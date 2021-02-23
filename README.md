@@ -48,16 +48,13 @@ This will start a local webserver with http2 and gzip to mimic real web server
 
 The example in this repo lists few github repos and there details in 2 different routes. We are following the nextjs routing way of defining files / folders in pages folder. This example shows a static route and a dynamic route.
 The example setup enables us to pre render stuff and create a static bundle with npm run export (a route like repos) where the page structure is already known and probably even data is available before time.
-This example setup also enables us to handle dynamic routes, where some pages can be pre rendered and rest can be build at run time, this can be seen in the repo list url where one page is pre rendered at build time and rest are rendered at runtime on browser. 
-You can try this out with npm run start. (Dynamic route page generation would not work with npm run export)
-
-So more or less via these 2 examples we showcase different ways of building web apps basis the nature of the app.
 
 ## Notes
 
 * for lhci to run locally please do the following
-```
-npm i -g lhci/ci
-```
- * state sharing via routes
+  ```
+  npm i -g lhci/ci
+  ```
+
+* state sharing via routes
 we donot use redux, hence to share data between pages we use route states - but unfortunately nextjs does not support route state i guess this is because they have an isomorphic router they allow data sharing only via query params, now to support route state we have extended the next router to have a method pushState which saves the data to be shared in session storage. And leveraging the getIntialProps lifecycle hook we read the data from storage and pass it on to the respective page (via withRouteState) but this doesn't seem to work by adding a basePath (i think this is because the basepath is not physically present in the pages directory), hence added a hook for to solve for that.
