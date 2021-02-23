@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="118" lines-covered="34" line-rate="0.28809999999999997" branches-valid="53" branches-covered="17" branch-rate="0.3208" timestamp="1612276921443" complexity="0" version="0.1">
+<coverage lines-valid="143" lines-covered="34" line-rate="0.2378" branches-valid="60" branches-covered="17" branch-rate="0.2833" timestamp="1614064580077" complexity="0" version="0.1">
   <sources>
-    <source>/Users/ankit.agarwal/Documents/projects/pwa</source>
+    <source>/Users/ankit.agarwal/Documents/projects/hipi-web</source>
   </sources>
   <packages>
-    <package name="src" line-rate="0" branch-rate="1">
+    <package name="src" line-rate="0" branch-rate="0">
       <classes>
         <class name="api-base.js" filename="src/api-base.js" line-rate="0" branch-rate="1">
           <methods>
@@ -18,6 +18,47 @@
           <methods>
           </methods>
           <lines>
+          </lines>
+        </class>
+        <class name="service-worker.js" filename="src/service-worker.js" line-rate="0" branch-rate="0">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="9" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="132" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="0" branch="false"/>
+            <line number="10" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="12" hits="0" branch="false"/>
+            <line number="19" hits="0" branch="false"/>
+            <line number="22" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="31" hits="0" branch="false"/>
+            <line number="33" hits="0" branch="false"/>
+            <line number="42" hits="0" branch="false"/>
+            <line number="50" hits="0" branch="false"/>
+            <line number="59" hits="0" branch="false"/>
+            <line number="67" hits="0" branch="false"/>
+            <line number="76" hits="0" branch="false"/>
+            <line number="85" hits="0" branch="false"/>
+            <line number="94" hits="0" branch="false"/>
+            <line number="104" hits="0" branch="false"/>
+            <line number="114" hits="0" branch="false"/>
+            <line number="128" hits="0" branch="false"/>
+            <line number="132" hits="0" branch="false"/>
+            <line number="141" hits="0" branch="true" condition-coverage="0% (0/3)"/>
+            <line number="144" hits="0" branch="false"/>
+            <line number="150" hits="0" branch="false"/>
+            <line number="158" hits="0" branch="false"/>
+            <line number="160" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>
