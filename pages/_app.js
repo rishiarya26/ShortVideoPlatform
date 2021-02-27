@@ -1,8 +1,8 @@
 // import App from "next/app"
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
-import { Workbox, messageSW } from 'workbox-window';
+// import { Workbox, messageSW } from 'workbox-window';
 import Layout from 'components/commons/layout';
 import appVersion from './app-version';
 
