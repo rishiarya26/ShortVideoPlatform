@@ -8,7 +8,7 @@ function VideoFooter(props) {
         <h3>Username</h3>
         <p>Nature at its best #nature #green</p>
         <div className="">
-        <MusicNoteIcon className=" float-left" />
+          <MusicNoteIcon className=" float-left" />
           <div className="">
             <Ticker mode="smooth" className="">
               {({ index }) => (
