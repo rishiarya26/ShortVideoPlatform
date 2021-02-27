@@ -3,14 +3,14 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 
 function VideoFooter(props) {
   return (
-    <div className="videoFooter relative flex bottom-40 text-white ml-5">
+    <div className="videoFooter relative flex bottom-24 text-white ml-5">
       <div className="videoFooter__text">
         <h3>Username</h3>
         <p>Nature at its best #nature #green</p>
-        <div className="videoFooter__ticker ">
-          <MusicNoteIcon className="videoFooter__icon" />
+        <div className="">
+        <MusicNoteIcon className=" float-left" />
           <div className="">
-            <Ticker mode="smooth">
+            <Ticker mode="smooth" className="">
               {({ index }) => (
                 <>
                   <p>music tilte goes here</p>
