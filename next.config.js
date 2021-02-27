@@ -34,4 +34,4 @@ const nextConfig = {
   }
 };
 
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : withPWA(nextConfig);
+module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
