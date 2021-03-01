@@ -18,7 +18,6 @@ export function reportWebVitals(metric) {
   //   fetch(url, { body, method: 'POST', keepalive: true });
   // }
 }
- 
 
 // TODO - removed to avoid the serviceworker scope the issue in localhost "start"
 // async function refreshCacheAndReload() {
@@ -96,7 +95,7 @@ function Zee5WebStarterKit({ Component, pageProps }) {
   //     });
   //   }
   // }, []);
-// TODO - removed to avoid the serviceworker scope the issue in localhost "end"
+  // TODO - removed to avoid the serviceworker scope the issue in localhost "end"
   return (
     <>
       <Head>

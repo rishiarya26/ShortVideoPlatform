@@ -2,38 +2,29 @@ import React, { useRef, useState, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 
-
-
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: undefined,
-    height: undefined,
+    height: undefined
   });
 
   function handleResize() {
-     
     setWindowSize({
       width: window.innerWidth,
-      height: window.innerHeight,
+      height: window.innerHeight
     });
   }
-  
 
   useEffect(() => {
-    
-    window.addEventListener("resize", handleResize);
-    
-    
+    window.addEventListener('resize', handleResize);
+
     handleResize();
-    
-    
-    return () => window.removeEventListener("resize", handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return windowSize;
 }
-
-
 
 function Video(props) {
   const [playing, setPlaying] = useState(true);
@@ -86,7 +77,7 @@ function Video(props) {
       <video loop ref={videoRef} onClick={handleVideoPress} className="vdo_player" width={size.width} height={size.height}>
         <source src="https://media.charmboard.com/images/demo_videos/116281312_735041643986642_3875123162107059152_n.mp4" type="video/mp4" />
       </video>
-     <VideoSidebar />
+      <VideoSidebar />
       <VideoFooter />
     </div>
   );
