@@ -2,9 +2,32 @@
 // import { useEffect } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 // import { Workbox, messageSW } from 'workbox-window';
-import Layout from 'components/commons/layout';
+import Layout from '../src/components/commons/layout';
 import appVersion from './app-version';
+import { TranslationProvider } from '../src/hooks/use-translation';
+import { RouteStateProvider } from '../src/hooks/use-route-state';
+
+const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
+  const { DrawerProvider } = module;
+  return DrawerProvider;
+}));
+
+const DialogProvider = dynamic(() => import('../src/hooks/use-dialog').then(module => {
+  const { DialogProvider } = module;
+  return DialogProvider;
+}));
+
+const LoaderProvider = dynamic(() => import('../src/hooks/use-loader').then(module => {
+  const { LoaderProvider } = module;
+  return LoaderProvider;
+}));
+
+const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(module => {
+  const { OverLayProvider } = module;
+  return OverLayProvider;
+}));
 
 export function reportWebVitals(metric) {
   console.log(metric);
@@ -19,6 +42,7 @@ export function reportWebVitals(metric) {
   // }
 }
 
+// TODO add useServiceWorker hook
 // async function refreshCacheAndReload() {
 //   console.warn('update found!!!');
 //   const clearAllCaches = [];
@@ -98,6 +122,7 @@ function Zee5WebStarterKit({ Component, pageProps }) {
   return (
     <>
       <Head>
+        {/* TODO move all of this to head component ot meta-data.js */}
         {/* Primary */}
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -237,9 +262,21 @@ function Zee5WebStarterKit({ Component, pageProps }) {
         <meta name="twitter:image:alt" content="Zee5 Web Starter Kit" />
 
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <TranslationProvider>
+        <OverLayProvider>
+          <LoaderProvider>
+            <DialogProvider>
+              <DrawerProvider>
+                <RouteStateProvider>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </RouteStateProvider>
+              </DrawerProvider>
+            </DialogProvider>
+          </LoaderProvider>
+        </OverLayProvider>
+      </TranslationProvider>
     </>
   );
 }
