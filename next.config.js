@@ -4,6 +4,7 @@ const withPWA = require('next-pwa');
 
 const { GEN_SOURCE_MAP, NODE_ENV } = process.env;
 const dev = NODE_ENV !== 'production';
+const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
 
@@ -34,4 +35,6 @@ const nextConfig = {
   }
 };
 
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : withPWA(nextConfig);
+// eslint-disable-next-line no-nested-ternary
+module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
+

@@ -45,19 +45,19 @@ export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
 
 export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
 
-export function asyncMemoize(_promise) {
+export function asyncMemoize(_promise, transformSuccess = data => (data), transformError = data => (data)) {
   const cache = {};
   let cacheKey = '';
-  const wrapped = async function (params = {}) {
+  const wrapped = async (params = {}) => {
     let resp = {};
     try {
       cacheKey = JSON.stringify(params);
       const cachedItem = cache[cacheKey];
       if (cachedItem) {
-        console.log('cache hit', cacheKey);
+        console.info('cache hit', cacheKey);
         return resolvePromise(cachedItem);
       }
-      console.log('cache miss', cacheKey);
+      console.info('cache miss', cacheKey);
       resp = await _promise(params);
       if (isObjectEmpty(resp)) {
         resp = null;
@@ -65,10 +65,10 @@ export function asyncMemoize(_promise) {
       if (!resp) {
         return _promise(params);
       }
-      cache[cacheKey] = resp;
+      cache[cacheKey] = transformSuccess(resp);
       return resolvePromise(resp);
     } catch (e) {
-      return _promise(params);
+      return rejectPromise(transformError(e));
     }
   };
 
