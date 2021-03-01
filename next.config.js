@@ -33,5 +33,6 @@ const nextConfig = {
     return config;
   }
 };
-
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : withPWA(nextConfig);
+// TODO - removed to avoid the serviceworker scope the issue in localhost
 module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;

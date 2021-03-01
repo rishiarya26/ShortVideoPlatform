@@ -1,5 +1,4 @@
 import Ticker from 'react-ticker';
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
 
 function VideoFooter(props) {
   return (
