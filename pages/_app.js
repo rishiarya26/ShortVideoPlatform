@@ -1,8 +1,8 @@
 // import App from "next/app"
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
-import { Workbox, messageSW } from 'workbox-window';
+// import { Workbox, messageSW } from 'workbox-window';
 import Layout from 'components/commons/layout';
 import appVersion from './app-version';
 
@@ -19,81 +19,81 @@ export function reportWebVitals(metric) {
   // }
 }
 
-async function refreshCacheAndReload() {
-  console.warn('update found!!!');
-  const clearAllCaches = [];
-  if (caches) {
-    // Service worker cache should be cleared with caches.delete()
-    const cacheNames = await caches.keys();
-    console.warn('updating caches', cacheNames);
-    cacheNames.forEach(name => clearAllCaches.push(caches.delete(name)));
-  }
-  await Promise.all(clearAllCaches);
-  // delete browser cache and hard reload
-  window.location.reload(true);
-}
+// async function refreshCacheAndReload() {
+//   console.warn('update found!!!');
+//   const clearAllCaches = [];
+//   if (caches) {
+//     // Service worker cache should be cleared with caches.delete()
+//     const cacheNames = await caches.keys();
+//     console.warn('updating caches', cacheNames);
+//     cacheNames.forEach(name => clearAllCaches.push(caches.delete(name)));
+//   }
+//   await Promise.all(clearAllCaches);
+//   // delete browser cache and hard reload
+//   window.location.reload(true);
+// }
 
-function createUIPrompt(opts) {
-  // eslint-disable-next-line no-restricted-globals
-  if (confirm('A new update is available. Do you want to update now?')) {
-    opts.onAccept();
-  }
-}
+// function createUIPrompt(opts) {
+//   // eslint-disable-next-line no-restricted-globals
+//   if (confirm('A new update is available. Do you want to update now?')) {
+//     opts.onAccept();
+//   }
+// }
 
 function Zee5WebStarterKit({ Component, pageProps }) {
   const APP_NAME = 'Zee5 Web Starter Kit';
 
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      const wb = new Workbox('sw.js');
-      let registration;
+  // useEffect(() => {
+  //   if ('serviceWorker' in navigator) {
+  //     const wb = new Workbox('sw.js');
+  //     let registration;
 
-      const showSkipWaitingPrompt = event => {
-        // `event.wasWaitingBeforeRegister` will be false if this is
-        // the first time the updated service worker is waiting.
-        // When `event.wasWaitingBeforeRegister` is true, a previously
-        // updated service worker is still waiting.
-        // You may want to customize the UI prompt accordingly.
+  //     const showSkipWaitingPrompt = event => {
+  //       // `event.wasWaitingBeforeRegister` will be false if this is
+  //       // the first time the updated service worker is waiting.
+  //       // When `event.wasWaitingBeforeRegister` is true, a previously
+  //       // updated service worker is still waiting.
+  //       // You may want to customize the UI prompt accordingly.
 
-        // Assumes your app has some sort of prompt UI element
-        // that a user can either accept or reject.
-        console.info(event);
-        const prompt = createUIPrompt({
-          onAccept: async () => {
-            // Assuming the user accepted the update, set up a listener
-            // that will reload the page as soon as the previously waiting
-            // service worker has taken control.
-            wb.addEventListener('controlling', event => {
-              console.info('controlling event!!!', event);
-              refreshCacheAndReload();
-            });
+  //       // Assumes your app has some sort of prompt UI element
+  //       // that a user can either accept or reject.
+  //       console.info(event);
+  //       const prompt = createUIPrompt({
+  //         onAccept: async () => {
+  //           // Assuming the user accepted the update, set up a listener
+  //           // that will reload the page as soon as the previously waiting
+  //           // service worker has taken control.
+  //           wb.addEventListener('controlling', event => {
+  //             console.info('controlling event!!!', event);
+  //             refreshCacheAndReload();
+  //           });
 
-            console.info(registration, registration.waiting);
-            if (registration && registration.waiting) {
-              // Send a message to the waiting service worker,
-              // instructing it to activate.
-              // Note: for this to work, you have to add a message
-              // listener in your service worker. See below.
-              messageSW(registration.waiting, { type: 'SKIP_WAITING' });
-            }
-          },
+  //           console.info(registration, registration.waiting);
+  //           if (registration && registration.waiting) {
+  //             // Send a message to the waiting service worker,
+  //             // instructing it to activate.
+  //             // Note: for this to work, you have to add a message
+  //             // listener in your service worker. See below.
+  //             messageSW(registration.waiting, { type: 'SKIP_WAITING' });
+  //           }
+  //         },
 
-          onReject: () => {
-            prompt.dismiss();
-          }
-        });
-      };
+  //         onReject: () => {
+  //           prompt.dismiss();
+  //         }
+  //       });
+  //     };
 
-      // Add an event listener to detect when the registered
-      // service worker has installed but is waiting to activate.
-      wb.addEventListener('waiting', showSkipWaitingPrompt);
-      wb.addEventListener('externalwaiting', showSkipWaitingPrompt);
+  //     // Add an event listener to detect when the registered
+  //     // service worker has installed but is waiting to activate.
+  //     wb.addEventListener('waiting', showSkipWaitingPrompt);
+  //     wb.addEventListener('externalwaiting', showSkipWaitingPrompt);
 
-      wb.register().then(r => {
-        registration = r;
-      });
-    }
-  }, []);
+  //     wb.register().then(r => {
+  //       registration = r;
+  //     });
+  //   }
+  // }, []);
 
   return (
     <>

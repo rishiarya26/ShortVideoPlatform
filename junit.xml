@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="11" failures="0" time="3.339">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:16:59" time="0.725" tests="5">
-    <testcase classname=" should json-parse responses with Content-Type: application/json" name=" should json-parse responses with Content-Type: application/json" time="0.004">
+<testsuites name="jest tests" tests="11" failures="0" time="3.844">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:19:00" time="0.739" tests="5">
+    <testcase classname=" should json-parse responses with Content-Type: application/json" name=" should json-parse responses with Content-Type: application/json" time="0.008">
     </testcase>
     <testcase classname=" should text-parse responses with Content-Type: test/json" name=" should text-parse responses with Content-Type: test/json" time="0">
     </testcase>
@@ -9,10 +9,10 @@
     </testcase>
     <testcase classname=" should handle error responses with Content-Type: text/plain" name=" should handle error responses with Content-Type: text/plain" time="0.001">
     </testcase>
-    <testcase classname=" should handle link headers for pagination" name=" should handle link headers for pagination" time="0.004">
+    <testcase classname=" should handle link headers for pagination" name=" should handle link headers for pagination" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:16:59" time="0.726" tests="5">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:19:00" time="0.747" tests="5">
     <testcase classname=" should make a get request" name=" should make a get request" time="0.004">
     </testcase>
     <testcase classname=" should make a delete request" name=" should make a delete request" time="0.001">
@@ -21,10 +21,10 @@
     </testcase>
     <testcase classname=" should make a put request" name=" should make a put request" time="0">
     </testcase>
-    <testcase classname=" should make a patch request" name=" should make a patch request" time="0.002">
+    <testcase classname=" should make a patch request" name=" should make a patch request" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="Components::SearchResults" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:16:59" time="1.181" tests="1">
+  <testsuite name="Components::SearchResults" errors="0" failures="0" skipped="0" timestamp="2021-02-23T07:19:00" time="1.23" tests="1">
     <testcase classname="Components::SearchResults renders all items" name="Components::SearchResults renders all items" time="0.028">
     </testcase>
   </testsuite>
