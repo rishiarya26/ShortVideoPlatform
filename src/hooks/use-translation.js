@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import { trimFirstChar } from '../utils/string';
 import { getFirstTruthyValue } from '../utils/functional';
-import defaultTranslations from '../../public/locales/default.json';
 import { localStorage } from '../utils/storage';
+import { getLocale } from '../config';
 
 const TranslationContext = createContext({
   language: 'en',
@@ -13,7 +13,9 @@ const TranslationContext = createContext({
 });
 
 const supportedLanguages = {
-  en: 'English'
+  hi: 'हिंदी',
+  en: 'English',
+  bn: 'বাংলা'
 };
 
 const setLanguagePref = lang => (localStorage.set('pref-lang', lang));
@@ -44,9 +46,9 @@ const getLanguage = () => (getFirstTruthyValue(getLanguageFromPath, getLanguageP
 //   window.location.href = goto;
 // };
 
-export const TranslationProvider = ({ children }) => {
-  const [language, setLang] = useState(getDefaultLanguage());
-  const [translations] = useState(defaultTranslations);
+export const TranslationProvider = ({ children, locales }) => {
+  const [language, setLang] = useState(getLocale());
+  const [translations] = useState(locales);
   const t = useCallback(key => (translations[key] || ''));
 
   useEffect(() => {

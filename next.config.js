@@ -8,12 +8,12 @@ const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
 
-// this controls the script path in .html files - can be relative or absolute (CDN)
-const { ASSET_HOST = '' } = process.env;
-const assetPrefix = ASSET_HOST || '';
-
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode...`);
+
+function getLocale() {
+  return (process.env.BASE_PATH || '').split('/')[1] || 'en';
+}
 
 const nextConfig = {
   // would suggest keeping this false
@@ -22,7 +22,11 @@ const nextConfig = {
     modern: true
   },
   generateEtags: true,
-  assetPrefix,
+  assetPrefix: process.env.BASE_PATH || '',
+  publicRuntimeConfig: {
+    locale: getLocale() || 'en',
+    basePath: process.env.BASE_PATH || ''
+  },
   generateBuildId: async () => appVersion,
   webpack: config => {
     config.output.publicPath = '';
