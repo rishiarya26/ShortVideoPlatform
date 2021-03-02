@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 
