@@ -1,4 +1,4 @@
 {
-  "languages":["hi", "en", "bn"],
+  "languages":["hi-in", "en-in", "bn-in"],
   "localePath":"public/locales"
 }

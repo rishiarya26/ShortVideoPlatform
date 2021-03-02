@@ -62,11 +62,11 @@ The example setup enables us to pre render stuff and create a static bundle with
 
 ## Approach
 
-multi lingual support is very different when its via CSR / SSR / SSG and we might need to solve for all cases but our priority is SSG since we believe most of the webapp cases in jio should be addressed with SSG.
+multi lingual support is very different when its via CSR / SSR / SSG and we might need to solve for all cases but our priority is SSG since we believe most of the webapp cases in hipi should be addressed with SSG.
 
 via SSG 
 - generate multiple versions of pages for each language at build time and all pages to have language as base path in the route
-  example - jio.com/en/recharge,  jio.com/hi/recharge
+  example - hipi.com/en/recharge,  hipi.com/hi/recharge
   this is so that language specific pages are directly discoverable and shareable
 
 - this is done by adding a base path during running the build script
@@ -90,8 +90,8 @@ A user journey would look like this
 - app checks if language context exists in the path, if not then checks user pref (local storage), if not checks browser locale. Hence a decision is made for the user as to what is the current language. This should also go as an input to apis
 - if the current app env and the selected language from step 2 doesn't match user gets redirected to the respective context
 example :
-user lands on jio.com but has the browser locale set to hindi - user will be taken to jio.com/hi page OR
-user lands on jio.com but has the user pref set to hindi - user will be taken to jio.com/hi page
+user lands on hipi.com but has the browser locale set to hindi - user will be taken to hipi.com/hi page OR
+user lands on hipi.com but has the user pref set to hindi - user will be taken to hipi.com/hi page
 
 - user can switch the language at any point from the app - this sets a local pref and redirects to language context page
 

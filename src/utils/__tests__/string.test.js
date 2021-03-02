@@ -23,28 +23,28 @@ test.each([null, undefined, ''])(
   'trimFirstChar should return empty for null undefined and empty',
   arg => {
     expect(trimFirstChar(arg)).toEqual('');
-}
+  }
 );
 
 test.each([null, undefined, ''])(
   'trimLastChar should return empty for null undefined and empty',
   arg => {
     expect(trimLastChar(arg)).toEqual('');
-}
+  }
 );
 
 test.each([null, undefined, ''])(
   'trimEdges should return empty for null undefined and empty',
   arg => {
     expect(trimEdges(arg)).toEqual('');
-}
+  }
 );
 
 test.each([null, undefined, ''])(
   'trimLowerCase should return empty for null undefined and empty',
   arg => {
     expect(trimLowerCase(arg)).toEqual('');
-}
+  }
 );
 
 it('formatAmount should return comma append amount with rupee symbol', () => {

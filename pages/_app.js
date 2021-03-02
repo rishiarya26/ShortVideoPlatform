@@ -10,8 +10,7 @@ import { RouteStateProvider } from '../src/hooks/use-route-state';
 import { getLocaleData } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
 
-
-//TODO add withBasePath for everything that gets affected because of base-path i18n
+// TODO add withBasePath for everything that gets affected because of base-path i18n
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
