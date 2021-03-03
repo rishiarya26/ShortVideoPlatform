@@ -1,6 +1,14 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
+
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
 
 async function getShortsConfig({ lang }) {
   let response = {};
@@ -14,5 +22,6 @@ async function getShortsConfig({ lang }) {
   }
 }
 
-const getConfig = promiseMemoize(getShortsConfig, { resolve: 'json' });
-export { getConfig };
+const [getConfig, clearConfig] = apiMiddleWare(getShortsConfig, transformSuccess, transformError);
+
+export { getConfig, clearConfig };

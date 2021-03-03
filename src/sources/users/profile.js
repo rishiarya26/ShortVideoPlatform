@@ -1,8 +1,17 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
 
-async function getUserProfile({ lang }) {
+// TODO add transforms per call
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
+
+async function fetchUserProfile({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/profile`;
@@ -14,7 +23,7 @@ async function getUserProfile({ lang }) {
   }
 }
 
-async function getSimilarProfile({ lang }) {
+async function fetchSimilarProfile({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/profile/similar`;
@@ -26,7 +35,7 @@ async function getSimilarProfile({ lang }) {
   }
 }
 
-async function getPopularUser({ lang }) {
+async function fetchPopularUser({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/users/popular`;
@@ -38,7 +47,7 @@ async function getPopularUser({ lang }) {
   }
 }
 
-async function getSoundDetails({ lang }) {
+async function fetchSoundDetails({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/sound/detail`;
@@ -50,7 +59,7 @@ async function getSoundDetails({ lang }) {
   }
 }
 
-async function getUserFollower({ lang }) {
+async function fetchUserFollower({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/users/follower`;
@@ -61,7 +70,7 @@ async function getUserFollower({ lang }) {
     return Promise.reject(err);
   }
 }
-async function getUserFollowing({ lang }) {
+async function fetchUserFollowing({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/users/following`;
@@ -73,7 +82,7 @@ async function getUserFollowing({ lang }) {
   }
 }
 
-async function getUserRecommendation({ lang }) {
+async function fetchUserRecommendation({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v2/shorts/discover/recommendation`;
@@ -85,15 +94,24 @@ async function getUserRecommendation({ lang }) {
   }
 }
 
-const userProfile = promiseMemoize(getUserProfile, { resolve: 'json' });
-const userFollowers = promiseMemoize(getUserFollower, { resolve: 'json' });
-const followingUser = promiseMemoize(getUserFollowing, { resolve: 'json' });
-const userRecommendation = promiseMemoize(getUserRecommendation, { resolve: 'json' });
-const soundDetails = promiseMemoize(getSoundDetails, { resolve: 'json' });
-const similarProfile = promiseMemoize(getSimilarProfile, { resolve: 'json' });
-const popularProfile = promiseMemoize(getPopularUser, { resolve: 'json' });
+// TODO add TTL for api cache
+
+const shouldCache = false;
+
+const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError, shouldCache);
+const [getUserFollower] = apiMiddleWare(fetchUserFollower, transformSuccess, transformError, shouldCache);
+const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError, shouldCache);
+const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError, shouldCache);
+const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError, shouldCache);
+const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError, shouldCache);
+const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError, shouldCache);
 
 export {
-  userProfile, userFollowers, followingUser,
-  userRecommendation, soundDetails, similarProfile, popularProfile
+  getUserProfile,
+  getUserFollower,
+  getUserFollowing,
+  getUserRecommendation,
+  getSoundDetails,
+  getSimilarProfile,
+  getPopularUser
 };

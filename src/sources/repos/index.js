@@ -1,6 +1,6 @@
 import { get } from 'network';
 import { core } from '../../api-base';
-import { asyncMemoize } from '../../utils/app';
+import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
   return data;
@@ -22,6 +22,6 @@ async function getTopRepos({ lang }) {
   }
 }
 
-const [srGetTopRepos, clearGetTopRepos] = asyncMemoize(getTopRepos, transformSuccess, transformError);
+const [srGetTopRepos, clearGetTopRepos] = apiMiddleWare(getTopRepos, transformSuccess, transformError);
 
 export { srGetTopRepos, clearGetTopRepos };

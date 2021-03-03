@@ -45,7 +45,7 @@ export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
 
 export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
 
-export function asyncMemoize(_promise, transformSuccess = data => (data), transformError = data => (data)) {
+export function apiMiddleWare(_promise, transformSuccess = data => (data), transformError = data => (data), shouldCache = true) {
   const cache = {};
   let cacheKey = '';
   const wrapped = async (params = {}) => {
@@ -65,7 +65,9 @@ export function asyncMemoize(_promise, transformSuccess = data => (data), transf
       if (!resp) {
         return _promise(params);
       }
-      cache[cacheKey] = transformSuccess(resp);
+      if (shouldCache) {
+        cache[cacheKey] = transformSuccess(resp);
+      }
       return resolvePromise(resp);
     } catch (e) {
       return rejectPromise(transformError(e));

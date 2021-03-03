@@ -1,8 +1,16 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
 
-async function getHomeFeed({ lang }) {
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
+
+async function fetchHomeFeed({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v2/shorts/home`;
@@ -13,6 +21,6 @@ async function getHomeFeed({ lang }) {
     return Promise.reject(err);
   }
 }
+const [getHomeFeed, clearHomeFeed] = apiMiddleWare(fetchHomeFeed, transformSuccess, transformError);
 
-const homeFeed = promiseMemoize(getHomeFeed, { resolve: 'json' });
-export { homeFeed };
+export { getHomeFeed, clearHomeFeed };

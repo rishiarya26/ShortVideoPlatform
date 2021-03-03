@@ -1,8 +1,16 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
 
-async function getSearchResult({ lang }) {
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
+
+async function fetchSearchResult({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/search/repositories?q=${lang}&sort=stars&order=desc`;
@@ -14,5 +22,7 @@ async function getSearchResult({ lang }) {
   }
 }
 
-const search = promiseMemoize(getSearchResult, { resolve: 'json' });
-export { search };
+const [getSearchResults, clearSearchResults] = apiMiddleWare(fetchSearchResult, transformSuccess, transformError);
+
+export { getSearchResults, clearSearchResults };
+

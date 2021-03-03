@@ -1,6 +1,15 @@
 import { get, post, put } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
+
+// TODO add transforms per call
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
 
 async function sendOtp({ lang }) {
   let response = {};
@@ -61,11 +70,18 @@ async function reportProfile({ lang }) {
   }
 }
 
-const requestOtp = promiseMemoize(sendOtp, { resolve: 'json' });
-const verifyOtp = promiseMemoize(verifyOtpPassword, { resolve: 'json' });
-const resetPassword = promiseMemoize(forgotPassword, { resolve: 'json' });
-const profileUpdate = promiseMemoize(updateProfile, { resolve: 'json' });
-const reportUser = promiseMemoize(reportProfile, { resolve: 'json' });
+const shouldCache = false;
+
+const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError, shouldCache);
+const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError, shouldCache);
+const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError, shouldCache);
+const [srUpdateProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError, shouldCache);
+const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError, shouldCache);
+
 export {
-  resetPassword, profileUpdate, requestOtp, verifyOtp, reportUser
+  srSendOtp,
+  srVerifyOtpPassword,
+  srForgotPassword,
+  srUpdateProfile,
+  srReportProfile
 };

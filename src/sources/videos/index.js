@@ -1,8 +1,17 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { baseURL } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
 
-async function getProfileVideos({ lang }) {
+// TODO add transforms per call
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
+
+async function fetchProfileVideos({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/v1/shorts/profile/videos`;
@@ -14,7 +23,7 @@ async function getProfileVideos({ lang }) {
   }
 }
 
-async function getCommentByVideoId({ lang }) {
+async function fetchCommentByVideoId({ lang }) {
   let response = {};
   try {
     const apiPath = `${baseURL}/search/repositories?q=${lang}&sort=stars&order=desc`;
@@ -26,7 +35,12 @@ async function getCommentByVideoId({ lang }) {
   }
 }
 
-const getCommment = promiseMemoize(getCommentByVideoId, { resolve: 'json' });
-const profileVideos = promiseMemoize(getProfileVideos, { resolve: 'json' });
+const shouldCache = false;
 
-export { getCommment, profileVideos };
+const [getProfileVideos] = apiMiddleWare(fetchProfileVideos, transformSuccess, transformError, shouldCache);
+const [getCommentByVideoId] = apiMiddleWare(fetchCommentByVideoId, transformSuccess, transformError, shouldCache);
+
+export {
+  getProfileVideos,
+  getCommentByVideoId
+};
