@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { core } from '../../api-base';
+import { baseURL } from '../../api-base';
 import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
@@ -10,10 +10,10 @@ function transformError(data) {
   return data;
 }
 
-async function getTopRepos({ lang }) {
+async function getShortsConfig({ lang }) {
   let response = {};
   try {
-    const apiPath = `${core}/search/repositories?q=${lang}&sort=stars&order=desc`;
+    const apiPath = `${baseURL}/v1/shorts/config`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -22,6 +22,6 @@ async function getTopRepos({ lang }) {
   }
 }
 
-const [srGetTopRepos, clearGetTopRepos] = apiMiddleWare(getTopRepos, transformSuccess, transformError);
+const [getConfig, clearConfig] = apiMiddleWare(getShortsConfig, transformSuccess, transformError);
 
-export { srGetTopRepos, clearGetTopRepos };
+export { getConfig, clearConfig };

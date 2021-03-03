@@ -1,7 +1,7 @@
 
 import { get } from 'network';
 import { core } from '../../api-base';
-import { asyncMemoize } from '../../utils/app';
+import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
   return data;
@@ -23,6 +23,6 @@ async function getRepoDetails({ publisher, project }) {
   }
 }
 
-const [srGetRepoDetails, clearGetRepoDetails] = asyncMemoize(getRepoDetails, transformSuccess, transformError);
+const [srGetRepoDetails, clearGetRepoDetails] = apiMiddleWare(getRepoDetails, transformSuccess, transformError);
 
 export { srGetRepoDetails, clearGetRepoDetails };

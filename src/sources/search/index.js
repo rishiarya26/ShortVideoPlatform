@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { core } from '../../api-base';
+import { baseURL } from '../../api-base';
 import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
@@ -10,10 +10,10 @@ function transformError(data) {
   return data;
 }
 
-async function getTopRepos({ lang }) {
+async function fetchSearchResult({ lang }) {
   let response = {};
   try {
-    const apiPath = `${core}/search/repositories?q=${lang}&sort=stars&order=desc`;
+    const apiPath = `${baseURL}/search/repositories?q=${lang}&sort=stars&order=desc`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -22,6 +22,7 @@ async function getTopRepos({ lang }) {
   }
 }
 
-const [srGetTopRepos, clearGetTopRepos] = apiMiddleWare(getTopRepos, transformSuccess, transformError);
+const [getSearchResults, clearSearchResults] = apiMiddleWare(fetchSearchResult, transformSuccess, transformError);
 
-export { srGetTopRepos, clearGetTopRepos };
+export { getSearchResults, clearSearchResults };
+
