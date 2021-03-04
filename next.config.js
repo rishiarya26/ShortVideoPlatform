@@ -6,7 +6,8 @@ const {
   GEN_SOURCE_MAP,
   NODE_ENV,
   BASE_PATH,
-  MOCK_MODE = 'n'
+  MOCK_MODE = 'n',
+  APP_ENV = 'production'
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
@@ -32,7 +33,8 @@ const nextConfig = {
   publicRuntimeConfig: {
     locale: getLocale(),
     basePath: BASE_PATH,
-    mockMode: MOCK_MODE
+    mockMode: MOCK_MODE,
+    appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
   webpack: config => {

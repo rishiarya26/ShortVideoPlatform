@@ -1,6 +1,6 @@
 
 import { get } from 'network';
-import { core } from '../../api-base';
+import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
@@ -14,7 +14,7 @@ function transformError(data) {
 async function getRepoDetails({ publisher, project }) {
   let response = {};
   try {
-    const apiPath = `${core}/repos/${publisher}/${project}`;
+    const apiPath = `${getApiBasePath('test')}/repos/${publisher}/${project}`;
     response = await get(apiPath);
     response.data.requestedWith = { publisher, project };
     return Promise.resolve(response.data);

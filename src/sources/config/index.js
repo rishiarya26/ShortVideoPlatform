@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { baseURL } from '../../api-base';
+import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
 
 function transformSuccess(data) {
@@ -13,7 +13,7 @@ function transformError(data) {
 async function getShortsConfig({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/config`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/config`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);

@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { baseURL } from '../../api-base';
+import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
 
 // TODO add transforms per call
@@ -14,7 +14,7 @@ function transformError(data) {
 async function fetchUserProfile({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/profile`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -26,7 +26,7 @@ async function fetchUserProfile({ lang }) {
 async function fetchSimilarProfile({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/profile/similar`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/similar`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -38,7 +38,7 @@ async function fetchSimilarProfile({ lang }) {
 async function fetchPopularUser({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/users/popular`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/popular`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -50,7 +50,7 @@ async function fetchPopularUser({ lang }) {
 async function fetchSoundDetails({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/sound/detail`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/sound/detail`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -62,7 +62,7 @@ async function fetchSoundDetails({ lang }) {
 async function fetchUserFollower({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/users/follower`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/follower`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -73,7 +73,7 @@ async function fetchUserFollower({ lang }) {
 async function fetchUserFollowing({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/users/following`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/following`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -85,7 +85,7 @@ async function fetchUserFollowing({ lang }) {
 async function fetchUserRecommendation({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v2/shorts/discover/recommendation`;
+    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/discover/recommendation`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);

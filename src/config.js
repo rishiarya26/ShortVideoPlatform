@@ -1,5 +1,6 @@
 import getConfig from 'next/config';
 import { trimFirstChar } from './utils/string';
+import { apiBaseEndPoints, defaultApiBasePath} from './api-base';
 
 export const getBasePath = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
@@ -23,6 +24,13 @@ export const isMockMode = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
   const { mockMode = '' } = publicRuntimeConfig;
   return (mockMode === 'y');
+};
+
+export const getApiBasePath = serviceType => {
+  const { publicRuntimeConfig = {} } = getConfig() || {};
+  const { appEnv = '' } = publicRuntimeConfig;
+  console.log(`appEnv - ${appEnv}`);
+  return (apiBaseEndPoints[appEnv][serviceType] || defaultApiBasePath);
 };
 
 export const withBasePath = path => (`${getBasePath() || '/'}${path}`);
