@@ -36,6 +36,7 @@
     "react-ticker": "^1.2.2",
     "serve": "^11.3.0",
     "styled-jsx-css-loader": "^0.3.0",
+    "swiper": "^6.4.15",
     "tailwindcss": "^2.0.2",
     "workbox-expiration": "^6.1.1",
     "workbox-precaching": "^6.1.1",
