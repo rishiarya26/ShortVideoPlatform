@@ -5,7 +5,7 @@ const Dialog = ({
 }) => {
 // TODO use the right tailwind class
   const clsComponentWidth = useMedia(breakpoints,
-    ['w-3/12', 'w-6/12', 'w-9/12']);
+    ['w-3/12', 'w-6/12', 'w-9/12'], 'w-3/12');
   return (
     <div
       className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'}`}

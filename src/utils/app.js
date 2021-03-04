@@ -54,10 +54,8 @@ export function apiMiddleWare(_promise, transformSuccess = data => (data), trans
       cacheKey = JSON.stringify(params);
       const cachedItem = cache[cacheKey];
       if (cachedItem) {
-        console.info('cache hit', cacheKey);
         return resolvePromise(cachedItem);
       }
-      console.info('cache miss', cacheKey);
       resp = await _promise(params);
       if (isObjectEmpty(resp)) {
         resp = null;
