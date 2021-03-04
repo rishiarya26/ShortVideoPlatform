@@ -4,8 +4,6 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 
-let videoRef = null;
-
 function Video() {
   const [playing, setPlaying] = useState(true);
   const [clicked, setClicked] = useState(true);
@@ -14,11 +12,11 @@ function Video() {
 
   const handleVideoPress = () => {
     if (playing) {
-      videoRef.current.pause();
+      rootRef.current.children[0].pause();
       setPlaying(false);
       setClicked(false);
     } else {
-      videoRef.current.play();
+      rootRef.current.children[0].play();
       setPlaying(true);
       setClicked(true);
     }
@@ -27,10 +25,10 @@ function Video() {
   const handlePlay = entry => {
     if (clicked) {
       if (entry.isIntersecting) {
-        videoRef.current.play();
+        rootRef.current.children[0].play();
         setPlaying(true);
       } else {
-        videoRef.current.pause();
+        rootRef.current.children[0].pause();
         setPlaying(false);
       }
     }
@@ -41,7 +39,6 @@ function Video() {
     callback: handlePlay
   });
 
-  videoRef = ref;
 
   return (
     <div

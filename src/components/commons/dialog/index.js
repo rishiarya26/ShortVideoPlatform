@@ -8,7 +8,7 @@ const Dialog = ({
     ['w-3/12', 'w-6/12', 'w-9/12'], 'w-3/12');
   return (
     <div
-      className={`${clsComponentWidth || ''} ${visible ? 'visible' : 'invisible'}`}
+      className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'}`}
       data-testid="dialog-container"
     >
       <div data-testid="dialog-header">
