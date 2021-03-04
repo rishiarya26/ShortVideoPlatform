@@ -3,12 +3,14 @@ import Video from '../video';
 import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
+const ErrorComp = () => (<div>Failed to fetch</div>);
+
 export default function Feed() {
   const [items, setItems] = useState({});
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     console.log(data);
-    setItems(data, () => {
+    setItems(data , () => {
       console.log(items);
     });
   };
@@ -16,6 +18,7 @@ export default function Feed() {
   return (
     <ComponentStateHandler
       state={fetchState}
+      ErrorComp={ErrorComp}
     >
       <div className="grid h-full">
         <div className="relative overflow-scroll w-full max-w-screen-sm Video_sheet">
