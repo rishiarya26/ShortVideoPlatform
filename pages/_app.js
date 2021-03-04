@@ -45,7 +45,7 @@ export function reportWebVitals(metric) {
   // }
 }
 
-// TODO add useServiceWorker hook
+// TODO add useServiceWorker hook have manifest.json generated from some js
 // async function refreshCacheAndReload() {
 //   console.warn('update found!!!');
 //   const clearAllCaches = [];
@@ -67,7 +67,7 @@ export function reportWebVitals(metric) {
 //   }
 // }
 
-function Zee5WebStarterKit({ Component, pageProps, locales }) {
+function hipiWebStarterKit({ Component, pageProps, locales }) {
   // useEffect(() => {
   //   if ('serviceWorker' in navigator) {
   //     const wb = new Workbox('sw.js');
@@ -119,7 +119,6 @@ function Zee5WebStarterKit({ Component, pageProps, locales }) {
   //     });
   //   }
   // }, []);
-
   return (
     <>
       <Head>
@@ -149,7 +148,7 @@ function Zee5WebStarterKit({ Component, pageProps, locales }) {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-Zee5WebStarterKit.getInitialProps = async () => {
+hipiWebStarterKit.getInitialProps = async () => {
   try {
     const locales = await getLocaleData();
     return {
@@ -161,4 +160,4 @@ Zee5WebStarterKit.getInitialProps = async () => {
   return {};
 };
 
-export default Zee5WebStarterKit;
+export default hipiWebStarterKit;

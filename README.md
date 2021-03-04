@@ -1,8 +1,8 @@
-# zee5 pwa
-Web application for zee5 content.
+# hipi pwa
+Web application for hipi content.
 
 ## About
-zee5 PWA is based on [next.js](https://nextjs.org/) at its core which is minimalistic framework to build modern universal webapps.
+hipi PWA is based on [next.js](https://nextjs.org/) at its core which is minimalistic framework to build modern universal webapps.
 
 ## Features
 - uses only functional react.

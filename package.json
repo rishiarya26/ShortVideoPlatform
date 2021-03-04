@@ -1,5 +1,5 @@
 {
-  "name": "@Zee5/with-tailwind",
+  "name": "@hipi/with-tailwind",
   "version": "1.0.0",
   "main": "pages/_app.js",
   "sideEffects": false,
@@ -34,6 +34,7 @@
     "react-dom": "^17.0.1",
     "react-error-boundary": "^3.0.2",
     "react-scripts": "^4.0.0",
+    "react-ticker": "^1.2.2",
     "serve": "^11.3.0",
     "styled-jsx-css-loader": "^0.3.0",
     "tailwindcss": "^2.0.2",

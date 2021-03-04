@@ -3,7 +3,7 @@ import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
 
 function HeadMeta() {
-  const APP_NAME = 'Zee5 Starter Kit';
+  const APP_NAME = 'hipi Starter Kit';
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
   return (
@@ -21,7 +21,7 @@ function HeadMeta() {
         itemProp="description"
         content="This project is a starter kit that can be used to build a robust and high performance web app"
       />
-      <meta name="keywords" content="Zee5 web starter kit" />
+      <meta name="keywords" content="hipi web starter kit" />
       <meta name="format-detection" content="telephone=no" />
 
       {/* IOS */}
@@ -123,7 +123,7 @@ function HeadMeta() {
       <link href={withBasePath('icons/favicon.icon')} rel="shortcut icon" type="image/x-icon" />
 
       {/* UC Browser  */}
-      <link href={withBasePath('images/Zee5_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
+      <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
 
@@ -131,8 +131,8 @@ function HeadMeta() {
 
       {/* Social Media */}
       <meta property="og:type" content="article" />
-      <meta property="og:title" content="Zee5 Web Starter Kit" />
-      <meta property="og:image" content={withBasePath('images/Zee5_logo_v01.png')} />
+      <meta property="og:title" content="hipi Web Starter Kit" />
+      <meta property="og:image" content={withBasePath('images/hipi_logo_v01.png')} />
       <meta property="og:url" content="https://localhost:5000/" />
       <meta
         property="og:description"
@@ -140,10 +140,10 @@ function HeadMeta() {
       />
 
       <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content="Zee5 Web Starter Kit" />
+      <meta name="twitter:title" content="hipi Web Starter Kit" />
       {/* twitter needs absolute urls for image */}
       {/* <meta name="twitter:image" content="https://covid.bhaarat.ai/img_fb.jpg" /> */}
-      <meta name="twitter:image:alt" content="Zee5 Web Starter Kit" />
+      <meta name="twitter:image:alt" content="hipi Web Starter Kit" />
     </>
   );
 }

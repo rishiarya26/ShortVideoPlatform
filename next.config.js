@@ -25,7 +25,7 @@ const nextConfig = {
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
     locale: getLocale(),
-    basePath: BASE_PATH || 'en-in'
+    basePath: BASE_PATH
   },
   generateBuildId: async () => appVersion,
   webpack: config => {

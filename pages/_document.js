@@ -2,7 +2,7 @@ import Document, {
   Html, Main, NextScript, Head
 } from 'next/document';
 
-class Zee5WebStarterKit extends Document {
+class hipiWebStarterKit extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
@@ -21,4 +21,4 @@ class Zee5WebStarterKit extends Document {
   }
 }
 
-export default Zee5WebStarterKit;
+export default hipiWebStarterKit;

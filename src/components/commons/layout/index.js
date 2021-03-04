@@ -1,17 +1,29 @@
-import Link from 'next/link';
-import { withBasePath } from '../../../config';
+import Router from '../../../../router';
 
 const Layout = props => (
   <div>
     <div className="flex justify-end">
       <div className="flex justify-evenly">
-        <Link scroll={false} href={withBasePath('/repos')}>
-          <div>Git Hub </div>
-        </Link>
+        <div
+          role="presentation"
+          onClick={() => Router.pushState('repos')}
+        >
+          Git Hub
+        </div>
         <span className="px-2">|</span>
-        <Link scroll={false} href={withBasePath('/error-boundary')}>
-          <div>Error Boundary</div>
-        </Link>
+        <div
+          role="presentation"
+          onClick={() => Router.pushState('feed')}
+        >
+          Feed
+        </div>
+        <span className="px-2">|</span>
+        <div
+          role="presentation"
+          onClick={() => Router.pushState('error-boundary')}
+        >
+          Error Boundary
+        </div>
       </div>
     </div>
     {props.children}
