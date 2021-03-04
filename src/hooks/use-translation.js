@@ -7,7 +7,7 @@ import { localStorage } from '../utils/storage';
 import { getLocale } from '../config';
 
 const TranslationContext = createContext({
-  language: 'en',
+  language: 'en-IN',
   t: () => { },
   setLanguage: () => { }
 });
@@ -20,7 +20,7 @@ const supportedLanguages = {
 
 const setLanguagePref = lang => (localStorage.set('pref-lang', lang));
 
-export const getDefaultLanguage = () => 'en';
+export const getDefaultLanguage = () => 'en-IN';
 const getLanguagePref = () => (localStorage.get('pref-lang'));
 const getLanguageFromPath = () => (trimFirstChar(window.location.pathname).split('/')[0]);
 const getLanguageFromBrowser = () => (navigator.language.split('-')[0]);

@@ -29,7 +29,6 @@ export const isMockMode = () => {
 export const getApiBasePath = serviceType => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
   const { appEnv = '' } = publicRuntimeConfig;
-  console.log(`appEnv - ${appEnv}`);
   return (apiBaseEndPoints[appEnv][serviceType] || defaultApiBasePath);
 };
 
