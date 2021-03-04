@@ -34,3 +34,47 @@ export const withRouteState = Component => {
  * }
  * export default withRouteState(User)
  */
+
+export const resolvePromise = (data = {}) => (new Promise(resolve => {
+  resolve(data);
+}));
+
+export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
+  reject(data);
+}));
+
+export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
+
+export function apiMiddleWare(_promise, transformSuccess = data => (data), transformError = data => (data), shouldCache = true) {
+  const cache = {};
+  let cacheKey = '';
+  const wrapped = async (params = {}) => {
+    let resp = {};
+    try {
+      cacheKey = JSON.stringify(params);
+      const cachedItem = cache[cacheKey];
+      if (cachedItem) {
+        return resolvePromise(cachedItem);
+      }
+      resp = await _promise(params);
+      if (isObjectEmpty(resp)) {
+        resp = null;
+      }
+      if (!resp) {
+        return _promise(params);
+      }
+      if (shouldCache) {
+        cache[cacheKey] = transformSuccess(resp);
+      }
+      return resolvePromise(resp);
+    } catch (e) {
+      return rejectPromise(transformError(e));
+    }
+  };
+
+  const clearCache = () => {
+    delete cache[cacheKey];
+    return true;
+  };
+  return [wrapped, clearCache];
+}

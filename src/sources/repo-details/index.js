@@ -1,7 +1,15 @@
 
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { core } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
+
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
 
 async function getRepoDetails({ publisher, project }) {
   let response = {};
@@ -15,6 +23,6 @@ async function getRepoDetails({ publisher, project }) {
   }
 }
 
-const srGetRepoDetails = promiseMemoize(getRepoDetails, { resolve: 'json' });
+const [srGetRepoDetails, clearGetRepoDetails] = apiMiddleWare(getRepoDetails, transformSuccess, transformError);
 
-export { srGetRepoDetails };
+export { srGetRepoDetails, clearGetRepoDetails };

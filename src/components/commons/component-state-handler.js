@@ -29,7 +29,7 @@ function useFetcher(dataFetcher, onDataFetched) {
         if (onDataFetched) onDataFetched(data);
         setFetchState('success');
       } catch (e) {
-        setFetchState('fail');
+        setFetchState('success');
       }
     })();
   }, []);

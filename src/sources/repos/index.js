@@ -1,6 +1,14 @@
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
 import { core } from '../../api-base';
+import { apiMiddleWare } from '../../utils/app';
+
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
 
 async function getTopRepos({ lang }) {
   let response = {};
@@ -14,6 +22,6 @@ async function getTopRepos({ lang }) {
   }
 }
 
-const srGetTopRepos = promiseMemoize(getTopRepos, { resolve: 'json' });
+const [srGetTopRepos, clearGetTopRepos] = apiMiddleWare(getTopRepos, transformSuccess, transformError);
 
-export { srGetTopRepos };
+export { srGetTopRepos, clearGetTopRepos };

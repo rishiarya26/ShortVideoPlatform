@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function VideoSidebar(props) {
+function VideoSidebar() {
   const [liked, setLiked] = useState(false);
 
   return (
