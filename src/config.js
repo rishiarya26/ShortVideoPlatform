@@ -19,4 +19,10 @@ export const getLocale = () => {
   return locale;
 };
 
+export const isMockMode = () => {
+  const { publicRuntimeConfig = {} } = getConfig() || {};
+  const { mockMode = '' } = publicRuntimeConfig;
+  return (mockMode === 'y');
+};
+
 export const withBasePath = path => (`${getBasePath() || '/'}${path}`);

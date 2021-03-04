@@ -1,8 +1,10 @@
 import { Server } from 'miragejs';
 import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
+import { isMockMode } from '../config';
 
 function mockServer(environment = 'development', callback) {
+  console.log('running in mock mode');
   const server = new Server({
     environment,
     seeds(server) {
@@ -17,8 +19,6 @@ function mockServer(environment = 'development', callback) {
   return server;
 }
 
-const isMockAPi = (process.env.MOCK_MODE === 'y');
-
 function loadMockServerOnce() {
   let initializeMockServer = true;
   const channel = {};
@@ -27,7 +27,7 @@ function loadMockServerOnce() {
     channel.reject = reject;
   });
   return async () => {
-    if (isMockAPi && initializeMockServer) {
+    if (isMockMode() && initializeMockServer) {
       const { default: mockServer } = await import('../mock');
       mockServer('development', channel.resolve);
       initializeMockServer = false;

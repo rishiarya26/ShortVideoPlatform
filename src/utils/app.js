@@ -1,4 +1,5 @@
 import canUseDom from 'can-use-dom';
+import { loadMockServer } from '../mock';
 
 // params in  getInitialProps [ err, req, res, pathname, query, asPath, AppTree ]
 export const withRouteState = Component => {
@@ -51,6 +52,7 @@ export function apiMiddleWare(_promise, transformSuccess = data => (data), trans
   const wrapped = async (params = {}) => {
     let resp = {};
     try {
+      await loadMockServer();
       cacheKey = JSON.stringify(params);
       const cachedItem = cache[cacheKey];
       if (cachedItem) {
