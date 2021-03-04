@@ -1,5 +1,5 @@
 import { get, post, put } from 'network';
-import { baseURL } from '../../api-base';
+import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
 
 // TODO add transforms per call
@@ -14,7 +14,7 @@ function transformError(data) {
 async function sendOtp({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/sendOtp`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/sendOtp`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -26,7 +26,7 @@ async function sendOtp({ lang }) {
 async function verifyOtpPassword({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/verifyOtp`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/verifyOtp`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -38,7 +38,7 @@ async function verifyOtpPassword({ lang }) {
 async function forgotPassword({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/forgotPassword`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/forgotPassword`;
     response = await post(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -49,7 +49,7 @@ async function forgotPassword({ lang }) {
 async function updateProfile({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/profile`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
     response = await put(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);
@@ -61,7 +61,7 @@ async function updateProfile({ lang }) {
 async function reportProfile({ lang }) {
   let response = {};
   try {
-    const apiPath = `${baseURL}/v1/shorts/report`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/report`;
     response = await post(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response.data);

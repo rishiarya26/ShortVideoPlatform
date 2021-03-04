@@ -1,10 +1,10 @@
 import { get } from 'network';
-import { getLocale } from '../../config';
+import { getLocale, getApiBasePath } from '../../config';
 
 async function getLocaleData() {
   let response = {};
   try {
-    response = await get(`https://anky2k.github.io/${getLocale()}.json`);
+    response = await get(`${getApiBasePath('translations')}/${getLocale()}.json`);
     return response.data;
   } catch (err) {
     return Promise.reject(err);
