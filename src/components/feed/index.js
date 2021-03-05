@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Video from '../video';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Video from '../video';
 import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
@@ -23,19 +23,18 @@ export default function Feed() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-     <Swiper
-    spaceBetween={50}
-    direction='vertical'
-    draggable='true'
-    calculateHeight='true'
-    >
-      <SwiperSlide><Video /></SwiperSlide>
-      <SwiperSlide><Video /></SwiperSlide>
-      <SwiperSlide><Video /></SwiperSlide>
-      <SwiperSlide><Video /></SwiperSlide>
-      ...
-    </Swiper>
-
+      <Swiper
+        spaceBetween={50}
+        direction="vertical"
+        draggable="true"
+        calculateHeight="true"
+      >
+        {
+          [0, 1, 2, 3, 4].map(
+            item => <SwiperSlide key={item}><Video /></SwiperSlide>
+          )
+        }
+      </Swiper>
     </ComponentStateHandler>
   );
 }
