@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
@@ -36,10 +36,10 @@ function Video() {
   };
 
   const [ref] = useIntersect({
-    root: rootRef.current,
-    callback: handlePlay
+    callback: handlePlay,
+    rootMargin: '20px',
+    threshold: [0.30, 0.75]
   });
-
 
   return (
     <div

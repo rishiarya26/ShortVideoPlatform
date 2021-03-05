@@ -2,7 +2,14 @@
 const withSourceMaps = require('@zeit/next-source-maps');
 const withPWA = require('next-pwa');
 
-const { GEN_SOURCE_MAP, NODE_ENV, BASE_PATH } = process.env;
+const {
+  GEN_SOURCE_MAP,
+  NODE_ENV,
+  BASE_PATH,
+  MOCK_MODE = 'n',
+  APP_ENV = 'production'
+} = process.env;
+
 const dev = NODE_ENV !== 'production';
 const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
@@ -25,7 +32,9 @@ const nextConfig = {
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
     locale: getLocale(),
-    basePath: BASE_PATH
+    basePath: BASE_PATH,
+    mockMode: MOCK_MODE,
+    appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
   webpack: config => {
