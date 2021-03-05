@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchResults from 'components/search-results';
 import { srGetTopRepos } from 'sources/repos';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import { track } from '../../analytics';
 
 const GitHubRepoList = () => {
   const [items, setItems] = useState([]);
@@ -11,6 +12,10 @@ const GitHubRepoList = () => {
     setItems(data.items);
     setTotalCount(data.totalCount);
   };
+  useEffect(() => {
+    track('View Page', { a: 'b' });
+  }, []);
+
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   return (
     <ComponentStateHandler
