@@ -80,9 +80,9 @@ Following script does the magic
  this creates
  ```
  out/
-     /hi
-     /bn
-     /en
+     /hi-in
+     /bn-in
+     /en-in
 ```     
 
 A user journey would look like this

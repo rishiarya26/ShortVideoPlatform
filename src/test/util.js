@@ -26,3 +26,7 @@ global.IntersectionObserver = jest.fn(() => ({
   unobserve,
   disconnect
 }));
+
+global.mixpanel = {
+  track: jest.fn()
+};
