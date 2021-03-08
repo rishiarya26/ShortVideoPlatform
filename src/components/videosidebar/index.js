@@ -5,9 +5,9 @@ function VideoSidebar() {
 
   return (
     <div className="absolute bottom-28 right-3 text-white">
-      <div className="relative p-3 text-center">
+      <div className="relative p-3 text-center flex justify-center">
         <img className="usrimg w-12 h-12 rounded-full" src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face" />
-        <div className="absolute bottom-0 left-6">
+        <div className="absolute bottom-0 left-1/3">
           <svg viewBox="0 0 60 60" width={24} height={24}>
             {' '}
             <defs>
