@@ -12,6 +12,8 @@ function HeadMeta() {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       <title>{APP_NAME}</title>
+      <script type="text/javascript" src="/agents/instana.js" />
+
       <link rel="canonical" href="https://nextpwa-72153.web.app" />
       <meta name="theme-color" content="red" />
       <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" />
