@@ -31,7 +31,6 @@ const injectScriptSrc = (scriptSrc = '') => {
   }
   const elem = createElement();
   elem.text = scriptSrc;
-  console.log(scriptSrc);
   document.body.appendChild(elem);
   return Promise.resolve({ loaded: true });
 };

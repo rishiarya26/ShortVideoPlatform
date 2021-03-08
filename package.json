@@ -82,6 +82,7 @@
     "jest-junit": "^10.0.0",
     "jest-svg-transformer": "^1.0.0",
     "lint-staged": "^8.1.0",
+    "mq-polyfill": "^1.1.8",
     "next-compose-plugins": "^2.2.0",
     "nodemon": "^1.12.1",
     "parse-git": "^1.1.2",
