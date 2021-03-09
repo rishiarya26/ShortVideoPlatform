@@ -7,7 +7,7 @@ import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
 const ErrorComp = () => (<Reload/>);
-const LoadComp = () => (<div>div that shimmers</div>);
+const LoadComp = () => ( <Loading/>);
 
 export default function Feed() {
   const [items, setItems] = useState({});
@@ -24,7 +24,6 @@ export default function Feed() {
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}>
-        <Loading/>
       <Swiper
         spaceBetween={50}
         direction="vertical"
