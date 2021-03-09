@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
+import Reload from '../appshell/reload'
+import Loading from '../appshell/videoLoad'
 import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-const ErrorComp = () => (<div>Failed to fetch</div>);
+const ErrorComp = () => (<Reload/>);
 const LoadComp = () => (<div>div that shimmers</div>);
 
 export default function Feed() {
@@ -21,14 +23,13 @@ export default function Feed() {
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
-      ErrorComp={ErrorComp}
-    >
+      ErrorComp={ErrorComp}>
+        <Loading/>
       <Swiper
         spaceBetween={50}
         direction="vertical"
         draggable="true"
-        calculateHeight="true"
-      >
+        calculateHeight="true">
         {
           [0, 1, 2, 3, 4].map(
             item => <SwiperSlide key={item}><Video /></SwiperSlide>
