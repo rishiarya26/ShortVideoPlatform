@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
-import Reload from '../appshell/reload'
-import Loading from '../appshell/videoLoad'
+import Error from './error';
+import Loader from './loader';
 import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-const ErrorComp = () => (<Reload/>);
-const LoadComp = () => ( <Loading/>);
+const ErrorComp = () => (<Error />);
+const LoadComp = () => (<Loader />);
 
 export default function Feed() {
   const [items, setItems] = useState({});
@@ -23,12 +23,14 @@ export default function Feed() {
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
-      ErrorComp={ErrorComp}>
+      ErrorComp={ErrorComp}
+    >
       <Swiper
         spaceBetween={50}
         direction="vertical"
         draggable="true"
-        calculateHeight="true">
+        calculateHeight="true"
+      >
         {
           [0, 1, 2, 3, 4].map(
             item => <SwiperSlide key={item}><Video /></SwiperSlide>
