@@ -60,7 +60,7 @@ function Video() {
           type="video/mp4"
         />
       </video>
-      <VideoSidebar />
+      <VideoSidebar usrimg={"https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"} likes={444} comment={555} share={777} />
       <VideoFooter />
     </div>
   );

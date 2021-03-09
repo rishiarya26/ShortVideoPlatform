@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
+import Error from './error';
+import Loader from './loader';
 import { getHomeFeed } from '../../sources/home';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-const ErrorComp = () => (<div>Failed to fetch</div>);
-const LoadComp = () => (<div>div that shimmers</div>);
+const ErrorComp = () => (<Error />);
+const LoadComp = () => (<Loader />);
 
 export default function Feed() {
   const [items, setItems] = useState({});
