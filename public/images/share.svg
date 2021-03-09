@@ -1,7 +1,5 @@
-/* eslint-disable max-len */
-
-const Share = () => (
-  <svg
+<?xml version="1.0" encoding="utf-8"?>
+<svg
     width="40"
     height="40"
     viewBox="0 0 48 48"
@@ -50,5 +48,3 @@ const Share = () => (
       </radialGradient>
     </defs>
   </svg>
-);
-export default Share;

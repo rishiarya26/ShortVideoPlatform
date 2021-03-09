@@ -8,32 +8,37 @@ import Share from '../commons/svgicons/share';
 function VideoSidebar() {
   const [liked, setLiked] = useState(false);
 
+  // TODO add useTranslation for alt tags as well
   return (
     <div className="absolute bottom-28 right-3 text-white">
-      <div className="relative p-3 text-center">
-        <img className="usrimg w-12 h-12 rounded-full" src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face" />
+      <div className="relative p-3 text-center flex justify-center">
+        <img
+          alt="profile-pic"
+          className="usrimg w-12 h-12 rounded-full"
+          // eslint-disable-next-line max-len
+          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face" />
         <div className="absolute bottom-0 left-6">
-          <Follow/>
+          <Follow />
         </div>
       </div>
       <div className="relative p-3 text-center">
         {liked ? (
-          <div onClick={e => setLiked(false)}>
-          <Liked/>
+          <div role="presentation" onClick={() => setLiked(false)}>
+            <Liked />
           </div>
         ) : (
-          <div  onClick={e => setLiked(true)} >
-          <Like/>
+          <div role="presentation" onClick={() => setLiked(true)}>
+            <Like />
           </div>
         )}
         <p className="text-sm">500</p>
       </div>
       <div className="relative p-3 text-center flex flex-col items-center">
-        <Comment/>
+        <Comment />
         <p className="text-sm">25</p>
       </div>
       <div className="relative p-3 text-center flex flex-col items-center">
-        <Share/>
+        <Share />
         <p className="text-sm">7029</p>
       </div>
     </div>

@@ -14,7 +14,7 @@ it('should return an object', () => {
 
 it('should return an language prop pointing to default language', () => {
   const { result } = renderHook(() => useTranslation());
-  expect(result.current.language).toBe('en');
+  expect(result.current.language).toBe('en-IN');
 });
 
 it('should have functions to get translations and set language', async () => {
@@ -29,7 +29,7 @@ it('should be able fetch and use translations as defined in the locales file', a
     const { t } = useTranslation();
     return (
       <>
-        <div data-testid="dt-label">{t('lblViewMore')}</div>
+        <div data-testid="dt-label">{t('welcome')}</div>
       </>
     );
   };
@@ -39,7 +39,7 @@ it('should be able fetch and use translations as defined in the locales file', a
     </TranslationProvider>
   );
 
-  expect(getByTestId('dt-label').innerHTML).toBe('View more');
+  expect(getByTestId('dt-label').innerHTML).toBe('Welcome to web starter kit');
 });
 
 it('should be able to change the language', async () => {
@@ -48,7 +48,7 @@ it('should be able to change the language', async () => {
     return (
       <>
         <div data-testid="dt-language">{language}</div>
-        <button data-testid="dt-change-language" onClick={() => (setLanguage('hi'))}>Change Language</button>
+        <button data-testid="dt-change-language" onClick={() => (setLanguage('hi-IN'))}>Change Language</button>
       </>
     );
   };
@@ -57,8 +57,8 @@ it('should be able to change the language', async () => {
       <TestComponent />
     </TranslationProvider>
   );
-  expect(getByTestId('dt-language').innerHTML).toBe('en');
+  expect(getByTestId('dt-language').innerHTML).toBe('en-IN');
   fireEvent.click(getByTestId('dt-change-language'));
-  expect(getByTestId('dt-language').innerHTML).toBe('hi');
+  expect(getByTestId('dt-language').innerHTML).toBe('hi-IN');
 });
 
