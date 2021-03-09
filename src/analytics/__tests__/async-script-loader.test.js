@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 import { inject } from '../async-script-loader';
+// eslint-disable-next-line no-unused-vars
+import * as testUtils from '../../test/util';
 
 describe('------ async script loader ------', () => {
   jest.spyOn(global.console, 'warn');

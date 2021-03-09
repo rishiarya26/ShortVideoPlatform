@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 import { trimFirstChar } from './utils/string';
-import { apiBaseEndPoints, defaultApiBasePath} from './api-base';
+import { apiBaseEndPoints, defaultApiBasePath } from './api-base';
 
 export const getBasePath = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
@@ -8,11 +8,8 @@ export const getBasePath = () => {
   return basePath ? `${basePath}` : '';
 };
 
-export const getLanguage = () => {
-  const { publicRuntimeConfig = {} } = getConfig() || {};
-  const { basePath = '' } = publicRuntimeConfig;
-  return trimFirstChar(basePath || '/en');
-};
+// TODO replace this with a default from a constant
+export const getLanguage = () => (trimFirstChar(getBasePath() || '/en-in'));
 
 export const getLocale = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
