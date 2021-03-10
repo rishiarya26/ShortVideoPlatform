@@ -1,14 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
-
-function transformSuccess(data) {
-  return data;
-}
-
-function transformError(data) {
-  return data;
-}
+import { transformSuccess, transformError } from '../../utils/home/feed';
 
 async function fetchHomeFeed({ lang }) {
   let response = {};
