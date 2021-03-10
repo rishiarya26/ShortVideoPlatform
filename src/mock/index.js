@@ -1,6 +1,7 @@
 import { Server } from 'miragejs';
 import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
+import { getForYouFeed } from './req-handlers/feed';
 import { isMockMode } from '../config';
 
 function mockServer(environment = 'development', callback) {
@@ -12,8 +13,12 @@ function mockServer(environment = 'development', callback) {
       callback();
     },
     routes() {
+      // git
       this.get('https://api.github.com/search/repositories', getListRequestHandler);
       this.delete('https://api.github.com/delete/repositories', deleteListRequestHandler);
+
+      // feed
+      this.get('https://hipigwapi.zee5.com/v2/shorts/home', getForYouFeed);
     }
   });
   return server;
