@@ -53,4 +53,4 @@ function transformSuccess(data) {
   }
 }
 
-export default { transformSuccess, transformError };
+export { transformSuccess, transformError };
