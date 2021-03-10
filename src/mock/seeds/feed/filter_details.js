@@ -3,4 +3,4 @@ export const trendingMusic = {
   success: true,
   message: 'Data not found.',
   responseData: {}
-}
+};

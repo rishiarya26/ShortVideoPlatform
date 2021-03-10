@@ -16,7 +16,7 @@ function VideoSidebar(props) {
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
           // eslint-disable-next-line max-len
-          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face" 
+          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"
         />
         <div className="absolute bottom-0 left-6">
           <Follow />

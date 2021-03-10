@@ -1,7 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
-import '../../test/utils';
-import useMedia from '../use-media';
-import { breakpoints } from '../../styles/reset';
+import '../../test/util';
+import useMedia, { breakpoints } from '../use-media';
 
 it('should be a function', () => {
   expect(useMedia).toBeDefined();

@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-
+import { translations } from '../factories';
 import useTranslation, { TranslationProvider } from '../use-translation';
 
 it('should be a function', () => {
@@ -34,7 +34,7 @@ it('should be able fetch and use translations as defined in the locales file', a
     );
   };
   const { getByTestId } = render(
-    <TranslationProvider>
+    <TranslationProvider locales={translations}>
       <TestComponent />
     </TranslationProvider>
   );
@@ -53,7 +53,7 @@ it('should be able to change the language', async () => {
     );
   };
   const { getByTestId } = render(
-    <TranslationProvider>
+    <TranslationProvider locales={translations}>
       <TestComponent />
     </TranslationProvider>
   );

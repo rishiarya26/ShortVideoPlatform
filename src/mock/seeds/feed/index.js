@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export const trendingMusic = {
+export const forYouFeed = {
   status: 200,
   success: true,
   message: 'Data found successfully.',
