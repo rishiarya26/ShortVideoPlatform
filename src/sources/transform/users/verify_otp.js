@@ -19,10 +19,8 @@ function transformSuccess(data) {
         status: 200,
         message: data.message || 'default',
         meta: {
-
         },
         data: {
-          name: data.profile.name
 
         }
       };
@@ -33,5 +31,4 @@ function transformSuccess(data) {
     return message;
   }
 }
-
-export default transformSuccess;
+export default { transformSuccess, transformError };

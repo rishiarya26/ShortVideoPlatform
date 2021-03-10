@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-function transformError(data) {
+export function transformError(data) {
   let message = {};
   if (data.code === 2) {
     message = {
@@ -11,7 +11,7 @@ function transformError(data) {
   return message;
 }
 
-function transformSuccess(data) {
+export function transformSuccess(data) {
   let message = {};
   try {
     if (data.code === 0) {
@@ -44,4 +44,3 @@ function transformSuccess(data) {
   }
 }
 
-export default transformSuccess;
