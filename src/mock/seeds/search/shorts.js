@@ -1338,4 +1338,4 @@ export const searchVideos = {
       }
     ]
   }
-}
+};

@@ -38,6 +38,9 @@ describe('------ mixpanel analytics ------', () => {
       a: 'b'
     };
     window.mixpanel = {};
+    window.mixpanel = {
+      track: jest.fn()
+    };
     const pushSpy = jest.spyOn(window.mixpanel, 'track');
     mixpanel.track(event, payload);
     expect(queue.getAll).toHaveBeenCalled();
@@ -51,6 +54,9 @@ describe('------ mixpanel analytics ------', () => {
       a: 'b'
     };
     window.mixpanel = {};
+    window.mixpanel = {
+      track: jest.fn()
+    };
     const pushSpy = jest.spyOn(window.mixpanel, 'track');
     mixpanel.track(event, payload);
     expect(queue.push).not.toHaveBeenCalled();
