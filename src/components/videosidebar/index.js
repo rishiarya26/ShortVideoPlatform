@@ -36,11 +36,11 @@ function VideoSidebar(props) {
       </div>
       <div className="relative p-3 text-center flex flex-col items-center">
         <Comment />
-        <p className="text-sm">25</p>
+        <p className="text-sm">{props.comment}</p>
       </div>
       <div className="relative p-3 text-center flex flex-col items-center">
         <Share />
-        <p className="text-sm">7029</p>
+        <p className="text-sm">{props.share}</p>
       </div>
     </div>
   );
