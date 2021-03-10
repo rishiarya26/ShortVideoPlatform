@@ -13,7 +13,7 @@ export const getLanguage = () => (trimFirstChar(getBasePath() || '/en-in'));
 
 export const getLocale = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
-  const { locale = '' } = publicRuntimeConfig;
+  const { locale = 'en-IN' } = publicRuntimeConfig;
   return locale;
 };
 
