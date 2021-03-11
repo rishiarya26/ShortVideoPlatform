@@ -96,15 +96,13 @@ async function fetchUserRecommendation({ lang }) {
 
 // TODO add TTL for api cache
 
-const shouldCache = false;
-
-const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError, shouldCache);
-const [getUserFollower] = apiMiddleWare(fetchUserFollower, transformSuccess, transformError, shouldCache);
-const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError, shouldCache);
-const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError, shouldCache);
-const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError, shouldCache);
-const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError, shouldCache);
-const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError, shouldCache);
+const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError);
+const [getUserFollower] = apiMiddleWare(fetchUserFollower, transformSuccess, transformError);
+const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError);
+const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError);
+const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
+const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
+const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
 
 export {
   getUserProfile,

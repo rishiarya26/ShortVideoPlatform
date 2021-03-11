@@ -2,7 +2,7 @@ import { transformModel, getMessage } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 
 function transformError(error = {}) {
-  const payload = getNewObjectCopy(transformModel);
+  const { payload } = getNewObjectCopy(transformModel);
   payload.status = 'fail';
   payload.message = getMessage(error, {});
   payload['http-status'] = error.status;

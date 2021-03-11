@@ -37,7 +37,7 @@ function Video() {
 
   const [ref] = useIntersect({
     callback: handlePlay,
-    rootMargin: '20px',
+    rootMargin: '50px',
     threshold: [0.30, 0.75]
   });
 
