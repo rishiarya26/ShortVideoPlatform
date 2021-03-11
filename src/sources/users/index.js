@@ -1,6 +1,6 @@
 import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../utils/app';
+import { apiMiddleWare } from '../../network/utils';
 
 // TODO add transforms per call
 function transformSuccess(data) {

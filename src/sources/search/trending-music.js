@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../utils/app';
+import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/search/trending_music';
 
 async function fetchSearchResult({
