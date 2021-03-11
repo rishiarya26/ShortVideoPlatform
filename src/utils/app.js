@@ -1,6 +1,20 @@
 import canUseDom from 'can-use-dom';
 import { loadMockServer } from '../mock';
 
+function objClone(clone, obj) {
+  try {
+    Object.keys(obj).forEach(i => {
+      clone[i] = (typeof obj[i] === 'object' && obj[i] != null)
+        ? this.objClone(obj[i].constructor(), obj[i]) : obj[i];
+    });
+  } catch (e) {
+    return obj;
+  }
+  return clone;
+}
+
+export const getNewObjectCopy = ogObj => (objClone({}, ogObj));
+
 // params in  getInitialProps [ err, req, res, pathname, query, asPath, AppTree ]
 export const withRouteState = Component => {
   if (!Component.getInitialProps) {
@@ -65,11 +79,13 @@ export function apiMiddleWare(_promise, transformSuccess = data => (data), trans
       if (!resp) {
         return _promise(params);
       }
+      const tResponse = transformSuccess(resp);
       if (shouldCache) {
-        cache[cacheKey] = transformSuccess(resp);
+        cache[cacheKey] = tResponse;
       }
-      return resolvePromise(resp);
+      return resolvePromise(tResponse);
     } catch (e) {
+      e.status = resp.status;
       return rejectPromise(transformError(e));
     }
   };
