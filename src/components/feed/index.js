@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
 import Error from './error';
 import Loader from './loader';
-import { getHomeFeed } from '../../sources/home';
+import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
 const ErrorComp = () => (<Error />);

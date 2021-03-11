@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
-import { transformSuccess, transformError } from '../transform/home/feed';
+import { transformSuccess, transformError } from '../transform/feed';
 
 async function fetchHomeFeed({ lang }) {
   let response = {};
