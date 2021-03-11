@@ -1,6 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
 import canUseDom from 'can-use-dom';
-import { loadMockServer } from '../mock';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
@@ -38,49 +37,3 @@ export const withRouteState = Component => {
  * }
  * export default withRouteState(User)
  */
-
-export const resolvePromise = (data = {}) => (new Promise(resolve => {
-  resolve(data);
-}));
-
-export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
-  reject(data);
-}));
-
-export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
-
-export function apiMiddleWare(_promise, transformSuccess = data => (data), transformError = data => (data), shouldCache = false) {
-  const cache = {};
-  let cacheKey = '';
-  const wrapped = async (params = {}) => {
-    let resp = {};
-    try {
-      await loadMockServer();
-      cacheKey = JSON.stringify(params);
-      const cachedItem = cache[cacheKey];
-      if (cachedItem) {
-        return resolvePromise(cachedItem);
-      }
-      resp = await _promise(params);
-      if (isObjectEmpty(resp)) {
-        resp = null;
-      }
-      if (!resp) {
-        return _promise(params);
-      }
-      const tResponse = transformSuccess(resp);
-      if (shouldCache) {
-        cache[cacheKey] = tResponse;
-      }
-      return resolvePromise(tResponse);
-    } catch (e) {
-      return rejectPromise(transformError(e));
-    }
-  };
-
-  const clearCache = () => {
-    delete cache[cacheKey];
-    return true;
-  };
-  return [wrapped, clearCache];
-}
