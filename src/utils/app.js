@@ -1,19 +1,8 @@
+import cloneDeep from 'lodash/cloneDeep';
 import canUseDom from 'can-use-dom';
 import { loadMockServer } from '../mock';
 
-function objClone(clone, obj) {
-  try {
-    Object.keys(obj).forEach(i => {
-      clone[i] = (typeof obj[i] === 'object' && obj[i] != null)
-        ? this.objClone(obj[i].constructor(), obj[i]) : obj[i];
-    });
-  } catch (e) {
-    return obj;
-  }
-  return clone;
-}
-
-export const getNewObjectCopy = ogObj => (objClone({}, ogObj));
+export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
 // params in  getInitialProps [ err, req, res, pathname, query, asPath, AppTree ]
 export const withRouteState = Component => {
@@ -60,7 +49,7 @@ export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
 
 export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
 
-export function apiMiddleWare(_promise, transformSuccess = data => (data), transformError = data => (data), shouldCache = true) {
+export function apiMiddleWare(_promise, transformSuccess = data => (data), transformError = data => (data), shouldCache = false) {
   const cache = {};
   let cacheKey = '';
   const wrapped = async (params = {}) => {
@@ -85,7 +74,6 @@ export function apiMiddleWare(_promise, transformSuccess = data => (data), trans
       }
       return resolvePromise(tResponse);
     } catch (e) {
-      e.status = resp.status;
       return rejectPromise(transformError(e));
     }
   };

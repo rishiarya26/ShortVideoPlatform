@@ -2,23 +2,21 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
 import Error from './error';
-import Loader from './loader';
+import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
 const ErrorComp = () => (<Error />);
-const LoadComp = () => (<Loader />);
+const LoadComp = () => (<Loading />);
 
 export default function Feed() {
   const [items, setItems] = useState({});
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
-    console.log(data);
-    setItems(data, () => {
-      console.log(items);
-    });
+    setItems(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+  console.log(items);
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -29,7 +27,7 @@ export default function Feed() {
         spaceBetween={50}
         direction="vertical"
         draggable="true"
-        calculateHeight="true"
+        calculateheight="true"
       >
         {
           [0, 1, 2, 3, 4].map(

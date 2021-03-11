@@ -35,10 +35,8 @@ async function fetchCommentByVideoId({ lang }) {
   }
 }
 
-const shouldCache = false;
-
-const [getProfileVideos] = apiMiddleWare(fetchProfileVideos, transformSuccess, transformError, shouldCache);
-const [getCommentByVideoId] = apiMiddleWare(fetchCommentByVideoId, transformSuccess, transformError, shouldCache);
+const [getProfileVideos] = apiMiddleWare(fetchProfileVideos, transformSuccess, transformError);
+const [getCommentByVideoId] = apiMiddleWare(fetchCommentByVideoId, transformSuccess, transformError);
 
 export {
   getProfileVideos,

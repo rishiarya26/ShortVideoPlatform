@@ -109,3 +109,10 @@ export const forYouFeed = {
     ]
   }
 };
+
+export const forYouFeedFailure = {
+  status: 400,
+  success: false,
+  message: 'Failed to fetch.',
+  responseData: {}
+};
