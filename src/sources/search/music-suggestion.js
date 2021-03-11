@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../utils/app';
-import { transformSuccess, transformError } from '../transform/search/suggestion_music';
+import { transformSuccess, transformError } from '../transform/search/suggestion-music';
 
 async function fetchSearchResult({ lang, keyword }) {
   let response = {};
