@@ -12,6 +12,8 @@ function HeadMeta() {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       <title>{APP_NAME}</title>
+
+      <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
       <link rel="canonical" href="https://nextpwa-72153.web.app" />
