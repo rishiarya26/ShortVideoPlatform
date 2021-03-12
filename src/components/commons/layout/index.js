@@ -1,8 +1,6 @@
-import Router from '../../../../router';
-
 const Layout = props => (
   <div>
-    <div className="flex justify-end">
+    {/* <div className="flex justify-end">
       <div className="flex justify-evenly">
         <div
           role="presentation"
@@ -25,7 +23,7 @@ const Layout = props => (
           Error Boundary
         </div>
       </div>
-    </div>
+    </div> */}
     {props.children}
   </div>
 );

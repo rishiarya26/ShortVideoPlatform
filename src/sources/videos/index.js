@@ -1,6 +1,6 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../utils/app';
+import { apiMiddleWare } from '../../network/utils';
 
 // TODO add transforms per call
 function transformSuccess(data) {
@@ -35,10 +35,8 @@ async function fetchCommentByVideoId({ lang }) {
   }
 }
 
-const shouldCache = false;
-
-const [getProfileVideos] = apiMiddleWare(fetchProfileVideos, transformSuccess, transformError, shouldCache);
-const [getCommentByVideoId] = apiMiddleWare(fetchCommentByVideoId, transformSuccess, transformError, shouldCache);
+const [getProfileVideos] = apiMiddleWare(fetchProfileVideos, transformSuccess, transformError);
+const [getCommentByVideoId] = apiMiddleWare(fetchCommentByVideoId, transformSuccess, transformError);
 
 export {
   getProfileVideos,

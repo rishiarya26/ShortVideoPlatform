@@ -13,7 +13,7 @@ function instanaAgent (i, s, o, g, r, a, m) {
 
 instanaAgent(window, document, 'script', '//eum.instana.io/eum.min.js', 'ineum')
 ineum('reportingUrl', 'https://eum-us-west-2.instana.io');
-function setKey() {
+(() => {
     var env = window.location.hostname
     if(env === 'hipi.zee5.com') {
       ineum('key', 'hipi.zee5.com');
@@ -24,4 +24,4 @@ function setKey() {
       return;
     }
     ineum('key', 'local-env');
-}
+  })()

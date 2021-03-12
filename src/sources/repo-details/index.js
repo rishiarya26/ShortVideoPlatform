@@ -1,7 +1,7 @@
 
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../utils/app';
+import { apiMiddleWare } from '../../network/utils';
 
 function transformSuccess(data) {
   return data;

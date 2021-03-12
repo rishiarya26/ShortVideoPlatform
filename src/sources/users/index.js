@@ -1,6 +1,6 @@
 import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../utils/app';
+import { apiMiddleWare } from '../../network/utils';
 
 // TODO add transforms per call
 function transformSuccess(data) {
@@ -70,13 +70,11 @@ async function reportProfile({ lang }) {
   }
 }
 
-const shouldCache = false;
-
-const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError, shouldCache);
-const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError, shouldCache);
-const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError, shouldCache);
-const [srUpdateProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError, shouldCache);
-const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError, shouldCache);
+const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError);
+const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError);
+const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError);
+const [srUpdateProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError);
+const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError);
 
 export {
   srSendOtp,
