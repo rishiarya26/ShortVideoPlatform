@@ -1,15 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-
-// TODO add transforms per call
-function transformSuccess(data) {
-  return data;
-}
-
-function transformError(data) {
-  return data;
-}
+import { transformSuccess, transformError } from '../transform/users/profile';
 
 async function fetchUserProfile({ lang }) {
   let response = {};

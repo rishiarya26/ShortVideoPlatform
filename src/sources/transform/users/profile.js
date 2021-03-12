@@ -1,56 +1,29 @@
-/* eslint-disable no-console */
+import { transformModel, getMessage } from '../index';
+import { getNewObjectCopy } from '../../../utils/app';
 
-function transformError(data) {
-  let message = {};
-  if (data.code === 2) {
-    message = {
-      status: 404,
-      message: data.message
-    };
-  }
-  return message;
+function transformError(error = {}) {
+  const { payload } = getNewObjectCopy(transformModel);
+  payload.status = 'fail';
+  payload.message = getMessage(error, {});
+  payload['http-status'] = error.status;
+  return payload;
 }
 
 function transformSuccess(data) {
-  let message = {};
+  const { payload } = getNewObjectCopy(transformModel);
   try {
-    if (data.code === 0) {
-      message = {
-        status: 200,
-        message: data.message || 'default',
-        meta: {
-          total: 1,
-          page: 1
-        },
-        data: {
-          user_id: data.id,
-          user_handle: data.userHandle,
-          username: data.userName,
-          profile_pic: data.userIcon,
-          first_name: data.firstName,
-          last_name: data.lastName,
-          likes: data.likes,
-          dob: data.dateOfBirth,
-          pristine_image: data.pristine_image,
-          bio: data.bio,
-          social_id: data.getSocialId,
-          followers: data.followers,
-          following: data.following,
-          profile_type: data.profileType,
-          is_star: data.hipiStar,
-          total_views: data.totalViews,
-          settings: data.settings,
-          is_following: data.isFollowing,
-          follow_request: data.followRequest
-
-        }
-      };
+    if (data.success) {
+      payload.status = 'success';
+      payload.message = getMessage(data, {});
+      payload['http-status'] = data.status;
+      payload.data = { ...data.responseData };
+      payload.requestedWith = { ...data.requestedWith };
     }
-    return message;
+    return payload;
   } catch (err) {
-    transformError(data);
-    return message;
+    data.appError = err.message;
+    return transformError(data);
   }
 }
 
-export default transformSuccess;
+export { transformSuccess, transformError };
