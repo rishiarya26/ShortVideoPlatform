@@ -5,6 +5,7 @@ import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import { data } from 'autoprefixer';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
@@ -14,6 +15,7 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data);
+    console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   console.log(items);
