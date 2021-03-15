@@ -1,46 +1,29 @@
-/* eslint-disable no-console */
+import { transformModel, getMessage } from '../index';
+import { getNewObjectCopy } from '../../../utils/app';
 
-export function transformError(data) {
-  let message = {};
-  if (data.code === 2) {
-    message = {
-      status: 404,
-      message: data.message
-    };
-  }
-  return message;
+function transformError(error = {}) {
+  const { payload } = getNewObjectCopy(transformModel);
+  payload.status = 'fail';
+  payload.message = getMessage(error, {});
+  payload['http-status'] = error.status;
+  return payload;
 }
 
-export function transformSuccess(data) {
-  let message = {};
+function transformSuccess(data) {
+  const { payload } = getNewObjectCopy(transformModel);
   try {
-    if (data.code === 0) {
-      message = {
-        status: 200,
-        message: data.message || 'default',
-        meta: {
-          total: data.totalPages,
-          page: data.currentPage,
-          page_size: data.pageSize
-        },
-        data: {
-          id: data.musicId,
-          music_icon: data.musicIcon,
-          music_url: data.musicUrl,
-          download_url: data.musicDownloadUrl,
-          title: data.musicTitle,
-          artist_name: data.musicArtistName,
-          pristine_image: data.pristine_image,
-          music_length: data.musicLength,
-          dialouges: data.dialouges
-
-        }
-      };
+    if (data.success) {
+      payload.status = 'success';
+      payload.message = getMessage(data, {});
+      payload['http-status'] = data.status;
+      payload.data = { ...data.responseData };
+      payload.requestedWith = { ...data.requestedWith };
     }
-    return message;
+    return payload;
   } catch (err) {
-    transformError(data);
-    return message;
+    data.appError = err.message;
+    return transformError(data);
   }
 }
 
+export { transformSuccess, transformError };

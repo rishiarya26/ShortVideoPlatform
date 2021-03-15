@@ -1,43 +1,29 @@
-/* eslint-disable no-console */
+import { transformModel, getMessage } from '../index';
+import { getNewObjectCopy } from '../../../utils/app';
 
-export function transformError(data) {
-  let message = {};
-  if (data.code === 2) {
-    message = {
-      status: 404,
-      message: data.message
-    };
-  }
-  return message;
+function transformError(error = {}) {
+  const { payload } = getNewObjectCopy(transformModel);
+  payload.status = 'fail';
+  payload.message = getMessage(error, {});
+  payload['http-status'] = error.status;
+  return payload;
 }
 
-export function transformSuccess(data) {
-  let message = {};
+function transformSuccess(data) {
+  const { payload } = getNewObjectCopy(transformModel);
   try {
-    if (data.code === 0) {
-      message = {
-        status: 200,
-        message: data.message || 'default',
-        meta: {
-          total: data.totalPages,
-          page: data.currentPage,
-          page_size: data.pageSize
-        },
-        data: {
-          id: data.id,
-          hashtag: data.hashtag,
-          profile_pic: data.hashtagLikeCount,
-          user_handle: data.hashtagPlayCount,
-          hashtag_id: data.hashtagId,
-          hashtag_thumbnail: data.hashtagThumbnail,
-          pristine_image: data.pristine_image
-
-        }
-      };
+    if (data.success) {
+      payload.status = 'success';
+      payload.message = getMessage(data, {});
+      payload['http-status'] = data.status;
+      payload.data = { ...data.responseData };
+      payload.requestedWith = { ...data.requestedWith };
     }
-    return message;
+    return payload;
   } catch (err) {
-    transformError(data);
-    return message;
+    data.appError = err.message;
+    return transformError(data);
   }
 }
+
+export { transformSuccess, transformError };

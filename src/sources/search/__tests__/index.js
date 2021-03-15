@@ -14,7 +14,7 @@ describe('source for feed', () => {
     get.mockResolvedValueOnce({ data: forYouFeed });
     const data = await getHomeFeed();
     expect(get).toBeCalledTimes(1);
-    expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1');
+    expect(get).toBeCalledWith('https://zee5.com/v2/shorts/home');
     expect(data).toMatchObject(feed);
   });
 
@@ -24,7 +24,7 @@ describe('source for feed', () => {
       await getHomeFeed();
     } catch (e) {
       expect(get).toBeCalledTimes(1);
-      expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1');
+      expect(get).toBeCalledWith('https://zee5.com/v2/shorts/home');
       expect(e).toMatchObject({
         status: 'fail',
         message: 'something went wrong',
