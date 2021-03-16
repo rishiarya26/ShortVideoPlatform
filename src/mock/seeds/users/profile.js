@@ -22,3 +22,10 @@ export const profile = {
     followRequest: false
   }
 };
+
+export const prfoileFailure = {
+  status: 400,
+  success: false,
+  message: 'Failed to fetch.',
+  responseData: {}
+};
