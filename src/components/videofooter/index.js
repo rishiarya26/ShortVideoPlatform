@@ -2,10 +2,11 @@ import Ticker from 'react-ticker';
 
 function VideoFooter() {
   return (
-    <div className="videoFooter relative flex bottom-24 text-white ml-5">
+    <div className="videoFooter relative flex bottom-32 text-white ml-5">
       <div className="videoFooter__text">
         <h3 className="font-bold">Username</h3>
-        <p>Nature at its best #nature #green</p>
+        <p>Nature at its best </p>
+        <p>#nature #green #hash #tags</p>
         <div>
           <svg
             className="float-left"
@@ -24,19 +25,6 @@ function VideoFooter() {
             )}
           </Ticker>
         </div>
-      </div>
-      <div
-        className={`videoFooter__record flex 
-          items-center justify-center 
-          animate-spin-slow absolute w-12 h-12 
-          bottom-0 right-8 rounded-full overflow-hidden 
-          profile-bg bg-no-repeat bg-contain`}
-      >
-        <img
-          className="w-3/5 rounded-full"
-          src="https://tinyurl.com/yuc7zdc2"
-          alt=""
-        />
       </div>
     </div>
   );

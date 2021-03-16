@@ -4,13 +4,14 @@ import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
+import Shop from '../commons/svgicons/shop';
 
 function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
 
   // TODO add useTranslation for alt tags as well
   return (
-    <div className="absolute bottom-28 right-3 text-white">
+    <div className="absolute bottom-16 right-3 text-white">
       <div className="relative p-3 text-center flex justify-center">
         <img
           alt="profile-pic"
@@ -42,6 +43,12 @@ function VideoSidebar(props) {
         <Share />
         <p className="text-sm">{props.share}</p>
       </div>
+
+      <div className="relative p-3 text-center flex flex-col items-center">
+     <Shop/> 
+      </div>
+
+      
     </div>
   );
 }
