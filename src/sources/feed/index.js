@@ -1,12 +1,12 @@
 import { get } from 'network';
-import { getApiBasePath } from '../../config';
+// import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/feed';
 
 async function fetchHomeFeed(params = {}) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/home`;
+    const apiPath = 'https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1';
     response = await get(apiPath);
     response.data.requestedWith = { ...params };
     return Promise.resolve(response.data);

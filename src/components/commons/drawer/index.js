@@ -5,9 +5,10 @@ const Drawer = ({
   <div
     data-testid="drawer-container"
     className={`${visible ? 'visible' : 'invisible'}`}
+    className="baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white h-0"  
   >
-    <div data-testid="drawer-header">
-      <div data-testid="drawer-title">
+    <div className="drawer-header w-full flex-row justify-between p-4">
+      <div className="drawer-title text-lg">
         {title}
       </div>
       <img
@@ -16,12 +17,11 @@ const Drawer = ({
         src="images/ic_close.svg"
         onClick={() => close()}
         alt="Close Icon"
-        width="20px"
-        height="20px"
+        className="w-6 h-6 absolute right-8"
       />
     </div>
-    <div data-testid="drawer-content">
-      {children}
+    <div data-testid="drawer-content w-full">
+      {children}sfsdfsdfsdf this is sample content
     </div>
   </div>
 );

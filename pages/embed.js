@@ -1,3 +1,5 @@
+import embedFeed from '../src/components/embedfeed/';
+
 export default function Embed() {
   return (
     <blockquote className="hipi-media" cite="https://hipi-web.s3.ap-south-1.amazonaws.com/">
@@ -13,6 +15,7 @@ export default function Embed() {
           overflow: 'hidden'
         }}
       />
+      <embedFeed />
     </blockquote>
   );
 }
