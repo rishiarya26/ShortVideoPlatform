@@ -3,9 +3,9 @@ import useMedia, { breakpoints } from '../../../hooks/use-media';
 const Dialog = ({
   children, title, close, visible
 }) => {
-// TODO use the right tailwind class
+// TODO use the right tailwind class - maybe add another route for desktop to set right defaults
   const clsComponentWidth = useMedia(breakpoints,
-    ['w-3/12', 'w-6/12', 'w-9/12'], 'w-3/12');
+    ['w-3/12', 'w-6/12', 'w-9/12'], 'w-9/12');
   return (
     <div
       className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'}`}

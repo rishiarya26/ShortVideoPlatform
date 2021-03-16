@@ -13,8 +13,11 @@ function HeadMeta() {
 
       <title>{APP_NAME}</title>
 
+      <link rel="preload" href="https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html" as="document" />
+
       <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
+      <script type="text/javascript" src="/embeds/hipi.js" />
 
       <link rel="canonical" href="https://nextpwa-72153.web.app" />
       <meta name="theme-color" content="red" />
