@@ -1,4 +1,4 @@
-import Ticker from 'react-ticker';
+import Marquee from '../commons/text-marquee';
 
 function VideoFooter() {
   return (
@@ -17,13 +17,7 @@ function VideoFooter() {
           >
             <path className="st0" fill="white" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z" />
           </svg>
-          <Ticker mode="smooth" className="">
-            {() => (
-              <>
-                <p>music title goes here</p>
-              </>
-            )}
-          </Ticker>
+          <Marquee text="music title goes here" />
         </div>
       </div>
     </div>
