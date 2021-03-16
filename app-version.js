@@ -1,8 +1,1 @@
-const appVersion = 'a341e02f7cb408131d24241fccad4915b381a14c';
-module.exports = appVersion;
-
-// script to generate this file
-// git log -n 1 > commits.txt
-// readline=$(head -n 1 commits.txt)
-// commithash="$(cut -d' ' -f2 <<< $readline)"
-// echo "const appVersion = '$commithash';\nmodule.exports = appVersion;" > app-version.js
+var appVersion = 'e62674337c4d88b4777c390ae1f4172ba3d0dfe6'; module.exports = appVersion
