@@ -8,6 +8,17 @@ module.exports = {
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translate(0, 0)' },
+          '100%': { transform: 'translate(-100%, 0)' }
+        }
+      },
+      animation: {
+        marquee: 'marquee 4s linear infinite'
+      }
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -65,7 +76,8 @@ module.exports = {
       64: '16rem',
       72: '18rem',
       80: '20rem',
-      96: '24rem'
+      96: '24rem',
+      100: '100%'
     },
     animation: {
       none: 'none',
