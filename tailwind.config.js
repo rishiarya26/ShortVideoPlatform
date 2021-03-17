@@ -84,8 +84,8 @@ module.exports = {
     animation: {
       none: 'none',
       spin: 'spin 1s linear infinite',
-      fade_in: 'fade-in-down 0.5s ease-out',
-      fade_out: 'fade-out-down 0.5s ease-out',
+      fade_in: 'fade-in-down 5s ease-out',
+      fade_out: 'fade-out-down 5s ease-out',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
