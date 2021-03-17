@@ -29,7 +29,9 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
+      hipipink: {
+        DEFAULT: '#FF0066'
+      },
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -82,6 +84,8 @@ module.exports = {
     animation: {
       none: 'none',
       spin: 'spin 1s linear infinite',
+      fade_in: 'fade-in-down 0.5s ease-out',
+      fade_out: 'fade-out-down 0.5s ease-out',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
@@ -405,6 +409,22 @@ module.exports = {
           transform: 'rotate(360deg)'
         }
       },
+      fade_in: {
+        '0%': {
+            opacity: '0'
+        },
+        '100%': {
+            opacity: '1'
+        },
+    },
+    fade_out: {
+        'from': {
+            opacity: '1'
+        },
+        'to': {
+            opacity: '0'
+        },
+    },
       ping: {
         '75%, 100%': {
           transform: 'scale(2)',
@@ -464,7 +484,8 @@ module.exports = {
     maxHeight: theme => ({
       ...theme('spacing'),
       full: '100%',
-      screen: '100vh'
+      screen: '100vh',
+      px500:'500px'
     }),
     maxWidth: (theme, { breakpoints }) => ({
       none: 'none',

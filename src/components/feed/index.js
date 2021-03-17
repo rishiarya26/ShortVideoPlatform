@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+// import { data } from 'autoprefixer';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
@@ -16,7 +17,7 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data);
-    console.log(JSON.stringify(data));
+    console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   console.log(items);
@@ -40,12 +41,12 @@ export default function Feed() {
         }
       </Swiper>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-center">
-        <button
-          className="rounded-full text-white py-1 px-4 bg-red-600 font-medium tracking-wide"
+        <buttom
+          className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide"
           onClick={() => show()}
         >
           SHOP
-        </button>
+        </buttom>
       </div>
     </ComponentStateHandler>
   );
