@@ -1,10 +1,12 @@
 import parseResponse from './parse-response';
+import { getUserId } from '../utils/user';
 
 const options = (methodName, body, headersOpt = {}) => ({
   method: methodName,
   ...body && { body: JSON.stringify(body) },
   headers: {
     Accept: 'application/json',
+    'guest-token': getUserId(),
     ...headersOpt
   }
 });
