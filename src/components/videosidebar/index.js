@@ -45,10 +45,9 @@ function VideoSidebar(props) {
       </div>
 
       <div className="relative p-3 text-center flex flex-col items-center">
-     <Shop/> 
+        <Shop />
       </div>
 
-      
     </div>
   );
 }

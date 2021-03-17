@@ -3,111 +3,81 @@ export const forYouFeed = {
   status: 200,
   success: true,
   message: 'Data found successfully.',
-  responseData: {
-    videos: [
-      {
-        videoThumbnail: 'https://d1kyb9fragsmaa.cloudfront.net/src/546510fa-ffa2-4e74-9598-63bedf48b565.mp4',
-        manualModrationStatus: 'ACCEPT',
-        hipiSpotLight: false,
-        videoOwners: {
-          lastName: 'shankar',
-          editable: 0,
-          userName: 'shiv18bc9238',
-          updatedTimestamp: 1603266984696,
-          createdOn: '10/21/2020 13:26:06',
-          firstName: 'shiv',
-          profileType: 'public',
-          onboarding: '{influencer=[]}',
-          hipiStar: false,
-          Id: '18bc9238-d008-415d-a2fb-9b50af4a2b45',
-          updateOn: '10/21/2020 13:26:06',
-          objectID: '18bc9238-d008-415d-a2fb-9b50af4a2b45',
-          status: 'ACTIVE',
-          id: '18bc9238-d008-415d-a2fb-9b50af4a2b45',
-          pristine_image: ''
-        },
-        moderationJobId: 'moderation-642',
-        sound: {
-          name: 'shiv18bc92381604402592972',
-          id: '018a55f2-b513-4c6b-aced-3e28b30049d7',
-          soundurl: 'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_audio.mp3?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae'
-        },
-        downloadUrl: 'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_DownloadWM.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae',
-        updatedTimestamp: 1615200608844,
-        transcodingJobId: '1604402578259-jnve7i',
-        audioUrl: 'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_audio.mp3',
-        draft: false,
-        allowLikeDislike: 'true',
-        allowSharing: 'true',
-        moderationPrimaryCategories: [
-          'animal'
-        ],
-        promotional: false,
-        aiModrationStatus: 'true',
-        updatedOn: '11/03/2020 16:22:57',
-        mashupDetailsData: '{"videoId":"","videoOwner":{"id":"","userName":""}}',
-        effect: {},
-        hipiExclusive: false,
-        manualModerationMetakeys: '{"id":"cfcb3a92-50bb-4b37-a51d-b142ef3cc3be","contentType":"video","moderation":"ACCEPT","primaryCategories":["animal"],"secondaryCategories":["wild-life"],"contentLanguage":"unknown"}',
-        status: 'ACTIVE',
-        akamaiStatus: 'ACTIVE',
-        akamaiUrl: 'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_512.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae',
-        downloadable: 'true',
-        s3Url: 'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_512.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae',
-        hashtags: [
-          {
-            name: 'shiv',
-            id: 'f4ab99e6-94a6-4cfd-ae0f-7a2e6790e43a'
-          }
-        ],
-        createdTimeStamp: '1604400777381',
-        description: '#shiv',
-        transcodingStatus: 'akamai',
-        allowDuet: 'true',
-        createdOn: '11/03/2020 16:22:57',
-        speed: '1',
-        videoOwnersId: '18bc9238-d008-415d-a2fb-9b50af4a2b45',
-        videoOwnersData: '{"id":"18bc9238-d008-415d-a2fb-9b50af4a2b45","firstName":"shiv","lastName":"shankar","userName":"shiv18bc9238","dateOfBirth":"21/10/1990","onboarding":"{influencer=[]}","status":"ACTIVE","createdBy":"shiv18bc9238","createdOn":"10/21/2020 13:26:06","updateOn":"10/21/2020 13:26:06","email":"shivshankar938@gmail.com","updatedTimestamp":1603266984696,"hipiStar":false,"profileType":"public","editable":0,"objectID":"18bc9238-d008-415d-a2fb-9b50af4a2b45"}',
-        videoUrl: {
-          AkamaiURL: [
-            'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_512.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae',
-            'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_1024.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae',
-            'https://z5shorts.akamaized.net/2020/10/3/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be_1536.mp4?hdnea=st=1615287928~exp=1615302328~acl=/*~hmac=2e3a0eaaa63c34d87cc3107bf27be8c8bd7e199eb54cc9e9a7d96c03849098ae'
-          ],
-          CloudfrontURL: ''
-        },
-        advancedSettings: '{\n  "language" : {\n    "name" : "English",\n    "code" : "en"\n  },\n  "videoTitle" : "Post Shoot",\n  "beautymode" : true,\n  "mashupDetails" : {\n    "videoId" : "",\n    "videoOwner" : {\n      "id" : "",\n      "userName" : ""\n    }\n  },\n  "getSocialId" : "",\n  "allowLikeDislike" : true,\n  "downloadable" : true,\n  "allowSharing" : true,\n  "description" : "#shiv",\n  "privacySettings" : "public",\n  "sound" : {\n    "name" : "",\n    "id" : "",\n    "soundurl" : ""\n  },\n  "allowDuet" : true,\n  "allowDuplicate" : true,\n  "speed" : 1,\n  "filter" : {\n    "id" : "",\n    "url" : "",\n    "name" : "",\n    "assetId" : ""\n  },\n  "videoOwners" : {\n    "userName" : "",\n    "id" : "18bc9238-d008-415d-a2fb-9b50af4a2b45"\n  },\n  "effect" : {\n    "name" : "",\n    "assetId" : "",\n    "url" : "",\n    "id" : ""\n  },\n  "allowComments" : true,\n  "s3Url" : "https:\\/\\/hipi-videos-stage.s3.ap-south-1.amazonaws.com\\/src\\/546510fa-ffa2-4e74-9598-63bedf48b565.mp4"\n}',
-        thumbnailDynamic: 'https://zee5-staging-ressh.cloudinary.com/image/upload/w_297,c_scale,f_auto,q_auto/v1604402591/hipi/videos/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be.webp',
-        mashupDetails: {
-          videoOwner: {}
-        },
-        moderationSecondaryCategories: [
-          'wild-life'
-        ],
-        viewCount: '56',
-        thumbnailUrl: 'https://zee5-staging-ressh.cloudinary.com/image/upload/w_297,c_scale,f_auto,q_auto/v1604402591/hipi/videos/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be.webp',
-        silent: 0,
-        allowDuplicate: 'true',
-        agency: 0,
-        getSocialId: '508232113963139174',
-        beautymode: 'false',
-        hashtagsData: '[{"id":"f4ab99e6-94a6-4cfd-ae0f-7a2e6790e43a","name":"shiv"}]',
-        videoTitle: 'Post Shoot',
-        privacySettings: 'public',
-        moderationJobTimestamp: 1604400784444,
-        filter: {},
-        allowComments: 'true',
-        videoDuration: 15,
-        vCount: 56,
-        sCount: 7,
-        objectID: 'cfcb3a92-50bb-4b37-a51d-b142ef3cc3be',
-        id: 'cfcb3a92-50bb-4b37-a51d-b142ef3cc3be',
-        likeCount: '0',
-        isFavourite: false,
-        pristine_image: 'hipi/videos/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be/cfcb3a92-50bb-4b37-a51d-b142ef3cc3be'
-      }
-    ]
-  }
+  requestedWith: {
+    page: 1,
+    total: 5
+  },
+  data: [
+    {
+      data_id: 11,
+      content_id: 'cbvtest1mq99gi6b',
+      video_url: 'https://media.charmboard.com/images/demo_videos/116048223_280845449876104_5314998475040145773_n.mp4',
+      poster_image_url: '',
+      content_description: 'Ho gaye shareaam tere shehar charche !!\r\n#reel #punjabi #instareel #8Parche #ashnakishore #PunjabiSong2019 #BaaniSandhu #haircurler #Lakme #EyeconicKajal #M.A.C #Peachlipstick',
+      content_url: '',
+      music_title: "God's Plan",
+      musicCoverTitle: '8 Parche',
+      userId: '868268f4-d450-48b9-b84e-5b853366bb17',
+      videoOwnersId: '868268f4-d450-48b9-b84e-5b853366bb17',
+      getSocialId: '539929525481158009',
+      id: 'cfcb3a92-50bb-4b37-a51d-b142ef3cc3be',
+      genre: 'shoppable',
+      type: 'video',
+      video_type: 'vertical video',
+      tagged_video: '1',
+      userProfilePicUrl: 'https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face',
+      userName: '@Stark',
+      likesCount: 220,
+      commentsCount: 25,
+      contentWarning: null
+    },
+    {
+      data_id: 12,
+      content_id: 'cbvtest4acqv8hea',
+      video_url: 'https://media.charmboard.com/images/demo_videos/116281312_735041643986642_3875123162107059152_n.mp4',
+      poster_image_url: '',
+      content_description: "Mine is pink ❤ What's yours ?\r\n#makeupreelsvideo #NudeOrangeshade #Pinkeyeshadow #MatteLipstick #myglamm #HighlighterStick #classymakeuplook\r\n #HippieSabotage #DevilEyes #BhumiPednekar ",
+      content_url: '',
+      music_title: "God's Plan",
+      musicCoverTitle: 'Devil Eyes',
+      userId: '7b65a474-c521-4da0-a003-643a81f1e296',
+      videoOwnersId: '7b65a474-c521-4da0-a003-643a81f1e296',
+      getSocialId: '473133402323434279',
+      id: '626283a5-7cd8-4ce1-9b43-0e8835051cde',
+      genre: 'shoppable',
+      type: 'video',
+      video_type: 'vertical video',
+      tagged_video: '1',
+      userProfilePicUrl: 'https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face',
+      userName: '@Stark',
+      likesCount: 220,
+      commentsCount: 25,
+      contentWarning: null
+    },
+    {
+      data_id: 13,
+      content_id: 'cbvtest1km0dkjqh',
+      video_url: 'https://media.charmboard.com/images/demo_videos/116335347_384239915879641_9216393402670515633_n.mp4',
+      poster_image_url: '',
+      content_description: 'White On White!\r\n#OutfitInspiration #WhiteShirt #allwhiteoutfit #HM #stylish #ChainNecklace #BlackPumps #lookoftheday ##outfitideas #Maroon5 #Memories #M5',
+      content_url: '',
+      music_title: "God's Plan",
+      musicCoverTitle: 'Memories',
+      userId: '215903e9-5790-424c-a502-a4f6621ca3ae',
+      videoOwnersId: '215903e9-5790-424c-a502-a4f6621ca3ae',
+      getSocialId: '523946837371670909',
+      id: '2f5a0bb8-6f39-4938-b6d4-699f28e102bc',
+      genre: 'shoppable',
+      type: 'video',
+      video_type: 'vertical video',
+      tagged_video: '1',
+      userProfilePicUrl: 'https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face',
+      userName: '@Stark',
+      likesCount: 220,
+      commentsCount: 25,
+      contentWarning: null
+    }
+  ]
 };
 
 export const forYouFeedFailure = {

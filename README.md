@@ -49,6 +49,11 @@ This will start a local mock app
   npm run mock
 ```
 
+To run test cases 
+```
+  npm run test
+```
+
 ## Example
 
 The example in this repo lists few github repos and there details in 2 different routes. We are following the nextjs routing way of defining files / folders in pages folder. This example shows a static route and a dynamic route.

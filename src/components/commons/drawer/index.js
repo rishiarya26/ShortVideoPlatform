@@ -4,8 +4,8 @@ const Drawer = ({
 }) => (
   <div
     data-testid="drawer-container"
-    className={`${visible ? 'visible' : 'invisible'}`}
-    className="baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white h-0"  
+    className={`${visible ? 'visible' : 'invisible '} 
+    baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white h-0`}
   >
     <div className="drawer-header w-full flex-row justify-between p-4">
       <div className="drawer-title text-lg">
@@ -21,7 +21,8 @@ const Drawer = ({
       />
     </div>
     <div data-testid="drawer-content w-full">
-      {children}sfsdfsdfsdf this is sample content
+      {children}
+      sfsdfsdfsdf this is sample content
     </div>
   </div>
 );

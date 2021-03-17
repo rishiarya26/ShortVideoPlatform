@@ -5,24 +5,22 @@ import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
-import { data } from 'autoprefixer';
-import useDrawer from '../../hooks/use-drawer'
+import useDrawer from '../../hooks/use-drawer';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
-
 export default function Feed() {
   const [items, setItems] = useState({});
-  const { show , close } = useDrawer();
+  const { show } = useDrawer();
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data);
-    console.log(data);
+    console.log(JSON.stringify(data));
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   console.log(items);
-  
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -42,8 +40,12 @@ export default function Feed() {
         }
       </Swiper>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-center">
-        <buttom className="rounded-full text-white py-1 px-4 bg-red-600 font-medium tracking-wide" 
-      onclick={() => show()}>SHOP</buttom>
+        <button
+          className="rounded-full text-white py-1 px-4 bg-red-600 font-medium tracking-wide"
+          onClick={() => show()}
+        >
+          SHOP
+        </button>
       </div>
     </ComponentStateHandler>
   );

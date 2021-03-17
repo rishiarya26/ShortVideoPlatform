@@ -3,12 +3,12 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/users/profile';
 
-async function fetchUserProfile({ lang }) {
+async function fetchUserProfile({ params }) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${params.id}`;
     response = await get(apiPath);
-    response.data.requestedWith = { lang };
+    response.data.requestedWith = { params };
     return Promise.resolve(response.data);
   } catch (err) {
     return Promise.reject(err);

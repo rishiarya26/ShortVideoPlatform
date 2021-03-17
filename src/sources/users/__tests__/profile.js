@@ -1,27 +1,27 @@
 // import { get } from 'network';
-// import { srSendOtp } from '../index';
+// import { getUserProfile } from '../profile';
+// import { profile, prfoileFailure } from '../../../mock/seeds/users/profile';
+// import { userProfile } from '../../factories/profile';
 // import { getApiBasePath } from '../../../config';
-// import { forYouFeed, forYouFeedFailure } from '../../../mock/seeds/otp';
-// import { otp } from '../../factories/otp';
 
 // jest.mock('network', () => ({
 //   get: jest.fn()
 // }));
-// const apiPath = `${getApiBasePath('hipi')}/v1/shorts/sendOtp`;
-
-// describe('source for otp', () => {
+// const userId = '34224242424';
+// const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${userId}`;
+// describe('source for profile', () => {
 //   it('should return the expected response for success state', async () => {
-//     get.mockResolvedValueOnce({ data: forYouFeed });
-//     const data = await srSendOtp();
+//     get.mockResolvedValueOnce({ data: profile });
+//     const data = await getUserProfile();
 //     expect(get).toBeCalledTimes(1);
 //     expect(get).toBeCalledWith(apiPath);
-//     expect(data).toMatchObject(otp);
+//     expect(data).toMatchObject(userProfile);
 //   });
 
 //   it('should return the expected response for failure state', async () => {
-//     get.mockRejectedValueOnce({ data: forYouFeedFailure });
+//     get.mockRejectedValueOnce({ data: prfoileFailure });
 //     try {
-//       await srSendOtp();
+//       await getUserProfile();
 //     } catch (e) {
 //       expect(get).toBeCalledTimes(1);
 //       expect(get).toBeCalledWith(apiPath);
