@@ -9,7 +9,7 @@ function VideoFooter() {
         <p>Nature at its best </p>
         <p>#nature #green #hash #tags</p>
         <div>
-         <Music/>
+          <Music />
           <Marquee text="music title goes here" />
         </div>
       </div>

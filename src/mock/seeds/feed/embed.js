@@ -1,8 +1,11 @@
 /* eslint-disable max-len */
-export const forYouFeed = {
+export const forYouEmbedFeed = {
   status: 200,
   success: true,
   message: 'Data found successfully.',
+  requestedWith: {
+    page: 1
+  },
   data: [
     {
       data_id: 11,
@@ -30,7 +33,7 @@ export const forYouFeed = {
   ]
 };
 
-export const forYouFeedFailure = {
+export const forYouEmbedFeedFailure = {
   status: 400,
   success: false,
   message: 'Failed to fetch.',

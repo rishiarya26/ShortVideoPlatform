@@ -1,11 +1,8 @@
 
 function Error() {
-    return (
-      <div className="">
-      
-      </div>
-    );
-  }
-  
-  export default Error;
-  
+  return (
+    <div className="" />
+  );
+}
+
+export default Error;

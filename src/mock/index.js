@@ -2,6 +2,7 @@ import { Server } from 'miragejs';
 import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
 import { getForYouFeed } from './req-handlers/feed';
+import { getForYouEmbedFeed } from './req-handlers/embed';
 import { isMockMode } from '../config';
 
 function mockServer(environment = 'development', callback) {
@@ -18,7 +19,8 @@ function mockServer(environment = 'development', callback) {
       this.delete('https://api.github.com/delete/repositories', deleteListRequestHandler);
 
       // feed
-      this.get('https://hipigwapi.zee5.com/v2/shorts/home', getForYouFeed);
+      this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/5', getForYouFeed);
+      this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1', getForYouEmbedFeed);
     }
   });
   return server;

@@ -1,9 +1,9 @@
 import { get } from 'network';
 import {
-  getHomeFeed
-} from '../index';
-import { forYouFeed, forYouFeedFailure } from '../../../mock/seeds/feed/embed-feed';
-import { feed } from '../../factories/embed-feed';
+  getSingleFeed
+} from '../embed';
+import { forYouEmbedFeed, forYouEmbedFeedFailure } from '../../../mock/seeds/feed/embed';
+import { feed } from '../../factories/embed';
 
 jest.mock('network', () => ({
   get: jest.fn()
@@ -11,17 +11,17 @@ jest.mock('network', () => ({
 
 describe('source for feed', () => {
   it('should return the expected response for success state', async () => {
-    get.mockResolvedValueOnce({ data: forYouFeed });
-    const data = await getHomeFeed();
+    get.mockResolvedValueOnce({ data: forYouEmbedFeed });
+    const data = await getSingleFeed();
     expect(get).toBeCalledTimes(1);
     expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1');
     expect(data).toMatchObject(feed);
   });
 
   it('should return the expected response for failure state', async () => {
-    get.mockRejectedValueOnce({ data: forYouFeedFailure });
+    get.mockRejectedValueOnce({ data: forYouEmbedFeedFailure });
     try {
-      await getHomeFeed();
+      await getSingleFeed();
     } catch (e) {
       expect(get).toBeCalledTimes(1);
       expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1');
