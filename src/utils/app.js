@@ -1,7 +1,7 @@
 import canUseDom from 'can-use-dom';
 import cloneDeep from 'lodash/cloneDeep';
 import { setItem } from './cookie';
-import { GUEST_TOKEN } from '../constants';
+import { GUEST_TOKEN, NO_SUPPORT } from '../constants';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
@@ -38,6 +38,17 @@ export const generateUUID = persist => {
     setItem(GUEST_TOKEN, uuid);
   }
   return uuid;
+};
+
+export const share = () => {
+  if (navigator.share) {
+    const canonicalElement = document.querySelector('link[rel=canonical]');
+    const url = canonicalElement?.href || document.location.href;
+    return navigator.share({
+      url
+    });
+  }
+  return Promise.reject(NO_SUPPORT);
 };
 
 /** example

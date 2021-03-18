@@ -115,6 +115,7 @@
     "build": "cross-env NODE_ENV=production next build",
     "preexport": "npm run clean && npm run build",
     "export": "next export",
+    "export-mock": "cross-env MOCK_MODE=y npm run export",
     "prestart": "npm run clean && npm run build",
     "start": "next start",
     "clean": "rimraf node_modules/.cache .next",

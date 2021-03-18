@@ -5,19 +5,40 @@ import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
+import { share } from '../../utils/app';
+import useDevice, { devices } from '../../hooks/use-device';
+
+const DummyComp = () => (<div />);
+
+const shareThis = async () => {
+  try {
+    await share();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const ShareComp = ({ shareCount }) => (
+  <div
+    role="presentation"
+    onClick={shareThis}
+    className="relative p-3 text-center flex flex-col items-center"
+  >
+    <Share />
+    <p className="text-sm">{shareCount}</p>
+  </div>
+);
 
 function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
-
-  // TODO add useTranslation for alt tags as well
+  const Comp = useDevice(devices, [ShareComp, DummyComp], DummyComp);
   return (
     <div className="absolute bottom-16 right-3 text-white">
       <div className="relative p-3 text-center flex justify-center">
         <img
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
-          // eslint-disable-next-line max-len
-          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"
+          src={props.profilePic}
         />
         <div className="absolute bottom-0 left-1/3">
           <Follow />
@@ -39,10 +60,8 @@ function VideoSidebar(props) {
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
-        <Share />
-        <p className="text-sm">{props.share}</p>
-      </div>
+
+      <Comp shareCount={props.share} />
 
       <div className="relative p-3 text-center flex flex-col items-center">
         <Shop />

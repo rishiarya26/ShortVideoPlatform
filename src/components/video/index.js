@@ -61,12 +61,16 @@ function Video(props) {
         />
       </video>
       <VideoSidebar
-        usrimg="https://tinyurl.com/yuc7zdc2"
-        likes={444}
-        comment={555}
+        profilePic={props.profilePic}
+        likes={props.likes}
+        comment={props.comments}
         share={777}
       />
-      <VideoFooter />
+      <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={props.userName}
+        musicCoverTitle={props.musicCoverTitle}
+      />
     </div>
   );
 }

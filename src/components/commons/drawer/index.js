@@ -26,9 +26,11 @@ const Drawer = ({
         ght-8" >
         <Close />
       </div>
-      v className="drawer-content w-full px-4 flex">
-      {children}
-      sfsdfsdfsdf this is sample content
+      <div className="drawer-content w-full px-4 flex">
+
+        {children}
+        sfsdfsdfsdf this is sample content
+      </div>
     </div>
   </div>
 );

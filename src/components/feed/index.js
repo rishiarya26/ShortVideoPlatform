@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import { data } from 'autoprefixer';
 import Video from '../video';
-import Footmenu from '../footmenu';
+import FooterMenu from '../footer-menu';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
@@ -16,7 +16,6 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
-    console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   console.log(items);
@@ -36,16 +35,19 @@ export default function Feed() {
         {
           items.map(
             item => (
-              <SwiperSlide id={item.data_id}>
+              <SwiperSlide
+                key={item.content_id}
+              >
                 <Video
                   url={item.video_url}
                   id={item.content_id}
-                  cmntcount={item.commentsCount}
+                  comments={item.commentsCount}
                   likes={item.likesCount}
                   music={item.musicCoverTitle}
-                  musictitle={item.music_title}
-                  propic={item.userProfilePicUrl}
-                  usrnme={item.userName}
+                  musicTitle={item.music_title}
+                  profilePic={item.userProfilePicUrl}
+                  userName={item.userName}
+                  musicCoverTitle={item.musicCoverTitle}
                 />
               </SwiperSlide>
             )
@@ -53,7 +55,7 @@ export default function Feed() {
         }
       </Swiper>
 
-      <Footmenu />
+      <FooterMenu />
     </ComponentStateHandler>
   );
 }
