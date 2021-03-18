@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import { data } from 'autoprefixer';
 import Video from '../video';
+import Footmenu from '../footmenu'
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
@@ -12,11 +13,11 @@ const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
-  const [items, setItems] = useState({});
+  const [items, setItems] = useState([]);
   const { show } = useDrawer();
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
-    setItems(data);
+    setItems(data.data);
     console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
@@ -35,19 +36,26 @@ export default function Feed() {
         calculateheight="true"
       >
         {
-          [0, 1, 2, 3, 4].map(
-            item => <SwiperSlide key={item}><Video /></SwiperSlide>
+          items.map(
+            item => (
+              <SwiperSlide id={item.data_id}>
+                <Video
+                  url={item.video_url}
+                  id={item.content_id}
+                  cmntcount={item.commentsCount}
+                  likes={item.likesCount}
+                  music={item.musicCoverTitle}
+                  musictitle={item.music_title}
+                  propic={item.userProfilePicUrl}
+                  usrnme={item.userName}
+                />
+              </SwiperSlide>
+            )
           )
         }
       </Swiper>
-      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-center">
-        <buttom
-          className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide"
-          onClick={() => show()}
-        >
-          SHOP
-        </buttom>
-      </div>
+
+<Footmenu/>
     </ComponentStateHandler>
   );
 }

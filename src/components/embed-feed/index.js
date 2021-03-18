@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Video from '../video';
+import Embedvideo from '../embedvideo';
 import Error from './error';
 import Loading from './loader';
 import { getSingleFeed } from '../../sources/feed/embed';
@@ -25,7 +25,8 @@ export default function EmbedFeed() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <Video />
+      <Loading />
+      <Embedvideo />
     </ComponentStateHandler>
   );
 }

@@ -32,6 +32,9 @@ module.exports = {
       hipipink: {
         DEFAULT: '#FF0066'
       },
+      hipidblue: {
+        DEFAULT: '#100618'
+      },
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
