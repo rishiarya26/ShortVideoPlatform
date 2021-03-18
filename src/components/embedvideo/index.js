@@ -4,10 +4,11 @@ import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
+import Play from '../commons/svgicons/play';
 
-function Video(props) {
-  const [playing, setPlaying] = useState(true);
-  const [clicked, setClicked] = useState(true);
+function Embedvideo(props) {
+  const [playing, setPlaying] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
 
@@ -44,11 +45,10 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full h-full scroll-snap-start"
+      className="video_card relative w-full h-screen scroll-snap-start"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        loop
         ref={ref}
         onClick={handleVideoPress}
         className="vdo_player"
@@ -60,6 +60,13 @@ function Video(props) {
           type="video/mp4"
         />
       </video>
+      <div
+        onClick={handleVideoPress}
+        className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
+        style={{ display: playing ? 'none' : 'block' }}
+      >
+        <Play />
+      </div>
       <VideoSidebar
         profilePic={props.profilePic}
         likes={props.likes}
@@ -75,4 +82,4 @@ function Video(props) {
   );
 }
 
-export default Video;
+export default Embedvideo;

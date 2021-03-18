@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+// import { data } from 'autoprefixer';
 import Video from '../video';
+import FooterMenu from '../footer-menu';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
-import useDrawer from '../../hooks/use-drawer';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
-  const [items, setItems] = useState({});
-  const { show } = useDrawer();
+  const [items, setItems] = useState([]);
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
-    setItems(data);
-    console.log(JSON.stringify(data));
+    setItems(data.data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
-  console.log(items);
 
   return (
     <ComponentStateHandler
@@ -34,19 +32,29 @@ export default function Feed() {
         calculateheight="true"
       >
         {
-          [0, 1, 2, 3, 4].map(
-            item => <SwiperSlide key={item}><Video /></SwiperSlide>
+          items.map(
+            item => (
+              <SwiperSlide
+                key={item.content_id}
+              >
+                <Video
+                  url={item.video_url}
+                  id={item.content_id}
+                  comments={item.commentsCount}
+                  likes={item.likesCount}
+                  music={item.musicCoverTitle}
+                  musicTitle={item.music_title}
+                  profilePic={item.userProfilePicUrl}
+                  userName={item.userName}
+                  musicCoverTitle={item.musicCoverTitle}
+                />
+              </SwiperSlide>
+            )
           )
         }
       </Swiper>
-      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-center">
-        <button
-          className="rounded-full text-white py-1 px-4 bg-red-600 font-medium tracking-wide"
-          onClick={() => show()}
-        >
-          SHOP
-        </button>
-      </div>
+
+      <FooterMenu />
     </ComponentStateHandler>
   );
 }
