@@ -25,7 +25,6 @@ export default function EmbedFeed() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <Loading />
       <Embedvideo />
     </ComponentStateHandler>
   );

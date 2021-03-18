@@ -13,16 +13,20 @@ const Drawer = ({
     <div className="drawer-header w-full flex-row justify-between p-4">
       <div className="drawer-title text-lg">
         {title}
-      </div>
-      <div
-        onClick={() => close()}
-        alt="Close Icon"
-        className="w-6 h-6 absolute right-8"
-      >
+        {' '}
+        <div
+          onClick={() => close()}
+          alt="Close Icon"
+          className="w-6 h-6 absolute right-8"
+          data-testid="drawer-close"
+          role="presentation"
+        >
+          <Close />
+        </div>
+        ght-8" >
         <Close />
       </div>
-    </div>
-    <div className="drawer-content w-full px-4 flex">
+      v className="drawer-content w-full px-4 flex">
       {children}
       sfsdfsdfsdf this is sample content
     </div>

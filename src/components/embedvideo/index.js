@@ -4,6 +4,7 @@ import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
+import Play from '../commons/svgicons/play';
 
 function Embedvideo() {
   const [playing, setPlaying] = useState(false);
@@ -59,6 +60,13 @@ function Embedvideo() {
           type="video/mp4"
         />
       </video>
+      <div
+        onClick={handleVideoPress}
+        className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
+        style={{ display: playing ? 'none' : 'block' }}
+      >
+        <Play />
+      </div>
       <VideoSidebar
         usrimg="https://tinyurl.com/yuc7zdc2"
         likes={444}
