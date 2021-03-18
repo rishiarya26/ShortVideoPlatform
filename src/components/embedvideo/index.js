@@ -5,7 +5,7 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 
-function Embedvideo() {
+function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
   const rootRef = useRef(null);
@@ -55,17 +55,21 @@ function Embedvideo() {
         height={size.height}
       >
         <source
-          src="https://media.charmboard.com/images/demo_videos/116335347_384239915879641_9216393402670515633_n.mp4"
+          src={props.url}
           type="video/mp4"
         />
       </video>
       <VideoSidebar
-        usrimg="https://tinyurl.com/yuc7zdc2"
-        likes={444}
-        comment={555}
+        profilePic={props.profilePic}
+        likes={props.likes}
+        comment={props.comments}
         share={777}
       />
-      <VideoFooter />
+      <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={props.userName}
+        musicCoverTitle={props.musicCoverTitle}
+      />
     </div>
   );
 }
