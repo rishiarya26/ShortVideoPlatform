@@ -5,9 +5,9 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 
-function Video(props) {
-  const [playing, setPlaying] = useState(true);
-  const [clicked, setClicked] = useState(true);
+function Embedvideo() {
+  const [playing, setPlaying] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
 
@@ -44,11 +44,10 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full h-full scroll-snap-start"
+      className="video_card relative w-full h-screen scroll-snap-start"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        loop
         ref={ref}
         onClick={handleVideoPress}
         className="vdo_player"
@@ -56,7 +55,7 @@ function Video(props) {
         height={size.height}
       >
         <source
-          src={props.url}
+          src="https://media.charmboard.com/images/demo_videos/116335347_384239915879641_9216393402670515633_n.mp4"
           type="video/mp4"
         />
       </video>
@@ -71,4 +70,4 @@ function Video(props) {
   );
 }
 
-export default Video;
+export default Embedvideo;

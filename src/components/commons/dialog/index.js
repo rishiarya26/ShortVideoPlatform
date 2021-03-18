@@ -8,10 +8,10 @@ const Dialog = ({
     ['w-3/12', 'w-6/12', 'w-9/12'], 'w-9/12');
   return (
     <div
-      className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'}`}
       data-testid="dialog-container"
+      className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'} fixed z-30 max-h-px500 overflow-y-auto bg-black rounded-sm`}
     >
-      <div data-testid="dialog-header">
+      <div data-testid="dialog-header flex w-full justify-between ">
         <div data-testid="dialog-title">{title}</div>
         <img
           data-testid="dialog-close"
@@ -23,7 +23,7 @@ const Dialog = ({
           height="20px"
         />
       </div>
-      <div data-testid="dialog-content">
+      <div data-testid="dialog-content w-full">
         {children}
       </div>
     </div>
