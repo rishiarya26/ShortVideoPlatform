@@ -5,11 +5,16 @@ import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
+import { share } from '../../utils/app';
+import useTranslation from '../../hooks/use-translation';
 
 function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
+  const { t } = useTranslation(false);
 
-  // TODO add useTranslation for alt tags as well
+  const shareThis = async () => {
+    share(t('share-title', 'share-text'));
+  };
   return (
     <div className="absolute bottom-16 right-3 text-white">
       <div className="relative p-3 text-center flex justify-center">
@@ -39,7 +44,11 @@ function VideoSidebar(props) {
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div
+        role="presentation"
+        onClick={shareThis}
+        className="relative p-3 text-center flex flex-col items-center"
+      >
         <Share />
         <p className="text-sm">{props.share}</p>
       </div>

@@ -40,6 +40,19 @@ export const generateUUID = persist => {
   return uuid;
 };
 
+export const share = (title, text) => {
+  if (navigator.share) {
+    const canonicalElement = document.querySelector('link[rel=canonical]');
+    const url = canonicalElement?.href || document.location.href;
+    return navigator.share({
+      title,
+      text,
+      url
+    });
+  }
+  return Promise.resolve({});
+};
+
 /** example
  * Router.pushState('/user, {name : ankit, age: 31})
  * This will work only on component in pages folder

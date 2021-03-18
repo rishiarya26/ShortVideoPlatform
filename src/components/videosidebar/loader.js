@@ -28,10 +28,10 @@ function VideoSidebar() {
         <Comment />
         <p className="text-sm h-8" />
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      {/* <div className="relative p-3 text-center flex flex-col items-center">
         <Share />
         <p className="text-sm h-8" />
-      </div>
+      </div> */}
       <div className="relative p-3 text-center flex flex-col items-center">
         <Shop />
       </div>
