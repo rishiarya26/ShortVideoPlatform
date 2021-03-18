@@ -13,12 +13,17 @@ const Drawer = ({
     <div className="drawer-header w-full flex-row justify-between p-4">
       <div className="drawer-title text-lg">
         {title}
-      </div>
-      <div
-        onClick={() => close()}
-        alt="Close Icon"
-        className="w-6 h-6 absolute right-8"
-      >
+        {' '}
+        <div
+          onClick={() => close()}
+          alt="Close Icon"
+          className="w-6 h-6 absolute right-8"
+          data-testid="drawer-close"
+          role="presentation"
+        >
+          <Close />
+        </div>
+        ght-8" >
         <Close />
       </div>
     </div>
