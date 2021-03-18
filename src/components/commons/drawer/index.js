@@ -23,7 +23,6 @@ const Drawer = ({
         >
           <Close />
         </div>
-        <Close />
       </div>
     </div>
     <div className="w-full h-full px-4 flex">
