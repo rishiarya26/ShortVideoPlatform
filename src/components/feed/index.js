@@ -2,19 +2,17 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import { data } from 'autoprefixer';
 import Video from '../video';
-import Footmenu from '../footmenu'
+import Footmenu from '../footmenu';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
-import useDrawer from '../../hooks/use-drawer';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
   const [items, setItems] = useState([]);
-  const { show } = useDrawer();
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
@@ -55,7 +53,7 @@ export default function Feed() {
         }
       </Swiper>
 
-<Footmenu/>
+      <Footmenu />
     </ComponentStateHandler>
   );
 }
