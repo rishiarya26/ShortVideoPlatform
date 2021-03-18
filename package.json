@@ -130,7 +130,9 @@
     "analyze"
   ],
   "post-commit": [
-    "gitlint"
+    "gitlint",
+    "git add .",
+    "git commit -am 'append bundle report' --no-verify"
   ],
   "lint-staged": {
     "src/**/*.{js,jsx,tsx,ts}": [
