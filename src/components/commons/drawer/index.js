@@ -22,9 +22,8 @@ const Drawer = ({
         <Close />
       </div>
     </div>
-    <div className="drawer-content w-full px-4 flex">
+    <div className="w-full h-full px-4 flex">
       {children}
-      sfsdfsdfsdf this is sample content
     </div>
   </div>
 );

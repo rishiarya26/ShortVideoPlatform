@@ -18,7 +18,6 @@ export default function Feed() {
     setItems(data.data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
-  console.log(items);
 
   return (
     <ComponentStateHandler

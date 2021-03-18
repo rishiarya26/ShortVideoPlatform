@@ -4,6 +4,7 @@ import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
 import useDrawer from '../../hooks/use-drawer';
 import useTranslation from '../../hooks/use-translation';
+import ShoppingWidget from '../shopping-widget';
 
 function FooterMenu() {
   const { show } = useDrawer();
@@ -14,7 +15,7 @@ function FooterMenu() {
       <Search />
       <button
         className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide"
-        onClick={() => show()}
+        onClick={() => show('', ShoppingWidget)}
       >
         {t('shop')}
       </button>
