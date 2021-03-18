@@ -44,7 +44,7 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full h-full scroll-snap-start"
+      className="video_card relative w-full h-full scroll-snap-start bg-black"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video

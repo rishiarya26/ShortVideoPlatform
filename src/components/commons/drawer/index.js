@@ -23,7 +23,6 @@ const Drawer = ({
         >
           <Close />
         </div>
-        ght-8" >
         <Close />
       </div>
       <div className="drawer-content w-full px-4 flex">

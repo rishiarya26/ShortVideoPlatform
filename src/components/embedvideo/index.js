@@ -45,7 +45,7 @@ function Embedvideo(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full h-screen scroll-snap-start"
+      className="video_card relative w-full h-screen scroll-snap-start bg-black"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
