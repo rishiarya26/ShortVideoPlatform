@@ -11,6 +11,8 @@ function ShoppingWidget() {
         frameBorder="0"
         marginWidth="0"
         marginHeight="0"
+        width="340"
+        height="475"
       />
     </blockquote>
   );
