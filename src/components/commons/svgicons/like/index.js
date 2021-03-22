@@ -4,8 +4,8 @@ const Like = () => (
   <svg
     version="1.1"
     className="white"
-    width="56"
-    height="56"
+    width="46"
+    height="46"
     viewBox="0 0 56 56"
   >
     <path

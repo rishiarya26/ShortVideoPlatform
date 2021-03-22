@@ -14,11 +14,12 @@ function FooterMenu() {
       <Home />
       <Search />
       <button
-        className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide"
+        className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
         onClick={() => show('', ShoppingWidget)}
       >
         {t('shop')}
       </button>
+
       <Add />
       <Profile />
     </div>

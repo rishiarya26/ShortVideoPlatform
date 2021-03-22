@@ -9,6 +9,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'xxs': '300px',
+        'xs' : '375px'
+      },
       keyframes: {
         marquee: {
           '0%': { transform: 'translate(0, 0)' },
@@ -20,6 +24,7 @@ module.exports = {
       }
     },
     screens: {
+
       sm: '640px',
       md: '768px',
       lg: '1024px',
