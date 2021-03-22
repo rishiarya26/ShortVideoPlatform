@@ -7,6 +7,8 @@ import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
 import useDevice, { devices } from '../../hooks/use-device';
+import Commenttray from '../commenttray';
+import useDrawer from '../../hooks/use-drawer';
 
 const DummyComp = () => (<div />);
 
@@ -30,6 +32,7 @@ const ShareComp = ({ shareCount }) => (
 );
 
 function VideoSidebar(props) {
+  const { show } = useDrawer();
   const [liked, setLiked] = useState(false);
   const Comp = useDevice(devices, [ShareComp, DummyComp], DummyComp);
   return (
@@ -56,7 +59,7 @@ function VideoSidebar(props) {
         )}
         <p className="text-sm">{props.likes}</p>
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div className="relative p-3 text-center flex flex-col items-center" onClick={() => show('', Commenttray)}>
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>
