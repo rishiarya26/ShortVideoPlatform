@@ -7,7 +7,7 @@ import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
 import useDevice, { devices } from '../../hooks/use-device';
-import Commenttray from '../commenttray';
+import CommentTray from '../comment-tray';
 import useDrawer from '../../hooks/use-drawer';
 
 const DummyComp = () => (<div />);
@@ -59,7 +59,7 @@ function VideoSidebar(props) {
         )}
         <p className="text-sm">{props.likes}</p>
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center" onClick={() => show(' 3 comments', Commenttray)}>
+      <div className="relative p-3 text-center flex flex-col items-center" onClick={() => show(' 3 comments', CommentTray)}>
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>

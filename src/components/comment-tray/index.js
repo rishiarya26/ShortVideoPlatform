@@ -1,7 +1,7 @@
 import Comment from '../comment';
 import Send from '../commons/svgicons/send';
 
-function Commenttray() {
+function CommentTray() {
   return (
     <blockquote className="w-full h-full" cite="https://www.charmboard.com/">
       <div
@@ -23,5 +23,5 @@ function Commenttray() {
   );
 }
 
-export default Commenttray;
+export default CommentTray;
 
