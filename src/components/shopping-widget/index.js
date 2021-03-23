@@ -5,7 +5,7 @@ function ShoppingWidget() {
         id="shopping-widget"
       />
       <iframe
-        src="https://www.charmboard.com/"
+        src="https://www.charmboard.com/en/style/tanu-grewal-all-in-trust-me-single-2020-white-sweatshirts/p/cbve37onvu5j62-2150924#trch"
         title="charmboard"
         name="charmboard"
         frameBorder="0"
