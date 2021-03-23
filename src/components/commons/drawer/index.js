@@ -10,8 +10,8 @@ const Drawer = ({
     baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white
     transition-all duration-500`}
   >
-    <div className="drawer-header w-full flex-row justify-between p-6">
-      <div className="drawer-title text-lg">
+    <div className="drawer-header w-full flex-row justify-between p-4">
+      <div className="drawer-title text-sm font-medium text-center">
         {title}
         {' '}
         <div
