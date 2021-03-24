@@ -28,7 +28,7 @@
     "mq-polyfill": "^1.1.8",
     "next": "^10.0.6",
     "next-pwa": "^5.0.5",
-    "next-seo": "^4.22.0",
+    "next-seo": "^4.23.0",
     "parse-link-header": "^1.0.1",
     "postcss": "^8.2.4",
     "prop-types": "^15.7.2",

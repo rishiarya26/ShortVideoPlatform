@@ -1,61 +1,68 @@
 import React from 'react';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 
-const DEFAULT_SEO = {
-  title: 'hipi',
-  description: 'watch videos on hipi',
+// This link relation is used to indicate a relation between a desktop and a mobile website to search engines.
+
+// mobileAlternate={{
+//   media: 'only screen and (max-width: 640px)',
+//   href: 'https://m.canonical.ie',
+// }}
+
+// language alternates
+
+// languageAlternates={[{
+//   hrefLang: 'de-AT',
+//   href: 'https://www.canonical.ie/de',
+// }]}
+
+const defaultMeta = {
+  title: 'Hipi App: Free Short Video Making App for fun videos, memes & more',
+  // eslint-disable-next-line max-len
+  description: 'Dialogue Dubbing App: Download Hipi App for short music videos, create funny videos, dialogue dubbing video, dance videos & more and share on social media',
+  canonical: 'https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html',
   openGraph: {
-    type: 'website',
-    locale: 'en-IN',
     url: 'https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html',
-    title: 'hipi',
-    description: 'watch videos on hipi',
-    image:
-      'https://prismic-io.s3.amazonaws.com/gary-blog%2F3297f290-a885-4cc6-9b19-3235e3026646_default.jpg',
-    site_name: 'hipi.com',
-    imageWidth: 1200,
-    imageHeight: 1200
+    title: 'Hipi App: Free Short Video Making App for fun videos, memes & more',
+    // eslint-disable-next-line max-len
+    description: 'Dialogue Dubbing App: Download Hipi App for short music videos, create funny videos, dialogue dubbing video, dance videos & more and share on social media',
+    images: [
+      {
+        url: 'https://prismic-io.s3.amazonaws.com/gary-blog%2F3297f290-a885-4cc6-9b19-3235e3026646_default.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Hipi'
+      },
+      {
+        url: 'https://prismic-io.s3.amazonaws.com/gary-blog%2F3297f290-a885-4cc6-9b19-3235e3026646_default.jpg',
+        width: 900,
+        height: 800,
+        alt: 'Hipi'
+      },
+      { url: 'https://prismic-io.s3.amazonaws.com/gary-blog%2F3297f290-a885-4cc6-9b19-3235e3026646_default.jpg' },
+      { url: 'https://prismic-io.s3.amazonaws.com/gary-blog%2F3297f290-a885-4cc6-9b19-3235e3026646_default.jpg' }
+    ],
+    site_name: 'Hipi'
   },
   twitter: {
     handle: '@hipi',
+    site: '@hipi',
     cardType: 'summary_large_image'
   }
 };
 
-// function isNewPage(prevProps, newProps) {
-//   return (prevProps.path === newProps.path);
-// }
+const SeoMeta = ({ data = {} }) => {
+  const meta = { ...defaultMeta, ...data }
+  return (
+    <NextSeo
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...meta}
+    />
+  );
+};
 
-// const Meta = props => (
-//   <>
-//     <link rel="canonical" href={props.path || '//hipi.com'} />
-//     <meta property="og:type" content="article" />
-//     <meta property="og:title" content={props.title || 'watch hipi'} />
-//     <meta property="og:image" content={props.image || ''} />
-//     <meta property="og:url" content={props.path} />
-//     <meta
-//       property="og:description"
-//       content="This project is a starter kit that can be used to build a robust and high performance web app."
-//     />
+const DonotIndex = () => (<NextSeo noindex />);
 
-//     <meta name="twitter:card" content="summary" />
-//     <meta name="twitter:title" content="hipi Web Starter Kit" />
-//     {/* twitter needs absolute urls for image */}
-//     {/* <meta name="twitter:image" content="https://covid.bhaarat.ai/img_fb.jpg" /> */}
-//     <meta name="twitter:image:alt" content="hipi Web Starter Kit" />
-
-//     <meta
-//       name="description"
-//       itemProp="description"
-//       content="This project is a starter kit that can be used to build a robust and high performance web app"
-//     />
-//     <meta name="keywords" content="hipi web starter kit" />
-//     <meta name="format-detection" content="telephone=no" />
-//   </>
-// );
-
-// const SeoMeta = React.memo(Meta, isNewPage);
-
-const SeoMeta = () => (<NextSeo config={DEFAULT_SEO} />);
-
-export default SeoMeta;
+export {
+  SeoMeta,
+  DonotIndex
+};

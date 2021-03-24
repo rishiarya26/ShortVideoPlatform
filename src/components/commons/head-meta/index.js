@@ -10,8 +10,7 @@ function HeadMeta() {
     <>
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
-      <title>{APP_NAME}</title>
+      {/* <title>{APP_NAME}</title> */}
 
       <link rel="preload" href="https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html" as="document" />
 
@@ -19,7 +18,8 @@ function HeadMeta() {
       {/* <script type="text/javascript" src="/agents/instana.js" /> */}
       <script type="text/javascript" src="/embeds/hipi.js" />
       <meta name="theme-color" content="#100618" />
-      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" />
+      {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       {/* IOS */}
       <meta name="apple-mobile-web-app-capable" content="yes" />
