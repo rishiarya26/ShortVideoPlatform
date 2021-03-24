@@ -6,10 +6,10 @@ import useDrawer from '../../hooks/use-drawer';
 import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 
-function FooterMenu(props) {
+function FooterMenu() {
 
-  const vobj = {"{props.id} ": "" };
-  // const { show } = useDrawer();
+  const vobj = {'videoId' : '{cfcb3a92-50bb-4b37-a51d-b142ef3cc3be}' };
+  const { show } = useDrawer();
   const { t } = useTranslation();
   return (
     <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center">
