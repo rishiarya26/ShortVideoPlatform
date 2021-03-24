@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import Pause from '../commons/svgicons/pause';
+import FooterMenu from '../footer-menu';
 
 function Video(props) {
   const [playing, setPlaying] = useState(true);
@@ -88,6 +89,10 @@ function Video(props) {
       >
         <Pause />
       </div>
+
+      
+      <FooterMenu id={props.videoid} />
+
       <VideoSidebar
         profilePic={props.profilePic}
         likes={props.likes}

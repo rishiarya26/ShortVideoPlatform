@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import { data } from 'autoprefixer';
 import Video from '../video';
-import FooterMenu from '../footer-menu';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
@@ -48,14 +47,13 @@ export default function Feed() {
                   profilePic={item.userProfilePicUrl}
                   userName={item.userName}
                   musicCoverTitle={item.musicCoverTitle}
+                  videoid={item.id}
                 />
               </SwiperSlide>
             )
           )
         }
       </Swiper>
-
-      <FooterMenu />
     </ComponentStateHandler>
   );
 }

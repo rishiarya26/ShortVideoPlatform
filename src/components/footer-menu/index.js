@@ -6,9 +6,10 @@ import useDrawer from '../../hooks/use-drawer';
 import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 
-function FooterMenu() {
-  const vobj = { 'videoId' : '' };
-  const { show } = useDrawer();
+function FooterMenu(props) {
+
+  const vobj = {"{props.id} ": "" };
+  // const { show } = useDrawer();
   const { t } = useTranslation();
   return (
     <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center">
