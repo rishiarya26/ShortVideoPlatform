@@ -4,9 +4,10 @@ import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
 import useDrawer from '../../hooks/use-drawer';
 import useTranslation from '../../hooks/use-translation';
-import ShoppingWidget from '../shopping-widget';
+// import ShoppingWidget from '../shopping-widget';
 
 function FooterMenu() {
+  const vobj = { 'videoId' : '' };
   const { show } = useDrawer();
   const { t } = useTranslation();
   return (
@@ -15,11 +16,16 @@ function FooterMenu() {
       <Search />
       <button
         className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-        onClick={() => show('', ShoppingWidget)}
+        
+        onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
       >
         {t('shop')}
       </button>
-
+      <div id="cb_tg_d_wrapper">
+        <div className="playkit-player">
+            
+        </div>
+      </div>
       <Add />
       <Profile />
     </div>
@@ -27,3 +33,5 @@ function FooterMenu() {
 }
 
 export default FooterMenu;
+
+

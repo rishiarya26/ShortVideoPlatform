@@ -16,6 +16,7 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
+    console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
 

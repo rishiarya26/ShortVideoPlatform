@@ -15,6 +15,10 @@ function HeadMeta() {
 
       <link rel="preload" href="https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html" as="document" />
 
+      {/* charmboard plugin */}
+      <script type="text/javascript" src="https://devqa2.charmboard.com/zee5/kaltura_plugin.js" />
+
+
       {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" /> */}
       {/* <script type="text/javascript" src="/agents/instana.js" /> */}
       <script type="text/javascript" src="/embeds/hipi.js" />
