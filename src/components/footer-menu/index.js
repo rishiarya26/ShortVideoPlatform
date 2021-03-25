@@ -8,7 +8,7 @@ import useTranslation from '../../hooks/use-translation';
 
 function FooterMenu() {
 
-  const vobj = {videoId : "cfcb3a92-50bb-4b37-a51d-b142ef3cc3be" };
+  const vobj = {'videoId' : 'cfcb3a92-50bb-4b37-a51d-b142ef3cc3be' };
   // const { show } = useDrawer();
   const { t } = useTranslation();
   return (
