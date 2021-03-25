@@ -1,23 +1,27 @@
-import { useState, useEffect } from 'react';
 import useTranslation from '../src/hooks/use-translation';
 import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 
-const Home = () => {
+const Home = props => {
   const { t } = useTranslation();
-  const [str, setStr] = useState('');
-  useEffect(() => {
-    setTimeout(() => (setStr('this is test title for hipi')), 1000);
-  }, []);
   return (
     <div className="flex h-screen">
       <SeoMeta
         data={{
-          title: str
+          title: props.title
         }}
       />
       <span className="font-bold m-auto text-purple-800 text-4xl">{t('welcome')}</span>
     </div>
   );
 };
+
+export async function getServerSideProps(params) {
+  const id = params?.query?.id;
+  return {
+    props: {
+      title: `i need this to work - ${id}`
+    }
+  };
+}
 
 export default Home;

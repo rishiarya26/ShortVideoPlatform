@@ -119,8 +119,10 @@
     "export-mock": "cross-env MOCK_MODE=y npm run export",
     "prestart": "npm run clean && npm run build",
     "start": "next start",
+    "prestart-mock": "cross-env MOCK_MODE=y npm run clean && npm run build",
+    "start-mock": "cross-env MOCK_MODE=y next start",
     "clean": "rimraf node_modules/.cache .next",
-    "preserve": "npm run export",
+    "preserve": "cross-env MOCK_MODE=y  npm run export",
     "gitlint": "git log -1 --pretty=%B | gitlint",
     "multilingual-build": "node ./command.js",
     "serve": "ws --directory out --static.maxage 1000000 --static.extensions html --static.index index.html --http2 --compress"
