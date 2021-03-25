@@ -36,7 +36,7 @@ function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
   const Comp = useDevice(devices, [ShareComp, DummyComp], DummyComp);
   return (
-    <div className="absolute bottom-28 right-0 text-white">
+    <div className="absolute bottom-36 right-0 text-white">
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"

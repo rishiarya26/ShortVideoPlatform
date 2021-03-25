@@ -64,8 +64,8 @@ function Embedvideo(props) {
         onClick={handleVideoPress}
         className="absolute top-2/5 left-1/2 "
         style={{ display: playing ? 'none' : 'block' }}
-      > 
-         <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
+      >
+        <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
       </div>
       <VideoSidebar
         profilePic={props.profilePic}
