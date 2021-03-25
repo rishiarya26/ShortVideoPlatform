@@ -5,7 +5,7 @@ function ShoppingWidget() {
       <div
         id="shopping-widget"
       />
-      {/* <iframe
+       <iframe
         src="https://www.charmboard.com/"
         title="charmboard"
         name="charmboard"
@@ -14,7 +14,7 @@ function ShoppingWidget() {
         marginHeight="0"
         width="340"
         height="475"
-      /> */}
+      /> 
 
     </blockquote>
   );
