@@ -15,11 +15,10 @@ const Home = props => {
   );
 };
 
-export async function getServerSideProps(params) {
-  const id = params?.query?.id;
+export async function getServerSideProps() {
   return {
     props: {
-      title: `i need this to work - ${id}`
+      title: 'test title'
     }
   };
 }
