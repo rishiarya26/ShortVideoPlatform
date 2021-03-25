@@ -51,7 +51,7 @@ const defaultMeta = {
 };
 
 const SeoMeta = ({ data = {} }) => {
-  const meta = { ...defaultMeta, ...data }
+  const meta = { ...defaultMeta, ...data };
   return (
     <NextSeo
       // eslint-disable-next-line react/jsx-props-no-spreading
