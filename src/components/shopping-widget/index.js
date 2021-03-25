@@ -13,7 +13,7 @@ function ShoppingWidget() {
         marginWidth="0"
         marginHeight="0"
         width="340"
-        height="475"
+        height="470"
       /> 
 
     </blockquote>
