@@ -34,7 +34,6 @@ const ShareComp = ({ shareCount }) => (
 function VideoSidebar(props) {
   const { show } = useDrawer();
   const [liked, setLiked] = useState(false);
-  const Comp = useDevice(devices, [ShareComp, DummyComp], DummyComp);
   return (
     <div className="absolute bottom-12 right-3 text-white">
       <div className="relative p-3 text-center flex justify-center">
@@ -64,7 +63,7 @@ function VideoSidebar(props) {
         <p className="text-sm">{props.comment}</p>
       </div>
 
-      <Comp shareCount={props.share} />
+      <ShareComp shareCount={props.share} />
 
       <div className="relative p-3 text-center flex flex-col items-center">
         <Shop />

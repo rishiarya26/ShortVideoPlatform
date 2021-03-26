@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import { data } from 'autoprefixer';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';

@@ -10,8 +10,7 @@ function HeadMeta() {
     <>
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
-      <title>{APP_NAME}</title>
+      {/* <title>{APP_NAME}</title> */}
 
       <link rel="preload" href="https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html" as="document" />
 
@@ -22,18 +21,9 @@ function HeadMeta() {
       {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" /> */}
       {/* <script type="text/javascript" src="/agents/instana.js" /> */}
       <script type="text/javascript" src="/embeds/hipi.js" />
-
-      <link rel="canonical" href="https://nextpwa-72153.web.app" />
-      <meta name="theme-color" content="red" />
-      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" />
-
-      <meta
-        name="description"
-        itemProp="description"
-        content="This project is a starter kit that can be used to build a robust and high performance web app"
-      />
-      <meta name="keywords" content="hipi web starter kit" />
-      <meta name="format-detection" content="telephone=no" />
+      <meta name="theme-color" content="#100618" />
+      {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       {/* IOS */}
       <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -139,22 +129,6 @@ function HeadMeta() {
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
 
       <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
-
-      {/* Social Media */}
-      <meta property="og:type" content="article" />
-      <meta property="og:title" content="hipi Web Starter Kit" />
-      <meta property="og:image" content={withBasePath('images/hipi_logo_v01.png')} />
-      <meta property="og:url" content="https://localhost:5000/" />
-      <meta
-        property="og:description"
-        content="This project is a starter kit that can be used to build a robust and high performance web app."
-      />
-
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content="hipi Web Starter Kit" />
-      {/* twitter needs absolute urls for image */}
-      {/* <meta name="twitter:image" content="https://covid.bhaarat.ai/img_fb.jpg" /> */}
-      <meta name="twitter:image:alt" content="hipi Web Starter Kit" />
     </>
   );
 }

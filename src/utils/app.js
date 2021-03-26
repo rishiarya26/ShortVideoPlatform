@@ -26,6 +26,7 @@ export const withRouteState = Component => {
   return Component;
 };
 
+
 export const generateUUID = persist => {
   const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     // eslint-disable-next-line no-bitwise
