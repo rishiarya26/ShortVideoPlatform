@@ -12,10 +12,19 @@ const TranslationContext = createContext({
   setLanguage: () => { }
 });
 
-const supportedLanguages = {
-  'hi-in': 'हिंदी',
-  'en-in': 'English',
-  'bn-in': 'বাংলা'
+export const supportedLanguages = {
+  'hi-in': {
+    text: 'हिंदी',
+    code: 'hi-IN'
+  },
+  'en-in': {
+    text: 'English',
+    code: 'en-IN'
+  },
+  'bn-in': {
+    text: 'বাংলা',
+    code: 'bn-IN'
+  }
 };
 
 const setLanguagePref = lang => (localStorage.set('pref-lang', lang));

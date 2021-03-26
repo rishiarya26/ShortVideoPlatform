@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextSeo } from 'next-seo';
+import { NextSeo, VideoJsonLd } from 'next-seo';
 
 // This link relation is used to indicate a relation between a desktop and a mobile website to search engines.
 
@@ -64,5 +64,6 @@ const DonotIndex = () => (<NextSeo noindex />);
 
 export {
   SeoMeta,
-  DonotIndex
+  DonotIndex,
+  VideoJsonLd
 };
