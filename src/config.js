@@ -11,12 +11,6 @@ export const getBasePath = () => {
 // TODO replace this with a default from a constant
 export const getLanguage = () => (trimFirstChar(getBasePath() || '/en-in'));
 
-export const getLocale = () => {
-  const { publicRuntimeConfig = {} } = getConfig() || {};
-  const { locale = 'en-IN' } = publicRuntimeConfig;
-  return locale;
-};
-
 export const isMockMode = () => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
   const { mockMode = '' } = publicRuntimeConfig;
