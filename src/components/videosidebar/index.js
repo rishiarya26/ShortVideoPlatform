@@ -6,8 +6,13 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
+import { getDeviceType } from '../../hooks/use-device';
 
 const shareThis = async () => {
+  if (getDeviceType() === 'desktop') {
+    // show toast
+    return;
+  }
   try {
     await share();
   } catch (e) {
