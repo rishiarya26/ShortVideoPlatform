@@ -4,7 +4,7 @@ import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
-import Play from '../commons/svgicons/play';
+import { withBasePath } from '../../config';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -62,10 +62,10 @@ function Embedvideo(props) {
       </video>
       <div
         onClick={handleVideoPress}
-        className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
+        className="absolute top-2/5 left-1/2 "
         style={{ display: playing ? 'none' : 'block' }}
       >
-        <Play />
+        <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
       </div>
       <VideoSidebar
         profilePic={props.profilePic}
