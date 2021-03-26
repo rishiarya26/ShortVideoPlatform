@@ -1,5 +1,5 @@
-import Embedvideo from '../src/components/embedvideo';
-import FooterMenu from '../src/components/footer-menu';
+import Embedvideo from '../src/components/embedvideo/';
+import FooterMenu from '../src/components/footer-menu/';
 import { getSingleFeed } from '../src/sources/feed/embed';
 import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 
