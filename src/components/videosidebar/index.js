@@ -6,11 +6,13 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
-import useDevice, { devices } from '../../hooks/use-device';
-
-const DummyComp = () => (<div />);
+import { getDeviceType } from '../../hooks/use-device';
 
 const shareThis = async () => {
+  if (getDeviceType() === 'desktop') {
+    // show toast
+    return;
+  }
   try {
     await share();
   } catch (e) {
@@ -31,7 +33,6 @@ const ShareComp = ({ shareCount }) => (
 
 function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
-  const Comp = useDevice(devices, [ShareComp, DummyComp], DummyComp);
   return (
     <div className="absolute bottom-16 right-3 text-white">
       <div className="relative p-3 text-center flex justify-center">
@@ -61,7 +62,7 @@ function VideoSidebar(props) {
         <p className="text-sm">{props.comment}</p>
       </div>
 
-      <Comp shareCount={props.share} />
+      <ShareComp shareCount={props.share} />
 
       <div className="relative p-3 text-center flex flex-col items-center">
         <Shop />

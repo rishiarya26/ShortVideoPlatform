@@ -14,7 +14,7 @@ it('should return an object', () => {
 
 it('should return an language prop pointing to default language', () => {
   const { result } = renderHook(() => useTranslation());
-  expect(result.current.language).toBe('en-IN');
+  expect(result.current.language).toBe('en-in');
 });
 
 it('should have functions to get translations and set language', async () => {
@@ -48,7 +48,7 @@ it('should be able to change the language', async () => {
     return (
       <>
         <div data-testid="dt-language">{language}</div>
-        <button data-testid="dt-change-language" onClick={() => (setLanguage('hi-IN'))}>Change Language</button>
+        <button data-testid="dt-change-language" onClick={() => (setLanguage('hi-in'))}>Change Language</button>
       </>
     );
   };
@@ -57,8 +57,8 @@ it('should be able to change the language', async () => {
       <TestComponent />
     </TranslationProvider>
   );
-  expect(getByTestId('dt-language').innerHTML).toBe('en-IN');
+  expect(getByTestId('dt-language').innerHTML).toBe('en-in');
   fireEvent.click(getByTestId('dt-change-language'));
-  expect(getByTestId('dt-language').innerHTML).toBe('hi-IN');
+  expect(getByTestId('dt-language').innerHTML).toBe('hi-in');
 });
 
