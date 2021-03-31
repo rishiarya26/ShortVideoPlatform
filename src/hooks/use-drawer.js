@@ -14,7 +14,7 @@ const DrawerContext = createContext({
 
 export const DrawerProvider = ({ children }) => {
   const { show: showOverLay, hide: hideOverLay } = useOverLay();
-  const Comp = useMedia(breakpoints, [Dialog, Drawer, Drawer], Drawer);
+  const Comp = useMedia(breakpoints, [Dialog, Dialog, Drawer], Drawer);
 
   const [state, setState] = useState({
     visible: false,
