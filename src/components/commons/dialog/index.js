@@ -18,13 +18,15 @@ const Dialog = ({
   >
     <div data-testid="dialog-header flex w-full justify-between relative">
       <div data-testid="dialog-title">{title}</div>
-      <div data-testid="dialog-close"
+      <div
+        data-testid="dialog-close"
         role="presentation"
         onClick={() => (close())}
-        className="w-6 h-6 absolute right-3 top-3">
-        <Close/>
-        </div>
-     
+        className="w-6 h-6 absolute right-3 top-3"
+      >
+        <Close />
+      </div>
+
     </div>
     <div data-testid="dialog-content w-full">
       {children}
