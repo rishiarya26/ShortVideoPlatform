@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 const Comment = () => (
-  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g
       opacity="0.9"
       filter="url(#CommentShadowColor_filter0_d)"
