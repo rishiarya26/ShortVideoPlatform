@@ -10,7 +10,7 @@ import { getDeviceType } from '../../hooks/use-device';
 import CommentTray from '../comment-tray';
 import useDrawer from '../../hooks/use-drawer';
 
-//const DummyComp = () => (<div />);
+// const DummyComp = () => (<div />);
 
 const shareThis = async () => {
   if (getDeviceType() === 'desktop') {
