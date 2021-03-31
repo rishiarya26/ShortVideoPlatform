@@ -4,23 +4,31 @@ import React, {
 import { trimFirstChar } from '../utils/string';
 import { getFirstTruthyValue } from '../utils/functional';
 import { localStorage } from '../utils/storage';
-import { getLocale } from '../config';
 
 const TranslationContext = createContext({
-  language: 'en-IN',
+  language: 'en-in',
   t: () => { },
   setLanguage: () => { }
 });
 
-const supportedLanguages = {
-  'hi-in': 'हिंदी',
-  'en-in': 'English',
-  'bn-in': 'বাংলা'
+export const supportedLanguages = {
+  'hi-in': {
+    text: 'हिंदी',
+    code: 'hi-in'
+  },
+  'en-in': {
+    text: 'English',
+    code: 'en-in'
+  },
+  'bn-in': {
+    text: 'বাংলা',
+    code: 'bn-in'
+  }
 };
 
 const setLanguagePref = lang => (localStorage.set('pref-lang', lang));
 
-export const getDefaultLanguage = () => 'en-IN';
+export const getDefaultLanguage = () => 'en-in';
 const getLanguagePref = () => (localStorage.get('pref-lang'));
 const getLanguageFromPath = () => (trimFirstChar(window.location.pathname).split('/')[0]);
 const getLanguageFromBrowser = () => (navigator.language.split('-')[0]);
@@ -46,8 +54,8 @@ const getLanguage = () => (getFirstTruthyValue(getLanguageFromPath, getLanguageP
 //   window.location.href = goto;
 // };
 
-export const TranslationProvider = ({ children, locales }) => {
-  const [language, setLang] = useState(getLocale());
+export const TranslationProvider = ({ children, locales, locale }) => {
+  const [language, setLang] = useState(locale);
   const [translations] = useState(locales);
   const t = useCallback(key => (translations[key] || ''));
 
