@@ -38,6 +38,7 @@ const ShareComp = ({ shareCount }) => (
 function VideoSidebar(props) {
   const { show } = useDrawer();
   const [liked, setLiked] = useState(false);
+
   return (
     <div className="absolute bottom-36 right-0 text-white">
       <div className="relative py-3  px-1 text-center flex justify-center">
@@ -62,7 +63,10 @@ function VideoSidebar(props) {
         )}
         <p className="text-sm">{props.likes}</p>
       </div>
-      <div className="relative py-3  px-1 text-center flex flex-col items-center" onClick={() => show(' 3 comments', CommentTray)}>
+      <div
+        className="relative py-3  px-1 text-center flex flex-col items-center"
+        onClick={() => show(' 3 comments', CommentTray)}
+      >
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>
