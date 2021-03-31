@@ -26,8 +26,8 @@ export default function DeskFeed() {
       </div>
       <div className="flex pt-24 relative">
         <div id="navbar" className="w-1/4 px-12 flex flex-col fixed top-28 justify-end items-end">
-          <p className="text-lg font-semibold">Trending</p>
-          <p className="text-lg font-semibold">Following</p>
+          <p className="text-lg font-semibold px-6 py-2 rounded-full border border-purple-800 text-purple-800">Trending</p>
+          <p className="text-lg font-semibold px-6 py-2 rounded-full">Following</p>
         </div>
         <div className="w-96 left-1/4 top-24 absolute">
           <ComponentStateHandler
