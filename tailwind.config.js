@@ -414,20 +414,36 @@ module.exports = {
       },
       fade_in: {
         '0%': {
-            opacity: '0'
+          opacity: '0'
         },
         '100%': {
-            opacity: '1'
+          opacity: '1'
+        }
+      },
+      fade_out: {
+        from: {
+          opacity: '1'
         },
-    },
-    fade_out: {
-        'from': {
-            opacity: '1'
+        to: {
+          opacity: '0'
+        }
+      },
+      pop_in: {
+        from: {
+          transform: 'translate(-50%, 0);'
         },
-        'to': {
-            opacity: '0'
+        to: {
+          transform: 'translate(-50%, -50%);'
+        }
+      },
+      pop_out: {
+        from: {
+          transform: 'translate(-50%, -50%);'
         },
-    },
+        to: {
+          transform: 'translate(-50%, 0);'
+        }
+      },
       ping: {
         '75%, 100%': {
           transform: 'scale(2)',
