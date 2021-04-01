@@ -1,5 +1,7 @@
 
-function Comment() {
+function Comment({
+  comment, timeSince, user, likeCount
+}) {
   return (
     <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2">
       <div id="usrimg" className="w-8 h-8 mr-4">
@@ -11,12 +13,14 @@ function Comment() {
       </div>
       <div id="commentlist" className="flex flex-col ">
         <div id="usrname" className="font-medium">
-          User@987589
+          {user}
         </div>
         <div id="comment" className="flex ">
           <div id="commenttxt" className="truncate pr-10 pt-1">
-            video looks nice and comment goes here
-            <p className="text-gray-400"> 3 hous ago</p>
+            {comment}
+            <p className="text-gray-400">
+              {timeSince}
+            </p>
           </div>
         </div>
       </div>
@@ -32,7 +36,7 @@ function Comment() {
             />
           </svg>
         </div>
-        <div>679</div>
+        <div>{likeCount}</div>
       </div>
     </div>
   );

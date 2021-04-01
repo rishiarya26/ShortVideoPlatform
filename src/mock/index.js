@@ -3,6 +3,7 @@ import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
 import { getForYouFeed } from './req-handlers/feed';
 import { getForYouEmbedFeed } from './req-handlers/embed';
+import { getComments } from './req-handlers/social';
 import { isMockMode } from '../config';
 
 function mockServer(environment = 'development', callback) {
@@ -21,6 +22,9 @@ function mockServer(environment = 'development', callback) {
       // feed
       this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/5', getForYouFeed);
       this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1', getForYouEmbedFeed);
+
+      // social
+      this.get('https://api.getsocial.im/v1/activities', getComments);
     }
   });
   return server;
