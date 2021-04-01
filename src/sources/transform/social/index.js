@@ -1,7 +1,6 @@
 import { transformModel, getMessage } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { trimLowerCase } from '../../../utils/string';
-import { getStatusSince } from '../../../utils/date';
 
 const msgMap = {
   200: 'ok'
@@ -17,6 +16,7 @@ function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
   payload.status = 'fail';
   payload.message = getMessage(error, {});
+  payload.data = [];
   payload['http-status'] = error.status;
   return payload;
 }
@@ -34,15 +34,18 @@ function transformSuccess(data) {
           return {
             comment: fetchCommentsTextByLang(comment.content)?.text || '',
             likeCount: comment?.reactions_count?.like || 0,
-            time: getStatusSince(comment?.status_updated_at || 0),
-            user: comment?.author?.user?.display_name || ''
-
+            time: comment?.status_updated_at || 0,
+            user: comment?.author?.user?.display_name || '',
+            profilePic: comment?.author?.user?.avatar_url || ''
           };
         }
         return null;
       });
       payload.data = commentsToShow.filter(item => item != null);
       payload.requestedWith = { ...data.requestedWith };
+    }
+    if (!payload.data || payload.data.length === 0) {
+      throw new Error('comments not found');
     }
     return payload;
   } catch (err) {

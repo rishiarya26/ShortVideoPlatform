@@ -1,14 +1,15 @@
+// TODO call like here for comment send comment id as input
 
 function Comment({
-  comment, timeSince, user, likeCount
+  comment, timeSince, user, likeCount, profilePic
 }) {
   return (
     <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2">
-      <div id="usrimg" className="w-8 h-8 mr-4">
+      <div id="usrimg" className="flex -space-x-2 overflow-hidden">
         <img
           alt="profile-pic"
-          className="usrimg w-full rounded-full"
-          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"
+          className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+          src={profilePic}
         />
       </div>
       <div id="commentlist" className="flex flex-col ">

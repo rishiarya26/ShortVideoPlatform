@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useRef } from 'react';
 
 import useOverLay from './use-overlay';
 import useMedia, { breakpoints } from './use-media';
@@ -14,6 +14,7 @@ const DrawerContext = createContext({
 
 export const DrawerProvider = ({ children }) => {
   const { show: showOverLay, hide: hideOverLay } = useOverLay();
+  const ComponentProps = useRef({});
   const Comp = useMedia(breakpoints, [Dialog, Dialog, Drawer], Drawer);
 
   const [state, setState] = useState({
@@ -22,7 +23,8 @@ export const DrawerProvider = ({ children }) => {
     type: 'md'
   });
 
-  const show = (title, content, type = 'md') => {
+  const show = (title, content, type = 'md', props) => {
+    ComponentProps.current = props;
     DrawerContent = content;
     showOverLay();
     setState({
@@ -50,7 +52,7 @@ export const DrawerProvider = ({ children }) => {
           close={close}
           title={state.title}
         >
-          {DrawerContent && <DrawerContent />}
+          {DrawerContent && <DrawerContent {...ComponentProps.current} />}
         </Comp>
       }
     </DrawerContext.Provider>

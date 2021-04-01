@@ -64,8 +64,9 @@ function VideoSidebar(props) {
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
+        role="presentation"
         className="relative py-3  px-1 text-center flex flex-col items-center"
-        onClick={() => show(' 3 comments', CommentTray)}
+        onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
         <p className="text-sm">{props.comment}</p>
