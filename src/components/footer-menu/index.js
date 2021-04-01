@@ -10,18 +10,25 @@ function FooterMenu() {
   const { show } = useDrawer();
   const { t } = useTranslation();
   return (
-    <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center">
+    <div className="flex flex-col w-full fixed bottom-0">
+      <div id="progress-bar" className="w-1/4 h-1 bg-hipipink">
+
+      </div>
+    <div className="w-full bg-black  py-2 flex justify-around items-center">
       <Home />
       <Search />
       <button
-        className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+        className="rounded-full flex bg-hipipink tracking-wide bg-opacity-50 cursor-pointer relative
+        outline-none group"
         onClick={() => show('', ShoppingWidget)}
       >
-        {t('shop')}
+        <span className="transform-gpu  -translate-y-1   rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base
+        group-active:translate-y-0">{t('shop')}</span>
       </button>
-
+     
       <Add />
       <Profile />
+    </div>
     </div>
   );
 }

@@ -3,7 +3,8 @@ function Comment({
   comment, timeSince, user, likeCount
 }) {
   return (
-    <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2">
+    <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2 justify-between">
+      <div className="flex">
       <div id="usrimg" className="w-8 h-8 mr-4">
         <img
           alt="profile-pic"
@@ -24,7 +25,8 @@ function Comment({
           </div>
         </div>
       </div>
-      <div id="commentlike" className="flex flex-col justify-self-end">
+      </div>
+      <div id="commentlike" className="flex flex-col items-center">
         <div className="pb-2">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -36,7 +38,7 @@ function Comment({
             />
           </svg>
         </div>
-        <div>{likeCount}</div>
+        <div>{likeCount} 56</div>
       </div>
     </div>
   );
