@@ -1,4 +1,4 @@
-import { get, post } from 'network';
+import { get, post, del } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/social';
@@ -81,11 +81,36 @@ const postLike = async ({ socialId }) => {
   }
 };
 
+const deleteLike = async ({ socialId }) => {
+  let response = {};
+  try {
+    const payload = {
+      app_id: appId,
+      reaction: {
+        type: 'like',
+        activity_ids: [
+          socialId
+        ]
+      }
+    };
+    const apiPath = `${getApiBasePath('get-social')}/activities/reactions`;
+    response = await del(apiPath, payload, {
+      'X-GetSocial-API-Key': apiKey
+    });
+    response.data.status = 200;
+    response.data.message = '';
+    return Promise.resolve(response.data);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
 const [getComments, clearComments] = apiMiddleWare(getActivityFeed, transformSuccess, transformError, middlewareSettings);
 
-export { 
+export {
   getComments,
   clearComments,
   postComment,
-  postLike
+  postLike,
+  deleteLike
 };
