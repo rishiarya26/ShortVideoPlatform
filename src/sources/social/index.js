@@ -3,6 +3,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/social';
 import { getEpochTime } from '../../utils/date';
+import { trimSpace } from '../../utils/string';
 
 const apiKey = '4dbc881836c2a0130cda9cfcec0f3383';
 const appId = 'YInJ8G70y098';
@@ -15,9 +16,14 @@ const middlewareSettings = {
 const getActivityFeed = async ({ socialId = 0, nextPage = '' }) => {
   let response = {};
   try {
-    const apiPath = `
-    ${getApiBasePath('get-social')}/activities?target_id=${socialId}&app_id=${appId}${(nextPage ? `&next_cursor=${nextPage}` : '')}
-    `;
+    // eslint-disable-next-line max-len
+    const apiPath = trimSpace(`
+    ${getApiBasePath('get-social')}/activities
+    ?target_type=ACTIVITY
+    &target_id=${socialId}
+    &app_id=${appId}
+    ${(nextPage ? `&next_cursor=${nextPage}` : '')}
+    `);
     response = await get(apiPath, null, {
       'X-GetSocial-API-Key': apiKey
     });
