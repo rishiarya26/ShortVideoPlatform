@@ -20,8 +20,10 @@ function FooterMenu() {
         outline-none group"
           onClick={() => show('', ShoppingWidget)}
         >
-          <span className="transform-gpu  -translate-y-1   rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base
-        group-active:translate-y-0"
+          <span className={`transform-gpu -translate-y-1
+          rounded-full text-white py-1 px-4 bg-hipipink 
+          font-medium tracking-wide xxs:text-sm xs:text-base
+          group-active:translate-y-0`}
           >
             {t('shop')}
           </span>

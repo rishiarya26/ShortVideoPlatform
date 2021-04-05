@@ -9,6 +9,7 @@ import { share } from '../../utils/app';
 import { getDeviceType } from '../../hooks/use-device';
 import CommentTray from '../comment-tray';
 import useDrawer from '../../hooks/use-drawer';
+import { postLike, deleteLike } from '../../sources/social';
 
 // const DummyComp = () => (<div />);
 
@@ -38,6 +39,7 @@ const ShareComp = ({ shareCount }) => (
 function VideoSidebar(props) {
   const { show } = useDrawer();
   const [liked, setLiked] = useState(false);
+  const { socialId } = props;
 
   return (
     <div className="absolute bottom-36 right-0 text-white">
@@ -53,19 +55,36 @@ function VideoSidebar(props) {
       </div>
       <div className="relative py-3  px-1 text-center">
         {liked ? (
-          <div role="presentation" onClick={() => setLiked(false)}>
+          <div
+            role="presentation"
+            onClick={
+              () => {
+                deleteLike({ socialId });
+                setLiked(false);
+              }
+            }
+          >
             <Liked />
           </div>
         ) : (
-          <div role="presentation" onClick={() => setLiked(true)}>
+          <div
+            role="presentation"
+            onClick={
+              () => {
+                postLike({ socialId });
+                setLiked(true);
+              }
+            }
+          >
             <Like />
           </div>
         )}
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
+        role="presentation"
         className="relative py-3  px-1 text-center flex flex-col items-center"
-        onClick={() => show(' 3 comments', CommentTray)}
+        onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
         <p className="text-sm">{props.comment}</p>

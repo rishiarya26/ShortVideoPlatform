@@ -1,11 +1,12 @@
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
+import differenceInSeconds from 'date-fns/differenceInSeconds';
 import { trimUpperCase } from './string';
 
 /**
    * [getEpochTime this is to get epoch time relative to current time, this can
    * be addition of subtraction of seconds,minutes,hours,days,months,years
-   * basis a positive or negative value respectivley]
+   * basis a positive or negative value respectively]
    * @param  {String} typeOfValue [description]
    * @param  {Number} value   [positive or negative to add or delete the value to current date]
    * @return {[epoch time]}   [description]
@@ -86,9 +87,12 @@ export const getStatusSince = (statusDate, t) => {
     return false;
   });
   const diffNum = Math.floor(timeDiff / lastMatchKey);
-  const timeUnit = `${timeMap[lastMatchKey]}${(diffNum > 1 ? 's' : '')}`;
+  let timeUnit = `${timeMap[lastMatchKey]}${(diffNum > 1 ? 's' : '')}`;
+  timeUnit = t(trimUpperCase(timeUnit));
   if (timeMap[lastMatchKey] && timeMap[lastMatchKey] === 'year' && diffNum > 1) {
-    return `status as on ${parseAndFormatDate(statusDate)} `;
+    return `${t('STATUS_AS_ON')} ${parseAndFormatDate(statusDate)} `;
   }
-  return (timeUnit ? `${diffNum} ${timeUnit} ago` : '');
+  return (timeUnit ? `${diffNum} ${timeUnit} ${t('AGO')}` : '');
 };
+
+export const getDateDiffSeconds = (d1, d2) => differenceInSeconds(d1, d2);

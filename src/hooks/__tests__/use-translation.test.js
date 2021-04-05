@@ -34,7 +34,10 @@ it('should be able fetch and use translations as defined in the locales file', a
     );
   };
   const { getByTestId } = render(
-    <TranslationProvider locales={translations}>
+    <TranslationProvider
+      locales={translations}
+      locale="en-in"
+    >
       <TestComponent />
     </TranslationProvider>
   );
@@ -53,7 +56,10 @@ it('should be able to change the language', async () => {
     );
   };
   const { getByTestId } = render(
-    <TranslationProvider locales={translations}>
+    <TranslationProvider
+      locales={translations}
+      locale="en-in"
+    >
       <TestComponent />
     </TranslationProvider>
   );
