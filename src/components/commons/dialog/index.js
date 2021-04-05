@@ -1,32 +1,36 @@
-import useMedia, { breakpoints } from '../../../hooks/use-media';
+import Close from '../svgicons/close';
 
 const Dialog = ({
   children, title, close, visible
-}) => {
-// TODO use the right tailwind class - maybe add another route for desktop to set right defaults
-  const clsComponentWidth = useMedia(breakpoints,
-    ['w-3/12', 'w-6/12', 'w-9/12'], 'w-9/12');
-  return (
-    <div
-      data-testid="dialog-container"
-      className={`${clsComponentWidth} ${visible ? 'visible' : 'invisible'} fixed z-30 max-h-px500 overflow-y-auto bg-black rounded-sm`}
-    >
-      <div data-testid="dialog-header flex w-full justify-between ">
-        <div data-testid="dialog-title">{title}</div>
-        <img
-          data-testid="dialog-close"
-          role="presentation"
-          src="images/ic_close.svg"
-          onClick={() => (close())}
-          alt="Close Icon"
-          width="20px"
-          height="20px"
-        />
+}) => (
+  <div
+    data-testid="dialog-container"
+    className={`
+      w-3/4
+      ${visible ? 'visible' : 'invisible'} 
+      z-10 fixed rounded-lg p-4 bg-white 
+      overflow-y-auto
+      transition-all duration-300
+      top-2/4 left-2/4
+      transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4
+      motion-reduce:transition-none motion-reduce:transform-none
+    `}
+  >
+    <div data-testid="dialog-header flex w-full justify-between relative">
+      <div data-testid="dialog-title">{title}</div>
+      <div
+        data-testid="dialog-close"
+        role="presentation"
+        onClick={() => (close())}
+        className="w-6 h-6 absolute right-3 top-3"
+      >
+        <Close />
       </div>
-      <div data-testid="dialog-content w-full">
-        {children}
-      </div>
+
     </div>
-  );
-};
+    <div data-testid="dialog-content w-full">
+      {children}
+    </div>
+  </div>
+);
 export default Dialog;

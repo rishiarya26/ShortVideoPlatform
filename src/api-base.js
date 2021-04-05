@@ -4,12 +4,14 @@ export const apiBaseEndPoints = {
   development: {
     test: 'https://api.github.com',
     hipi: 'https://mobiletest.charmboard.com/v3.6',
-    translations: 'https://anky2k.github.io'
+    translations: 'http://localhost:3000',
+    'get-social': 'https://api.getsocial.im/v1'
   },
   production: {
     test: 'https://api.github.com',
     hipi: 'https://mobiletest.charmboard.com/v3.6',
-    translations: 'https://anky2k.github.io'
+    translations: 'https://hipi-web.s3.ap-south-1.amazonaws.com',
+    'get-social': 'https://api.getsocial.im/v1'
   }
 };
 

@@ -54,6 +54,7 @@ export default function Hipi(params) {
         regionsAllowed={languageCodes}
       />
       <EmbedVideo
+        socialId={item.getSocialId}
         url={item.video_url}
         id={item.content_id}
         comments={item.commentsCount}

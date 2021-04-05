@@ -13,3 +13,4 @@ export const track = (event, payload) => {
   if (!initiated) init();
   trackEvent(event, payload);
 };
+

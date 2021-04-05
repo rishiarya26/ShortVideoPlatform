@@ -62,6 +62,33 @@ async function reportProfile({ lang }) {
   }
 }
 
+async function postComment() {
+  console.log('commented');
+}
+
+async function postLike() {
+  console.log('liked');
+}
+
+async function getComments() {
+  return [{
+    comment: 'this is a comment',
+    user: 'ankit',
+    time: '2 hrs ago',
+    likes: 45
+  }, {
+    comment: 'this is a fancy comment',
+    user: 'cristibin',
+    time: '2 days ago',
+    likes: 145
+  }, {
+    comment: 'this is another fancy comment',
+    user: 'hariom',
+    time: '1 min ago',
+    likes: 2
+  }];
+}
+
 const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError);
 const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError);
 const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError);
@@ -69,6 +96,9 @@ const [srUpdateProfile] = apiMiddleWare(updateProfile, transformSuccess, transfo
 const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError);
 
 export {
+  postComment,
+  postLike,
+  getComments,
   srSendOtp,
   srVerifyOtpPassword,
   srForgotPassword,

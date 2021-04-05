@@ -1,5 +1,4 @@
 // import App from "next/app"
-// import { useEffect } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';

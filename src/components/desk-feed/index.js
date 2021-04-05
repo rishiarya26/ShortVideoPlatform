@@ -19,14 +19,20 @@ export default function DeskFeed() {
 
   return (
     <div>
-      <div id="header" className=" w-full h-24 shadow px-12 flex items-center fixed top-0 z-10 bg-white">
-        <div>
+      <div id="header" className=" w-full h-24 shadow px-48 flex items-center fixed top-0 z-10 bg-white">
+        <div className="flex items-center">
           <img className="w-20" src={withBasePath('icons/android-icon-192x192-dunplab-manifest-17016.png')} alt="zee logo" />
+          <h1 className="font-bold text-xl">HIPI</h1>
         </div>
       </div>
       <div className="flex pt-24 relative">
-        <div id="navbar" className="w-1/4 px-12 flex flex-col fixed top-28 justify-end items-end">
-          <p className="text-lg font-semibold px-6 py-2 rounded-full border border-purple-800 text-purple-800">Trending</p>
+        <div id="navbar" className="w-1/4 px-20 flex flex-col fixed top-28 justify-end items-end">
+          <p className={`text-lg font-semibold px-6 py-2 
+          rounded-full border border-purple-800
+           text-purple-800 bg-purple-800 bg-opacity-20`}
+          >
+            Trending
+          </p>
           <p className="text-lg font-semibold px-6 py-2 rounded-full">Following</p>
         </div>
         <div className="w-96 left-1/4 top-24 absolute">

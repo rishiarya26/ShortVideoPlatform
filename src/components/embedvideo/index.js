@@ -68,6 +68,7 @@ function Embedvideo(props) {
         <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
       </div>
       <VideoSidebar
+        socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
         comment={props.comments}
