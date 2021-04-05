@@ -7,6 +7,8 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
+import { CopyToClipBoard } from '../../utils/web';
+import { getCurrentUri } from '../../utils/location';
 import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 import { postLike, deleteLike } from '../../sources/social';
@@ -21,6 +23,7 @@ const CommentTray = dynamic(
 
 const shareThis = async () => {
   if (getDeviceType() === 'desktop') {
+    CopyToClipBoard(getCurrentUri());
     // show toast
     return;
   }
