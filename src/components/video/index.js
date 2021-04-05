@@ -14,10 +14,7 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
-
-console.log(rootRef.currentTime);
-
-
+  
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -57,6 +54,7 @@ console.log(rootRef.currentTime);
     rootMargin: '50px',
     threshold: [0.30, 0.75]
   });
+  
 
   return (
     <div
