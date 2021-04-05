@@ -5,26 +5,26 @@ function Comment({
   return (
     <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2 justify-between">
       <div className="flex">
-      <div id="usrimg" className="w-8 h-8 mr-4">
-        <img
-          alt="profile-pic"
-          className="usrimg w-full rounded-full"
-          src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"
-        />
-      </div>
-      <div id="commentlist" className="flex flex-col ">
-        <div id="usrname" className="font-medium">
-          {user}
+        <div id="usrimg" className="w-8 h-8 mr-4">
+          <img
+            alt="profile-pic"
+            className="usrimg w-full rounded-full"
+            src="https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face"
+          />
         </div>
-        <div id="comment" className="flex ">
-          <div id="commenttxt" className="truncate pr-10 pt-1">
-            {comment}
-            <p className="text-gray-400">
-              {timeSince}
-            </p>
+        <div id="commentlist" className="flex flex-col ">
+          <div id="usrname" className="font-medium">
+            {user}
+          </div>
+          <div id="comment" className="flex ">
+            <div id="commenttxt" className="truncate pr-10 pt-1">
+              {comment}
+              <p className="text-gray-400">
+                {timeSince}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
       </div>
       <div id="commentlike" className="flex flex-col items-center">
         <div className="pb-2">
@@ -38,7 +38,11 @@ function Comment({
             />
           </svg>
         </div>
-        <div>{likeCount} 56</div>
+        <div>
+          {likeCount}
+          {' '}
+          56
+        </div>
       </div>
     </div>
   );
