@@ -23,8 +23,6 @@ export default function OnView(props) {
     [childrenLength]
   );
 
-  console.log('showLoader ---- ', showLoader);
-
   return (
     <>
       {props.children}
