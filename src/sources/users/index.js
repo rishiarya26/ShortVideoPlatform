@@ -62,11 +62,11 @@ async function reportProfile({ lang }) {
   }
 }
 
-async function postComment () {
+async function postComment() {
   console.log('commented');
 }
 
-async function postLike () {
+async function postLike() {
   console.log('liked');
 }
 

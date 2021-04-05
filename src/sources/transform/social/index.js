@@ -28,7 +28,7 @@ function transformSuccess(data) {
       payload.status = 'success';
       payload.message = getMessage(data, msgMap);
       payload['http-status'] = 200;
-      const { data: comments = [] } = data;
+      const { data: comments = [], next_cursor: nextCursor = null } = data;
       const commentsToShow = comments.map(comment => {
         if (trimLowerCase(comment.status) === 'approved') {
           return {
@@ -42,6 +42,7 @@ function transformSuccess(data) {
         return null;
       });
       payload.data = commentsToShow.filter(item => item != null);
+      payload.nextCursor = nextCursor;
       payload.requestedWith = { ...data.requestedWith };
     }
     if (!payload.data || payload.data.length === 0) {

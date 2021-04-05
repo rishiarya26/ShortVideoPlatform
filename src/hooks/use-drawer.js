@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useRef } from 'react';
+import React, {
+  createContext, useContext, useState, useRef
+} from 'react';
 
 import useOverLay from './use-overlay';
 import useMedia, { breakpoints } from './use-media';

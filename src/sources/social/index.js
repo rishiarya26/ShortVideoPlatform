@@ -12,8 +12,8 @@ const middlewareSettings = {
   shouldCache: true,
   ttl: getEpochTime('MINUTE', 5)
 };
-// 539929525481158009
-const getActivityFeed = async ({ socialId = 0, nextPage = '' }) => {
+
+const getActivityFeed = async ({ socialId = 0, nextCursor = '' }) => {
   let response = {};
   try {
     // eslint-disable-next-line max-len
@@ -22,7 +22,7 @@ const getActivityFeed = async ({ socialId = 0, nextPage = '' }) => {
     ?target_type=ACTIVITY
     &target_id=${socialId}
     &app_id=${appId}
-    ${(nextPage ? `&next_cursor=${nextPage}` : '')}
+    ${(nextCursor ? `&next_cursor=${nextCursor}` : '')}
     `);
     response = await get(apiPath, null, {
       'X-GetSocial-API-Key': apiKey

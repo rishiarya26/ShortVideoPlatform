@@ -1,10 +1,19 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { getComments, clearComments, postComment } from '../../sources/social';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Comment from '../comment';
 import Send from '../commons/svgicons/send';
 import useTranslation from '../../hooks/use-translation';
 import { getStatusSince } from '../../utils/date';
+
+const Paginator = dynamic(
+  () => import('../commons/paginator'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 const ErrorComp = () => (<div>error</div>);
 const LoadComp = () => (<div>loading</div>);
@@ -22,12 +31,27 @@ const optimisticUpdate = comment => (
 function CommentTray({ socialId }) {
   const { t } = useTranslation();
   const refInputComment = useRef('');
+  const nextCursor = useRef(null);
   const [items, setItems] = useState([]);
   const dataFetcher = () => getComments({ socialId });
   const onDataFetched = data => {
-    setItems(data.data);
+    nextCursor.current = data.nextCursor;
+    items.length === 0 ? setItems(data.data) : setItems([...items, ...data.data]);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+
+  const loadMore = useCallback(
+    async () => {
+      try {
+        const data = await getComments({ socialId, nextCursor: nextCursor.current });
+        onDataFetched(data);
+      } catch (e) {
+        console.log('no more comments');
+      }
+    },
+    [socialId, nextCursor.current]
+  );
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -38,20 +62,26 @@ function CommentTray({ socialId }) {
         <div
           id="comment-widget"
         />
-        <div className="flex flex-col overflow-scroll">
-          {
-            items.map((item, index) => (
-              <Comment
-                commentId={item.id}
-                profilePic={item.profilePic}
-                comment={item.comment}
-                likeCount={item.likes}
-                timeSince={getStatusSince(item.time, t)}
-                user={item.user}
-                key={index}
-              />
-            ))
-          }
+        <div className="flex flex-col overflow-y-auto h-4/5">
+          <Paginator
+            hasMore={nextCursor.current}
+            loader={LoadComp()}
+            loadFunction={loadMore}
+          >
+            {
+              items.map((item, index) => (
+                <Comment
+                  commentId={item.id}
+                  profilePic={item.profilePic}
+                  comment={item.comment}
+                  likeCount={item.likes}
+                  timeSince={getStatusSince(item.time, t)}
+                  user={item.user}
+                  key={index}
+                />
+              ))
+            }
+          </Paginator>
           <div className="fixed bottom-0 bg-white py-4 w-full flex">
             <input
               placeholder={t('ADD_COMMENT')}
