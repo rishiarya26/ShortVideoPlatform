@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
@@ -7,11 +8,16 @@ import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
 import { getDeviceType } from '../../hooks/use-device';
-import CommentTray from '../comment-tray';
 import useDrawer from '../../hooks/use-drawer';
 import { postLike, deleteLike } from '../../sources/social';
 
-// const DummyComp = () => (<div />);
+const CommentTray = dynamic(
+  () => import('../comment-tray'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 const shareThis = async () => {
   if (getDeviceType() === 'desktop') {
