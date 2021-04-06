@@ -1,56 +1,99 @@
-import Close from '../svgicons/close';
+import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
-const ColorTypeMap = {
-  warn: 'red',
-  error: 'red',
-  info: 'red',
-  success: 'red'
+const ErrorIcon = dynamic(
+  () => import('../svgicons/snackbar/error'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const SuccessIcon = dynamic(
+  () => import('../svgicons/snackbar/success'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const InfoIcon = dynamic(
+  () => import('../svgicons/snackbar/info'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const WarnIcon = dynamic(
+  () => import('../svgicons/snackbar/warn'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const SnackType = {
+  error: 'bg-red-400',
+  info: 'bg-blue-300',
+  success: 'bg-green-400',
+  warn: 'bg-yellow-400'
 };
 
-const getStyleForType = type => ColorTypeMap[type] || ColorTypeMap.info;
+const IconType = {
+  error: ErrorIcon,
+  info: InfoIcon,
+  success: SuccessIcon,
+  warn: WarnIcon
+};
 
+// TODO add close button and call hide function
 function SnackBar(
   {
-    text = 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum', autoClose = true,
-    appearFrom = 'bottom', type = 'info'
+    message = '', visibility, type = 'info'
   }
 ) {
+  const [visible, setVisible] = useState(visibility);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(false), 3000);
+  }, []);
+
+  const Icon = (IconType[type] || IconType.info);
+
+  if (!message) {
+    return (<div />);
+  }
+
+  console.log(` visible - ${visible}`);
+
   return (
-    <div
-      className={`
-      w-80
-      h-auto
-      bg-red-300
-      border border-red-400
-      text-red-700 
-      pl-2 pr-4 py-2
-      rounded 
+    <div className={`
+      ${visible ? 'bottom-20 visible' : 'bottom-0 invisible'}
+      transition-all duration-500
+      motion-reduce:transition-none motion-reduce:transform-none
+      flex items-center 
       absolute
-      bottom-20
       z-20
-      `}
-      role="alert"
+      text-white max-w-sm w-auto
+      ${SnackType[type] || SnackType.info}
+      shadow-md
+      rounded-lg
+      overflow-hidden
+      mx-auto
+    `}
     >
-      <span className="block sm:inline">{text}</span>
-      <span className="absolute pin-t pin-b pin-r pr-2 py-3">
-        {/* <svg
-          className="h-6 w-6 text-red"
-          role="button"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-        >
-          <title>Close</title>
-          <path
-            d={`M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10
-            11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1
-            1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z`}
-          />
-        </svg> */}
-        <Close />
-      </span>
+      <div className="w-10 border-r px-2">
+        <Icon />
+      </div>
+
+      <div className="flex items-center py-3">
+        <div className="mx-3">
+          <p>{message}</p>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default SnackBar;
-

@@ -16,6 +16,11 @@ const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(modu
   return DrawerProvider;
 }));
 
+const SnackbarProvider = dynamic(() => import('../src/hooks/use-snackbar').then(module => {
+  const { SnackbarProvider } = module;
+  return SnackbarProvider;
+}));
+
 const DialogProvider = dynamic(() => import('../src/hooks/use-dialog').then(module => {
   const { DialogProvider } = module;
   return DialogProvider;
@@ -133,11 +138,13 @@ function Hipi({
           <LoaderProvider>
             <DialogProvider>
               <DrawerProvider>
-                <RouteStateProvider>
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
-                </RouteStateProvider>
+                <SnackbarProvider>
+                  <RouteStateProvider>
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </RouteStateProvider>
+                </SnackbarProvider>
               </DrawerProvider>
             </DialogProvider>
           </LoaderProvider>

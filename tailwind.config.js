@@ -40,7 +40,7 @@ module.exports = {
           to: {
             transform: 'translate(-50%, 0) 0.3s ease-in-out;'
           }
-        }
+        }        
       },
       animation: {
         marquee: 'marquee 4s linear infinite'
