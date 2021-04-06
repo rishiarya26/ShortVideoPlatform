@@ -89,6 +89,7 @@ function Video(props) {
         <Pause />
       </div>
       <VideoSidebar
+        socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
         comment={props.comments}

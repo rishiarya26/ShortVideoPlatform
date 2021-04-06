@@ -27,7 +27,7 @@ const Drawer = ({
         </div>
       </div>
     </div>
-    <div className="w-full h-full px-4 flex">
+    <div className="w-full h-full px-4 flex overflow-y-auto">
       {children}
     </div>
   </div>
