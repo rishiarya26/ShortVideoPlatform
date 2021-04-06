@@ -93,11 +93,13 @@ function Video(props) {
         likes={props.likes}
         comment={props.comments}
         share={777}
+        type="feed"
       />
       <VideoFooter
         musicTitle={props.musicTitle}
         userName={props.userName}
         musicCoverTitle={props.musicCoverTitle}
+        type="feed"
       />
     </div>
   );

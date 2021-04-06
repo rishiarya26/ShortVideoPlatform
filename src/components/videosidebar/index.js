@@ -40,7 +40,9 @@ function VideoSidebar(props) {
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="absolute bottom-36 right-0 text-white">
+    <div className="absolute
+    {props.type === 'feed' ? bottom-16 : bottom-36 }
+      right-0 text-white">
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
