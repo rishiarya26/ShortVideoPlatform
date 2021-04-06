@@ -46,8 +46,9 @@ export default function Feed() {
                   profilePic={item.userProfilePicUrl}
                   userName={item.userName}
                   musicCoverTitle={item.musicCoverTitle}
-                  videoid={item.id}
+                  videoid={item.content_id}
                 />
+                
               </SwiperSlide>
             )
           )
