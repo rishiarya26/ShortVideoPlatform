@@ -6,9 +6,10 @@ import Profile from '../commons/svgicons/profile';
 import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 
-function FooterMenu() {
+function FooterMenu(props) {
 
-  const vobj = {'videoId' : 'cfcb3a92-50bb-4b37-a51d-b142ef3cc3be' };
+  const vobj = {'videoId' : props.id };
+  //console.log(vobj);
   // const { show } = useDrawer();
   const { t } = useTranslation();
   return (
