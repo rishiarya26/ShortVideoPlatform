@@ -26,10 +26,11 @@ const ShareComp = ({ shareCount, show }) => (
   <div
     role="presentation"
     onClick={async () => {
+      show({ message: 'Copied Successfully', type: 'info' });
       if (getDeviceType() === 'desktop') {
         CopyToClipBoard(getCurrentUri());
         // TODO use t function for translation
-        show({ message: 'Copied Successfully' });
+        show({ message: 'Copied Successfully', type: 'info' });
         return;
       }
       try {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const ErrorIcon = dynamic(
@@ -50,14 +50,14 @@ const IconType = {
 // TODO add close button and call hide function
 function SnackBar(
   {
-    message = '', visibility, type = 'info'
+    message = '', visible, type = 'info', hide
   }
 ) {
-  const [visible, setVisible] = useState(visibility);
-
   useEffect(() => {
-    setTimeout(() => setVisible(false), 3000);
-  }, []);
+    if (visible) {
+      setTimeout(() => hide(), 3000);
+    }
+  }, [visible]);
 
   const Icon = (IconType[type] || IconType.info);
 
@@ -65,12 +65,10 @@ function SnackBar(
     return (<div />);
   }
 
-  console.log(` visible - ${visible}`);
-
   return (
     <div className={`
       ${visible ? 'bottom-20 visible' : 'bottom-0 invisible'}
-      transition-all duration-500
+      transition-all duration-300
       motion-reduce:transition-none motion-reduce:transform-none
       flex items-center 
       absolute

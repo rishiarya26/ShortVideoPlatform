@@ -31,7 +31,8 @@ export const SnackbarProvider = ({ children }) => {
     <SnackbarContext.Provider value={{ showSnackbar, hideSnackbar }}>
       {children}
       {<Snackbar
-        visibility={state.visibility}
+        hide={hideSnackbar}
+        visible={state.visibility}
         message={state.message}
         type={state.type}
       />}
