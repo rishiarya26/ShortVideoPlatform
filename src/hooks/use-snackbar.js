@@ -23,6 +23,7 @@ export const SnackbarProvider = ({ children }) => {
 
   const hideSnackbar = () => {
     setState({
+      message: state.message,
       visibility: false
     });
   };

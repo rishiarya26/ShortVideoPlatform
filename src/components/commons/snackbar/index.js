@@ -35,7 +35,7 @@ const WarnIcon = dynamic(
 
 const SnackType = {
   error: 'bg-red-400',
-  info: 'bg-blue-300',
+  info: 'bg-blue-400',
   success: 'bg-green-400',
   warn: 'bg-yellow-400'
 };
@@ -67,12 +67,11 @@ function SnackBar(
 
   return (
     <div className={`
-      ${visible ? 'bottom-20 visible' : 'bottom-0 invisible'}
-      transition-all duration-300
-      motion-reduce:transition-none motion-reduce:transform-none
-      flex items-center 
-      absolute
-      z-20
+      ${visible ? 'animate-fade-in-bottom bottom-20' : 'animate-fade-out-bottom'}      
+      fixed
+      z-20              
+      lg:left-1/3
+      flex items-center justify-center
       text-white max-w-sm w-auto
       ${SnackType[type] || SnackType.info}
       shadow-md
