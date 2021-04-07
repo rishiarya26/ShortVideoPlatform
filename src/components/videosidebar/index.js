@@ -48,9 +48,7 @@ function VideoSidebar(props) {
   const { socialId } = props;
 
   return (
-    <div className="absolute
-    {props.type === 'feed' ? bottom-16 : bottom-36 }
-      right-0 text-white">
+    <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-36'} absolute right-0 text-white`}>
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
