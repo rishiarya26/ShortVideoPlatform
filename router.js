@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { withBasePath } from './src/config';
 
 Router.pushState = (path, data = {}, opt = { getInitialProps: true }) => {
@@ -8,3 +8,4 @@ Router.pushState = (path, data = {}, opt = { getInitialProps: true }) => {
 };
 
 export default Router;
+export { useRouter };

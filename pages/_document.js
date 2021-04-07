@@ -2,7 +2,7 @@ import Document, {
   Html, Main, NextScript, Head
 } from 'next/document';
 
-class hipiWebStarterKit extends Document {
+class Hipi extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
@@ -21,4 +21,4 @@ class hipiWebStarterKit extends Document {
   }
 }
 
-export default hipiWebStarterKit;
+export default Hipi;

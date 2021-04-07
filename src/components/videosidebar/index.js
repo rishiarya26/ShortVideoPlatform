@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
@@ -6,13 +7,25 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
-import useDevice, { devices } from '../../hooks/use-device';
 import CommentTray from '../comment-tray';
+import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
+import { postLike, deleteLike } from '../../sources/social';
 
 const DummyComp = () => (<div />);
+const CommentTray = dynamic(
+  () => import('../comment-tray'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 const shareThis = async () => {
+  if (getDeviceType() === 'desktop') {
+    // show toast
+    return;
+  }
   try {
     await share();
   } catch (e) {
@@ -34,6 +47,8 @@ const ShareComp = ({ shareCount }) => (
 function VideoSidebar(props) {
   const { show } = useDrawer();
   const [liked, setLiked] = useState(false);
+  const { socialId } = props;
+
   return (
     <div className="absolute bottom-36 right-0 text-white">
       <div className="relative py-3  px-1 text-center flex justify-center">
@@ -48,17 +63,37 @@ function VideoSidebar(props) {
       </div>
       <div className="relative py-3  px-1 text-center">
         {liked ? (
-          <div role="presentation" onClick={() => setLiked(false)}>
+          <div
+            role="presentation"
+            onClick={
+              () => {
+                deleteLike({ socialId });
+                setLiked(false);
+              }
+            }
+          >
             <Liked />
           </div>
         ) : (
-          <div role="presentation" onClick={() => setLiked(true)}>
+          <div
+            role="presentation"
+            onClick={
+              () => {
+                postLike({ socialId });
+                setLiked(true);
+              }
+            }
+          >
             <Like />
           </div>
         )}
         <p className="text-sm">{props.likes}</p>
       </div>
-      <div className="relative py-3  px-1 text-center flex flex-col items-center" onClick={() => show(' 3 comments', CommentTray)}>
+      <div
+        role="presentation"
+        className="relative py-3  px-1 text-center flex flex-col items-center"
+        onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
+      >
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>

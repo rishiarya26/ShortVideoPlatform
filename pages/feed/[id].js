@@ -1,11 +1,13 @@
-import Embedvideo from '../../src/components/embedvideo/';
+import EmbedVideo from '../../src/components/embedvideo';
 import FooterMenu from '../../src/components/footer-menu';
 import { getSingleFeed } from '../../src/sources/feed/embed';
-import { SeoMeta } from '../../src/components/commons/head-meta/seo-meta';
+import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
+import { supportedLanguages } from '../../src/hooks/use-translation';
+
+const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
 
 export default function Hipi(params) {
   const { data: item = {} } = params;
-  console.log(item);
   return (
     <>
       <SeoMeta
@@ -18,16 +20,17 @@ export default function Hipi(params) {
             title: item.musicCoverTitle,
             description: item.content_description,
             url: params.uri,
+            images: [
+              {
+                url: item.poster_image_url,
+                width: 800,
+                height: 600,
+                alt: item.musicCoverTitle
+              },
+              { url: item.userProfilePicUrl }
+            ],
             type: 'video.movie',
             video: {
-              images: [
-                {
-                  url: item.poster_image_url,
-                  width: 800,
-                  height: 600,
-                  alt: item.musicCoverTitle
-                }
-              ],
               actors: [
                 {
                   role: item.userName
@@ -39,7 +42,19 @@ export default function Hipi(params) {
           }
         }}
       />
-      <Embedvideo
+      <VideoJsonLd
+        name={item.musicCoverTitle}
+        description={item.content_description}
+        contentUrl={item.video_url}
+        embedUrl={params.uri}
+        thumbnailUrls={[
+          item.poster_image_url
+        ]}
+        watchCount={item.likesCount}
+        regionsAllowed={languageCodes}
+      />
+      <EmbedVideo
+        socialId={item.getSocialId}
         url={item.video_url}
         id={item.content_id}
         comments={item.commentsCount}
@@ -57,13 +72,16 @@ export default function Hipi(params) {
 
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
-  console.log(ctx);
-  const { req } = ctx;
+  const {
+    req, params, locale,
+    defaultLocale, locales
+  } = ctx;
   const uri = (new URL(req.url, `http://${req.headers.host}`)).href;
+  const { id } = params;
   let data = {};
   try {
     data = await getSingleFeed({
-      page: contentId
+      page: id
     });
   } catch (e) {
     data = {
@@ -74,6 +92,9 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       uri,
+      locale,
+      locales,
+      defaultLocale,
       ...data
     }
   };

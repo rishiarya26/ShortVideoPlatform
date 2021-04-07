@@ -1,6 +1,7 @@
 import useTranslation from '../../../hooks/use-translation';
 import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
+import { SeoMeta } from './seo-meta';
 
 function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
@@ -8,6 +9,7 @@ function HeadMeta() {
   const { t } = useTranslation();
   return (
     <>
+      <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       {/* <title>{APP_NAME}</title> */}

@@ -38,6 +38,7 @@ export default function Feed() {
                 key={item.content_id} id={item.content_id}
               >
                 <Video
+                  socialId={item.getSocialId}
                   url={item.video_url}
                   id={item.content_id}
                   comments={item.commentsCount}

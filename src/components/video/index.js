@@ -94,6 +94,7 @@ function Video(props) {
       <FooterMenu id={props.videoid} />
 
       <VideoSidebar
+        socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
         comment={props.comments}

@@ -1,5 +1,4 @@
 // import App from "next/app"
-// import { useEffect } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -67,7 +66,9 @@ export function reportWebVitals(metric) {
 //   }
 // }
 
-function hipiWebStarterKit({ Component, pageProps, locales }) {
+function Hipi({
+  Component, pageProps, locales, locale
+}) {
   // useEffect(() => {
   //   if ('serviceWorker' in navigator) {
   //     const wb = new Workbox('sw.js');
@@ -124,7 +125,10 @@ function hipiWebStarterKit({ Component, pageProps, locales }) {
       <Head>
         <HeadMeta />
       </Head>
-      <TranslationProvider locales={locales}>
+      <TranslationProvider
+        locale={locale}
+        locales={locales}
+      >
         <OverLayProvider>
           <LoaderProvider>
             <DialogProvider>
@@ -148,10 +152,13 @@ function hipiWebStarterKit({ Component, pageProps, locales }) {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-hipiWebStarterKit.getInitialProps = async () => {
+Hipi.getInitialProps = async ctx => {
+  const { router } = ctx;
+  const { locale } = router;
   try {
-    const locales = await getLocaleData();
+    const locales = await getLocaleData(locale);
     return {
+      locale,
       locales
     };
   } catch (e) {
@@ -160,4 +167,4 @@ hipiWebStarterKit.getInitialProps = async () => {
   return {};
 };
 
-export default hipiWebStarterKit;
+export default Hipi;

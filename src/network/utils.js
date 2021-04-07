@@ -1,5 +1,6 @@
 
 import { loadMockServer } from '../mock';
+import { getDateDiffSeconds } from '../utils/date';
 
 const RETRY_COUNT = 3;
 const RETRY_DELAY = 500;
@@ -38,13 +39,20 @@ export const rejectPromise = (data = {}) => (new Promise((resolve, reject) => {
 
 export const isObjectEmpty = obj => (obj instanceof Object && Object.keys(obj || {}).length <= 0);
 
+const isValid = cachedItem => {
+  if (!cachedItem.ttl) {
+    return true;
+  }
+  return getDateDiffSeconds(new Date(cachedItem.ttl, new Date()));
+};
+
 export function apiMiddleWare(
   _promise,
   transformSuccess = data => (data),
   transformError = data => (data),
   settings = {}
 ) {
-  const { shouldCache = false, backoff = false } = settings;
+  const { shouldCache = false, backoff = false, ttl = 0 } = settings;
   const cache = {};
   let cacheKey = '';
   const wrapped = async (params = {}) => {
@@ -53,7 +61,7 @@ export function apiMiddleWare(
       await loadMockServer();
       cacheKey = JSON.stringify(params);
       const cachedItem = cache[cacheKey];
-      if (cachedItem) {
+      if (cachedItem && isValid(cachedItem)) {
         return resolvePromise(cachedItem);
       }
       if (backoff) {
@@ -69,6 +77,7 @@ export function apiMiddleWare(
       }
       const tResponse = transformSuccess(resp);
       if (shouldCache) {
+        tResponse.cacheTTL = ttl;
         cache[cacheKey] = tResponse;
       }
       return resolvePromise(tResponse);

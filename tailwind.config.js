@@ -13,13 +13,33 @@ module.exports = {
         '2/5': '40%'
       },
       screens: {
-        'xxs': '300px',
-        'xs' : '375px'
+        xxs: '300px',
+        xs: '375px'
       },
       keyframes: {
         marquee: {
-          '0%': { transform: 'translate(0, 0)' },
-          '100%': { transform: 'translate(-100%, 0)' }
+          '0%': {
+            transform: 'translate(0, 0)'
+          },
+          '100%': {
+            transform: 'translate(-100%, 0)'
+          }
+        },
+        pop_in: {
+          from: {
+            transform: 'translate(-50%, 0) 0.3s ease-in-out;'
+          },
+          to: {
+            transform: 'translate(-50%, -50%) 0.3s ease-in-out;'
+          }
+        },
+        pop_out: {
+          from: {
+            transform: 'translate(-50%, -50%) 0.3s ease-in-out;'
+          },
+          to: {
+            transform: 'translate(-50%, 0) 0.3s ease-in-out;'
+          }
         }
       },
       animation: {
@@ -422,20 +442,20 @@ module.exports = {
       },
       fade_in: {
         '0%': {
-            opacity: '0'
+          opacity: '0'
         },
         '100%': {
-            opacity: '1'
+          opacity: '1'
+        }
+      },
+      fade_out: {
+        from: {
+          opacity: '1'
         },
-    },
-    fade_out: {
-        'from': {
-            opacity: '1'
-        },
-        'to': {
-            opacity: '0'
-        },
-    },
+        to: {
+          opacity: '0'
+        }
+      },
       ping: {
         '75%, 100%': {
           transform: 'scale(2)',

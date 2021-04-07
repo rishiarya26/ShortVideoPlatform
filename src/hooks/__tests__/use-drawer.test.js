@@ -20,8 +20,8 @@ it('should return close and show: functions', () => {
 });
 
 it('should be able show drawer', async () => {
+  window.resizeTo(420, 360);
   const ChildComponent = () => (<div data-testid="dt-drawer-child">I will be rendered inside the drawer</div>);
-
   const TestComponent = () => {
     const { show } = useDrawer();
     return (
