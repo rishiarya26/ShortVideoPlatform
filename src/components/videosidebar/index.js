@@ -7,7 +7,7 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
-import CommentTray from '../comment-tray';
+//import CommentTray from '../comment-tray';
 import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 import { postLike, deleteLike } from '../../sources/social';

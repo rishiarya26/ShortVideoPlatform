@@ -34,7 +34,7 @@ export default function Feed() {
         {
           items.map(
             item => (
-              <SwiperSlide ref="tester"
+              <SwiperSlide
                 key={item.content_id} id={item.content_id}
               >
                 <Video
