@@ -8,7 +8,7 @@ import useTranslation from '../../hooks/use-translation';
 
 function FooterMenu(props) {
 
-  const vobj = {'videoId' : 'cbvtest1mq99gi6b' };
+  const vobj = {'videoId' : props.id };
   //console.log(props.id);
   // const { show } = useDrawer();
   const { t } = useTranslation();

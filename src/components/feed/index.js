@@ -8,7 +8,8 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
-
+//const vidid=document.getElementsByClassName('asad')[0]
+//console.log(vidid);
 export default function Feed() {
   const [items, setItems] = useState([]);
   const dataFetcher = () => getHomeFeed();
@@ -33,8 +34,8 @@ export default function Feed() {
         {
           items.map(
             item => (
-              <SwiperSlide
-                key={item.content_id}
+              <SwiperSlide ref="tester"
+                key={item.content_id} id={item.content_id}
               >
                 <Video
                   url={item.video_url}
@@ -48,7 +49,6 @@ export default function Feed() {
                   musicCoverTitle={item.musicCoverTitle}
                   videoid={item.content_id}
                 />
-                
               </SwiperSlide>
             )
           )
