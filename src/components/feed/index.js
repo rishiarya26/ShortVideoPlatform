@@ -6,17 +6,23 @@ import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import Seekbar from '../seekbar';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
   const [items, setItems] = useState([]);
+  const [seekedPercentage, setSeekedPercentage] = useState(0);
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+
+  const updateSeekbar = percentage => {
+    setSeekedPercentage(percentage);
+  };
 
   return (
     <ComponentStateHandler
@@ -37,6 +43,7 @@ export default function Feed() {
                 key={item.content_id}
               >
                 <Video
+                  updateSeekbar={updateSeekbar}
                   socialId={item.getSocialId}
                   url={item.video_url}
                   id={item.content_id}
@@ -48,13 +55,15 @@ export default function Feed() {
                   userName={item.userName}
                   musicCoverTitle={item.musicCoverTitle}
                 />
+
               </SwiperSlide>
             )
           )
         }
       </Swiper>
-
+      <Seekbar seekedPercentage={seekedPercentage} />
       <FooterMenu />
+
     </ComponentStateHandler>
   );
 }
