@@ -11,13 +11,12 @@ function FooterMenu() {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col w-full fixed bottom-0">
-      {/* <div id="progress-bar" className="w-1/4 h-1 bg-hipipink" /> */}
       <div className="w-full bg-black  py-2 flex justify-around items-center">
         <Home />
         <Search />
         <button
           className="rounded-full flex bg-hipipink tracking-wide bg-opacity-50 cursor-pointer relative
-        outline-none group"
+          outline-none group"
           onClick={() => show('', ShoppingWidget)}
         >
           <span className={`transform-gpu -translate-y-1
