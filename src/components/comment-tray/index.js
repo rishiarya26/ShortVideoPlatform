@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import { getComments, clearComments, postComment } from '../../sources/social';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Comment from '../comment';
+import Error from './error';
+import Loader from './loader';
 import Send from '../commons/svgicons/send';
 import useTranslation from '../../hooks/use-translation';
 import { getStatusSince } from '../../utils/date';
@@ -15,8 +17,8 @@ const Paginator = dynamic(
   }
 );
 
-const ErrorComp = () => (<div>error</div>);
-const LoadComp = () => (<div>loading</div>);
+const ErrorComp = () => (<Error />);
+const LoadComp = () => (<Loader />);
 
 const optimisticUpdate = comment => (
   [{
