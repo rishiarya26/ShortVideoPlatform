@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -25,25 +26,49 @@ module.exports = {
             transform: 'translate(-100%, 0)'
           }
         },
-        pop_in: {
+        'pop-in': {
           from: {
-            transform: 'translate(-50%, 0) 0.3s ease-in-out;'
+            transform: 'translate(-50%, 0)'
           },
           to: {
-            transform: 'translate(-50%, -50%) 0.3s ease-in-out;'
+            transform: 'translate(-50%, -50%)'
           }
         },
-        pop_out: {
+        'pop-out': {
           from: {
-            transform: 'translate(-50%, -50%) 0.3s ease-in-out;'
+            transform: 'translate(-50%, -50%)'
           },
           to: {
-            transform: 'translate(-50%, 0) 0.3s ease-in-out;'
+            transform: 'translate(-50%, 0)'
+          }
+        },
+        'fade-out-bottom': {
+          from: {
+            bottom: '6rem',
+            opacity: 1
+          },
+          to: {
+            bottom: 0,
+            opacity: 0
+          }
+        },
+        'fade-in-bottom': {
+          from: {
+            bottom: '0px',
+            opacity: 0
+          },
+          to: {
+            bottom: '5rem',
+            opacity: 1
           }
         }
       },
       animation: {
-        marquee: 'marquee 4s linear infinite'
+        marquee: 'marquee 4s linear infinite',
+        'fade-in-bottom': 'fade-in-bottom 0.3s ease-in',
+        'fade-out-bottom': 'fade-out-bottom 0.3s ease-out',
+        'pop-in': 'pop-in 0.3s ease-in',
+        'pop-out': 'pop-out 0.3s ease-out'
       }
     },
     screens: {
@@ -72,7 +97,8 @@ module.exports = {
       blue: colors.blue,
       indigo: colors.indigo,
       purple: colors.violet,
-      pink: colors.pink
+      pink: colors.pink,
+      blueGray: '#64758B'
     },
     spacing: {
       px: '1px',
@@ -919,6 +945,8 @@ module.exports = {
     wordBreak: ['responsive'],
     zIndex: ['responsive', 'focus-within', 'focus']
   },
-  plugins: []
+  plugins: [
+    require('@tailwindcss/line-clamp')
+  ]
 };
 

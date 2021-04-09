@@ -5,6 +5,7 @@ import Profile from '../commons/svgicons/profile';
 import useDrawer from '../../hooks/use-drawer';
 import useTranslation from '../../hooks/use-translation';
 import ShoppingWidget from '../shopping-widget';
+import SnackBar from '../commons/snackbar';
 
 function FooterMenu() {
   const { show } = useDrawer();
@@ -31,6 +32,7 @@ function FooterMenu() {
 
         <Add />
         <Profile />
+        <SnackBar />
       </div>
     </div>
   );
