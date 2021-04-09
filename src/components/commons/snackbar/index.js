@@ -67,12 +67,12 @@ function SnackBar(
 
   return (
     <div className={`
-      ${visible ? 'animate-fade-in-bottom bottom-20' : 'animate-fade-out-bottom'}      
+      ${visible ? 'animate-fade-in-bottom bottom-14' : 'animate-fade-out-bottom'}      
       fixed
       z-20              
-      lg:left-1/3
+      left-1/3
       flex items-center justify-center
-      text-white max-w-sm w-auto
+      text-white max-w-sm w-1/3 
       ${SnackType[type] || SnackType.info}
       shadow-md
       rounded-lg
