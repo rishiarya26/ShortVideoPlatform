@@ -74,26 +74,11 @@ The example setup enables us to pre render stuff and create a static bundle with
 
 multi lingual support is very different when its via CSR / SSR / SSG and we might need to solve for all cases but our priority is SSG since we believe most of the webapp cases in hipi should be addressed with SSG.
 
-via SSG 
-- generate multiple versions of pages for each language at build time and all pages to have language as base path in the route
+via SSR 
+- generate version of pages for respective language at run time and cache it in cdn, the page to have language as base path in the route
   example - hipi.com/en/recharge,  hipi.com/hi/recharge
   this is so that language specific pages are directly discoverable and shareable
 
-- this is done by adding a base path during running the build script
-
-Following script does the magic
-
-```
- npm run multilingual-build
-```
-
- this creates
- ```
- out/
-     /hi-in
-     /bn-in
-     /en-in
-```     
 
 A user journey would look like this
 - user lands on the app for the first time (any page)

@@ -30,14 +30,14 @@ precacheAndRoute(WB_MANIFEST);
 
 cleanupOutdatedCaches();
 
-registerRoute(
-  '/',
-  new NetworkFirst({
-    cacheName: 'start-url',
-    plugins: [new ExpirationPlugin({ maxEntries: 1, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
-  }),
-  'GET'
-);
+// registerRoute(
+//   '/',
+//   new NetworkFirst({
+//     cacheName: 'start-url',
+//     plugins: [new ExpirationPlugin({ maxEntries: 1, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
+//   }),
+//   'GET'
+// );
 
 registerRoute(
   /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
@@ -47,6 +47,7 @@ registerRoute(
   }),
   'GET'
 );
+
 registerRoute(
   /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i,
   new StaleWhileRevalidate({
@@ -55,6 +56,7 @@ registerRoute(
   }),
   'GET'
 );
+
 // disable image cache, so we could observe the placeholder image when offline
 registerRoute(
   /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
@@ -64,6 +66,7 @@ registerRoute(
   }),
   'GET'
 );
+
 registerRoute(
   /\.(?:js)$/i,
   new StaleWhileRevalidate({
@@ -91,35 +94,35 @@ registerRoute(
   'GET'
 );
 
-registerRoute(
-  /\/api\/.*$/i,
-  new NetworkFirst({
-    cacheName: 'apis',
-    networkTimeoutSeconds: 10,
-    plugins: [new ExpirationPlugin({ maxEntries: 16, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
-  }),
-  'GET'
-);
+// registerRoute(
+//   /\/api\/.*$/i,
+//   new NetworkFirst({
+//     cacheName: 'apis',
+//     networkTimeoutSeconds: 10,
+//     plugins: [new ExpirationPlugin({ maxEntries: 16, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
+//   }),
+//   'GET'
+// );
 
-registerRoute(
-  /\/api\/.*$/i,
-  new NetworkFirst({
-    cacheName: 'apis',
-    networkTimeoutSeconds: 10,
-    plugins: [new ExpirationPlugin({ maxEntries: 16, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
-  }),
-  'POST'
-);
+// registerRoute(
+//   /\/api\/.*$/i,
+//   new NetworkFirst({
+//     cacheName: 'apis',
+//     networkTimeoutSeconds: 10,
+//     plugins: [new ExpirationPlugin({ maxEntries: 16, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
+//   }),
+//   'POST'
+// );
 
-registerRoute(
-  /.*/i,
-  new NetworkFirst({
-    cacheName: 'others',
-    networkTimeoutSeconds: 10,
-    plugins: [new ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
-  }),
-  'GET'
-);
+// registerRoute(
+//   /.*/i,
+//   new NetworkFirst({
+//     cacheName: 'others',
+//     networkTimeoutSeconds: 10,
+//     plugins: [new ExpirationPlugin({ maxEntries: 32, maxAgeSeconds: 86400, purgeOnQuotaError: !0 })]
+//   }),
+//   'GET'
+// );
 
 // following lines gives you control of the offline fallback strategies
 // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#comprehensive_fallbacks
