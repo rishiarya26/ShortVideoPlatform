@@ -4,7 +4,7 @@ import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
-//import Share from '../commons/svgicons/share';
+// import Share from '../commons/svgicons/share';
 // import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
@@ -23,8 +23,6 @@ const CommentTray = dynamic(
   }
 );
 
-
-
 function VideoSidebar(props) {
   const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
@@ -32,7 +30,7 @@ function VideoSidebar(props) {
   const { socialId } = props;
 
   return (
-    <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-36'} absolute right-0 text-white`}>
+    <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-16'} absolute right-0 text-white`}>
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"

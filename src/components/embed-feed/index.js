@@ -4,7 +4,7 @@ import Error from './error';
 import Loading from './loader';
 // import useDrawer from '../../hooks/use-drawer';
 import { getSingleFeed } from '../../sources/feed/embed';
-import { withBasePath } from '../../config';
+//import { withBasePath } from '../../config';
 // import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
@@ -42,7 +42,7 @@ export default function EmbedFeed() {
         musicCoverTitle={items.musicCoverTitle}
       />
 
-      <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
+      <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <button
           className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
           onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
