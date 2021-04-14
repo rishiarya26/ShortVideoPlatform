@@ -8,11 +8,11 @@ import { withBasePath } from '../../config';
 import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-let retryFn;
-const ErrorComp = () => (<Error />);
+let retry;
+const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
 
-export default function EmbedFeed(props) {
+export default function EmbedFeed() {
   const [item, setItem] = useState([]);
   const { show } = useDrawer();
 
@@ -24,7 +24,7 @@ export default function EmbedFeed(props) {
   };
  
   const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retryFn = setRetry.bind(retryFn);
+  retry = setRetry.bind(retry);
   
   
   return (
