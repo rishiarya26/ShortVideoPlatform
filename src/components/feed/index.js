@@ -8,6 +8,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
+
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 // const vidid=document.getElementsByClassName('asad')[0]

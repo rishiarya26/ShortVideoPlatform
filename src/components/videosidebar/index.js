@@ -4,17 +4,17 @@ import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
-import Share from '../commons/svgicons/share';
-import Shop from '../commons/svgicons/shop';
-import { share } from '../../utils/app';
-import { CopyToClipBoard } from '../../utils/web';
-import { getCurrentUri } from '../../utils/location';
-import { getDeviceType } from '../../hooks/use-device';
+//import Share from '../commons/svgicons/share';
+// import Shop from '../commons/svgicons/shop';
+// import { share } from '../../utils/app';
+// import { CopyToClipBoard } from '../../utils/web';
+// import { getCurrentUri } from '../../utils/location';
+// import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
-import useSnackBar from '../../hooks/use-snackbar';
+// import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
 
-//const DummyComp = () => (<div />);
+// const DummyComp = () => (<div />);
 const CommentTray = dynamic(
   () => import('../comment-tray'),
   {
@@ -23,33 +23,11 @@ const CommentTray = dynamic(
   }
 );
 
-const ShareComp = ({ shareCount, show }) => (
-  <div
-    role="presentation"
-    onClick={async () => {
-      if (getDeviceType() === 'desktop') {
-        CopyToClipBoard(getCurrentUri());
-        // TODO use t function for translation
-        show({ message: 'Copied Successfully', type: 'info' });
-        return;
-      }
-      try {
-        await share();
-        show({ message: 'Shared', type: 'info' });
-      } catch (e) {
-        console.error(e);
-      }
-    }}
-    className="relative py-3  px-1 text-center flex flex-col items-center"
-  >
-    <Share />
-    <p className="text-sm">{shareCount}</p>
-  </div>
-);
+
 
 function VideoSidebar(props) {
   const { show } = useDrawer();
-  const { showSnackbar } = useSnackBar();
+  // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
   const { socialId } = props;
 
@@ -102,14 +80,14 @@ function VideoSidebar(props) {
         <p className="text-sm">{props.comment}</p>
       </div>
 
-      <ShareComp
+      {/* <ShareComp
         show={showSnackbar}
         shareCount={props.share}
       />
 
       <div className="relative py-3  px-1 text-center flex flex-col items-center">
         <Shop />
-      </div>
+      </div> */}
 
     </div>
   );
