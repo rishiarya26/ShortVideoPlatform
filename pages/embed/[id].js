@@ -1,5 +1,6 @@
+import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
-import FooterMenu from '../../src/components/footer-menu';
+// import FooterMenu from '../../src/components/footer-menu';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
@@ -7,8 +8,11 @@ import { supportedLanguages } from '../../src/hooks/use-translation';
 const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
 
 export default function Hipi(params) {
-  const { data: item = {} } = params;
-  const vobj = { videoId: items.content_id };
+  const { data: item = {}, errorCode, message } = params;
+  const vobj = { videoId: item.content_id };
+  if (errorCode) {
+    return <Error message={message} statusCode={errorCode} />;
+  }
   return (
     <>
       <SeoMeta
@@ -93,7 +97,7 @@ export async function getServerSideProps(ctx) {
     });
   } catch (e) {
     data = {
-      notFound: true,
+      errorCode: e['http-status'],
       message: e.message
     };
   }
