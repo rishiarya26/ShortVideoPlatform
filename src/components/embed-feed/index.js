@@ -19,6 +19,7 @@ export default function EmbedFeed() {
     page: 1
   });
   const onDataFetched = data => {
+    console.log(data)
     setItems(data.data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
@@ -28,24 +29,19 @@ export default function EmbedFeed() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      {
-        items.map(
-          item => (
             <Embedvideo
-              key={item.content_id}
-              url={item.video_url}
-              id={item.content_id}
-              comments={item.commentsCount}
-              likes={item.likesCount}
-              music={item.musicCoverTitle}
-              musicTitle={item.music_title}
-              profilePic={item.userProfilePicUrl}
-              userName={item.userName}
-              musicCoverTitle={item.musicCoverTitle}
+              key={items.content_id}
+              url={items.video_url}
+              id={items.content_id}
+              comments={items.commentsCount}
+              likes={items.likesCount}
+              music={items.musicCoverTitle}
+              musicTitle={items.music_title}
+              profilePic={items.userProfilePicUrl}
+              userName={items.userName}
+              musicCoverTitle={items.musicCoverTitle}
             />
-          )
-        )
-      }
+       
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
         <button
           className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
