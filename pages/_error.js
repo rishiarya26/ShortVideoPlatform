@@ -1,7 +1,16 @@
-const ErrorPage = () => (
-  <>
-    <span>Something went wrong</span>
-  </>
-);
+function Error({ statusCode, message }) {
+  return (
+    <p>
+      {statusCode
+        ? message
+        : 'An error occurred on client'}
+    </p>
+  );
+}
 
-export default ErrorPage;
+Error.getInitialProps = ({ res, err }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+  return { statusCode };
+};
+
+export default Error;

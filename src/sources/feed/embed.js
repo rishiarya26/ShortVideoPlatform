@@ -8,8 +8,6 @@ async function fetchEmbedFeed({ page }) {
   try {
     const apiPath = `${getApiBasePath('hipi')}/demo/video-detail/${page}`;
     response = await get(apiPath);
-    // eslint-disable-next-line prefer-destructuring
-    // response.data.data = response.data.data[0];
     response.data.requestedWith = { page };
     return Promise.resolve(response.data);
   } catch (err) {
