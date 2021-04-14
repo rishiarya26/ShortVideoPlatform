@@ -13,7 +13,6 @@ const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed(props) {
-  console.log(props)
   const [item, setItem] = useState([]);
   const { show } = useDrawer();
 
