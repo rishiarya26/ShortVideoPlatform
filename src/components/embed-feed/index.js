@@ -9,23 +9,24 @@ import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
 let retryFn;
-const ErrorComp = () => (<Error retryFn={retryFn}/>);
+const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
-export default function EmbedFeed() {
-
-  const [items, setItems] = useState([]);
+export default function EmbedFeed(props) {
+  console.log(props)
+  const [item, setItem] = useState([]);
   const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
-    page: 1
+    page: "cbvtest1mq99gi6b"
   });
   const onDataFetched = data => {
-    setItems(data.data);
+    setItem(data.data);
   };
-
+ 
   const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
   retryFn = setRetry.bind(retryFn);
+  
   
   return (
     <ComponentStateHandler
@@ -34,18 +35,18 @@ export default function EmbedFeed() {
       ErrorComp={ErrorComp}
     >
       
-       {  items &&
+       {  item &&
          <Embedvideo
-         key={items.content_id}
-         url={items.video_url}
-         id={items.content_id}
-         comments={items.commentsCount}
-         likes={items.likesCount}
-         music={items.musicCoverTitle}
-         musicTitle={items.music_title}
-         profilePic={items.userProfilePicUrl}
-         userName={items.userName}
-         musicCoverTitle={items.musicCoverTitle}
+         key={item.content_id}
+         url={item.video_url}
+         id={item.content_id}
+         comments={item.commentsCount}
+         likes={item.likesCount}
+         music={item.musicCoverTitle}
+         musicTitle={item.music_title}
+         profilePic={item.userProfilePicUrl}
+         userName={item.userName}
+         musicCoverTitle={item.musicCoverTitle}
        />
          }
           

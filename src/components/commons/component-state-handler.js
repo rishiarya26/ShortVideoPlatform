@@ -23,7 +23,7 @@ function useFetcher(dataFetcher, onDataFetched) {
   const [retry, setRetry] = useState(false)
   const [data, setData] = useState(null);
 
-  const dataSetterFn = async () => {
+  const dataFetch = async () => {
     try {
       const data = await dataFetcher();
       setData(data);
@@ -34,11 +34,11 @@ function useFetcher(dataFetcher, onDataFetched) {
     }
   }
   useEffect(() => {
-   dataSetterFn();
+    dataFetch();
   }, []);
 
-  if(retry === true){
-    dataSetterFn();
+  if(retry){
+    dataFetch();
     setRetry(false)
   }
 
