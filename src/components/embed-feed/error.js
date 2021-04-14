@@ -1,8 +1,12 @@
 import FooterMenu from '../footer-menu';
 
-function Error() {
+function Error(props) {
+  const handleRetry=()=>{
+    props.retryFn(true)
+  }
+
   return (
-    <div className="video_card relative flex w-full h-screen scroll-snap-start bg-gray-300 items-center justify-center">
+    <div onClick={handleRetry} className="video_card relative flex w-full h-screen scroll-snap-start bg-gray-300 items-center justify-center">
       <svg
         enableBackground="new 0 0 24 24"
         height="24"

@@ -8,10 +8,12 @@ import { withBasePath } from '../../config';
 import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-const ErrorComp = () => (<Error />);
+let retryFn;
+const ErrorComp = () => (<Error retryFn={retryFn}/>);
 const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed() {
+
   const [items, setItems] = useState([]);
   const { show } = useDrawer();
 
@@ -21,31 +23,32 @@ export default function EmbedFeed() {
   const onDataFetched = data => {
     setItems(data.data);
   };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+
+  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retryFn = setRetry.bind(retryFn);
+  
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      {
-        items.map(
-          item => (
-            <Embedvideo
-              key={item.content_id}
-              url={item.video_url}
-              id={item.content_id}
-              comments={item.commentsCount}
-              likes={item.likesCount}
-              music={item.musicCoverTitle}
-              musicTitle={item.music_title}
-              profilePic={item.userProfilePicUrl}
-              userName={item.userName}
-              musicCoverTitle={item.musicCoverTitle}
-            />
-          )
-        )
-      }
+      
+       {  items &&
+         <Embedvideo
+         key={items.content_id}
+         url={items.video_url}
+         id={items.content_id}
+         comments={items.commentsCount}
+         likes={items.likesCount}
+         music={items.musicCoverTitle}
+         musicTitle={items.music_title}
+         profilePic={items.userProfilePicUrl}
+         userName={items.userName}
+         musicCoverTitle={items.musicCoverTitle}
+       />
+         }
+          
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
         <button
           className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"

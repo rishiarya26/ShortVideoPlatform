@@ -20,20 +20,29 @@ function ComponentStateHandler({
  */
 function useFetcher(dataFetcher, onDataFetched) {
   const [fetchState, setFetchState] = useState('pending');
+  const [retry, setRetry] = useState(false)
   const [data, setData] = useState(null);
+
+  const dataSetterFn = async () => {
+    try {
+      const data = await dataFetcher();
+      setData(data);
+      if (onDataFetched) onDataFetched(data);
+      setFetchState('success');
+    } catch (e) {
+      setFetchState('fail');
+    }
+  }
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await dataFetcher();
-        setData(data);
-        if (onDataFetched) onDataFetched(data);
-        setFetchState('success');
-      } catch (e) {
-        setFetchState('fail');
-      }
-    })();
+   dataSetterFn();
   }, []);
-  return [fetchState, data];
+
+  if(retry === true){
+    dataSetterFn();
+    setRetry(false)
+  }
+
+  return [fetchState, data, setRetry];
 }
 
 export { useFetcher };
