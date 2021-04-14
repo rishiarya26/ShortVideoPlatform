@@ -7,7 +7,7 @@ import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
-import SeekbarLoading from "../seekbar/loader.js"
+import SeekbarLoading from '../seekbar/loader.js';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
@@ -24,7 +24,6 @@ export default function Feed() {
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
- 
 
   return (
     <ComponentStateHandler
@@ -37,7 +36,7 @@ export default function Feed() {
         direction="vertical"
         draggable="true"
         calculateheight="true"
-        
+
       >
 
         {
@@ -45,7 +44,7 @@ export default function Feed() {
             item => (
               <SwiperSlide
                 key={item.content_id}
-                
+
               >
                 <Video
                   updateSeekbar={updateSeekbar}
@@ -66,9 +65,9 @@ export default function Feed() {
           )
         }
       </Swiper>
-      {seekedPercentage && seekedPercentage > 0 ?
-      <Seekbar seekedPercentage={seekedPercentage} />:
-      <SeekbarLoading/>}
+      {seekedPercentage && seekedPercentage > 0
+        ? <Seekbar seekedPercentage={seekedPercentage} />
+        : <SeekbarLoading />}
       <FooterMenu />
 
     </ComponentStateHandler>
