@@ -7,12 +7,14 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 import { share } from '../../utils/app';
-//import CommentTray from '../comment-tray';
+import { CopyToClipBoard } from '../../utils/web';
+import { getCurrentUri } from '../../utils/location';
 import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
+import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
 
-const DummyComp = () => (<div />);
+//const DummyComp = () => (<div />);
 const CommentTray = dynamic(
   () => import('../comment-tray'),
   {
@@ -21,22 +23,23 @@ const CommentTray = dynamic(
   }
 );
 
-const shareThis = async () => {
-  if (getDeviceType() === 'desktop') {
-    // show toast
-    return;
-  }
-  try {
-    await share();
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const ShareComp = ({ shareCount }) => (
+const ShareComp = ({ shareCount, show }) => (
   <div
     role="presentation"
-    onClick={shareThis}
+    onClick={async () => {
+      if (getDeviceType() === 'desktop') {
+        CopyToClipBoard(getCurrentUri());
+        // TODO use t function for translation
+        show({ message: 'Copied Successfully', type: 'info' });
+        return;
+      }
+      try {
+        await share();
+        show({ message: 'Shared', type: 'info' });
+      } catch (e) {
+        console.error(e);
+      }
+    }}
     className="relative py-3  px-1 text-center flex flex-col items-center"
   >
     <Share />
@@ -46,11 +49,12 @@ const ShareComp = ({ shareCount }) => (
 
 function VideoSidebar(props) {
   const { show } = useDrawer();
+  const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
   const { socialId } = props;
 
   return (
-    <div className="absolute bottom-36 right-0 text-white">
+    <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-36'} absolute right-0 text-white`}>
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
@@ -98,7 +102,10 @@ function VideoSidebar(props) {
         <p className="text-sm">{props.comment}</p>
       </div>
 
-      <ShareComp shareCount={props.share} />
+      <ShareComp
+        show={showSnackbar}
+        shareCount={props.share}
+      />
 
       <div className="relative py-3  px-1 text-center flex flex-col items-center">
         <Shop />

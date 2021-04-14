@@ -12,7 +12,6 @@ const parseBody = async res => {
 };
 
 const handleError = async res => {
-  console.log(res.headers.get('content-type'));
   if (res.ok) return;
 
   const body = await parseBody(res);

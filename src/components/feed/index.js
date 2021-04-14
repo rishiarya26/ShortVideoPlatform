@@ -5,19 +5,26 @@ import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
-
+import Seekbar from '../seekbar';
+import SeekbarLoading from '../seekbar/loader.js';
+import FooterMenu from '../footer-menu';
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
-//const vidid=document.getElementsByClassName('asad')[0]
-//console.log(vidid);
+// const vidid=document.getElementsByClassName('asad')[0]
+// console.log(vidid);
 export default function Feed() {
   const [items, setItems] = useState([]);
+  const [seekedPercentage, setSeekedPercentage] = useState(0);
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
     console.log(data);
   };
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+
+  const updateSeekbar = percentage => {
+    setSeekedPercentage(percentage);
+  };
 
   return (
     <ComponentStateHandler
@@ -30,14 +37,18 @@ export default function Feed() {
         direction="vertical"
         draggable="true"
         calculateheight="true"
+
       >
+
         {
           items.map(
             item => (
               <SwiperSlide
-                key={item.content_id} id={item.content_id}
+                key={item.content_id}
+
               >
                 <Video
+                  updateSeekbar={updateSeekbar}
                   socialId={item.getSocialId}
                   url={item.video_url}
                   id={item.content_id}
@@ -50,11 +61,17 @@ export default function Feed() {
                   musicCoverTitle={item.musicCoverTitle}
                   videoid={item.content_id}
                 />
+
               </SwiperSlide>
             )
           )
         }
       </Swiper>
+      {seekedPercentage && seekedPercentage > 0
+        ? <Seekbar seekedPercentage={seekedPercentage} />
+        : <SeekbarLoading />}
+      <FooterMenu />
+
     </ComponentStateHandler>
   );
 }
