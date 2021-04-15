@@ -8,8 +8,8 @@ import { withBasePath } from '../../config';
 import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-let retry;
-const ErrorComp = () => (<Error retry={retry}/>);
+
+const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed() {
@@ -23,8 +23,8 @@ export default function EmbedFeed() {
     setItem(data.data);
   };
  
-  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry.bind(retry);
+  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+
   
   
   return (
