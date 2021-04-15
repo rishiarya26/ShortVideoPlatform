@@ -12,8 +12,7 @@ import FooterMenu from '../footer-menu';
 let retry;
 const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
-// const vidid=document.getElementsByClassName('asad')[0]
-// console.log(vidid);
+
 export default function Feed() {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);

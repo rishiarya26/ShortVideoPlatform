@@ -43,6 +43,7 @@ function VideoSidebar(props) {
       </div>
       <div className="relative py-3  px-1 text-center">
         {liked ? (
+          <div>
           <div
             role="presentation"
             onClick={
@@ -54,7 +55,11 @@ function VideoSidebar(props) {
           >
             <Liked />
           </div>
+        
+            <p className="text-sm">{props.likes+1}</p>
+            </div>
         ) : (
+          <div>
           <div
             role="presentation"
             onClick={
@@ -66,8 +71,10 @@ function VideoSidebar(props) {
           >
             <Like />
           </div>
+           <p className="text-sm">{props.likes}</p>
+           </div>
         )}
-        <p className="text-sm">{props.likes}</p>
+       
       </div>
       <div
         role="presentation"

@@ -16,8 +16,8 @@ const Paginator = dynamic(
     ssr: false
   }
 );
-
-const ErrorComp = () => (<Error />);
+let retry;
+const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loader />);
 
 const optimisticUpdate = comment => (
@@ -40,7 +40,8 @@ function CommentTray({ socialId }) {
     nextCursor.current = data.nextCursor;
     items.length === 0 ? setItems(data.data) : setItems([...items, ...data.data]);
   };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retry = setRetry.bind(retry)
 
   const loadMore = useCallback(
     async () => {
