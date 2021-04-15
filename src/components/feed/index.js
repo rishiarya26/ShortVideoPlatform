@@ -9,7 +9,8 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 
-const ErrorComp = () => (<Error />);
+let retry;
+const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
@@ -19,7 +20,8 @@ export default function Feed() {
   const onDataFetched = data => {
     setItems(data.data);
   };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
