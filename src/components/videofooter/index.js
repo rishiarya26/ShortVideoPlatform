@@ -5,7 +5,7 @@ function VideoFooter({
   userName, musicTitle, musicCoverTitle, type
 }) {
   return (
-    <div className={`${type === 'feed' ? 'bottom-16' : 'bottom-36'} videoFooter absolute flex text-white ml-2`}>
+    <div className={`${type === 'feed' ? 'bottom-16' : 'bottom-16'} videoFooter absolute flex text-white ml-2`}>
       <div className="videoFooter__text">
         <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 xxs:text-sm xs:text-base">
           Shoppable
