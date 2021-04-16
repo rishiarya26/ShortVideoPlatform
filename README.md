@@ -1,8 +1,8 @@
-# zee5 pwa
-Web application for zee5 content.
+# hipi pwa
+Web application for hipi content.
 
 ## About
-zee5 PWA is based on [next.js](https://nextjs.org/) at its core which is minimalistic framework to build modern universal webapps.
+hipi PWA is based on [next.js](https://nextjs.org/) at its core which is minimalistic framework to build modern universal webapps.
 
 ## Features
 - uses only functional react.
@@ -44,10 +44,51 @@ This will start a local webserver with http2 and gzip to mimic real web server
   npm run serve
 ```
 
+This will start a local mock app
+```
+  npm run mock
+```
+
+To run test cases 
+```
+  npm run test
+```
+
 ## Example
 
 The example in this repo lists few github repos and there details in 2 different routes. We are following the nextjs routing way of defining files / folders in pages folder. This example shows a static route and a dynamic route.
 The example setup enables us to pre render stuff and create a static bundle with npm run export (a route like repos) where the page structure is already known and probably even data is available before time.
+
+
+## Localisation Goals
+- URLs should be parameterized with a language code (i.e. locale subpaths).
+- The app needs to be able to read the locale from the URL (during SSR and client-side navigation).
+- The URL language parameter must be kept in sync with the app’s internal state.
+- It must be possible to change the language.
+- The app should be able to set a language when it is accessed for the first time at a root (url-agnostic) URL (preferably by performing some sort of auto-detection with a fallback to the default setting).
+- The language selected by a user should be saved as their preference for future sessions.
+- The contents of the website/app should be translated/localized based on the current language setting.
+- The app’s metadata should respect the selected language setting (for SEO purposes).
+
+## Approach
+
+multi lingual support is very different when its via CSR / SSR / SSG and we might need to solve for all cases but our priority is SSG since we believe most of the webapp cases in hipi should be addressed with SSG.
+
+via SSR 
+- generate version of pages for respective language at run time and cache it in cdn, the page to have language as base path in the route
+  example - hipi.com/en/recharge,  hipi.com/hi/recharge
+  this is so that language specific pages are directly discoverable and shareable
+
+
+A user journey would look like this
+- user lands on the app for the first time (any page)
+- app checks if language context exists in the path, if not then checks user pref (local storage), if not checks browser locale. Hence a decision is made for the user as to what is the current language. This should also go as an input to apis
+- if the current app env and the selected language from step 2 doesn't match user gets redirected to the respective context
+example :
+user lands on hipi.com but has the browser locale set to hindi - user will be taken to hipi.com/hi page OR
+user lands on hipi.com but has the user pref set to hindi - user will be taken to hipi.com/hi page
+
+- user can switch the language at any point from the app - this sets a local pref and redirects to language context page
 
 ## Notes
 

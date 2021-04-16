@@ -1,9 +1,9 @@
 {
-  "short_name": "Zee5Starter",
-  "name": "Zee5Starter",
+  "short_name": "hipiStarter",
+  "name": "hipiStarter",
   "lang": "en",
-  "description": "Bootstrapping kit for webapps at Zee5",
-  "start_url": "https://nextpwa-72153.web.app/",
+  "description": "Bootstrapping kit for webapps at hipi",
+  "start_url": "https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html",
   "background_color": "#00aae7",
   "theme_color": "#00aae7",
   "dir": "ltr",

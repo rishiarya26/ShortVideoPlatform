@@ -8,20 +8,19 @@ These steps will guide you through contributing to this project:
 - Fork the repo
 - Clone it and install dependencies
 
-		git clone https://anky-agarwal@bitbucket.org/anky-agarwal/pwa.git
-		git checkout basic-starter-kit
-		git pull origin basic-starter-kit
-		npm install
+	git clone https://anky-agarwal@bitbucket.org/zee5in/hipi-web.git
+	git checkout develop
+	git pull origin develop
+	npm install
 
-Fork a new branch from this - in the format the-one-with-<your-utility>
-***example**: the-one-with-service-worker, the-one-with-multilingual-support*
 
 Then write up a README.md with your proposed utility, for example if your are developing a Theme Provider please write down 
-  - what does it solve 
-  - how are we building it 
-  - how to use it
+- what does it solve 
+- how are we building it 
+- how to use it
 
 Push this branch on to the repo, assign it to few people, then people can review this proposal discuss and add comments on it. Once that is approved by all we move ahead and code it out
 
 Finally send a GitHub Pull Request with a clear list of what you've done. Make sure all of your commits are atomic (one feature per commit).
+
 Please ensure all of your pre commit hooks are in place, do not use --no-verify :)

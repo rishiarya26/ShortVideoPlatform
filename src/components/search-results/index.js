@@ -1,9 +1,10 @@
 
 import Link from 'next/link';
+import { withBasePath } from '../../config';
 
 function compare(a, b) {
-  if (a.full_name < b.full_name) { return -1; }
-  if (a.full_name > b.full_name) { return 1; }
+  if (a.name < b.name) { return -1; }
+  if (a.name > b.name) { return 1; }
   return 0;
 }
 
@@ -23,7 +24,7 @@ const SearchResults = ({ items, totalCount }) => (
               <Link
                 scroll={false}
                 href="/repo-details/[publisher]/[project]"
-                as={`/repo-details/${item.full_name.split('/')[0]}/${item.full_name.split('/')[1]}`}
+                as={withBasePath(`/repo-details/${item.name.split('/')[0]}/${item.name.split('/')[1]}`)}
               >
                 <div className="underline text-blue-600">
                   { item.name }

@@ -1,12 +1,20 @@
 
 import { get } from 'network';
-import promiseMemoize from 'promise-memoize';
-import { core } from '../../api-base';
+import { getApiBasePath } from '../../config';
+import { apiMiddleWare } from '../../network/utils';
+
+function transformSuccess(data) {
+  return data;
+}
+
+function transformError(data) {
+  return data;
+}
 
 async function getRepoDetails({ publisher, project }) {
   let response = {};
   try {
-    const apiPath = `${core}/repos/${publisher}/${project}`;
+    const apiPath = `${getApiBasePath('test')}/repos/${publisher}/${project}`;
     response = await get(apiPath);
     response.data.requestedWith = { publisher, project };
     return Promise.resolve(response.data);
@@ -15,6 +23,6 @@ async function getRepoDetails({ publisher, project }) {
   }
 }
 
-const srGetRepoDetails = promiseMemoize(getRepoDetails, { resolve: 'json' });
+const [srGetRepoDetails, clearGetRepoDetails] = apiMiddleWare(getRepoDetails, transformSuccess, transformError);
 
-export { srGetRepoDetails };
+export { srGetRepoDetails, clearGetRepoDetails };
