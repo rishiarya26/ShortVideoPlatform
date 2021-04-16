@@ -9,10 +9,10 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
 
-const ErrorComp = () => (<Error />);
+let retry;
+const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
-// const vidid=document.getElementsByClassName('asad')[0]
-// console.log(vidid);
+
 export default function Feed() {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
@@ -21,7 +21,8 @@ export default function Feed() {
     setItems(data.data);
     console.log(data);
   };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
