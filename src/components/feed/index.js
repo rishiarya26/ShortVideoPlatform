@@ -19,9 +19,8 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
-    console.log(data);
   };
-  const [fetchState, data, setRetry] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState, data = {}, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {
@@ -39,9 +38,7 @@ export default function Feed() {
         direction="vertical"
         draggable="true"
         calculateheight="true"
-
       >
-
         {
           items.map(
             item => (

@@ -1,4 +1,4 @@
-import { transformModel, getMessage } from '../index';
+import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 
 const msgMap = {
@@ -7,22 +7,27 @@ const msgMap = {
 
 function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
+  const { data = {} } = error;
   payload.status = 'fail';
   payload.message = getMessage(error, {});
-  payload['http-status'] = error.status;
+  payload['http-status'] = error['http-status'];
+  payload.errorCode = data.statusCode || error['http-status'];
   return payload;
 }
 
-function transformSuccess(data) {
+function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
+  let data = {};
   try {
-    if (data.status > 199 && data.status < 300) {
-      payload.status = 'success';
-      payload.message = getMessage(data, msgMap);
-      payload['http-status'] = data.status;
-      payload.data = data.data;
-      payload.requestedWith = { ...data.requestedWith };
+    if (!isSuccess(resp)) {
+      return transformError(resp);
     }
+    data = resp.data;
+    payload.status = 'success';
+    payload.message = getMessage(data, msgMap);
+    payload['http-status'] = data.status;
+    payload.data = data.data;
+    payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
     data.appError = err.message;

@@ -11,13 +11,15 @@ const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLa
 
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
-  const { data: item = {}, errorCode, message } = params;
+  const {
+    data: item = {},
+    errorCode, message, status
+  } = params;
   const vobj = { videoId: item.content_id };
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
-
-  if (errorCode) {
+  if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
@@ -106,10 +108,11 @@ export async function getServerSideProps(ctx) {
     });
   } catch (e) {
     data = {
-      errorCode: e['http-status'],
+      'http-status': e['http-status'],
       message: e.message
     };
   }
+
   return {
     props: {
       uri,
