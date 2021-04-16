@@ -11,6 +11,7 @@ const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLa
 
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
+  console.log(params)
   const {
     data: item = {},
     errorCode, message, status
@@ -19,7 +20,9 @@ export default function Hipi(params) {
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
+  console.log("failed",errorCode)
   if (status === 'fail') {
+
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
@@ -108,6 +111,8 @@ export async function getServerSideProps(ctx) {
     });
   } catch (e) {
     data = {
+      'status': e['status'],
+      'errorCode':e['errorCode'],
       'http-status': e['http-status'],
       message: e.message
     };
