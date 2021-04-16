@@ -10,7 +10,7 @@ const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLa
 export default function Hipi(params) {
   const { data: item = {}, errorCode, message } = params;
   const vobj = { videoId: item.content_id };
-  
+
   if (errorCode) {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -79,7 +79,7 @@ export default function Hipi(params) {
           SHOP
         </button>
       </div>
-      
+
     </>
   );
 }
