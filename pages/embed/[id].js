@@ -79,6 +79,7 @@ export default function Hipi(params) {
           SHOP
         </button>
       </div>
+      
     </>
   );
 }
