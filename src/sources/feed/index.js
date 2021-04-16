@@ -9,7 +9,7 @@ async function fetchHomeFeed({ page = 1, total = 5 }) {
     const apiPath = `${getApiBasePath('hipi')}/demo/hipifeed/${page}/${total}`;
     response = await get(apiPath);
     response.data.requestedWith = { page, total };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }

@@ -9,7 +9,7 @@ async function fetchEmbedFeed({ page }) {
     const apiPath = `${getApiBasePath('hipi')}/demo/video-detail/${page}`;
     response = await get(apiPath);
     response.data.requestedWith = { page };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
