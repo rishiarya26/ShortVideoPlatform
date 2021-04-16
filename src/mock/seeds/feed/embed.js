@@ -6,7 +6,7 @@ export const forYouEmbedFeed = {
   requestedWith: {
     page: 1
   },
-  data: [
+  data:
     {
       data_id: 11,
       content_id: 'cbvtest1mq99gi6b',
@@ -30,7 +30,6 @@ export const forYouEmbedFeed = {
       commentsCount: 25,
       contentWarning: null
     }
-  ]
 };
 
 export const forYouEmbedFeedFailure = {

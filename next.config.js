@@ -1,6 +1,6 @@
 
 const withSourceMaps = require('@zeit/next-source-maps');
-// const withPWA = require('next-pwa');
+const withPWA = require('next-pwa');
 
 const {
   GEN_SOURCE_MAP,
@@ -11,7 +11,7 @@ const {
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
-// const prod = NODE_ENV === 'production';
+const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
 
@@ -28,6 +28,10 @@ const nextConfig = {
     localeDetection: false,
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
+  },
+  pwa: {
+    swSrc: './src/service-worker.js',
+    dest: 'public'
   },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
@@ -49,6 +53,6 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 

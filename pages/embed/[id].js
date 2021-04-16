@@ -1,14 +1,24 @@
+import {useState} from "react";
 import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
-import FooterMenu from '../../src/components/footer-menu';
+// import FooterMenu from '../../src/components/footer-menu';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
+import EmbedSeekbar from "../../src/components/emded-seekbar"
 
 const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
 
 export default function Hipi(params) {
+  const [seekedPercentage,setSeekedPercentage] = useState(0);
   const { data: item = {}, errorCode, message } = params;
+  const vobj = { videoId: item.content_id };
+ 
+
+  const updateSeekbar=(percentage)=>{
+    setSeekedPercentage(percentage)
+  }
+  
   if (errorCode) {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -58,6 +68,7 @@ export default function Hipi(params) {
         regionsAllowed={languageCodes}
       />
       <EmbedVideo
+        updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
         url={item.video_url}
         id={item.content_id}
@@ -69,7 +80,15 @@ export default function Hipi(params) {
         userName={item.userName}
         musicCoverTitle={item.musicCoverTitle}
       />
-      <FooterMenu />
+      <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
+        <button
+          className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+          onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+        >
+          SHOP
+        </button>
+      </div>
+      <EmbedSeekbar seekedPercentage={seekedPercentage}/>
     </>
   );
 }

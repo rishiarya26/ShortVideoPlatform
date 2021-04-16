@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Video from '../video';
-import FooterMenu from '../footer-menu';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
+import SeekbarLoading from '../seekbar/loader.js';
+import FooterMenu from '../footer-menu';
 
-const ErrorComp = () => (<Error />);
+let retry;
+const ErrorComp = () => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
@@ -17,8 +19,10 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
+    console.log(data);
   };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -35,12 +39,15 @@ export default function Feed() {
         direction="vertical"
         draggable="true"
         calculateheight="true"
+
       >
+
         {
           items.map(
             item => (
               <SwiperSlide
                 key={item.content_id}
+
               >
                 <Video
                   updateSeekbar={updateSeekbar}
@@ -54,6 +61,7 @@ export default function Feed() {
                   profilePic={item.userProfilePicUrl}
                   userName={item.userName}
                   musicCoverTitle={item.musicCoverTitle}
+                  videoid={item.content_id}
                 />
 
               </SwiperSlide>
@@ -61,7 +69,9 @@ export default function Feed() {
           )
         }
       </Swiper>
-      <Seekbar seekedPercentage={seekedPercentage} />
+      {seekedPercentage && seekedPercentage > 0
+        ? <Seekbar seekedPercentage={seekedPercentage} />
+        : <SeekbarLoading />}
       <FooterMenu />
 
     </ComponentStateHandler>
