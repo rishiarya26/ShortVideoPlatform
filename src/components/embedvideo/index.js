@@ -42,10 +42,10 @@ function Embedvideo(props) {
     threshold: [0.30, 0.75]
   });
 
-  const handleUpdateSeekbar = (e)=>{
+  const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
-  }
+  };
 
   return (
     <div
@@ -54,7 +54,7 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        onTimeUpdate = {handleUpdateSeekbar}
+        onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
         onClick={handleVideoPress}
         className="vdo_player"

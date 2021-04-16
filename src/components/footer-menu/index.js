@@ -26,7 +26,9 @@ function FooterMenu(props) {
           font-medium tracking-wide xxs:text-sm xs:text-base
           group-active:translate-y-0`}
           >
-          SHOP  {/* {t('shop')} */}
+            SHOP
+            {' '}
+            {/* {t('shop')} */}
           </span>
         </button>
         <div id="cb_tg_d_wrapper">

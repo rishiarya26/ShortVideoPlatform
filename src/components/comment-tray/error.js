@@ -1,7 +1,7 @@
 
-function Error({retry}) {
+function Error({ retry }) {
   return (
-    <div onClick={()=>retry(true)} className="video_card relative flex w-full h-full scroll-snap-start bg-gray-300 items-center justify-center">
+    <div onClick={() => retry(true)} className="video_card relative flex w-full h-full scroll-snap-start bg-gray-300 items-center justify-center">
       <svg
         enableBackground="new 0 0 24 24"
         height="24"

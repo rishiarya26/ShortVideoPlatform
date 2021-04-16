@@ -20,7 +20,7 @@ function ComponentStateHandler({
  */
 function useFetcher(dataFetcher, onDataFetched) {
   const [fetchState, setFetchState] = useState('pending');
-  const [retry, setRetry] = useState(false)
+  const [retry, setRetry] = useState(false);
   const [data, setData] = useState(null);
 
   const dataFetch = async () => {
@@ -32,14 +32,14 @@ function useFetcher(dataFetcher, onDataFetched) {
     } catch (e) {
       setFetchState('fail');
     }
-  }
+  };
   useEffect(() => {
     dataFetch();
   }, []);
 
-  if(retry){
+  if (retry) {
     dataFetch();
-    setRetry(false)
+    setRetry(false);
   }
 
   return [fetchState, data, setRetry];

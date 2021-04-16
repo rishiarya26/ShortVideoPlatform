@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-function EmbedSeekbar({seekedPercentage}) {
+function EmbedSeekbar({ seekedPercentage }) {
   return (
     <div className="w-full h-1 fixed bottom-0">
       <div className="relative w-400 h-1  bg-black">
