@@ -22,7 +22,7 @@ export default function Feed() {
     console.log(data);
   };
   const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry.bind(retry);
+  retry = setRetry
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);

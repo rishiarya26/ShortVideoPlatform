@@ -41,7 +41,7 @@ function CommentTray({ socialId }) {
     items.length === 0 ? setItems(data.data) : setItems([...items, ...data.data]);
   };
   const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry.bind(retry)
+  retry = setRetry
 
   const loadMore = useCallback(
     async () => {
