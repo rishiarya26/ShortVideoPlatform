@@ -11,16 +11,8 @@ function transformError(error = {}) {
   const { data = {} } = error;
   payload.status = 'fail';
   payload.message = getMessage(error, {});
-  if (error['http-status']) {
-    payload['http-status'] = error['http-status'];
-  } else {
-    payload['http-status'] = DEFAULT_ERROR_CODE;
-  }
-  if (data.statusCode || error['http-status']) {
-    payload.errorCode = data.statusCode || error['http-status'];
-  } else {
-    payload.errorCode = DEFAULT_ERROR_CODE;
-  }
+  payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
+  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
   return payload;
 }
 
