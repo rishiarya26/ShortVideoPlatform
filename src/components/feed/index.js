@@ -38,9 +38,7 @@ export default function Feed() {
         direction="vertical"
         draggable="true"
         calculateheight="true"
-
       >
-
         {
           items.map(
             item => (

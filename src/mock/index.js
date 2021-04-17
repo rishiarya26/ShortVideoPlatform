@@ -20,7 +20,7 @@ function mockServer(environment = 'development', callback) {
 
       // feed
       this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/5', getForYouFeed);
-      this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1', getForYouEmbedFeed);
+      this.get('https://mobiletest.charmboard.com/v3.6/demo/video-detail/cbvtest1mq99gi6b', getForYouEmbedFeed);
 
       // social
       this.get('https://api.getsocial.im/v1/activities', getComments);

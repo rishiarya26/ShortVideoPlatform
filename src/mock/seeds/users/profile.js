@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 export const profile = {
   status: 200,
+  'http-status': 200,
   success: true,
   responseData: {
     id: '0f4b4096-a4bc-4f8f-82ec-b1d85c018cf2',

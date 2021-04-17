@@ -1,6 +1,7 @@
 export const trendingMusic = {
   success: true,
   status: 200,
+  'http-status': 200,
   responseData: [
     {
       title: 'any',

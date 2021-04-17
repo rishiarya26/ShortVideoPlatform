@@ -2,6 +2,7 @@
 export const repoList = {
   success: true,
   status: 200,
+  'http-status': 200,
   responseData: [
     {
       widgetId: 'bucket1',
