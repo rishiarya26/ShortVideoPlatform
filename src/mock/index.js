@@ -4,7 +4,6 @@ import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/
 import { getForYouFeed } from './req-handlers/feed';
 import { getForYouEmbedFeed } from './req-handlers/embed';
 import { getComments } from './req-handlers/social';
-import { isMockMode } from '../config';
 
 function mockServer(environment = 'development', callback) {
   console.log('running in mock mode');
@@ -21,7 +20,7 @@ function mockServer(environment = 'development', callback) {
 
       // feed
       this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/5', getForYouFeed);
-      this.get('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1', getForYouEmbedFeed);
+      this.get('https://mobiletest.charmboard.com/v3.6/demo/video-detail/cbvtest1mq99gi6b', getForYouEmbedFeed);
 
       // social
       this.get('https://api.getsocial.im/v1/activities', getComments);
@@ -29,26 +28,5 @@ function mockServer(environment = 'development', callback) {
   });
   return server;
 }
-
-function loadMockServerOnce() {
-  let initializeMockServer = true;
-  const channel = {};
-  channel.waitOn = new Promise((resolve, reject) => {
-    channel.resolve = resolve;
-    channel.reject = reject;
-  });
-  return async () => {
-    if (isMockMode() && initializeMockServer) {
-      const { default: mockServer } = await import('../mock');
-      mockServer('development', channel.resolve);
-      initializeMockServer = false;
-    } else {
-      channel.resolve();
-    }
-    return channel.waitOn;
-  };
-}
-
-export const loadMockServer = loadMockServerOnce();
 
 export default mockServer;

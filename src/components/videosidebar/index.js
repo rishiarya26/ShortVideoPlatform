@@ -44,37 +44,37 @@ function VideoSidebar(props) {
       <div className="relative py-3  px-1 text-center">
         {liked ? (
           <div>
-          <div
-            role="presentation"
-            onClick={
-              () => {
-                deleteLike({ socialId });
-                setLiked(false);
+            <div
+              role="presentation"
+              onClick={
+                () => {
+                  deleteLike({ socialId });
+                  setLiked(false);
+                }
               }
-            }
-          >
-            <Liked />
-          </div>
-        
-            <p className="text-sm">{props.likes+1}</p>
+            >
+              <Liked />
             </div>
+
+            <p className="text-sm">{props.likes + 1}</p>
+          </div>
         ) : (
           <div>
-          <div
-            role="presentation"
-            onClick={
-              () => {
-                postLike({ socialId });
-                setLiked(true);
+            <div
+              role="presentation"
+              onClick={
+                () => {
+                  postLike({ socialId });
+                  setLiked(true);
+                }
               }
-            }
-          >
-            <Like />
+            >
+              <Like />
+            </div>
+            <p className="text-sm">{props.likes}</p>
           </div>
-           <p className="text-sm">{props.likes}</p>
-           </div>
         )}
-       
+
       </div>
       <div
         role="presentation"

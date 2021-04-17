@@ -2,6 +2,7 @@
 
 export const comments = {
   status: 200,
+  'http-status': 200,
   'data': [
     {
       'id': 123456,

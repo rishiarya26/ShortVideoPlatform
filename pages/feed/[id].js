@@ -8,8 +8,10 @@ import { supportedLanguages } from '../../src/hooks/use-translation';
 const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
 
 export default function Hipi(params) {
-  const { data: item = {}, errorCode, message } = params;
-  if (errorCode) {
+  const {
+    data: item = {}, errorCode, message, status
+  } = params;
+  if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (

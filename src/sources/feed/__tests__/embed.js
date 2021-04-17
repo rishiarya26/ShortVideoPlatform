@@ -11,27 +11,27 @@ jest.mock('network', () => ({
 
 describe('source for feed', () => {
   it('should return the expected response for success state', async () => {
-    get.mockResolvedValueOnce({ data: forYouEmbedFeed });
-    const data = await getSingleFeed();
+    get.mockResolvedValueOnce({ ...forYouEmbedFeed });
+    const data = await getSingleFeed({ page: 1 });
     expect(get).toBeCalledTimes(1);
-    expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1');
+    expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/video-detail/1');
     expect(data).toMatchObject(feed);
   });
 
   it('should return the expected response for failure state', async () => {
-    get.mockRejectedValueOnce({ data: forYouEmbedFeedFailure });
+    get.mockRejectedValueOnce({ ...forYouEmbedFeedFailure });
     try {
-      await getSingleFeed();
+      await getSingleFeed({ page: 1 });
     } catch (e) {
       expect(get).toBeCalledTimes(1);
-      expect(get).toBeCalledWith('https://mobiletest.charmboard.com/v3.6/demo/hipifeed/1/1');
+      expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/video-detail/1');
       expect(e).toMatchObject({
         status: 'fail',
-        message: 'something went wrong',
+        message: 'Failed to fetch.',
         meta: {},
         data: {},
         requestedWith: {},
-        'http-status': undefined
+        'http-status': 400
       });
     }
   });

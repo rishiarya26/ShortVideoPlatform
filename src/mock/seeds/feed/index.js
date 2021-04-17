@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 export const forYouFeed = {
   status: 200,
+  'http-status': 200,
   success: true,
   message: 'Data found successfully.',
   requestedWith: {
@@ -82,6 +83,7 @@ export const forYouFeed = {
 
 export const forYouFeedFailure = {
   status: 400,
+  'http-status': 400,
   success: false,
   message: 'Failed to fetch.',
   responseData: {}
