@@ -8,51 +8,49 @@ import { getSingleFeed } from '../../sources/feed/embed';
 // import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 
-
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed() {
   const [item, setItem] = useState([]);
-  const { show } = useDrawer();
+  // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
-    page: "cbvtest1mq99gi6b"
+    page: 'cbvtest1mq99gi6b'
   });
   const onDataFetched = data => {
     setItem(data.data);
   };
- 
+
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
 
-  
-  
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      
-       {  item &&
-         <Embedvideo
-         key={item.content_id}
-         url={item.video_url}
-         id={item.content_id}
-         comments={item.commentsCount}
-         likes={item.likesCount}
-         music={item.musicCoverTitle}
-         musicTitle={item.music_title}
-         profilePic={item.userProfilePicUrl}
-         userName={item.userName}
-         musicCoverTitle={item.musicCoverTitle}
-       />
-         }
-          
+
+      { item
+         && (
+           <Embedvideo
+             key={item.content_id}
+             url={item.video_url}
+             id={item.content_id}
+             comments={item.commentsCount}
+             likes={item.likesCount}
+             music={item.musicCoverTitle}
+             musicTitle={item.music_title}
+             profilePic={item.userProfilePicUrl}
+             userName={item.userName}
+             musicCoverTitle={item.musicCoverTitle}
+           />
+         )}
+
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
         <button
           className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-  >
+        >
           SHOP
         </button>
       </div>
