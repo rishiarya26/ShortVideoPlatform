@@ -1,5 +1,5 @@
 
-import { loadMockServer } from '../mock';
+import { loadMockServer } from '../mock/load';
 import { getDateDiffSeconds } from '../utils/date';
 
 const RETRY_COUNT = 3;

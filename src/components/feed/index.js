@@ -10,7 +10,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
 
 let retry;
-const ErrorComp = () => (<Error retry={retry}/>);
+const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
 
 export default function Feed() {
@@ -19,10 +19,9 @@ export default function Feed() {
   const dataFetcher = () => getHomeFeed();
   const onDataFetched = data => {
     setItems(data.data);
-    console.log(data);
   };
-  const [fetchState,data,setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry
+  const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
+  retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
