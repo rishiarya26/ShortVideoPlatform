@@ -13,7 +13,7 @@ const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed() {
   const [item, setItem] = useState([]);
-  const { show } = useDrawer();
+  // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
     page: 'cbvtest1mq99gi6b'

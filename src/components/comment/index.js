@@ -1,7 +1,8 @@
 // TODO call like here for comment send comment id as input
 
+// TODO add likeCount to params
 function Comment({
-  comment, timeSince, user, likeCount, profilePic
+  comment, timeSince, user, profilePic
 }) {
   return (
     <div id="commentbox" className="w-full flex text-xs font-normal text-gray-600 py-2">

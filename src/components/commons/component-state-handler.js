@@ -46,7 +46,7 @@ function useFetcher(dataFetcher, onDataFetched) {
     setRetry(false);
   }
 
-  return [fetchState, data, setRetry];
+  return [fetchState, setRetry, data];
 }
 
 export { useFetcher };

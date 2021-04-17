@@ -13,16 +13,9 @@ export const apiBaseEndPoints = {
     translations: 'http://localhost:3000',
     'get-social': 'https://api.getsocial.im/v1'
   },
-  prod: {
-    test: 'https://api.github.com',
-    hipi: 'https://mapi.charmboard.com/v3.6',
-    translations: 'http://localhost:3000',
-    'get-social': 'https://api.getsocial.im/v1'
-  },
-  
   production: {
     test: 'https://api.github.com',
-    hipi: 'https://mobiletest.charmboard.com/v3.6',
+    hipi: 'https://mapi.charmboard.com/v3.6',
     translations: 'http://localhost:3000',
     'get-social': 'https://api.getsocial.im/v1'
   }

@@ -3,15 +3,15 @@ import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
 // import useDrawer from '../../hooks/use-drawer';
-import useTranslation from '../../hooks/use-translation';
+// import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 import SnackBar from '../commons/snackbar';
 
-function FooterMenu(props) {
+function FooterMenu() {
   const vobj = { videoId: 'cbvtest1mq99gi6b' };
   // console.log(props.id);
   // const { show } = useDrawer();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <div>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center">
@@ -19,6 +19,7 @@ function FooterMenu(props) {
         <Search />
         <button
           className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+          // eslint-disable-next-line no-undef
           onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
         >
           <span className={`transform-gpu -translate-y-1

@@ -20,7 +20,7 @@ export default function Feed() {
   const onDataFetched = data => {
     setItems(data.data);
   };
-  const [fetchState, data = {}, setRetry] = useFetcher(dataFetcher, onDataFetched);
+  const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry.bind(retry);
 
   const updateSeekbar = percentage => {

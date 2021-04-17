@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 export const forYouEmbedFeed = {
   status: 200,
+  'http-status': 200,
   success: true,
   message: 'Data found successfully.',
   requestedWith: {
