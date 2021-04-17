@@ -1,6 +1,7 @@
 export const searchMusic = {
   success: true,
   status: 200,
+  'http-status': 200,
   message: 'Data fetch.',
   responseData: [
     {

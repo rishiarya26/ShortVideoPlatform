@@ -1,25 +1,26 @@
-import {useState} from "react";
+import { useState } from 'react';
 import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
-// import FooterMenu from '../../src/components/footer-menu';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
-import EmbedSeekbar from "../../src/components/emded-seekbar"
+import EmbedSeekbar from '../../src/components/emded-seekbar';
 
 const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
 
+// TODO enable mock mode here
 export default function Hipi(params) {
-  const [seekedPercentage,setSeekedPercentage] = useState(0);
-  const { data: item = {}, errorCode, message } = params;
+  const [seekedPercentage, setSeekedPercentage] = useState(0);
+  const {
+    data: item = {},
+    errorCode, message,
+    status
+  } = params;
   const vobj = { videoId: item.content_id };
- 
-
-  const updateSeekbar=(percentage)=>{
-    setSeekedPercentage(percentage)
-  }
-  
-  if (errorCode) {
+  const updateSeekbar = percentage => {
+    setSeekedPercentage(percentage);
+  };
+  if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
@@ -83,12 +84,13 @@ export default function Hipi(params) {
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <button
           className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+          // eslint-disable-next-line no-undef
           onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
         >
           SHOP
         </button>
       </div>
-      <EmbedSeekbar seekedPercentage={seekedPercentage}/>
+      <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
   );
 }
@@ -108,10 +110,13 @@ export async function getServerSideProps(ctx) {
     });
   } catch (e) {
     data = {
-      errorCode: e['http-status'],
+      status: e.status,
+      errorCode: e.errorCode,
+      'http-status': e['http-status'],
       message: e.message
     };
   }
+
   return {
     props: {
       uri,

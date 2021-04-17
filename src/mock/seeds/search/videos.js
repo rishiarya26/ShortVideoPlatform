@@ -2,6 +2,7 @@
 export const searchVideos = {
   success: true,
   status: 200,
+  'http-status': 200,
   message: 'Data fetch.',
   responseData: [
     {

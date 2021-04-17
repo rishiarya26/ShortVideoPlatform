@@ -17,6 +17,7 @@ const handleError = async res => {
   const body = await parseBody(res);
   const error = new Error(body.message || body);
   error.statusCode = res.status;
+  error['http-status'] = res.status;
   error.code = body.code;
   throw error;
 };
@@ -38,6 +39,7 @@ const pagination = res => {
 export default async res => {
   if (!res.ok) return handleError(res);
   return {
+    'http-status': res.status,
     headers: res.headers,
     data: await parseBody(res),
     ...pagination(res)
