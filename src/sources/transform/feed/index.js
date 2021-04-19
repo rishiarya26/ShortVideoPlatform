@@ -30,7 +30,6 @@ function transformSuccess(resp) {
     payload.message = getMessage(resp.data, msgMap);
     payload.data = data;
     payload.requestedWith = { ...resp.data.requestedWith };
-    console.log(payload);
     return payload;
   } catch (err) {
     data.appError = err.message;
