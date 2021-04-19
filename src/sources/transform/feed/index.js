@@ -23,7 +23,7 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(resp);
     }
-    data = resp.data;
+    data = resp.data.data;
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(resp, msgMap);
