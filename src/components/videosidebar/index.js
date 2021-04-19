@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
-//import Follow from '../commons/svgicons/follow';
+// import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 // import Share from '../commons/svgicons/share';
 // import Shop from '../commons/svgicons/shop';
