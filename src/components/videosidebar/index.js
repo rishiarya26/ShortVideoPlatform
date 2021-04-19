@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
-import Follow from '../commons/svgicons/follow';
+//import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 // import Share from '../commons/svgicons/share';
 // import Shop from '../commons/svgicons/shop';
@@ -37,9 +37,9 @@ function VideoSidebar(props) {
           className="usrimg w-12 h-12 rounded-full"
           src={props.profilePic}
         />
-        <div className="absolute bottom-0 left-1/3">
+        {/* <div className="absolute bottom-0 left-1/3">
           <Follow />
-        </div>
+        </div> */}
       </div>
       <div className="relative py-3  px-1 text-center">
         {liked ? (
