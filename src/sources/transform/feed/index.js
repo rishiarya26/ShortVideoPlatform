@@ -25,7 +25,7 @@ function transformSuccess(resp) {
     }
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
-    payload.message = getMessage(data.data, msgMap);
+    payload.message = getMessage(data, msgMap);
     payload.data = data.data;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
