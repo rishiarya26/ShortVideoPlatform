@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 export const forYouEmbedFeed = {
-  status: 200,
   'http-status': 200,
-  success: true,
-  message: 'Data found successfully.',
-  requestedWith: {
-    page: 1
-  },
-  data:
+  data: {
+    status: 200,
+    success: true,
+    message: 'Data found successfully.',
+    requestedWith: {
+      page: 1
+    },
+    data:
     {
       data_id: 11,
       content_id: 'cbvtest1mq99gi6b',
@@ -31,6 +32,8 @@ export const forYouEmbedFeed = {
       commentsCount: 25,
       contentWarning: null
     }
+  }
+
 };
 
 export const forYouEmbedFeedFailure = {
