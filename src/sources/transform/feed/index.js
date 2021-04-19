@@ -19,6 +19,7 @@ function transformError(error = {}) {
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   let data = {};
+
   try {
     if (!isSuccess(resp)) {
       return transformError(resp);
@@ -26,9 +27,10 @@ function transformSuccess(resp) {
     data = resp.data.data;
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
-    payload.message = getMessage(resp, msgMap);
+    payload.message = getMessage(resp.data, msgMap);
     payload.data = data;
-    payload.requestedWith = { ...resp.requestedWith };
+    payload.requestedWith = { ...resp.data.requestedWith };
+    console.log(payload);
     return payload;
   } catch (err) {
     data.appError = err.message;
