@@ -1,6 +1,7 @@
-import { transformModel, getMessage } from '../index';
+import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { trimLowerCase } from '../../../utils/string';
+import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 const msgMap = {
   200: 'ok'
@@ -14,20 +15,25 @@ function fetchCommentsTextByLang(content) {
 
 function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
+  const { data = {} } = error;
   payload.status = 'fail';
   payload.message = getMessage(error, {});
   payload.data = [];
-  payload['http-status'] = error.status;
+  payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
+  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
   return payload;
 }
 
-function transformSuccess(data) {
+function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
+  const { data = {} } = resp;
   try {
-    if (data.status > 199 && data.status < 300) {
+    if (!isSuccess(resp)) {
+      return transformError(resp);
+    }
       payload.status = 'success';
       payload.message = getMessage(data, msgMap);
-      payload['http-status'] = 200;
+      payload['http-status'] = resp['http-status'];
       const { data: comments = [], next_cursor: nextCursor = null } = data;
       const commentsToShow = comments.map(comment => {
         if (trimLowerCase(comment.status) === 'approved') {
@@ -44,7 +50,6 @@ function transformSuccess(data) {
       payload.data = commentsToShow.filter(item => item != null);
       payload.nextCursor = nextCursor;
       payload.requestedWith = { ...data.requestedWith };
-    }
     if (!payload.data || payload.data.length === 0) {
       throw new Error('comments not found');
     }

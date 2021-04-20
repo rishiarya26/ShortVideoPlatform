@@ -94,7 +94,7 @@ function CommentTray({ socialId }) {
             <Send onClick={() => {
               const comment = refInputComment.current.value;
               if (!comment) return;
-              postComment(comment, socialId);
+              postComment({text: comment, socialId: socialId});
               clearComments();
               setItems([...optimisticUpdate(comment), ...items]);
               refInputComment.current.value = '';

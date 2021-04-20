@@ -40,7 +40,7 @@ export default function Feed() {
         calculateheight="true"
       >
         {
-          items.map(
+          items && items.map(
             item => (
               <SwiperSlide
                 key={item.content_id}
