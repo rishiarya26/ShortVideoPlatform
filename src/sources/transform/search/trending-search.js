@@ -14,16 +14,16 @@ function transformError(error = {}) {
 
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
-  const { data={}} = resp;
+  const { data = {} } = resp;
   try {
     if (!isSuccess(resp)) {
-      return transformError(resp);
+      return transformError(data);
     }
-      payload.status = 'success';
-      payload.message = getMessage(data, {});
-      payload['http-status'] = data.status;
-      payload.data = { ...data.responseData };
-      payload.requestedWith = { ...data.requestedWith };
+    payload.status = 'success';
+    payload.message = getMessage(data, {});
+    payload['http-status'] = data.status;
+    payload.data = { ...data.responseData };
+    payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
     data.appError = err.message;

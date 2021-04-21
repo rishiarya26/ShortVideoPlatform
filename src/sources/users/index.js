@@ -9,7 +9,7 @@ async function sendOtp({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/sendOtp`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -21,7 +21,7 @@ async function verifyOtpPassword({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/verifyOtp`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -33,7 +33,7 @@ async function forgotPassword({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/forgotPassword`;
     response = await post(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -44,7 +44,7 @@ async function updateProfile({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
     response = await put(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -56,7 +56,7 @@ async function reportProfile({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/report`;
     response = await post(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }

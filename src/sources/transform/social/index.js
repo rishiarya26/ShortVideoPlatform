@@ -29,27 +29,27 @@ function transformSuccess(resp) {
   const { data = {} } = resp;
   try {
     if (!isSuccess(resp)) {
-      return transformError(resp);
+      return transformError(data);
     }
-      payload.status = 'success';
-      payload.message = getMessage(data, msgMap);
-      payload['http-status'] = resp['http-status'];
-      const { data: comments = [], next_cursor: nextCursor = null } = data;
-      const commentsToShow = comments.map(comment => {
-        if (trimLowerCase(comment.status) === 'approved') {
-          return {
-            comment: fetchCommentsTextByLang(comment.content)?.text || '',
-            likeCount: comment?.reactions_count?.like || 0,
-            time: comment?.status_updated_at || 0,
-            user: comment?.author?.user?.display_name || '',
-            profilePic: comment?.author?.user?.avatar_url || ''
-          };
-        }
-        return null;
-      });
-      payload.data = commentsToShow.filter(item => item != null);
-      payload.nextCursor = nextCursor;
-      payload.requestedWith = { ...data.requestedWith };
+    payload.status = 'success';
+    payload.message = getMessage(data, msgMap);
+    payload['http-status'] = resp['http-status'];
+    const { data: comments = [], next_cursor: nextCursor = null } = data;
+    const commentsToShow = comments.map(comment => {
+      if (trimLowerCase(comment.status) === 'approved') {
+        return {
+          comment: fetchCommentsTextByLang(comment.content)?.text || '',
+          likeCount: comment?.reactions_count?.like || 0,
+          time: comment?.status_updated_at || 0,
+          user: comment?.author?.user?.display_name || '',
+          profilePic: comment?.author?.user?.avatar_url || ''
+        };
+      }
+      return null;
+    });
+    payload.data = commentsToShow.filter(item => item != null);
+    payload.nextCursor = nextCursor;
+    payload.requestedWith = { ...data.requestedWith };
     if (!payload.data || payload.data.length === 0) {
       throw new Error('comments not found');
     }

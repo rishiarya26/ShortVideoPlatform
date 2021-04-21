@@ -2,7 +2,6 @@ import { get, post, del } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/social';
-import { transformSuccess as transformPostCommentSuccess, transformError as transformPostCommentError } from '../transform/social/post-comment';
 import { getEpochTime } from '../../utils/date';
 import { trimSpace } from '../../utils/string';
 
@@ -36,7 +35,7 @@ const getActivityFeed = async ({ socialId = 0, nextCursor = '' }) => {
   }
 };
 
-const postActivityComment = async ({text = "", socialId}) => {
+const postComment = async ({ text = '', socialId }) => {
   let response = {};
   try {
     const payload = {
@@ -44,7 +43,7 @@ const postActivityComment = async ({text = "", socialId}) => {
       activity: {
         content: {
           language: 'en',
-          text: text
+          text
         },
         target: {
           type: 'ACTIVITY',
@@ -80,7 +79,7 @@ const postLike = async ({ socialId }) => {
     response = await post(apiPath, payload, {
       'X-GetSocial-API-Key': apiKey
     });
-    
+
     response.data.status = 200;
     response.data.message = '';
     return Promise.resolve(response);
@@ -114,9 +113,6 @@ const deleteLike = async ({ socialId }) => {
 };
 
 const [getComments, clearComments] = apiMiddleWare(getActivityFeed, transformSuccess, transformError, middlewareSettings);
-const [postComment, clearComment] = apiMiddleWare(postActivityComment, transformPostCommentSuccess, transformPostCommentError);
-// const [postLike, clearLike] = apiMiddleWare(postActivityLike, transformSuccess, transformError);
-// const [deleteLike, clearDeleteLike] = apiMiddleWare(deleteActivityLike, transformSuccess, transformError);
 
 export {
   getComments,
