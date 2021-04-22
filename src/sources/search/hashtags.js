@@ -12,11 +12,13 @@ async function fetchSearchResult({
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/search/result/hashtags?keyword=${keyword}&limit=${limit}&offset=${offset}`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
 }
+
+fetchSearchResult();
 
 const [getSearchResults, clearSearchResults] = apiMiddleWare(fetchSearchResult, transformSuccess, transformError);
 

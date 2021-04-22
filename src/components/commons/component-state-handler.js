@@ -31,6 +31,7 @@ function useFetcher(dataFetcher, onDataFetched) {
         return;
       }
       setData(data);
+
       if (onDataFetched) onDataFetched(data);
       setFetchState('success');
     } catch (e) {

@@ -19,8 +19,9 @@ function HeadMeta() {
       {/* charmboard plugin */}
       <script type="text/javascript" src="https://devqa2.charmboard.com/zee5/kaltura_plugin.js" />
 
-      {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" /> */}
-      {/* <script type="text/javascript" src="/agents/instana.js" /> */}
+      <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
+      <script type="text/javascript" src="/agents/instana.js" />
+
       <script type="text/javascript" src="/embeds/hipi.js" />
       <meta name="theme-color" content="#100618" />
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}

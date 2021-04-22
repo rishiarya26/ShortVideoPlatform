@@ -21,7 +21,7 @@ export default function Feed() {
     setItems(data.data);
   };
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry.bind(retry);
+  retry = setRetry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -40,7 +40,7 @@ export default function Feed() {
         calculateheight="true"
       >
         {
-          items.map(
+          items && items.map(
             item => (
               <SwiperSlide
                 key={item.content_id}
