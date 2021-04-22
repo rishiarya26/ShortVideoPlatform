@@ -54,6 +54,8 @@ const SeoMeta = ({ data = {} }) => {
   const meta = { ...defaultMeta, ...data };
   return (
     <NextSeo
+      noindex
+      nofollow
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...meta}
     />
