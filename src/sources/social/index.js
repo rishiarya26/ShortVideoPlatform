@@ -29,13 +29,13 @@ const getActivityFeed = async ({ socialId = 0, nextCursor = '' }) => {
     });
     response.data.status = 200;
     response.data.message = '';
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
 };
 
-const postComment = async (text = '', socialId) => {
+const postComment = async ({ text = '', socialId }) => {
   let response = {};
   try {
     const payload = {
@@ -57,7 +57,7 @@ const postComment = async (text = '', socialId) => {
     });
     response.data.status = 200;
     response.data.message = 'success';
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -79,9 +79,10 @@ const postLike = async ({ socialId }) => {
     response = await post(apiPath, payload, {
       'X-GetSocial-API-Key': apiKey
     });
+
     response.data.status = 200;
     response.data.message = '';
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -105,7 +106,7 @@ const deleteLike = async ({ socialId }) => {
     });
     response.data.status = 200;
     response.data.message = '';
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }

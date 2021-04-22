@@ -17,7 +17,6 @@ export default function Hipi(params) {
     status
   } = params;
   const vobj = { videoId: item.content_id };
-  console.log(vobj);
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };

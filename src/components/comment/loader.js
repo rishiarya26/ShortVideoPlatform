@@ -1,7 +1,7 @@
 
 function CommentLoader() {
   return (
-    <div id="commentbox" className="w-full flex flex-col bg-gray-200 py-2">
+    <div id="commentbox" className="w-full flex flex-col bg-white py-2">
       <div className="flex my-2">
         <div className="usrimg w-12 h-12 rounded-full mr-2 bg-gray-400" />
         <div id="commentlist" className="flex flex-col w-3/4">

@@ -9,7 +9,7 @@ async function fetchUserProfile({ params }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${params.id}`;
     response = await get(apiPath);
     response.data.requestedWith = { params };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -21,7 +21,7 @@ async function fetchSimilarProfile({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/similar`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -33,7 +33,7 @@ async function fetchPopularUser({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/popular`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -45,7 +45,7 @@ async function fetchSoundDetails({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/sound/detail`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -57,7 +57,7 @@ async function fetchUserFollower({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/follower`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -68,7 +68,7 @@ async function fetchUserFollowing({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/following`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -80,7 +80,7 @@ async function fetchUserRecommendation({ lang }) {
     const apiPath = `${getApiBasePath('hipi')}/v2/shorts/discover/recommendation`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }

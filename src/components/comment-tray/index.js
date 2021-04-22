@@ -41,7 +41,7 @@ function CommentTray({ socialId }) {
     items.length === 0 ? setItems(data.data) : setItems([...items, ...data.data]);
   };
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry.bind(retry);
+  retry = setRetry;
 
   const loadMore = useCallback(
     async () => {
@@ -72,7 +72,7 @@ function CommentTray({ socialId }) {
             loadFunction={loadMore}
           >
             {
-              items.map((item, index) => (
+              items && items.length > 0 ? items.map((item, index) => (
                 <Comment
                   commentId={item.id}
                   profilePic={item.profilePic}
@@ -82,7 +82,7 @@ function CommentTray({ socialId }) {
                   user={item.user}
                   key={index}
                 />
-              ))
+              )) : (<div />)
             }
           </Paginator>
           <div className="fixed bottom-0 bg-white py-4 w-full flex">
@@ -94,7 +94,7 @@ function CommentTray({ socialId }) {
             <Send onClick={() => {
               const comment = refInputComment.current.value;
               if (!comment) return;
-              postComment(comment, socialId);
+              postComment({ text: comment, socialId });
               clearComments();
               setItems([...optimisticUpdate(comment), ...items]);
               refInputComment.current.value = '';

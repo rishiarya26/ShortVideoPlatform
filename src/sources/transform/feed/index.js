@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import isEmptyObject from '../../../utils/is-object-empty';
 
 const msgMap = {
   200: 'ok'
@@ -21,12 +22,16 @@ function transformSuccess(resp) {
   const { data = {} } = resp;
   try {
     if (!isSuccess(resp)) {
-      return transformError(resp);
+      return transformError(data);
     }
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
-    payload.data = data.data;
+    if ((Array.isArray(data.data) && data.data.length > 0) || !isEmptyObject(data.data)) {
+      payload.data = data.data;
+    } else {
+      return transformError(data);
+    }
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

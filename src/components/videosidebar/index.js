@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
-// import Follow from '../commons/svgicons/follow';
+import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 // import Share from '../commons/svgicons/share';
-// import Shop from '../commons/svgicons/shop';
+import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
@@ -37,11 +37,11 @@ function VideoSidebar(props) {
           className="usrimg w-12 h-12 rounded-full"
           src={props.profilePic}
         />
-        {/* <div className="absolute bottom-0 left-1/3">
+        <div className={`${props.type === 'feed' ? 'block' : 'hidden'} absolute bottom-0 left-1/3`}>
           <Follow />
-        </div> */}
+        </div>
       </div>
-      <div className="relative py-3  px-1 text-center">
+      <div className={`${props.type === 'feed' ? 'block' : 'hidden'} "relative py-3  px-1 text-center`}>
         {liked ? (
           <div>
             <div
@@ -78,22 +78,21 @@ function VideoSidebar(props) {
       </div>
       <div
         role="presentation"
-        className="relative py-3  px-1 text-center flex flex-col items-center"
+        className={`${props.type === 'feed' ? 'block' : 'hidden'} relative py-3  px-1 text-center flex flex-col items-center`}
         onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
         <p className="text-sm">{props.comment}</p>
       </div>
-
-      {/* <ShareComp
+      {/* <div className={`${props.type === 'feed' ? 'block' : 'hidden'}`}>
+       <ShareComp
         show={showSnackbar}
         shareCount={props.share}
       />
-
-      <div className="relative py-3  px-1 text-center flex flex-col items-center">
-        <Shop />
       </div> */}
-
+      <div className={`${props.type === 'feed' ? 'block' : 'hidden'} relative py-3  px-1 text-center flex flex-col items-center`}>
+        <Shop />
+      </div>
     </div>
   );
 }
