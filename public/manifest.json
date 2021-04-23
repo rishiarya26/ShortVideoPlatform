@@ -3,7 +3,7 @@
   "name": "hipiStarter",
   "lang": "en",
   "description": "Bootstrapping kit for webapps at hipi",
-  "start_url": "https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html",
+  "start_url": "https://hipi.co.in/feed",
   "background_color": "#00aae7",
   "theme_color": "#00aae7",
   "dir": "ltr",
