@@ -4,7 +4,7 @@ import EmbedVideo from '../../src/components/embedvideo';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import {
   SeoMeta,
-  VideoJsonLd,
+  VideoJsonLd
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
@@ -23,7 +23,7 @@ export default function Hipi(params) {
     errorCode,
     message,
     status,
-    dataShopVerification,
+    dataShopVerification
   } = params;
   const vobj = { videoId: item.content_id };
   const videoVerifiedForShop = null;
@@ -68,7 +68,7 @@ export default function Hipi(params) {
               tag: item.genre,
             },
             site_name: 'Hipi',
-          },
+          }
         }}
       />
       <VideoJsonLd
@@ -122,14 +122,14 @@ export async function getServerSideProps(ctx) {
   let dataShopVerification = {};
   try {
     data = await getSingleFeed({
-      page: id,
+      page: id
     });
   } catch (e) {
     data = {
       status: e.status,
       errorCode: e.errorCode,
       'http-status': e['http-status'],
-      message: e.message,
+      message: e.message
     };
   }
   try {
@@ -145,7 +145,7 @@ export async function getServerSideProps(ctx) {
       locales,
       defaultLocale,
       ...data,
-      ...dataShopVerification,
+      ...dataShopVerification
     },
   };
 }

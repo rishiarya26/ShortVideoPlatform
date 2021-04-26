@@ -38,7 +38,7 @@ function Embedvideo(props) {
   const [ref] = useIntersect({
     callback: handlePlay,
     rootMargin: '50px',
-    threshold: [0.3, 0.75],
+    threshold: [0.3, 0.75]
   });
 
   const handleUpdateSeekbar = (e) => {

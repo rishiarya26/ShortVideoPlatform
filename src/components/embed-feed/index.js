@@ -7,7 +7,7 @@ import { getSingleFeed } from '../../sources/feed/embed';
 // import { withBasePath } from '../../config';
 // import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, {
-  useFetcher,
+  useFetcher
 } from '../commons/component-state-handler';
 
 const ErrorComp = () => <Error />;
@@ -19,7 +19,7 @@ export default function EmbedFeed() {
 
   const dataFetcher = () =>
     getSingleFeed({
-      page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae',
+      page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
     });
   const onDataFetched = (data) => {
     setItem(data.data);
