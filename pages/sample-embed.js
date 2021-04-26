@@ -35,7 +35,7 @@ export default function SampleEmbed() {
           style={{
             position: 'relative',
             margin: '0 auto',
-            height: '700px',
+            height: '640px',
             width: '340px',
             overflow: 'hidden'
           }}
