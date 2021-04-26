@@ -59,6 +59,7 @@ export default function Feed() {
                   userName={item.userName}
                   musicCoverTitle={item.musicCoverTitle}
                   videoid={item.content_id}
+                  hashTags={item.hashTags}
                 />
 
               </SwiperSlide>

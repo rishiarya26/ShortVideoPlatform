@@ -80,7 +80,7 @@ function VideoSidebar(props) {
           </div>
         )}
       </div>
-      <div
+      {/* <div
         role="presentation"
         className={`${
           props.type === 'feed' ? 'block' : 'hidden'
@@ -89,7 +89,7 @@ function VideoSidebar(props) {
       >
         <Comment />
         <p className="text-sm">{props.comment}</p>
-      </div>
+      </div> */}
       {/* <div className={`${props.type === 'feed' ? 'block' : 'hidden'}`}>
        <ShareComp
         show={showSnackbar}

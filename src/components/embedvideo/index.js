@@ -1,10 +1,9 @@
-
-import React, { useState, useRef } from 'react';
-import VideoFooter from '../videofooter/index';
-import VideoSidebar from '../videosidebar/index';
-import useWindowSize from '../../hooks/use-window-size';
-import useIntersect from '../../hooks/use-intersect';
-import { withBasePath } from '../../config';
+import React, { useState, useRef } from "react";
+import VideoFooter from "../videofooter/index";
+import VideoSidebar from "../videosidebar/index";
+import useWindowSize from "../../hooks/use-window-size";
+import useIntersect from "../../hooks/use-intersect";
+import { withBasePath } from "../../config";
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -24,7 +23,7 @@ function Embedvideo(props) {
     }
   };
 
-  const handlePlay = entry => {
+  const handlePlay = (entry) => {
     if (clicked) {
       if (entry.isIntersecting) {
         rootRef.current.children[0].play();
@@ -38,11 +37,11 @@ function Embedvideo(props) {
 
   const [ref] = useIntersect({
     callback: handlePlay,
-    rootMargin: '50px',
-    threshold: [0.30, 0.75]
+    rootMargin: "50px",
+    threshold: [0.3, 0.75],
   });
 
-  const handleUpdateSeekbar = e => {
+  const handleUpdateSeekbar = (e) => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
@@ -61,17 +60,18 @@ function Embedvideo(props) {
         width={size.width}
         height={size.height}
       >
-        <source
-          src={props.url}
-          type="video/mp4"
-        />
+        <source src={props.url} type="video/mp4" />
       </video>
       <div
         onClick={handleVideoPress}
         className="absolute top-2/5 left-1/2 "
-        style={{ display: playing ? 'none' : 'block' }}
+        style={{ display: playing ? "none" : "block" }}
       >
-        <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
+        <img
+          src={withBasePath("images/play.png")}
+          className="w-12 h-12"
+          alt="playicon"
+        />
       </div>
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
@@ -87,6 +87,7 @@ function Embedvideo(props) {
         musicTitle={props.musicTitle}
         userName={props.userName}
         musicCoverTitle={props.musicCoverTitle}
+        hashTags={props.hashTags}
       />
     </div>
   );

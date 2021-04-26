@@ -1,40 +1,141 @@
 /* eslint-disable */
 
 export const feed = {
-"status":"success",
-"message":"Data found successfully.",
-"meta":{},
-"data":[{
-  "data_id":11,
-  "content_id":"cbvtest1mq99gi6b",
-  "video_url":"https://media.charmboard.com/images/demo_videos/116048223_280845449876104_5314998475040145773_n.mp4",
-  "poster_image_url":"",
-  "content_description":"Ho gaye shareaam tere shehar charche !!\r\n#reel #punjabi #instareel #8Parche #ashnakishore #PunjabiSong2019 #BaaniSandhu #haircurler #Lakme #EyeconicKajal #M.A.C #Peachlipstick",
-  "content_url":"",
-  "music_title":"God's Plan",
-  "musicCoverTitle":"8 Parche",
-  "userId":"868268f4-d450-48b9-b84e-5b853366bb17",
-  "videoOwnersId":"868268f4-d450-48b9-b84e-5b853366bb17",
-  "getSocialId":"539929525481158009",
-  "id":"cfcb3a92-50bb-4b37-a51d-b142ef3cc3be",
-  "genre":"shoppable",
-  "type":"video",
-  "video_type":"vertical video",
-  "tagged_video":"1",
-  "userProfilePicUrl":"https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face",
-  "userName":"@Stark",
-  "likesCount":220,
-  "commentsCount":25,
-  "contentWarning":null
-},
-  {"data_id":12,"content_id":"cbvtest4acqv8hea","video_url":"https://media.charmboard.com/images/demo_videos/116281312_735041643986642_3875123162107059152_n.mp4","poster_image_url":"","content_description":"Mine is pink ❤ What's yours ?\r\n#makeupreelsvideo #NudeOrangeshade #Pinkeyeshadow #MatteLipstick #myglamm #HighlighterStick #classymakeuplook\r\n #HippieSabotage #DevilEyes #BhumiPednekar ","content_url":"","music_title":"God's Plan","musicCoverTitle":"Devil Eyes","userId":"7b65a474-c521-4da0-a003-643a81f1e296","videoOwnersId":"7b65a474-c521-4da0-a003-643a81f1e296","getSocialId":"473133402323434279","id":"626283a5-7cd8-4ce1-9b43-0e8835051cde","genre":"shoppable","type":"video","video_type":"vertical video","tagged_video":"1","userProfilePicUrl":"https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face","userName":"@Stark","likesCount":220,"commentsCount":25,"contentWarning":null},{"data_id":13,"content_id":"cbvtest1km0dkjqh","video_url":"https://media.charmboard.com/images/demo_videos/116335347_384239915879641_9216393402670515633_n.mp4","poster_image_url":"","content_description":"White On White!\r\n#OutfitInspiration #WhiteShirt #allwhiteoutfit #HM #stylish #ChainNecklace #BlackPumps #lookoftheday ##outfitideas #Maroon5 #Memories #M5","content_url":"","music_title":"God's Plan","musicCoverTitle":"Memories","userId":"215903e9-5790-424c-a502-a4f6621ca3ae","videoOwnersId":"215903e9-5790-424c-a502-a4f6621ca3ae","getSocialId":"523946837371670909","id":"2f5a0bb8-6f39-4938-b6d4-699f28e102bc","genre":"shoppable","type":"video","video_type":"vertical video","tagged_video":"1","userProfilePicUrl":"https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face","userName":"@Stark","likesCount":220,"commentsCount":25,"contentWarning":null}
-],
-  "requestedWith":{"page":1,"total":5},
-  "http-status":200}
-  
+  status: "success",
+  message: "ok",
+  meta: {},
+  data: [
+    {
+      data_id: "250f8cf3-9c77-436c-a630-7df5a42666e7",
+      content_id: "250f8cf3-9c77-436c-a630-7df5a42666e7",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/2/31/250f8cf3-9c77-436c-a630-7df5a42666e7/250f8cf3-9c77-436c-a630-7df5a42666e7_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description:
+        "Jugni be posing around like 🤷🏻‍♀️\n\n#jugnisong #FreshOnHipi #Himanshi #HimanshiKhurana #glamour #pretty #beautiful #poses #posing",
+      userId: "b2945c30-9048-49b7-8605-e95a08c255cb",
+      videoOwnersId: "b2945c30-9048-49b7-8605-e95a08c255cb",
+      getSocialId: "561982338821456345",
+      id: "250f8cf3-9c77-436c-a630-7df5a42666e7",
+      genre: ["Entertainment"],
+      userProfilePicUrl:
+        "https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1610017758/hipi/assets/user/b2945c30-9048-49b7-8605-e95a08c255cb/b2945c30-9048-49b7-8605-e95a08c255cb.webp",
+      userName: "Himanshikhurana",
+      likesCount: 67,
+      music_title: "God's Plan",
+    },
+    {
+      data_id: "e4133202-18c8-42a6-ba92-cce5ccbb9503",
+      content_id: "e4133202-18c8-42a6-ba92-cce5ccbb9503",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/3/3/e4133202-18c8-42a6-ba92-cce5ccbb9503/e4133202-18c8-42a6-ba92-cce5ccbb9503_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description: "Twist kamariya babe \n#TwistKamariya\n#Dance #Fun",
+      userId: "85fc3560-62df-4328-a8f7-94f4493b5f06",
+      videoOwnersId: "85fc3560-62df-4328-a8f7-94f4493b5f06",
+      getSocialId: "562985591277572158",
+      id: "e4133202-18c8-42a6-ba92-cce5ccbb9503",
+      userName: "durga1909",
+      likesCount: 83,
+      music_title: "God's Plan",
+    },
+    {
+      data_id: "e03e7ecf-65fc-4381-b8b9-5fa7e22b40cc",
+      content_id: "e03e7ecf-65fc-4381-b8b9-5fa7e22b40cc",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/2/30/e03e7ecf-65fc-4381-b8b9-5fa7e22b40cc/e03e7ecf-65fc-4381-b8b9-5fa7e22b40cc_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description: "#UMeAurDevgan\n\n #Birthday #LipSync",
+      userId: "873a3a9b-f6a8-4e47-8225-4744169bd49c",
+      videoOwnersId: "873a3a9b-f6a8-4e47-8225-4744169bd49c",
+      getSocialId: "561459152522523667",
+      id: "e03e7ecf-65fc-4381-b8b9-5fa7e22b40cc",
+      genre: ["Challenge"],
+      userProfilePicUrl:
+        "https://akamaividz2.zee5.com/image/upload/v1606635381/hipi/assets/user/873a3a9b-f6a8-4e47-8225-4744169bd49c/873a3a9b-f6a8-4e47-8225-4744169bd49c.jpg",
+      userName: "Nupurkashyap",
+      likesCount: 2,
+      music_title: "God's Plan",
+    },
+    {
+      data_id: "7b97189f-9885-460e-9a2f-90b8650da795",
+      content_id: "7b97189f-9885-460e-9a2f-90b8650da795",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/3/16/7b97189f-9885-460e-9a2f-90b8650da795/7b97189f-9885-460e-9a2f-90b8650da795_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description:
+        "My Meditation\n#freshonhipi #staronhipi #Princenarula #superstar #trending #meditation",
+      userId: "23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc",
+      videoOwnersId: "23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc",
+      getSocialId: "567748173456426606",
+      id: "7b97189f-9885-460e-9a2f-90b8650da795",
+      genre: ["Entertainment"],
+      userProfilePicUrl:
+        "https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp",
+      userName: "Princenarula",
+      likesCount: 13,
+      music_title: "God's Plan",
+    },
+    {
+      data_id: "1d092b69-c382-4ddf-b45b-5921c2351b13",
+      content_id: "1d092b69-c382-4ddf-b45b-5921c2351b13",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/3/7/1d092b69-c382-4ddf-b45b-5921c2351b13/1d092b69-c382-4ddf-b45b-5921c2351b13_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description:
+        "#sahipakdehain #twistkamariya #couple #food #Bollywood #MUSIC #Khatarnaakdance",
+      userId: "fb863677-6c03-4d98-a51d-91bcb6b2b094",
+      videoOwnersId: "fb863677-6c03-4d98-a51d-91bcb6b2b094",
+      getSocialId: "564485382142879496",
+      id: "1d092b69-c382-4ddf-b45b-5921c2351b13",
+      genre: [
+        "Dance",
+        "Entertainment",
+        "Bollywood",
+        "Jazz",
+        "Beauty",
+        "Fitness",
+        "Music",
+        "Technology",
+        "networking",
+        "Software",
+        "Acoustic",
+        "Challenge",
+        "Food",
+        "Branded Content",
+        "Comedy",
+        "Cricket",
+        "Trick",
+        "Sports",
+        "Memes",
+        "Electronics",
+      ],
+      userProfilePicUrl:
+        "https://akamaividz2.zee5.com/image/upload/v1610781844/hipi/assets/user/fb863677-6c03-4d98-a51d-91bcb6b2b094/fb863677-6c03-4d98-a51d-91bcb6b2b094.jpg",
+      userName: "Akhishri",
+      likesCount: 35,
+      music_title: "God's Plan",
+    },
+    {
+      data_id: "3ca9cfdb-7ce1-4abb-9edc-3f1271358131",
+      content_id: "3ca9cfdb-7ce1-4abb-9edc-3f1271358131",
+      video_url:
+        "https://z5shorts.akamaized.net/2021/3/25/3ca9cfdb-7ce1-4abb-9edc-3f1271358131/3ca9cfdb-7ce1-4abb-9edc-3f1271358131_512.mp4?hdnea=st=1619420678~exp=1619435078~acl=/*~hmac=c3322d1bb53c7008dc9c464791825b9100b07d28212c9c9bd57b9c51a88b45be",
+      content_description:
+        "Naga Bhairavi - April 27, 2021 - Episode Spoiler #Nagabhairavi #ZEETeluguNagabhairavi #ZEE5Nagabhairavi #ZEE5TeluguNagabhairavi #NagabhairaviTelugu #Nagabhairavi2020 #ZEETelugusociofantasyshow",
+      userId: "76d51088-bf78-47f3-9bd8-1373403de73c",
+      videoOwnersId: "76d51088-bf78-47f3-9bd8-1373403de73c",
+      getSocialId: "570897163868047745",
+      id: "3ca9cfdb-7ce1-4abb-9edc-3f1271358131",
+      userName: "NagaBhairavi",
+      likesCount: 11,
+      music_title: "God's Plan",
+    },
+  ],
+  requestedWith: {
+    page: 1,
+    total: 5,
+  },
+  "http-status": 200,
+};
 
 export const feedFail = {
-  "status": "fail",
-  "message": "Failed to fetch.",
-  "http-status": 400
-}
+  status: "fail",
+  message: "Failed to fetch.",
+  "http-status": 400,
+};

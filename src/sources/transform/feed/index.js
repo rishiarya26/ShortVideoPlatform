@@ -1,37 +1,36 @@
-import { transformModel, getMessage, isSuccess } from '../index';
-import { getNewObjectCopy } from '../../../utils/app';
-import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { transformModel, getMessage, isSuccess } from "../index";
+import { getNewObjectCopy } from "../../../utils/app";
+import { DEFAULT_ERROR_CODE } from "../../../constants";
 
 const msgMap = {
-  200: 'ok'
+  200: "ok",
 };
 
 function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
-  payload.status = 'fail';
+  payload.status = "fail";
   payload.message = getMessage(error, {});
-  payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
-  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
+  payload["http-status"] = error["http-status"] || DEFAULT_ERROR_CODE;
+  payload.errorCode =
+    data.statusCode || error["http-status"] || DEFAULT_ERROR_CODE;
   return payload;
 }
 
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
-  console.log('data in transform - initail', data);
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
-    payload.status = 'success';
-    payload['http-status'] = resp['http-status'];
+    payload.status = "success";
+    payload["http-status"] = resp["http-status"];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    console.log('responseData', responseData.videos);
     if (responseData.videos && responseData.videos.length > 0) {
       const payloadData = [];
-      responseData.videos.forEach(d => {
+      responseData.videos.forEach((d) => {
         const payloadObject = {};
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
@@ -45,9 +44,8 @@ function transformSuccess(resp) {
         payloadObject.userProfilePicUrl = d.videoOwners.profilePicImgUrl;
         payloadObject.userName = d.videoOwners.userName;
         payloadObject.likesCount = d.lCount;
-        payloadObject.commentsCount = 25;
-        payloadObject.music_title = "God's Plan";
-        payloadObject.musicCoverTitle = '8 Parche';
+        payloadObject.music_title =  d.sound.name;
+        payloadObject.hashTags = d.hashtags;
 
         payloadData.push(payloadObject);
       });
@@ -56,8 +54,6 @@ function transformSuccess(resp) {
       return transformError(data);
     }
     payload.requestedWith = { ...data.requestedWith };
-    console.log('responseData111111', payload);
-    console.log('finalPayload11', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

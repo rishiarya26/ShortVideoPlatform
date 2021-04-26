@@ -113,6 +113,7 @@ function Video(props) {
         userName={props.userName}
         musicCoverTitle={props.musicCoverTitle}
         type="feed"
+        hashTags={props.hashTags}
       />
 
     </div>

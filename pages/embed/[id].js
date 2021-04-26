@@ -81,6 +81,7 @@ export default function Hipi(params) {
         profilePic={item.userProfilePicUrl}
         userName={item.userName}
         musicCoverTitle={item.musicCoverTitle}
+        hashTags={item.hashTags}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <button
