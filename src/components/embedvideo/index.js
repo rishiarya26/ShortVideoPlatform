@@ -64,8 +64,8 @@ function Embedvideo(props) {
       </video>
       <div
         onClick={handleVideoPress}
-        className="absolute top-2/5 left-1/2 "
-        style={{ display: playing ? "none" : "block" }}
+        className="absolute top-2/5 justify-center w-full"
+        style={{ display: playing ? 'none' : 'flex' }}
       >
         <img
           src={withBasePath("images/play.png")}
