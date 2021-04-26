@@ -46,7 +46,7 @@ function transformSuccess(resp) {
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
       });
-
+      
       payload.data = payloadObject;
     } else {
       return transformError(data);

@@ -20,10 +20,10 @@ function VideoFooter({
         </div>
 
         <h3 className=" my-1 font-semibold xxs:text-sm xs:text-base">{`@${userName}`}</h3>
-        <div className="font-semibold xxs:text-sm xs:text-base">
+        {/* <div className="font-semibold xxs:text-sm xs:text-base">
           {hashTags &&
             hashTags.map((data) => <span>{`#${data.name}${" "}`}</span>)}
-        </div>
+        </div> */}
         {/* <p className=" my-1 xxs:text-sm xs:text-base">{musicCoverTitle}</p> */}
         <div className=" my-1 xxs:text-sm xs:text-base">
           <Music />
