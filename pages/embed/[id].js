@@ -34,7 +34,7 @@ export default function Hipi(params) {
   const updateSeekbar = (percentage) => {
     setSeekedPercentage(percentage);
   };
-  if (status === "fail") {
+  if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
@@ -58,7 +58,7 @@ export default function Hipi(params) {
               },
               { url: item.userProfilePicUrl },
             ],
-            type: "video.movie",
+            type: 'video.movie',
             video: {
               actors: [
                 {
@@ -67,7 +67,7 @@ export default function Hipi(params) {
               ],
               tag: item.genre,
             },
-            site_name: "Hipi",
+            site_name: 'Hipi',
           },
         }}
       />
@@ -128,7 +128,7 @@ export async function getServerSideProps(ctx) {
     data = {
       status: e.status,
       errorCode: e.errorCode,
-      "http-status": e["http-status"],
+      'http-status': e['http-status'],
       message: e.message,
     };
   }
