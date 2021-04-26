@@ -2,26 +2,39 @@ import { useState } from 'react';
 import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
 import { getSingleFeed } from '../../src/sources/feed/embed';
-import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
+import {
+  SeoMeta,
+  VideoJsonLd,
+} from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
+import { verifyVideo } from '../../src/sources/verifyVideoForShop';
 
-const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
+const languageCodes = Object.keys(supportedLanguages).map(
+  (keyName) => supportedLanguages[keyName].code
+);
 
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
+  // const [shopButton, setShopButton] = useState(false)
   const {
     data: item = {},
-    errorCode, message,
-    status
+    errorCode,
+    message,
+    status,
+    dataShopVerification,
   } = params;
   const vobj = { videoId: item.content_id };
+  const videoVerifiedForShop = null;
+  if (dataShopVerification && dataShopVerification.videoVerified) {
+    videoVerifiedForShop = dataShopVerification.videoVerified;
+  }
   console.log(vobj);
-  const updateSeekbar = percentage => {
+  const updateSeekbar = (percentage) => {
     setSeekedPercentage(percentage);
   };
-  if (status === 'fail') {
+  if (status === "fail") {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
@@ -41,21 +54,21 @@ export default function Hipi(params) {
                 url: item.poster_image_url,
                 width: 800,
                 height: 600,
-                alt: item.musicCoverTitle
+                alt: item.musicCoverTitle,
               },
-              { url: item.userProfilePicUrl }
+              { url: item.userProfilePicUrl },
             ],
-            type: 'video.movie',
+            type: "video.movie",
             video: {
               actors: [
                 {
-                  role: item.userName
-                }
+                  role: item.userName,
+                },
               ],
-              tag: item.genre
+              tag: item.genre,
             },
-            site_name: 'Hipi'
-          }
+            site_name: "Hipi",
+          },
         }}
       />
       <VideoJsonLd
@@ -63,9 +76,7 @@ export default function Hipi(params) {
         description={item.content_description}
         contentUrl={item.video_url}
         embedUrl={params.uri}
-        thumbnailUrls={[
-          item.poster_image_url
-        ]}
+        thumbnailUrls={[item.poster_image_url]}
         watchCount={item.likesCount}
         regionsAllowed={languageCodes}
       />
@@ -82,15 +93,20 @@ export default function Hipi(params) {
         userName={item.userName}
         musicCoverTitle={item.musicCoverTitle}
         hashTags={item.hashTags}
+        dataShopVerification={videoVerifiedForShop}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        <button
-          className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-          // eslint-disable-next-line no-undef
-          onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-        >
-          SHOP
-        </button>
+        {videoVerifiedForShop ? (
+          <button
+            className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+            // eslint-disable-next-line no-undef
+            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+          >
+            SHOP
+          </button>
+        ) : (
+          ""
+        )}
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
@@ -99,24 +115,27 @@ export default function Hipi(params) {
 
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
-  const {
-    req, params, locale,
-    defaultLocale, locales
-  } = ctx;
-  const uri = (new URL(req.url, `http://${req.headers.host}`)).href;
+  const { req, params, locale, defaultLocale, locales } = ctx;
+  const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
+  let dataShopVerification = {};
   try {
     data = await getSingleFeed({
-      page: id
+      page: id,
     });
   } catch (e) {
     data = {
       status: e.status,
       errorCode: e.errorCode,
-      'http-status': e['http-status'],
-      message: e.message
+      "http-status": e["http-status"],
+      message: e.message,
     };
+  }
+  try {
+    dataShopVerification = await verifyVideo({ videoId: id });
+  } catch (e) {
+    dataShopVerification.videoVerified = false;
   }
 
   return {
@@ -125,7 +144,8 @@ export async function getServerSideProps(ctx) {
       locale,
       locales,
       defaultLocale,
-      ...data
-    }
+      ...data,
+      ...dataShopVerification,
+    },
   };
 }
