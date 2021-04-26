@@ -3,7 +3,7 @@ import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 const msgMap = {
-  200: 'ok',
+  200: 'ok'
 };
 
 function transformError(error = {}) {

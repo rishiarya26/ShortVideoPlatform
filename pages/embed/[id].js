@@ -54,20 +54,20 @@ export default function Hipi(params) {
                 url: item.poster_image_url,
                 width: 800,
                 height: 600,
-                alt: item.musicCoverTitle,
+                alt: item.musicCoverTitle
               },
-              { url: item.userProfilePicUrl },
+              { url: item.userProfilePicUrl }
             ],
             type: 'video.movie',
             video: {
               actors: [
                 {
                   role: item.userName,
-                },
+                }
               ],
-              tag: item.genre,
+              tag: item.genre
             },
-            site_name: 'Hipi',
+            site_name: 'Hipi'
           }
         }}
       />
