@@ -1,7 +1,5 @@
 import { get } from 'network';
-import {
-  getHomeFeed
-} from '../index';
+import { getHomeFeed } from '../index';
 import { forYouFeed, forYouFeedFailure } from '../../../mock/seeds/feed';
 import { feed } from '../../factories/feed';
 
@@ -14,7 +12,9 @@ describe('source for feed', () => {
     get.mockResolvedValueOnce({ ...forYouFeed });
     const data = await getHomeFeed();
     expect(get).toBeCalledTimes(1);
-    expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/hipifeed/1/5');
+    expect(get).toBeCalledWith(
+      'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=forYou&offset=1'
+    );
     expect(JSON.stringify(data)).toEqual(JSON.stringify(feed));
   });
 
@@ -24,7 +24,9 @@ describe('source for feed', () => {
       await getHomeFeed();
     } catch (e) {
       expect(get).toBeCalledTimes(1);
-      expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/hipifeed/1/5');
+      expect(get).toBeCalledWith(
+        'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=forYou&offset=1'
+      );
       expect(e).toMatchObject({
         status: 'fail',
         'http-status': 400,
@@ -36,4 +38,3 @@ describe('source for feed', () => {
     }
   });
 });
-

@@ -18,6 +18,7 @@ export const userProfile = {
     tag: 'member',
     hipiStar: false,
     totalViews: 336,
+    totalLikes: 13,
     isFollowing: false,
     followRequest: false
   }

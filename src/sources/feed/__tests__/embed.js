@@ -14,7 +14,7 @@ describe('source for feed', () => {
     get.mockResolvedValueOnce({ ...forYouEmbedFeed });
     const data = await getSingleFeed({ page: 1 });
     expect(get).toBeCalledTimes(1);
-    expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/video-detail/1');
+    expect(get).toBeCalledWith('https://hipigwapi.zee5.com/api/v1/shorts/video/detail?id=1');
     expect(data).toMatchObject(feed);
   });
 
@@ -24,7 +24,7 @@ describe('source for feed', () => {
       await getSingleFeed({ page: 1 });
     } catch (e) {
       expect(get).toBeCalledTimes(1);
-      expect(get).toBeCalledWith('https://mapi.charmboard.com/v3.6/demo/video-detail/1');
+      expect(get).toBeCalledWith('https://hipigwapi.zee5.com/api/v1/shorts/video/detail?id=1');
       expect(e).toMatchObject({
         status: 'fail',
         message: 'Failed to fetch.',

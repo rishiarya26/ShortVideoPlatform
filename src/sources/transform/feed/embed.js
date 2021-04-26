@@ -19,7 +19,6 @@ function transformError(error = {}) {
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
-  console.log('data in transform - initail', data);
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -28,11 +27,9 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    console.log('responseData', responseData.videos);
     if (responseData.videos && responseData.videos.length > 0) {
-      const payloadData = [];
+      const payloadObject = {};
       responseData.videos.forEach(d => {
-        const payloadObject = {};
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
         payloadObject.video_url = d.akamaiUrl;
@@ -48,16 +45,13 @@ function transformSuccess(resp) {
         payloadObject.commentsCount = 25;
         payloadObject.music_title = "God's Plan";
         payloadObject.musicCoverTitle = '8 Parche';
-
-        payloadData.push(payloadObject);
       });
-      payload.data = payloadData;
+      console.log('payload', payloadObject);
+      payload.data = payloadObject;
     } else {
       return transformError(data);
     }
     payload.requestedWith = { ...data.requestedWith };
-    console.log('responseData111111', payload);
-    console.log('finalPayload11', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

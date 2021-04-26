@@ -16,7 +16,7 @@ export default function EmbedFeed() {
   // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
-    page: 'cbvtest1mq99gi6b'
+    page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
   });
   const onDataFetched = data => {
     setItem(data.data);

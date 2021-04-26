@@ -15,13 +15,10 @@ import useDrawer from '../../hooks/use-drawer';
 import { postLike, deleteLike } from '../../sources/social';
 
 // const DummyComp = () => (<div />);
-const CommentTray = dynamic(
-  () => import('../comment-tray'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+const CommentTray = dynamic(() => import('../comment-tray'), {
+  loading: () => <div />,
+  ssr: false
+});
 
 function VideoSidebar(props) {
   const { show } = useDrawer();
@@ -30,28 +27,38 @@ function VideoSidebar(props) {
   const { socialId } = props;
 
   return (
-    <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-16'} absolute right-0 text-white`}>
+    <div
+      className={`${
+        props.type === 'feed' ? 'bottom-16' : 'bottom-16'
+      } absolute right-0 text-white`}
+    >
       <div className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
           src={props.profilePic}
         />
-        <div className={`${props.type === 'feed' ? 'block' : 'hidden'} absolute bottom-0 left-1/3`}>
+        <div
+          className={`${
+            props.type === 'feed' ? 'block' : 'hidden'
+          } absolute bottom-0 left-1/3`}
+        >
           <Follow />
         </div>
       </div>
-      <div className={`${props.type === 'feed' ? 'block' : 'hidden'} "relative py-3  px-1 text-center`}>
+      <div
+        className={`${
+          props.type === 'feed' ? 'block' : 'hidden'
+        } "relative py-3  px-1 text-center`}
+      >
         {liked ? (
           <div>
             <div
               role="presentation"
-              onClick={
-                () => {
-                  deleteLike({ socialId });
-                  setLiked(false);
-                }
-              }
+              onClick={() => {
+                deleteLike({ socialId });
+                setLiked(false);
+              }}
             >
               <Liked />
             </div>
@@ -62,23 +69,22 @@ function VideoSidebar(props) {
           <div>
             <div
               role="presentation"
-              onClick={
-                () => {
-                  postLike({ socialId });
-                  setLiked(true);
-                }
-              }
+              onClick={() => {
+                postLike({ socialId });
+                setLiked(true);
+              }}
             >
               <Like />
             </div>
             <p className="text-sm">{props.likes}</p>
           </div>
         )}
-
       </div>
       <div
         role="presentation"
-        className={`${props.type === 'feed' ? 'block' : 'hidden'} relative py-3  px-1 text-center flex flex-col items-center`}
+        className={`${
+          props.type === 'feed' ? 'block' : 'hidden'
+        } relative py-3  px-1 text-center flex flex-col items-center`}
         onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
@@ -90,7 +96,11 @@ function VideoSidebar(props) {
         shareCount={props.share}
       />
 </div> */}
-      <div className={`${props.type === 'feed' ? 'block' : 'hidden'} relative py-3  px-1 text-center flex flex-col items-center`}>
+      <div
+        className={`${
+          props.type === 'feed' ? 'block' : 'hidden'
+        } relative py-3  px-1 text-center flex flex-col items-center`}
+      >
         <Shop />
       </div>
     </div>
