@@ -11,13 +11,12 @@ import EmbedSeekbar from '../../src/components/emded-seekbar';
 import { verifyVideo } from '../../src/sources/verifyVideoForShop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
-  (keyName) => supportedLanguages[keyName].code
+  keyName => supportedLanguages[keyName].code
 );
 
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
-  // const [shopButton, setShopButton] = useState(false)
   const {
     data: item = {},
     errorCode,
@@ -31,7 +30,7 @@ export default function Hipi(params) {
     videoVerifiedForShop = dataShopVerification.videoVerified;
   }
   console.log(vobj);
-  const updateSeekbar = (percentage) => {
+  const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
   if (status === 'fail') {
@@ -62,7 +61,7 @@ export default function Hipi(params) {
             video: {
               actors: [
                 {
-                  role: item.userName,
+                  role: item.userName
                 }
               ],
               tag: item.genre
