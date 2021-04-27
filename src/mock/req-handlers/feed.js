@@ -1,2 +1,2 @@
-export const getForYouFeed = schema => ({ ...schema.db.forYouFeed[0] });
+export const getForYouFeed = schema => (schema.db.forYouFeed[0].data);
 

@@ -1,2 +1,2 @@
-export const getForYouEmbedFeed = schema => ({ ...schema.db.forYouEmbedFeed[0] });
+export const getForYouEmbedFeed = schema => (schema.db.forYouEmbedFeed[0].data);
 

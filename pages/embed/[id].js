@@ -8,7 +8,6 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
-import { verifyVideo } from '../../src/sources/verifyVideoForShop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -21,15 +20,11 @@ export default function Hipi(params) {
     data: item = {},
     errorCode,
     message,
-    status,
-    dataShopVerification
+    status
   } = params;
   const vobj = { videoId: item.content_id };
-  const videoVerifiedForShop = null;
-  if (dataShopVerification && dataShopVerification.videoVerified) {
-    videoVerifiedForShop = dataShopVerification.videoVerified;
-  }
-  console.log(vobj);
+  const canShop = item?.isShoppable || false;
+
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
@@ -92,10 +87,10 @@ export default function Hipi(params) {
         userName={item.userName}
         musicCoverTitle={item.musicCoverTitle}
         hashTags={item.hashTags}
-        dataShopVerification={videoVerifiedForShop}
+        canShop={canShop}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        {videoVerifiedForShop ? (
+        {canShop ? (
           <button
             className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
             // eslint-disable-next-line no-undef
@@ -104,7 +99,7 @@ export default function Hipi(params) {
             SHOP
           </button>
         ) : (
-          ""
+          ''
         )}
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
@@ -114,11 +109,13 @@ export default function Hipi(params) {
 
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
-  const { req, params, locale, defaultLocale, locales } = ctx;
+  const {
+    req, params, locale, defaultLocale, locales
+  } = ctx;
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
-  let dataShopVerification = {};
+
   try {
     data = await getSingleFeed({
       page: id
@@ -131,11 +128,6 @@ export async function getServerSideProps(ctx) {
       message: e.message
     };
   }
-  try {
-    dataShopVerification = await verifyVideo({ videoId: id });
-  } catch (e) {
-    dataShopVerification.videoVerified = false;
-  }
 
   return {
     props: {
@@ -143,8 +135,7 @@ export async function getServerSideProps(ctx) {
       locale,
       locales,
       defaultLocale,
-      ...data,
-      ...dataShopVerification
-    },
+      ...data
+    }
   };
 }

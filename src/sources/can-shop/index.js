@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { transformSuccess, transformError } from '../transform/feed/embed';
+import { transformSuccess, transformError } from '../transform/can-shop';
 
 async function verifyVideoForShop({ videoId }) {
   let response = {};
@@ -10,16 +10,16 @@ async function verifyVideoForShop({ videoId }) {
       'verifyVideoForShop'
     )}/v3.6/video/${videoId}/charm?video_id=${videoId}`;
     response = await get(apiPath);
-    response.data.requestedWith = { id };
+    response.data.requestedWith = { videoId };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }
 }
-const [verifyVideo] = apiMiddleWare(
+const [verifyIsShoppable] = apiMiddleWare(
   verifyVideoForShop,
   transformSuccess,
   transformError
 );
 
-export { verifyVideo };
+export { verifyIsShoppable };

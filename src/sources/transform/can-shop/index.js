@@ -8,8 +8,8 @@ function transformError(error = {}) {
   payload.status = 'fail';
   payload.message = getMessage(error, {});
   payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
-  payload.errorCode =
-    data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
+  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
+  payload.videoVerified = false;
   return payload;
 }
 
@@ -20,22 +20,13 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
-    payload.status = 'success';
-    payload.message = getMessage(data, {});
-    payload['http-status'] = data.status;
     if (
-      data.data &&
-      data.data.length > 0 &&
-      data.data.topCharms &&
-      data.data.topCharms.length > 0
+      data.data?.[0].topCharms.length
     ) {
-      payload.data = data.data;
       payload.videoVerified = true;
     } else {
       payload.videoVerified = false;
     }
-    payload.requestedWith = { ...data.requestedWith };
-    console.log('finalPayload', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

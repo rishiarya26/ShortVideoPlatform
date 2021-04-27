@@ -17,11 +17,10 @@ export default function EmbedFeed() {
   const [item, setItem] = useState([]);
   // const { show } = useDrawer();
 
-  const dataFetcher = () =>
-    getSingleFeed({
-      page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
-    });
-  const onDataFetched = (data) => {
+  const dataFetcher = () => getSingleFeed({
+    page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
+  });
+  const onDataFetched = data => {
     setItem(data.data);
   };
 
@@ -46,13 +45,16 @@ export default function EmbedFeed() {
           userName={item.userName}
           musicCoverTitle={item.musicCoverTitle}
           hashTags={item.hashTags}
+          canShop={item.isShoppable}
         />
       )}
 
-      <div className='w-full fixed bottom-28 py-2 flex justify-around items-center'>
-        <button className='rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base'>
-          SHOP
-        </button>
+      <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
+        {item.isShoppable ? (
+          <button className="rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base">
+            SHOP
+          </button>
+        ) : ''}
       </div>
       {/* <div className='absolute bottom-0 bg-white h-28 w-full flex justify-center items-center '>
         <button className='rounded-lg border border-gray-600 py-3 px-16 flex font-bold text-lg'>

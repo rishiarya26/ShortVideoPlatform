@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
-import Comment from '../commons/svgicons/comment';
+// import Comment from '../commons/svgicons/comment';
 // import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
 // import { getDeviceType } from '../../hooks/use-device';
-import useDrawer from '../../hooks/use-drawer';
+// import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
 
 // const DummyComp = () => (<div />);
-const CommentTray = dynamic(() => import('../comment-tray'), {
-  loading: () => <div />,
-  ssr: false
-});
+// const CommentTray = dynamic(() => import('../comment-tray'), {
+//   loading: () => <div />,
+//   ssr: false
+// });
 
 function VideoSidebar(props) {
-  const { show } = useDrawer();
+  // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
   const { socialId } = props;

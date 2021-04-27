@@ -21,13 +21,12 @@ function mockServer(environment = 'development', callback) {
 
       // feed
       this.get('https://hipigwapi.zee5.com/api/v1/shorts/home', getForYouFeed);
-      this.get('https://mobiletest.charmboard.com/v3.6/demo/video-detail/cbvtest1mq99gi6b', getForYouEmbedFeed);
+      this.get('https://hipigwapi.zee5.com/api/v1/shorts/video/detail', getForYouEmbedFeed);
 
       // social
       this.get('https://api.getsocial.im/v1/activities', getComments);
 
       // users-profile
-      this.get('http://3.6.36.112:7000/api/v1/shorts/profile', getUserProfile);
       this.get('https://hipigwapi.zee5.com/api/v1/shorts/profile', getUserProfile);
     }
   });

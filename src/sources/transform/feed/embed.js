@@ -12,8 +12,7 @@ function transformError(error = {}) {
   payload.status = 'fail';
   payload.message = getMessage(error, {});
   payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
-  payload.errorCode =
-    data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
+  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
   return payload;
 }
 
@@ -28,9 +27,9 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    if (responseData.videos && responseData.videos.length > 0) {
+    if (responseData.videos?.length) {
       const payloadObject = {};
-      responseData.videos.forEach((d) => {
+      responseData.videos.forEach(d => {
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
         payloadObject.video_url = d.akamaiUrl;
@@ -46,11 +45,11 @@ function transformSuccess(resp) {
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
       });
-      
       payload.data = payloadObject;
     } else {
       return transformError(data);
     }
+    payload.data.isShoppable = data.isShoppable;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
