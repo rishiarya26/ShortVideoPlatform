@@ -14,7 +14,7 @@ function HeadMeta() {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       {/* <title>{APP_NAME}</title> */}
 
-      <link rel="preload" href="https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html" as="document" />
+      <link rel="preload" href="https://hipi.co.in/feed" as="document" />
 
       {/* charmboard plugin */}
       <script type="text/javascript" src="https://devqa2.charmboard.com/zee5/kaltura_plugin.js" />

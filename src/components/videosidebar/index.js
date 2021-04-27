@@ -94,7 +94,7 @@ function VideoSidebar(props) {
         show={showSnackbar}
         shareCount={props.share}
       />
-</div> */}
+      </div> */}
       <div
         className={`${
           props.type === 'feed' ? 'block' : 'hidden'
