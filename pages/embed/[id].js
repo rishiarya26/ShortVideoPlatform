@@ -23,7 +23,7 @@ export default function Hipi(params) {
     status
   } = params;
   const vobj = { videoId: item.content_id };
-  const canShop = item?.isShoppable || false;
+  const canShop = !!item?.canShop;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -118,7 +118,7 @@ export async function getServerSideProps(ctx) {
 
   try {
     data = await getSingleFeed({
-      page: id
+      id
     });
   } catch (e) {
     data = {

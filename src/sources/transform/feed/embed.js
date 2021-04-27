@@ -49,7 +49,7 @@ function transformSuccess(resp) {
     } else {
       return transformError(data);
     }
-    payload.data.isShoppable = data.isShoppable;
+    payload.data.canShop = data.canShop;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

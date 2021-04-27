@@ -18,7 +18,7 @@ export default function EmbedFeed() {
   // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
-    page: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
+    id: 'ddeaa554-b40e-45ef-8cde-9d940a9d2cae'
   });
   const onDataFetched = data => {
     setItem(data.data);
@@ -45,12 +45,12 @@ export default function EmbedFeed() {
           userName={item.userName}
           musicCoverTitle={item.musicCoverTitle}
           hashTags={item.hashTags}
-          canShop={item.isShoppable}
+          canShop={item.canShop}
         />
       )}
 
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
-        {item.isShoppable ? (
+        {item.canShop ? (
           <button className="rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base">
             SHOP
           </button>

@@ -1,15 +1,9 @@
-import { transformModel, getMessage, isSuccess } from '../index';
+import { transformModel, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
-import { DEFAULT_ERROR_CODE } from '../../../constants';
 
-function transformError(error = {}) {
+function transformError() {
   const { payload } = getNewObjectCopy(transformModel);
-  const { data = {} } = error;
-  payload.status = 'fail';
-  payload.message = getMessage(error, {});
-  payload['http-status'] = error['http-status'] || DEFAULT_ERROR_CODE;
-  payload.errorCode = data.statusCode || error['http-status'] || DEFAULT_ERROR_CODE;
-  payload.videoVerified = false;
+  payload.canShop = false;
   return payload;
 }
 
@@ -23,9 +17,9 @@ function transformSuccess(resp) {
     if (
       data.data?.[0].topCharms.length
     ) {
-      payload.videoVerified = true;
+      payload.canShop = true;
     } else {
-      payload.videoVerified = false;
+      payload.canShop = false;
     }
     return payload;
   } catch (err) {

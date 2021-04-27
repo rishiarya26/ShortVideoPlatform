@@ -1,24 +1,17 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { verifyIsShoppable } from '../can-shop';
+import { canShop } from '../can-shop';
 import { transformSuccess, transformError } from '../transform/feed/embed';
 
-async function fetchEmbedFeed({ page }) {
+async function fetchEmbedFeed({ id }) {
   let response = {};
-  let isShoppable = false;
   try {
-    const resp = await verifyIsShoppable({ videoId: page });
-    isShoppable = resp?.videoVerified;
-  } catch (e) {
-    isShoppable = false;
-  }
-  try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${page}`;
-    response = await get(apiPath);
-    response.data.requestedWith = { page };
-    response.data.isShoppable = isShoppable;
-    return Promise.resolve(response);
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+    response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
+    response[0].data.requestedWith = { id };
+    response[0].data.canShop = response[1].canShop;
+    return Promise.resolve(response[0]);
   } catch (err) {
     return Promise.reject(err);
   }

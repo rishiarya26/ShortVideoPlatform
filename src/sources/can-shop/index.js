@@ -13,13 +13,13 @@ async function verifyVideoForShop({ videoId }) {
     response.data.requestedWith = { videoId };
     return Promise.resolve(response);
   } catch (err) {
-    return Promise.reject(err);
+    return Promise.resolve({ data: '' });
   }
 }
-const [verifyIsShoppable] = apiMiddleWare(
+const [canShop, clearCanShop] = apiMiddleWare(
   verifyVideoForShop,
   transformSuccess,
   transformError
 );
 
-export { verifyIsShoppable };
+export { canShop, clearCanShop };

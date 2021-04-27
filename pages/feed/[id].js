@@ -87,7 +87,7 @@ export async function getServerSideProps(ctx) {
   let data = {};
   try {
     data = await getSingleFeed({
-      page: id
+      id
     });
   } catch (e) {
     data = {
