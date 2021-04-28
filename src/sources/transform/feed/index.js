@@ -27,7 +27,7 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
-    if ((Array.isArray(data.data) && data.data.length > 0) || !isEmptyObject(data.data)) {
+    if (data.data && ((Array.isArray(data.data) && data.data.length > 0) || !isEmptyObject(data.data))) {
       payload.data = data.data;
     } else {
       return transformError(data);
