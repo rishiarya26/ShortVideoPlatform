@@ -83,7 +83,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       hipipink: {
-        DEFAULT: '#FF0066'
+        DEFAULT: '#5c2ade'
       },
       hipidblue: {
         DEFAULT: '#100618'
