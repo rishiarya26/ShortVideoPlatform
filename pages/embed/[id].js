@@ -84,7 +84,7 @@ export default function Hipi(params) {
       />
       <div className="w-full fixed bottom-4 py-2 flex justify-around items-center">
         <button
-          className="rounded-full text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+          className="rounded-lg text-white py-1 px-4 bg-hipipink font-normal tracking-wide xxs:text-sm xs:text-base"
           // eslint-disable-next-line no-undef
           onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
         >

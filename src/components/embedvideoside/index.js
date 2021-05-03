@@ -28,7 +28,6 @@ function EmbedVideoSidebar(props) {
       <div className="relative py-3  px-1 text-center flex flex-col items-center">
         <Share />
       </div>
-
     </div>
   );
 }
