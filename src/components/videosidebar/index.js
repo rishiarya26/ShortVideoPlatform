@@ -13,6 +13,7 @@ import Shop from '../commons/svgicons/shop';
 import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
+// import { getMobileOperatingSystem } from '../../utils/get-mobile-operating-system';
 
 // const DummyComp = () => (<div />);
 const CommentTray = dynamic(
@@ -28,6 +29,11 @@ function VideoSidebar(props) {
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
   const { socialId } = props;
+
+  // const handleOperatingsystem = () => {
+  //   const OperatingSys = getMobileOperatingSystem();
+  //   OperatingSys && OperatingSys === 'Android' ? console.log('and') : (OperatingSys === 'iOS') ? console.log('iOS') : '';
+  // };
 
   return (
     <div className={`${props.type === 'feed' ? 'bottom-16' : 'bottom-16'} absolute right-0 text-white`}>
