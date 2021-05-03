@@ -26,7 +26,7 @@ function EmbedVideoSidebar(props) {
   return (
     <div className="absolute right-0 text-white bottom-20">
       <div
-        onClick={() => show('Please Download app', DetectOperatingSystemModal, 'md',
+        onClick={() => show('', DetectOperatingSystemModal, 'md',
           { handleOperatingsystem })}
         className="relative py-3  px-1 text-center flex justify-center"
       >
@@ -36,7 +36,7 @@ function EmbedVideoSidebar(props) {
           src={props.profilePic}
         />
         <div
-          onClick={() => show('Please Download app', DetectOperatingSystemModal, 'md',
+          onClick={() => show('', DetectOperatingSystemModal, 'md',
             { handleOperatingsystem })}
           className="absolute bottom-0 left-1/3"
         >
@@ -44,7 +44,7 @@ function EmbedVideoSidebar(props) {
         </div>
       </div>
       <div
-        onClick={() => show('Please Download app', DetectOperatingSystemModal, 'md',
+        onClick={() => show('', DetectOperatingSystemModal, 'md',
           { handleOperatingsystem })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
@@ -52,7 +52,7 @@ function EmbedVideoSidebar(props) {
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
-        onClick={() => show('Please Download app', DetectOperatingSystemModal, 'md',
+        onClick={() => show('', DetectOperatingSystemModal, 'md',
           { handleOperatingsystem })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
@@ -60,7 +60,7 @@ function EmbedVideoSidebar(props) {
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
-        onClick={() => show('Please Download app', DetectOperatingSystemModal, 'md',
+        onClick={() => show('', DetectOperatingSystemModal, 'md',
           { handleOperatingsystem })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
