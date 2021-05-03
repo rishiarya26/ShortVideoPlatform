@@ -5,6 +5,10 @@ import { getForYouFeed } from './req-handlers/feed';
 import { getForYouEmbedFeed } from './req-handlers/embed';
 import { getComments } from './req-handlers/social';
 import { getUserProfile } from './req-handlers/users/profile';
+import { userLogin } from './req-handlers/auth';
+import { hipiLogin } from './req-handlers/auth/hipi-login';
+import { editUserProfile } from './req-handlers/users/profile-edit';
+import { getUserProfileVideos } from './req-handlers/users/profile-videos';
 
 function mockServer(environment = 'development', callback) {
   console.log('running in mock mode');
@@ -28,7 +32,14 @@ function mockServer(environment = 'development', callback) {
 
       // users-profile
       this.get('https://hipigwapi.zee5.com/api/v1/shorts/profile', getUserProfile);
+      this.put('https://hipigwapi.zee5.com/api/v1/shorts/profile', editUserProfile);
+      this.get('https://hipigwapi.zee5.com/api/v1/shorts/profile/videos', getUserProfileVideos);
+
+      // login
+      this.post('https://whapi.zee5.com/v1/user', userLogin);
+      this.post('https://hipigwapi.zee5.com/api/v1/shorts/login', hipiLogin);
     }
+
   });
   return server;
 }
