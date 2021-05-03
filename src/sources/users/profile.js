@@ -1,6 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
+import { preCondition } from '../auth/pre-condition';
 import { transformSuccess, transformError } from '../transform/users/profile';
 
 async function fetchUserProfile({ params }) {
@@ -86,6 +87,24 @@ async function fetchUserRecommendation({ lang }) {
   }
 }
 
+async function fetchUserProfileVideos({ limit = '1', offset = '5' }) {
+  let response = {};
+  try {
+    const resp = await preCondition();
+    const { data = {} } = resp;
+    const apiPath = `${getApiBasePath('hipi')}/shorts/profile/videos?filter=all&limit=${limit}&offset=${offset}`;
+    response = await get(apiPath, {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${data.authToken}`,
+      'access-token': data.accessToken
+    });
+    response.data.requestedWith = { limit, offset };
+    return Promise.resolve(response);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
 // TODO add TTL for api cache
 
 const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError);
@@ -95,6 +114,7 @@ const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transform
 const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
 const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
 const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
+const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformSuccess, transformError);
 
 export {
   getUserProfile,
@@ -103,5 +123,6 @@ export {
   getUserRecommendation,
   getSoundDetails,
   getSimilarProfile,
-  getPopularUser
+  getPopularUser,
+  getProfileVideos
 };
