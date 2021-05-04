@@ -1,6 +1,7 @@
+import VideoGallery from '../video-gallery';
 
 export default function UserProfile({
-  userHandle, profilePic, followers, following, totalLikes
+  userHandle, profilePic, followers, following, totalLikes, id
 }) {
   return (
     <div>
@@ -51,26 +52,9 @@ export default function UserProfile({
           </button>
         </div>
       </div>
-      <div className="flex flex-col w-full">
-        <div className="tabs flex justify-around  border-t-2 border-grey-600">
-          <div>
-            <p className="font-semibold p-4 border-b-2 border-black">400</p>
-          </div>
-          <div className="bg-grey-100">
-            <p className="font-semibold p-4">400</p>
-          </div>
-        </div>
-        <div className="video-layout flex flex-col p-10 items-center">
-          <p className="font-semibold">No published videos</p>
-          <p className="text-center text-sm text-gray-500 my-2">
-            You haven't
-            published any video yet. Start creating your short videos.
-          </p>
-          <button className="bg-black rounded-full text-white px-4 py-2 my-4">
-            Create video
-          </button>
-        </div>
-      </div>
+      <div className="tabs flex justify-around  border-t-2 border-grey-600" />
+      <VideoGallery id={id} />
     </div>
+    // </ComponentStateHandler>
   );
 }

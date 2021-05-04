@@ -3,13 +3,17 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { preCondition } from '../auth/pre-condition';
 import { transformSuccess, transformError } from '../transform/users/profile';
+import {
+  transformSuccess as transformProfileVideoSuccess,
+  transformError as transformProfileVideoError
+} from '../transform/users/profile-videos';
 
-async function fetchUserProfile({ params }) {
+async function fetchUserProfile(id) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${params.id}`;
-    response = await get(apiPath);
-    response.data.requestedWith = { params };
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+    response = await get(apiPath, null, { 'guest-token': 'abcd' });
+    response.data.requestedWith = { id };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -87,18 +91,17 @@ async function fetchUserRecommendation({ lang }) {
   }
 }
 
-async function fetchUserProfileVideos({ limit = '1', offset = '5' }) {
+async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
   let response = {};
   try {
     const resp = await preCondition();
     const { data = {} } = resp;
-    const apiPath = `${getApiBasePath('hipi')}/shorts/profile/videos?filter=all&limit=${limit}&offset=${offset}`;
-    response = await get(apiPath, {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${data.authToken}`,
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
+    response = await get(apiPath, null, {
+      Authorization: `Bearer ${data.shortsAuthToken}`,
       'access-token': data.accessToken
     });
-    response.data.requestedWith = { limit, offset };
+    response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -114,7 +117,7 @@ const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transform
 const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
 const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
 const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
-const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformSuccess, transformError);
+const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
 
 export {
   getUserProfile,

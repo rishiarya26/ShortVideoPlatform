@@ -7,11 +7,11 @@ import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 const login = async ({ zee5Token }) => {
   let response = {};
   try {
-    const payload = {
-      zee5Token
-    };
-    const apiPath = `${getApiBasePath('hipiLogin')}/v1/shorts/login`;
-    response = await post(apiPath, payload, {
+    const urlencoded = new URLSearchParams();
+    urlencoded.append('zee5Token', zee5Token);
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
+    response = await post(apiPath, urlencoded, {
+      'content-type': 'application/x-www-form-urlencoded'
     });
     response.data.status = 200;
     response.data.message = 'success';

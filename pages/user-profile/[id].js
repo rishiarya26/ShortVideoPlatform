@@ -63,6 +63,7 @@ export default function Hipi(params) {
         totalLikes={item.totalLikes}
         userHandle={item.userHandle}
         profilePic={item.profilePic}
+        id={item.id}
       />
     </>
   );
@@ -78,9 +79,7 @@ export async function getServerSideProps(ctx) {
   let data = {};
 
   try {
-    data = await getUserProfile({
-      params: id
-    });
+    data = await getUserProfile(id);
   } catch (e) {
     data = {
       status: e.status,

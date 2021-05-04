@@ -31,7 +31,6 @@ function useFetcher(dataFetcher, onDataFetched) {
         return;
       }
       setData(data);
-
       if (onDataFetched) onDataFetched(data);
       setFetchState('success');
     } catch (e) {
@@ -41,12 +40,10 @@ function useFetcher(dataFetcher, onDataFetched) {
   useEffect(() => {
     dataFetch();
   }, []);
-
   if (retry) {
     dataFetch();
     setRetry(false);
   }
-
   return [fetchState, setRetry, data];
 }
 
