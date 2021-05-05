@@ -14,14 +14,14 @@ function ImageComponent({data, videoTitle}) {
    }
     return (
       <>
-        <Image
+       {imageLoaded ? <Image
           onError={handleError}
           loader={myLoader}
-          src={imageLoaded ? data : Shop}
+          src={data}
           alt={videoTitle}
           width={100}
           height={100}
-        />
+        /> : <Shop/>}
       </>
     )
   }
