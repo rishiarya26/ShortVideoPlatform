@@ -44,10 +44,10 @@ const nextConfig = {
   webpack: config => {
     config.output.publicPath = '';
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.(svg)$/,
       use: ['@svgr/webpack', 'url-loader']
     });
-
+  
     return config;
   }
 };
@@ -55,4 +55,10 @@ const nextConfig = {
 // eslint-disable-next-line no-nested-ternary
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
 module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+module.exports = {
+  images: {
+    loader: 'akamai',
+    path: 'https://akamaividz2.zee5.com'
+  },
+}
 
