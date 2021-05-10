@@ -8,11 +8,11 @@ import {
   transformError as transformProfileVideoError
 } from '../transform/users/profile-videos';
 
-async function fetchUserProfile( id ) {
+async function fetchUserProfile(id) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
-    response = await get(apiPath)
+    response = await get(apiPath);
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -101,7 +101,7 @@ async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
       'access-token': data.accessToken
     });
 
-    console.log("original resposne",response)
+    console.log('original resposne', response);
     response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {

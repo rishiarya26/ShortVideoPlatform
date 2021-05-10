@@ -8,15 +8,16 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
+import Tabs from '../commons/tabs';
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed() {
+export default function Feed({ type }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
-  const dataFetcher = () => getHomeFeed();
+  const dataFetcher = () => getHomeFeed({ type });
   const onDataFetched = data => {
     setItems(data.data);
   };
@@ -27,12 +28,15 @@ export default function Feed() {
     setSeekedPercentage(percentage);
   };
 
+  const tabs = ["forYou", "following"]
+
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+      <div className="fixed m-10 z-10"><Tabs items={tabs}/></div>
       <Swiper
         spaceBetween={50}
         direction="vertical"

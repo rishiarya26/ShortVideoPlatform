@@ -9,7 +9,6 @@ import Send from '../commons/svgicons/send';
 import useTranslation from '../../hooks/use-translation';
 import { getStatusSince } from '../../utils/date';
 
-
 const Paginator = dynamic(
   () => import('../commons/paginator'),
   {

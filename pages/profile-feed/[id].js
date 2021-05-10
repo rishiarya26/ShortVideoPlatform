@@ -1,4 +1,4 @@
-import ProfileFeed from "../../src/components/profile-feed";
+import ProfileFeed from '../../src/components/profile-feed';
 
 export default function Hipi() {
   return (

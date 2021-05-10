@@ -1,30 +1,30 @@
-import Router from "next/router"
+import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { getProfileVideos } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import VideoGallery from '../video-gallery';
 
 export default function UserProfile({
-  userHandle, profilePic, followers, following, totalLikes,firstName, id
+  userHandle, profilePic, followers, following, totalLikes, firstName, id
 }) {
-    const [videoData, setVideoData] = useState({});
+  const [videoData, setVideoData] = useState({});
 
-    const dataFetcher = () =>  getProfileVideos({ id });
-    const [fetchState,retry,data] = useFetcher(dataFetcher);
+  const dataFetcher = () => getProfileVideos({ id });
+  const [fetchState, retry, data] = useFetcher(dataFetcher);
 
-    useEffect(()=>{
-     let dataItems = {}
-     fetchState && (dataItems.status = fetchState);
-     data && (dataItems.items = data.data);
-     setVideoData(dataItems);
-    },[fetchState])
+  useEffect(() => {
+    const dataItems = {};
+    fetchState && (dataItems.status = fetchState);
+    data && (dataItems.items = data.data);
+    setVideoData(dataItems);
+  }, [fetchState]);
 
-    const handleClick =()=>{
-      Router.push({
-        pathname: '/profile-feed/[pid]',
-        query: { pid: id },
-      })
-    }
+  const handleClick = () => {
+    Router.push({
+      pathname: '/profile-feed/[pid]',
+      query: { pid: id }
+    });
+  };
   return (
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
@@ -76,9 +76,9 @@ export default function UserProfile({
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
       <span onClick={handleClick}>
-      <VideoGallery items={videoData.items} status={videoData.status}/>
+        <VideoGallery items={videoData.items} status={videoData.status} />
       </span>
-      
+
     </div>
   );
 }

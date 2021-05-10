@@ -1,11 +1,10 @@
 import FooterMenu from '../footer-menu';
 
-function Error({retry}) {
+function Error({ retry }) {
   return (
-    <div 
+    <div
       onClick={() => retry(true)}
       role="presentation"
-     
       className="video_card relative flex w-full h-screen scroll-snap-start bg-gray-300 items-center justify-center"
     >
       <svg
