@@ -1,29 +1,18 @@
-import { useState } from 'react';
-import { getProfileVideos } from '../../sources/users/profile';
-import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
 import Error from './error';
-import Loader from './loader';
+import Loading from './loader';
 
-let retry;
-const ErrorComp = () => (<Error retry={retry} />);
-const LoadComp = () => (<Loader />);
+const ErrorComp = () => (<Error  />);
+const LoadComp = () => (<Loading />);
 
-export default function VideoGallery({ id }) {
-  const [items, setItems] = useState([]);
-  const dataFetcher = () => getProfileVideos({ id });
-  const onDataFetched = data => {
-    setItems(data.data);
-  };
-  const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry;
-
-  items?.length && console.log(items[0].videoThumbnail);
+export default function VideoGallery({items, status}) {
   return (
-    <ComponentStateHandler
-      state={fetchState}
-      Loader={LoadComp}
-      ErrorComp={ErrorComp}
+  <>
+  {status &&  <ComponentStateHandler 
+     state={status}
+     Loader={LoadComp}
+     ErrorComp={ErrorComp}
     >
       <div className="flex flex-wrap flex-row w-full space-x space-y">
         {items?.length
@@ -43,6 +32,7 @@ export default function VideoGallery({ id }) {
             </div>
           )}
       </div>
-    </ComponentStateHandler>
+      </ComponentStateHandler>}
+      </>
   );
 }

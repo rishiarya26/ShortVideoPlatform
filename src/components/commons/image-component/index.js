@@ -7,7 +7,6 @@ const myLoader = ({ src, width }) => {
   }
 
 function ImageComponent({data, videoTitle}) {
-
    const [imageLoaded, setImageLoaded] = useState(true)
    const handleError=()=>{
     setImageLoaded(false)

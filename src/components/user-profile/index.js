@@ -1,8 +1,30 @@
+import Router from "next/router"
+import { useEffect, useState } from 'react';
+import { getProfileVideos } from '../../sources/users/profile';
+import { useFetcher } from '../commons/component-state-handler';
 import VideoGallery from '../video-gallery';
 
 export default function UserProfile({
-  userHandle, profilePic, followers, following, totalLikes, id
+  userHandle, profilePic, followers, following, totalLikes,firstName, id
 }) {
+    const [videoData, setVideoData] = useState({});
+
+    const dataFetcher = () =>  getProfileVideos({ id });
+    const [fetchState,retry,data] = useFetcher(dataFetcher);
+
+    useEffect(()=>{
+     let dataItems = {}
+     fetchState && (dataItems.status = fetchState);
+     data && (dataItems.items = data.data);
+     setVideoData(dataItems);
+    },[fetchState])
+
+    const handleClick =()=>{
+      Router.push({
+        pathname: '/profile-feed/[pid]',
+        query: { pid: id },
+      })
+    }
   return (
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
@@ -27,7 +49,7 @@ export default function UserProfile({
           <div className="w-28 rounded-full overflow-hidden">
             <img src={profilePic} alt="PP" />
           </div>
-          <p className="font-medium p-2 text-sm">Guest User</p>
+          <p className="font-medium p-2 text-sm">{firstName}</p>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
           <div className="flex flex-col items-center">
@@ -53,8 +75,11 @@ export default function UserProfile({
         </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      <VideoGallery id={id} />
+      <span onClick={handleClick}>
+      <VideoGallery items={videoData.items} status={videoData.status}/>
+      </span>
+      
     </div>
-    // </ComponentStateHandler>
   );
 }
+

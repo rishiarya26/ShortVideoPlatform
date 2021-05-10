@@ -19,7 +19,6 @@ export default function Hipi(params) {
     message,
     status
   } = params;
-
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -63,6 +62,7 @@ export default function Hipi(params) {
         totalLikes={item.totalLikes}
         userHandle={item.userHandle}
         profilePic={item.profilePic}
+        firstName={item.firstName}
         id={item.id}
       />
     </>
@@ -72,12 +72,11 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-    req, params, locale, defaultLocale, locales
+    req, params
   } = ctx;
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
-
   try {
     data = await getUserProfile(id);
   } catch (e) {
@@ -92,9 +91,6 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       uri,
-      locale,
-      locales,
-      defaultLocale,
       ...data
     }
   };
