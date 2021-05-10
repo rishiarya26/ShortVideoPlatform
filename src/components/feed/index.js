@@ -9,6 +9,9 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
+import SwiperCore, { Mousewheel } from "swiper";
+
+SwiperCore.use([Mousewheel]);
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
