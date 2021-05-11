@@ -4,7 +4,7 @@ import Like from '../commons/svgicons/like';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
-import { getOS } from '../../utils/get-OS';
+import { deviceDetails } from '../../utils/device-details';
 import useDrawer from '../../hooks/use-drawer';
 
 const detectDeviceModal = dynamic(
@@ -22,7 +22,7 @@ function EmbedVideoSidebar(props) {
     <div className="absolute right-0 text-white bottom-20">
       <div
         onClick={() => show('', detectDeviceModal, 'md',
-          { getOS })}
+          { deviceDetails })}
         className="relative py-3  px-1 text-center flex justify-center"
       >
         <img
@@ -32,7 +32,7 @@ function EmbedVideoSidebar(props) {
         />
         <div
           onClick={() => show('', detectDeviceModal, 'md',
-            { getOS })}
+            { deviceDetails })}
           className="absolute bottom-0 left-1/3"
         >
           <Follow />
@@ -40,7 +40,7 @@ function EmbedVideoSidebar(props) {
       </div>
       <div
         onClick={() => show('', detectDeviceModal, 'md',
-          { getOS })}
+          { deviceDetails })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Like />
@@ -48,7 +48,7 @@ function EmbedVideoSidebar(props) {
       </div>
       <div
         onClick={() => show('', detectDeviceModal, 'md',
-          { getOS })}
+          { deviceDetails })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Comment />
@@ -56,7 +56,7 @@ function EmbedVideoSidebar(props) {
       </div>
       <div
         onClick={() => show('', detectDeviceModal, 'md',
-          { getOS })}
+          { deviceDetails })}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Share />
