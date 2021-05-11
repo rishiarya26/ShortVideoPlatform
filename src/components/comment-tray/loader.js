@@ -1,5 +1,5 @@
 
-import CommentLoader from '../detect-operating-system-modal/loader';
+import CommentLoader from '../detect-device/loader';
 
 function Loader() {
   return (

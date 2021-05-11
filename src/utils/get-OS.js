@@ -1,4 +1,4 @@
-export function getMobileOperatingSystem() {
+export function getOS() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   if (/windows phone/i.test(userAgent)) {
