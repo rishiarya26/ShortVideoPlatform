@@ -2,18 +2,58 @@
 
 const Like = () => (
   <svg
-    version="1.1"
-    className="white"
-    width="46"
-    height="46"
-    viewBox="0 0 56 56"
+    xmlns="http://www.w3.org/2000/svg"
+    width="40"
+    height="40"
+    fill="none"
+    viewBox="0 0 48 48"
   >
-    <path
-      className="st0"
-      fill="#FFFFFF"
-      fillOpacity="0.9"
-      d="M45.5,22.2c0-0.1,0-0.3,0-0.4c0,0,0,0,0,0c-0.2-5.6-4.3-10-10-10c-5,0-7.5,3.3-7.5,3.3s-2.5-3.3-7.5-3.3c-5.8,0-10,4.6-10,10.4c0,2.1,0.6,4.2,1.5,6.2c0,0,0,0,0,0c0,0.1,0.1,0.1,0.1,0.2c0.2,0.4,0.4,0.7,0.6,1.1c0.1,0.1,0.2,0.3,0.2,0.4c0.2,0.4,0.4,0.7,0.7,1.1c0.1,0.1,0.1,0.2,0.2,0.3c0.3,0.4,0.6,0.9,0.9,1.3c0.1,0.1,0.2,0.2,0.3,0.3c0.3,0.3,0.5,0.6,0.8,1c0.1,0.1,0.1,0.1,0.2,0.2c0.1,0.1,0.1,0.1,0.2,0.2c0.3,0.3,0.6,0.7,0.9,1c0.1,0.1,0.1,0.1,0.2,0.2c0.4,0.4,0.7,0.8,1.1,1.2c0.1,0.1,0.2,0.2,0.3,0.3c0.3,0.3,0.6,0.6,0.8,0.8c0.1,0.1,0.2,0.2,0.3,0.3c0.4,0.3,0.7,0.7,1.1,1c0,0,0,0,0,0c3,2.7,5.4,4.6,7.1,4.6h0h0c1.7,0,4-1.8,7.1-4.6C40.1,34.8,45.5,28.8,45.5,22.2C45.5,22.2,45.5,22.2,45.5,22.2z"
-    />
+    <g filter="url(#filter0_b)">
+      <rect
+        width="48"
+        height="48"
+        fill="#fff"
+        fillOpacity="0.2"
+        rx="24"
+      />
+    </g>
+    <g fill="#fff" clipPath="url(#clip0)">
+      <path d="M13.75 34h2.5c.965 0 1.75-.785 1.75-1.75v-11.5c0-.965-.785-1.75-1.75-1.75h-2.5c-.965 0-1.75.785-1.75 1.75v11.5c0 .965.785 1.75 1.75 1.75zM24.781 11.75c-1 0-1.5.5-1.5 3 0 2.376-2.301 4.288-3.781 5.273v12.388c1.601.741 4.806 1.839 9.781 1.839h1.6c1.95 0 3.61-1.4 3.94-3.32l1.12-6.5a3.998 3.998 0 00-3.94-4.68h-4.72s.75-1.5.75-4c0-3-2.25-4-3.25-4z" />
+    </g>
+    <defs>
+      <filter
+        id="filter0_b"
+        width="52"
+        height="52"
+        x="-2"
+        y="-2"
+        colorInterpolationFilters="sRGB"
+        filterUnits="userSpaceOnUse"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feGaussianBlur
+          in="BackgroundImage"
+          stdDeviation="1"
+        />
+        <feComposite
+          in2="SourceAlpha"
+          operator="in"
+          result="effect1_backgroundBlur"
+        />
+        <feBlend
+          in="SourceGraphic"
+          in2="effect1_backgroundBlur"
+          result="shape"
+        />
+      </filter>
+      <clipPath id="clip0">
+        <path
+          fill="#fff"
+          d="M0 0H24V24H0z"
+          transform="translate(12 11)"
+        />
+      </clipPath>
+    </defs>
   </svg>
 );
 
