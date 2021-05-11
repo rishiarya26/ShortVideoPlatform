@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
-import { getHomeFeed } from '../../sources/feed';
-import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import ComponentStateHandler from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
-import SwiperCore, { Mousewheel } from "swiper";
 
 SwiperCore.use([Mousewheel]);
 
@@ -17,21 +16,22 @@ let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ type }) {
+export default function Feed({ fetchState, setRetry, data }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
-  const dataFetcher = () => getHomeFeed({ type });
-  const onDataFetched = data => {
-    setItems(data.data);
-  };
-  const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
-  retry = setRetry;
+  const [activeVideoId, setActiveVideoId] = useState(null);
+
+  retry = setRetry?.setRetry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
-  const tabs = ["forYou", "following"]
+  useEffect(() => {
+    data && setItems(data.data);
+  }, [fetchState]);
+
+  const tabs = [{ display: 'forYou', path: 'for-you' }, { display: 'following', path: 'following' }];
 
   return (
     <ComponentStateHandler
@@ -39,21 +39,29 @@ export default function Feed({ type }) {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="fixed m-10 z-10"><Tabs items={tabs}/></div>
+      <div className="fixed mt-10 z-10 w-full"><Tabs items={tabs} /></div>
       <Swiper
         spaceBetween={50}
         direction="vertical"
         draggable="true"
+        mousewheel
         calculateheight="true"
+        scrollbar={{ draggable: true }}
+        onSlideChange={swiperCore => {
+          const {
+            activeIndex
+          } = swiperCore;
+          setActiveVideoId(activeIndex);
+        }}
       >
         {
-          items && items.map(
+          (items?.length > 0 ? items.map(
             item => (
               <SwiperSlide
                 key={item.content_id}
-
               >
                 <Video
+                  activeVideoId={activeVideoId}
                   updateSeekbar={updateSeekbar}
                   socialId={item.getSocialId}
                   url={item.video_url}
@@ -71,14 +79,20 @@ export default function Feed({ type }) {
 
               </SwiperSlide>
             )
-          )
+          ) : (
+            <div className="h-60 bg-black flex justify-center items-center">
+              <span className="mt-10 text-white"> No videos found</span>
+            </div>
+          ))
+
         }
       </Swiper>
-      {seekedPercentage && seekedPercentage > 0
+      {items?.length > 0 ? seekedPercentage && seekedPercentage > 0
         ? <Seekbar seekedPercentage={seekedPercentage} />
-        : <SeekbarLoading />}
+        : <SeekbarLoading /> : ''}
       <FooterMenu />
 
     </ComponentStateHandler>
+
   );
 }

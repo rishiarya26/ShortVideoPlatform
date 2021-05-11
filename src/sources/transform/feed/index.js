@@ -27,7 +27,7 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    if (responseData.videos?.length) {
+    if (responseData.videos?.length > 0) {
       const payloadData = [];
       responseData.videos.forEach(d => {
         const payloadObject = {};
@@ -50,7 +50,7 @@ function transformSuccess(resp) {
       });
       payload.data = payloadData;
     } else {
-      return transformError(data);
+      payload.data = [];
     }
     payload.requestedWith = { ...data.requestedWith };
     return payload;

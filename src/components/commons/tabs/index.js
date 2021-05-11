@@ -1,20 +1,21 @@
-import React from "react"
-import Link from "next/link"
+import React from 'react';
+import Link from 'next/link';
+import { withRouter } from 'next/router';
 
-const Tabs = ({ items }) => {
+const Tabs = ({ items, router }) => {
+  const selected = router.pathname.slice(6);
   return (
-    <React.Fragment>
-      <div className="h-2 p-1 flex items-center from-white justify-center">
-          {
-              items?.length && items.map((data)=>(
-                <Link classname="white p-10 bold" href={`/feed/${data}`}>
-                  <a>{data}</a>
-                </Link>
-              ))
-          }
-      </div>
-    </React.Fragment>
-  )
-}
+    <div className="h-2 p-1 flex items-center text-white justify-center">
+      { items?.length && items.map((data, id) => (
+        <>
+          <Link classname="font-bold " href={`/feed/${data.path}`}>
+            <button className={data.path === selected ? 'font-bold ' : ''}>{data.display}</button>
+          </Link>
+          { id < items.length - 1 ? <span>&nbsp; | &nbsp;</span> : '' }
+        </>
+      )) }
+    </div>
+  );
+};
 
-export default Tabs
+export default withRouter(Tabs);
