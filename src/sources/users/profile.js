@@ -100,8 +100,6 @@ async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
       Authorization: `Bearer ${data.shortsAuthToken}`,
       'access-token': data.accessToken
     });
-
-    console.log('original resposne', response);
     response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {

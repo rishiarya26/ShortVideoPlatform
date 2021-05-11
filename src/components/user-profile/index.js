@@ -8,7 +8,6 @@ export default function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id
 }) {
   const [videoData, setVideoData] = useState({});
-
   const dataFetcher = () => getProfileVideos({ id });
   const [fetchState, retry, data] = useFetcher(dataFetcher);
 
@@ -78,7 +77,6 @@ export default function UserProfile({
       <span onClick={handleClick}>
         <VideoGallery items={videoData.items} status={videoData.status} />
       </span>
-
     </div>
   );
 }

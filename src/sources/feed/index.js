@@ -14,7 +14,6 @@ async function fetchHomeFeed({ type, page = 1, total = 5 }) {
       Authorization: `Bearer ${data.shortsAuthToken}`,
       'access-token': data.accessToken
     });
-    console.log('original resposne', response);
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
