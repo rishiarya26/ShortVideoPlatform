@@ -8,9 +8,9 @@ export default function detectDevice({ getOS }) {
       <div className=" flex items-center justify-center flex-col bg-gray-900 w-full ">
         <Logo />
         <p className="text-white text-lg my-2">The best experience is in App</p>
-        { getOS() === 'Android'
+        { getOS() === 'android'
           ? <img src={withBasePath('icons/play_store.png')} className="" alt="playicon" />
-          : getOS() === 'iOS'
+          : getOS() === 'ios'
             ? <img src={withBasePath('icons/app_store.png')} className="" alt="playicon" />
             : (
               <span className="text-white">
