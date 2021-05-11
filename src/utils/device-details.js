@@ -1,4 +1,4 @@
-export function deviceDetails() {
+export function getOS() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   if (/android/i.test(userAgent)) {
