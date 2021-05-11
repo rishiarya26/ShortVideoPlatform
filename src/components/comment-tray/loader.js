@@ -1,5 +1,5 @@
 
-import CommentLoader from '../detect-device/loader';
+import CommentLoader from '../display-device-OS/loader';
 
 function Loader() {
   return (
