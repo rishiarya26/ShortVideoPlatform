@@ -7,12 +7,14 @@ import { getSingleFeed } from '../../sources/feed/embed';
 // import { withBasePath } from '../../config';
 // import ShoppingWidget from '../shopping-widget';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import EmbedSeekbar from '../emded-seekbar';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
 export default function EmbedFeed() {
   const [item, setItem] = useState([]);
+  const [seekedPercentage, setSeekedPercentage] = useState(0);
   // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
@@ -20,6 +22,9 @@ export default function EmbedFeed() {
   });
   const onDataFetched = data => {
     setItem(data.data);
+  };
+  const updateSeekbar = percentage => {
+    setSeekedPercentage(percentage);
   };
 
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
@@ -44,6 +49,8 @@ export default function EmbedFeed() {
              profilePic={item.userProfilePicUrl}
              userName={item.userName}
              musicCoverTitle={item.musicCoverTitle}
+             updateSeekbar={updateSeekbar}
+             seekedPercentage={seekedPercentage}
            />
          )}
 
@@ -53,6 +60,7 @@ export default function EmbedFeed() {
         >
           SHOP
         </button>
+        <EmbedSeekbar seekedPercentage={seekedPercentage} />
       </div>
       {/* <div className="absolute bottom-0 bg-white h-28 w-full flex justify-center items-center ">
         <button className="rounded-lg border border-gray-600 py-3 px-16 flex font-bold text-lg">

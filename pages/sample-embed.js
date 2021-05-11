@@ -36,7 +36,7 @@ export default function SampleEmbed() {
             position: 'relative',
             margin: '0 auto',
             height: '640px',
-            width: '340px',
+            width: '360px',
             overflow: 'hidden'
           }}
         >
