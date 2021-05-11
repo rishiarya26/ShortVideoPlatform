@@ -18,11 +18,6 @@ const detectDeviceModal = dynamic(
 function EmbedVideoSidebar(props) {
   const { show } = useDrawer();
 
-  // const getOS = () => {
-  //   const operatingSys = getOS();
-  //   return operatingSys;
-  // };
-
   return (
     <div className="absolute right-0 text-white bottom-20">
       <div
