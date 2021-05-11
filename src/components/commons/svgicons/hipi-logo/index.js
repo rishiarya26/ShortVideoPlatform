@@ -1,4 +1,4 @@
-
+/* eslint-disable max-len */
 const Logo = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
