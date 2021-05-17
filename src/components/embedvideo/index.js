@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
-import VideoSidebar from '../videosidebar/index';
+import EmbedVideoSidebar from '../embedvideoside/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
@@ -76,7 +76,7 @@ function Embedvideo(props) {
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
-      <VideoSidebar
+      <EmbedVideoSidebar
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
