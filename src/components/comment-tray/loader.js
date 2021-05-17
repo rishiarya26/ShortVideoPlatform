@@ -1,5 +1,5 @@
 
-import CommentLoader from '../detect-device/loader';
+import CommentLoader from '../download-app-widget/loader';
 
 function Loader() {
   return (

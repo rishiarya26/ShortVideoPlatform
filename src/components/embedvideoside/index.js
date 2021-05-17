@@ -8,7 +8,7 @@ import { getOS } from '../../utils/device-details';
 import useDrawer from '../../hooks/use-drawer';
 
 const detectDeviceModal = dynamic(
-  () => import('../detect-device'),
+  () => import('../download-app-widget'),
   {
     loading: () => <div />,
     ssr: false
