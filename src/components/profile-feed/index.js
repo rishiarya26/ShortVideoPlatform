@@ -45,7 +45,7 @@ function ProfileFeed({ router }) {
           calculateheight="true"
         >
           {
-            items && items.map(
+            items?.map(
               item => (
                 <SwiperSlide
                   key={item.content_id}
@@ -72,7 +72,7 @@ function ProfileFeed({ router }) {
             )
           }
         </Swiper>
-        {seekedPercentage && seekedPercentage > 0
+        {seekedPercentage
           ? <Seekbar seekedPercentage={seekedPercentage} />
           : <SeekbarLoading />}
         <FooterMenu />

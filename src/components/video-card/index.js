@@ -1,10 +1,10 @@
-import ImageComponent from '../commons/image-component';
+import ImageComp from '../commons/image';
 
 export default function VideoCard({ data, id }) {
   return (
     <div>
       <div key={id} className="p-0.5 border border-black rounded-md m-px">
-        <ImageComponent data={data.thumbnailUrl} videoTitle={data.videoTitle} />
+        <ImageComp data={data.thumbnailUrl} title={data.videoTitle} />
       </div>
     </div>
   );

@@ -27,9 +27,10 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    if (responseData.videos?.length) {
+    const { videos = [] } = responseData;
+    if (videos?.length) {
       const payloadObject = {};
-      responseData.videos.forEach(d => {
+      videos.forEach(d => {
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
         payloadObject.video_url = d.akamaiUrl;

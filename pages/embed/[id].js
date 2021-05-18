@@ -90,17 +90,16 @@ export default function Hipi(params) {
         canShop={canShop}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        {canShop ? (
-          <button
-            className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-            // eslint-disable-next-line no-undef
-            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-          >
-            SHOP
-          </button>
-        ) : (
-          ''
-        )}
+        {canShop
+          && (
+            <button
+              className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+              // eslint-disable-next-line no-undef
+              onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+            >
+              SHOP
+            </button>
+          )}
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>

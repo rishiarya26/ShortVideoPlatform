@@ -13,7 +13,7 @@ const LoadComp = () => <Loading />;
 
 export default function EmbedFeed() {
   const [item, setItem] = useState([]);
-  const [seekedPercentage, setSeekedPercentage] = useState(0);
+  // const [seekedPercentage, setSeekedPercentage] = useState(0);
   // const { show } = useDrawer();
 
   const dataFetcher = () => getSingleFeed({
@@ -22,9 +22,9 @@ export default function EmbedFeed() {
   const onDataFetched = data => {
     setItem(data.data);
   };
-  const updateSeekbar = percentage => {
-    setSeekedPercentage(percentage);
-  };
+  // const updateSeekbar = percentage => {
+  //   setSeekedPercentage(percentage);
+  // };
 
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
 
@@ -52,11 +52,12 @@ export default function EmbedFeed() {
       )}
 
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
-        {item.canShop ? (
-          <button className="rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base">
-            SHOP
-          </button>
-        ) : ''}
+        {item.canShop
+          && (
+            <button className="rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base">
+              SHOP
+            </button>
+          )}
       </div>
       {/* <div className='absolute bottom-0 bg-white h-28 w-full flex justify-center items-center '>
         <button className='rounded-lg border border-gray-600 py-3 px-16 flex font-bold text-lg'>
