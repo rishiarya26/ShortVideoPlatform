@@ -1,6 +1,7 @@
 import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
+import { preCondition } from '../auth/pre-condition';
 import { transformSuccess, transformError } from '../transform/users/send-otp';
 
 async function sendOtp({ lang }) {
@@ -38,12 +39,18 @@ async function forgotPassword({ lang }) {
     return Promise.reject(err);
   }
 }
-async function updateProfile({ lang }) {
+async function updateProfile(payload) {
   let response = {};
   try {
+    const resp = await preCondition();
+    const { data = {} } = resp;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
-    response = await put(apiPath);
-    response.data.requestedWith = { lang };
+    response = await put(apiPath, payload, {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${data.authToken}`,
+      'access-token': data.accessToken
+    });
+    response.data.requestedWith = { payload };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

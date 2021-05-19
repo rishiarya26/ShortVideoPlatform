@@ -1,107 +1,32 @@
-import Error from 'next/error';
-import EmbedVideo from '../../src/components/embedvideo';
-import FooterMenu from '../../src/components/footer-menu';
-import { getSingleFeed } from '../../src/sources/feed/embed';
-import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
-import { supportedLanguages } from '../../src/hooks/use-translation';
+import { withRouter } from 'next/router';
+import { useFetcher } from '../../src/components/commons/component-state-handler';
+import Feed from '../../src/components/feed';
+import { getHomeFeed } from '../../src/sources/feed';
 
-const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
+function Hipi({ router }) {
+  const { id } = router.query;
 
-export default function Hipi(params) {
-  const {
-    data: item = {}, errorCode, message, status
-  } = params;
-  if (status === 'fail') {
-    return <Error message={message} statusCode={errorCode} />;
+  const dataFetcher = () => getHomeFeed({ type: id });
+
+  let [fetchState, retry, data] = useFetcher(dataFetcher, null, id);
+
+  if (id === 'for-you') {
+    const status = fetchState === 'success';
+    const dataLength = data?.data?.length;
+
+    fetchState = (status && !dataLength > 0) ? 'fail' : fetchState;
+    data = (status && dataLength > 0) && data;
+    retry = (status && !dataLength > 0) && retry;
   }
+
   return (
     <>
-      <SeoMeta
-        data={{
-          title: item.musicCoverTitle,
-          image: item.poster_image_url,
-          description: item.content_description,
-          canonical: params.uri,
-          openGraph: {
-            title: item.musicCoverTitle,
-            description: item.content_description,
-            url: params.uri,
-            images: [
-              {
-                url: item.poster_image_url,
-                width: 800,
-                height: 600,
-                alt: item.musicCoverTitle
-              },
-              { url: item.userProfilePicUrl }
-            ],
-            type: 'video.movie',
-            video: {
-              actors: [
-                {
-                  role: item.userName
-                }
-              ],
-              tag: item.genre
-            },
-            site_name: 'Hipi'
-          }
-        }}
+      <Feed
+        {...{ fetchState, data, retry }}
       />
-      <VideoJsonLd
-        name={item.musicCoverTitle}
-        description={item.content_description}
-        contentUrl={item.video_url}
-        embedUrl={params.uri}
-        thumbnailUrls={[
-          item.poster_image_url
-        ]}
-        watchCount={item.likesCount}
-        regionsAllowed={languageCodes}
-      />
-      <EmbedVideo
-        socialId={item.getSocialId}
-        url={item.video_url}
-        id={item.content_id}
-        comments={item.commentsCount}
-        likes={item.likesCount}
-        music={item.musicCoverTitle}
-        musicTitle={item.music_title}
-        profilePic={item.userProfilePicUrl}
-        userName={item.userName}
-        musicCoverTitle={item.musicCoverTitle}
-      />
-      <FooterMenu />
     </>
   );
 }
 
-export async function getServerSideProps(ctx) {
-  // const contentId = ctx?.query?.id;
-  const {
-    req, params, locale,
-    defaultLocale, locales
-  } = ctx;
-  const uri = (new URL(req.url, `http://${req.headers.host}`)).href;
-  const { id } = params;
-  let data = {};
-  try {
-    data = await getSingleFeed({
-      page: id
-    });
-  } catch (e) {
-    data = {
-      errorCode: e['http-status'],
-      message: e.message
-    };
-  }
-  return {
-    props: {
-      uri,
-      locale,
-      locales,
-      defaultLocale,
-      ...data
-    }
-  };
-}
+export default withRouter(Hipi);
+

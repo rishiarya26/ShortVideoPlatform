@@ -19,9 +19,9 @@ const defaultMeta = {
   title: 'Hipi App: Free Short Video Making App for fun videos, memes & more',
   // eslint-disable-next-line max-len
   description: 'Dialogue Dubbing App: Download Hipi App for short music videos, create funny videos, dialogue dubbing video, dance videos & more and share on social media',
-  canonical: 'https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html',
+  canonical: 'https://hipi.co.in/feed',
   openGraph: {
-    url: 'https://hipi-web.s3.ap-south-1.amazonaws.com/feed.html',
+    url: 'https://hipi.co.in/feed',
     title: 'Hipi App: Free Short Video Making App for fun videos, memes & more',
     // eslint-disable-next-line max-len
     description: 'Dialogue Dubbing App: Download Hipi App for short music videos, create funny videos, dialogue dubbing video, dance videos & more and share on social media',
