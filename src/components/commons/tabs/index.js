@@ -2,16 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 
-const Tabs = ({ items, router }) => {
-  const selected = router.pathname.slice(6);
+const Tabs = ({ items = [], router }) => {
+  const selected = router.query.id;
+
   return (
     <div className="h-2 p-1 flex items-center text-white justify-center">
-      { items?.length && items.map((data, id) => (
+      { items.map((data, id) => (
         <>
-          <Link classname="font-bold " href={`/feed/${data.path}`}>
-            <button className={data.path === selected ? 'font-bold ' : ''}>{data.display}</button>
+          <Link href={`/feed/${data.path}`}>
+            <span className={data.path === selected ? 'font-bold ' : ''}>{data.display}</span>
           </Link>
-          { id < items.length - 1 ? <span>&nbsp; | &nbsp;</span> : '' }
+          { id < items.length - 1 ? <pre> | </pre> : '' }
         </>
       )) }
     </div>

@@ -1,9 +1,12 @@
+import VideoCard from '../video-card/loader';
+
 function Loader() {
   return (
-    <div className="video_card relative flex w-full h-screen scroll-snap-start bg-hipidblue items-center justify-center">
-      Loading...
+    <div className="flex flex-wrap flex-row w-full h-full">
+      <VideoCard />
     </div>
   );
 }
 
 export default Loader;
+

@@ -44,7 +44,7 @@ const nextConfig = {
   webpack: config => {
     config.output.publicPath = '';
     config.module.rules.push({
-      test: /\.(svg)$/,
+      test: /\.svg$/,
       use: ['@svgr/webpack', 'url-loader']
     });
   

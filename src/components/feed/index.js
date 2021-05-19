@@ -9,21 +9,21 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
-import useWindowSize from '../../hooks/use-window-size';
+import useTranslation from '../../hooks/use-translation';
 
 SwiperCore.use([Mousewheel]);
 
-let retry;
-const ErrorComp = () => (<Error retry={retry} />);
+let setRetry;
+const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ fetchState, setRetry, data }) {
+export default function Feed({ fetchState, retry, data }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const size = useWindowSize();
-
-  retry = setRetry?.setRetry;
+  const { t } = useTranslation();
+  const validItemsLength = items?.length > 0;
+  setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -31,7 +31,7 @@ export default function Feed({ fetchState, setRetry, data }) {
 
   useEffect(() => {
     data && setItems(data.data);
-  }, [fetchState]);
+  }, [data]);
 
   const tabs = [{ display: 'forYou', path: 'for-you' }, { display: 'following', path: 'following' }];
 
@@ -57,7 +57,7 @@ export default function Feed({ fetchState, setRetry, data }) {
         }}
       >
         {
-          (items?.length > 0 ? items.map(
+          (validItemsLength ? items.map(
             item => (
               <SwiperSlide
                 key={item.content_id}
@@ -83,15 +83,15 @@ export default function Feed({ fetchState, setRetry, data }) {
             )
           ) : (
             <div className="h-60 bg-black flex justify-center items-center">
-              <span className="mt-10 text-white"> No videos found</span>
+              <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
             </div>
           ))
-
         }
       </Swiper>
-      {items?.length > 0 ? seekedPercentage && seekedPercentage > 0
+      {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
-        : <SeekbarLoading /> : ''}
+        : <SeekbarLoading />
+        : ''}
       <FooterMenu />
 
     </ComponentStateHandler>

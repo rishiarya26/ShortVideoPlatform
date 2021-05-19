@@ -1,5 +1,5 @@
 
-import CommentLoader from '../comment/loader';
+import CommentLoader from '../download-app-widget/loader';
 
 function Loader() {
   return (

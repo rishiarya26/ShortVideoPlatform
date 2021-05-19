@@ -9,13 +9,14 @@ export default function UserProfile({
 }) {
   const [videoData, setVideoData] = useState({});
   const dataFetcher = () => getProfileVideos({ id });
+  // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
 
   useEffect(() => {
-    const dataItems = {};
-    fetchState && (dataItems.status = fetchState);
-    data && (dataItems.items = data.data);
-    setVideoData(dataItems);
+    const videos = {};
+    fetchState && (videos.status = fetchState);
+    data && (videos.items = data.data);
+    setVideoData(videos);
   }, [fetchState]);
 
   const handleClick = () => {
@@ -64,19 +65,9 @@ export default function UserProfile({
             <p className="text-xs">Likes</p>
           </div>
         </div>
-        <div className="p-4 h-full flex items-center justify-center">
-          <button className="font-semibold text-sm border rounded-sm py-1 px-4 mr-1 ">
-            Edit Profile
-          </button>
-          <button className="font-semibold text-sm border rounded-sm px-2 py-1">
-            --
-          </button>
-        </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      <span onClick={handleClick}>
-        <VideoGallery items={videoData.items} status={videoData.status} />
-      </span>
+      <VideoGallery handleClick={handleClick} items={videoData.items} status={videoData.status} retry={retry && retry} />
     </div>
   );
 }

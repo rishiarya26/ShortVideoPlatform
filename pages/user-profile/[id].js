@@ -1,15 +1,9 @@
 import Error from 'next/error';
 import {
   SeoMeta
-  // VideoJsonLd
 } from '../../src/components/commons/head-meta/seo-meta';
-// import { supportedLanguages } from '../../src/hooks/use-translation';
 import UserProfile from '../../src/components/user-profile';
 import { getUserProfile } from '../../src/sources/users/profile';
-
-// const languageCodes = Object.keys(supportedLanguages).map(
-//   keyName => supportedLanguages[keyName].code
-// );
 
 // TODO enable mock mode here
 export default function Hipi(params) {
