@@ -14,12 +14,11 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
+    payload.canShop = false;
     if (
-      data.data?.[0].topCharms.length
+      data.data?.[0]?.topCharms?.length > 0
     ) {
       payload.canShop = true;
-    } else {
-      payload.canShop = false;
     }
     return payload;
   } catch (err) {
