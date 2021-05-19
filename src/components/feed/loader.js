@@ -5,10 +5,12 @@ import Seekbar from '../seekbar/loader';
 
 function Loader() {
   return (
-    <div className="video_card relative flex w-full h-screen scroll-snap-start bg-hipidblue items-center justify-center">
-      <VideoSidebar />
-      <VideoFooter />
-      <Seekbar />
+    <div>
+      <div className="video_card relative flex w-full h-screen scroll-snap-start bg-hipidblue items-center justify-center">
+        <VideoSidebar />
+        <VideoFooter />
+        <Seekbar />
+      </div>
       <FooterMenu />
     </div>
   );
