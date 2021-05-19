@@ -14,7 +14,7 @@ function FooterMenu() {
   // const { t } = useTranslation();
   return (
     <div>
-      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center">
+      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
         <Home />
         <Search />
         <button
@@ -32,13 +32,13 @@ function FooterMenu() {
             {/* {t('shop')} */}
           </span>
         </button>
-        <div id="cb_tg_d_wrapper">
-          <div className="playkit-player" />
-        </div>
         <Add />
         <Profile />
       </div>
       <SnackBar />
+      <div id="cb_tg_d_wrapper">
+        <div className="playkit-player" />
+      </div>
     </div>
   );
 }
