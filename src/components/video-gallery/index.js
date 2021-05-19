@@ -1,3 +1,4 @@
+import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
 import Error from './error';
@@ -12,6 +13,7 @@ export default function VideoGallery({
 }) {
   setRetry = retry;
   const validItemsLength = items?.length > 0;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -30,10 +32,9 @@ export default function VideoGallery({
               ))
               : (
                 <div className="video-layout flex flex-col p-10 items-center">
-                  <p className="font-semibold">No published videos</p>
+                  <p className="font-semibold">{t('NO_VIDEOS')}</p>
                   <p className="text-center text-sm text-gray-500 my-2">
-                    You haven't
-                    published any video yet. Start creating your short videos.
+                    {t('NO_VIDEOS_PUBLISHED')}
                   </p>
                 </div>
               )}

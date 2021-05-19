@@ -43,11 +43,11 @@ export default function Feed({ fetchState, retry, data }) {
     >
       <div className="fixed mt-10 z-10 w-full"><Tabs items={tabs} /></div>
       <Swiper
-        spaceBetween={50}
         direction="vertical"
         draggable="true"
-        mousewheel
+        spaceBetween={0}
         calculateheight="true"
+        mousewheel
         scrollbar={{ draggable: true }}
         onSlideChange={swiperCore => {
           const {

@@ -12,7 +12,7 @@ const Tabs = ({ items = [], router }) => {
           <Link href={`/feed/${data.path}`}>
             <span className={data.path === selected ? 'font-bold ' : ''}>{data.display}</span>
           </Link>
-          { id < items.length - 1 ? <span>&nbsp; | &nbsp;</span> : '' }
+          { id < items.length - 1 ? <pre> | </pre> : '' }
         </>
       )) }
     </div>
