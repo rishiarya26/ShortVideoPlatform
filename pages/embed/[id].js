@@ -2,21 +2,29 @@ import { useState } from 'react';
 import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
 import { getSingleFeed } from '../../src/sources/feed/embed';
-import { SeoMeta, VideoJsonLd } from '../../src/components/commons/head-meta/seo-meta';
+import {
+  SeoMeta,
+  VideoJsonLd
+} from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
 
-const languageCodes = Object.keys(supportedLanguages).map(keyName => supportedLanguages[keyName].code);
+const languageCodes = Object.keys(supportedLanguages).map(
+  keyName => supportedLanguages[keyName].code
+);
 
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const {
     data: item = {},
-    errorCode, message,
+    errorCode,
+    message,
     status
   } = params;
   const vobj = { videoId: item.content_id };
+  const canShop = !!item?.canShop;
+
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
@@ -62,9 +70,7 @@ export default function Hipi(params) {
         description={item.content_description}
         contentUrl={item.video_url}
         embedUrl={params.uri}
-        thumbnailUrls={[
-          item.poster_image_url
-        ]}
+        thumbnailUrls={[item.poster_image_url]}
         watchCount={item.likesCount}
         regionsAllowed={languageCodes}
       />
@@ -80,15 +86,20 @@ export default function Hipi(params) {
         profilePic={item.userProfilePicUrl}
         userName={item.userName}
         musicCoverTitle={item.musicCoverTitle}
+        hashTags={item.hashTags}
+        canShop={canShop}
       />
-      <div className="w-full fixed bottom-4 py-2 flex justify-around items-center">
-        <button
-          className="rounded-lg text-white py-1 px-4 bg-hipipink font-normal tracking-wide xxs:text-sm xs:text-base"
-          // eslint-disable-next-line no-undef
-          onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-        >
-          SHOP
-        </button>
+      <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
+        {canShop
+          && (
+            <button
+              className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
+              // eslint-disable-next-line no-undef
+              onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+            >
+              SHOP
+            </button>
+          )}
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
@@ -98,15 +109,17 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-    req, params, locale,
-    defaultLocale, locales
+    req, params
+    // , locale,
+    // defaultLocale, locales
   } = ctx;
-  const uri = (new URL(req.url, `http://${req.headers.host}`)).href;
+  const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
+
   try {
     data = await getSingleFeed({
-      page: id
+      id
     });
   } catch (e) {
     data = {
@@ -120,9 +133,9 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       uri,
-      locale,
-      locales,
-      defaultLocale,
+      // locale,
+      // locales,
+      // defaultLocale,
       ...data
     }
   };

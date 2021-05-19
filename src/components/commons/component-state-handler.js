@@ -18,7 +18,7 @@ function ComponentStateHandler({
  * data source is not an api we can have a function which promisifies data  - Promise.resolve(data)
  * @param {*} onDataFetched is a callback function which gets called with dataFetcher response as a param
  */
-function useFetcher(dataFetcher, onDataFetched) {
+function useFetcher(dataFetcher, onDataFetched, dep) {
   const [fetchState, setFetchState] = useState('pending');
   const [retry, setRetry] = useState(false);
   const [data, setData] = useState(null);
@@ -31,13 +31,17 @@ function useFetcher(dataFetcher, onDataFetched) {
         return;
       }
       setData(data);
-
       if (onDataFetched) onDataFetched(data);
       setFetchState('success');
     } catch (e) {
       setFetchState('fail');
     }
   };
+  useEffect(() => {
+    setFetchState('pending');
+    dataFetch();
+  }, [dep]);
+
   useEffect(() => {
     dataFetch();
   }, []);
@@ -46,7 +50,6 @@ function useFetcher(dataFetcher, onDataFetched) {
     dataFetch();
     setRetry(false);
   }
-
   return [fetchState, setRetry, data];
 }
 
