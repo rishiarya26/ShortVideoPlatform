@@ -6,7 +6,6 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import Pause from '../commons/svgicons/pause';
-import FooterMenu from '../footer-menu';
 
 function Video(props) {
   const [playing, setPlaying] = useState(true);
@@ -15,9 +14,9 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
+  const height = size.height - 45;
 
   const handleVideoPress = () => {
-    console.log(rootRef);
     if (playing) {
       rootRef.current.children[0].pause();
       setPlaying(false);
@@ -65,7 +64,8 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full h-full scroll-snap-start bg-black"
+      className="video_card relative w-full  bg-black"
+      style={{ height }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -75,7 +75,7 @@ function Video(props) {
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}
-        height={size.height}
+        height={size.height - 45}
       >
         <source
           src={props.url}
@@ -97,8 +97,6 @@ function Video(props) {
         <Pause />
       </div>
 
-      <FooterMenu id={props.videoid} />
-
       <VideoSidebar
         socialId={props.socialId}
         profilePic={props.profilePic}
@@ -113,6 +111,7 @@ function Video(props) {
         userName={props.userName}
         musicCoverTitle={props.musicCoverTitle}
         type="feed"
+        hashTags={props.hashTags}
       />
 
     </div>

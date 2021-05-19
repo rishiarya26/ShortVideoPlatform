@@ -1,7 +1,6 @@
-
 import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
-import VideoSidebar from '../videosidebar/index';
+import EmbedVideoSidebar from '../embedvideoside/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
@@ -61,22 +60,23 @@ function Embedvideo(props) {
         width={size.width}
         height={size.height}
       >
-        <source
-          src={props.url}
-          type="video/mp4"
-        />
+        <source src={props.url} type="video/mp4" />
       </video>
       <div
         onClick={handleVideoPress}
         className="absolute top-2/5 justify-center w-full"
         style={{ display: playing ? 'none' : 'flex' }}
       >
-        <img src={withBasePath('images/play.png')} className="w-12 h-12" alt="playicon" />
+        <img
+          src={withBasePath('images/play.png')}
+          className="w-12 h-12"
+          alt="playicon"
+        />
       </div>
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
-      <VideoSidebar
+      <EmbedVideoSidebar
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
@@ -87,6 +87,8 @@ function Embedvideo(props) {
         musicTitle={props.musicTitle}
         userName={props.userName}
         musicCoverTitle={props.musicCoverTitle}
+        hashTags={props.hashTags}
+        canShop={props.canShop}
       />
     </div>
   );

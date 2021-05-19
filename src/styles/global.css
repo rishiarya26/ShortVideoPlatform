@@ -4,6 +4,9 @@
 *{
     margin: 0;
 }
+body{
+  background-color: black;
+}
 .Video_sheet{
     /* scroll-snap-type: y mandatory; */
     height: 100vh;
