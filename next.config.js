@@ -1,6 +1,6 @@
 
 const withSourceMaps = require('@zeit/next-source-maps');
-const withPWA = require('next-pwa');
+// const withPWA = require('next-pwa');
 
 const {
   GEN_SOURCE_MAP,
@@ -11,7 +11,7 @@ const {
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
-const prod = NODE_ENV === 'production';
+// const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
 
@@ -47,7 +47,6 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack', 'url-loader']
     });
-  
     return config;
   }
 };
@@ -59,6 +58,6 @@ module.exports = {
   images: {
     loader: 'akamai',
     path: 'https://akamaividz2.zee5.com'
-  },
-}
+  }
+};
 
