@@ -35,7 +35,7 @@ export default function Feed({ fetchState, retry, data }) {
     data && setItems(data.data);
   }, [data]);
 
-  const tabs = [{ display: 'forYou', path: 'for-you' }, { display: 'following', path: 'following' }];
+  const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
   return (
     <ComponentStateHandler
