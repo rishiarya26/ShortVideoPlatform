@@ -9,6 +9,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5 }) {
     const condition = type === 'for-you' ? 'forYou' : 'following';
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     response = await get(apiPath);
+    console.log(response);
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
