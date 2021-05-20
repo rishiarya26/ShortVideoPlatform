@@ -45,11 +45,14 @@ function transformSuccess(resp) {
       payloadObject.likesCount = d.lCount;
       payloadObject.music_title = d.sound.name;
       payloadObject.hashTags = d.hashtags;
+      payloadObject.thumbnail = d.thumbnailUrl;
 
       payloadData.push(payloadObject);
     });
+
     payload.data = payloadData;
     payload.requestedWith = { ...data.requestedWith };
+    console.log(payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

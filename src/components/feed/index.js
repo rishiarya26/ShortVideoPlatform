@@ -7,7 +7,7 @@ import Loading from './loader';
 import ComponentStateHandler from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-import FooterMenu from '../footer-menu';
+// import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
 
@@ -25,6 +25,8 @@ export default function Feed({ fetchState, retry, data }) {
   const validItemsLength = items?.length > 0;
   setRetry = retry && retry;
 
+  const vobj = { videoId: 'cbvtest1mq99gi6b' };
+
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
@@ -33,7 +35,7 @@ export default function Feed({ fetchState, retry, data }) {
     data && setItems(data.data);
   }, [data]);
 
-  const tabs = [{ display: 'forYou', path: 'for-you' }, { display: 'following', path: 'following' }];
+  const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
   return (
     <ComponentStateHandler
@@ -77,22 +79,37 @@ export default function Feed({ fetchState, retry, data }) {
                   musicCoverTitle={item.musicCoverTitle}
                   videoid={item.content_id}
                   hashTags={item.hashTags}
+                  videoOwnersId={item.videoOwnersId}
+                  thumbnail={item.thumbnail}
                 />
 
               </SwiperSlide>
             )
           ) : (
-            <div className="h-60 bg-black flex justify-center items-center">
+            <div className="h-screen bg-black flex justify-center items-center">
               <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
             </div>
           ))
         }
+        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+          <button
+            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+            // eslint-disable-next-line no-undef
+            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+          >
+
+            SHOP
+            {' '}
+            {/* {t('shop')} */}
+
+          </button>
+        </div>
+
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
         : <SeekbarLoading />
         : ''}
-      <FooterMenu />
 
     </ComponentStateHandler>
 

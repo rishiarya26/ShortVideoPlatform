@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { withRouter } from 'next/router';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
-// import Comment from '../commons/svgicons/comment';
-// import Share from '../commons/svgicons/share';
+import Comment from '../commons/svgicons/comment';
+import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
@@ -19,36 +20,43 @@ import { postLike, deleteLike } from '../../sources/social';
 //   ssr: false
 // });
 
-function VideoSidebar(props) {
+function VideoSidebar({
+  socialId, type, profilePic, likes, router, videoOwnersId
+}) {
   // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
-  const { socialId } = props;
 
+  const handleProfileClick = () => {
+    router.push({
+      pathname: '/user-profile/[pid]',
+      query: { pid: videoOwnersId }
+    });
+  };
   return (
     <div
       className={`${
-        props.type === 'feed' ? 'bottom-16' : 'bottom-16'
+        type === 'feed' ? 'bottom-16' : 'bottom-16'
       } absolute right-0 text-white`}
     >
-      <div className="relative py-3  px-1 text-center flex justify-center">
+      <div onClick={handleProfileClick} className="relative py-3  px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
-          src={props.profilePic}
+          src={profilePic}
         />
         <div
           className={`${
-            props.type === 'feed' ? 'block' : 'hidden'
-          } absolute bottom-0 left-1/3`}
+            type === 'feed' ? 'block' : 'hidden'
+          } absolute bottom-0`}
         >
           <Follow />
         </div>
       </div>
       <div
         className={`${
-          props.type === 'feed' ? 'block' : 'hidden'
-        } "relative py-3  px-1 text-center`}
+          type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center justify-center`}
       >
         {liked ? (
           <div>
@@ -62,7 +70,7 @@ function VideoSidebar(props) {
               <Liked />
             </div>
 
-            <p className="text-sm">{props.likes + 1}</p>
+            <p className="text-sm">{likes + 1}</p>
           </div>
         ) : (
           <div>
@@ -75,9 +83,26 @@ function VideoSidebar(props) {
             >
               <Like />
             </div>
-            <p className="text-sm">{props.likes}</p>
+            <p className="text-sm">{likes}</p>
           </div>
         )}
+      </div>
+      <div
+        className={`${
+          type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center items-center flex-col`}
+      >
+        <Comment />
+        <p className="text-sm">0</p>
+      </div>
+      <div
+        className={`${
+          type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center items-center flex-col`}
+      >
+        <Share />
+
+        <p className="text-sm">Share</p>
       </div>
       {/* <div
         role="presentation"
@@ -97,8 +122,8 @@ function VideoSidebar(props) {
       </div> */}
       <div
         className={`${
-          props.type === 'feed' ? 'block' : 'hidden'
-        } relative py-3  px-1 text-center flex flex-col items-center`}
+          type === 'feed' ? 'block' : 'hidden'
+        } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
       >
         <Shop />
       </div>
@@ -106,4 +131,4 @@ function VideoSidebar(props) {
   );
 }
 
-export default VideoSidebar;
+export default withRouter(VideoSidebar);

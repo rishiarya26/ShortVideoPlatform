@@ -7,7 +7,6 @@ import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-import FooterMenu from '../footer-menu';
 import { getProfileVideos } from '../../sources/users/profile';
 
 let retry;
@@ -31,6 +30,10 @@ function ProfileFeed({ router }) {
     setSeekedPercentage(percentage);
   };
 
+  const handleBackClick = () => {
+    router.back();
+  };
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -38,6 +41,12 @@ function ProfileFeed({ router }) {
       ErrorComp={ErrorComp}
     >
       <>
+        <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
+          <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#ffffff">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+        </div>
         <Swiper
           spaceBetween={50}
           direction="vertical"
@@ -75,7 +84,6 @@ function ProfileFeed({ router }) {
         {seekedPercentage
           ? <Seekbar seekedPercentage={seekedPercentage} />
           : <SeekbarLoading />}
-        <FooterMenu />
       </>
     </ComponentStateHandler>
   );

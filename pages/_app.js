@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import Layout from '../src/components/commons/layout';
 import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
-import { getLocaleData } from '../src/sources/app';
+import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
 
 // TODO add withBasePath for everything that gets affected because of base-path i18n
@@ -163,7 +163,7 @@ Hipi.getInitialProps = async ctx => {
   const { router } = ctx;
   const { locale } = router;
   try {
-    const locales = await getLocaleData(locale);
+    const locales = await getLocales(locale);
     return {
       locale,
       locales

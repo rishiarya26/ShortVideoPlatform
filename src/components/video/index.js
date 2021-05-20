@@ -14,8 +14,7 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
-  const height = size.height - 45;
-
+  const videoHeight = `${size.height}`;
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -41,10 +40,10 @@ function Video(props) {
   const handlePlay = entry => {
     if (clicked) {
       if (entry.isIntersecting) {
-        rootRef.current.children[0].play();
+        rootRef?.current?.children[0]?.play();
         setPlaying(true);
       } else {
-        rootRef.current.children[0].pause();
+        rootRef?.current?.children[0]?.pause();
         setPlaying(false);
       }
     }
@@ -64,8 +63,8 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full  bg-black"
-      style={{ height }}
+      className="video_card relative w-full bg-black"
+      style={{ height: `${videoHeight}px` }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -75,7 +74,8 @@ function Video(props) {
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}
-        height={size.height - 45}
+        height={videoHeight}
+        poster={props.thumbnail}
       >
         <source
           src={props.url}
@@ -98,6 +98,7 @@ function Video(props) {
       </div>
 
       <VideoSidebar
+        videoOwnersId={props.videoOwnersId}
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
