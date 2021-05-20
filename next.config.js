@@ -16,9 +16,13 @@ const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
 
 // eslint-disable-next-line no-console
-console.log(`running in ${dev ? 'dev' : 'production'} mode...`);
+console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
 
 const nextConfig = {
+  images: {
+    loader: 'akamai',
+    path: 'https://akamaividz2.zee5.com'
+  },
   // would suggest keeping this false
   trailingSlash: false, // https://github.com/zeit/next.js/issues/8119
   experimental: { // this takes the module/nomodule approach -  https://nextjs.org/blog/next-9-1#module--nomodule
@@ -41,7 +45,12 @@ const nextConfig = {
     appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
-  webpack: config => {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.node = {
+        fs: 'empty'
+      };
+    }
     config.output.publicPath = '';
     config.module.rules.push({
       test: /\.svg$/,
@@ -54,10 +63,4 @@ const nextConfig = {
 // eslint-disable-next-line no-nested-ternary
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
 module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
-module.exports = {
-  images: {
-    loader: 'akamai',
-    path: 'https://akamaividz2.zee5.com'
-  }
-};
 

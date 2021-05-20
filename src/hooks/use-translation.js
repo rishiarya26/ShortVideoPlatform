@@ -4,6 +4,7 @@ import React, {
 import { trimFirstChar } from '../utils/string';
 import { getFirstTruthyValue } from '../utils/functional';
 import { localStorage } from '../utils/storage';
+import { getLocales } from '../sources/app';
 
 const TranslationContext = createContext({
   language: 'en-in',
@@ -54,6 +55,15 @@ const getLanguage = () => (getFirstTruthyValue(getLanguageFromPath, getLanguageP
 //   window.location.href = goto;
 // };
 
+const refreshTranslations = async (locale, locales, setTranslations) => {
+  try {
+    const clLocales = await getLocales(locale);
+    setTranslations({ ...locales, ...clLocales });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const TranslationProvider = ({ children, locales, locale }) => {
   const [language, setLang] = useState(locale);
   const [translations] = useState(locales);
@@ -62,6 +72,7 @@ export const TranslationProvider = ({ children, locales, locale }) => {
   useEffect(() => {
     (async () => {
       const language = getLanguage();
+      refreshTranslations();
       if (!supportedLanguages[language]) return;
       setLanguagePref(language);
       // if (language !== getDefaultLanguage()) redirectToLanguageContext(language);

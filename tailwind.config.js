@@ -13,11 +13,20 @@ module.exports = {
       inset: {
         '2/5': '40%'
       },
+      fontSize: {
+        10: ['10px', '14px'],
+        8: ['8px', '12px']
+      },
       screens: {
         xxs: '300px',
         xs: '375px'
       },
       keyframes: {
+        seekbarMove: {
+          from :{left: 0},
+          to :{left: 500},
+          animationTimingFunction: 'linear'
+        },
         marquee: {
           '0%': {
             transform: 'translate(0, 0)'
@@ -64,6 +73,7 @@ module.exports = {
         }
       },
       animation: {
+        'seekbar':'seekbarMove 1s infinite',
         marquee: 'marquee 4s linear infinite',
         'fade-in-bottom': 'fade-in-bottom 0.3s ease-in',
         'fade-out-bottom': 'fade-out-bottom 0.3s ease-out',
@@ -87,6 +97,9 @@ module.exports = {
       },
       hipidblue: {
         DEFAULT: '#100618'
+      },
+      hipired: {
+        DEFAULT: '#e65252'
       },
       black: colors.black,
       white: colors.white,
@@ -461,6 +474,10 @@ module.exports = {
       '-full': '-100%'
     }),
     keyframes: {
+      seekbarMove: {
+        from :{left: '0px'},
+        to :{left: '500px'}
+      },
       spin: {
         to: {
           transform: 'rotate(360deg)'

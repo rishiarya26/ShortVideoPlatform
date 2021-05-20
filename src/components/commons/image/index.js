@@ -25,13 +25,14 @@ function ImageComp({ data, title }) {
   return (
     <>
       <Image
+        className="object-cover"
         onLoad={handleLoad}
         onError={handleError}
         loader={myLoader}
         src={data}
         alt={title}
-        width={100}
-        height={100}
+        width={120}
+        height={160}
       />
     </>
   );

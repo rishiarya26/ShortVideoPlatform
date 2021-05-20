@@ -1,16 +1,18 @@
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import VideoGallery from '../video-gallery';
 
-export default function UserProfile({
-  userHandle, profilePic, followers, following, totalLikes, firstName, id
+function UserProfile({
+  userHandle, profilePic, followers, following, totalLikes, firstName, id, router
 }) {
   const [videoData, setVideoData] = useState({});
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const videos = {};
@@ -19,16 +21,21 @@ export default function UserProfile({
     setVideoData(videos);
   }, [fetchState]);
 
-  const handleClick = () => {
-    Router.push({
+  const handleVideoClick = () => {
+    router.push({
       pathname: '/profile-feed/[pid]',
       query: { pid: id }
     });
   };
+
+  const handleBackClick = () => {
+    router.back();
+  };
+
   return (
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
-        <div className="p-4 h-full flex items-center justify-center">
+        <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
           <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
             <path d="M0 0h24v24H0z" fill="none" />
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
@@ -46,8 +53,8 @@ export default function UserProfile({
       </div>
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
-          <div className="w-28 rounded-full overflow-hidden">
-            <img src={profilePic} alt="PP" />
+          <div className="w-24 h-24 rounded-full overflow-hidden">
+            <img src={profilePic} alt="PP" className="object-cover" />
           </div>
           <p className="font-medium p-2 text-sm">{firstName}</p>
         </div>
@@ -65,10 +72,19 @@ export default function UserProfile({
             <p className="text-xs">Likes</p>
           </div>
         </div>
+        <div className="p-4 h-full flex items-center justify-center">
+          <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+            {t('FOLLOW')}
+          </button>
+          <button className="font-semibold text-sm border rounded-sm px-2 py-1">
+            --
+          </button>
+        </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      <VideoGallery handleClick={handleClick} items={videoData.items} status={videoData.status} retry={retry && retry} />
+      <VideoGallery handleClick={handleVideoClick} items={videoData.items} status={videoData.status} retry={retry && retry} />
     </div>
   );
 }
 
+export default withRouter(UserProfile);
