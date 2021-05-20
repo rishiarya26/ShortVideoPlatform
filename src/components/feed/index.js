@@ -82,7 +82,7 @@ export default function Feed({ fetchState, retry, data }) {
               </SwiperSlide>
             )
           ) : (
-            <div className="h-60 bg-black flex justify-center items-center">
+            <div className="h-screen bg-black flex justify-center items-center">
               <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
             </div>
           ))
