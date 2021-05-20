@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
-// import Comment from '../commons/svgicons/comment';
-// import Share from '../commons/svgicons/share';
+import Comment from '../commons/svgicons/comment';
+import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
@@ -40,15 +40,15 @@ function VideoSidebar(props) {
         <div
           className={`${
             props.type === 'feed' ? 'block' : 'hidden'
-          } absolute bottom-0 left-1/3`}
+          } absolute bottom-0`}
         >
           <Follow />
         </div>
       </div>
       <div
         className={`${
-          props.type === 'feed' ? 'block' : 'hidden'
-        } "relative py-3  px-1 text-center`}
+          props.type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center justify-center`}
       >
         {liked ? (
           <div>
@@ -79,6 +79,22 @@ function VideoSidebar(props) {
           </div>
         )}
       </div>
+      <div
+        className={`${
+          props.type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center justify-center`}
+      >
+        <Comment />
+        <p className="text-sm">{props.comment}</p>
+      </div>
+      <div
+        className={`${
+          props.type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-1 text-center justify-center`}
+      >
+        <Share />
+
+      </div>
       {/* <div
         role="presentation"
         className={`${
@@ -98,7 +114,7 @@ function VideoSidebar(props) {
       <div
         className={`${
           props.type === 'feed' ? 'block' : 'hidden'
-        } relative py-3  px-1 text-center flex flex-col items-center`}
+        } relative py-3  px-0 text-center flex flex-col items-center`}
       >
         <Shop />
       </div>
