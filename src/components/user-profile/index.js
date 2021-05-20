@@ -53,8 +53,8 @@ function UserProfile({
       </div>
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
-          <div className="w-28 rounded-full overflow-hidden">
-            <img src={profilePic} alt="PP" />
+          <div className="w-24 h-24 rounded-full overflow-hidden">
+            <img src={profilePic} alt="PP" className="object-cover" />
           </div>
           <p className="font-medium p-2 text-sm">{firstName}</p>
         </div>

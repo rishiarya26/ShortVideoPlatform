@@ -8,31 +8,31 @@ import Shop from '../commons/svgicons/shop';
 function VideoSidebar() {
   // TODO add useTranslation for alt tags as well
   return (
-    <div className="absolute bottom-16 right-3 text-white">
+    <div className="absolute bottom-16 right-0 text-white">
       <div className="relative p-3 text-center flex justify-center">
         <div
           className="usrimg w-12 h-12 rounded-full bg-gray-500"
         />
-        <div className="absolute bottom-0 left-1/3">
+        <div className="absolute bottom-0 ">
           <Follow />
         </div>
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div className="relative p-2 text-center flex flex-col items-center">
 
         <div role="presentation">
           <Like />
         </div>
-        <p className="text-sm h-8" />
+        <p className="text-sm h-6" />
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div className="relative p-2 text-center flex flex-col items-center">
         <Comment />
-        <p className="text-sm h-8" />
+        <p className="text-sm h-6" />
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div className="relative p-2 text-center flex flex-col items-center">
         <Share />
-        <p className="text-sm h-8" />
+        <p className="text-sm h-6" />
       </div>
-      <div className="relative p-3 text-center flex flex-col items-center">
+      <div className="relative py-3 text-center flex flex-col items-center">
         <Shop />
       </div>
     </div>

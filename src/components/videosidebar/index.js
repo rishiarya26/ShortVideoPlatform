@@ -21,7 +21,7 @@ import { postLike, deleteLike } from '../../sources/social';
 // });
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, comment, router, videoOwnersId
+  socialId, type, profilePic, likes, router, videoOwnersId
 }) {
   // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
@@ -44,6 +44,7 @@ function VideoSidebar({
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
           src={profilePic}
+          onError='this.style.display = "none"'
         />
         <div
           className={`${
@@ -90,18 +91,19 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center justify-center`}
+        } "relative py-3  px-1 text-center items-center flex-col`}
       >
         <Comment />
-        <p className="text-sm">{comment}</p>
+        <p className="text-sm">0</p>
       </div>
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center justify-center`}
+        } "relative py-3  px-1 text-center items-center flex-col`}
       >
         <Share />
 
+        <p className="text-sm">Share</p>
       </div>
       {/* <div
         role="presentation"
