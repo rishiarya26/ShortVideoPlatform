@@ -14,8 +14,7 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
-  const height = size.height - 45;
-
+  const videoHeight = `${size.height - 45}`;
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -65,7 +64,7 @@ function Video(props) {
     <div
       ref={rootRef}
       className="video_card relative w-full  bg-black"
-      style={{ height }}
+      style={{ height: `${videoHeight}px` }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -75,7 +74,7 @@ function Video(props) {
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}
-        height={size.height - 45}
+        height={videoHeight}
       >
         <source
           src={props.url}
