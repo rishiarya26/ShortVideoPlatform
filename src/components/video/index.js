@@ -14,7 +14,7 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
-  const videoHeight = `${size.height - 0}`;
+  const videoHeight = `${size.height}`;
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -75,6 +75,7 @@ function Video(props) {
         className="vdo_player"
         width={size.width}
         height={videoHeight}
+        poster={props.thumbnail}
       >
         <source
           src={props.url}

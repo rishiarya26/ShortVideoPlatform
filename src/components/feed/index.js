@@ -80,6 +80,7 @@ export default function Feed({ fetchState, retry, data }) {
                   videoid={item.content_id}
                   hashTags={item.hashTags}
                   videoOwnersId={item.videoOwnersId}
+                  thumbnail={item.thumbnail}
                 />
 
               </SwiperSlide>
