@@ -1,6 +1,5 @@
 import VideoSidebar from '../videosidebar/loader';
 import VideoFooter from '../videofooter/loader';
-import FooterMenu from '../footer-menu';
 import Seekbar from '../seekbar/loader';
 
 function Loader() {
@@ -9,7 +8,6 @@ function Loader() {
       <VideoSidebar />
       <VideoFooter />
       <Seekbar />
-      <FooterMenu />
     </div>
   );
 }

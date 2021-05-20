@@ -63,7 +63,7 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full  bg-black"
+      className="video_card relative w-full bg-black"
       style={{ height: `${videoHeight}px` }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -97,6 +97,7 @@ function Video(props) {
       </div>
 
       <VideoSidebar
+        videoOwnersId={props.videoOwnersId}
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}

@@ -17,7 +17,7 @@ function VideoSidebar() {
           <Follow />
         </div>
       </div>
-      <div className="relative p-3 text-center">
+      <div className="relative p-3 text-center flex flex-col items-center">
 
         <div role="presentation">
           <Like />

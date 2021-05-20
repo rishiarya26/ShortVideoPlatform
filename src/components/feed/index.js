@@ -79,6 +79,7 @@ export default function Feed({ fetchState, retry, data }) {
                   musicCoverTitle={item.musicCoverTitle}
                   videoid={item.content_id}
                   hashTags={item.hashTags}
+                  videoOwnersId={item.videoOwnersId}
                 />
 
               </SwiperSlide>

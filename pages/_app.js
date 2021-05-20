@@ -1,6 +1,4 @@
 // import App from "next/app"
-import { promises as fs } from 'fs';
-import path from 'path';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -8,7 +6,7 @@ import dynamic from 'next/dynamic';
 import Layout from '../src/components/commons/layout';
 import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
-// import { getLocaleData } from '../src/sources/app';
+import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
 
 // TODO add withBasePath for everything that gets affected because of base-path i18n
@@ -164,13 +162,16 @@ function Hipi({
 Hipi.getInitialProps = async ctx => {
   const { router } = ctx;
   const { locale } = router;
-  const postsDirectory = path.join(process.cwd(), 'public/i10n');
-  const filePath = path.join(postsDirectory, `${locale}.json`);
-  const fileContents = await fs.readFile(filePath, 'utf8');
-  return {
-    locale,
-    locales: JSON.parse(fileContents)
-  };
+  try {
+    const locales = await getLocales(locale);
+    return {
+      locale,
+      locales
+    };
+  } catch (e) {
+    console.log(e);
+  }
+  return {};
 };
 
 export default Hipi;
