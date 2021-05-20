@@ -164,6 +164,7 @@ function Hipi({
 Hipi.getInitialProps = async ctx => {
   const { router } = ctx;
   const { locale } = router;
+  // TODO cache this
   const postsDirectory = path.join(process.cwd(), 'public/i10n');
   const filePath = path.join(postsDirectory, `${locale}.json`);
   const fileContents = await fs.readFile(filePath, 'utf8');
