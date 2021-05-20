@@ -32,7 +32,7 @@ function ImageComp({ data, title }) {
         src={data}
         alt={title}
         width={120}
-        height={160}
+        height={170}
       />
     </>
   );

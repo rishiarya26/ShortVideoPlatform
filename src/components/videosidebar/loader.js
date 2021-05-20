@@ -32,7 +32,7 @@ function VideoSidebar() {
         <Share />
         <p className="text-sm h-6" />
       </div>
-      <div className="relative py-3 text-center flex flex-col items-center">
+      <div className="relative py-3 mt-8 text-center flex flex-col items-center">
         <Shop />
       </div>
     </div>
