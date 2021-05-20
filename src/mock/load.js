@@ -9,7 +9,7 @@ function loadMockServerOnce() {
   });
   return async () => {
     if (isMockMode() && initializeMockServer) {
-      const { default: mockServer } = await import('../mock');
+      const { default: mockServer } = await import('.');
       mockServer('development', channel.resolve);
       initializeMockServer = false;
     } else {

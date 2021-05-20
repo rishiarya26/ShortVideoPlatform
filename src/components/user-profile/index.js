@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
+import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import VideoGallery from '../video-gallery';
@@ -11,6 +12,7 @@ export default function UserProfile({
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const videos = {};
@@ -64,6 +66,14 @@ export default function UserProfile({
             <p className="font-semibold text-sm">{totalLikes}</p>
             <p className="text-xs">Likes</p>
           </div>
+        </div>
+        <div className="p-4 h-full flex items-center justify-center">
+          <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+            {t('FOLLOW')}
+          </button>
+          <button className="font-semibold text-sm border rounded-sm px-2 py-1">
+            --
+          </button>
         </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />

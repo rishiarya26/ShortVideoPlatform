@@ -88,6 +88,9 @@ module.exports = {
       hipidblue: {
         DEFAULT: '#100618'
       },
+      hipired: {
+        DEFAULT: '#e65252'
+      },
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,

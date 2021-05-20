@@ -40,10 +40,10 @@ function Video(props) {
   const handlePlay = entry => {
     if (clicked) {
       if (entry.isIntersecting) {
-        rootRef.current.children[0].play();
+        rootRef?.current?.children[0]?.play();
         setPlaying(true);
       } else {
-        rootRef.current.children[0].pause();
+        rootRef?.current?.children[0]?.pause();
         setPlaying(false);
       }
     }
