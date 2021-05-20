@@ -1,4 +1,6 @@
 // import App from "next/app"
+import { promises as fs } from 'fs';
+import path from 'path';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -162,16 +164,13 @@ function Hipi({
 Hipi.getInitialProps = async ctx => {
   const { router } = ctx;
   const { locale } = router;
-  try {
-    const locales = await getLocaleData(locale);
-    return {
-      locale,
-      locales
-    };
-  } catch (e) {
-    console.log(e);
-  }
-  return {};
+  const postsDirectory = path.join(process.cwd(), 'public/i10n');
+  const filePath = path.join(postsDirectory, `${locale}.json`);
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  return {
+    locale,
+    locales: JSON.parse(fileContents)
+  };
 };
 
 export default Hipi;

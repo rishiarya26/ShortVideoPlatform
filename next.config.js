@@ -45,7 +45,12 @@ const nextConfig = {
     appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
-  webpack: config => {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.node = {
+        fs: 'empty'
+      };
+    }
     config.output.publicPath = '';
     config.module.rules.push({
       test: /\.svg$/,
