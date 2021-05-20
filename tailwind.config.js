@@ -13,6 +13,10 @@ module.exports = {
       inset: {
         '2/5': '40%'
       },
+      fontSize: {
+        10: ['10px', '14px'],
+        8: ['8px', '12px']
+      },
       screens: {
         xxs: '300px',
         xs: '375px'

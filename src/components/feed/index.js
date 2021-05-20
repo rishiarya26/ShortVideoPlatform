@@ -7,7 +7,7 @@ import Loading from './loader';
 import ComponentStateHandler from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-import FooterMenu from '../footer-menu';
+// import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
 
@@ -24,6 +24,8 @@ export default function Feed({ fetchState, retry, data }) {
   const { t } = useTranslation();
   const validItemsLength = items?.length > 0;
   setRetry = retry && retry;
+
+  const vobj = { videoId: 'cbvtest1mq99gi6b' };
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -87,12 +89,25 @@ export default function Feed({ fetchState, retry, data }) {
             </div>
           ))
         }
+        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+          <button
+            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+            // eslint-disable-next-line no-undef
+            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
+          >
+
+            SHOP
+            {' '}
+            {/* {t('shop')} */}
+
+          </button>
+        </div>
+
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
         : <SeekbarLoading />
         : ''}
-      <FooterMenu />
 
     </ComponentStateHandler>
 

@@ -14,7 +14,7 @@ function Video(props) {
   const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
-  const videoHeight = `${size.height - 45}`;
+  const videoHeight = `${size.height - 0}`;
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
