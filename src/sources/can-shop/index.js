@@ -7,9 +7,10 @@ async function verifyVideoForShop({ videoId }) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath(
-      'verifyVideoForShop'
+      'stagingMobile'
     )}/v3.6/video/${videoId}/charm?video_id=${videoId}`;
     response = await get(apiPath);
+    console.log(response)
     response.data.requestedWith = { videoId };
     return Promise.resolve(response);
   } catch (err) {

@@ -9,7 +9,7 @@ function Hipi({ router }) {
   const dataFetcher = () => getHomeFeed({ type: id });
 
   let [fetchState, retry, data] = useFetcher(dataFetcher, null, id);
-
+ console.log(fetchState, data)
   if (id === 'for-you') {
     const status = fetchState === 'success';
     const dataLength = data?.data?.length;

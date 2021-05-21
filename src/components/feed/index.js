@@ -10,6 +10,8 @@ import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
+import React from 'react';
+import { canShop } from '../../sources/can-shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -25,15 +27,24 @@ export default function Feed({ fetchState, retry, data }) {
   const validItemsLength = items?.length > 0;
   setRetry = retry && retry;
 
-  const vobj = { videoId: 'cbvtest1mq99gi6b' };
+  let vShop = false;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
   useEffect(() => {
-    data && setItems(data.data);
+    data && setItems(data.data)
+    data && setActiveVideoId(data.data[0].content_id)
+    // data && verifyShop(data.data[0].content_id);
   }, [data]);
+
+  const verifyShop = async(id)=>{
+  //  let response =  await canShop({});
+   console.log(response)
+  //  reponse && vShop = response
+  }
+
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
@@ -51,18 +62,28 @@ export default function Feed({ fetchState, retry, data }) {
         calculateheight="true"
         mousewheel
         scrollbar={{ draggable: true }}
+        // onSwiper={(swiper) => {
+        //   const {slides, activeIndex} = swiper;
+          // console.log(swiper.slides)
+          // let activeId = slides[0].id
+          // setActiveVideoId(activeId);
+        // }}
         onSlideChange={swiperCore => {
           const {
-            activeIndex
+            activeIndex,slides
           } = swiperCore;
-          setActiveVideoId(activeIndex);
+          // verifyShop({activeId});
+          let activeId = slides[activeIndex]?.id
+          setActiveVideoId(activeId);
+        
         }}
       >
         {
-          (validItemsLength ? items.map(
-            item => (
+          (validItemsLength ? items.map((
+            item,id )=> (
               <SwiperSlide
-                key={item.content_id}
+                key={id}
+                id={item.content_id}
               >
                 <Video
                   activeVideoId={activeVideoId}
@@ -82,7 +103,7 @@ export default function Feed({ fetchState, retry, data }) {
                   videoOwnersId={item.videoOwnersId}
                   thumbnail={item.thumbnail}
                 />
-
+             
               </SwiperSlide>
             )
           ) : (
@@ -91,20 +112,19 @@ export default function Feed({ fetchState, retry, data }) {
             </div>
           ))
         }
-        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-          <button
-            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
-            // eslint-disable-next-line no-undef
-            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-          >
-
-            SHOP
-            {' '}
-            {/* {t('shop')} */}
-
-          </button>
-        </div>
-
+      
+             <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+               <button
+                 className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+                 // eslint-disable-next-line no-undef
+                 onClick={() => cbplugin && cbplugin.cbTouch({videoId : activeVideoId})}
+               >
+                 SHOP
+                 {' '}
+                 {/* {t('shop')} */}
+     
+               </button>
+             </div>
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
