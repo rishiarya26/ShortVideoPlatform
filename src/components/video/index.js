@@ -5,13 +5,13 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
-import Pause from '../commons/svgicons/pause';
+// import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
   const [playing, setPlaying] = useState(true);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
-  const [pause, setPause] = useState(false);
+  // const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
@@ -20,7 +20,7 @@ function Video(props) {
       rootRef.current.children[0].pause();
       setPlaying(false);
       setPlay(true);
-      setPause(false);
+      // setPause(false);
       setClicked(false);
       setTimeout(() => {
         setPlay(false);
@@ -29,14 +29,14 @@ function Video(props) {
       rootRef.current.children[0].play();
       setPlaying(true);
       setClicked(true);
-      setPause(true);
+      // setPause(true);
       setPlay(false);
       setTimeout(() => {
-        setPause(false);
+        // setPause(false);
       }, 2000);
     }
   };
-
+  // console.log(JSON.stringify(props))
   const handlePlay = entry => {
     if (clicked) {
       if (entry.isIntersecting) {
@@ -76,6 +76,7 @@ function Video(props) {
         width={size.width}
         height={videoHeight}
         poster={props.thumbnail}
+        objectfit="cover"
       >
         <source
           src={props.url}
@@ -84,18 +85,18 @@ function Video(props) {
       </video>
       <div
         onClick={handleVideoPress}
-        className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
-        style={{ display: play ? 'block' : 'none' }}
+        className="absolute top-1/2 justify-center w-screen"
+        style={{ display: play ? 'flex' : 'none' }}
       >
         <Play />
       </div>
-      <div
+      {/* <div
         onClick={handleVideoPress}
         className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
         style={{ display: pause ? 'block' : 'none' }}
       >
         <Pause />
-      </div>
+      </div> */}
 
       <VideoSidebar
         videoOwnersId={props.videoOwnersId}
@@ -113,6 +114,8 @@ function Video(props) {
         musicCoverTitle={props.musicCoverTitle}
         type="feed"
         hashTags={props.hashTags}
+        videoShopData={props.videoShopData}
+        id={props.id}
       />
 
     </div>
