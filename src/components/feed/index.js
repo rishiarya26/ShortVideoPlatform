@@ -87,7 +87,8 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
                 videoid={item.content_id}
                 hashTags={item.hashtags}
                 videoOwnersId={item.videoOwnersId}
-                thumbnail={item.thumbnail}
+                // thumbnail={item.thumbnail}
+                thumbnail={item.poster_image_url}
                 videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop }}
               />
             </SwiperSlide>

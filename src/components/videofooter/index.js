@@ -10,7 +10,6 @@ function VideoFooter({
   id,
   videoShopData
 }) {
-  console.log('');
   return (
     <div
       className={`${
