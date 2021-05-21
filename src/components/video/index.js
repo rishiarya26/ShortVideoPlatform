@@ -85,8 +85,8 @@ function Video(props) {
       </video>
       <div
         onClick={handleVideoPress}
-        className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
-        style={{ display: play ? 'block' : 'none' }}
+        className="absolute top-1/2 justify-center w-screen"
+        style={{ display: play ? 'flex' : 'none' }}
       >
         <Play />
       </div>
