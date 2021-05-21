@@ -26,7 +26,8 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
-    const { responseData = {} } = data;
+    // COMMENTED - for production feed api
+    /* const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
     videos?.forEach(d => {
@@ -44,15 +45,17 @@ function transformSuccess(resp) {
       payloadObject.userName = d.videoOwners.userName;
       payloadObject.likesCount = d.lCount;
       payloadObject.music_title = d.sound.name;
-      payloadObject.hashTags = d.hashtags;
+      payloadObject.hashtags = d.hashtags;
       payloadObject.thumbnail = d.thumbnailUrl;
 
       payloadData.push(payloadObject);
     });
+  */
 
-    payload.data = payloadData;
+    const { response = [] } = data;
+    payload.data = response;
     payload.requestedWith = { ...data.requestedWith };
-    console.log(payload);
+    console.log('final tranform', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
-import ComponentStateHandler from '../commons/component-state-handler';
+import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
+import { canShop } from '../../sources/can-shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -17,29 +18,33 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ fetchState, retry, data }) {
+export default function Feed({ fetchState: status, retry: putRetry, data: resp }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const { t } = useTranslation();
   const validItemsLength = items?.length > 0;
-  setRetry = retry && retry;
-
-  const vobj = { videoId: 'cbvtest1mq99gi6b' };
+  setRetry = putRetry && putRetry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
   useEffect(() => {
-    data && setItems(data.data);
-  }, [data]);
+    resp && setItems(resp.data);
+    resp && setActiveVideoId(resp.data[0].content_id);
+  }, [resp]);
+
+  const dataFetcher = () => canShop({ videoId: activeVideoId });
+
+  // eslint-disable-next-line no-unused-vars
+  const [fetchState, retry, data] = useFetcher(dataFetcher, null, activeVideoId);
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
   return (
     <ComponentStateHandler
-      state={fetchState}
+      state={status}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
@@ -53,64 +58,72 @@ export default function Feed({ fetchState, retry, data }) {
         scrollbar={{ draggable: true }}
         onSlideChange={swiperCore => {
           const {
-            activeIndex
+            activeIndex, slides
           } = swiperCore;
-          setActiveVideoId(activeIndex);
+          const activeId = slides[activeIndex]?.id;
+          setActiveVideoId(activeId);
         }}
       >
         {
-          (validItemsLength ? items.map(
-            item => (
-              <SwiperSlide
-                key={item.content_id}
-              >
-                <Video
-                  activeVideoId={activeVideoId}
-                  updateSeekbar={updateSeekbar}
-                  socialId={item.getSocialId}
-                  url={item.video_url}
-                  id={item.content_id}
-                  comments={item.commentsCount}
-                  likes={item.likesCount}
-                  music={item.musicCoverTitle}
-                  musicTitle={item.music_title}
-                  profilePic={item.userProfilePicUrl}
-                  userName={item.userName}
-                  musicCoverTitle={item.musicCoverTitle}
-                  videoid={item.content_id}
-                  hashTags={item.hashTags}
-                  videoOwnersId={item.videoOwnersId}
-                  thumbnail={item.thumbnail}
-                />
-
-              </SwiperSlide>
-            )
-          ) : (
+          (validItemsLength ? items.map((
+            item, id
+          ) => (
+            <SwiperSlide
+              key={id}
+              id={item.content_id}
+            >
+              <Video
+                updateSeekbar={updateSeekbar}
+                socialId={item.getSocialId}
+                url={item.video_url}
+                id={item.content_id}
+                comments={item.commentsCount}
+                likes={item.likesCount}
+                music={item.musicCoverTitle}
+                musicTitle={item.music_title}
+                profilePic={item.userProfilePicUrl}
+                userName={item.userName}
+                musicCoverTitle={item.musicCoverTitle}
+                videoid={item.content_id}
+                hashTags={item.hashtags}
+                videoOwnersId={item.videoOwnersId}
+                // thumbnail={item.thumbnail}
+                thumbnail={item.poster_image_url}
+                videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop }}
+              />
+            </SwiperSlide>
+          )) : (
             <div className="h-screen bg-black flex justify-center items-center">
               <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
             </div>
           ))
         }
-        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-          <button
-            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
-            // eslint-disable-next-line no-undef
-            onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-          >
 
-            SHOP
-            {' '}
-            {/* {t('shop')} */}
+        { data && data.canShop
+     && (
+       <>
+         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+           <button
+             className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+             // eslint-disable-next-line no-undef
+             onClick={() => cbplugin && cbplugin.cbTouch({ videoId: activeVideoId })}
+           >
+             SHOP
+             {' '}
+             {/* {t('shop')} */}
 
-          </button>
-        </div>
-
+           </button>
+         </div>
+       </>
+     )}
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
         : <SeekbarLoading />
         : ''}
-
+      <div id="cb_tg_d_wrapper">
+        <div className="playkit-player" />
+      </div>
     </ComponentStateHandler>
 
   );
