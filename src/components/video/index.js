@@ -36,7 +36,7 @@ function Video(props) {
       }, 2000);
     }
   };
-
+  // console.log(JSON.stringify(props))
   const handlePlay = entry => {
     if (clicked) {
       if (entry.isIntersecting) {
@@ -114,6 +114,8 @@ function Video(props) {
         musicCoverTitle={props.musicCoverTitle}
         type="feed"
         hashTags={props.hashTags}
+        videoShopData={props.videoShopData}
+        id={props.id}
       />
 
     </div>

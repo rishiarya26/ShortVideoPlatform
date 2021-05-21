@@ -4,14 +4,13 @@ import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
-import ComponentStateHandler from '../commons/component-state-handler';
+import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
-
-// import { canShop } from '../../sources/can-shop';
+import { canShop } from '../../sources/can-shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -19,37 +18,33 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ fetchState, retry, data }) {
+export default function Feed({ fetchState: status, retry: putRetry, data: resp }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const { t } = useTranslation();
   const validItemsLength = items?.length > 0;
-  setRetry = retry && retry;
-
-  // let vShop = false;
+  setRetry = putRetry && putRetry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
   useEffect(() => {
-    data && setItems(data.data);
-    data && setActiveVideoId(data.data[0].content_id);
-    // data && verifyShop(data.data[0].content_id);
-  }, [data]);
+    resp && setItems(resp.data);
+    resp && setActiveVideoId(resp.data[0].content_id);
+  }, [resp]);
 
-  // const verifyShop = async(id)=>{
-  //  let response =  await canShop({});
-  //  console.log(response)
-  //  reponse && vShop = response
-  // }
+  const dataFetcher = () => canShop({ videoId: activeVideoId });
+
+  // eslint-disable-next-line no-unused-vars
+  const [fetchState, retry, data] = useFetcher(dataFetcher, null, activeVideoId);
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
   return (
     <ComponentStateHandler
-      state={fetchState}
+      state={status}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
@@ -61,18 +56,10 @@ export default function Feed({ fetchState, retry, data }) {
         calculateheight="true"
         mousewheel
         scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => {
-        //   const {slides, activeIndex} = swiper;
-        // console.log(swiper.slides)
-        // let activeId = slides[0].id
-        // setActiveVideoId(activeId);
-        // }}
         onSlideChange={swiperCore => {
           const {
             activeIndex, slides
           } = swiperCore;
-          console.log('dsd');
-          // verifyShop({activeId});
           const activeId = slides[activeIndex]?.id;
           setActiveVideoId(activeId);
         }}
@@ -86,7 +73,6 @@ export default function Feed({ fetchState, retry, data }) {
               id={item.content_id}
             >
               <Video
-                activeVideoId={activeVideoId}
                 updateSeekbar={updateSeekbar}
                 socialId={item.getSocialId}
                 url={item.video_url}
@@ -99,11 +85,11 @@ export default function Feed({ fetchState, retry, data }) {
                 userName={item.userName}
                 musicCoverTitle={item.musicCoverTitle}
                 videoid={item.content_id}
-                hashTags={item.hashTags}
+                hashTags={item.hashtags}
                 videoOwnersId={item.videoOwnersId}
                 thumbnail={item.thumbnail}
+                videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop }}
               />
-
             </SwiperSlide>
           )) : (
             <div className="h-screen bg-black flex justify-center items-center">
@@ -112,18 +98,23 @@ export default function Feed({ fetchState, retry, data }) {
           ))
         }
 
-        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-          <button
-            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
-            // eslint-disable-next-line no-undef
-            onClick={() => cbplugin && cbplugin.cbTouch({ videoId: activeVideoId })}
-          >
-            SHOP
-            {' '}
-            {/* {t('shop')} */}
+        { data && data.canShop
+     && (
+       <>
+         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+           <button
+             className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+             // eslint-disable-next-line no-undef
+             onClick={() => cbplugin && cbplugin.cbTouch({ videoId: activeVideoId })}
+           >
+             SHOP
+             {' '}
+             {/* {t('shop')} */}
 
-          </button>
-        </div>
+           </button>
+         </div>
+       </>
+     )}
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />

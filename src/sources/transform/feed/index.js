@@ -45,12 +45,13 @@ function transformSuccess(resp) {
       payloadObject.userName = d.videoOwners.userName;
       payloadObject.likesCount = d.lCount;
       payloadObject.music_title = d.sound.name;
-      payloadObject.hashTags = d.hashtags;
+      payloadObject.hashtags = d.hashtags;
       payloadObject.thumbnail = d.thumbnailUrl;
 
       payloadData.push(payloadObject);
     });
   */
+
     const { response = [] } = data;
     payload.data = response;
     payload.requestedWith = { ...data.requestedWith };
