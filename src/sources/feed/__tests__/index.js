@@ -13,7 +13,8 @@ describe('source for feed', () => {
     const data = await getHomeFeed();
     expect(get).toBeCalledTimes(1);
     expect(get).toBeCalledWith(
-      'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=following&offset=1'
+      'https://stagingmobile.charmboard.com/v3.6/demo/hipi/1'
+      // 'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=following&offset=1'
     );
     expect(JSON.stringify(data)).toEqual(JSON.stringify(feed));
   });
@@ -25,7 +26,8 @@ describe('source for feed', () => {
     } catch (e) {
       expect(get).toBeCalledTimes(1);
       expect(get).toBeCalledWith(
-        'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=following&offset=1'
+        'https://stagingmobile.charmboard.com/v3.6/demo/hipi/1'
+        // 'https://hipigwapi.zee5.com/api/v1/shorts/home?limit=5&type=following&offset=1'
       );
       expect(e).toMatchObject({
         status: 'fail',
