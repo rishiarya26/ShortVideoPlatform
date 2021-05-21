@@ -129,7 +129,9 @@ export default function Feed({ fetchState, retry, data }) {
         ? <Seekbar seekedPercentage={seekedPercentage} />
         : <SeekbarLoading />
         : ''}
-
+      <div id="cb_tg_d_wrapper">
+        <div className="playkit-player" />
+      </div>
     </ComponentStateHandler>
 
   );
