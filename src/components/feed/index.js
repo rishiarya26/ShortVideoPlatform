@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../video';
@@ -10,8 +10,8 @@ import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
-import React from 'react';
-import { canShop } from '../../sources/can-shop';
+
+// import { canShop } from '../../sources/can-shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -27,24 +27,23 @@ export default function Feed({ fetchState, retry, data }) {
   const validItemsLength = items?.length > 0;
   setRetry = retry && retry;
 
-  let vShop = false;
+  // let vShop = false;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
   useEffect(() => {
-    data && setItems(data.data)
-    data && setActiveVideoId(data.data[0].content_id)
+    data && setItems(data.data);
+    data && setActiveVideoId(data.data[0].content_id);
     // data && verifyShop(data.data[0].content_id);
   }, [data]);
 
-  const verifyShop = async(id)=>{
+  // const verifyShop = async(id)=>{
   //  let response =  await canShop({});
-   console.log(response)
+  //  console.log(response)
   //  reponse && vShop = response
-  }
-
+  // }
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
@@ -64,67 +63,67 @@ export default function Feed({ fetchState, retry, data }) {
         scrollbar={{ draggable: true }}
         // onSwiper={(swiper) => {
         //   const {slides, activeIndex} = swiper;
-          // console.log(swiper.slides)
-          // let activeId = slides[0].id
-          // setActiveVideoId(activeId);
+        // console.log(swiper.slides)
+        // let activeId = slides[0].id
+        // setActiveVideoId(activeId);
         // }}
         onSlideChange={swiperCore => {
           const {
-            activeIndex,slides
+            activeIndex, slides
           } = swiperCore;
+          console.log('dsd');
           // verifyShop({activeId});
-          let activeId = slides[activeIndex]?.id
+          const activeId = slides[activeIndex]?.id;
           setActiveVideoId(activeId);
-        
         }}
       >
         {
           (validItemsLength ? items.map((
-            item,id )=> (
-              <SwiperSlide
-                key={id}
+            item, id
+          ) => (
+            <SwiperSlide
+              key={id}
+              id={item.content_id}
+            >
+              <Video
+                activeVideoId={activeVideoId}
+                updateSeekbar={updateSeekbar}
+                socialId={item.getSocialId}
+                url={item.video_url}
                 id={item.content_id}
-              >
-                <Video
-                  activeVideoId={activeVideoId}
-                  updateSeekbar={updateSeekbar}
-                  socialId={item.getSocialId}
-                  url={item.video_url}
-                  id={item.content_id}
-                  comments={item.commentsCount}
-                  likes={item.likesCount}
-                  music={item.musicCoverTitle}
-                  musicTitle={item.music_title}
-                  profilePic={item.userProfilePicUrl}
-                  userName={item.userName}
-                  musicCoverTitle={item.musicCoverTitle}
-                  videoid={item.content_id}
-                  hashTags={item.hashTags}
-                  videoOwnersId={item.videoOwnersId}
-                  thumbnail={item.thumbnail}
-                />
-             
-              </SwiperSlide>
-            )
-          ) : (
+                comments={item.commentsCount}
+                likes={item.likesCount}
+                music={item.musicCoverTitle}
+                musicTitle={item.music_title}
+                profilePic={item.userProfilePicUrl}
+                userName={item.userName}
+                musicCoverTitle={item.musicCoverTitle}
+                videoid={item.content_id}
+                hashTags={item.hashTags}
+                videoOwnersId={item.videoOwnersId}
+                thumbnail={item.thumbnail}
+              />
+
+            </SwiperSlide>
+          )) : (
             <div className="h-screen bg-black flex justify-center items-center">
               <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
             </div>
           ))
         }
-      
-             <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-               <button
-                 className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
-                 // eslint-disable-next-line no-undef
-                 onClick={() => cbplugin && cbplugin.cbTouch({videoId : activeVideoId})}
-               >
-                 SHOP
-                 {' '}
-                 {/* {t('shop')} */}
-     
-               </button>
-             </div>
+
+        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+          <button
+            className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
+            // eslint-disable-next-line no-undef
+            onClick={() => cbplugin && cbplugin.cbTouch({ videoId: activeVideoId })}
+          >
+            SHOP
+            {' '}
+            {/* {t('shop')} */}
+
+          </button>
+        </div>
       </Swiper>
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />

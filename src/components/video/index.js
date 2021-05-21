@@ -76,7 +76,7 @@ function Video(props) {
         width={size.width}
         height={videoHeight}
         poster={props.thumbnail}
-        objectfit={'cover'}
+        objectfit="cover"
       >
         <source
           src={props.url}

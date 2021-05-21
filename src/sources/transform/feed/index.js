@@ -26,8 +26,8 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
-  // COMMENTED - for production feed api
-    {/* const { responseData = {} } = data;
+    // COMMENTED - for production feed api
+    /* const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
     videos?.forEach(d => {
@@ -50,11 +50,11 @@ function transformSuccess(resp) {
 
       payloadData.push(payloadObject);
     });
-  */}
-    const {response = []} = data;
+  */
+    const { response = [] } = data;
     payload.data = response;
     payload.requestedWith = { ...data.requestedWith };
-    console.log("final tranform", payload);
+    console.log('final tranform', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;
