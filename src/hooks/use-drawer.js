@@ -47,16 +47,14 @@ export const DrawerProvider = ({ children }) => {
   return (
     <DrawerContext.Provider value={{ show, close }}>
       {children}
-      {
-        <Comp
-          type={state.type}
-          visible={state.visible}
-          close={close}
-          title={state.title}
-        >
-          {DrawerContent && <DrawerContent {...ComponentProps.current} />}
-        </Comp>
-      }
+      <Comp
+        type={state.type}
+        visible={state.visible}
+        close={close}
+        title={state.title}
+      >
+        {DrawerContent && <DrawerContent {...ComponentProps.current} />}
+      </Comp>
     </DrawerContext.Provider>
   );
 };
