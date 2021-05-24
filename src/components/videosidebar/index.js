@@ -29,7 +29,7 @@ function VideoSidebar({
 
   const handleProfileClick = () => {
     router.push({
-      pathname: '/user-profile/[pid]',
+      pathname: '/users/[pid]',
       query: { pid: videoOwnersId }
     });
   };
