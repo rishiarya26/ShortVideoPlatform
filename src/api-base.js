@@ -5,6 +5,7 @@ export const apiBaseEndPoints = {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
     translations: 'http://localhost:3000',
+    stagingMobile: 'https://stagingmobile.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
     login: 'https://whapi.zee5.com/v1/user'
   },
