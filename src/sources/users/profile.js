@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { getApiBasePath } from '../../config';
+import { getApiBasePath, isMockMode } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { preCondition } from '../auth/pre-condition';
 import { transformSuccess, transformError } from '../transform/users/profile';
@@ -10,8 +10,13 @@ import {
 
 async function fetchUserProfile(id) {
   let response = {};
+  let apiPath = '';
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+    if (isMockMode()) {
+      apiPath = `${getApiBasePath('app')}/api/user`;
+    } else {
+      apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+    }
     response = await get(apiPath);
     return Promise.resolve(response);
   } catch (err) {
