@@ -7,7 +7,7 @@ async function verifyVideoForShop({ videoId }) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath(
-      'stagingMobile'
+      'charmboard'
     )}/v3.6/video/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/charm?video_id=${videoId}`;
     response = await get(apiPath);
     response.data.requestedWith = { videoId };

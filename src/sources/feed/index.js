@@ -7,7 +7,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5 }) {
   let response = {};
   try {
     // const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = `${getApiBasePath('stagingMobile')}/v3.6/demo/hipi/1`;
+    const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/1`;
     // const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     response = await get(apiPath);
     response.data.requestedWith = { page, total };

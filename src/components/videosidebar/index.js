@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
@@ -10,7 +11,7 @@ import Shop from '../commons/svgicons/shop';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
 // import { getDeviceType } from '../../hooks/use-device';
-// import useDrawer from '../../hooks/use-drawer';
+import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
 
@@ -19,6 +20,14 @@ import { postLike, deleteLike } from '../../sources/social';
 //   loading: () => <div />,
 //   ssr: false
 // });
+
+const login = dynamic(
+  () => import('../login'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 function VideoSidebar({
   socialId, type, profilePic, likes, router, videoOwnersId
@@ -33,6 +42,8 @@ function VideoSidebar({
       query: { pid: videoOwnersId }
     });
   };
+
+  const { show } = useDrawer();
   return (
     <div
       className={`${
@@ -76,7 +87,7 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={() => {
+              onClick={true ? () => show('', login, 'md') : () => {
                 postLike({ socialId });
                 setLiked(true);
               }}
@@ -86,6 +97,7 @@ function VideoSidebar({
             <p className="text-sm">{likes}</p>
           </div>
         )}
+
       </div>
       <div
         className={`${
