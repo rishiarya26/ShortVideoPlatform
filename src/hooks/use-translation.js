@@ -66,13 +66,13 @@ const refreshTranslations = async (locale, locales, setTranslations) => {
 
 export const TranslationProvider = ({ children, locales, locale }) => {
   const [language, setLang] = useState(locale);
-  const [translations] = useState(locales);
+  const [translations, setTranslations] = useState(locales);
   const t = useCallback(key => (translations[key] || ''));
 
   useEffect(() => {
     (async () => {
       const language = getLanguage();
-      refreshTranslations();
+      refreshTranslations(locale, locales, setTranslations);
       if (!supportedLanguages[language]) return;
       setLanguagePref(language);
       // if (language !== getDefaultLanguage()) redirectToLanguageContext(language);
