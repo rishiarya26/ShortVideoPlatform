@@ -3,7 +3,9 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/auth/verify-otp';
 
-async function validateOTP({ mobile, otp, guestToken, platform='web', cookieId}) {
+async function validateOTP({
+  mobile, otp, guestToken, platform = 'web', cookieId, version
+}) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('otp')}/device/verifyotp_v1.php?
@@ -15,8 +17,9 @@ async function validateOTP({ mobile, otp, guestToken, platform='web', cookieId})
     lotame_cookie_id=${cookieId}&
     version=${version}`;
     response = await get(apiPath);
-    response.data.requestedWith = { page, total };
-    console.log(type, response);
+    response.data.requestedWith = {
+      mobile, otp, platform, guestToken
+    };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

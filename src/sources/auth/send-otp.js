@@ -8,8 +8,7 @@ async function dispatchOTP({ mobile }) {
   try {
     const apiPath = `${getApiBasePath('otp')}/device/sendotp_v1.php?phoneno=${mobile}`;
     response = await get(apiPath);
-    response.data.requestedWith = { page, total };
-    console.log(type, response);
+    response.data.requestedWith = { mobile };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

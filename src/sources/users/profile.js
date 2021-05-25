@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { preCondition } from '../auth/pre-condition';
+import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/users/profile';
 import {
   transformSuccess as transformProfileVideoSuccess,
@@ -93,12 +93,13 @@ async function fetchUserRecommendation({ lang }) {
 async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
   let response = {};
   try {
-    const resp = await preCondition();
-    const { data = {} } = resp;
+    let tokens = getItem('tokens');
+    tokens = JSON.parse(tokens);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
+    console.log('ohh yup');
     response = await get(apiPath, null, {
-      Authorization: `Bearer ${data.shortsAuthToken}`,
-      'access-token': data.accessToken
+      Authorization: `Bearer ${tokens.shortsAuthToken}`,
+      'access-token': tokens.accessToken
     });
     response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
