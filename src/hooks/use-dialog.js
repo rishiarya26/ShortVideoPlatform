@@ -34,11 +34,9 @@ export const DialogProvider = ({ children }) => {
   return (
     <DialogContext.Provider value={{ show, close }}>
       {children}
-      {
-        <Dialog visible={state.visible} close={close} title={state.title}>
-          {DialogContent && <DialogContent />}
-        </Dialog>
-      }
+      <Dialog visible={state.visible} close={close} title={state.title}>
+        {DialogContent && <DialogContent />}
+      </Dialog>
     </DialogContext.Provider>
   );
 };

@@ -1,10 +1,6 @@
-commit e62674337c4d88b4777c390ae1f4172ba3d0dfe6
-Merge: 5d05075 acf623d
-Author: hariom srivastava <hariom.srivastava@zee.com>
-Date:   Sun Mar 14 12:49:18 2021 +0000
+commit a49e767b1c167247f7bfa2602adcddc1e04d7f29
+Merge: 6c97338 5d106be
+Author: Ankit Agarwal <ankit.agarwal@ZL-MU-MT-MAC100.local>
+Date:   Tue May 25 14:14:44 2021 +0530
 
-    Merged in feature/transform_changes (pull request #24)
-    
-    fix transform
-    
-    Approved-by: ankit.agarwal
+    Merge branch 'develop' of bitbucket.org:zee5in/hipi-web into release

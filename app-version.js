@@ -1,1 +1,1 @@
-var appVersion = 'e62674337c4d88b4777c390ae1f4172ba3d0dfe6'; module.exports = appVersion
+var appVersion = 'a49e767b1c167247f7bfa2602adcddc1e04d7f29'; module.exports = appVersion
