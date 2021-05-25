@@ -22,17 +22,19 @@ export const DrawerProvider = ({ children }) => {
   const [state, setState] = useState({
     visible: false,
     title: '',
-    type: 'md'
+    type: 'md',
+    height: ''
   });
 
-  const show = (title, content, type = 'md', props) => {
+  const show = (title, content, type = 'md', height, props) => {
     ComponentProps.current = props;
     DrawerContent = content;
     showOverLay();
     setState({
       visible: true,
       title,
-      type
+      type,
+      height
     });
   };
 
@@ -53,6 +55,7 @@ export const DrawerProvider = ({ children }) => {
           visible={state.visible}
           close={close}
           title={state.title}
+          height={state.height}
         >
           {DrawerContent && <DrawerContent {...ComponentProps.current} />}
         </Comp>

@@ -87,7 +87,7 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={true ? () => show('', login, 'md') : () => {
+              onClick={true ? () => show('', login, 'md','h-2/4') : () => {
                 postLike({ socialId });
                 setLiked(true);
               }}

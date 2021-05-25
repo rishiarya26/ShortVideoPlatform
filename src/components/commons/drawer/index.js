@@ -2,11 +2,13 @@ import Close from '../svgicons/close';
 
 const Drawer = ({
   // eslint-disable-next-line no-unused-vars
-  children, title, close, visible, type = 'md'
-}) => (
+  children, title, close, visible, type = 'md', height
+}) => {
+  console.log("height",height)
+  return(
   <div
     data-testid="drawer-container"
-    className={`${visible ? 'h-1/3' : 'h-0'} 
+    className={`${visible ? height : 'h-0'} 
       baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white
       transition-all duration-300
       motion-reduce:transition-none motion-reduce:transform-none
@@ -31,5 +33,6 @@ const Drawer = ({
       {children}
     </div>
   </div>
-);
+)
+  }
 export default Drawer;
