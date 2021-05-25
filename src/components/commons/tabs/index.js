@@ -3,17 +3,16 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 
 const Tabs = ({ items = [], router }) => {
-  const selected = router.query.id;
+  const selected = router.asPath;
 
   return (
-    <div className="h-2 p-1 flex items-center text-white justify-center">
+    <div className="h-2 p-1 flex items-center text-gray-400 justify-center">
       { items.map((data, id) => (
-        <React.Fragment key={id}>
-          <Link href={`/feed/${data.path}`}>
-            <span className={data.path === selected ? 'font-bold ' : ''}>{data.display}</span>
+        <div key={id} className="w-32 flex justify-center align-center">
+          <Link href={`${data.path}`}>
+            <span className={data.path === selected ? 'text-black border-b-2 border-black' : ''}>{data.display}</span>
           </Link>
-          { id < items.length - 1 ? <pre> | </pre> : '' }
-        </React.Fragment>
+        </div>
       )) }
     </div>
   );
