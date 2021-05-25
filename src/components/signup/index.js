@@ -8,8 +8,8 @@ export default function Login() {
   return (
     <div className="px-4 py-2 flex flex-col items-center">
       <div className="p-2 flex flex-col items-center">
-        <h1 className="text-lg font-bold">Login to Hipi</h1>
-        <p className="text-center text-sm">Manage your account, check notifications, comment on videos and more</p>
+        <h1 className="text-lg font-bold">Sign Up to Hipi</h1>
+        <p className="text-center text-sm">Create a profile, follow other accounts, make your own videos and more</p>
       </div>
       <div className="socail flex flex-col w-full">
         <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
@@ -43,10 +43,16 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="my-2 ">
+      <div className="my-2 flex flex-col">
+        <p className="text-sm">
+          By continuing, you agree to Hipi's
+          <span className="font-semibold">Term of Use</span>
+          and confirm that you have read Hipi's
+          <span className="font-semibold">Privacy Policy</span>
+        </p>
         <p>
-          Don't have an account?
-          <span className="text-red-600">Sign Up</span>
+          Already have an account?
+          <span className="text-red-600">Log in</span>
         </p>
       </div>
     </div>
