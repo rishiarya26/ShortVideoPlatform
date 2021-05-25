@@ -8,6 +8,8 @@ node_modules/
 dist/
 out
 .next
+Dockerfile
+start_docker_container.sh
 
 # Compiled Java class files
 *.class

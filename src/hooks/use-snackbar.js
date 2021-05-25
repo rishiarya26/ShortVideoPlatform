@@ -31,12 +31,12 @@ export const SnackbarProvider = ({ children }) => {
   return (
     <SnackbarContext.Provider value={{ showSnackbar, hideSnackbar }}>
       {children}
-      {<Snackbar
+      <Snackbar
         hide={hideSnackbar}
         visible={state.visibility}
         message={state.message}
         type={state.type}
-      />}
+      />
     </SnackbarContext.Provider>
   );
 };
