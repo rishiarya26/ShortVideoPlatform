@@ -1,6 +1,8 @@
 import { withRouter } from 'next/router';
 import { Back } from '../commons/svgicons/back';
 import Tabs from '../commons/tabs';
+import MobileLogin from '../access/mobile-login/'
+import EmailLogin from '../access/email-login/'
 
 const Login = () => {
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
@@ -17,6 +19,8 @@ const Login = () => {
       <div className="fixed mt-10 z-10 w-full ">
         <Tabs items={tabs} />
       </div>
+<MobileLogin />
+<EmailLogin />
     </>
   );
 };
