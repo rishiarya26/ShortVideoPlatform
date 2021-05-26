@@ -101,7 +101,6 @@ async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
     let tokens = getItem('tokens');
     tokens = JSON.parse(tokens);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
-    console.log('ohh yup');
     response = await get(apiPath, null, {
       Authorization: `Bearer ${tokens.shortsAuthToken}`,
       'access-token': tokens.accessToken
