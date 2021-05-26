@@ -10,6 +10,7 @@ out
 .next
 Dockerfile
 start_docker_container.sh
+commits.txt
 
 # Compiled Java class files
 *.class

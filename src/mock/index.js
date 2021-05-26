@@ -24,7 +24,8 @@ function mockServer(environment = 'development', callback) {
       this.delete('https://api.github.com/delete/repositories', deleteListRequestHandler);
 
       // feed
-      this.get('https://hipigwapi.zee5.com/api/v1/shorts/home', getForYouFeed);
+      this.get('https://stagingmobile.charmboard.com//v3.6/demo/hipi/1', getForYouFeed);
+      // this.get('https://hipigwapi.zee5.com/api/v1/shorts/home', getForYouFeed);
       this.get('https://hipigwapi.zee5.com/api/v1/shorts/video/detail', getForYouEmbedFeed);
 
       // social
@@ -36,7 +37,7 @@ function mockServer(environment = 'development', callback) {
       this.get('https://hipigwapi.zee5.com/api/v1/shorts/profile/videos', getUserProfileVideos);
 
       // login
-      this.post('https://whapi.zee5.com/v1/user', userLogin);
+      this.post('https://whapi.zee5.com/v1/user/loginemail_v2.php', userLogin);
       this.post('https://hipigwapi.zee5.com/api/v1/shorts/login', hipiLogin);
     }
 
