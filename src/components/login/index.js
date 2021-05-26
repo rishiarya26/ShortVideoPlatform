@@ -9,7 +9,7 @@ const Login = () => {
       <div>
         <div className="w-full flex h-16  bg-white items-center">
           <div className="p-4 h-full flex items-center justify-center">
-           <Back/>
+            <Back />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">Log in</div>
         </div>

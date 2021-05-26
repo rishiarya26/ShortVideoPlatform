@@ -13,14 +13,14 @@ function UserProfile({
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
-  console.log(fetchState,data)
+  console.log(fetchState, data);
   const { t } = useTranslation();
 
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data.data);
-    data && console.log(data)
+    data && console.log(data);
     setVideoData(videos);
   }, [fetchState]);
 
@@ -39,7 +39,7 @@ function UserProfile({
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
-         <Back/>
+          <Back />
         </div>
         <div className="font-bold">{userHandle}</div>
         <div className="p-4 h-full flex items-center justify-center">

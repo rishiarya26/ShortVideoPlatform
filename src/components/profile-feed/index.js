@@ -42,7 +42,7 @@ function ProfileFeed({ router }) {
     >
       <>
         <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
-          <Back/>
+          <Back />
         </div>
         <Swiper
           spaceBetween={50}
