@@ -5,6 +5,7 @@ import { trimFirstChar } from '../utils/string';
 import { getFirstTruthyValue } from '../utils/functional';
 import { localStorage } from '../utils/storage';
 import { getLocales } from '../sources/app';
+import { isMockMode } from '../config';
 
 const TranslationContext = createContext({
   language: 'en-in',
@@ -72,7 +73,9 @@ export const TranslationProvider = ({ children, locales, locale }) => {
   useEffect(() => {
     (async () => {
       const language = getLanguage();
-      refreshTranslations(locale, locales, setTranslations);
+      if (!isMockMode()) {
+        refreshTranslations(locale, locales, setTranslations);
+      }
       if (!supportedLanguages[language]) return;
       setLanguagePref(language);
       // if (language !== getDefaultLanguage()) redirectToLanguageContext(language);
