@@ -2,7 +2,7 @@ import { Server } from 'miragejs';
 import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
 import { getForYouFeed } from './req-handlers/feed';
-import { getForYouEmbedFeed } from './req-handlers/embed';
+// import { getForYouEmbedFeed } from './req-handlers/embed';
 import { getComments } from './req-handlers/social';
 import { getUserProfile } from './req-handlers/users/profile';
 import { userLogin } from './req-handlers/auth';
