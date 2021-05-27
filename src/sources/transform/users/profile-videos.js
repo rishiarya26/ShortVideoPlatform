@@ -19,7 +19,6 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
-    console.log(resp);
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;

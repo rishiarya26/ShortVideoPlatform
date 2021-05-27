@@ -1,10 +1,11 @@
 import { withRouter } from 'next/router';
 import { Back } from '../commons/svgicons/back';
 import Tabs from '../commons/tabs';
-import MobileLogin from '../access/mobile-login/'
-import EmailLogin from '../access/email-login/'
+import MobileLogin from '../access/mobile-login';
+import EmailLogin from '../access/email-login';
 
-const Login = () => {
+const Login = ({ router }) => {
+  const type = router.query.id;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
   return (
     <>
@@ -16,11 +17,14 @@ const Login = () => {
           <div className="font-bold flex justify-center align-center w-9/12">Log in</div>
         </div>
       </div>
-      <div className="fixed mt-10 z-10 w-full ">
+      <div className="fixed mt-10 z-10 w-full">
         <Tabs items={tabs} />
       </div>
-<MobileLogin />
-<EmailLogin />
+      <div className="mt-20">
+        {type === 'phone' && <MobileLogin />}
+        {type === 'email' && <EmailLogin />}
+      </div>
+
     </>
   );
 };
