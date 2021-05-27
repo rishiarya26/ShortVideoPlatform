@@ -2,6 +2,7 @@ import { withRouter } from 'next/router';
 import Tabs from '../commons/tabs';
 import MobileLogin from '../access/mobile-login/'
 import EmailLogin from '../access/email-login/'
+import ResetPassword from '../access/reset-password'
 
 const Login = () => {
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
@@ -22,8 +23,9 @@ const Login = () => {
       <div className="flex z-10 w-full ">
         <Tabs items={tabs} width="w-32 flex justify-center align-center " font="text-black" />
       </div>
-<MobileLogin />
-<EmailLogin />
+{/* <MobileLogin />
+<EmailLogin /> */}
+<ResetPassword />
     </>
   );
 };
