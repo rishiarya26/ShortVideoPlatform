@@ -22,7 +22,7 @@ import { postLike, deleteLike } from '../../sources/social';
 // });
 
 const login = dynamic(
-  () => import('../login-options'),
+  () => import('../auth-options'),
   {
     loading: () => <div />,
     ssr: false
@@ -87,7 +87,7 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={true ? () => show('', login, 'md', 'h-2/4') : () => {
+              onClick={true ? () => show('', login, 'md', 'h-3/4') : () => {
                 postLike({ socialId });
                 setLiked(true);
               }}

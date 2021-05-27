@@ -7,11 +7,14 @@ import EmailLogin from '../access/email-login';
 const Login = ({ router }) => {
   const type = router.query.id;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
+  const handleBackClick=()=>{
+      router.back();
+  }
   return (
     <>
       <div>
         <div className="w-full flex h-16  bg-white items-center">
-          <div className="p-4 h-full flex items-center justify-center">
+          <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
             <Back />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">Log in</div>

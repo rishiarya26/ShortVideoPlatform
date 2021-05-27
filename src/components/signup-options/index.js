@@ -4,7 +4,7 @@ import Instagram from '../commons/svgicons/instagram';
 import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 
-export default function Login() {
+export default function Signup({handleToggle}) {
   return (
     <div className="px-4 py-2 flex flex-col items-center">
       <div className="p-2 flex flex-col items-center">
@@ -52,7 +52,7 @@ export default function Login() {
         </p>
         <p>
           Already have an account?
-          <span className="text-red-600">Log in</span>
+          <span onClick={()=>handleToggle('login')} className="text-red-600">Log in</span>
         </p>
       </div>
     </div>
