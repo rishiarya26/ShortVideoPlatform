@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 import useTranslation from '../../../hooks/use-translation';
 import CircularProgress from '../circular-loader-small';
+import { inject } from '../../../analytics/async-script-loader';
 
 export const Shop = ({ videoId }) => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+
+  const loaded = () => {
+    setLoading(false);
+  };
+
   useEffect(() => {
-    setLoading(true);
-    // script response
-    // setLoading(false)
+    inject('https://devqa2.charmboard.com/zee5/kaltura_plugin.js', null, loaded);
   }, []);
   return (
     <>
