@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
+import { Back } from '../commons/svgicons/back';
 import VideoGallery from '../video-gallery';
 
 function UserProfile({
@@ -12,12 +13,14 @@ function UserProfile({
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
+  console.log(fetchState, data);
   const { t } = useTranslation();
 
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data.data);
+    data && console.log(data);
     setVideoData(videos);
   }, [fetchState]);
 
@@ -36,10 +39,7 @@ function UserProfile({
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
-          <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-          </svg>
+          <Back />
         </div>
         <div className="font-bold">{userHandle}</div>
         <div className="p-4 h-full flex items-center justify-center">

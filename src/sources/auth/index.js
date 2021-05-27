@@ -5,13 +5,15 @@ import { setItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth';
 import { hipiLogin } from './hipi-login';
 
-const login = async ({ type = 'email' }) => {
+const login = async ({
+  type, email = '', password = '', mobile = ''
+}) => {
   let response = {};
   try {
     const payload = {
-      email: 'akrao123@gmail.com',
-      password: '123456',
-      mobile: '',
+      email,
+      password,
+      mobile,
       guest_token: 'null',
       aid: 'djsucgius',
       platform: 'web',

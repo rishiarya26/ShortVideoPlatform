@@ -55,7 +55,6 @@ function transformSuccess(resp) {
     const { response = [] } = data;
     payload.data = response;
     payload.requestedWith = { ...data.requestedWith };
-    console.log('final tranform', payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

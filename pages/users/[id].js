@@ -13,6 +13,7 @@ export default function Hipi(params) {
     message,
     status
   } = params;
+
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }

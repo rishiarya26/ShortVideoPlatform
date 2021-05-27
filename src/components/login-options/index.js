@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Fb from '../commons/svgicons/facebook';
 import Google from '../commons/svgicons/google';
 import Instagram from '../commons/svgicons/instagram';
@@ -15,7 +16,9 @@ export default function Login() {
         <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center w-full font-semibold">
-            <p>Use phone or email</p>
+            <Link href="/login/phone">
+              <p>Use phone or email</p>
+            </Link>
           </div>
         </div>
         <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
