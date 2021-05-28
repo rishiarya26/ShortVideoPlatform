@@ -8,6 +8,7 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
+import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -22,7 +23,7 @@ export default function Hipi(params) {
     message,
     status
   } = params;
-  const vobj = { videoId: item.content_id };
+  const videoId = item.content_id;
   const canShop = !!item?.canShop;
 
   const updateSeekbar = percentage => {
@@ -92,13 +93,7 @@ export default function Hipi(params) {
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         {canShop
           && (
-            <button
-              className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-              // eslint-disable-next-line no-undef
-              onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-            >
-              SHOP
-            </button>
+            <Shop videoId={videoId} />
           )}
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
