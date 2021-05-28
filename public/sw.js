@@ -92,20 +92,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "0uIT":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// @ts-ignore
-try {
-    self['workbox:core:6.1.1'] && _();
-}
-catch (e) { }
-
-
-/***/ }),
-
 /***/ "2KUI":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -113,7 +99,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:expiration:6.1.1'] && _();
+    self['workbox:expiration:6.1.5'] && _();
 }
 catch (e) { }
 
@@ -127,21 +113,21 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:routing:6.1.1'] && _();
+    self['workbox:routing:6.1.5'] && _();
 }
 catch (e) { }
 
 
 /***/ }),
 
-/***/ "QLk0":
+/***/ "Bxln":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // @ts-ignore
 try {
-    self['workbox:core:6.1.1'] && _();
+    self['workbox:core:6.1.5'] && _();
 }
 catch (e) { }
 
@@ -155,10 +141,10 @@ catch (e) { }
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// EXTERNAL MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_version.js
-var _version = __webpack_require__("0uIT");
+// EXTERNAL MODULE: ./node_modules/workbox-core/_version.js
+var _version = __webpack_require__("Bxln");
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/models/messages/messages.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/models/messages/messages.js
 /*
   Copyright 2018 Google LLC
 
@@ -376,7 +362,7 @@ const messages = {
     },
 };
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/models/messages/messageGenerator.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/models/messages/messageGenerator.js
 /*
   Copyright 2018 Google LLC
 
@@ -403,7 +389,7 @@ const generatorFunction = (code, details = {}) => {
 const messageGenerator = ( true) ?
     fallback : undefined;
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/WorkboxError.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/WorkboxError.js
 /*
   Copyright 2018 Google LLC
 
@@ -440,7 +426,7 @@ class WorkboxError_WorkboxError extends Error {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/assert.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/assert.js
 /*
   Copyright 2018 Google LLC
 
@@ -501,7 +487,7 @@ const isArrayOfClass = (value, expectedClass, details) => {
 const finalAssertExports =  true ? null : undefined;
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/dontWaitFor.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/dontWaitFor.js
 /*
   Copyright 2019 Google LLC
   Use of this source code is governed by an MIT-style
@@ -519,7 +505,7 @@ function dontWaitFor(promise) {
     promise.then(() => { });
 }
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/logger.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/logger.js
 /*
   Copyright 2019 Google LLC
   Use of this source code is governed by an MIT-style
@@ -530,7 +516,7 @@ function dontWaitFor(promise) {
 const logger = ( true ? null : undefined);
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/DBWrapper.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/DBWrapper.js
 /*
   Copyright 2018 Google LLC
 
@@ -783,7 +769,7 @@ for (const [mode, methods] of Object.entries(methodsToWrap)) {
     }
 }
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/deleteDatabase.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/deleteDatabase.js
 /*
   Copyright 2018 Google LLC
 
@@ -1101,7 +1087,7 @@ class CacheExpiration_CacheExpiration {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/cacheNames.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/cacheNames.js
 /*
   Copyright 2018 Google LLC
 
@@ -1152,7 +1138,7 @@ const cacheNames = {
     },
 };
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/_private/getFriendlyURL.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/getFriendlyURL.js
 /*
   Copyright 2018 Google LLC
 
@@ -1169,7 +1155,7 @@ const getFriendlyURL = (url) => {
 };
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/models/quotaErrorCallbacks.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/models/quotaErrorCallbacks.js
 /*
   Copyright 2018 Google LLC
 
@@ -1182,7 +1168,7 @@ const getFriendlyURL = (url) => {
 const quotaErrorCallbacks = new Set();
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-expiration/node_modules/workbox-core/registerQuotaErrorCallback.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/registerQuotaErrorCallback.js
 /*
   Copyright 2019 Google LLC
 
@@ -1438,432 +1424,7 @@ class ExpirationPlugin_ExpirationPlugin {
 
 // CONCATENATED MODULE: ./node_modules/workbox-expiration/index.mjs
 
-// EXTERNAL MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_version.js
-var workbox_core_version = __webpack_require__("dBtQ");
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/models/messages/messages.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const messages_messages = {
-    'invalid-value': ({ paramName, validValueDescription, value }) => {
-        if (!paramName || !validValueDescription) {
-            throw new Error(`Unexpected input to 'invalid-value' error.`);
-        }
-        return `The '${paramName}' parameter was given a value with an ` +
-            `unexpected value. ${validValueDescription} Received a value of ` +
-            `${JSON.stringify(value)}.`;
-    },
-    'not-an-array': ({ moduleName, className, funcName, paramName }) => {
-        if (!moduleName || !className || !funcName || !paramName) {
-            throw new Error(`Unexpected input to 'not-an-array' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className}.${funcName}()' must be an array.`;
-    },
-    'incorrect-type': ({ expectedType, paramName, moduleName, className, funcName }) => {
-        if (!expectedType || !paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-type' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}` +
-            `${funcName}()' must be of type ${expectedType}.`;
-    },
-    'incorrect-class': ({ expectedClass, paramName, moduleName, className, funcName, isReturnValueProblem }) => {
-        if (!expectedClass || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-class' error.`);
-        }
-        if (isReturnValueProblem) {
-            return `The return value from ` +
-                `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-                `must be an instance of class ${expectedClass.name}.`;
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-            `must be an instance of class ${expectedClass.name}.`;
-    },
-    'missing-a-method': ({ expectedMethod, paramName, moduleName, className, funcName }) => {
-        if (!expectedMethod || !paramName || !moduleName || !className
-            || !funcName) {
-            throw new Error(`Unexpected input to 'missing-a-method' error.`);
-        }
-        return `${moduleName}.${className}.${funcName}() expected the ` +
-            `'${paramName}' parameter to expose a '${expectedMethod}' method.`;
-    },
-    'add-to-cache-list-unexpected-type': ({ entry }) => {
-        return `An unexpected entry was passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' The entry ` +
-            `'${JSON.stringify(entry)}' isn't supported. You must supply an array of ` +
-            `strings with one or more characters, objects with a url property or ` +
-            `Request objects.`;
-    },
-    'add-to-cache-list-conflicting-entries': ({ firstEntry, secondEntry }) => {
-        if (!firstEntry || !secondEntry) {
-            throw new Error(`Unexpected input to ` +
-                `'add-to-cache-list-duplicate-entries' error.`);
-        }
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${firstEntry._entryId} but different revision details. Workbox is ` +
-            `unable to cache and version the asset correctly. Please remove one ` +
-            `of the entries.`;
-    },
-    'plugin-error-request-will-fetch': ({ thrownError }) => {
-        if (!thrownError) {
-            throw new Error(`Unexpected input to ` +
-                `'plugin-error-request-will-fetch', error.`);
-        }
-        return `An error was thrown by a plugins 'requestWillFetch()' method. ` +
-            `The thrown error message was: '${thrownError.message}'.`;
-    },
-    'invalid-cache-name': ({ cacheNameId, value }) => {
-        if (!cacheNameId) {
-            throw new Error(`Expected a 'cacheNameId' for error 'invalid-cache-name'`);
-        }
-        return `You must provide a name containing at least one character for ` +
-            `setCacheDetails({${cacheNameId}: '...'}). Received a value of ` +
-            `'${JSON.stringify(value)}'`;
-    },
-    'unregister-route-but-not-found-with-method': ({ method }) => {
-        if (!method) {
-            throw new Error(`Unexpected input to ` +
-                `'unregister-route-but-not-found-with-method' error.`);
-        }
-        return `The route you're trying to unregister was not  previously ` +
-            `registered for the method type '${method}'.`;
-    },
-    'unregister-route-route-not-registered': () => {
-        return `The route you're trying to unregister was not previously ` +
-            `registered.`;
-    },
-    'queue-replay-failed': ({ name }) => {
-        return `Replaying the background sync queue '${name}' failed.`;
-    },
-    'duplicate-queue-name': ({ name }) => {
-        return `The Queue name '${name}' is already being used. ` +
-            `All instances of backgroundSync.Queue must be given unique names.`;
-    },
-    'expired-test-without-max-age': ({ methodName, paramName }) => {
-        return `The '${methodName}()' method can only be used when the ` +
-            `'${paramName}' is used in the constructor.`;
-    },
-    'unsupported-route-type': ({ moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter was an unsupported type. ` +
-            `Please check the docs for ${moduleName}.${className}.${funcName} for ` +
-            `valid input types.`;
-    },
-    'not-array-of-class': ({ value, expectedClass, moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter must be an array of ` +
-            `'${expectedClass}' objects. Received '${JSON.stringify(value)},'. ` +
-            `Please check the call to ${moduleName}.${className}.${funcName}() ` +
-            `to fix the issue.`;
-    },
-    'max-entries-or-age-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.maxEntries or config.maxAgeSeconds` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'statuses-or-headers-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.statuses or config.headers` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'invalid-string': ({ moduleName, funcName, paramName }) => {
-        if (!paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'invalid-string' error.`);
-        }
-        return `When using strings, the '${paramName}' parameter must start with ` +
-            `'http' (for cross-origin matches) or '/' (for same-origin matches). ` +
-            `Please see the docs for ${moduleName}.${funcName}() for ` +
-            `more info.`;
-    },
-    'channel-name-required': () => {
-        return `You must provide a channelName to construct a ` +
-            `BroadcastCacheUpdate instance.`;
-    },
-    'invalid-responses-are-same-args': () => {
-        return `The arguments passed into responsesAreSame() appear to be ` +
-            `invalid. Please ensure valid Responses are used.`;
-    },
-    'expire-custom-caches-only': () => {
-        return `You must provide a 'cacheName' property when using the ` +
-            `expiration plugin with a runtime caching strategy.`;
-    },
-    'unit-must-be-bytes': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'unit-must-be-bytes' error.`);
-        }
-        return `The 'unit' portion of the Range header must be set to 'bytes'. ` +
-            `The Range header provided was "${normalizedRangeHeader}"`;
-    },
-    'single-range-only': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'single-range-only' error.`);
-        }
-        return `Multiple ranges are not supported. Please use a  single start ` +
-            `value, and optional end value. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'invalid-range-values': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'invalid-range-values' error.`);
-        }
-        return `The Range header is missing both start and end values. At least ` +
-            `one of those values is needed. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'no-range-header': () => {
-        return `No Range header was found in the Request provided.`;
-    },
-    'range-not-satisfiable': ({ size, start, end }) => {
-        return `The start (${start}) and end (${end}) values in the Range are ` +
-            `not satisfiable by the cached response, which is ${size} bytes.`;
-    },
-    'attempt-to-cache-non-get-request': ({ url, method }) => {
-        return `Unable to cache '${url}' because it is a '${method}' request and ` +
-            `only 'GET' requests can be cached.`;
-    },
-    'cache-put-with-no-response': ({ url }) => {
-        return `There was an attempt to cache '${url}' but the response was not ` +
-            `defined.`;
-    },
-    'no-response': ({ url, error }) => {
-        let message = `The strategy could not generate a response for '${url}'.`;
-        if (error) {
-            message += ` The underlying error is ${error}.`;
-        }
-        return message;
-    },
-    'bad-precaching-response': ({ url, status }) => {
-        return `The precaching request for '${url}' failed` +
-            (status ? ` with an HTTP status of ${status}.` : `.`);
-    },
-    'non-precached-url': ({ url }) => {
-        return `createHandlerBoundToURL('${url}') was called, but that URL is ` +
-            `not precached. Please pass in a URL that is precached instead.`;
-    },
-    'add-to-cache-list-conflicting-integrities': ({ url }) => {
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${url} with different integrity values. Please remove one of them.`;
-    },
-    'missing-precache-entry': ({ cacheName, url }) => {
-        return `Unable to find a precached response in ${cacheName} for ${url}.`;
-    },
-    'cross-origin-copy-response': ({ origin }) => {
-        return `workbox-core.copyResponse() can only be used with same-origin ` +
-            `responses. It was passed a response with origin ${origin}.`;
-    },
-};
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/models/messages/messageGenerator.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-const messageGenerator_fallback = (code, ...args) => {
-    let msg = code;
-    if (args.length > 0) {
-        msg += ` :: ${JSON.stringify(args)}`;
-    }
-    return msg;
-};
-const messageGenerator_generatorFunction = (code, details = {}) => {
-    const message = messages_messages[code];
-    if (!message) {
-        throw new Error(`Unable to find message for code '${code}'.`);
-    }
-    return message(details);
-};
-const messageGenerator_messageGenerator = ( true) ?
-    messageGenerator_fallback : undefined;
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/WorkboxError.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/**
- * Workbox errors should be thrown with this class.
- * This allows use to ensure the type easily in tests,
- * helps developers identify errors from workbox
- * easily and allows use to optimise error
- * messages correctly.
- *
- * @private
- */
-class _private_WorkboxError_WorkboxError extends Error {
-    /**
-     *
-     * @param {string} errorCode The error code that
-     * identifies this particular error.
-     * @param {Object=} details Any relevant arguments
-     * that will help developers identify issues should
-     * be added as a key on the context object.
-     */
-    constructor(errorCode, details) {
-        const message = messageGenerator_messageGenerator(errorCode, details);
-        super(message);
-        this.name = errorCode;
-        this.details = details;
-    }
-}
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/assert.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/*
- * This method throws if the supplied value is not an array.
- * The destructed values are required to produce a meaningful error for users.
- * The destructed and restructured object is so it's clear what is
- * needed.
- */
-const assert_isArray = (value, details) => {
-    if (!Array.isArray(value)) {
-        throw new _private_WorkboxError_WorkboxError('not-an-array', details);
-    }
-};
-const assert_hasMethod = (object, expectedMethod, details) => {
-    const type = typeof object[expectedMethod];
-    if (type !== 'function') {
-        details['expectedMethod'] = expectedMethod;
-        throw new _private_WorkboxError_WorkboxError('missing-a-method', details);
-    }
-};
-const assert_isType = (object, expectedType, details) => {
-    if (typeof object !== expectedType) {
-        details['expectedType'] = expectedType;
-        throw new _private_WorkboxError_WorkboxError('incorrect-type', details);
-    }
-};
-const assert_isInstance = (object, expectedClass, details) => {
-    if (!(object instanceof expectedClass)) {
-        details['expectedClass'] = expectedClass;
-        throw new _private_WorkboxError_WorkboxError('incorrect-class', details);
-    }
-};
-const assert_isOneOf = (value, validValues, details) => {
-    if (!validValues.includes(value)) {
-        details['validValueDescription'] =
-            `Valid values are ${JSON.stringify(validValues)}.`;
-        throw new _private_WorkboxError_WorkboxError('invalid-value', details);
-    }
-};
-const assert_isArrayOfClass = (value, expectedClass, details) => {
-    const error = new _private_WorkboxError_WorkboxError('not-array-of-class', details);
-    if (!Array.isArray(value)) {
-        throw error;
-    }
-    for (const item of value) {
-        if (!(item instanceof expectedClass)) {
-            throw error;
-        }
-    }
-};
-const assert_finalAssertExports =  true ? null : undefined;
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/logger.js
-/*
-  Copyright 2019 Google LLC
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const logger_logger = ( true ? null : undefined);
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/cacheNames.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const cacheNames_cacheNameDetails = {
-    googleAnalytics: 'googleAnalytics',
-    precache: 'precache-v2',
-    prefix: 'workbox',
-    runtime: 'runtime',
-    suffix: typeof registration !== 'undefined' ? registration.scope : '',
-};
-const cacheNames_createCacheName = (cacheName) => {
-    return [cacheNames_cacheNameDetails.prefix, cacheName, cacheNames_cacheNameDetails.suffix]
-        .filter((value) => value && value.length > 0)
-        .join('-');
-};
-const cacheNames_eachCacheNameDetail = (fn) => {
-    for (const key of Object.keys(cacheNames_cacheNameDetails)) {
-        fn(key);
-    }
-};
-const cacheNames_cacheNames = {
-    updateDetails: (details) => {
-        cacheNames_eachCacheNameDetail((key) => {
-            if (typeof details[key] === 'string') {
-                cacheNames_cacheNameDetails[key] = details[key];
-            }
-        });
-    },
-    getGoogleAnalyticsName: (userCacheName) => {
-        return userCacheName || cacheNames_createCacheName(cacheNames_cacheNameDetails.googleAnalytics);
-    },
-    getPrecacheName: (userCacheName) => {
-        return userCacheName || cacheNames_createCacheName(cacheNames_cacheNameDetails.precache);
-    },
-    getPrefix: () => {
-        return cacheNames_cacheNameDetails.prefix;
-    },
-    getRuntimeName: (userCacheName) => {
-        return userCacheName || cacheNames_createCacheName(cacheNames_cacheNameDetails.runtime);
-    },
-    getSuffix: () => {
-        return cacheNames_cacheNameDetails.suffix;
-    },
-};
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/getFriendlyURL.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const getFriendlyURL_getFriendlyURL = (url) => {
-    const urlObj = new URL(String(url), location.href);
-    // See https://github.com/GoogleChrome/workbox/issues/2323
-    // We want to include everything, except for the origin if it's same-origin.
-    return urlObj.href.replace(new RegExp(`^${location.origin}`), '');
-};
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/cacheMatchIgnoreParams.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/cacheMatchIgnoreParams.js
 /*
   Copyright 2020 Google LLC
   Use of this source code is governed by an MIT-style
@@ -1909,7 +1470,7 @@ async function cacheMatchIgnoreParams(cache, request, ignoreParams, matchOptions
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/Deferred.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/Deferred.js
 /*
   Copyright 2018 Google LLC
 
@@ -1939,20 +1500,7 @@ class Deferred {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/models/quotaErrorCallbacks.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-// Callbacks to be executed whenever there's a quota error.
-const quotaErrorCallbacks_quotaErrorCallbacks = new Set();
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/executeQuotaErrorCallbacks.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/executeQuotaErrorCallbacks.js
 /*
   Copyright 2018 Google LLC
 
@@ -1972,7 +1520,7 @@ const quotaErrorCallbacks_quotaErrorCallbacks = new Set();
  */
 async function executeQuotaErrorCallbacks() {
     if (false) {}
-    for (const callback of quotaErrorCallbacks_quotaErrorCallbacks) {
+    for (const callback of quotaErrorCallbacks) {
         await callback();
         if (false) {}
     }
@@ -1980,7 +1528,7 @@ async function executeQuotaErrorCallbacks() {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-strategies/node_modules/workbox-core/_private/timeout.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/timeout.js
 /*
   Copyright 2019 Google LLC
   Use of this source code is governed by an MIT-style
@@ -2117,68 +1665,66 @@ class StrategyHandler_StrategyHandler {
      * @param {Request|string} input The URL or request to fetch.
      * @return {Promise<Response>}
      */
-    fetch(input) {
-        return this.waitUntil((async () => {
-            const { event } = this;
-            let request = toRequest(input);
-            if (request.mode === 'navigate' &&
-                event instanceof FetchEvent &&
-                event.preloadResponse) {
-                const possiblePreloadResponse = await event.preloadResponse;
-                if (possiblePreloadResponse) {
-                    if (false) {}
-                    return possiblePreloadResponse;
-                }
+    async fetch(input) {
+        const { event } = this;
+        let request = toRequest(input);
+        if (request.mode === 'navigate' &&
+            event instanceof FetchEvent &&
+            event.preloadResponse) {
+            const possiblePreloadResponse = await event.preloadResponse;
+            if (possiblePreloadResponse) {
+                if (false) {}
+                return possiblePreloadResponse;
             }
-            // If there is a fetchDidFail plugin, we need to save a clone of the
-            // original request before it's either modified by a requestWillFetch
-            // plugin or before the original request's body is consumed via fetch().
-            const originalRequest = this.hasCallback('fetchDidFail') ?
-                request.clone() : null;
-            try {
-                for (const cb of this.iterateCallbacks('requestWillFetch')) {
-                    request = await cb({ request: request.clone(), event });
-                }
+        }
+        // If there is a fetchDidFail plugin, we need to save a clone of the
+        // original request before it's either modified by a requestWillFetch
+        // plugin or before the original request's body is consumed via fetch().
+        const originalRequest = this.hasCallback('fetchDidFail') ?
+            request.clone() : null;
+        try {
+            for (const cb of this.iterateCallbacks('requestWillFetch')) {
+                request = await cb({ request: request.clone(), event });
             }
-            catch (err) {
-                throw new _private_WorkboxError_WorkboxError('plugin-error-request-will-fetch', {
-                    thrownError: err,
+        }
+        catch (err) {
+            throw new WorkboxError_WorkboxError('plugin-error-request-will-fetch', {
+                thrownError: err,
+            });
+        }
+        // The request can be altered by plugins with `requestWillFetch` making
+        // the original request (most likely from a `fetch` event) different
+        // from the Request we make. Pass both to `fetchDidFail` to aid debugging.
+        const pluginFilteredRequest = request.clone();
+        try {
+            let fetchResponse;
+            // See https://github.com/GoogleChrome/workbox/issues/1796
+            fetchResponse = await fetch(request, request.mode === 'navigate' ?
+                undefined : this._strategy.fetchOptions);
+            if (false) {}
+            for (const callback of this.iterateCallbacks('fetchDidSucceed')) {
+                fetchResponse = await callback({
+                    event,
+                    request: pluginFilteredRequest,
+                    response: fetchResponse,
                 });
             }
-            // The request can be altered by plugins with `requestWillFetch` making
-            // the original request (most likely from a `fetch` event) different
-            // from the Request we make. Pass both to `fetchDidFail` to aid debugging.
-            const pluginFilteredRequest = request.clone();
-            try {
-                let fetchResponse;
-                // See https://github.com/GoogleChrome/workbox/issues/1796
-                fetchResponse = await fetch(request, request.mode === 'navigate' ?
-                    undefined : this._strategy.fetchOptions);
-                if (false) {}
-                for (const callback of this.iterateCallbacks('fetchDidSucceed')) {
-                    fetchResponse = await callback({
-                        event,
-                        request: pluginFilteredRequest,
-                        response: fetchResponse,
-                    });
-                }
-                return fetchResponse;
+            return fetchResponse;
+        }
+        catch (error) {
+            if (false) {}
+            // `originalRequest` will only exist if a `fetchDidFail` callback
+            // is being used (see above).
+            if (originalRequest) {
+                await this.runCallbacks('fetchDidFail', {
+                    error,
+                    event,
+                    originalRequest: originalRequest.clone(),
+                    request: pluginFilteredRequest.clone(),
+                });
             }
-            catch (error) {
-                if (false) {}
-                // `originalRequest` will only exist if a `fetchDidFail` callback
-                // is being used (see above).
-                if (originalRequest) {
-                    await this.runCallbacks('fetchDidFail', {
-                        error,
-                        event,
-                        originalRequest: originalRequest.clone(),
-                        request: pluginFilteredRequest.clone(),
-                    });
-                }
-                throw error;
-            }
-        })());
+            throw error;
+        }
     }
     /**
      * Calls `this.fetch()` and (in the background) runs `this.cachePut()` on
@@ -2208,26 +1754,24 @@ class StrategyHandler_StrategyHandler {
      * @param {Request|string} key The Request or URL to use as the cache key.
      * @return {Promise<Response|undefined>} A matching response, if found.
      */
-    cacheMatch(key) {
-        return this.waitUntil((async () => {
-            const request = toRequest(key);
-            let cachedResponse;
-            const { cacheName, matchOptions } = this._strategy;
-            const effectiveRequest = await this.getCacheKey(request, 'read');
-            const multiMatchOptions = { ...matchOptions, ...{ cacheName } };
-            cachedResponse = await caches.match(effectiveRequest, multiMatchOptions);
-            if (false) {}
-            for (const callback of this.iterateCallbacks('cachedResponseWillBeUsed')) {
-                cachedResponse = (await callback({
-                    cacheName,
-                    matchOptions,
-                    cachedResponse,
-                    request: effectiveRequest,
-                    event: this.event,
-                })) || undefined;
-            }
-            return cachedResponse;
-        })());
+    async cacheMatch(key) {
+        const request = toRequest(key);
+        let cachedResponse;
+        const { cacheName, matchOptions } = this._strategy;
+        const effectiveRequest = await this.getCacheKey(request, 'read');
+        const multiMatchOptions = { ...matchOptions, ...{ cacheName } };
+        cachedResponse = await caches.match(effectiveRequest, multiMatchOptions);
+        if (false) {}
+        for (const callback of this.iterateCallbacks('cachedResponseWillBeUsed')) {
+            cachedResponse = (await callback({
+                cacheName,
+                matchOptions,
+                cachedResponse,
+                request: effectiveRequest,
+                event: this.event,
+            })) || undefined;
+        }
+        return cachedResponse;
     }
     /**
      * Puts a request/response pair in the cache (and invokes any applicable
@@ -2253,8 +1797,8 @@ class StrategyHandler_StrategyHandler {
         if (false) {}
         if (!response) {
             if (false) {}
-            throw new _private_WorkboxError_WorkboxError('cache-put-with-no-response', {
-                url: getFriendlyURL_getFriendlyURL(effectiveRequest.url),
+            throw new WorkboxError_WorkboxError('cache-put-with-no-response', {
+                url: getFriendlyURL(effectiveRequest.url),
             });
         }
         const responseToCache = await this._ensureResponseSafeToCache(response);
@@ -2506,7 +2050,7 @@ class Strategy_Strategy {
          *
          * @type {string}
          */
-        this.cacheName = cacheNames_cacheNames.getRuntimeName(options.cacheName);
+        this.cacheName = cacheNames.getRuntimeName(options.cacheName);
         /**
          * The list
          * [Plugins]{@link https://developers.google.com/web/tools/workbox/guides/using-plugins}
@@ -2605,7 +2149,7 @@ class Strategy_Strategy {
             // but in case a third-party Strategy doesn't, ensure that we have a
             // consistent failure when there's no response or an error response.
             if (!response || response.type === 'error') {
-                throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url });
+                throw new WorkboxError_WorkboxError('no-response', { url: request.url });
             }
         }
         catch (error) {
@@ -2689,13 +2233,13 @@ class Strategy_Strategy {
 
 
 
-const utils_messages_messages = {
-    strategyStart: (strategyName, request) => `Using ${strategyName} to respond to '${getFriendlyURL_getFriendlyURL(request.url)}'`,
+const messages_messages = {
+    strategyStart: (strategyName, request) => `Using ${strategyName} to respond to '${getFriendlyURL(request.url)}'`,
     printFinalResponse: (response) => {
         if (response) {
-            logger_logger.groupCollapsed(`View the final response here.`);
-            logger_logger.log(response || '[No response returned]');
-            logger_logger.groupEnd();
+            logger.groupCollapsed(`View the final response here.`);
+            logger.log(response || '[No response returned]');
+            logger.groupEnd();
         }
     },
 };
@@ -2756,7 +2300,7 @@ class CacheFirst_CacheFirst extends Strategy_Strategy {
         }
         if (false) {}
         if (!response) {
-            throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url, error });
+            throw new WorkboxError_WorkboxError('no-response', { url: request.url, error });
         }
         return response;
     }
@@ -2803,7 +2347,7 @@ class CacheOnly_CacheOnly extends Strategy_Strategy {
         const response = await handler.cacheMatch(request);
         if (false) {}
         if (!response) {
-            throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url });
+            throw new WorkboxError_WorkboxError('no-response', { url: request.url });
         }
         return response;
     }
@@ -2930,7 +2474,7 @@ class NetworkFirst_NetworkFirst extends Strategy_Strategy {
         })());
         if (false) {}
         if (!response) {
-            throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url });
+            throw new WorkboxError_WorkboxError('no-response', { url: request.url });
         }
         return response;
     }
@@ -3061,7 +2605,7 @@ class NetworkOnly_NetworkOnly extends Strategy_Strategy {
         }
         if (false) {}
         if (!response) {
-            throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url, error });
+            throw new WorkboxError_WorkboxError('no-response', { url: request.url, error });
         }
         return response;
     }
@@ -3160,7 +2704,7 @@ class StaleWhileRevalidate_StaleWhileRevalidate extends Strategy_Strategy {
         }
         if (false) {}
         if (!response) {
-            throw new _private_WorkboxError_WorkboxError('no-response', { url: request.url, error });
+            throw new WorkboxError_WorkboxError('no-response', { url: request.url, error });
         }
         return response;
     }
@@ -3192,363 +2736,6 @@ class StaleWhileRevalidate_StaleWhileRevalidate extends Strategy_Strategy {
 
 
 // CONCATENATED MODULE: ./node_modules/workbox-strategies/index.mjs
-
-// EXTERNAL MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/_version.js
-var node_modules_workbox_core_version = __webpack_require__("lagE");
-
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/models/messages/messages.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const messages_messages_messages = {
-    'invalid-value': ({ paramName, validValueDescription, value }) => {
-        if (!paramName || !validValueDescription) {
-            throw new Error(`Unexpected input to 'invalid-value' error.`);
-        }
-        return `The '${paramName}' parameter was given a value with an ` +
-            `unexpected value. ${validValueDescription} Received a value of ` +
-            `${JSON.stringify(value)}.`;
-    },
-    'not-an-array': ({ moduleName, className, funcName, paramName }) => {
-        if (!moduleName || !className || !funcName || !paramName) {
-            throw new Error(`Unexpected input to 'not-an-array' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className}.${funcName}()' must be an array.`;
-    },
-    'incorrect-type': ({ expectedType, paramName, moduleName, className, funcName }) => {
-        if (!expectedType || !paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-type' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}` +
-            `${funcName}()' must be of type ${expectedType}.`;
-    },
-    'incorrect-class': ({ expectedClass, paramName, moduleName, className, funcName, isReturnValueProblem }) => {
-        if (!expectedClass || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-class' error.`);
-        }
-        if (isReturnValueProblem) {
-            return `The return value from ` +
-                `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-                `must be an instance of class ${expectedClass.name}.`;
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-            `must be an instance of class ${expectedClass.name}.`;
-    },
-    'missing-a-method': ({ expectedMethod, paramName, moduleName, className, funcName }) => {
-        if (!expectedMethod || !paramName || !moduleName || !className
-            || !funcName) {
-            throw new Error(`Unexpected input to 'missing-a-method' error.`);
-        }
-        return `${moduleName}.${className}.${funcName}() expected the ` +
-            `'${paramName}' parameter to expose a '${expectedMethod}' method.`;
-    },
-    'add-to-cache-list-unexpected-type': ({ entry }) => {
-        return `An unexpected entry was passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' The entry ` +
-            `'${JSON.stringify(entry)}' isn't supported. You must supply an array of ` +
-            `strings with one or more characters, objects with a url property or ` +
-            `Request objects.`;
-    },
-    'add-to-cache-list-conflicting-entries': ({ firstEntry, secondEntry }) => {
-        if (!firstEntry || !secondEntry) {
-            throw new Error(`Unexpected input to ` +
-                `'add-to-cache-list-duplicate-entries' error.`);
-        }
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${firstEntry._entryId} but different revision details. Workbox is ` +
-            `unable to cache and version the asset correctly. Please remove one ` +
-            `of the entries.`;
-    },
-    'plugin-error-request-will-fetch': ({ thrownError }) => {
-        if (!thrownError) {
-            throw new Error(`Unexpected input to ` +
-                `'plugin-error-request-will-fetch', error.`);
-        }
-        return `An error was thrown by a plugins 'requestWillFetch()' method. ` +
-            `The thrown error message was: '${thrownError.message}'.`;
-    },
-    'invalid-cache-name': ({ cacheNameId, value }) => {
-        if (!cacheNameId) {
-            throw new Error(`Expected a 'cacheNameId' for error 'invalid-cache-name'`);
-        }
-        return `You must provide a name containing at least one character for ` +
-            `setCacheDetails({${cacheNameId}: '...'}). Received a value of ` +
-            `'${JSON.stringify(value)}'`;
-    },
-    'unregister-route-but-not-found-with-method': ({ method }) => {
-        if (!method) {
-            throw new Error(`Unexpected input to ` +
-                `'unregister-route-but-not-found-with-method' error.`);
-        }
-        return `The route you're trying to unregister was not  previously ` +
-            `registered for the method type '${method}'.`;
-    },
-    'unregister-route-route-not-registered': () => {
-        return `The route you're trying to unregister was not previously ` +
-            `registered.`;
-    },
-    'queue-replay-failed': ({ name }) => {
-        return `Replaying the background sync queue '${name}' failed.`;
-    },
-    'duplicate-queue-name': ({ name }) => {
-        return `The Queue name '${name}' is already being used. ` +
-            `All instances of backgroundSync.Queue must be given unique names.`;
-    },
-    'expired-test-without-max-age': ({ methodName, paramName }) => {
-        return `The '${methodName}()' method can only be used when the ` +
-            `'${paramName}' is used in the constructor.`;
-    },
-    'unsupported-route-type': ({ moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter was an unsupported type. ` +
-            `Please check the docs for ${moduleName}.${className}.${funcName} for ` +
-            `valid input types.`;
-    },
-    'not-array-of-class': ({ value, expectedClass, moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter must be an array of ` +
-            `'${expectedClass}' objects. Received '${JSON.stringify(value)},'. ` +
-            `Please check the call to ${moduleName}.${className}.${funcName}() ` +
-            `to fix the issue.`;
-    },
-    'max-entries-or-age-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.maxEntries or config.maxAgeSeconds` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'statuses-or-headers-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.statuses or config.headers` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'invalid-string': ({ moduleName, funcName, paramName }) => {
-        if (!paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'invalid-string' error.`);
-        }
-        return `When using strings, the '${paramName}' parameter must start with ` +
-            `'http' (for cross-origin matches) or '/' (for same-origin matches). ` +
-            `Please see the docs for ${moduleName}.${funcName}() for ` +
-            `more info.`;
-    },
-    'channel-name-required': () => {
-        return `You must provide a channelName to construct a ` +
-            `BroadcastCacheUpdate instance.`;
-    },
-    'invalid-responses-are-same-args': () => {
-        return `The arguments passed into responsesAreSame() appear to be ` +
-            `invalid. Please ensure valid Responses are used.`;
-    },
-    'expire-custom-caches-only': () => {
-        return `You must provide a 'cacheName' property when using the ` +
-            `expiration plugin with a runtime caching strategy.`;
-    },
-    'unit-must-be-bytes': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'unit-must-be-bytes' error.`);
-        }
-        return `The 'unit' portion of the Range header must be set to 'bytes'. ` +
-            `The Range header provided was "${normalizedRangeHeader}"`;
-    },
-    'single-range-only': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'single-range-only' error.`);
-        }
-        return `Multiple ranges are not supported. Please use a  single start ` +
-            `value, and optional end value. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'invalid-range-values': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'invalid-range-values' error.`);
-        }
-        return `The Range header is missing both start and end values. At least ` +
-            `one of those values is needed. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'no-range-header': () => {
-        return `No Range header was found in the Request provided.`;
-    },
-    'range-not-satisfiable': ({ size, start, end }) => {
-        return `The start (${start}) and end (${end}) values in the Range are ` +
-            `not satisfiable by the cached response, which is ${size} bytes.`;
-    },
-    'attempt-to-cache-non-get-request': ({ url, method }) => {
-        return `Unable to cache '${url}' because it is a '${method}' request and ` +
-            `only 'GET' requests can be cached.`;
-    },
-    'cache-put-with-no-response': ({ url }) => {
-        return `There was an attempt to cache '${url}' but the response was not ` +
-            `defined.`;
-    },
-    'no-response': ({ url, error }) => {
-        let message = `The strategy could not generate a response for '${url}'.`;
-        if (error) {
-            message += ` The underlying error is ${error}.`;
-        }
-        return message;
-    },
-    'bad-precaching-response': ({ url, status }) => {
-        return `The precaching request for '${url}' failed` +
-            (status ? ` with an HTTP status of ${status}.` : `.`);
-    },
-    'non-precached-url': ({ url }) => {
-        return `createHandlerBoundToURL('${url}') was called, but that URL is ` +
-            `not precached. Please pass in a URL that is precached instead.`;
-    },
-    'add-to-cache-list-conflicting-integrities': ({ url }) => {
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${url} with different integrity values. Please remove one of them.`;
-    },
-    'missing-precache-entry': ({ cacheName, url }) => {
-        return `Unable to find a precached response in ${cacheName} for ${url}.`;
-    },
-    'cross-origin-copy-response': ({ origin }) => {
-        return `workbox-core.copyResponse() can only be used with same-origin ` +
-            `responses. It was passed a response with origin ${origin}.`;
-    },
-};
-
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/models/messages/messageGenerator.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-const messages_messageGenerator_fallback = (code, ...args) => {
-    let msg = code;
-    if (args.length > 0) {
-        msg += ` :: ${JSON.stringify(args)}`;
-    }
-    return msg;
-};
-const messages_messageGenerator_generatorFunction = (code, details = {}) => {
-    const message = messages_messages_messages[code];
-    if (!message) {
-        throw new Error(`Unable to find message for code '${code}'.`);
-    }
-    return message(details);
-};
-const messages_messageGenerator_messageGenerator = ( true) ?
-    messages_messageGenerator_fallback : undefined;
-
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/_private/WorkboxError.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/**
- * Workbox errors should be thrown with this class.
- * This allows use to ensure the type easily in tests,
- * helps developers identify errors from workbox
- * easily and allows use to optimise error
- * messages correctly.
- *
- * @private
- */
-class workbox_core_private_WorkboxError_WorkboxError extends Error {
-    /**
-     *
-     * @param {string} errorCode The error code that
-     * identifies this particular error.
-     * @param {Object=} details Any relevant arguments
-     * that will help developers identify issues should
-     * be added as a key on the context object.
-     */
-    constructor(errorCode, details) {
-        const message = messages_messageGenerator_messageGenerator(errorCode, details);
-        super(message);
-        this.name = errorCode;
-        this.details = details;
-    }
-}
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/_private/assert.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/*
- * This method throws if the supplied value is not an array.
- * The destructed values are required to produce a meaningful error for users.
- * The destructed and restructured object is so it's clear what is
- * needed.
- */
-const _private_assert_isArray = (value, details) => {
-    if (!Array.isArray(value)) {
-        throw new workbox_core_private_WorkboxError_WorkboxError('not-an-array', details);
-    }
-};
-const _private_assert_hasMethod = (object, expectedMethod, details) => {
-    const type = typeof object[expectedMethod];
-    if (type !== 'function') {
-        details['expectedMethod'] = expectedMethod;
-        throw new workbox_core_private_WorkboxError_WorkboxError('missing-a-method', details);
-    }
-};
-const _private_assert_isType = (object, expectedType, details) => {
-    if (typeof object !== expectedType) {
-        details['expectedType'] = expectedType;
-        throw new workbox_core_private_WorkboxError_WorkboxError('incorrect-type', details);
-    }
-};
-const _private_assert_isInstance = (object, expectedClass, details) => {
-    if (!(object instanceof expectedClass)) {
-        details['expectedClass'] = expectedClass;
-        throw new workbox_core_private_WorkboxError_WorkboxError('incorrect-class', details);
-    }
-};
-const _private_assert_isOneOf = (value, validValues, details) => {
-    if (!validValues.includes(value)) {
-        details['validValueDescription'] =
-            `Valid values are ${JSON.stringify(validValues)}.`;
-        throw new workbox_core_private_WorkboxError_WorkboxError('invalid-value', details);
-    }
-};
-const _private_assert_isArrayOfClass = (value, expectedClass, details) => {
-    const error = new workbox_core_private_WorkboxError_WorkboxError('not-array-of-class', details);
-    if (!Array.isArray(value)) {
-        throw error;
-    }
-    for (const item of value) {
-        if (!(item instanceof expectedClass)) {
-            throw error;
-        }
-    }
-};
-const _private_assert_finalAssertExports =  true ? null : undefined;
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/_private/logger.js
-/*
-  Copyright 2019 Google LLC
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const _private_logger_logger = ( true ? null : undefined);
-
 
 // EXTERNAL MODULE: ./node_modules/workbox-routing/_version.js
 var workbox_routing_version = __webpack_require__("5tLK");
@@ -3817,23 +3004,6 @@ class RegExpRoute_RegExpRoute extends Route_Route {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-routing/node_modules/workbox-core/_private/getFriendlyURL.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const _private_getFriendlyURL_getFriendlyURL = (url) => {
-    const urlObj = new URL(String(url), location.href);
-    // See https://github.com/GoogleChrome/workbox/issues/2323
-    // We want to include everything, except for the origin if it's same-origin.
-    return urlObj.href.replace(new RegExp(`^${location.origin}`), '');
-};
-
-
 // CONCATENATED MODULE: ./node_modules/workbox-routing/Router.js
 /*
   Copyright 2018 Google LLC
@@ -4022,6 +3192,8 @@ class Router_Router {
      *
      * @param {Object} options
      * @param {URL} options.url
+     * @param {boolean} options.sameOrigin The result of comparing `url.origin`
+     *     against the current origin.
      * @param {Request} options.request The request to match.
      * @param {Event} options.event The corresponding event.
      * @return {Object} An object with `route` and `params` properties.
@@ -4107,7 +3279,7 @@ class Router_Router {
      */
     unregisterRoute(route) {
         if (!this._routes.has(route.method)) {
-            throw new workbox_core_private_WorkboxError_WorkboxError('unregister-route-but-not-found-with-method', {
+            throw new WorkboxError_WorkboxError('unregister-route-but-not-found-with-method', {
                 method: route.method,
             });
         }
@@ -4116,7 +3288,7 @@ class Router_Router {
             this._routes.get(route.method).splice(routeIndex, 1);
         }
         else {
-            throw new workbox_core_private_WorkboxError_WorkboxError('unregister-route-route-not-registered');
+            throw new WorkboxError_WorkboxError('unregister-route-route-not-registered');
         }
     }
 }
@@ -4207,7 +3379,7 @@ function registerRoute(capture, handler, method) {
         route = capture;
     }
     else {
-        throw new workbox_core_private_WorkboxError_WorkboxError('unsupported-route-type', {
+        throw new WorkboxError_WorkboxError('unsupported-route-type', {
             moduleName: 'workbox-routing',
             funcName: 'registerRoute',
             paramName: 'capture',
@@ -4295,415 +3467,7 @@ function setDefaultHandler(handler) {
 
 // CONCATENATED MODULE: ./node_modules/workbox-routing/index.mjs
 
-// EXTERNAL MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_version.js
-var workbox_precaching_node_modules_workbox_core_version = __webpack_require__("QLk0");
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/models/messages/messages.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const models_messages_messages_messages = {
-    'invalid-value': ({ paramName, validValueDescription, value }) => {
-        if (!paramName || !validValueDescription) {
-            throw new Error(`Unexpected input to 'invalid-value' error.`);
-        }
-        return `The '${paramName}' parameter was given a value with an ` +
-            `unexpected value. ${validValueDescription} Received a value of ` +
-            `${JSON.stringify(value)}.`;
-    },
-    'not-an-array': ({ moduleName, className, funcName, paramName }) => {
-        if (!moduleName || !className || !funcName || !paramName) {
-            throw new Error(`Unexpected input to 'not-an-array' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className}.${funcName}()' must be an array.`;
-    },
-    'incorrect-type': ({ expectedType, paramName, moduleName, className, funcName }) => {
-        if (!expectedType || !paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-type' error.`);
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}` +
-            `${funcName}()' must be of type ${expectedType}.`;
-    },
-    'incorrect-class': ({ expectedClass, paramName, moduleName, className, funcName, isReturnValueProblem }) => {
-        if (!expectedClass || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'incorrect-class' error.`);
-        }
-        if (isReturnValueProblem) {
-            return `The return value from ` +
-                `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-                `must be an instance of class ${expectedClass.name}.`;
-        }
-        return `The parameter '${paramName}' passed into ` +
-            `'${moduleName}.${className ? (className + '.') : ''}${funcName}()' ` +
-            `must be an instance of class ${expectedClass.name}.`;
-    },
-    'missing-a-method': ({ expectedMethod, paramName, moduleName, className, funcName }) => {
-        if (!expectedMethod || !paramName || !moduleName || !className
-            || !funcName) {
-            throw new Error(`Unexpected input to 'missing-a-method' error.`);
-        }
-        return `${moduleName}.${className}.${funcName}() expected the ` +
-            `'${paramName}' parameter to expose a '${expectedMethod}' method.`;
-    },
-    'add-to-cache-list-unexpected-type': ({ entry }) => {
-        return `An unexpected entry was passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' The entry ` +
-            `'${JSON.stringify(entry)}' isn't supported. You must supply an array of ` +
-            `strings with one or more characters, objects with a url property or ` +
-            `Request objects.`;
-    },
-    'add-to-cache-list-conflicting-entries': ({ firstEntry, secondEntry }) => {
-        if (!firstEntry || !secondEntry) {
-            throw new Error(`Unexpected input to ` +
-                `'add-to-cache-list-duplicate-entries' error.`);
-        }
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${firstEntry._entryId} but different revision details. Workbox is ` +
-            `unable to cache and version the asset correctly. Please remove one ` +
-            `of the entries.`;
-    },
-    'plugin-error-request-will-fetch': ({ thrownError }) => {
-        if (!thrownError) {
-            throw new Error(`Unexpected input to ` +
-                `'plugin-error-request-will-fetch', error.`);
-        }
-        return `An error was thrown by a plugins 'requestWillFetch()' method. ` +
-            `The thrown error message was: '${thrownError.message}'.`;
-    },
-    'invalid-cache-name': ({ cacheNameId, value }) => {
-        if (!cacheNameId) {
-            throw new Error(`Expected a 'cacheNameId' for error 'invalid-cache-name'`);
-        }
-        return `You must provide a name containing at least one character for ` +
-            `setCacheDetails({${cacheNameId}: '...'}). Received a value of ` +
-            `'${JSON.stringify(value)}'`;
-    },
-    'unregister-route-but-not-found-with-method': ({ method }) => {
-        if (!method) {
-            throw new Error(`Unexpected input to ` +
-                `'unregister-route-but-not-found-with-method' error.`);
-        }
-        return `The route you're trying to unregister was not  previously ` +
-            `registered for the method type '${method}'.`;
-    },
-    'unregister-route-route-not-registered': () => {
-        return `The route you're trying to unregister was not previously ` +
-            `registered.`;
-    },
-    'queue-replay-failed': ({ name }) => {
-        return `Replaying the background sync queue '${name}' failed.`;
-    },
-    'duplicate-queue-name': ({ name }) => {
-        return `The Queue name '${name}' is already being used. ` +
-            `All instances of backgroundSync.Queue must be given unique names.`;
-    },
-    'expired-test-without-max-age': ({ methodName, paramName }) => {
-        return `The '${methodName}()' method can only be used when the ` +
-            `'${paramName}' is used in the constructor.`;
-    },
-    'unsupported-route-type': ({ moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter was an unsupported type. ` +
-            `Please check the docs for ${moduleName}.${className}.${funcName} for ` +
-            `valid input types.`;
-    },
-    'not-array-of-class': ({ value, expectedClass, moduleName, className, funcName, paramName }) => {
-        return `The supplied '${paramName}' parameter must be an array of ` +
-            `'${expectedClass}' objects. Received '${JSON.stringify(value)},'. ` +
-            `Please check the call to ${moduleName}.${className}.${funcName}() ` +
-            `to fix the issue.`;
-    },
-    'max-entries-or-age-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.maxEntries or config.maxAgeSeconds` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'statuses-or-headers-required': ({ moduleName, className, funcName }) => {
-        return `You must define either config.statuses or config.headers` +
-            `in ${moduleName}.${className}.${funcName}`;
-    },
-    'invalid-string': ({ moduleName, funcName, paramName }) => {
-        if (!paramName || !moduleName || !funcName) {
-            throw new Error(`Unexpected input to 'invalid-string' error.`);
-        }
-        return `When using strings, the '${paramName}' parameter must start with ` +
-            `'http' (for cross-origin matches) or '/' (for same-origin matches). ` +
-            `Please see the docs for ${moduleName}.${funcName}() for ` +
-            `more info.`;
-    },
-    'channel-name-required': () => {
-        return `You must provide a channelName to construct a ` +
-            `BroadcastCacheUpdate instance.`;
-    },
-    'invalid-responses-are-same-args': () => {
-        return `The arguments passed into responsesAreSame() appear to be ` +
-            `invalid. Please ensure valid Responses are used.`;
-    },
-    'expire-custom-caches-only': () => {
-        return `You must provide a 'cacheName' property when using the ` +
-            `expiration plugin with a runtime caching strategy.`;
-    },
-    'unit-must-be-bytes': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'unit-must-be-bytes' error.`);
-        }
-        return `The 'unit' portion of the Range header must be set to 'bytes'. ` +
-            `The Range header provided was "${normalizedRangeHeader}"`;
-    },
-    'single-range-only': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'single-range-only' error.`);
-        }
-        return `Multiple ranges are not supported. Please use a  single start ` +
-            `value, and optional end value. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'invalid-range-values': ({ normalizedRangeHeader }) => {
-        if (!normalizedRangeHeader) {
-            throw new Error(`Unexpected input to 'invalid-range-values' error.`);
-        }
-        return `The Range header is missing both start and end values. At least ` +
-            `one of those values is needed. The Range header provided was ` +
-            `"${normalizedRangeHeader}"`;
-    },
-    'no-range-header': () => {
-        return `No Range header was found in the Request provided.`;
-    },
-    'range-not-satisfiable': ({ size, start, end }) => {
-        return `The start (${start}) and end (${end}) values in the Range are ` +
-            `not satisfiable by the cached response, which is ${size} bytes.`;
-    },
-    'attempt-to-cache-non-get-request': ({ url, method }) => {
-        return `Unable to cache '${url}' because it is a '${method}' request and ` +
-            `only 'GET' requests can be cached.`;
-    },
-    'cache-put-with-no-response': ({ url }) => {
-        return `There was an attempt to cache '${url}' but the response was not ` +
-            `defined.`;
-    },
-    'no-response': ({ url, error }) => {
-        let message = `The strategy could not generate a response for '${url}'.`;
-        if (error) {
-            message += ` The underlying error is ${error}.`;
-        }
-        return message;
-    },
-    'bad-precaching-response': ({ url, status }) => {
-        return `The precaching request for '${url}' failed` +
-            (status ? ` with an HTTP status of ${status}.` : `.`);
-    },
-    'non-precached-url': ({ url }) => {
-        return `createHandlerBoundToURL('${url}') was called, but that URL is ` +
-            `not precached. Please pass in a URL that is precached instead.`;
-    },
-    'add-to-cache-list-conflicting-integrities': ({ url }) => {
-        return `Two of the entries passed to ` +
-            `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` +
-            `${url} with different integrity values. Please remove one of them.`;
-    },
-    'missing-precache-entry': ({ cacheName, url }) => {
-        return `Unable to find a precached response in ${cacheName} for ${url}.`;
-    },
-    'cross-origin-copy-response': ({ origin }) => {
-        return `workbox-core.copyResponse() can only be used with same-origin ` +
-            `responses. It was passed a response with origin ${origin}.`;
-    },
-};
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/models/messages/messageGenerator.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-const models_messages_messageGenerator_fallback = (code, ...args) => {
-    let msg = code;
-    if (args.length > 0) {
-        msg += ` :: ${JSON.stringify(args)}`;
-    }
-    return msg;
-};
-const models_messages_messageGenerator_generatorFunction = (code, details = {}) => {
-    const message = models_messages_messages_messages[code];
-    if (!message) {
-        throw new Error(`Unable to find message for code '${code}'.`);
-    }
-    return message(details);
-};
-const models_messages_messageGenerator_messageGenerator = ( true) ?
-    models_messages_messageGenerator_fallback : undefined;
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/WorkboxError.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/**
- * Workbox errors should be thrown with this class.
- * This allows use to ensure the type easily in tests,
- * helps developers identify errors from workbox
- * easily and allows use to optimise error
- * messages correctly.
- *
- * @private
- */
-class node_modules_workbox_core_private_WorkboxError_WorkboxError extends Error {
-    /**
-     *
-     * @param {string} errorCode The error code that
-     * identifies this particular error.
-     * @param {Object=} details Any relevant arguments
-     * that will help developers identify issues should
-     * be added as a key on the context object.
-     */
-    constructor(errorCode, details) {
-        const message = models_messages_messageGenerator_messageGenerator(errorCode, details);
-        super(message);
-        this.name = errorCode;
-        this.details = details;
-    }
-}
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/assert.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-
-/*
- * This method throws if the supplied value is not an array.
- * The destructed values are required to produce a meaningful error for users.
- * The destructed and restructured object is so it's clear what is
- * needed.
- */
-const workbox_core_private_assert_isArray = (value, details) => {
-    if (!Array.isArray(value)) {
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('not-an-array', details);
-    }
-};
-const workbox_core_private_assert_hasMethod = (object, expectedMethod, details) => {
-    const type = typeof object[expectedMethod];
-    if (type !== 'function') {
-        details['expectedMethod'] = expectedMethod;
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('missing-a-method', details);
-    }
-};
-const workbox_core_private_assert_isType = (object, expectedType, details) => {
-    if (typeof object !== expectedType) {
-        details['expectedType'] = expectedType;
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('incorrect-type', details);
-    }
-};
-const workbox_core_private_assert_isInstance = (object, expectedClass, details) => {
-    if (!(object instanceof expectedClass)) {
-        details['expectedClass'] = expectedClass;
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('incorrect-class', details);
-    }
-};
-const workbox_core_private_assert_isOneOf = (value, validValues, details) => {
-    if (!validValues.includes(value)) {
-        details['validValueDescription'] =
-            `Valid values are ${JSON.stringify(validValues)}.`;
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('invalid-value', details);
-    }
-};
-const workbox_core_private_assert_isArrayOfClass = (value, expectedClass, details) => {
-    const error = new node_modules_workbox_core_private_WorkboxError_WorkboxError('not-array-of-class', details);
-    if (!Array.isArray(value)) {
-        throw error;
-    }
-    for (const item of value) {
-        if (!(item instanceof expectedClass)) {
-            throw error;
-        }
-    }
-};
-const workbox_core_private_assert_finalAssertExports =  true ? null : undefined;
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/cacheNames.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const _private_cacheNames_cacheNameDetails = {
-    googleAnalytics: 'googleAnalytics',
-    precache: 'precache-v2',
-    prefix: 'workbox',
-    runtime: 'runtime',
-    suffix: typeof registration !== 'undefined' ? registration.scope : '',
-};
-const _private_cacheNames_createCacheName = (cacheName) => {
-    return [_private_cacheNames_cacheNameDetails.prefix, cacheName, _private_cacheNames_cacheNameDetails.suffix]
-        .filter((value) => value && value.length > 0)
-        .join('-');
-};
-const _private_cacheNames_eachCacheNameDetail = (fn) => {
-    for (const key of Object.keys(_private_cacheNames_cacheNameDetails)) {
-        fn(key);
-    }
-};
-const _private_cacheNames_cacheNames = {
-    updateDetails: (details) => {
-        _private_cacheNames_eachCacheNameDetail((key) => {
-            if (typeof details[key] === 'string') {
-                _private_cacheNames_cacheNameDetails[key] = details[key];
-            }
-        });
-    },
-    getGoogleAnalyticsName: (userCacheName) => {
-        return userCacheName || _private_cacheNames_createCacheName(_private_cacheNames_cacheNameDetails.googleAnalytics);
-    },
-    getPrecacheName: (userCacheName) => {
-        return userCacheName || _private_cacheNames_createCacheName(_private_cacheNames_cacheNameDetails.precache);
-    },
-    getPrefix: () => {
-        return _private_cacheNames_cacheNameDetails.prefix;
-    },
-    getRuntimeName: (userCacheName) => {
-        return userCacheName || _private_cacheNames_createCacheName(_private_cacheNames_cacheNameDetails.runtime);
-    },
-    getSuffix: () => {
-        return _private_cacheNames_cacheNameDetails.suffix;
-    },
-};
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/logger.js
-/*
-  Copyright 2019 Google LLC
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const workbox_core_private_logger_logger = ( true ? null : undefined);
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/waitUntil.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/waitUntil.js
 /*
   Copyright 2020 Google LLC
   Use of this source code is governed by an MIT-style
@@ -4753,7 +3517,7 @@ const REVISION_SEARCH_PARAM = '__WB_REVISION__';
  */
 function createCacheKey(entry) {
     if (!entry) {
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('add-to-cache-list-unexpected-type', { entry });
+        throw new WorkboxError_WorkboxError('add-to-cache-list-unexpected-type', { entry });
     }
     // If a precache manifest entry is a string, it's assumed to be a versioned
     // URL, like '/app.abcd1234.js'. Return as-is.
@@ -4766,7 +3530,7 @@ function createCacheKey(entry) {
     }
     const { revision, url } = entry;
     if (!url) {
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('add-to-cache-list-unexpected-type', { entry });
+        throw new WorkboxError_WorkboxError('add-to-cache-list-unexpected-type', { entry });
     }
     // If there's just a URL and no revision, then it's also assumed to be a
     // versioned URL.
@@ -4874,11 +3638,11 @@ class PrecacheCacheKeyPlugin {
  * @private
  */
 const logGroup = (groupTitle, deletedURLs) => {
-    workbox_core_private_logger_logger.groupCollapsed(groupTitle);
+    logger.groupCollapsed(groupTitle);
     for (const url of deletedURLs) {
-        workbox_core_private_logger_logger.log(url);
+        logger.log(url);
     }
-    workbox_core_private_logger_logger.groupEnd();
+    logger.groupEnd();
 };
 /**
  * @param {Array<string>} deletedURLs
@@ -4889,11 +3653,11 @@ const logGroup = (groupTitle, deletedURLs) => {
 function printCleanupDetails(deletedURLs) {
     const deletionCount = deletedURLs.length;
     if (deletionCount > 0) {
-        workbox_core_private_logger_logger.groupCollapsed(`During precaching cleanup, ` +
+        logger.groupCollapsed(`During precaching cleanup, ` +
             `${deletionCount} cached ` +
             `request${deletionCount === 1 ? ' was' : 's were'} deleted.`);
         logGroup('Deleted Cache Requests', deletedURLs);
-        workbox_core_private_logger_logger.groupEnd();
+        logger.groupEnd();
     }
 }
 
@@ -4917,11 +3681,11 @@ function _nestedGroup(groupTitle, urls) {
     if (urls.length === 0) {
         return;
     }
-    workbox_core_private_logger_logger.groupCollapsed(groupTitle);
+    logger.groupCollapsed(groupTitle);
     for (const url of urls) {
-        workbox_core_private_logger_logger.log(url);
+        logger.log(url);
     }
-    workbox_core_private_logger_logger.groupEnd();
+    logger.groupEnd();
 }
 /**
  * @param {Array<string>} urlsToPrecache
@@ -4939,14 +3703,14 @@ function printInstallDetails(urlsToPrecache, urlsAlreadyPrecached) {
             message += ` ${alreadyPrecachedCount} ` +
                 `file${alreadyPrecachedCount === 1 ? ' is' : 's are'} already cached.`;
         }
-        workbox_core_private_logger_logger.groupCollapsed(message);
+        logger.groupCollapsed(message);
         _nestedGroup(`View newly precached URLs.`, urlsToPrecache);
         _nestedGroup(`View previously precached URLs.`, urlsAlreadyPrecached);
-        workbox_core_private_logger_logger.groupEnd();
+        logger.groupEnd();
     }
 }
 
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/canConstructResponseFromBodyStream.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/_private/canConstructResponseFromBodyStream.js
 /*
   Copyright 2019 Google LLC
 
@@ -4983,7 +3747,7 @@ function canConstructResponseFromBodyStream() {
 }
 
 
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/copyResponse.js
+// CONCATENATED MODULE: ./node_modules/workbox-core/copyResponse.js
 /*
   Copyright 2019 Google LLC
 
@@ -5021,7 +3785,7 @@ async function copyResponse(response, modifier) {
         origin = responseURL.origin;
     }
     if (origin !== self.location.origin) {
-        throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('cross-origin-copy-response', { origin });
+        throw new WorkboxError_WorkboxError('cross-origin-copy-response', { origin });
     }
     const clonedResponse = response.clone();
     // Create a fresh `ResponseInit` object by cloning the headers.
@@ -5039,23 +3803,6 @@ async function copyResponse(response, modifier) {
         clonedResponse.body : await clonedResponse.blob();
     return new Response(body, modifiedResponseInit);
 }
-
-
-// CONCATENATED MODULE: ./node_modules/workbox-precaching/node_modules/workbox-core/_private/getFriendlyURL.js
-/*
-  Copyright 2018 Google LLC
-
-  Use of this source code is governed by an MIT-style
-  license that can be found in the LICENSE file or at
-  https://opensource.org/licenses/MIT.
-*/
-
-const workbox_core_private_getFriendlyURL_getFriendlyURL = (url) => {
-    const urlObj = new URL(String(url), location.href);
-    // See https://github.com/GoogleChrome/workbox/issues/2323
-    // We want to include everything, except for the origin if it's same-origin.
-    return urlObj.href.replace(new RegExp(`^${location.origin}`), '');
-};
 
 
 // CONCATENATED MODULE: ./node_modules/workbox-precaching/PrecacheStrategy.js
@@ -5104,7 +3851,7 @@ class PrecacheStrategy_PrecacheStrategy extends Strategy_Strategy {
      * get the response from the network if there's a precache miss.
      */
     constructor(options = {}) {
-        options.cacheName = _private_cacheNames_cacheNames.getPrecacheName(options.cacheName);
+        options.cacheName = cacheNames.getPrecacheName(options.cacheName);
         super(options);
         this._fallbackToNetwork = options.fallbackToNetwork === false ? false : true;
         // Redirected responses cannot be used to satisfy a navigation request, so
@@ -5144,7 +3891,7 @@ class PrecacheStrategy_PrecacheStrategy extends Strategy_Strategy {
         else {
             // This shouldn't normally happen, but there are edge cases:
             // https://github.com/GoogleChrome/workbox/issues/1441
-            throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('missing-precache-entry', {
+            throw new WorkboxError_WorkboxError('missing-precache-entry', {
                 cacheName: this.cacheName,
                 url: request.url,
             });
@@ -5161,7 +3908,7 @@ class PrecacheStrategy_PrecacheStrategy extends Strategy_Strategy {
         if (!wasCached) {
             // Throwing here will lead to the `install` handler failing, which
             // we want to do if *any* of the responses aren't safe to cache.
-            throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('bad-precaching-response', {
+            throw new WorkboxError_WorkboxError('bad-precaching-response', {
                 url: request.url,
                 status: response.status,
             });
@@ -5277,7 +4024,7 @@ class PrecacheController_PrecacheController {
         this._urlsToCacheModes = new Map();
         this._cacheKeysToIntegrities = new Map();
         this._strategy = new PrecacheStrategy_PrecacheStrategy({
-            cacheName: _private_cacheNames_cacheNames.getPrecacheName(cacheName),
+            cacheName: cacheNames.getPrecacheName(cacheName),
             plugins: [
                 ...plugins,
                 new PrecacheCacheKeyPlugin({ precacheController: this }),
@@ -5336,7 +4083,7 @@ class PrecacheController_PrecacheController {
                 'reload' : 'default';
             if (this._urlsToCacheKeys.has(url) &&
                 this._urlsToCacheKeys.get(url) !== cacheKey) {
-                throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('add-to-cache-list-conflicting-entries', {
+                throw new WorkboxError_WorkboxError('add-to-cache-list-conflicting-entries', {
                     firstEntry: this._urlsToCacheKeys.get(url),
                     secondEntry: cacheKey,
                 });
@@ -5344,7 +4091,7 @@ class PrecacheController_PrecacheController {
             if (typeof entry !== 'string' && entry.integrity) {
                 if (this._cacheKeysToIntegrities.has(cacheKey) &&
                     this._cacheKeysToIntegrities.get(cacheKey) !== entry.integrity) {
-                    throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('add-to-cache-list-conflicting-integrities', {
+                    throw new WorkboxError_WorkboxError('add-to-cache-list-conflicting-integrities', {
                         url,
                     });
                 }
@@ -5372,8 +4119,7 @@ class PrecacheController_PrecacheController {
      * Note: this method calls `event.waitUntil()` for you, so you do not need
      * to call it yourself in your event handlers.
      *
-     * @param {Object} options
-     * @param {Event} options.event The install event.
+     * @param {ExtendableEvent} event
      * @return {Promise<module:workbox-precaching.InstallResult>}
      */
     install(event) {
@@ -5408,7 +4154,7 @@ class PrecacheController_PrecacheController {
      * Note: this method calls `event.waitUntil()` for you, so you do not need
      * to call it yourself in your event handlers.
      *
-     * @param {ExtendableEvent}
+     * @param {ExtendableEvent} event
      * @return {Promise<module:workbox-precaching.CleanupResult>}
      */
     activate(event) {
@@ -5496,7 +4242,7 @@ class PrecacheController_PrecacheController {
     createHandlerBoundToURL(url) {
         const cacheKey = this.getCacheKeyForURL(url);
         if (!cacheKey) {
-            throw new node_modules_workbox_core_private_WorkboxError_WorkboxError('non-precached-url', { url });
+            throw new WorkboxError_WorkboxError('non-precached-url', { url });
         }
         return (options) => {
             options.request = new Request(url);
@@ -5778,7 +4524,7 @@ const deleteOutdatedCaches = async (currentPrecacheName, substringToFind = SUBST
 function cleanupOutdatedCaches() {
     // See https://github.com/Microsoft/TypeScript/issues/28357#issuecomment-436484705
     self.addEventListener('activate', ((event) => {
-        const cacheName = _private_cacheNames_cacheNames.getPrecacheName();
+        const cacheName = cacheNames.getPrecacheName();
         event.waitUntil(deleteOutdatedCaches(cacheName).then((cachesDeleted) => {
             if (false) {}
         }));
@@ -6052,7 +4798,7 @@ self.addEventListener('message', event => {
 // https://developers.google.com/web/tools/workbox/guides/precache-files/workbox-build#add_an_injection_point
 // eslint-disable-next-line no-underscore-dangle
 
-var WB_MANIFEST = [{'revision':'e62674337c4d88b4777c390ae1f4172ba3d0dfe6','url':'/_next/static/css/c342ba67daf33ef7da0f.css'},{'revision':'e2456f1c42c4321652d502ab10bc8bb8','url':'/agents/instana.js'},{'revision':'38f08a98321b84045dbf9d15872aa145','url':'/embeds/hipi.js'},{'revision':'45b05f2e491fb27af3a0bf6a78e28a95','url':'/fonts/eot/CustomFont-Bold.eot'},{'revision':'6d503b08754ee3d8f5b282914c8ef0e2','url':'/fonts/eot/CustomFont-Light.eot'},{'revision':'5734490731350a6b760100713c7d13a5','url':'/fonts/eot/CustomFont-Medium.eot'},{'revision':'322e44bc7f0ac7207b5d33f5c128478b','url':'/fonts/ttf/CustomFont-Bold.ttf'},{'revision':'1d38055169378a25a382e4912bb79804','url':'/fonts/ttf/CustomFont-Light.ttf'},{'revision':'9d5462aad98076dfc40c65ae0f14400a','url':'/fonts/ttf/CustomFont-Medium.ttf'},{'revision':'8e1630e8bc5b6a100ac9e9f4c7310760','url':'/fonts/woff/CustomFont-Bold.woff'},{'revision':'81a33cafdfc9721c384a769625b06894','url':'/fonts/woff/CustomFont-Bold.woff2'},{'revision':'c1f04743d1862f46a3819436bf36f14f','url':'/fonts/woff/CustomFont-Light.woff'},{'revision':'f7aba3bfca88a454400574dbb800cb8b','url':'/fonts/woff/CustomFont-Light.woff2'},{'revision':'0dd1f5318b85ef26db395beda7386479','url':'/fonts/woff/CustomFont-Medium.woff'},{'revision':'b1efa9c0e0e1a52fbad00d818fc8aacd','url':'/fonts/woff/CustomFont-Medium.woff2'},{'revision':'70cd96349fea1b0a6488846f8c4d5fd0','url':'/i10n/bn-in.json'},{'revision':'6fdaee041b9968ad5eed7e0638d6e214','url':'/i10n/en-in.json'},{'revision':'dd2f5c2e736bdc65d2ad701393787449','url':'/i10n/hi-in.json'},{'revision':'04a784aadb94bc7b3e572e60378500f2','url':'/icons/android-chrome-192x192.png'},{'revision':'fc63ed118a32277e3ca1f68a304ad997','url':'/icons/android-icon-192x192-dunplab-manifest-17016.png'},{'revision':'d0a9e67975d793b0522de0572aabe8c9','url':'/icons/apple-icon-114x114-dunplab-manifest-17016.png'},{'revision':'30078725265f78e7c5b46497767e5d3e','url':'/icons/apple-icon-120x120-dunplab-manifest-17016.png'},{'revision':'672f50b1c0263df30299fe2d68ba252c','url':'/icons/apple-icon-144x144-dunplab-manifest-17016.png'},{'revision':'0d287d829b7a405a12dcda6cfef6146f','url':'/icons/apple-icon-152x152-dunplab-manifest-17016.png'},{'revision':'961515e2d848ec23fc6f16f8e602f649','url':'/icons/apple-icon-180x180-dunplab-manifest-17016.png'},{'revision':'2c8b1e9afd3348e5c046563272bfc8d6','url':'/icons/apple-icon-57x57-dunplab-manifest-17016.png'},{'revision':'edeaf09afe7c6a709e7dd0839ec928e9','url':'/icons/apple-icon-60x60-dunplab-manifest-17016.png'},{'revision':'6e6e2f4d13cec2bad08f6cb987f87356','url':'/icons/apple-icon-72x72-dunplab-manifest-17016.png'},{'revision':'0fb29cbb147c96ea9e1d18872e23d04e','url':'/icons/apple-icon-76x76-dunplab-manifest-17016.png'},{'revision':'bf969b0cd03421e924db7418d64cb638','url':'/icons/apple-touch-icon.png'},{'revision':'4c21126d785dc4e630e12321d8bf3dae','url':'/icons/favicon-16x16-dunplab-manifest-17016.png'},{'revision':'c3228f30d1760efc5d21e38ea6c8bcab','url':'/icons/favicon-32x32-dunplab-manifest-17016.png'},{'revision':'b99e6f1845a029ef5640a824b8a7231e','url':'/icons/favicon-96x96-dunplab-manifest-17016.png'},{'revision':'86316ae069c703bc195f3b6b8094da21','url':'/icons/favicon.ico'},{'revision':'2a0f6b9273eee8af9af32b8f7902cfe3','url':'/icons/icon-512x512.png'},{'revision':'65250319bf87b0b936b8f7fa37116e45','url':'/icons/output-onlinepngtools.png'},{'revision':'ed8d61f56809d52f0282a6ff285b2ec8','url':'/images/app-store.svg'},{'revision':'8ac36659d9e363dd9c644ec6a6e0982f','url':'/images/google-play.svg'},{'revision':'675ac406bc25e57afce072976ad06c8b','url':'/images/ic_close.svg'},{'revision':'3204fe18b171a3be90e86424c8a2ddb4','url':'/images/play.png'},{'revision':'eb9d86d5ca2ccf8339c7031c6bef6b86','url':'/images/zee5_logo_v01.png'},{'revision':'7d05addce2a6fbfd9b9d65419d5c8f14','url':'/manifest.json'},{'revision':'b933d768c1b0c8d0c48ea06aae36304c','url':'/robots.txt'}]; // Pre cache fallback route and image
+var WB_MANIFEST = [{'revision':'5d106be48bb8f6b69c71516b7d779bbef092fae4','url':'/_next/static/css/f62b4c6a8787a492a409.css'},{'revision':'e2456f1c42c4321652d502ab10bc8bb8','url':'/agents/instana.js'},{'revision':'05893a36bc64c1224936f161a5c652ce','url':'/embeds/hipi.js'},{'revision':'45b05f2e491fb27af3a0bf6a78e28a95','url':'/fonts/eot/CustomFont-Bold.eot'},{'revision':'6d503b08754ee3d8f5b282914c8ef0e2','url':'/fonts/eot/CustomFont-Light.eot'},{'revision':'5734490731350a6b760100713c7d13a5','url':'/fonts/eot/CustomFont-Medium.eot'},{'revision':'322e44bc7f0ac7207b5d33f5c128478b','url':'/fonts/ttf/CustomFont-Bold.ttf'},{'revision':'1d38055169378a25a382e4912bb79804','url':'/fonts/ttf/CustomFont-Light.ttf'},{'revision':'9d5462aad98076dfc40c65ae0f14400a','url':'/fonts/ttf/CustomFont-Medium.ttf'},{'revision':'8e1630e8bc5b6a100ac9e9f4c7310760','url':'/fonts/woff/CustomFont-Bold.woff'},{'revision':'81a33cafdfc9721c384a769625b06894','url':'/fonts/woff/CustomFont-Bold.woff2'},{'revision':'c1f04743d1862f46a3819436bf36f14f','url':'/fonts/woff/CustomFont-Light.woff'},{'revision':'f7aba3bfca88a454400574dbb800cb8b','url':'/fonts/woff/CustomFont-Light.woff2'},{'revision':'0dd1f5318b85ef26db395beda7386479','url':'/fonts/woff/CustomFont-Medium.woff'},{'revision':'b1efa9c0e0e1a52fbad00d818fc8aacd','url':'/fonts/woff/CustomFont-Medium.woff2'},{'revision':'70cd96349fea1b0a6488846f8c4d5fd0','url':'/i10n/bn-in.json'},{'revision':'330c8b5d3da26451d4a198433d9dfb9d','url':'/i10n/en-in.json'},{'revision':'dd2f5c2e736bdc65d2ad701393787449','url':'/i10n/hi-in.json'},{'revision':'04a784aadb94bc7b3e572e60378500f2','url':'/icons/android-chrome-192x192.png'},{'revision':'fc63ed118a32277e3ca1f68a304ad997','url':'/icons/android-icon-192x192-dunplab-manifest-17016.png'},{'revision':'5f93c6c34cdcea8c9c587c5591d513fb','url':'/icons/app_store.png'},{'revision':'d0a9e67975d793b0522de0572aabe8c9','url':'/icons/apple-icon-114x114-dunplab-manifest-17016.png'},{'revision':'30078725265f78e7c5b46497767e5d3e','url':'/icons/apple-icon-120x120-dunplab-manifest-17016.png'},{'revision':'672f50b1c0263df30299fe2d68ba252c','url':'/icons/apple-icon-144x144-dunplab-manifest-17016.png'},{'revision':'0d287d829b7a405a12dcda6cfef6146f','url':'/icons/apple-icon-152x152-dunplab-manifest-17016.png'},{'revision':'961515e2d848ec23fc6f16f8e602f649','url':'/icons/apple-icon-180x180-dunplab-manifest-17016.png'},{'revision':'2c8b1e9afd3348e5c046563272bfc8d6','url':'/icons/apple-icon-57x57-dunplab-manifest-17016.png'},{'revision':'edeaf09afe7c6a709e7dd0839ec928e9','url':'/icons/apple-icon-60x60-dunplab-manifest-17016.png'},{'revision':'6e6e2f4d13cec2bad08f6cb987f87356','url':'/icons/apple-icon-72x72-dunplab-manifest-17016.png'},{'revision':'0fb29cbb147c96ea9e1d18872e23d04e','url':'/icons/apple-icon-76x76-dunplab-manifest-17016.png'},{'revision':'bf969b0cd03421e924db7418d64cb638','url':'/icons/apple-touch-icon.png'},{'revision':'4c21126d785dc4e630e12321d8bf3dae','url':'/icons/favicon-16x16-dunplab-manifest-17016.png'},{'revision':'c3228f30d1760efc5d21e38ea6c8bcab','url':'/icons/favicon-32x32-dunplab-manifest-17016.png'},{'revision':'b99e6f1845a029ef5640a824b8a7231e','url':'/icons/favicon-96x96-dunplab-manifest-17016.png'},{'revision':'86316ae069c703bc195f3b6b8094da21','url':'/icons/favicon.ico'},{'revision':'2a0f6b9273eee8af9af32b8f7902cfe3','url':'/icons/icon-512x512.png'},{'revision':'65250319bf87b0b936b8f7fa37116e45','url':'/icons/output-onlinepngtools.png'},{'revision':'6af62d734b3701f7cdb87f41784d25e8','url':'/icons/play_store.png'},{'revision':'ed8d61f56809d52f0282a6ff285b2ec8','url':'/images/app-store.svg'},{'revision':'8ac36659d9e363dd9c644ec6a6e0982f','url':'/images/google-play.svg'},{'revision':'675ac406bc25e57afce072976ad06c8b','url':'/images/ic_close.svg'},{'revision':'3204fe18b171a3be90e86424c8a2ddb4','url':'/images/play.png'},{'revision':'eb9d86d5ca2ccf8339c7031c6bef6b86','url':'/images/zee5_logo_v01.png'},{'revision':'2cf95830eb74f8abf428c258e2618708','url':'/manifest.json'},{'revision':'b933d768c1b0c8d0c48ea06aae36304c','url':'/robots.txt'}]; // Pre cache fallback route and image
 
 WB_MANIFEST.push({
   url: '/fallback',
@@ -6197,35 +4943,7 @@ setCatchHandler((_ref) => {
 
 // @ts-ignore
 try {
-    self['workbox:strategies:6.1.1'] && _();
-}
-catch (e) { }
-
-
-/***/ }),
-
-/***/ "dBtQ":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// @ts-ignore
-try {
-    self['workbox:core:6.1.1'] && _();
-}
-catch (e) { }
-
-
-/***/ }),
-
-/***/ "lagE":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// @ts-ignore
-try {
-    self['workbox:core:6.1.1'] && _();
+    self['workbox:strategies:6.1.5'] && _();
 }
 catch (e) { }
 
@@ -6239,7 +4957,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:precaching:6.1.1'] && _();
+    self['workbox:precaching:6.1.5'] && _();
 }
 catch (e) { }
 
