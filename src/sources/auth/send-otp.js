@@ -3,7 +3,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/auth/send-otp';
 
-async function dispatchOTP({ mobile }) {
+async function dispatchOTP(mobile) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('otp')}/device/sendotp_v1.php?phoneno=${mobile}`;

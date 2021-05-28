@@ -3,12 +3,12 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const mobileSignUp = async ({ mobile }) => {
+const getUserVerify = async mobile => {
   let response = {};
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append('mobile', mobile);
-    const apiPath = `${getApiBasePath('hipi')}/v1/user/getUserToken.php`;
+    const apiPath = `${getApiBasePath('login')}/getUserToken.php`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'
     });
@@ -20,6 +20,6 @@ const mobileSignUp = async ({ mobile }) => {
   }
 };
 
-const [signUp, clearSignUp] = apiMiddleWare(mobileSignUp, transformSuccess, transformError);
+const [verifyUser, cleanVerifyUser] = apiMiddleWare(getUserVerify, transformSuccess, transformError);
 
-export { signUp, clearSignUp };
+export { verifyUser, cleanVerifyUser };
