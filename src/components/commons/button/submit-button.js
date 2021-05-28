@@ -1,4 +1,4 @@
-import CircularProgress from '../circular-loader';
+import CircularProgress from '../circular-loader-small';
 
 export const SubmitButton = ({ handleSubmit, text, pending }) => (
   <>
