@@ -1,8 +1,9 @@
 import { withRouter } from 'next/router';
 import { Back } from '../commons/svgicons/back';
 import Tabs from '../commons/tabs';
-import MobileLogin from '../access/mobile-login';
-import EmailLogin from '../access/email-login';
+import MobileLogin from '../access/mobile-login/'
+import EmailLogin from '../access/email-login/'
+import ResetPassword from '../access/reset-password'
 
 const Login = ({ router }) => {
   const type = router.query.id;
