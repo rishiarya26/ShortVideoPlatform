@@ -16,9 +16,6 @@ function HeadMeta() {
 
       <link rel="preload" href="https://hipi.co.in/feed" as="document" />
 
-      {/* charmboard plugin */}
-      <script type="text/javascript" src="https://devqa2.charmboard.com/zee5/kaltura_plugin.js" />
-
       <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
