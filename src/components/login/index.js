@@ -7,9 +7,9 @@ import EmailLogin from '../access/email-login';
 const Login = ({ router }) => {
   const type = router.query.id;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
-  const handleBackClick=()=>{
-      router.back();
-  }
+  const handleBackClick = () => {
+    router.back();
+  };
   return (
     <>
       <div>

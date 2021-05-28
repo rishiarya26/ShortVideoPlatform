@@ -4,11 +4,10 @@ import { withRouter } from 'next/router';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
-import ComponentStateHandler from '../commons/component-state-handler';
+import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { getProfileVideos } from '../../sources/users/profile';
-import checkTokens from '../commons/pre-condition';
 import { Back } from '../commons/svgicons/back';
 
 let retry;
@@ -25,7 +24,7 @@ function ProfileFeed({ router }) {
   const onDataFetched = data => {
     setItems(data.data);
   };
-  const [fetchState] = checkTokens(dataFetcher, onDataFetched);
+  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };

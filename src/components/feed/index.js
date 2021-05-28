@@ -11,6 +11,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { canShop } from '../../sources/can-shop';
+import { Shop } from '../commons/button/shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -106,16 +107,7 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
      && (
        <>
          <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-           <button
-             className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
-             // eslint-disable-next-line no-undef
-             onClick={() => cbplugin && cbplugin.cbTouch({ videoId: activeVideoId })}
-           >
-             SHOP
-             {' '}
-             {/* {t('shop')} */}
-
-           </button>
+           <Shop videoId={activeVideoId} />
          </div>
        </>
      )}

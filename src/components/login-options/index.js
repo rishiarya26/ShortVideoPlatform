@@ -6,8 +6,7 @@ import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 
-export default function Login({handleToggle}) {
-
+export default function Login({ handleToggle }) {
   const { close } = useDrawer();
   return (
     <div className="px-4 py-2 flex flex-col items-center">
@@ -18,7 +17,7 @@ export default function Login({handleToggle}) {
       <div className="socail flex flex-col w-full">
         <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
-          <div onClick={()=>close()} className="flex justify-center w-full font-semibold">
+          <div onClick={() => close()} className="flex justify-center w-full font-semibold">
             <Link href="/login/phone">
               <p>Use phone or email</p>
             </Link>
@@ -52,7 +51,7 @@ export default function Login({handleToggle}) {
       <div className="my-2 ">
         <p>
           Don't have an account?
-          <span onClick={()=>handleToggle('signup')} className="text-red-600">Sign Up</span>
+          <span onClick={() => handleToggle('signup')} className="text-red-600">Sign Up</span>
         </p>
       </div>
     </div>

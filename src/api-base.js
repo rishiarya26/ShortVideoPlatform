@@ -16,6 +16,7 @@ export const apiBaseEndPoints = {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
     translations: 'https://mock.hipi.co.in',
+    app: 'http://localhost:3000',
     charmboard:
     'https://stagingmobile.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',

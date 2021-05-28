@@ -46,7 +46,7 @@ export const profileFeed = {
         manualModerationMetakeys: '{"id":"080a4cff-9ea5-4a75-97fb-80ddd49894e9","contentType":"video","moderation":"ACCEPT","primaryCategories":["branding"],"secondaryCategories":["soft-branding"],"contentLanguage":"unknown"}',
         status: 'ACTIVE',
         akamaiStatus: 'ACTIVE',
-        akamaiUrl: 'https://z5shorts.akamaized.net/2020/10/22/080a4cff-9ea5-4a75-97fb-80ddd49894e9/080a4cff-9ea5-4a75-97fb-80ddd49894e9_512.mp4?hdnea=st=1622031651~exp=1622046051~acl=/*~hmac=e3cbf548b857049c06f49b0b8eaa553a402ca5ef1f8db2cd81ec978cc2ff5713',
+        akamaiUrl: 'https://z5shorts.akamaized.net/2020/10/22/080a4cff-9ea5-4a75-97fb-80ddd49894e9/080a4cff-9ea5-4a75-97fb-80ddd49894e9_512.mp4?hdnea=st=1622177817~exp=1622192217~acl=/*~hmac=c7ac5f2c6810b6fba70904601461bcba0f800cc01b33c188253d6e3625899bcb',
         downloadable: 'true',
         s3Url: 'https://z5shorts.akamaized.net/2020/10/22/080a4cff-9ea5-4a75-97fb-80ddd49894e9/080a4cff-9ea5-4a75-97fb-80ddd49894e9_512.mp4?hdnea=st=1620128289~exp=1620142689~acl=/*~hmac=9aadef2f84145cce5a9161fad5d63cf54696fbefe0446d47bb5b40586cf916bf',
         hashtags: [],

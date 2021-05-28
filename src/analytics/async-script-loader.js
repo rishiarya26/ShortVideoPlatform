@@ -5,7 +5,7 @@ const createElement = () => {
   return script;
 };
 
-const injectScripUrl = (scriptUrl = '') => {
+const injectScripUrl = (scriptUrl = '', cb) => {
   if (!scriptUrl) {
     console.warn('you need to pass the script url!!!');
     return false;
@@ -16,6 +16,7 @@ const injectScripUrl = (scriptUrl = '') => {
   document.body.appendChild(elem);
   const promise = new Promise(resolve => {
     elem.onload = () => {
+      cb && cb();
       resolve({
         loaded: true
       });
@@ -24,7 +25,7 @@ const injectScripUrl = (scriptUrl = '') => {
   return promise;
 };
 
-const injectScriptSrc = (scriptSrc = '') => {
+const injectScriptSrc = (scriptSrc = '', cb) => {
   if (!scriptSrc) {
     console.warn('you need to pass the script source!!!');
     return false;
@@ -32,12 +33,13 @@ const injectScriptSrc = (scriptSrc = '') => {
   const elem = createElement();
   elem.text = scriptSrc;
   document.body.appendChild(elem);
+  cb && cb();
   return Promise.resolve({ loaded: true });
 };
 
-export function inject(scriptUrl, scriptSrc) {
+export function inject(scriptUrl, scriptSrc, cb) {
   if (!scriptUrl && !scriptSrc) {
     console.warn('please pass a script url or src');
   }
-  return (scriptUrl ? injectScripUrl(scriptUrl) : injectScriptSrc(scriptSrc));
+  return (scriptUrl ? injectScripUrl(scriptUrl, cb) : injectScriptSrc(scriptSrc, cb));
 }

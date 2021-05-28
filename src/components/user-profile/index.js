@@ -9,6 +9,7 @@ import VideoGallery from '../video-gallery';
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router
 }) {
+  console.log(id);
   const [videoData, setVideoData] = useState({});
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars

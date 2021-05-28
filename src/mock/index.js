@@ -2,7 +2,7 @@ import { Server } from 'miragejs';
 import { mockDataBase } from './seeds';
 import { getListRequestHandler, deleteListRequestHandler } from './req-handlers/github';
 import { getForYouFeed } from './req-handlers/feed';
-import { getForYouEmbedFeed } from './req-handlers/embed';
+// import { getForYouEmbedFeed } from './req-handlers/embed';
 import { getComments } from './req-handlers/social';
 import { getUserProfile } from './req-handlers/users/profile';
 import { userLogin } from './req-handlers/auth';
@@ -26,7 +26,7 @@ function mockServer(environment = 'development', callback) {
       // feed
       this.get('https://stagingmobile.charmboard.com//v3.6/demo/hipi/1', getForYouFeed);
       // this.get('https://hipigwapi.zee5.com/api/v1/shorts/home', getForYouFeed);
-      this.get('https://hipigwapi.zee5.com/api/v1/shorts/video/detail', getForYouEmbedFeed);
+      // this.get('https://hipigwapi.zee5.com/api/v1/shorts/video/detail', getForYouEmbedFeed);
 
       // social
       this.get('https://api.getsocial.im/v1/activities', getComments);

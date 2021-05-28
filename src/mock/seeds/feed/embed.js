@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 export const forYouEmbedFeed = {
   'http-status': 200,
+  headers: {},
   data: {
     status: 200,
     success: true,
@@ -44,7 +45,7 @@ export const forYouEmbedFeed = {
           hipiExclusive: false,
           status: 'ACTIVE',
           akamaiStatus: 'ACTIVE',
-          akamaiUrl: 'https://z5shorts.akamaized.net/2021/3/19/09b322e4-ad5d-4e68-a48b-82ab8850ccd0/09b322e4-ad5d-4e68-a48b-82ab8850ccd0_512.mp4?hdnea=st=1622032021~exp=1622046421~acl=/*~hmac=92d506c89bf0f2aea485ef66f05c9ca7f51bf163dccc36e8b35d4e96eca98f16',
+          akamaiUrl: 'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1622179131~exp=1622193531~acl=/*~hmac=853a4779ec5159050addeb0a43caa3c0c418b57ffab69505f33253519bd3776f',
           downloadable: 'true',
           s3Url: 'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1619511157~exp=1619525557~acl=/*~hmac=082f72d72c6d562f268004a05bd73fb8de4d2c31c850dd09d88917422cb0d3d2',
           hashtags: [
@@ -115,8 +116,7 @@ export const forYouEmbedFeed = {
     requestedWith: {
       id: 1
     }
-  },
-  headers: {}
+  }
 };
 export const forYouEmbedFeedFailure = {
   status: 400,

@@ -32,7 +32,7 @@ const login = async ({
       accessToken: zee5Token,
       refreshToken: resp.data.refresh_token
     };
-    setItem('tokens', JSON.stringify(tokens));
+    setItem('tokens', JSON.stringify(tokens), { path: '/' });
     response.data.accessToken = zee5Token;
     response.data.status = 200;
     response.data.message = 'success';
