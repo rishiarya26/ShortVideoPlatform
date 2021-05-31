@@ -10,6 +10,8 @@ import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
 import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
+import { SW_IGNORE } from '../src/constants';
+import { doesStringMatch } from '../src/utils/string';
 
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
@@ -128,7 +130,9 @@ function Hipi({
   Component, pageProps, locales, locale
 }) {
   useEffect(() => {
-    registerSW();
+    if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
+      registerSW();
+    }
   }, []);
   return (
     <>
