@@ -2,6 +2,7 @@ import { post } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
+import { sendOTP } from './send-otp';
 
 const getUserVerify = async mobile => {
   let response = {};
@@ -14,6 +15,8 @@ const getUserVerify = async mobile => {
     });
     response.data.status = 200;
     response.data.message = 'success';
+    const resp = await sendOTP(mobile);
+    response.data.sendOtp = resp.data;
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
