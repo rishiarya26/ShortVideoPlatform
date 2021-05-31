@@ -35,7 +35,7 @@ function VideoFooter({
         {/* ) : ''} */}
 
         <h3 className=" my-1 font-semibold xxs:text-sm xs:text-base">{userName}</h3>
-        <div className="font-normal text-xs mb-3 mt-2">
+        <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (
               <span key={id}>{`#${data.name}${' '}`}</span>
