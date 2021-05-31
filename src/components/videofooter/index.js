@@ -1,5 +1,5 @@
-// import Marquee from '../commons/text-marquee';
-// import Music from '../commons/svgicons/music';
+import Marquee from '../commons/text-marquee';
+import Music from '../commons/svgicons/music';
 
 function VideoFooter({
   userName,
@@ -8,7 +8,8 @@ function VideoFooter({
   hashTags,
   canShop,
   id,
-  videoShopData
+  videoShopData,
+  musicCoverTitle
 }) {
   return (
     <div
@@ -40,11 +41,13 @@ function VideoFooter({
               <span key={id}>{`#${data.name}${' '}`}</span>
             ))}
         </div>
-        {/* <p className=" my-1 xxs:text-sm xs:text-base">{musicCoverTitle}</p> */}
-        {/* <div className=" my-1 xxs:text-sm xs:text-base">
+        {/* {musicCoverTitle}</p> */}
+        <div className=" my-1 xxs:text-sm xs:text-base">
           <Music />
-          <Marquee text={musicTitle} />
-        </div> */}
+          <p className=" my-1 xxs:text-sm xs:text-base w-4/12">
+            <Marquee text={musicCoverTitle} />
+          </p>
+        </div>
       </div>
     </div>
   );
