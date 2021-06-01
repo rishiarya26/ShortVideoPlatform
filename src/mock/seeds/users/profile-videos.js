@@ -15,7 +15,7 @@ export const profileVideos = {
           firstName: 'newer',
           lastName: 'Kn',
           hipiStar: false,
-          userName: 'Ritikabadiani',
+          userName: '@Ritikabadiani',
           objectID: '0f4b4096-a4bc-4f8f-82ec-b1d85c018cf2',
           pristine_image: '',
           profilePicImgUrl: 'https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1605183269/hipi/assets/user/95473b77-2bb0-4c2a-b4ad-a08e64b99a4f/95473b77-2bb0-4c2a-b4ad-a08e64b99a4f.webp'

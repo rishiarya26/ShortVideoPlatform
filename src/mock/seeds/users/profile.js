@@ -11,7 +11,7 @@ export const profile = {
       lastName: 'Kn',
       likes: 0,
       dateOfBirth: '01/04/1996',
-      profilePic: 'https://assets2.charmboard.com/pro/images/104578166157776556785/1578291929591.jpeg?tr=w-200,h-200,z-0.75,fo-face,c-thumb,pr-true,q-70,g-face',
+      profilePic: 'https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1605183269/hipi/assets/user/95473b77-2bb0-4c2a-b4ad-a08e64b99a4f/95473b77-2bb0-4c2a-b4ad-a08e64b99a4f.webp',
       pristine_image: '',
       bio: '',
       followers: 2,
