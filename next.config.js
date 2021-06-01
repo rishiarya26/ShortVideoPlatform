@@ -1,6 +1,6 @@
 
 const withSourceMaps = require('@zeit/next-source-maps');
-const withPWA = require('next-pwa');
+// const withPWA = require('next-pwa');
 
 const {
   GEN_SOURCE_MAP,
@@ -62,6 +62,6 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
-// module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
+module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 
