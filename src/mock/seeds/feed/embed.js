@@ -45,7 +45,7 @@ export const forYouEmbedFeed = {
           hipiExclusive: false,
           status: 'ACTIVE',
           akamaiStatus: 'ACTIVE',
-          akamaiUrl: 'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1622179131~exp=1622193531~acl=/*~hmac=853a4779ec5159050addeb0a43caa3c0c418b57ffab69505f33253519bd3776f',
+          akamaiUrl: 'https://media.charmboard.com/images/demo_videos/116048223_280845449876104_5314998475040145773_n.mp4',
           downloadable: 'true',
           s3Url: 'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1619511157~exp=1619525557~acl=/*~hmac=082f72d72c6d562f268004a05bd73fb8de4d2c31c850dd09d88917422cb0d3d2',
           hashtags: [
