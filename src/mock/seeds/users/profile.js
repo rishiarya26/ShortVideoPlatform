@@ -1,5 +1,6 @@
 export const profile = {
-  'http-status': 200,
+ 'http-status': 200,
+  data:{
   status: 200,
   success: true,
   responseData: {
@@ -21,5 +22,5 @@ export const profile = {
     totalLikes: 4,
     isFollowing: false,
     followRequest: false
-  }
+  }}
 };
