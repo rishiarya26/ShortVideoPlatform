@@ -44,9 +44,9 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
         <div className=" my-1 xxs:text-sm xs:text-base">
           <Music />
-          <p className=" my-1 xxs:text-sm xs:text-base w-4/12">
+          <span className=" my-1 xxs:text-sm xs:text-base w-4/12">
             <Marquee text={musicCoverTitle} />
-          </p>
+          </span>
         </div>
       </div>
     </div>

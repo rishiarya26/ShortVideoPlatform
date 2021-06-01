@@ -108,6 +108,8 @@ export async function getServerSideProps(ctx) {
     // , locale,
     // defaultLocale, locales
   } = ctx;
+
+  console.log(params)
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
@@ -116,6 +118,7 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
+    console.log(data)
   } catch (e) {
     data = {
       status: e.status,
