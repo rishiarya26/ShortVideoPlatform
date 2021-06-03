@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Error from 'next/error';
 import EmbedVideo from '../../src/components/embedvideo';
 import { getSingleFeed } from '../../src/sources/feed/embed';
@@ -9,6 +9,7 @@ import {
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
 import { Shop } from '../../src/components/commons/button/shop';
+import { getNetworkConnection } from '../../src/utils/device-details';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -17,18 +18,33 @@ const languageCodes = Object.keys(supportedLanguages).map(
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
+  const [videoUrl, setVideoUrl] = useState(null)
   const {
     data: item = {},
     errorCode,
     message,
     status
   } = params;
-  const videoId = item.content_id;
+  const videoId = item?.content_id;
   const canShop = !!item?.canShop;
-
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
+
+  useEffect(()=>{
+    const hd = item.video_urls[2]
+    const standard = item.video_urls[1]
+    const low = item.defaultUrl;
+    const networkConnection = getNetworkConnection();
+    
+    if(networkConnection === '4g')
+    { setVideoUrl(hd)} else
+    if(networkConnection === '3g') 
+    { setVideoUrl(standard)} else
+     setVideoUrl(low)
+  },[videoUrl])
+  
+
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -78,7 +94,8 @@ export default function Hipi(params) {
       <EmbedVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
-        url={item.video_url}
+        defaultUrl={item.default_video_url}
+        url={videoUrl}
         id={item.content_id}
         comments={item.commentsCount}
         likes={item.likesCount}
@@ -89,6 +106,7 @@ export default function Hipi(params) {
         musicCoverTitle={item.musicCoverTitle}
         hashTags={item.hashTags}
         canShop={canShop}
+        poster={item.thumbnail}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         {canShop
@@ -108,8 +126,6 @@ export async function getServerSideProps(ctx) {
     // , locale,
     // defaultLocale, locales
   } = ctx;
-
-  console.log(params)
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
@@ -118,7 +134,6 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
-    console.log(data)
   } catch (e) {
     data = {
       status: e.status,

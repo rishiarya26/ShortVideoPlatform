@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect,useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
 import EmbedVideoSidebar from '../embedvideoside/index';
 import useWindowSize from '../../hooks/use-window-size';
@@ -8,9 +8,9 @@ import { withBasePath } from '../../config';
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
+
   const rootRef = useRef(null);
   const size = useWindowSize();
-
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -22,6 +22,10 @@ function Embedvideo(props) {
       setClicked(true);
     }
   };
+
+  //  useEffect(()=>{
+  //   setUrl(props.url)
+  // })
 
   const handlePlay = entry => {
     if (clicked) {
@@ -55,6 +59,7 @@ function Embedvideo(props) {
       <video
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
+        // poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}

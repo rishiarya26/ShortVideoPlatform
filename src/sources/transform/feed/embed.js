@@ -28,17 +28,12 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
-    // const networkConnection = getNetworkConnection();
     const { videos = [] } = responseData;
     if (videos?.length) {
       const payloadObject = {};
       videos.forEach(d => {
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
-        networkConnection === '4g' ? 
-        payloadObject.video_url = d.videoUrl?.AkamaiURL?.[2] :
-        networkConnection === '3g' ? 
-        payloadObject.video_url = d.videoUrl?.AkamaiURL?.[1] : payloadObject.video_url = d.akamaiUrl;
         payloadObject.content_description = d.description;
         payloadObject.userId = d.videoOwnersId;
         payloadObject.videoOwnersId = d.videoOwnersId;
@@ -50,6 +45,9 @@ function transformSuccess(resp) {
         payloadObject.likesCount = d.lCount;
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
+        payloadObject.default_video_url = d.akamaiUrl;
+        payloadObject.video_urls = d?.videoUrl?.AkamaiURL
+        payloadObject.thumbnail = d.thumbnailUrl;
       });
       payload.data = payloadObject;
     } else {
