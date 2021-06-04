@@ -14,9 +14,11 @@ async function fetchUserProfile(id) {
   try {
     if (isMockMode()) {
       apiPath = `${getApiBasePath('app')}/api/user`;
-    } else {
-      apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+      response = await get(apiPath);
+      return Promise.resolve(response);
     }
+    apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+
     response = await get(apiPath);
     return Promise.resolve(response);
   } catch (err) {

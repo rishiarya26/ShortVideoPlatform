@@ -1,1 +1,1 @@
-export const userLogin = schema => (schema.db.login[0]);
+export const userLogin = schema => (schema.db.login[0].data);
