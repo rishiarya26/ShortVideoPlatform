@@ -103,7 +103,7 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
           <Shop
             videoId={activeVideoId}
-            data={data}
+            canShop={data?.canShop}
             status={fetchState}
           />
         </div>

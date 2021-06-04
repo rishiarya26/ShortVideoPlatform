@@ -3,7 +3,7 @@ import { inject } from '../../../../analytics/async-script-loader';
 import useTranslation from '../../../../hooks/use-translation';
 
 export const Shop = ({
-  videoId, status, data
+  videoId, status, canShop
 }) => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ export const Shop = ({
   return (
     <>
       {!loading && status === 'success' ? (
-        data?.canShop
+        canShop
         && (
           <button
             className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
