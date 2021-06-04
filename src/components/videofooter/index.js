@@ -13,8 +13,8 @@ function VideoFooter({
   return (
     <div
       className={`${
-        type === 'feed' ? 'bottom-16' : 'bottom-16'
-      } videoFooter absolute flex text-white ml-2`}
+        type === 'feed' ? 'bottom' : 'bottom'
+      } videoFooter  flex text-white ml-2`}
     >
       <div className="videoFooter__text w-2/3">
         {/* {canShop ? ( */}
