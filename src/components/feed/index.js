@@ -11,7 +11,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { canShop } from '../../sources/can-shop';
-import { Shop } from '../commons/button/shop';
+import { Shop } from '../commons/button/shop.js';
 
 SwiperCore.use([Mousewheel]);
 

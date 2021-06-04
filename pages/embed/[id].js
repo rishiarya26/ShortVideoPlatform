@@ -8,7 +8,7 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
-import { Shop } from '../../src/components/commons/button/shop';
+import { Shop } from '../../src/components/commons/button/shop.js';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
