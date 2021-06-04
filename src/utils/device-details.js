@@ -11,3 +11,15 @@ export function getOS() {
 
   return 'unknown';
 }
+
+export function getNetworkConnection() {
+  const networkInformation = navigator.connection;
+  const { effectiveType } = networkInformation;
+  let networkStrength = 'low';
+  if (effectiveType === '4g') {
+    networkStrength = 'fast';
+  } else if (effectiveType === '3g') {
+    networkStrength = 'medium';
+  }
+  return networkStrength;
+}

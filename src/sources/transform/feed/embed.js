@@ -33,7 +33,6 @@ function transformSuccess(resp) {
       videos.forEach(d => {
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
-        payloadObject.video_url = d.akamaiUrl;
         payloadObject.content_description = d.description;
         payloadObject.userId = d.videoOwnersId;
         payloadObject.videoOwnersId = d.videoOwnersId;
@@ -45,12 +44,19 @@ function transformSuccess(resp) {
         payloadObject.likesCount = d.lCount;
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
+        const videoUrls = {};
+        videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+        videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+        videoUrls.low = d.akamaiUrl;
+        payloadObject.video_urls = videoUrls;
+        payloadObject.thumbnail = d.thumbnailUrl;
       });
       payload.data = payloadObject;
     } else {
       return transformError(data);
     }
     payload.data.canShop = data.canShop;
+    payload.data.canShopStatus = 'success';
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

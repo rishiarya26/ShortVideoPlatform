@@ -7,7 +7,6 @@ export const feed = {
   "data": {
       "data_id": "ddeaa554-b40e-45ef-8cde-9d940a9d2cae",
       "content_id": "ddeaa554-b40e-45ef-8cde-9d940a9d2cae",
-      "video_url": "https://media.charmboard.com/images/demo_videos/116048223_280845449876104_5314998475040145773_n.mp4",
       "content_description": "#AbhishekBachchan #Music #Challenge #Bollywood#TheBigBull",
       "userId": "95473b77-2bb0-4c2a-b4ad-a08e64b99a4f",
       "videoOwnersId": "95473b77-2bb0-4c2a-b4ad-a08e64b99a4f",

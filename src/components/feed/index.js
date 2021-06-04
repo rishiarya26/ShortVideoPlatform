@@ -90,7 +90,8 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
                 videoOwnersId={item.videoOwnersId}
                 // thumbnail={item.thumbnail}
                 thumbnail={item.poster_image_url}
-                videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop }}
+                videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop, canShopStatus: fetchState && fetchState }}
+
               />
             </SwiperSlide>
           )) : (
@@ -99,16 +100,15 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
             </div>
           ))
         }
-
-        { data && data.canShop
-     && (
-       <>
-         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-           <Shop videoId={activeVideoId} />
-         </div>
-       </>
-     )}
+        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+          <Shop
+            videoId={activeVideoId}
+            canShop={data?.canShop}
+            status={fetchState}
+          />
+        </div>
       </Swiper>
+
       {validItemsLength ? seekedPercentage
         ? <Seekbar seekedPercentage={seekedPercentage} />
         : <SeekbarLoading />
