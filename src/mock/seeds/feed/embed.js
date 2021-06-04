@@ -89,6 +89,7 @@ export const forYouEmbedFeed = {
           silent: 0,
           allowDuplicate: 'false',
           agency: 0,
+          user: 'yo',
           getSocialId: '564424030012889198',
           videoTitle: '#TheBigBull',
           privacySettings: 'PUBLIC',
