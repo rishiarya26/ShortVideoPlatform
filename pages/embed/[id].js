@@ -86,7 +86,6 @@ export default function Hipi(params) {
       <EmbedVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
-        defaultUrl={item.default_video_url}
         url={videoUrl}
         id={item.content_id}
         comments={item.commentsCount}
