@@ -1,5 +1,6 @@
-commit 5d106be48bb8f6b69c71516b7d779bbef092fae4
+commit 20d9eed0c80664be7757d0f701993f2189ef3c62
+Merge: aef30f2 3e36735
 Author: Ankit Agarwal <ankit.agarwal@ZL-MU-MT-MAC100.local>
-Date:   Mon May 24 20:01:42 2021 +0530
+Date:   Tue May 25 16:29:40 2021 +0530
 
-    fix the parser
+    Merge branch 'release' of bitbucket.org:zee5in/hipi-web
