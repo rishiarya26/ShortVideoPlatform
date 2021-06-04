@@ -8,9 +8,9 @@ import { withBasePath } from '../../config';
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
+
   const rootRef = useRef(null);
   const size = useWindowSize();
-
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -53,8 +53,10 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
+        poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}

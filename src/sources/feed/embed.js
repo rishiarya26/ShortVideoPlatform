@@ -10,9 +10,13 @@ async function fetchEmbedFeed({ id }) {
   try {
     if (isMockMode()) {
       apiPath = `${getApiBasePath('app')}/api/embed`;
-    } else {
-      apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+      response = await get(apiPath);
+      response.data.requestedWith = { id };
+      response.data.data.canShop = true;
+      return Promise.resolve(response.data);
     }
+    apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+
     response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
     response[0].data.requestedWith = { id };
     response[0].data.canShop = response[1].canShop;

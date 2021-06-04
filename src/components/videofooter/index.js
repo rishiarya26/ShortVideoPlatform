@@ -1,9 +1,9 @@
-// import Marquee from '../commons/text-marquee';
-// import Music from '../commons/svgicons/music';
+import Marquee from '../commons/text-marquee';
+import Music from '../commons/svgicons/music';
 
 function VideoFooter({
   userName,
-  // musicTitle,
+  musicTitle,
   type,
   hashTags,
   canShop,
@@ -25,7 +25,7 @@ function VideoFooter({
           </div>
         )}
 
-        { (id === videoShopData?.activeId) && videoShopData?.canShop
+        { (id === videoShopData?.activeId) && videoShopData?.canShopStatus === 'success' && videoShopData?.canShop
           && (
             <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 xxs:text-sm xs:text-base">
               Shoppable
@@ -34,17 +34,19 @@ function VideoFooter({
         {/* ) : ''} */}
 
         <h3 className=" my-1 font-semibold xxs:text-sm xs:text-base">{userName}</h3>
-        <div className="font-normal text-xs mb-3 mt-2">
+        <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (
               <span key={id}>{`#${data.name}${' '}`}</span>
             ))}
         </div>
-        {/* <p className=" my-1 xxs:text-sm xs:text-base">{musicCoverTitle}</p> */}
-        {/* <div className=" my-1 xxs:text-sm xs:text-base">
+        {/* {musicCoverTitle}</p> */}
+        <div className="w-8/12 my-1 xxs:text-sm xs:text-base">
           <Music />
-          <Marquee text={musicTitle} />
-        </div> */}
+          <span className=" my-1 xxs:text-sm xs:text-base w-4/12">
+            <Marquee text={musicTitle} />
+          </span>
+        </div>
       </div>
     </div>
   );
