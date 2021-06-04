@@ -35,9 +35,12 @@ function transformSuccess(resp) {
       const payloadObject = {};
       payloadObject.data_id = d.objectID;
       payloadObject.content_id = d.id;
-      networkConnection === '4g' ? payloadObject.video_url = d.videoUrl?.AkamaiURL?.[2] :
-      networkConnection === '3g' ? payloadObject.video_url = d.videoUrl?.AkamaiURL?.[1] :
-                                   payloadObject.video_url = d.akamaiUrl;
+      let videoUrls = {}
+      videoUrls.fast = d.videoUrl?.AkamaiURL?.[2];
+      videoUrls.medium = d.videoUrl?.AkamaiURL?.[1];
+      videoUrls.low = d.akamaiUrl;
+      const videoUrl = getEffectiveVideoUrl(videoUrls);
+      payloadObject.video_url = videoUrl;
       payloadObject.content_description = d.description;
       payloadObject.userId = d.videoOwnersId;
       payloadObject.videoOwnersId = d.videoOwnersId;

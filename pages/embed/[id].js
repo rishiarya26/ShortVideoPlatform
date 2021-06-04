@@ -8,8 +8,8 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
-import { getNetworkConnection } from '../../src/utils/device-details';
-import { ShopEmbed } from '../../src/components/commons/button/shop-embed';
+import { getEffectiveVideoUrl } from '../../src/utils/get-effective-video-url';
+import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -33,12 +33,8 @@ export default function Hipi(params) {
   };
 
   useEffect(() => {
-    const hd = item?.video_urls?.[2];
-    const standard = item?.video_urls?.[1];
-    const low = item?.defaultUrl;
-    const networkConnection = getNetworkConnection();
-    (networkConnection === '4g' && hd) ? setVideoUrl(hd)
-      : (networkConnection === '3g' && standard) ? setVideoUrl(standard) : setVideoUrl(low);
+    const videoUrl = getEffectiveVideoUrl(item.video_urls);
+    setVideoUrl(videoUrl);
   }, []);
 
   if (status === 'fail') {
@@ -105,7 +101,7 @@ export default function Hipi(params) {
         poster={item.thumbnail}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        <ShopEmbed videoId={videoId} canShop={canShop} />
+        <Shop videoId={videoId} canShop={canShop} status={item.canShopStatus} />
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>

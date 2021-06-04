@@ -1,21 +1,12 @@
 import { useEffect, useState } from 'react';
-import CircularProgress from '../../circular-loader-small';
 import { inject } from '../../../../analytics/async-script-loader';
-import Error from './error';
-import Loader from './loader';
-import ComponentStateHandler from '../../component-state-handler';
 import useTranslation from '../../../../hooks/use-translation';
 
-let retry;
-const ErrorComp = () => (<Error retry={retry} />);
-const LoadComp = () => (<Loader />);
-
 export const Shop = ({
-  videoId, setRetry, status, data
+  videoId, status, data
 }) => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
-  retry = setRetry;
   const loaded = () => {
     setLoading(false);
   };
@@ -24,12 +15,8 @@ export const Shop = ({
   }, []);
 
   return (
-    <ComponentStateHandler
-      state={status}
-      Loader={LoadComp}
-      ErrorComp={ErrorComp}
-    >
-      {!loading ? (
+    <>
+      {!loading && status === 'success' ? (
         data?.canShop
         && (
           <button
@@ -42,14 +29,12 @@ export const Shop = ({
         )
       ) : (
         <button
-          className="rounded-lg text-white py-1 pl-4 pr-2 bg-hipipink  tracking-wide xxs:text-sm xs:text-base flex items-center"
+          className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base"
         >
-          <span>{t('SHOP')}</span>
-          {' '}
-          <span className="inline-block p-1"><CircularProgress /></span>
+          {t('SHOP')}
         </button>
       )}
-    </ComponentStateHandler>
+    </>
 
   );
 };

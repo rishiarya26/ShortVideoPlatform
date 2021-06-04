@@ -44,8 +44,11 @@ function transformSuccess(resp) {
         payloadObject.likesCount = d.lCount;
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
-        payloadObject.default_video_url = d.akamaiUrl;
-        payloadObject.video_urls = d?.videoUrl?.AkamaiURL;
+        const videoUrls = {};
+        videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+        videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+        videoUrls.low = d.akamaiUrl;
+        payloadObject.video_urls = videoUrls;
         payloadObject.thumbnail = d.thumbnailUrl;
       });
       payload.data = payloadObject;
@@ -53,6 +56,7 @@ function transformSuccess(resp) {
       return transformError(data);
     }
     payload.data.canShop = data.canShop;
+    payload.data.canShopStatus = 'success';
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

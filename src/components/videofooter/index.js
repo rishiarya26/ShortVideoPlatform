@@ -25,7 +25,7 @@ function VideoFooter({
           </div>
         )}
 
-        { (id === videoShopData?.activeId) && videoShopData?.canShop
+        { (id === videoShopData?.activeId) && videoShopData?.canShopStatus === 'success' && videoShopData?.canShop
           && (
             <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 xxs:text-sm xs:text-base">
               Shoppable
