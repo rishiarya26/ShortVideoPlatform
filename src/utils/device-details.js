@@ -12,8 +12,8 @@ export function getOS() {
   return 'unknown';
 }
 
-export function getNetworkConnection(){
-  const networkInformation = navigator.connection
-  const {effectiveType} = networkInformation;
+export function getNetworkConnection() {
+  const networkInformation = navigator.connection;
+  const { effectiveType } = networkInformation;
   return effectiveType;
 }

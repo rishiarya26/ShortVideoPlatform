@@ -3,13 +3,12 @@ import Music from '../commons/svgicons/music';
 
 function VideoFooter({
   userName,
-  // musicTitle,
+  musicTitle,
   type,
   hashTags,
   canShop,
   id,
-  videoShopData,
-  musicCoverTitle
+  videoShopData
 }) {
   return (
     <div
@@ -42,10 +41,10 @@ function VideoFooter({
             ))}
         </div>
         {/* {musicCoverTitle}</p> */}
-        <div className=" my-1 xxs:text-sm xs:text-base">
+        <div className="w-8/12 my-1 xxs:text-sm xs:text-base">
           <Music />
           <span className=" my-1 xxs:text-sm xs:text-base w-4/12">
-            <Marquee text={musicCoverTitle} />
+            <Marquee text={musicTitle} />
           </span>
         </div>
       </div>

@@ -12,7 +12,6 @@ import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
 import { canShop } from '../../sources/can-shop';
 import { Shop } from '../commons/button/shop';
-import { getNetworkConnection } from '../../utils/device-details';
 
 SwiperCore.use([Mousewheel]);
 
@@ -33,7 +32,6 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
   };
 
   useEffect(() => {
-    console.log(getNetworkConnection())
     resp && setItems(resp.data);
     resp && setActiveVideoId(resp.data[0].content_id);
   }, [resp]);
@@ -101,14 +99,14 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
             </div>
           ))
         }
-         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-           <Shop 
-             videoId={activeVideoId} 
-             data={data} 
-             setRetry={retry}
-             status={fetchState}
-           />
-         </div>
+        <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
+          <Shop
+            videoId={activeVideoId}
+            data={data}
+            setRetry={retry}
+            status={fetchState}
+          />
+        </div>
       </Swiper>
 
       {validItemsLength ? seekedPercentage

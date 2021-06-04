@@ -39,7 +39,7 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
   };
   useEffect(() => {
     setFetchState('pending');
-    setData(null)
+    setData(null);
     dataFetch();
   }, [dep]);
 

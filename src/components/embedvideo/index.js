@@ -1,4 +1,4 @@
-import React, { useEffect,useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
 import EmbedVideoSidebar from '../embedvideoside/index';
 import useWindowSize from '../../hooks/use-window-size';
@@ -22,10 +22,6 @@ function Embedvideo(props) {
       setClicked(true);
     }
   };
-
-  //  useEffect(()=>{
-  //   setUrl(props.url)
-  // })
 
   const handlePlay = entry => {
     if (clicked) {
@@ -57,9 +53,10 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
-        // poster={props.poster}
+        poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}

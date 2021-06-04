@@ -1,7 +1,6 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
-import { getNetworkConnection } from '../../../utils/device-details';
 
 const msgMap = {
   200: 'ok'
@@ -46,7 +45,7 @@ function transformSuccess(resp) {
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
         payloadObject.default_video_url = d.akamaiUrl;
-        payloadObject.video_urls = d?.videoUrl?.AkamaiURL
+        payloadObject.video_urls = d?.videoUrl?.AkamaiURL;
         payloadObject.thumbnail = d.thumbnailUrl;
       });
       payload.data = payloadObject;

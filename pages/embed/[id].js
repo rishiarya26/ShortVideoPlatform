@@ -6,10 +6,10 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../../src/components/commons/head-meta/seo-meta';
-import { supportedLanguages } from '../../src/hooks/use-translation';
+import  { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
-import { Shop } from '../../src/components/commons/button/shop';
 import { getNetworkConnection } from '../../src/utils/device-details';
+import { ShopEmbed } from '../../src/components/commons/button/shop-embed';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -18,32 +18,28 @@ const languageCodes = Object.keys(supportedLanguages).map(
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
-  const [videoUrl, setVideoUrl] = useState(null)
+  const [videoUrl, setVideoUrl] = useState(null);
   const {
     data: item = {},
     errorCode,
     message,
     status
   } = params;
+
   const videoId = item?.content_id;
   const canShop = !!item?.canShop;
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
-  useEffect(()=>{
-    const hd = item.video_urls[2]
-    const standard = item.video_urls[1]
-    const low = item.defaultUrl;
+  useEffect(() => {
+    const hd = item?.video_urls?.[2];
+    const standard = item?.video_urls?.[1];
+    const low = item?.defaultUrl;
     const networkConnection = getNetworkConnection();
-    
-    if(networkConnection === '4g')
-    { setVideoUrl(hd)} else
-    if(networkConnection === '3g') 
-    { setVideoUrl(standard)} else
-     setVideoUrl(low)
-  },[videoUrl])
-  
+    (networkConnection === '4g' && hd) ? setVideoUrl(hd): 
+    (networkConnection === '3g' && standard) ? setVideoUrl(standard) : setVideoUrl(low);
+  }, []);
 
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
@@ -109,10 +105,7 @@ export default function Hipi(params) {
         poster={item.thumbnail}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        {canShop
-          && (
-            <Shop videoId={videoId} />
-          )}
+       <ShopEmbed videoId={videoId} canShop={canShop}/>
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
@@ -142,7 +135,6 @@ export async function getServerSideProps(ctx) {
       message: e.message
     };
   }
-
   return {
     props: {
       uri,

@@ -1,7 +1,6 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
-import { getNetworkConnection } from '../../../utils/device-details';
 
 const msgMap = {
   200: 'ok'
@@ -28,7 +27,7 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     // COMMENTED - for production feed api
-    const networkConnection = getNetworkConnection();
+    // const networkConnection = getNetworkConnection();
     /* const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
@@ -37,7 +36,7 @@ function transformSuccess(resp) {
       payloadObject.data_id = d.objectID;
       payloadObject.content_id = d.id;
       networkConnection === '4g' ? payloadObject.video_url = d.videoUrl?.AkamaiURL?.[2] :
-      networkConnection === '3g' ? payloadObject.video_url = d.videoUrl?.AkamaiURL?.[1] : 
+      networkConnection === '3g' ? payloadObject.video_url = d.videoUrl?.AkamaiURL?.[1] :
                                    payloadObject.video_url = d.akamaiUrl;
       payloadObject.content_description = d.description;
       payloadObject.userId = d.videoOwnersId;
