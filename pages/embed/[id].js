@@ -8,7 +8,7 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
-import { getEffectiveVideoUrl } from '../../src/utils/get-effective-video-url';
+import { getEffectiveVideoUrl } from '../../src/utils/content';
 import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
