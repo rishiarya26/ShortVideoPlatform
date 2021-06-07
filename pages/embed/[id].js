@@ -27,7 +27,7 @@ export default function Hipi(params) {
   } = params;
 
   const videoId = item?.content_id;
-  const canShop = !!item?.canShop;
+  const { canShop = 'fail' } = item;
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
@@ -100,7 +100,7 @@ export default function Hipi(params) {
         poster={item.thumbnail}
       />
       <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        <Shop videoId={videoId} canShop={canShop} status={item.canShopStatus} />
+        <Shop videoId={videoId} canShop={canShop} />
       </div>
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>

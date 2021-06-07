@@ -114,8 +114,7 @@ function Video(props) {
         musicCoverTitle={props.musicCoverTitle}
         type="feed"
         hashTags={props.hashTags}
-        videoShopData={props.videoShopData}
-        id={props.id}
+        canShop={props.canShop}
       />
 
     </div>

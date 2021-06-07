@@ -10,8 +10,9 @@ import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
 import Tabs from '../commons/tabs';
 import useTranslation from '../../hooks/use-translation';
-import { canShop } from '../../sources/can-shop';
 import { Shop } from '../commons/button/shop';
+import { getHomeFeed } from '../../sources/feed';
+import { canShop } from '../../sources/can-shop';
 
 SwiperCore.use([Mousewheel]);
 
@@ -19,33 +20,57 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ fetchState: status, retry: putRetry, data: resp }) {
+export default function Feed({ id }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
+  const [isShoppable, setIsShoppable] = useState('pending');
+
   const { t } = useTranslation();
+
+  const onDataFetched = data => {
+    data && setItems(data?.data);
+    data && setActiveVideoId(data?.data?.[0]?.content_id);
+  };
+  const dataFetcher = () => getHomeFeed({ type: id });
+  let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
+
+  if (id === 'for-you') {
+    const status = fetchState === 'success';
+    const dataLength = data?.data?.length;
+    fetchState = (status && !dataLength > 0) ? 'fail' : fetchState;
+    data = (status && dataLength > 0) && data;
+    retry = (status && !dataLength > 0) && retry;
+  }
+
   const validItemsLength = items?.length > 0;
-  setRetry = putRetry && putRetry;
+  setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
 
+  const getCanShop = async () => {
+    let isShoppable = false;
+    try {
+      const response = await canShop({ videoId: activeVideoId });
+      isShoppable = response?.canShop;
+    } catch (e) {
+      isShoppable = false;
+    }
+    isShoppable ? setIsShoppable('success') : setIsShoppable('fail');
+  };
+
   useEffect(() => {
-    resp && setItems(resp.data);
-    resp && setActiveVideoId(resp.data[0].content_id);
-  }, [resp]);
-
-  const dataFetcher = () => canShop({ videoId: activeVideoId });
-
-  // eslint-disable-next-line no-unused-vars
-  const [fetchState, retry, data] = useFetcher(dataFetcher, null, activeVideoId);
+    setIsShoppable('pending');
+    getCanShop();
+  }, [activeVideoId]);
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
   return (
     <ComponentStateHandler
-      state={status}
+      state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
@@ -90,7 +115,7 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
                 videoOwnersId={item.videoOwnersId}
                 // thumbnail={item.thumbnail}
                 thumbnail={item.poster_image_url}
-                videoShopData={{ activeId: activeVideoId, canShop: data && data.canShop, canShopStatus: fetchState && fetchState }}
+                canShop={isShoppable}
 
               />
             </SwiperSlide>
@@ -103,8 +128,7 @@ export default function Feed({ fetchState: status, retry: putRetry, data: resp }
         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
           <Shop
             videoId={activeVideoId}
-            canShop={data?.canShop}
-            status={fetchState}
+            canShop={isShoppable}
           />
         </div>
       </Swiper>

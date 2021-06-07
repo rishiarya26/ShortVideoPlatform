@@ -55,8 +55,7 @@ function transformSuccess(resp) {
     } else {
       return transformError(data);
     }
-    payload.data.canShop = data.canShop;
-    payload.data.canShopStatus = 'success';
+    payload.data.canShop = data?.canShop ? 'success' : 'fail';
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
