@@ -5,6 +5,7 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
+import ProductWidget from '../product-widget/'
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
@@ -98,25 +99,31 @@ function Video(props) {
         <Pause />
       </div> */}
 
-      <VideoSidebar
-        videoOwnersId={props.videoOwnersId}
-        socialId={props.socialId}
-        profilePic={props.profilePic}
-        likes={props.likes}
-        comment={props.comments}
-        share={777}
-        type="feed"
-      />
+<div className="flex flex-col absolute bottom-12 justify-items-end w-full">
+          <div className="flex justify-between items-end">
+               
 
-      <VideoFooter
-        musicTitle={props.musicTitle}
-        userName={props.userName}
-        musicCoverTitle={props.musicCoverTitle}
-        type="feed"
-        hashTags={props.hashTags}
-        videoShopData={props.videoShopData}
-        id={props.id}
-      />
+            <VideoFooter
+              musicTitle={props.musicTitle}
+              userName={props.userName}
+              musicCoverTitle={props.musicCoverTitle}
+              type="feed"
+              hashTags={props.hashTags}
+              videoShopData={props.videoShopData}
+              id={props.id}
+            />
+            <VideoSidebar
+              videoOwnersId={props.videoOwnersId}
+              socialId={props.socialId}
+              profilePic={props.profilePic}
+              likes={props.likes}
+              comment={props.comments}
+              share={777}
+              type="feed"
+            />
+          </div>
+          <ProductWidget/>
+      </div>
 
     </div>
   );
