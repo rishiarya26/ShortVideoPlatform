@@ -1,4 +1,4 @@
-import Close from '../svgicons/close';
+import Close from '../svgicons/close-black';
 
 const Drawer = ({
   // eslint-disable-next-line no-unused-vars

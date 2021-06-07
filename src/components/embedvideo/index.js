@@ -78,6 +78,9 @@ function Embedvideo(props) {
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
+      <div className="flex flex-col absolute bottom-12 justify-items-end w-full">
+          <div className="flex justify-between items-end">
+               
       <EmbedVideoSidebar
         socialId={props.socialId}
         profilePic={props.profilePic}
@@ -92,6 +95,8 @@ function Embedvideo(props) {
         hashTags={props.hashTags}
         canShop={props.canShop}
       />
+      </div>
+      </div>
     </div>
   );
 }
