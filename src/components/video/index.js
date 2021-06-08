@@ -103,15 +103,14 @@ function Video(props) {
           <div className="flex justify-between items-end">
                
 
-            <VideoFooter
-              musicTitle={props.musicTitle}
-              userName={props.userName}
-              musicCoverTitle={props.musicCoverTitle}
-              type="feed"
-              hashTags={props.hashTags}
-              videoShopData={props.videoShopData}
-              id={props.id}
-            />
+           <VideoFooter
+           musicTitle={props.musicTitle}
+           userName={props.userName}
+           musicCoverTitle={props.musicCoverTitle}
+           type="feed"
+           hashTags={props.hashTags}
+           canShop={props.canShop}
+         />
             <VideoSidebar
               videoOwnersId={props.videoOwnersId}
               socialId={props.socialId}
