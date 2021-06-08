@@ -3,9 +3,10 @@ import Image from 'next/image';
 // import Shop from '../svgicons/shop';
 
 const myLoader = ({ src, width }) => `${src}?w=${width}`;
-// console.log()
 
-function ImageComp({ data, title }) {
+function ImageComp({
+  data, title, width, height
+}) {
   // const [loaded, setLoaded] = useState(true);
   // const [error, setError] = useState(false)
 
@@ -31,8 +32,8 @@ function ImageComp({ data, title }) {
         loader={myLoader}
         src={data}
         alt={title}
-        width={120}
-        height={170}
+        width={width}
+        height={height}
       />
     </>
   );

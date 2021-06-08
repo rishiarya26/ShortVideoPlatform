@@ -79,23 +79,23 @@ function Embedvideo(props) {
         <div className="playkit-player" />
       </div>
       <div className="flex flex-col absolute bottom-12 justify-items-end w-full">
-          <div className="flex justify-between items-end">
-               
-      <EmbedVideoSidebar
-        socialId={props.socialId}
-        profilePic={props.profilePic}
-        likes={props.likes}
-        comment={props.comments}
-        share={777}
-      />
-      <VideoFooter
-        musicTitle={props.musicTitle}
-        userName={props.userName}
-        musicCoverTitle={props.musicCoverTitle}
-        hashTags={props.hashTags}
-        canShop={props.canShop}
-      />
-      </div>
+        <div className="flex justify-between items-end">
+
+          <EmbedVideoSidebar
+            socialId={props.socialId}
+            profilePic={props.profilePic}
+            likes={props.likes}
+            comment={props.comments}
+            share={777}
+          />
+          <VideoFooter
+            musicTitle={props.musicTitle}
+            userName={props.userName}
+            musicCoverTitle={props.musicCoverTitle}
+            hashTags={props.hashTags}
+            canShop={props.canShop}
+          />
+        </div>
       </div>
     </div>
   );

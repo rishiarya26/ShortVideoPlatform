@@ -10,7 +10,6 @@ export const Shop = ({
   const loaded = () => {
     setLoading(false);
   };
-  console.log(loading, canShop);
   useEffect(() => {
     inject('https://devqa2.charmboard.com/zee5/kaltura_plugin.js', null, loaded);
   }, []);

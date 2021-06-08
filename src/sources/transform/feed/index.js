@@ -59,7 +59,12 @@ function transformSuccess(resp) {
   */
 
     const { response = [] } = data;
-    payload.data = response;
+    const tResponse = [...response];
+    tResponse.forEach(data => {
+      data.saveLook = false;
+    });
+    payload.data = tResponse;
+
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

@@ -24,8 +24,8 @@ export default function Feed({ id }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [isShoppable, setIsShoppable] = useState('pending');
-
+  const [saveLook, setsaveLook] = useState(true);
+  const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
 
   const onDataFetched = data => {
@@ -52,19 +52,32 @@ export default function Feed({ id }) {
 
   const getCanShop = async () => {
     let isShoppable = false;
+    const shopContent = { ...shop };
     try {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.canShop;
+      shopContent.data = response?.data;
     } catch (e) {
       isShoppable = false;
     }
-    isShoppable ? setIsShoppable('success') : setIsShoppable('fail');
+    isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
+    setShop(shopContent);
   };
 
   useEffect(() => {
-    setIsShoppable('pending');
+    setShop({ isShoppable: 'pending' });
     getCanShop();
+    setsaveLook(true);
   }, [activeVideoId]);
+
+  const handleSaveLook = () => {
+    const data = [...items];
+    data.forEach(item => {
+      if (item.content_id === activeVideoId) item.saveLook = true;
+    });
+    setItems(data);
+    setsaveLook(!saveLook);
+  };
 
   const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
 
@@ -115,8 +128,11 @@ export default function Feed({ id }) {
                 videoOwnersId={item.videoOwnersId}
                 // thumbnail={item.thumbnail}
                 thumbnail={item.poster_image_url}
-                canShop={isShoppable}
-
+                canShop={shop.isShoppable}
+                shopCards={shop.data}
+                handleSaveLook={handleSaveLook}
+                saveLook={saveLook}
+                saved={item.saveLook}
               />
             </SwiperSlide>
           )) : (
@@ -128,7 +144,7 @@ export default function Feed({ id }) {
         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
           <Shop
             videoId={activeVideoId}
-            canShop={isShoppable}
+            canShop={shop.isShoppable}
           />
         </div>
       </Swiper>

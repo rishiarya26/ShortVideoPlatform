@@ -97,7 +97,7 @@ async function fetchUserRecommendation({ lang }) {
   }
 }
 
-async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
+async function fetchUserProfileVideos({ id, limit = '10', offset = '1' }) {
   let response = {};
   try {
     const resp = await preCondition();

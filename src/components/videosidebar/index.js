@@ -21,7 +21,7 @@ import { postLike, deleteLike } from '../../sources/social';
 // });
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId
+  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved
 }) {
   // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
@@ -33,6 +33,7 @@ function VideoSidebar({
       query: { pid: videoOwnersId }
     });
   };
+
   return (
     <div
       className={`${
@@ -120,13 +121,26 @@ function VideoSidebar({
         shareCount={props.share}
       />
       </div> */}
-      <div
-        className={`${
-          type === 'feed' ? 'block' : 'hidden'
-        } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-      >
-        <Shop />
-      </div>
+      {canShop && !saved ? saveLook && (
+        <div
+          className={`${
+            type === 'feed' ? 'block' : 'hidden'
+          } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+          onClick={handleSaveLook}
+        >
+          <Shop text="save look" />
+        </div>
+      ) : saveLook
+      && (
+        <div
+          className={`${
+            type === 'feed' ? 'block' : 'hidden'
+          } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+          onClick={handleSaveLook}
+        >
+          <Shop text="saved" />
+        </div>
+      )}
     </div>
   );
 }
