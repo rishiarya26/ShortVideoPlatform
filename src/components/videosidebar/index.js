@@ -21,7 +21,8 @@ import { postLike, deleteLike } from '../../sources/social';
 // });
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved
+  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  profileFeed
 }) {
   // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
@@ -121,25 +122,29 @@ function VideoSidebar({
         shareCount={props.share}
       />
       </div> */}
-      {canShop && !saved ? saveLook && (
-        <div
-          className={`${
-            type === 'feed' ? 'block' : 'hidden'
-          } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-          onClick={handleSaveLook}
-        >
-          <Shop text="save look" />
-        </div>
-      ) : saveLook
-      && (
-        <div
-          className={`${
-            type === 'feed' ? 'block' : 'hidden'
-          } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-          onClick={handleSaveLook}
-        >
-          <Shop text="saved" />
-        </div>
+
+      {canShop === 'success' && (!profileFeed
+        ? saveLook
+        && (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
+        : (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
       )}
     </div>
   );

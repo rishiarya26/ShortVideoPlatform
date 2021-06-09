@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Mousewheel } from 'swiper';
 import { withRouter } from 'next/router';
 import Video from '../video';
 import Error from './error';
@@ -7,7 +8,10 @@ import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
+import { canShop } from '../../sources/can-shop';
 import { getProfileVideos } from '../../sources/users/profile';
+
+SwiperCore.use([Mousewheel]);
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
@@ -16,15 +20,20 @@ const LoadComp = () => (<Loading />);
 function ProfileFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
+  const [activeVideoId, setActiveVideoId] = useState(null);
+  const [saveLook, setsaveLook] = useState(true);
+  const [shop, setShop] = useState({ isShoppable: 'pending' });
 
   const { id } = router.query;
   const dataFetcher = () => getProfileVideos({ id });
   const onDataFetched = data => {
-    setItems(data.data);
+    data && setItems(data?.data);
+    data && setActiveVideoId(data?.data?.[0]?.content_id);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
+  const validItemsLength = items?.length > 0;
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
@@ -32,6 +41,35 @@ function ProfileFeed({ router }) {
 
   const handleBackClick = () => {
     router.back();
+  };
+
+  const getCanShop = async () => {
+    let isShoppable = false;
+    const shopContent = { ...shop };
+    try {
+      const response = await canShop({ videoId: activeVideoId });
+      isShoppable = response?.canShop;
+      shopContent.data = response?.data;
+    } catch (e) {
+      isShoppable = false;
+    }
+    isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
+    setShop(shopContent);
+  };
+
+  useEffect(() => {
+    setShop({ isShoppable: 'pending' });
+    getCanShop();
+    setsaveLook(true);
+  }, [activeVideoId]);
+
+  const handleSaveLook = () => {
+    const data = [...items];
+    data.forEach(item => {
+      if (item.content_id === activeVideoId) item.saveLook = true;
+    });
+    setItems(data);
+    setsaveLook(!saveLook);
   };
 
   return (
@@ -48,16 +86,26 @@ function ProfileFeed({ router }) {
           </svg>
         </div>
         <Swiper
-          spaceBetween={50}
           direction="vertical"
           draggable="true"
+          spaceBetween={0}
           calculateheight="true"
+          mousewheel
+          scrollbar={{ draggable: true }}
+          onSlideChange={swiperCore => {
+            const {
+              activeIndex, slides
+            } = swiperCore;
+            const activeId = slides[activeIndex]?.id;
+            setActiveVideoId(activeId);
+          }}
         >
           {
             items?.map(
               item => (
                 <SwiperSlide
                   key={item.content_id}
+                  id={item.content_id}
 
                 >
                   <Video
@@ -74,6 +122,15 @@ function ProfileFeed({ router }) {
                     musicCoverTitle={item.musicCoverTitle}
                     videoid={item.content_id}
                     hashTags={item.hashTags}
+                    videoOwnersId={item.videoOwnersId}
+                    thumbnail={item.poster_image_url}
+                    canShop={shop.isShoppable}
+                    shopCards={shop.data}
+                    handleSaveLook={handleSaveLook}
+                    saveLook={saveLook}
+                    saved={item.saveLook}
+                    activeVideoId={activeVideoId}
+                    profileFeed
                   />
 
                 </SwiperSlide>
@@ -81,9 +138,13 @@ function ProfileFeed({ router }) {
             )
           }
         </Swiper>
-        {seekedPercentage
+        {validItemsLength ? seekedPercentage
           ? <Seekbar seekedPercentage={seekedPercentage} />
-          : <SeekbarLoading />}
+          : <SeekbarLoading />
+          : ''}
+        <div id="cb_tg_d_wrapper">
+          <div className="playkit-player" />
+        </div>
       </>
     </ComponentStateHandler>
   );

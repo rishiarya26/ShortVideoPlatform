@@ -123,7 +123,7 @@ export default function Feed({ id }) {
                 profilePic={item.userProfilePicUrl}
                 userName={item.userName}
                 musicCoverTitle={item.musicCoverTitle}
-                videoid={item.content_id}
+                // videoid={item.content_id}
                 hashTags={item.hashtags}
                 videoOwnersId={item.videoOwnersId}
                 // thumbnail={item.thumbnail}
@@ -133,6 +133,7 @@ export default function Feed({ id }) {
                 handleSaveLook={handleSaveLook}
                 saveLook={saveLook}
                 saved={item.saveLook}
+                activeVideoId={activeVideoId}
               />
             </SwiperSlide>
           )) : (

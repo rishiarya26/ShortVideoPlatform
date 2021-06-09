@@ -78,6 +78,7 @@ function Video(props) {
         height={videoHeight}
         poster={props.thumbnail}
         objectfit="cover"
+        key={props.url}
       >
         <source
           src={props.url}
@@ -122,11 +123,28 @@ function Video(props) {
             saveLook={props.saveLook}
             canShop={props.canShop}
             saved={props.saved}
+            profileFeed={props?.profileFeed}
           />
         </div>
-        {!props.saveLook && <ProductWidget shopCards={props.shopCards} handleSaveLook={props.handleSaveLook} />}
+        {props.canShop === 'success' && (!props.profileFeed
+          ? (!props.saveLook
+          && (
+            <ProductWidget
+              shopCards={props.shopCards}
+              handleSaveLook={props.handleSaveLook}
+              videoId={props.activeVideoId}
+            />
+          )
+          ) : (
+            <ProductWidget
+              shopCards={props.shopCards}
+              handleSaveLook={props.handleSaveLook}
+              videoId={props.activeVideoId}
+              profileFeed={props.profileFeed}
+            />
+          )
+        )}
       </div>
-
     </div>
   );
 }
