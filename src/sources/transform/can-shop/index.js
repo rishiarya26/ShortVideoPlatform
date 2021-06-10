@@ -18,6 +18,7 @@ function transformSuccess(resp) {
     if (
       data.data?.[0]?.topCharms?.length > 0
     ) {
+      payload.data = data.data[0].topCharms?.[0]?.contentImageUrlArray;
       payload.canShop = true;
     }
     return payload;

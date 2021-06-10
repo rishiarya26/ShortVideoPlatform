@@ -3,3 +3,4 @@ export const USER_TOKEN = 'user-token';
 export const NO_SUPPORT = 'NO_SUPPORT';
 export const DEFAULT_ERROR_CODE = 400;
 export const SW_IGNORE = ['embed/*'];
+export const CHARMBOARD_PLUGIN_URL = 'https://devqa2.charmboard.com/zee5/kaltura_plugin.js';

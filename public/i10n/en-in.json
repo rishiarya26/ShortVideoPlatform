@@ -33,5 +33,11 @@
   "NO_VIDEOS": "No Videos Found",
   "NO_VIDEOS_PUBLISHED": "You haven't published any video yet.",
   "FOLLOW": "Follow",
-  "SHOP":"Shop"
+  "SHOP":"Shop",
+  "FOR-YOU":"for-you",
+  "FORYOU":"For You",
+  "FOLLOWING":"Following",
+  "SFOLLOWING":"following",
+  "PRODUCT_CAN_BUY":"Products you can buy",
+  "ITEMS":"items"
   }

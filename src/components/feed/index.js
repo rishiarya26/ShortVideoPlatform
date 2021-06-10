@@ -24,8 +24,8 @@ export default function Feed({ id }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [isShoppable, setIsShoppable] = useState('pending');
-
+  const [saveLook, setSaveLook] = useState(true);
+  const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
 
   const onDataFetched = data => {
@@ -52,21 +52,34 @@ export default function Feed({ id }) {
 
   const getCanShop = async () => {
     let isShoppable = false;
+    const shopContent = { ...shop };
     try {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.canShop;
+      shopContent.data = response?.data;
     } catch (e) {
       isShoppable = false;
     }
-    isShoppable ? setIsShoppable('success') : setIsShoppable('fail');
+    isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
+    setShop(shopContent);
   };
 
   useEffect(() => {
-    setIsShoppable('pending');
+    setShop({ isShoppable: 'pending' });
     getCanShop();
+    setSaveLook(true);
   }, [activeVideoId]);
 
-  const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
+  const toggleSaveLook = () => {
+    const data = [...items];
+    const resp = data.findIndex(item => (item.content_id === activeVideoId));
+    resp && (data[resp].saveLook = true);
+    setItems(data);
+    setSaveLook(!saveLook);
+  };
+
+  const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
+    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` }];
 
   return (
     <ComponentStateHandler
@@ -110,13 +123,17 @@ export default function Feed({ id }) {
                 profilePic={item.userProfilePicUrl}
                 userName={item.userName}
                 musicCoverTitle={item.musicCoverTitle}
-                videoid={item.content_id}
+                // videoid={item.content_id}
                 hashTags={item.hashtags}
                 videoOwnersId={item.videoOwnersId}
                 // thumbnail={item.thumbnail}
                 thumbnail={item.poster_image_url}
-                canShop={isShoppable}
-
+                canShop={shop.isShoppable}
+                shopCards={shop.data}
+                handleSaveLook={toggleSaveLook}
+                saveLook={saveLook}
+                saved={item.saveLook}
+                activeVideoId={activeVideoId}
               />
             </SwiperSlide>
           )) : (
@@ -128,7 +145,7 @@ export default function Feed({ id }) {
         <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
           <Shop
             videoId={activeVideoId}
-            canShop={isShoppable}
+            canShop={shop.isShoppable}
           />
         </div>
       </Swiper>

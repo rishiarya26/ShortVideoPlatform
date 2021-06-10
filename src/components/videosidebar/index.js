@@ -21,7 +21,8 @@ import { postLike, deleteLike } from '../../sources/social';
 // });
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId
+  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  profileFeed
 }) {
   // const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
@@ -33,11 +34,12 @@ function VideoSidebar({
       query: { pid: videoOwnersId }
     });
   };
+
   return (
     <div
       className={`${
-        type === 'feed' ? 'bottom-16' : 'bottom-16'
-      } absolute right-0 text-white`}
+        type === 'feed' ? 'bottom' : 'bottom'
+      } text-white`}
     >
       <div onClick={handleProfileClick} className="relative py-3  px-1 text-center flex justify-center">
         <img
@@ -120,13 +122,30 @@ function VideoSidebar({
         shareCount={props.share}
       />
       </div> */}
-      <div
-        className={`${
-          type === 'feed' ? 'block' : 'hidden'
-        } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-      >
-        <Shop />
-      </div>
+
+      {canShop === 'success' && (!profileFeed
+        ? saveLook
+        && (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
+        : (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
+      )}
     </div>
   );
 }

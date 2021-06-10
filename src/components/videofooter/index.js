@@ -4,15 +4,12 @@ import Music from '../commons/svgicons/music';
 function VideoFooter({
   userName,
   musicTitle,
-  type,
   hashTags,
   canShop
 }) {
   return (
     <div
-      className={`${
-        type === 'feed' ? 'bottom-16' : 'bottom-16'
-      } videoFooter absolute flex text-white ml-2`}
+      className="bottom videoFooter  flex text-white ml-2"
     >
       <div className="videoFooter__text w-2/3">
 
