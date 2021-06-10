@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { inject } from '../../../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../../../constants';
 import useTranslation from '../../../../hooks/use-translation';
 
 export const Shop = ({
@@ -12,7 +13,7 @@ export const Shop = ({
   };
 
   useEffect(() => {
-    inject('https://devqa2.charmboard.com/zee5/kaltura_plugin.js', null, loaded);
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // charmboard_plugin- multiple object(player)
   }, []);
 

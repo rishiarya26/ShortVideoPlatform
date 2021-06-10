@@ -24,7 +24,7 @@ export default function Feed({ id }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [saveLook, setsaveLook] = useState(true);
+  const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
 
@@ -67,19 +67,19 @@ export default function Feed({ id }) {
   useEffect(() => {
     setShop({ isShoppable: 'pending' });
     getCanShop();
-    setsaveLook(true);
+    setSaveLook(true);
   }, [activeVideoId]);
 
-  const handleSaveLook = () => {
+  const toggleSaveLook = () => {
     const data = [...items];
-    data.forEach(item => {
-      if (item.content_id === activeVideoId) item.saveLook = true;
-    });
+    const resp = data.findIndex(item => (item.content_id === activeVideoId));
+    resp && (data[resp].saveLook = true);
     setItems(data);
-    setsaveLook(!saveLook);
+    setSaveLook(!saveLook);
   };
 
-  const tabs = [{ display: 'For You', path: 'for-you' }, { display: 'Following', path: 'following' }];
+  const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
+    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` }];
 
   return (
     <ComponentStateHandler
@@ -130,7 +130,7 @@ export default function Feed({ id }) {
                 thumbnail={item.poster_image_url}
                 canShop={shop.isShoppable}
                 shopCards={shop.data}
-                handleSaveLook={handleSaveLook}
+                handleSaveLook={toggleSaveLook}
                 saveLook={saveLook}
                 saved={item.saveLook}
                 activeVideoId={activeVideoId}
