@@ -22,7 +22,7 @@ export default function OtpLogin({ handleToggle, handleChange, data }) {
         });
       }
     } catch (e) {
-      setPending();
+      setPending(false);
       showSnackbar({ message: 'mobile no is not registered with. Please Sign up' });
     }
   };

@@ -100,13 +100,10 @@ async function fetchUserRecommendation({ lang }) {
 async function fetchUserProfileVideos({ id, limit = '10', offset = '1' }) {
   let response = {};
   try {
-    let tokens = getItem('tokens');
-    tokens = JSON.parse(tokens);
+    // let tokens = getItem('tokens');
+    // tokens = JSON.parse(tokens);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
-    response = await get(apiPath, null, {
-      Authorization: `Bearer ${tokens.shortsAuthToken}`,
-      'access-token': tokens.accessToken
-    });
+    response = await get(apiPath)
     response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {

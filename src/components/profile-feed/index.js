@@ -129,7 +129,7 @@ function ProfileFeed({ router }) {
                     saveLook={saveLook}
                     saved={item.saveLook}
                     activeVideoId={activeVideoId}
-                    profileFeed
+                    profileFeed={true}
                   />
 
                 </SwiperSlide>
