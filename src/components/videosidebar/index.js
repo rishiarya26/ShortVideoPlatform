@@ -30,9 +30,10 @@ const login = dynamic(
 );
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId
+  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  profileFeed
 }) {
-  // const { show } = useDrawer();
+  const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
 
@@ -43,12 +44,11 @@ function VideoSidebar({
     });
   };
 
-  const { show } = useDrawer();
   return (
     <div
       className={`${
-        type === 'feed' ? 'bottom-166' : 'bottom-166'
-      }  right-09999 text-white`}
+        type === 'feed' ? 'bottom' : 'bottom'
+      } text-white`}
     >
       <div onClick={handleProfileClick} className="relative py-3  px-1 text-center flex justify-center">
         <img
@@ -132,13 +132,30 @@ function VideoSidebar({
         shareCount={props.share}
       />
       </div> */}
-      <div
-        className={`${
-          type === 'feed' ? 'block' : 'hidden'
-        } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-      >
-        <Shop />
-      </div>
+
+      {canShop === 'success' && (!profileFeed
+        ? saveLook
+        && (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
+        : (
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            onClick={handleSaveLook}
+          >
+            <Shop text={!saved ? 'save look' : 'saved'} />
+          </div>
+        )
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ const {
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
+const local = APP_ENV === 'local';
 // const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
@@ -61,6 +62,6 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (prod ? withPWA(nextConfig) : nextConfig);
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
 module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 

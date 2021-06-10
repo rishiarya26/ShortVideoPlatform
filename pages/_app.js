@@ -1,4 +1,6 @@
 // import App from "next/app"
+import { useEffect } from 'react';
+// import { isLocalEnv } from 'config';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -8,6 +10,8 @@ import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
 import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
+// import { SW_IGNORE } from '../src/constants';
+// import { doesStringMatch } from '../src/utils/string';
 
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
@@ -36,8 +40,8 @@ const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(mo
   return OverLayProvider;
 }));
 
-export function reportWebVitals(metric) {
-  console.log(metric);
+export function reportWebVitals() {
+  // console.log(metric);
   // const body = JSON.stringify(metric);
   // const url = 'analytics endpoint';
 
@@ -71,60 +75,66 @@ export function reportWebVitals(metric) {
 //   }
 // }
 
+// function registerSW() {
+//   if ('serviceWorker' in navigator && !isLocalEnv()) {
+//     const wb = new Workbox('sw.js');
+//     let registration;
+
+//     const showSkipWaitingPrompt = event => {
+//       // `event.wasWaitingBeforeRegister` will be false if this is
+//       // the first time the updated service worker is waiting.
+//       // When `event.wasWaitingBeforeRegister` is true, a previously
+//       // updated service worker is still waiting.
+//       // You may want to customize the UI prompt accordingly.
+
+//       // Assumes your app has some sort of prompt UI element
+//       // that a user can either accept or reject.
+//       console.info(event);
+//       const prompt = createUIPrompt({
+//         onAccept: async () => {
+//           // Assuming the user accepted the update, set up a listener
+//           // that will reload the page as soon as the previously waiting
+//           // service worker has taken control.
+//           wb.addEventListener('controlling', event => {
+//             console.info('controlling event!!!', event);
+//             refreshCacheAndReload();
+//           });
+
+//           console.info(registration, registration.waiting);
+//           if (registration && registration.waiting) {
+//             // Send a message to the waiting service worker,
+//             // instructing it to activate.
+//             // Note: for this to work, you have to add a message
+//             // listener in your service worker. See below.
+//             messageSW(registration.waiting, { type: 'SKIP_WAITING' });
+//           }
+//         },
+
+//         onReject: () => {
+//           prompt.dismiss();
+//         }
+//       });
+//     };
+
+//     // Add an event listener to detect when the registered
+//     // service worker has installed but is waiting to activate.
+//     wb.addEventListener('waiting', showSkipWaitingPrompt);
+//     wb.addEventListener('externalwaiting', showSkipWaitingPrompt);
+//     wb.register().then(r => {
+//       registration = r;
+//     });
+//   }
+// }
+
 function Hipi({
   Component, pageProps, locales, locale
 }) {
-  // useEffect(() => {
-  //   if ('serviceWorker' in navigator) {
-  //     const wb = new Workbox('sw.js');
-  //     let registration;
-
-  //     const showSkipWaitingPrompt = event => {
-  //       // `event.wasWaitingBeforeRegister` will be false if this is
-  //       // the first time the updated service worker is waiting.
-  //       // When `event.wasWaitingBeforeRegister` is true, a previously
-  //       // updated service worker is still waiting.
-  //       // You may want to customize the UI prompt accordingly.
-
-  //       // Assumes your app has some sort of prompt UI element
-  //       // that a user can either accept or reject.
-  //       console.info(event);
-  //       const prompt = createUIPrompt({
-  //         onAccept: async () => {
-  //           // Assuming the user accepted the update, set up a listener
-  //           // that will reload the page as soon as the previously waiting
-  //           // service worker has taken control.
-  //           wb.addEventListener('controlling', event => {
-  //             console.info('controlling event!!!', event);
-  //             refreshCacheAndReload();
-  //           });
-
-  //           console.info(registration, registration.waiting);
-  //           if (registration && registration.waiting) {
-  //             // Send a message to the waiting service worker,
-  //             // instructing it to activate.
-  //             // Note: for this to work, you have to add a message
-  //             // listener in your service worker. See below.
-  //             messageSW(registration.waiting, { type: 'SKIP_WAITING' });
-  //           }
-  //         },
-
-  //         onReject: () => {
-  //           prompt.dismiss();
-  //         }
-  //       });
-  //     };
-
-  //     // Add an event listener to detect when the registered
-  //     // service worker has installed but is waiting to activate.
-  //     wb.addEventListener('waiting', showSkipWaitingPrompt);
-  //     wb.addEventListener('externalwaiting', showSkipWaitingPrompt);
-
-  //     wb.register().then(r => {
-  //       registration = r;
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    // if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
+    //   // registerSW();
+    // }
+    console.log('mounted');
+  }, []);
   return (
     <>
       <Head>

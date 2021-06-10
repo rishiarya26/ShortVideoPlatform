@@ -77,14 +77,6 @@ export const forYouEmbedFeed = {
           createdOn: '04/07/2021 12:19:34',
           videoOwnersId: '95473b77-2bb0-4c2a-b4ad-a08e64b99a4f',
           retainAudioTitle: 0,
-          videoUrl: {
-            AkamaiURL: [
-              'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1619511157~exp=1619525557~acl=/*~hmac=082f72d72c6d562f268004a05bd73fb8de4d2c31c850dd09d88917422cb0d3d2',
-              'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_1024.mp4?hdnea=st=1619511157~exp=1619525557~acl=/*~hmac=082f72d72c6d562f268004a05bd73fb8de4d2c31c850dd09d88917422cb0d3d2',
-              'https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_1536.mp4?hdnea=st=1619511157~exp=1619525557~acl=/*~hmac=082f72d72c6d562f268004a05bd73fb8de4d2c31c850dd09d88917422cb0d3d2'
-            ],
-            CloudfrontURL: ''
-          },
           genre: [
             'Entertainment',
             'Dance',
@@ -97,6 +89,7 @@ export const forYouEmbedFeed = {
           silent: 0,
           allowDuplicate: 'false',
           agency: 0,
+          user: 'yo',
           getSocialId: '564424030012889198',
           videoTitle: '#TheBigBull',
           privacySettings: 'PUBLIC',

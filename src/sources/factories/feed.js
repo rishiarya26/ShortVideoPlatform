@@ -52,7 +52,8 @@ export const feed = {
             "userName": "@Ritikabadiani",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 22,
@@ -101,7 +102,8 @@ export const feed = {
             "userName": "@Tarunkinra",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false,
         },
         {
             "data_id": 23,
@@ -150,7 +152,8 @@ export const feed = {
             "userName": "@Paraschhabra",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 24,
@@ -199,7 +202,8 @@ export const feed = {
             "userName": "@Sanyo6",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false,
         },
         {
             "data_id": 25,
@@ -248,7 +252,8 @@ export const feed = {
             "userName": "@Princenarula",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 26,
@@ -297,7 +302,8 @@ export const feed = {
             "userName": "@Surbhichandna",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 27,
@@ -346,7 +352,8 @@ export const feed = {
             "userName": "@Mahirasharma",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 28,
@@ -395,7 +402,8 @@ export const feed = {
             "userName": "@aerreo",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 29,
@@ -444,7 +452,8 @@ export const feed = {
             "userName": "@DheerajDhoopar",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 30,
@@ -493,7 +502,8 @@ export const feed = {
             "userName": "@VatsalSheth",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 31,
@@ -542,7 +552,8 @@ export const feed = {
             "userName": "@DalljietKaur",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 32,
@@ -591,7 +602,8 @@ export const feed = {
             "userName": "@Shraddhaarya",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 33,
@@ -640,7 +652,8 @@ export const feed = {
             "userName": "@Ritikabadiani",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         },
         {
             "data_id": 34,
@@ -689,7 +702,8 @@ export const feed = {
             "userName": "@Tarunkinra",
             "likesCount": 220,
             "commentsCount": 25,
-            "contentWarning": null
+            "contentWarning": null,
+            "saveLook":false
         }
     ],
     "requestedWith": {

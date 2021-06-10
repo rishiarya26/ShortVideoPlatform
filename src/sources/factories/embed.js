@@ -7,7 +7,6 @@ export const feed = {
   "data": {
       "data_id": "ddeaa554-b40e-45ef-8cde-9d940a9d2cae",
       "content_id": "ddeaa554-b40e-45ef-8cde-9d940a9d2cae",
-      "video_url": "https://z5shorts.akamaized.net/2021/3/7/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/ddeaa554-b40e-45ef-8cde-9d940a9d2cae_512.mp4?hdnea=st=1622179131~exp=1622193531~acl=/*~hmac=853a4779ec5159050addeb0a43caa3c0c418b57ffab69505f33253519bd3776f",
       "content_description": "#AbhishekBachchan #Music #Challenge #Bollywood#TheBigBull",
       "userId": "95473b77-2bb0-4c2a-b4ad-a08e64b99a4f",
       "videoOwnersId": "95473b77-2bb0-4c2a-b4ad-a08e64b99a4f",

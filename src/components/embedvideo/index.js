@@ -8,9 +8,9 @@ import { withBasePath } from '../../config';
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
+
   const rootRef = useRef(null);
   const size = useWindowSize();
-
   const handleVideoPress = () => {
     if (playing) {
       rootRef.current.children[0].pause();
@@ -53,8 +53,10 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
+        poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}
@@ -76,20 +78,25 @@ function Embedvideo(props) {
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
-      <EmbedVideoSidebar
-        socialId={props.socialId}
-        profilePic={props.profilePic}
-        likes={props.likes}
-        comment={props.comments}
-        share={777}
-      />
-      <VideoFooter
-        musicTitle={props.musicTitle}
-        userName={props.userName}
-        musicCoverTitle={props.musicCoverTitle}
-        hashTags={props.hashTags}
-        canShop={props.canShop}
-      />
+      <div className="flex flex-col absolute bottom-12 justify-items-end w-full">
+        <div className="flex justify-between items-end">
+
+          <EmbedVideoSidebar
+            socialId={props.socialId}
+            profilePic={props.profilePic}
+            likes={props.likes}
+            comment={props.comments}
+            share={777}
+          />
+          <VideoFooter
+            musicTitle={props.musicTitle}
+            userName={props.userName}
+            musicCoverTitle={props.musicCoverTitle}
+            hashTags={props.hashTags}
+            canShop={props.canShop}
+          />
+        </div>
+      </div>
     </div>
   );
 }

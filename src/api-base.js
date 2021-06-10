@@ -25,8 +25,8 @@ export const apiBaseEndPoints = {
   },
   staging: {
     test: 'https://api.github.com',
-    hipi: 'http://3.6.36.112:7000/api',
-    app: 'https://preprod.hipi.co.in',
+    hipi: 'https://hipigwapi.zee5.com/api',
+    app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
       'https://stagingmobile.charmboard.com',

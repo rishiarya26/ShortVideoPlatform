@@ -17,6 +17,12 @@ export const isMockMode = () => {
   return (mockMode === 'y');
 };
 
+export const isLocalEnv = () => {
+  const { publicRuntimeConfig = {} } = getConfig() || {};
+  const { appEnv = '' } = publicRuntimeConfig;
+  return (appEnv === 'local');
+};
+
 export const getApiBasePath = serviceType => {
   const { publicRuntimeConfig = {} } = getConfig() || {};
   const { appEnv = 'production' } = publicRuntimeConfig;

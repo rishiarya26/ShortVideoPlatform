@@ -27,6 +27,7 @@ function transformSuccess(resp) {
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
     // COMMENTED - for production feed api
+    // const networkConnection = getNetworkConnection();
     /* const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
@@ -34,7 +35,12 @@ function transformSuccess(resp) {
       const payloadObject = {};
       payloadObject.data_id = d.objectID;
       payloadObject.content_id = d.id;
-      payloadObject.video_url = d.akamaiUrl;
+      let videoUrls = {}
+      videoUrls.fast = d.videoUrl?.AkamaiURL?.[2];
+      videoUrls.medium = d.videoUrl?.AkamaiURL?.[1];
+      videoUrls.low = d.akamaiUrl;
+      const videoUrl = getEffectiveVideoUrl(videoUrls);
+      payloadObject.video_url = videoUrl;
       payloadObject.content_description = d.description;
       payloadObject.userId = d.videoOwnersId;
       payloadObject.videoOwnersId = d.videoOwnersId;
@@ -53,7 +59,12 @@ function transformSuccess(resp) {
   */
 
     const { response = [] } = data;
-    payload.data = response;
+    const tResponse = [...response];
+    tResponse.forEach(data => {
+      data.saveLook = false;
+    });
+    payload.data = tResponse;
+
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 const Close = () => (
   <svg viewBox="0 0 24 24" fill="white" width="20px" height="20px">
     <path d="M0 0h24v24H0z" fill="none" />
@@ -7,4 +5,3 @@ const Close = () => (
   </svg>
 );
 export default Close;
-
