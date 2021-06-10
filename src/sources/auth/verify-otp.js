@@ -6,13 +6,13 @@ import { setItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/auth/verify-otp';
 
 async function validateOTP({
-  mobile, otp, guestToken = "null", platform = 'web', cookieId, version = '2.50.19'
+  mobile, otp, guestToken = 'null', platform = 'web', cookieId, version = '2.50.19'
 }) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('otp')}/device/verifyotp_v1.php?phoneno=${mobile}&otp=${otp}&guest_token=${guestToken}&platform=${platform}&aid=${mobile}&lotame_cookie_id=${cookieId}&version=${version}`;
     const resp = await get(apiPath);
-    console.log(resp)
+    console.log(resp);
     resp.data.requestedWith = {
       mobile, otp, platform, guestToken
     };
