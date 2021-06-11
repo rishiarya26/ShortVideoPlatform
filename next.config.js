@@ -1,5 +1,7 @@
 
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const withSourceMaps = require('@zeit/next-source-maps');
+
 // const withPWA = require('next-pwa');
 
 const {
@@ -11,7 +13,7 @@ const {
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
-const local = APP_ENV === 'local';
+// const local = APP_ENV === 'local';
 // const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
@@ -53,6 +55,27 @@ const nextConfig = {
       };
     }
     config.output.publicPath = '';
+    config.plugins.push(new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      generateStatsFile: true,
+      analyzerMode: 'json',
+      excludeAssets: ['node_modules', 'coverage', 'tools', 'public', 'perf'],
+      statsOptions: {
+        exclude: ['node_modules', 'coverage', 'tools', 'public', 'perf'],
+        hash: false,
+        cached: false,
+        cachedAssets: false,
+        reasons: false,
+        source: true,
+        warnings: false,
+        errors: false,
+        errorDetails: false,
+        publicPath: false,
+        modulesSort: 'size',
+        chunksSort: 'size',
+        assetsSort: 'size'
+      }
+    }));
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack', 'url-loader']
