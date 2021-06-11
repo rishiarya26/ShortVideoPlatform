@@ -5,7 +5,7 @@ on:
     branches: [ develop, release, master ]
   pull_request:
     branches: [ develop, release, master ]
-    
+
 jobs:
   security:
     runs-on: ubuntu-latest
@@ -13,4 +13,4 @@ jobs:
       - name: Test for public javascript library vulnerabilities 
         uses: lirantal/is-website-vulnerable@master
         with:
-          scan-url: "https://yoursite.com"
+          scan-url: "https://preprod.hipi.co.in/feed/for-you"
