@@ -43,5 +43,5 @@ jobs:
       with:
         name: JEST Tests Coverage           # Name of the check run which will be created
         github_token: ${{ secrets.GITHUB_TOKEN }}  
-        threshold: 30      
+        threshold: 20      
 
