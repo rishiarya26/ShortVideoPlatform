@@ -46,16 +46,15 @@ function ProfileFeed({ router }) {
   };
 
   const getCanShop = async () => {
-    let isShoppable = false;
     const shopContent = { ...shop };
+    shopContent.isShoppable = 'fail';
     try {
       const response = await canShop({ videoId: activeVideoId });
-      isShoppable = response?.canShop;
+      response?.canShop ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
     } catch (e) {
-      isShoppable = false;
+      console.log('error in canShop');
     }
-    isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
     setShop(shopContent);
   };
 

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import useTranslation from '../../hooks/use-translation';
 import ImageComp from '../commons/image';
 import Close from '../commons/svgicons/close-white';
+import { Loading } from './loading';
 
 function ProductWidget({
   shopCards, handleSaveLook, videoId, profileFeed
@@ -12,9 +15,10 @@ function ProductWidget({
   };
 
   useEffect(() => {
-    inject('https://devqa2.charmboard.com/zee5/kaltura_plugin.js', null, loaded);
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
   }, []);
 
+  const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
 
   return (
@@ -26,11 +30,13 @@ function ProductWidget({
       <div className="flex flex-col">
         {!profileFeed && (
           <div className="flex text-xs text-white mb-2">
-            Products you can buy |
+            {t('PRODUCT_CAN_BUY')}
+            {' '}
+            |
             {' '}
             {shopCardsLength}
             {' '}
-            items
+            {t('ITEMS')}
           </div>
         )}
         <div className="flex">
@@ -45,17 +51,7 @@ function ProductWidget({
             </div>
           ))
             : (
-              <>
-                <div
-                  className="w-14 h-14 mr-4 rounded-md bg-gray-500"
-                />
-                <div
-                  className="w-14 h-14 mr-4 rounded-md bg-gray-500"
-                />
-                <div
-                  className="w-14 h-14 mr-4 rounded-md bg-gray-500"
-                />
-              </>
+              <Loading />
             )}
         </div>
       </div>
