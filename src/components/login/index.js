@@ -6,8 +6,8 @@ import EmailLogin from '../access/email-login';
 import { BackButton } from '../commons/button/back';
 
 const Login = ({ router }) => {
-  const [phoneData, setPhoneData] = useState({});
-  const [emailData, setEmailData] = useState({});
+  const [phoneData, setPhoneData] = useState({ mobile: '', password: '' });
+  const [emailData, setEmailData] = useState({ email: '', password: '' });
   const type = router.query.id;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
 

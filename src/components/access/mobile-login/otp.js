@@ -20,6 +20,7 @@ export default function OtpLogin({ handleToggle, handleChange, data }) {
           pathname: '/verify-otp/[pid]',
           query: { pid: mobile }
         });
+        showSnackbar({ message: 'otp send suucessfully' });
       }
     } catch (e) {
       setPending(false);

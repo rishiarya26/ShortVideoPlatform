@@ -1,29 +1,42 @@
 import { withRouter } from 'next/router';
 import { useState } from 'react';
+import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { verifyOTP } from '../../../sources/auth/verify-otp';
 import { BackButton } from '../../commons/button/back';
+import { SubmitButton } from '../../commons/button/submit';
 
 const VerifyOTP = ({ router }) => {
-  const [otp, setOtp] = useState(null);
+  const [otp, setOtp] = useState('');
+  const [pending, setPending] = useState(false);
   const { id } = router.query;
   const { t } = useTranslation();
+
+  const { showSnackbar } = useSnackbar();
 
   const handleOtpChange = e => {
     const otp = e.currentTarget.value;
     setOtp(otp);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setPending(true);
     const payload = {
       mobile: id,
       otp
     };
     try {
-      const response = verifyOTP(payload);
-      console.log(response);
+      const response = await verifyOTP(payload);
+      if (response.data.status === 200) {
+        setPending(false);
+        router.push({
+          pathname: '/feed/for-you'
+        });
+        showSnackbar({ message: 'Succesfully Login ' });
+      }
     } catch (error) {
-
+      setPending(false);
+      showSnackbar({ message: 'Incorrect OTP or has expired' });
     }
   };
   return (
@@ -39,11 +52,12 @@ const VerifyOTP = ({ router }) => {
           type="password"
           name="phone"
           placeholder="OTP"
+          value={otp}
           onChange={handleOtpChange}
         />
       </div>
       <div className="mt-10">
-        <button onClick={handleSubmit} className="bg-red-400 w-full px-4 py-2 text-white font-semibold">{t('VERIFY_OTP')}</button>
+        <SubmitButton handleSubmit={handleSubmit} text={t('VERIFY_OTP')} pending={pending} />
       </div>
     </div>
   );

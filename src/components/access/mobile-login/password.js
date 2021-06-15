@@ -1,9 +1,14 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import useSnackbar from '../../../hooks/use-snackbar';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
 export default function PasswordLogin({ handleToggle, handleChange, data }) {
   const [pending, setPending] = useState(false);
+  const router = useRouter();
+
+  const { showSnackbar } = useSnackbar();
 
   const handleSubmit = async () => {
     setPending(true);
@@ -11,8 +16,12 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
       const finalData = { ...data };
       finalData.type = 'Mobile';
       const response = await userLogin(finalData);
-      if (response?.data?.accessToken) {
+      if (response.data.status === 200) {
         setPending(false);
+        router.push({
+          pathname: '/feed/for-you'
+        });
+        showSnackbar({ message: 'Succesfully Login ' });
       }
     } catch (e) {
       setPending(false);

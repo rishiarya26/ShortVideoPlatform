@@ -14,6 +14,7 @@ import Shop from '../commons/svgicons/shop';
 import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
 import { postLike, deleteLike } from '../../sources/social';
+import useAuth from '../../hooks/use-auth';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -30,12 +31,26 @@ const login = dynamic(
 );
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
   const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
+
+  const showLoginOptions = () => {
+    show('', login, 'md', 'h-3/4');
+  };
+
+  const like = () => {
+    setLiked(true);
+  };
+  const execute = useAuth(showLoginOptions, like);
+
+  const handleLike = () => {
+    execute();
+    console.log('returned fn', execute);
+  };
 
   const handleProfileClick = () => {
     router.push({
@@ -87,10 +102,9 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={true ? () => show('', login, 'md', 'h-3/4') : () => {
-                postLike({ socialId });
-                setLiked(true);
-              }}
+              onClick={()=>{handleLike();
+                postLike({ socialId })}}
+
             >
               <Like />
             </div>

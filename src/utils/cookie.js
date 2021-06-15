@@ -24,9 +24,7 @@ export const deleteAllCookies = () => {
 export const setItem = (key, val, opt = {}) => {
   if (!canUseDom) return false;
   console.log(opt);
-  const cookieStr = `${key}=${val}; 
-  path = ${opt.path || '/'}
-  ;domain = ${opt.domain || '.hipi'}`;
+  const cookieStr = `${key}=${val}; path=${opt.path || '/'}; domain = ${opt.domain || '.hipi'}`;
   console.log(cookieStr);
   document.cookie = cookieStr;
   return true;

@@ -1,5 +1,5 @@
-
 import { loadMockServer } from '../mock/load';
+import { renewTokens } from '../sources/auth/renew-tokens';
 import { getDateDiffSeconds } from '../utils/date';
 
 const RETRY_COUNT = 3;
@@ -28,6 +28,33 @@ export const backoff = async (fn, reqObj, depth = 0) => {
     return backoff(fn, reqObj, depth + 1);
   }
 };
+export async function reAuthenticate(dataFetcher, params) {
+  let response = {};
+  let resp = {};
+  try {
+    response = await renewTokens();
+    if (response.data.status === 200) {
+      resp = await dataFetcher(params);
+    }
+  } catch (error) {
+    console.log('error in reAuth');
+    return error;
+  }
+  return resp;
+}
+
+export const preCondition = async (dataFetcher, params) => {
+  let resp = {};
+  try {
+    resp = await dataFetcher(params);
+  } catch (error) {
+    if (error?.statusCode === 401) {
+      const response = await reAuthenticate(dataFetcher, params);
+      return response;
+    }
+  }
+  return resp;
+};
 
 export const resolvePromise = (data = {}) => (new Promise(resolve => {
   resolve(data);
@@ -52,7 +79,9 @@ export function apiMiddleWare(
   transformError = data => (data),
   settings = {}
 ) {
-  const { shouldCache = false, backoff = false, ttl = 0 } = settings;
+  const {
+    shouldCache = false, backoff = false, ttl = 0, requireAuth = false
+  } = settings;
   const cache = {};
   let cacheKey = '';
   const wrapped = async (params = {}) => {
@@ -63,6 +92,9 @@ export function apiMiddleWare(
       const cachedItem = cache[cacheKey];
       if (cachedItem && isValid(cachedItem)) {
         return resolvePromise(cachedItem);
+      }
+      if (requireAuth) {
+        resp = await preCondition(_promise, params);
       }
       if (backoff) {
         resp = await backoff(_promise, params);

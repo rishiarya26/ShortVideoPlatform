@@ -1,7 +1,6 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { setItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth';
 import { hipiLogin } from './hipi-login';
 
@@ -26,16 +25,8 @@ const login = async ({
     resp.data.status = 200;
     resp.data.message = 'success';
     const zee5Token = resp.data.access_token;
-    response = await hipiLogin({ zee5Token });
-    const tokens = {
-      shortsAuthToken: response.data.shortsAuthToken,
-      accessToken: zee5Token,
-      refreshToken: resp.data.refresh_token
-    };
-    setItem('tokens', JSON.stringify(tokens), { path: '/' });
-    response.data.accessToken = zee5Token;
-    response.data.status = 200;
-    response.data.message = 'success';
+    const refreshToken = resp.data.refresh_token;
+    response = await hipiLogin({ zee5Token, refreshToken });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
