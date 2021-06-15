@@ -46,10 +46,10 @@ function VideoSidebar({
   const like = () => {
     setLiked(true);
   };
-  const execute = useAuth(showLoginOptions, like);
+  const selected = useAuth(showLoginOptions, like);
 
   const handleLike = () => {
-    execute();
+    selected();
     // postLike({ socialId });
   };
 
