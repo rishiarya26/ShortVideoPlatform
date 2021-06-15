@@ -31,7 +31,7 @@ const login = dynamic(
 );
 
 function VideoSidebar({
-  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
   const { show } = useDrawer();
@@ -49,6 +49,7 @@ function VideoSidebar({
 
   const handleLike = () => {
     execute();
+    postLike({ socialId })
     console.log('returned fn', execute);
   };
 
@@ -102,8 +103,7 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={()=>{handleLike();
-                postLike({ socialId })}}
+              onClick={handleLike}
 
             >
               <Like />

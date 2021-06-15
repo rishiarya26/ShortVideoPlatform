@@ -77,8 +77,8 @@ const postLike = async ({ socialId }) => {
     };
     const apiPath = `${getApiBasePath('get-social')}/activities/reactions`;
     response = await post(apiPath, payload, {
-      'X-GetSocial-API-Key': apiKey
-    });
+      'X-GetSocial-API-Key': apiKey,
+      'X-GetSocial-impersonate-user': 'f999f4de-5c13-4b9f-8467-dfc417548169'    });
 
     response.data.status = 200;
     response.data.message = '';
