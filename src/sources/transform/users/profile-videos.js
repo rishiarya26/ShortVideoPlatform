@@ -3,7 +3,6 @@ import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 function transformError(error = {}) {
-  console.log('in t-error', error);
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -14,12 +13,10 @@ function transformError(error = {}) {
 }
 
 function transformSuccess(resp) {
-  console.log('in t-success');
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   try {
     if (!isSuccess(resp)) {
-      console.log('error', resp, data);
       return transformError(data);
     }
     payload.status = 'success';

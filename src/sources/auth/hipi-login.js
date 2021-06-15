@@ -1,5 +1,6 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+/* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
 import { setItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
@@ -12,7 +13,7 @@ const login = async ({ zee5Token, refreshToken }) => {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'
-    }); 
+    });
     const tokens = {
       shortsAuthToken: response.data.shortsAuthToken,
       accessToken: zee5Token,

@@ -13,7 +13,7 @@ import Shop from '../commons/svgicons/shop';
 // import { getDeviceType } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
-import { postLike, deleteLike } from '../../sources/social';
+// import { postLike, deleteLike } from '../../sources/social';
 import useAuth from '../../hooks/use-auth';
 
 // const DummyComp = () => (<div />);
@@ -31,7 +31,8 @@ const login = dynamic(
 );
 
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  // socialId,
+  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
   const { show } = useDrawer();
@@ -49,8 +50,7 @@ function VideoSidebar({
 
   const handleLike = () => {
     execute();
-    postLike({ socialId })
-    console.log('returned fn', execute);
+    // postLike({ socialId });
   };
 
   const handleProfileClick = () => {
@@ -90,7 +90,7 @@ function VideoSidebar({
             <div
               role="presentation"
               onClick={() => {
-                deleteLike({ socialId });
+                // deleteLike({ socialId });
                 setLiked(false);
               }}
             >

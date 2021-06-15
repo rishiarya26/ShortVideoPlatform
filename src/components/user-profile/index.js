@@ -9,19 +9,16 @@ import VideoGallery from '../video-gallery';
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router
 }) {
-  console.log(id);
   const [videoData, setVideoData] = useState({});
   const dataFetcher = () => getProfileVideos({ id });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
-  console.log(fetchState, data);
   const { t } = useTranslation();
 
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data.data);
-    data && console.log(data);
     setVideoData(videos);
   }, [fetchState]);
 

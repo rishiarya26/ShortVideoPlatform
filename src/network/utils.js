@@ -1,5 +1,6 @@
 import { loadMockServer } from '../mock/load';
-import { renewTokens } from '../sources/auth/renew-tokens';
+/* eslint-disable import/no-cycle */
+import preCondition from '../sources/auth/pre-condition';
 import { getDateDiffSeconds } from '../utils/date';
 
 const RETRY_COUNT = 3;
@@ -27,33 +28,6 @@ export const backoff = async (fn, reqObj, depth = 0) => {
     await wait(depth * RETRY_DELAY);
     return backoff(fn, reqObj, depth + 1);
   }
-};
-export async function reAuthenticate(dataFetcher, params) {
-  let response = {};
-  let resp = {};
-  try {
-    response = await renewTokens();
-    if (response.data.status === 200) {
-      resp = await dataFetcher(params);
-    }
-  } catch (error) {
-    console.log('error in reAuth');
-    return error;
-  }
-  return resp;
-}
-
-export const preCondition = async (dataFetcher, params) => {
-  let resp = {};
-  try {
-    resp = await dataFetcher(params);
-  } catch (error) {
-    if (error?.statusCode === 401) {
-      const response = await reAuthenticate(dataFetcher, params);
-      return response;
-    }
-  }
-  return resp;
 };
 
 export const resolvePromise = (data = {}) => (new Promise(resolve => {

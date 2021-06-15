@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath, isMockMode } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { getItem } from '../../utils/cookie';
+// import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/users/profile';
 import {
   transformSuccess as transformProfileVideoSuccess,
@@ -103,6 +103,7 @@ async function fetchUserProfileVideos({ id, limit = '10', offset = '1' }) {
   // tokens = JSON.parse(tokens);
   // const { shortsAuthToken = '' } = tokens;
   // const { accessToken = '' } = tokens;
+
   try {
     /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;

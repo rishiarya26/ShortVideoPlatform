@@ -1,5 +1,6 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+/* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/auth/renew-tokens';
