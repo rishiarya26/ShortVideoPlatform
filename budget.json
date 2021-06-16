@@ -1,52 +1,26 @@
 [
   {
-    "path": "/repos",
-    "resourceSizes": [
-      {
-        "resourceType": "document",
-        "budget": 15
-      },
-      {
-        "resourceType": "stylesheet",
-        "budget": 20
-      },
-      {
-        "resourceType": "font",
-        "budget": 30
-      },
-      {
-        "resourceType": "image",
-        "budget": 300
-      },
-      {
-        "resourceType": "script",
-        "budget": 120
-      }
-    ]
-  },
-  {
-    "path": "/repo-details/Homebrew/brew",
-    "resourceSizes": [
-      {
-        "resourceType": "document",
-        "budget": 20
-      },
-      {
-        "resourceType": "stylesheet",
-        "budget": 50
-      },
-      {
-        "resourceType": "font",
-        "budget": 50
-      },
-      {
-        "resourceType": "image",
-        "budget": 300
-      },
-      {
-        "resourceType": "script",
-        "budget": 120
-      }
-    ]
+      "resourceSizes": [
+          {
+              "resourceType": "document",
+              "budget": 20
+          },
+          {
+              "resourceType": "stylesheet",
+              "budget": 50
+          },
+          {
+              "resourceType": "font",
+              "budget": 50
+          },
+          {
+              "resourceType": "image",
+              "budget": 300
+          },
+          {
+              "resourceType": "script",
+              "budget": 100
+          }
+      ]
   }
 ]
