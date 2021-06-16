@@ -39,5 +39,6 @@
   "FOLLOWING":"Following",
   "SFOLLOWING":"following",
   "PRODUCT_CAN_BUY":"Products you can buy",
-  "ITEMS":"items"
+  "ITEMS":"items",
+  "VERIFY_OTP":"Verify OTP"
   }
