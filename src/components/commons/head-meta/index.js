@@ -14,7 +14,10 @@ function HeadMeta() {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       {/* <title>{APP_NAME}</title> */}
 
-      <link rel="preload" href="https://hipi.co.in/feed" as="document" />
+      <link rel="preload" href="https://hipi.co.in/feed/for-you" as="document" />
+
+      <link rel="dns-prefetch" href="https://eum.instana.io" />
+      <link rel="dns-prefetch" href="https://eum-blue-saas.instana.io" />
 
       <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />

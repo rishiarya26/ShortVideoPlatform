@@ -11,7 +11,7 @@ const {
 } = process.env;
 
 const dev = NODE_ENV !== 'production';
-const local = APP_ENV === 'local';
+// const local = APP_ENV === 'local';
 // const prod = NODE_ENV === 'production';
 const genSourceMap = GEN_SOURCE_MAP === 'y';
 const appVersion = require('./app-version');
