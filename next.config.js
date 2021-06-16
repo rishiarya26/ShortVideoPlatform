@@ -48,12 +48,8 @@ const nextConfig = {
     appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.node = {
-        fs: 'empty'
-      };
-    }
+  webpack: config => {
+    config.resolve.fallback = { ...config.resolve.fallback, ...{ fs: false } };
     config.output.publicPath = '';
     config.plugins.push(new BundleAnalyzerPlugin({
       openAnalyzer: false,
@@ -76,10 +72,6 @@ const nextConfig = {
         assetsSort: 'size'
       }
     }));
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader']
-    });
     return config;
   }
 };
