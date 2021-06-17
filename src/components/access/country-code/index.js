@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { SubmitButton } from '../../commons/button/submit-button';
 
 export default function CountryCode() {
   // eslint-disable-next-line no-unused-vars
-  const [pending, setPending] = useState(false);
 
   return (
     <div className="flex flex-col w-full">
@@ -22,7 +20,7 @@ export default function CountryCode() {
           />
         </div>
         <div className="flex w-3/12">
-          <SubmitButton text="Search" pending={pending} />
+          <SubmitButton text="Search" />
         </div>
       </div>
       <div className="flex flex-col p-2">

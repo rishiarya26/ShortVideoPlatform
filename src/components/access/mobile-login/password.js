@@ -1,30 +1,30 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import useSnackbar from '../../../hooks/use-snackbar';
+import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
 export default function PasswordLogin({ handleToggle, handleChange, data }) {
-  const [pending, setPending] = useState(false);
   const router = useRouter();
-
+  const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async setPending => {
     setPending(true);
     try {
       const finalData = { ...data };
       finalData.type = 'Mobile';
       const response = await userLogin(finalData);
-      if (response.data.status === 200) {
+      if (response.status === 'success') {
         setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
-        showSnackbar({ message: 'Succesfully Login ' });
+        showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (e) {
       setPending(false);
+      showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
     }
   };
 
@@ -32,7 +32,7 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
     <div className="flex flex-col px-4 pt-10">
       <div className="mt-4">
         <input
-          id="phone"
+          id="mobile"
           value={data.mobile}
           onChange={handleChange}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
@@ -57,7 +57,7 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
         <p onClick={() => handleToggle('otp')} className="text-blue-400">Login with OTP</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Log in" pending={pending} />
+        <SubmitButton handleSubmit={handleSubmit} text="Log in" />
       </div>
     </div>
   );

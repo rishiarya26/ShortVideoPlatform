@@ -8,7 +8,6 @@ import { SubmitButton } from '../../commons/button/submit';
 
 const VerifyOTP = ({ router }) => {
   const [otp, setOtp] = useState('');
-  const [pending, setPending] = useState(false);
   const { id } = router.query;
   const { t } = useTranslation();
 
@@ -19,7 +18,7 @@ const VerifyOTP = ({ router }) => {
     setOtp(otp);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async setPending => {
     setPending(true);
     const payload = {
       mobile: id,
@@ -32,11 +31,11 @@ const VerifyOTP = ({ router }) => {
         router.push({
           pathname: '/feed/for-you'
         });
-        showSnackbar({ message: 'Succesfully Login ' });
+        showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (error) {
       setPending(false);
-      showSnackbar({ message: 'Incorrect OTP or has expired' });
+      showSnackbar({ message: t('INCORRECT_OTP') });
     }
   };
   return (
@@ -57,7 +56,7 @@ const VerifyOTP = ({ router }) => {
         />
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text={t('VERIFY_OTP')} pending={pending} />
+        <SubmitButton handleSubmit={handleSubmit} text={t('VERIFY_OTP')} />
       </div>
     </div>
   );

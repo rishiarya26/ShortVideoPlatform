@@ -1,7 +1,8 @@
 import Logo from '../commons/svgicons/hipi-logo';
 import { withBasePath } from '../../config';
+import { getOS } from '../../utils/device-details';
 
-export default function downloadAppWidget({ getOS }) {
+export default function downloadAppWidget() {
   const storeImages = {
     android: 'icons/play_store.png',
     ios: 'icons/app_store.png'

@@ -54,7 +54,7 @@ export function apiMiddleWare(
   settings = {}
 ) {
   const {
-    shouldCache = false, backoff = false, ttl = 0, requireAuth = false
+    shouldCache = false, backoff = false, ttl = 0, requiresAuth = false
   } = settings;
   const cache = {};
   let cacheKey = '';
@@ -67,7 +67,7 @@ export function apiMiddleWare(
       if (cachedItem && isValid(cachedItem)) {
         return resolvePromise(cachedItem);
       }
-      if (requireAuth) {
+      if (requiresAuth) {
         resp = await preCondition(_promise, params);
       }
       if (backoff) {

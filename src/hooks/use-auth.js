@@ -1,13 +1,13 @@
 import { getItem } from '../utils/cookie';
 
-function useAuth(login, apiCall) {
+function useAuth(compWithAuth, compWOAuth) {
   let tokens = getItem('tokens');
   tokens = tokens && JSON.parse(tokens);
 
   if (tokens?.shortsAuthToken && tokens?.accessToken) {
-    return apiCall;
+    return compWOAuth;
   }
-  return login;
+  return compWithAuth;
 }
 
 export default useAuth;

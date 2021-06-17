@@ -8,25 +8,26 @@ import { BackButton } from '../commons/button/back';
 const Login = ({ router }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', password: '' });
   const [emailData, setEmailData] = useState({ email: '', password: '' });
-  const type = router.query.id;
+  const { id } = router.query;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
 
-  const handleChangePhone = e => {
-    const currentData = { ...phoneData };
-    const inputType = e.target.id;
+  const getMappings = (e, data) => {
+    const { id } = e.target;
     const { value } = e.target;
-    inputType === 'phone' && (currentData.mobile = value);
-    inputType === 'password' && (currentData.password = value);
-    setPhoneData(currentData);
+    data[id] = value;
+    return data;
   };
 
-  const handleChangeEmail = e => {
-    const currentData = { ...emailData };
-    const inputType = e.target.id;
-    const { value } = e.target;
-    inputType === 'email' && (currentData.email = value);
-    inputType === 'password' && (currentData.password = value);
-    setEmailData(currentData);
+  const processPhoneData = e => {
+    let data = { ...phoneData };
+    data = getMappings(e, data);
+    setPhoneData(data);
+  };
+
+  const processEmailData = e => {
+    let data = { ...emailData };
+    data = getMappings(e, data);
+    setEmailData(data);
   };
 
   return (
@@ -43,8 +44,8 @@ const Login = ({ router }) => {
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        {type === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={handleChangePhone} />}
-        {type === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={handleChangeEmail} />}
+        {id === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={processPhoneData} />}
+        {id === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={processEmailData} />}
       </div>
     </>
   );

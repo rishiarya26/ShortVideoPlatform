@@ -43,9 +43,7 @@ function VideoSidebar({
     show('', login, 'md', 'h-5/6');
   };
 
-  const like = () => {
-    setLiked(true);
-  };
+  const like = () => setLiked(true);
   const selected = useAuth(showLoginOptions, like);
 
   const handleLike = () => {

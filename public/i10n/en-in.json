@@ -40,5 +40,10 @@
   "SFOLLOWING":"following",
   "PRODUCT_CAN_BUY":"Products you can buy",
   "ITEMS":"items",
-  "VERIFY_OTP":"Verify OTP"
+  "VERIFY_OTP":"Verify OTP",
+  "SUCCESS_LOGIN": "Succesfully Logged in",
+  "FAIL_EMAIL_LOGIN": "Incorrect Email or Password",
+  "FAIL_MOBILE_LOGIN": "Incorrect Phone or Password",
+  "SUCCESS_OTP":"OTP sent successfully",
+  "INCORRECT_OTP":"Incorrect OTP or has expired"
   }

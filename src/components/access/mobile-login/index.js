@@ -6,11 +6,7 @@ export default function MobileLogin({ phoneData, handleChangePhone }) {
   const [showPasswordLogin, setShowPasswordLogin] = useState(true);
 
   const handleToggle = selected => {
-    if (selected === 'otp') {
-      setShowPasswordLogin(false);
-    } else {
-      setShowPasswordLogin(true);
-    }
+    setShowPasswordLogin(!(selected === 'otp'));
   };
   return (
     <>

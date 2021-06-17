@@ -1,20 +1,29 @@
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import useSnackbar from '../../../hooks/use-snackbar';
+import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
 export default function EmailLogin({ emailData: data, handleChangeEmail }) {
-  const [pending, setPending] = useState(false);
+  const router = useRouter();
+  const { showSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async setPending => {
     setPending(true);
     try {
       const finalData = { ...data };
       finalData.type = 'email';
       const response = await userLogin(finalData);
-      if (response.data && response.data.accessToken) {
+      if (response.status === 'success') {
         setPending(false);
+        router.push({
+          pathname: '/feed/for-you'
+        });
+        showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (e) {
+      showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
       setPending(false);
     }
   };
@@ -47,7 +56,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <p>Forgot password?</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Log in" pending={pending} />
+        <SubmitButton handleSubmit={handleSubmit} text="Log in" />
       </div>
     </div>
   );
