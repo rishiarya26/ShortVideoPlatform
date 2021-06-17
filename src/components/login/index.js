@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Tabs from '../commons/tabs';
 import MobileLogin from '../access/mobile-login';
 import EmailLogin from '../access/email-login';
-import Registration from '../access/registration';
 import { BackButton } from '../commons/button/back';
 
 const Login = ({ router }) => {
@@ -44,7 +43,6 @@ const Login = ({ router }) => {
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        <Registration />
         {type === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={handleChangePhone} />}
         {type === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={handleChangeEmail} />}
       </div>
