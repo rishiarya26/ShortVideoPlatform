@@ -3,8 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 
 // TODO we need a proper default image url for blurDataURL
-
-const myLoader = ({ src, width }) => `${src}?w=${width}`;
+/* eslint-disable max-len */
 const Img = ({
   onClick, loading = 'lazy', data, title = 'hipi', width, height
 }) => {
@@ -18,13 +17,12 @@ const Img = ({
         `}
         style={{ paddingBottom: `${aspectRatio}%` }}
         loading={loading}
-        loader={myLoader}
         src={data}
         alt={title}
         width={width}
         height={height}
-        placeholder="blur"
-        blurDataURL="/image/upload/w_261,h_147,c_scale,f_webp,q_auto:eco/resources/0-6-2645/list/junglebook1170x658withlogo.jpg"
+        // placeholder="blur"
+        // blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
         onClick={onClick}
         onKeyPress={() => true}
         role="presentation"

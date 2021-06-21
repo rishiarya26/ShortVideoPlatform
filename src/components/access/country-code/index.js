@@ -38,7 +38,7 @@ export default function CountryCode() {
       <div className="flex flex-col p-2">
         <div className="flex px-2 justify-between font-medium">
           <div>India</div>
-          <div>++91</div>
+          <div>+91</div>
         </div>
       </div>
     </div>
