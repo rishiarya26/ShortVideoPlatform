@@ -18,8 +18,7 @@ const VerifyOTP = ({ router }) => {
     setOtp(otp);
   };
 
-  const submit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     const payload = {
       mobile: id,
       otp
@@ -27,14 +26,12 @@ const VerifyOTP = ({ router }) => {
     try {
       const response = await verifyOTP(payload);
       if (response.data.status === 200) {
-        setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
         showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (error) {
-      setPending(false);
       showSnackbar({ message: t('INCORRECT_OTP') });
     }
   };
@@ -56,7 +53,7 @@ const VerifyOTP = ({ router }) => {
         />
       </div>
       <div className="mt-10">
-        <SubmitButton submit={submit} text={t('VERIFY_OTP')} />
+        <SubmitButton fetchData={fetchData} text={t('VERIFY_OTP')} />
       </div>
     </div>
   );

@@ -9,14 +9,12 @@ export default function EmailLogin({ emailData: data, processEmailData }) {
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const submit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     try {
       const finalData = { ...data };
       finalData.type = 'email';
       const response = await userLogin(finalData);
       if (response.status === 'success') {
-        setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
@@ -24,7 +22,6 @@ export default function EmailLogin({ emailData: data, processEmailData }) {
       }
     } catch (e) {
       showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
-      setPending(false);
     }
   };
 
@@ -56,7 +53,7 @@ export default function EmailLogin({ emailData: data, processEmailData }) {
         <p>Forgot password?</p>
       </div>
       <div className="mt-10">
-        <SubmitButton submit={submit} text="Log in" />
+        <SubmitButton fetchData={fetchData} text="Log in" />
       </div>
     </div>
   );

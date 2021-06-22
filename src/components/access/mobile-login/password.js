@@ -9,21 +9,18 @@ export default function PasswordLogin({ toggle, processPhoneData, data }) {
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
 
-  const submit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     try {
       const finalData = { ...data };
       finalData.type = 'Mobile';
       const response = await userLogin(finalData);
       if (response.status === 'success') {
-        setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
         showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (e) {
-      setPending(false);
       showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
     }
   };
@@ -57,7 +54,7 @@ export default function PasswordLogin({ toggle, processPhoneData, data }) {
         <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
       </div>
       <div className="mt-10">
-        <SubmitButton submit={submit} text="Log in" />
+        <SubmitButton fetchData={fetchData} text="Log in" />
       </div>
     </div>
   );

@@ -10,13 +10,10 @@ export default function OtpLogin({ toggle, processPhoneData, data }) {
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const submit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     try {
       const response = await verifyUser(mobile);
-      console.log(response);
       if (response.status === 'success') {
-        setPending(false);
         router.push({
           pathname: '/verify-otp/[pid]',
           query: { pid: mobile }
@@ -24,7 +21,7 @@ export default function OtpLogin({ toggle, processPhoneData, data }) {
         showSnackbar({ message: t('SUCCESS_OTP') });
       }
     } catch (e) {
-      setPending(false);
+      console.log(e);
     }
   };
 
@@ -48,7 +45,7 @@ export default function OtpLogin({ toggle, processPhoneData, data }) {
         <p className="text-blue-400">Login with Password</p>
       </div>
       <div className="mt-10">
-        <SubmitButton submit={submit} text="Send OTP" />
+        <SubmitButton fetchData={fetchData} text="Send OTP" />
       </div>
     </div>
   );

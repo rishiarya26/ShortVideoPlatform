@@ -40,7 +40,7 @@ function VideoSidebar({
   const [liked, setLiked] = useState(false);
 
   const showLoginOptions = () => {
-    show('', login, 'type1');
+    show('', login, 'medium');
   };
 
   const like = () => setLiked(true);
