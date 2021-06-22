@@ -26,7 +26,7 @@ export default function VideoGallery({
           <div className="flex flex-wrap flex-row w-full space-x space-y">
             {validItemsLength
               ? items.map((data, id) => (
-                <span key={id} onClick={() => handleClick()}>
+                <span key={id} onClick={() => handleClick()} className="w-1/3">
                   <VideoCard data={data} id={id} />
                 </span>
               ))

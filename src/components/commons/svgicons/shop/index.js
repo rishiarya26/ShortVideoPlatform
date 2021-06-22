@@ -24,11 +24,11 @@ const Shop = ({ text }) => (
           xmlns="http://www.w3.org/2000/svg"
           width="22"
           height="20"
-          fill="none"
+          fill="#ff0000"
           viewBox="0 0 22 20"
         >
           <path
-            stroke="#fff"
+            stroke="#ff0000"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
