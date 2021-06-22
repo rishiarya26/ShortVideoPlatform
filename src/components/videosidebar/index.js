@@ -63,7 +63,7 @@ function VideoSidebar({
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
       <div onClick={handleProfileClick} className="relative py-3 px-3 text-center justify-end flex">
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
             className="usrimg w-12 h-12 rounded-full"
