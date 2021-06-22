@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Image from 'next/image';
 
@@ -15,7 +14,7 @@ const Img = ({
         position-relative overflow-hidden
         animate-appear
         `}
-        style={{ paddingBottom: `${aspectRatio}%` }}
+        //style={{ paddingBottom: `${aspectRatio}%` }}
         loading={loading}
         src={data}
         alt={title}
