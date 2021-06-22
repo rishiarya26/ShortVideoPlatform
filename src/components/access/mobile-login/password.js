@@ -4,12 +4,12 @@ import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
-export default function PasswordLogin({ handleToggle, handleChange, data }) {
+export default function PasswordLogin({ toggle, processPhoneData, data }) {
   const router = useRouter();
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
 
-  const handleSubmit = async setPending => {
+  const submit = async setPending => {
     setPending(true);
     try {
       const finalData = { ...data };
@@ -34,7 +34,7 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
         <input
           id="mobile"
           value={data.mobile}
-          onChange={handleChange}
+          onChange={processPhoneData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="number"
           name="phone"
@@ -45,7 +45,7 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
         <input
           id="password"
           value={data.password}
-          onChange={handleChange}
+          onChange={processPhoneData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="password"
           name="phone"
@@ -54,10 +54,10 @@ export default function PasswordLogin({ handleToggle, handleChange, data }) {
       </div>
       <div className="flex justify-between text-sm font-semibold mt-2 px-2">
         <p>Forgot password?</p>
-        <p onClick={() => handleToggle('otp')} className="text-blue-400">Login with OTP</p>
+        <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Log in" />
+        <SubmitButton submit={submit} text="Log in" />
       </div>
     </div>
   );

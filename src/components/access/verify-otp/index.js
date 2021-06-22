@@ -18,7 +18,7 @@ const VerifyOTP = ({ router }) => {
     setOtp(otp);
   };
 
-  const handleSubmit = async setPending => {
+  const submit = async setPending => {
     setPending(true);
     const payload = {
       mobile: id,
@@ -40,7 +40,7 @@ const VerifyOTP = ({ router }) => {
   };
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={router.back} />
+      <BackButton back={() => { router.push('/phone/otp'); }} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">Enter 4-digit code</p>
         <p className="text-gray-400 text-xs">{`Your code was messaged to +${id}`}</p>
@@ -56,7 +56,7 @@ const VerifyOTP = ({ router }) => {
         />
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text={t('VERIFY_OTP')} />
+        <SubmitButton submit={submit} text={t('VERIFY_OTP')} />
       </div>
     </div>
   );

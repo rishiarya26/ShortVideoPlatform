@@ -4,13 +4,13 @@ import useTranslation from '../../../hooks/use-translation';
 import { verifyUser } from '../../../sources/auth/verify-user';
 import { SubmitButton } from '../../commons/button/submit';
 
-export default function OtpLogin({ handleToggle, handleChange, data }) {
+export default function OtpLogin({ toggle, processPhoneData, data }) {
   const router = useRouter();
   const mobile = data && data.mobile;
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const handleSubmit = async setPending => {
+  const submit = async setPending => {
     setPending(true);
     try {
       const response = await verifyUser(mobile);
@@ -34,7 +34,7 @@ export default function OtpLogin({ handleToggle, handleChange, data }) {
         <input
           id="mobile"
           value={data.mobile}
-          onChange={handleChange}
+          onChange={processPhoneData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="number"
           name="phone"
@@ -42,13 +42,13 @@ export default function OtpLogin({ handleToggle, handleChange, data }) {
         />
       </div>
       <div
-        onClick={() => handleToggle('password')}
+        onClick={() => toggle('password')}
         className="flex justify-end text-sm font-semibold mt-2 px-2"
       >
         <p className="text-blue-400">Login with Password</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Send OTP" />
+        <SubmitButton submit={submit} text="Send OTP" />
       </div>
     </div>
   );

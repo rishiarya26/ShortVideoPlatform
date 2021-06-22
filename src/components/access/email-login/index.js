@@ -4,12 +4,12 @@ import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
-export default function EmailLogin({ emailData: data, handleChangeEmail }) {
+export default function EmailLogin({ emailData: data, processEmailData }) {
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const handleSubmit = async setPending => {
+  const submit = async setPending => {
     setPending(true);
     try {
       const finalData = { ...data };
@@ -34,7 +34,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <input
           id="email"
           value={data.email}
-          onChange={handleChangeEmail}
+          onChange={processEmailData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="email"
           name="phone"
@@ -45,7 +45,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <input
           id="password"
           value={data.password}
-          onChange={handleChangeEmail}
+          onChange={processEmailData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="password"
           name="phone"
@@ -56,7 +56,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <p>Forgot password?</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Log in" />
+        <SubmitButton submit={submit} text="Log in" />
       </div>
     </div>
   );

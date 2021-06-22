@@ -6,7 +6,7 @@ import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 
-export default function Login({ handleToggle }) {
+export default function Login({ toggle }) {
   const { close } = useDrawer();
   return (
     <div className="px-4 py-2 flex flex-col items-center">
@@ -51,7 +51,7 @@ export default function Login({ handleToggle }) {
       <div className="my-2 ">
         <p>
           Don't have an account?
-          <span onClick={() => handleToggle('signup')} className="text-red-600">Sign Up</span>
+          <span onClick={() => toggle('signup')} className="text-red-600">Sign Up</span>
         </p>
       </div>
     </div>

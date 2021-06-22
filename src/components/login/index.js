@@ -44,8 +44,8 @@ const Login = ({ router }) => {
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        {type === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={processPhoneData} />}
-        {type === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={processEmailData} />}
+        {type === 'phone' && <MobileLogin phoneData={phoneData} processPhoneData={processPhoneData} />}
+        {type === 'email' && <EmailLogin emailData={emailData} processEmailData={processEmailData} />}
       </div>
     </>
   );

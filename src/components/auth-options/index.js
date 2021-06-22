@@ -4,13 +4,13 @@ import Signup from '../signup-options';
 
 export default function AuthOptions() {
   const [showLoginOptons, setShowLoginOptons] = useState(true);
-  const handleToggle = selected => {
+  const toggle = selected => {
     setShowLoginOptons(!(selected === 'signup'));
   };
   return (
     <>
-      {showLoginOptons ? <Login handleToggle={handleToggle} />
-        : <Signup handleToggle={handleToggle} />}
+      {showLoginOptons ? <Login toggle={toggle} />
+        : <Signup toggle={toggle} />}
     </>
   );
 }
