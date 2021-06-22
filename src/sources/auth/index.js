@@ -2,7 +2,7 @@ import { post } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformError, transformSuccess } from '../transform/auth';
-import { hipiLogin } from './hipi-login';
+import { hipiLogin } from './login';
 
 const login = async ({
   type, email = '', password = '', mobile = ''

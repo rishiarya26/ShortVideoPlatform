@@ -22,7 +22,7 @@ console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV
  
 const nextConfig = {
  images: {
- domains: ['akamaividz2.zee5.com']
+ domains: ['akamaividz2.zee5.com','assets2.charmboard.com']
  },
  // would suggest keeping this false
  trailingSlash: false, // https://github.com/zeit/next.js/issues/8119

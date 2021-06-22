@@ -43,7 +43,7 @@ function ProductWidget({
           {!loading ? shopCardsLength > 0 && shopCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-md"
+              className="w-14 h-14 mr-4 rounded-md bg-gray-500"
               // eslint-disable-next-line no-undef
               onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
             >

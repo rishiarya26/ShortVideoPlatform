@@ -8,7 +8,7 @@ import { BackButton } from '../commons/button/back';
 const Login = ({ router }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', password: '' });
   const [emailData, setEmailData] = useState({ email: '', password: '' });
-  const { id } = router.query;
+  const { type } = router.query;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
 
   const getMappings = (e, data) => {
@@ -44,8 +44,8 @@ const Login = ({ router }) => {
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        {id === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={processPhoneData} />}
-        {id === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={processEmailData} />}
+        {type === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={processPhoneData} />}
+        {type === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={processEmailData} />}
       </div>
     </>
   );

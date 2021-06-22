@@ -2,7 +2,7 @@ import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/auth/verify-otp';
-import { hipiLogin } from './hipi-login';
+import { hipiLogin } from './login';
 
 async function validateOTP({
   mobile, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19', aid = '91955485578'

@@ -4,7 +4,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/auth/renew-tokens';
-import { hipiLogin } from './hipi-login';
+import { hipiLogin } from './login';
 
 async function refreshTokens() {
   let response = {};
