@@ -73,7 +73,7 @@ export default function Feed({ id }) {
   const toggleSaveLook = () => {
     const data = [...items];
     const resp = data.findIndex(item => (item.content_id === activeVideoId));
-    resp && (data[resp].saveLook = true);
+    data[resp].saveLook = true;
     setItems(data);
     setSaveLook(!saveLook);
   };

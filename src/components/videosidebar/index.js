@@ -146,18 +146,8 @@ function VideoSidebar({
       </div> */}
 
       {canShop === 'success' && (!profileFeed
-        ? saveLook
+        && saveLook
         && (
-          <div
-            className={`${
-              type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-            onClick={handleSaveLook}
-          >
-            <Shop text={!saved ? 'save look' : 'saved'} />
-          </div>
-        )
-        : (
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
