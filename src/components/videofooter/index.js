@@ -10,7 +10,7 @@ function VideoFooter({
 }) {
   return (
     <div
-      className= {saveLook ? "bottom-12 videoFooter  flex text-white ml-2":"bottom-26 videoFooter  flex text-white ml-2"}
+      className={`${saveLook ? ' bottom-12 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`}
     >
       <div className="videoFooter__text w-2/3">
 

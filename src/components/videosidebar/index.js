@@ -60,26 +60,28 @@ function VideoSidebar({
 
   return (
     <div
-      className={'bottom text-white'}
+      className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={handleProfileClick} className="relative py-3 px-1 text-center flex justify-center">
-        <img
-          alt="profile-pic"
-          className="usrimg w-12 h-12 rounded-full"
-          src={profilePic}
-        />
-        <div
-          className={`${
-            type === 'feed' ? 'block' : 'hidden'
-          } absolute bottom-0`}
-        >
-          <Follow />
+      <div onClick={handleProfileClick} className="relative py-3 px-3 text-center justify-end flex">
+        <div className="flex flex-col items-end">
+          <img
+            alt="profile-pic"
+            className="usrimg w-12 h-12 rounded-full"
+            src={profilePic}
+          />
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } absolute bottom-0`}
+          >
+            <Follow />
+          </div>
         </div>
       </div>
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center justify-center`}
+        } "relative py-3  px-3 text-center justify-end`}
       >
         {liked ? (
           <div>
@@ -93,7 +95,7 @@ function VideoSidebar({
               <Liked />
             </div>
 
-            <p className="text-sm">{likes + 1}</p>
+            <p className="text-sm text-center">{likes + 1}</p>
           </div>
         ) : (
           <div>
@@ -104,7 +106,7 @@ function VideoSidebar({
             >
               <Like />
             </div>
-            <p className="text-sm">{likes}</p>
+            <p className="text-sm text-center">{likes}</p>
           </div>
         )}
 
@@ -112,19 +114,22 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center items-center flex-col`}
+        } "relative py-3  px-3 text-center items-end flex-col`}
       >
-        <Comment />
-        <p className="text-sm">0</p>
+        <div>
+          <Comment />
+          <p className="text-sm text-center">0</p>
+        </div>
       </div>
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center items-center flex-col`}
+        } "relative py-3  px-3 text-center items-end flex-col`}
       >
-        <Share />
-
-        <p className="text-sm">Share</p>
+        <div>
+          <Share />
+          <p className="text-sm text-center">Share</p>
+        </div>
       </div>
       {/* <div
         role="presentation"

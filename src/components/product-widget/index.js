@@ -24,8 +24,8 @@ function ProductWidget({
   return (
     <div
       className={profileFeed
-        ? 'flex w-6/12 h-24 justify-between items-center p-2'
-        : 'flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2'}
+        ? 'flex w-6/12 h-24 justify-between items-center p-2 absolute bottom-14'
+        : 'flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-14'}
     >
       <div className="flex flex-col">
         {!profileFeed && (
