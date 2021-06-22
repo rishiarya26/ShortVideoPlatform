@@ -60,11 +60,9 @@ function VideoSidebar({
 
   return (
     <div
-      className={`${
-        type === 'feed' ? 'bottom' : 'bottom'
-      } text-white`}
+      className={'bottom text-white'}
     >
-      <div onClick={handleProfileClick} className="relative py-3  px-1 text-center flex justify-center">
+      <div onClick={handleProfileClick} className="relative py-3 px-1 text-center flex justify-center">
         <img
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
