@@ -111,7 +111,6 @@ export const forYouEmbedFeed = {
     }
   }
 };
-
 export const forYouEmbedFeedFailure = {
   status: 400,
   success: false,

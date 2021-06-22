@@ -22,10 +22,35 @@ export const DrawerProvider = ({ children }) => {
   const [state, setState] = useState({
     visible: false,
     title: '',
-    type: 'md'
+    type: {
+      width: 'md',
+      height: 'h-1/3'
+    }
   });
 
-  const show = (title, content, type = 'md', props) => {
+  const chooseDesign = selectedType => {
+    let type = {
+      width: 'md',
+      height: 'h-1/3'
+    };
+    if (selectedType === 'type1') {
+      type = {
+        width: 'md',
+        height: 'h-4/6'
+      };
+    }
+    if (selectedType === 'type2') {
+      type = {
+        width: 'md',
+        height: 'h-5/6'
+      };
+    }
+    return type;
+  };
+
+  const show = (title, content, type, props) => {
+    /* eslint-disable no-param-reassign */
+    type = chooseDesign(type);
     ComponentProps.current = props;
     DrawerContent = content;
     showOverLay();

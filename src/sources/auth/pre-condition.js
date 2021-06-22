@@ -1,39 +1,32 @@
-import { userLogin } from '.';
-import { hipiLogin } from './hipi-login';
-import { transformError, transformSuccess } from '../transform/auth/pre-conditon';
-import { apiMiddleWare } from '../../network/utils';
-import { getItem, setItem } from '../../utils/cookie';
+/* eslint-disable import/no-cycle */
+import { renewTokens } from './renew-tokens';
 
-const getPreConditionTokens = async () => {
+const reAuthenticate = async (dataFetcher, params) => {
   let response = {};
+  let resp = {};
   try {
-    let payload = {};
-    const itemsToSetCookies = {
-      mobile: '',
-      email: 'akrao123@gmail.com',
-      password: '123456',
-      guest_token: 'null',
-      aid: 'djsucgius',
-      platform: 'web',
-      version: '27.0202065'
-    };
-    setItem('userDetails', JSON.stringify(itemsToSetCookies));
-    payload = getItem('userDetails');
-    payload = JSON.parse(payload);
-    if (payload) {
-      const resp = await userLogin(payload);
-      const zee5Token = resp.data.access_token;
-      response = await hipiLogin({ zee5Token });
-      response.data.accessToken = zee5Token;
-      response.data.status = 200;
-      response.data.message = 'success';
+    response = await renewTokens();
+    if (response.data.status === 200) {
+      resp = await dataFetcher(params);
     }
-    return Promise.resolve(response);
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (error) {
+    console.log('error in reAuth');
+    return error;
   }
+  return resp;
 };
 
-const [preCondition, clearPreCondition] = apiMiddleWare(getPreConditionTokens, transformSuccess, transformError);
+const preCondition = async (dataFetcher, params) => {
+  let resp = {};
+  try {
+    resp = await dataFetcher(params);
+  } catch (error) {
+    if (error?.statusCode === 401) {
+      const response = await reAuthenticate(dataFetcher, params);
+      return response;
+    }
+  }
+  return resp;
+};
 
-export { preCondition, clearPreCondition };
+export default preCondition;

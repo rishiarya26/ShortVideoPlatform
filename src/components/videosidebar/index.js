@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
@@ -10,9 +11,10 @@ import Shop from '../commons/svgicons/shop';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
 // import { getDeviceType } from '../../hooks/use-device';
-// import useDrawer from '../../hooks/use-drawer';
+import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
-import { postLike, deleteLike } from '../../sources/social';
+// import { postLike, deleteLike } from '../../sources/social';
+import useAuth from '../../hooks/use-auth';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -20,13 +22,34 @@ import { postLike, deleteLike } from '../../sources/social';
 //   ssr: false
 // });
 
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  // socialId,
+  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
-  // const { show } = useDrawer();
+  const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
+
+  const showLoginOptions = () => {
+    show('', login, 'type1');
+  };
+
+  const like = () => setLiked(true);
+  const selected = useAuth(showLoginOptions, like);
+
+  const handleLike = () => {
+    selected();
+    // postLike({ socialId });
+  };
 
   const handleProfileClick = () => {
     router.push({
@@ -65,7 +88,7 @@ function VideoSidebar({
             <div
               role="presentation"
               onClick={() => {
-                deleteLike({ socialId });
+                // deleteLike({ socialId });
                 setLiked(false);
               }}
             >
@@ -78,16 +101,15 @@ function VideoSidebar({
           <div>
             <div
               role="presentation"
-              onClick={() => {
-                postLike({ socialId });
-                setLiked(true);
-              }}
+              onClick={handleLike}
+
             >
               <Like />
             </div>
             <p className="text-sm">{likes}</p>
           </div>
         )}
+
       </div>
       <div
         className={`${

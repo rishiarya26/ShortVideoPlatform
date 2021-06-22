@@ -1,10 +1,11 @@
-
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+/* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
+import { setItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const login = async ({ zee5Token }) => {
+const login = async ({ zee5Token, refreshToken }) => {
   let response = {};
   try {
     const urlencoded = new URLSearchParams();
@@ -13,6 +14,13 @@ const login = async ({ zee5Token }) => {
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'
     });
+    const tokens = {
+      shortsAuthToken: response.data.shortsAuthToken,
+      accessToken: zee5Token,
+      refreshToken
+    };
+    setItem('tokens', JSON.stringify(tokens), { path: '/', domain: 'localhost' });
+    response.data.accessToken = zee5Token;
     response.data.status = 200;
     response.data.message = 'success';
     return Promise.resolve(response);

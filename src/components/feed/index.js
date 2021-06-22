@@ -8,7 +8,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 // import FooterMenu from '../footer-menu';
-import Tabs from '../commons/tabs';
+import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
@@ -87,7 +87,10 @@ export default function Feed({ id }) {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="fixed mt-10 z-10 w-full"><Tabs items={tabs} /></div>
+      <div className="fixed mt-10 z-10 w-full">
+        <FeedTabs items={tabs} />
+      </div>
+
       <Swiper
         direction="vertical"
         draggable="true"
