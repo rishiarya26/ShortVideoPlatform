@@ -24,9 +24,9 @@ const login = async ({
     });
     resp.data.status = 200;
     resp.data.message = 'success';
-    const zee5Token = resp.data.access_token;
+    const accessToken = resp.data.access_token;
     const refreshToken = resp.data.refresh_token;
-    response = await hipiLogin({ zee5Token, refreshToken });
+    response = await hipiLogin({ accessToken, refreshToken });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
@@ -32,10 +32,11 @@ const login = dynamic(
 
 function VideoSidebar({
   // socialId,
-  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
   const { show } = useDrawer();
+  const router = useRouter();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
 
@@ -162,4 +163,4 @@ function VideoSidebar({
   );
 }
 
-export default withRouter(VideoSidebar);
+export default VideoSidebar;
