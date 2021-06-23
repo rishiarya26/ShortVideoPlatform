@@ -5,19 +5,19 @@ import { transformSuccess, transformError } from '../transform/auth/verify-otp';
 import { hipiLogin } from './login';
 
 async function validateOTP({
-  mobile, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19', aid = '91955485578'
+  mobile, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19'
 }) {
   let response = {};
   try {
     /* eslint-disable max-len */
-    const apiPath = `${getApiBasePath('otp')}/device/verifyotp_v1.php?phoneno=${mobile}&otp=${otp}&guest_token=${guestToken}&platform=${platform}&aid=${aid}&lotame_cookie_id=${cookieId}&version=${version}`;
+    const apiPath = `${getApiBasePath('otp')}/device/verifyotp_v1.php?phoneno=${mobile}&otp=${otp}&guest_token=${guestToken}&platform=${platform}&aid=${mobile}&lotame_cookie_id=${cookieId}&version=${version}`;
     const resp = await get(apiPath);
     resp.data.requestedWith = {
       mobile, otp, platform, guestToken
     };
-    const zee5Token = resp.data.token;
+    const accessToken = resp?.data?.token;
     const refreshToken = resp.data.refresh_token;
-    response = await hipiLogin({ zee5Token, refreshToken });
+    response = await hipiLogin({ accessToken, refreshToken });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

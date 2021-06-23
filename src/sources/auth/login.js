@@ -5,22 +5,22 @@ import { apiMiddleWare } from '../../network/utils';
 import { setItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const login = async ({ zee5Token, refreshToken }) => {
+const login = async ({ accessToken, refreshToken }) => {
   let response = {};
   try {
     const urlencoded = new URLSearchParams();
-    urlencoded.append('zee5Token', zee5Token);
+    urlencoded.append('zee5Token', accessToken);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'
     });
     const tokens = {
       shortsAuthToken: response.data.shortsAuthToken,
-      accessToken: zee5Token,
+      accessToken,
       refreshToken
     };
     setItem('tokens', JSON.stringify(tokens), { path: '/', domain: 'localhost' });
-    response.data.accessToken = zee5Token;
+    response.data.accessToken = accessToken;
     response.data.status = 200;
     response.data.message = 'success';
     return Promise.resolve(response);
