@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import useTranslation from '../../hooks/use-translation';
-import ImageComp from '../commons/image';
+import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
 import { Loading } from './loading';
 
@@ -47,7 +47,7 @@ function ProductWidget({
               // eslint-disable-next-line no-undef
               onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
             >
-              <ImageComp data={data} title="card" height={120} width={120} />
+              <Img data={data} height={120} width={120} />
             </div>
           ))
             : (

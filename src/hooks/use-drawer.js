@@ -22,10 +22,11 @@ export const DrawerProvider = ({ children }) => {
   const [state, setState] = useState({
     visible: false,
     title: '',
-    type: 'md'
+    type: 'small'
   });
 
-  const show = (title, content, type = 'md', props) => {
+  const show = (title, content, type, props) => {
+    /* eslint-disable no-param-reassign */
     ComponentProps.current = props;
     DrawerContent = content;
     showOverLay();

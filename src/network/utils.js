@@ -1,5 +1,6 @@
-
 import { loadMockServer } from '../mock/load';
+/* eslint-disable import/no-cycle */
+import preCondition from '../sources/auth/pre-condition';
 import { getDateDiffSeconds } from '../utils/date';
 
 const RETRY_COUNT = 3;
@@ -52,7 +53,9 @@ export function apiMiddleWare(
   transformError = data => (data),
   settings = {}
 ) {
-  const { shouldCache = false, backoff = false, ttl = 0 } = settings;
+  const {
+    shouldCache = false, backoff = false, ttl = 0, requiresAuth = false
+  } = settings;
   const cache = {};
   let cacheKey = '';
   const wrapped = async (params = {}) => {
@@ -63,6 +66,9 @@ export function apiMiddleWare(
       const cachedItem = cache[cacheKey];
       if (cachedItem && isValid(cachedItem)) {
         return resolvePromise(cachedItem);
+      }
+      if (requiresAuth) {
+        resp = await preCondition(_promise, params);
       }
       if (backoff) {
         resp = await backoff(_promise, params);

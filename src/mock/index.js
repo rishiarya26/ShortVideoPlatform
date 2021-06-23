@@ -24,7 +24,8 @@ function mockServer(environment = 'development', callback) {
       this.delete('https://api.github.com/delete/repositories', deleteListRequestHandler);
 
       // feed
-      this.get('https://stagingmobile.charmboard.com/v3.6/demo/hipi/1', getForYouFeed);
+      this.get('https://stagingmobile.charmboard.com//v3.6/demo/hipi/1', getForYouFeed);
+      // this.get('https://hipigwapi.zee5.com/api/v1/shorts/home', getForYouFeed);
       // this.get('https://hipigwapi.zee5.com/api/v1/shorts/video/detail', getForYouEmbedFeed);
 
       // social

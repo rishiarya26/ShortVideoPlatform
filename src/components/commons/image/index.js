@@ -20,8 +20,6 @@ const Img = ({
         alt={title}
         width={width}
         height={height}
-        placeholder="blur"
-        blurDataURL="/image/upload/w_261,h_147,c_scale,f_webp,q_auto:eco/resources/0-6-2645/list/junglebook1170x658withlogo.jpg"
         onClick={onClick}
         onKeyPress={() => true}
         role="presentation"

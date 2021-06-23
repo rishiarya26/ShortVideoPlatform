@@ -1,1 +1,1 @@
-export const getUserProfile = schema => ({ ...schema.db.profile[0] });
+export const getUserProfile = schema => ({ ...schema.db.profile[0].data });
