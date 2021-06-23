@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Error from 'next/error';
-import EmbedVideo from '../../src/components/embedvideo';
+import EmbedVideo from '../../src/components/embed-video';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import {
   SeoMeta,
