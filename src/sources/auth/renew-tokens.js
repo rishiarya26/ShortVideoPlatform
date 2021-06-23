@@ -9,14 +9,15 @@ import { hipiLogin } from './login';
 async function refreshTokens() {
   let response = {};
   const tokens = getItem('tokens');
-  const refresh = JSON.parse(tokens)?.refreshToken;
+
   try {
+    const refresh = JSON.parse(tokens)?.refreshToken;
     const apiPath = `${getApiBasePath('userApi')}/v2/user/renew?refresh_token=${refresh}`;
 
     const resp = await post(apiPath);
-    const zee5Token = resp.data.access_token;
-    const refreshToken = resp.data.refresh_token;
-    response = await hipiLogin({ zee5Token, refreshToken });
+    const accessToken = resp?.data?.access_token;
+    const refreshToken = resp?.data?.refresh_token;
+    response = await hipiLogin({ accessToken, refreshToken });
     response.data.requestedWith = { refreshToken };
     return Promise.resolve(response);
   } catch (err) {
