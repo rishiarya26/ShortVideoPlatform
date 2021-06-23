@@ -1,42 +1,29 @@
+import React from 'react';
 import Image from 'next/image';
-// import { useEffect, useRef, useState } from 'react';
-// import Shop from '../svgicons/shop';
 
-const myLoader = ({ src, width }) => `${src}?w=${width}`;
-
-function ImageComp({
-  data, title, width, height
-}) {
-  // const [loaded, setLoaded] = useState(true);
-  // const [error, setError] = useState(false)
-
-  // const image = useRef()
-
-  // useEffect(()=>{
-  //   if (image.current.complete) setLoaded(true)
-  // },[])
-  const handleError = () => {
-    // setLoaded(true)
-    // setError(true)
-  };
-
-  const handleLoad = () => {
-    // setLoaded(true)
-  };
+// TODO we need a proper default image url for blurDataURL
+const Img = ({
+  onClick, loading = 'lazy', data, title = 'hipi', width, height
+}) => {
+  const aspectRatio = (height / width) * 100;
   return (
     <>
       <Image
-        className="object-cover"
-        onLoad={handleLoad}
-        onError={handleError}
-        loader={myLoader}
+        className={`
+        position-relative overflow-hidden
+        animate-appear
+        `}
+        style={{ paddingBottom: `${aspectRatio}%` }}
+        loading={loading}
         src={data}
         alt={title}
         width={width}
         height={height}
+        onClick={onClick}
+        onKeyPress={() => true}
+        role="presentation"
       />
     </>
   );
-}
-
-export default ImageComp;
+};
+export default Img;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
@@ -10,9 +11,10 @@ import Shop from '../commons/svgicons/shop';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
 // import { getDeviceType } from '../../hooks/use-device';
-// import useDrawer from '../../hooks/use-drawer';
+import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
-import { postLike, deleteLike } from '../../sources/social';
+// import { postLike, deleteLike } from '../../sources/social';
+import useAuth from '../../hooks/use-auth';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -20,13 +22,35 @@ import { postLike, deleteLike } from '../../sources/social';
 //   ssr: false
 // });
 
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 function VideoSidebar({
-  socialId, type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  // socialId,
+  type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
-  // const { show } = useDrawer();
+  const router = useRouter();
+  const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
+
+  const showLoginOptions = () => {
+    show('', login, 'medium');
+  };
+
+  const like = () => setLiked(true);
+  const selected = useAuth(showLoginOptions, like);
+
+  const handleLike = () => {
+    selected();
+    // postLike({ socialId });
+  };
 
   const handleProfileClick = () => {
     router.push({
@@ -37,74 +61,76 @@ function VideoSidebar({
 
   return (
     <div
-      className={`${
-        type === 'feed' ? 'bottom' : 'bottom'
-      } text-white`}
+      className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={handleProfileClick} className="relative py-3  px-1 text-center flex justify-center">
-        <img
-          alt="profile-pic"
-          className="usrimg w-12 h-12 rounded-full"
-          src={profilePic}
-        />
-        <div
-          className={`${
-            type === 'feed' ? 'block' : 'hidden'
-          } absolute bottom-0`}
-        >
-          <Follow />
+      <div onClick={handleProfileClick} className="relative py-3 px-3 text-center justify-end flex">
+        <div className="flex flex-col items-center">
+          <img
+            alt="profile-pic"
+            className="usrimg w-12 h-12 rounded-full"
+            src={profilePic}
+          />
+          <div
+            className={`${
+              type === 'feed' ? 'block' : 'hidden'
+            } absolute bottom-0`}
+          >
+            <Follow />
+          </div>
         </div>
       </div>
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center justify-center`}
+        } "relative py-3  px-3 text-center justify-end`}
       >
         {liked ? (
           <div>
             <div
               role="presentation"
               onClick={() => {
-                deleteLike({ socialId });
+                // deleteLike({ socialId });
                 setLiked(false);
               }}
             >
               <Liked />
             </div>
 
-            <p className="text-sm">{likes + 1}</p>
+            <p className="text-sm text-center">{likes + 1}</p>
           </div>
         ) : (
           <div>
             <div
               role="presentation"
-              onClick={() => {
-                postLike({ socialId });
-                setLiked(true);
-              }}
+              onClick={handleLike}
+
             >
               <Like />
             </div>
-            <p className="text-sm">{likes}</p>
+            <p className="text-sm text-center">{likes}</p>
           </div>
         )}
-      </div>
-      <div
-        className={`${
-          type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center items-center flex-col`}
-      >
-        <Comment />
-        <p className="text-sm">0</p>
-      </div>
-      <div
-        className={`${
-          type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-1 text-center items-center flex-col`}
-      >
-        <Share />
 
-        <p className="text-sm">Share</p>
+      </div>
+      <div
+        className={`${
+          type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-3 text-center items-end flex-col`}
+      >
+        <div>
+          <Comment />
+          <p className="text-sm text-center">0</p>
+        </div>
+      </div>
+      <div
+        className={`${
+          type === 'feed' ? 'flex' : 'hidden'
+        } "relative py-3  px-3 text-center items-end flex-col`}
+      >
+        <div>
+          <Share />
+          <p className="text-sm text-center">Share</p>
+        </div>
       </div>
       {/* <div
         role="presentation"
@@ -124,18 +150,8 @@ function VideoSidebar({
       </div> */}
 
       {canShop === 'success' && (!profileFeed
-        ? saveLook
+        && saveLook
         && (
-          <div
-            className={`${
-              type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-            onClick={handleSaveLook}
-          >
-            <Shop text={!saved ? 'save look' : 'saved'} />
-          </div>
-        )
-        : (
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
@@ -150,4 +166,4 @@ function VideoSidebar({
   );
 }
 
-export default withRouter(VideoSidebar);
+export default VideoSidebar;

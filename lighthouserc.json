@@ -1,23 +1,5 @@
 {
-  "ci": {
-    "collect": {
-      "settings": {
-        "chromeFlags": "--ignore-certificate-errors"
-      },
-      "startServerCommand": "npm run lhci:serve",
-      "startServerReadyPattern": "Listening",
-      "reportFilenamePattern": "%%HOSTNAME%%-%%PATHNAME%%-.report.%%EXTENSION%%",
-      "url": [
-        "https://127.0.0.1:8000",
-        "https://127.0.0.1:8000/repos",
-        "https://127.0.0.1:8000/repo-details/Homebrew/brew"
-      ],
-      "numberOfRuns": 1
-    },
-    "upload": {
-      "target": "filesystem",
-      "outputDir": "./perf/page-perf/"
-    },
+  "ci": {   
     "assert": {
       "assertions": {
         "categories:performance": [

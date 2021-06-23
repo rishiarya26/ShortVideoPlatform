@@ -44,6 +44,7 @@ function transformSuccess(resp) {
 
         payloadData.push(payloadObject);
       });
+
       payload.data = payloadData;
     } else {
       return transformError(data);

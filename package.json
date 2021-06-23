@@ -73,6 +73,7 @@
     "commander": "^7.1.0",
     "cross-env": "^5.2.1",
     "eslint": "^7.27.0",
+    "eslint-config-next": "^11.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^11.1.0",
@@ -99,6 +100,7 @@
     "rimraf": "^2.6.2",
     "source-map-explorer": "^2.4.2",
     "url-loader": "^4.1.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-clear-console": "^1.0.3"
   },
   "scripts": {
