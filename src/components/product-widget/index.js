@@ -24,8 +24,8 @@ function ProductWidget({
   return (
     <div
       className={profileFeed
-        ? 'flex w-6/12 h-24 justify-between items-center p-2'
-        : 'flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2'}
+        ? 'flex w-6/12 h-24 justify-between items-center p-2 absolute bottom-14'
+        : 'flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-14'}
     >
       <div className="flex flex-col">
         {!profileFeed && (
@@ -43,7 +43,7 @@ function ProductWidget({
           {!loading ? shopCardsLength > 0 && shopCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-md bg-gray-500"
+              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden"
               // eslint-disable-next-line no-undef
               onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
             >

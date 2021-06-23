@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Embedvideo from '../embedvideo';
+import Embedvideo from '../embed-video';
 import Error from './error';
 import Loading from './loader';
 // import useDrawer from '../../hooks/use-drawer';

@@ -100,34 +100,35 @@ function Video(props) {
         <Pause />
       </div> */}
 
-      <div className="flex flex-col absolute bottom-12 justify-items-end w-full">
-        <div className="flex justify-between items-end">
+      <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={props.userName}
+        musicCoverTitle={props.musicCoverTitle}
+        type="feed"
+        hashTags={props.hashTags}
+        canShop={props.canShop}
+        saveLook={props.saveLook}
+        comp={props?.comp}
+      />
+      {/* TO-DO  comdition acc to comp */}
+      <VideoSidebar
+        videoOwnersId={props.videoOwnersId}
+        socialId={props.socialId}
+        profilePic={props.profilePic}
+        likes={props.likes}
+        comment={props.comments}
+        share={777}
+        type="feed"
+        handleSaveLook={props.handleSaveLook}
+        saveLook={props.saveLook}
+        canShop={props.canShop}
+        saved={props.saved}
+        profileFeed={props?.profileFeed}
+      />
 
-          <VideoFooter
-            musicTitle={props.musicTitle}
-            userName={props.userName}
-            musicCoverTitle={props.musicCoverTitle}
-            type="feed"
-            hashTags={props.hashTags}
-            canShop={props.canShop}
-          />
-          <VideoSidebar
-            videoOwnersId={props.videoOwnersId}
-            socialId={props.socialId}
-            profilePic={props.profilePic}
-            likes={props.likes}
-            comment={props.comments}
-            share={777}
-            type="feed"
-            handleSaveLook={props.handleSaveLook}
-            saveLook={props.saveLook}
-            canShop={props.canShop}
-            saved={props.saved}
-            profileFeed={props?.profileFeed}
-          />
-        </div>
-        {props.canShop === 'success' && (!props.profileFeed
-          ? (!props.saveLook
+      {/* TO-DO  comdition acc to comp */}
+      {props.canShop === 'success' && (!props.profileFeed
+        ? (!props.saveLook
           && (
             <ProductWidget
               shopCards={props.shopCards}
@@ -135,16 +136,16 @@ function Video(props) {
               videoId={props.activeVideoId}
             />
           )
-          ) : (
-            <ProductWidget
-              shopCards={props.shopCards}
-              handleSaveLook={props.handleSaveLook}
-              videoId={props.activeVideoId}
-              profileFeed={props.profileFeed}
-            />
-          )
-        )}
-      </div>
+        ) : (
+          <ProductWidget
+            shopCards={props.shopCards}
+            handleSaveLook={props.handleSaveLook}
+            videoId={props.activeVideoId}
+            profileFeed={props.profileFeed}
+          />
+        )
+      )}
+
     </div>
   );
 }

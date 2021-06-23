@@ -5,11 +5,19 @@ function VideoFooter({
   userName,
   musicTitle,
   hashTags,
-  canShop
+  canShop,
+  saveLook,
+  comp
 }) {
+  // TO-DO common classes
+  const type = {
+    profile: `${canShop === 'success' ? 'bottom-40' : 'bottom-12'} videoFooter absolute left-0  flex text-white ml-2`,
+    feed: `${saveLook ? ' bottom-12 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`,
+    embed: 'bottom-12 videoFooter absolute left-0  flex text-white ml-2'
+  };
   return (
     <div
-      className="bottom videoFooter  flex text-white ml-2"
+      className={type[comp]}
     >
       <div className="videoFooter__text w-2/3">
 

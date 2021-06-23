@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
-import EmbedVideoSidebar from '../embedvideoside/index';
+import EmbedVideoSidebar from '../embed-video-sidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
@@ -94,6 +94,7 @@ function Embedvideo(props) {
             musicCoverTitle={props.musicCoverTitle}
             hashTags={props.hashTags}
             canShop={props.canShop}
+            comp="embed"
           />
         </div>
       </div>

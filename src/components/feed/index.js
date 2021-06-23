@@ -137,6 +137,7 @@ export default function Feed({ id }) {
                 saveLook={saveLook}
                 saved={item.saveLook}
                 activeVideoId={activeVideoId}
+                comp="feed"
               />
             </SwiperSlide>
           )) : (
