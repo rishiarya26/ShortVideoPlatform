@@ -94,6 +94,7 @@ function Embedvideo(props) {
             musicCoverTitle={props.musicCoverTitle}
             hashTags={props.hashTags}
             canShop={props.canShop}
+            comp="embed"
           />
         </div>
       </div>

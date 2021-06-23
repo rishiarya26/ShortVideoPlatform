@@ -108,8 +108,9 @@ function Video(props) {
         hashTags={props.hashTags}
         canShop={props.canShop}
         saveLook={props.saveLook}
-        profileFeed={props?.profileFeed}
+        comp={props?.comp}
       />
+      {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
         videoOwnersId={props.videoOwnersId}
         socialId={props.socialId}
@@ -124,6 +125,8 @@ function Video(props) {
         saved={props.saved}
         profileFeed={props?.profileFeed}
       />
+
+      {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed
         ? (!props.saveLook
           && (
