@@ -45,5 +45,6 @@
   "FAIL_EMAIL_LOGIN": "Incorrect Email or Password",
   "FAIL_MOBILE_LOGIN": "Incorrect Phone or Password",
   "SUCCESS_OTP":"OTP sent successfully",
-  "INCORRECT_OTP":"Incorrect OTP or has expired"
+  "INCORRECT_OTP":"Incorrect OTP or has expired",
+  "ITEMS":"items"
   }
