@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
@@ -32,15 +32,16 @@ const login = dynamic(
 
 function VideoSidebar({
   // socialId,
-  type, profilePic, likes, router, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
+  type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
+  const router = useRouter();
   const { show } = useDrawer();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
 
   const showLoginOptions = () => {
-    show('', login, 'type1');
+    show('', login, 'medium');
   };
 
   const like = () => setLiked(true);
@@ -149,18 +150,8 @@ function VideoSidebar({
       </div> */}
 
       {canShop === 'success' && (!profileFeed
-        ? saveLook
+        && saveLook
         && (
-          <div
-            className={`${
-              type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
-            onClick={handleSaveLook}
-          >
-            <Shop text={!saved ? 'save look' : 'saved'} />
-          </div>
-        )
-        : (
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
@@ -175,4 +166,4 @@ function VideoSidebar({
   );
 }
 
-export default withRouter(VideoSidebar);
+export default VideoSidebar;

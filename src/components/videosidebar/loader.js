@@ -3,7 +3,6 @@ import Like from '../commons/svgicons/like';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
-import Shop from '../commons/svgicons/shop';
 
 function VideoSidebar() {
   // TODO add useTranslation for alt tags as well
@@ -31,9 +30,6 @@ function VideoSidebar() {
       <div className="relative p-2 text-center flex flex-col items-center">
         <Share />
         <p className="text-sm h-6" />
-      </div>
-      <div className="relative py-3 mt-8 text-center flex flex-col items-center">
-        <Shop />
       </div>
     </div>
   );

@@ -108,6 +108,7 @@ function Video(props) {
         hashTags={props.hashTags}
         canShop={props.canShop}
         saveLook={props.saveLook}
+        profileFeed={props?.profileFeed}
       />
       <VideoSidebar
         videoOwnersId={props.videoOwnersId}

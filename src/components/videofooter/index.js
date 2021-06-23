@@ -6,11 +6,15 @@ function VideoFooter({
   musicTitle,
   hashTags,
   canShop,
-  saveLook
+  saveLook,
+  profileFeed
 }) {
   return (
     <div
-      className={`${saveLook ? ' bottom-12 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`}
+    // TO-DO refine this check
+      className={`${(!profileFeed
+        ? saveLook ? ' bottom-12 ' : ' bottom-40 '
+        : canShop === 'success' ? 'bottom-40' : 'bottom-12')} videoFooter absolute left-0  flex text-white ml-2`}
     >
       <div className="videoFooter__text w-2/3">
 

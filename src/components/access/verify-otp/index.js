@@ -18,8 +18,7 @@ const VerifyOTP = ({ router }) => {
     setOtp(otp);
   };
 
-  const handleSubmit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     const payload = {
       mobile: id,
       otp
@@ -27,20 +26,18 @@ const VerifyOTP = ({ router }) => {
     try {
       const response = await verifyOTP(payload);
       if (response.data.status === 200) {
-        setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
         showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (error) {
-      setPending(false);
       showSnackbar({ message: t('INCORRECT_OTP') });
     }
   };
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={router.back} />
+      <BackButton back={() => { router.push('/phone/otp'); }} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">Enter 4-digit code</p>
         <p className="text-gray-400 text-xs">{`Your code was messaged to +${id}`}</p>
@@ -56,7 +53,7 @@ const VerifyOTP = ({ router }) => {
         />
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text={t('VERIFY_OTP')} />
+        <SubmitButton fetchData={fetchData} text={t('VERIFY_OTP')} />
       </div>
     </div>
   );

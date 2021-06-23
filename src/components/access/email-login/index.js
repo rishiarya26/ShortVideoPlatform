@@ -4,19 +4,17 @@ import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
 
-export default function EmailLogin({ emailData: data, handleChangeEmail }) {
+export default function EmailLogin({ emailData: data, processEmailData }) {
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
 
-  const handleSubmit = async setPending => {
-    setPending(true);
+  const fetchData = async () => {
     try {
       const finalData = { ...data };
       finalData.type = 'email';
       const response = await userLogin(finalData);
       if (response.status === 'success') {
-        setPending(false);
         router.push({
           pathname: '/feed/for-you'
         });
@@ -24,7 +22,6 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
       }
     } catch (e) {
       showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
-      setPending(false);
     }
   };
 
@@ -34,7 +31,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <input
           id="email"
           value={data.email}
-          onChange={handleChangeEmail}
+          onChange={processEmailData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="email"
           name="phone"
@@ -45,7 +42,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <input
           id="password"
           value={data.password}
-          onChange={handleChangeEmail}
+          onChange={processEmailData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="password"
           name="phone"
@@ -56,7 +53,7 @@ export default function EmailLogin({ emailData: data, handleChangeEmail }) {
         <p>Forgot password?</p>
       </div>
       <div className="mt-10">
-        <SubmitButton handleSubmit={handleSubmit} text="Log in" />
+        <SubmitButton fetchData={fetchData} text="Log in" />
       </div>
     </div>
   );
