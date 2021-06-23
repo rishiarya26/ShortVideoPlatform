@@ -37,7 +37,6 @@ function VideoSidebar({
 }) {
   const router = useRouter();
   const { show } = useDrawer();
-  const router = useRouter();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
 
