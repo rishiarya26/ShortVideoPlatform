@@ -24,7 +24,7 @@ export const SubmitButton = ({ fetchData, text }) => {
       >
         {' '}
         {text}
-        {!pending ? <CircularProgress /> : <CircularProgress />}
+        {!pending ? '' : <CircularProgress />}
       </button>
     </>
   );
