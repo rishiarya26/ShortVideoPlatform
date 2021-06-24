@@ -22,3 +22,8 @@
   .swiper-wrapper{
     max-height: 100vh;
   }
+  
+  .video-card{
+    width: 31vw;
+    height: 55.8vw;
+  }
