@@ -20,11 +20,11 @@ export const SubmitButton = ({ fetchData, text }) => {
         disabled={pending}
         onClick={submit}
         onKeyDown={submit}
-        className="bg-red-400 w-full px-4 py-2 text-white font-semibold"
+        className="bg-red-400 w-full px-4 py-2 text-white font-semibold relative"
       >
         {' '}
         {text}
-        {!pending ? '' : <CircularProgress />}
+        {!pending ? <CircularProgress /> : <CircularProgress />}
       </button>
     </>
   );
