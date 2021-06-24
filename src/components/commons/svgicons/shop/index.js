@@ -36,7 +36,7 @@ const Shop = ({ text }) => (
           />
         </svg>
       )}
-    <p className="text-10 px-2">
+    <p className="w-12 text-10 px-2 text-sm font-medium leading-4">
       {text}
     </p>
   </div>
