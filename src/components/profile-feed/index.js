@@ -14,8 +14,6 @@ import { Back } from '../commons/svgicons/back';
 
 SwiperCore.use([Mousewheel]);
 
-SwiperCore.use([Mousewheel]);
-
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);

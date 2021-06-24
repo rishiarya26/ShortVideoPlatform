@@ -1,4 +1,6 @@
+// import Img from '../commons/image';
 
+/* eslint-disable max-len */
 export const Loading = () => (
   <>
     <div

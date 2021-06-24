@@ -43,12 +43,11 @@ function ProductWidget({
           {!loading ? shopCardsLength > 0 && shopCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden"
+              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
               onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
             >
               <Img data={data} height={120} width={120} />
-
             </div>
           ))
             : (
