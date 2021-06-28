@@ -6,7 +6,7 @@ import EmailLogin from '../access/email-login';
 import { BackButton } from '../commons/button/back';
 
 const Login = ({ router }) => {
-  const [phoneData, setPhoneData] = useState({ mobile: '', password: '' });
+  const [phoneData, setPhoneData] = useState({ mobile: '', password: '', countryCode: '91' });
   const [emailData, setEmailData] = useState({ email: '', password: '' });
   const { type } = router.query;
   const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
@@ -30,6 +30,12 @@ const Login = ({ router }) => {
     setEmailData(data);
   };
 
+  const onCountryCodeChange = selectedData => {
+    const data = { ...phoneData };
+    data.countryCode = selectedData.code;
+    setPhoneData(data);
+  };
+
   return (
     <>
       <div>
@@ -44,8 +50,21 @@ const Login = ({ router }) => {
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        {type === 'phone' && <MobileLogin phoneData={phoneData} processPhoneData={processPhoneData} />}
-        {type === 'email' && <EmailLogin emailData={emailData} processEmailData={processEmailData} />}
+        {type === 'phone'
+        && (
+          <MobileLogin
+            phoneData={phoneData}
+            processPhoneData={processPhoneData}
+            onCountryCodeChange={onCountryCodeChange}
+          />
+        )}
+        {type === 'email'
+       && (
+         <EmailLogin
+           emailData={emailData}
+           processEmailData={processEmailData}
+         />
+       )}
       </div>
     </>
   );

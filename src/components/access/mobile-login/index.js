@@ -2,7 +2,7 @@ import { useState } from 'react';
 import OtpLogin from './otp';
 import PasswordLogin from './password';
 
-export default function MobileLogin({ phoneData, processPhoneData }) {
+export default function MobileLogin({ phoneData, processPhoneData, onCountryCodeChange }) {
   const [showPasswordLogin, setShowPasswordLogin] = useState(true);
 
   const toggle = selected => {
@@ -16,6 +16,7 @@ export default function MobileLogin({ phoneData, processPhoneData }) {
             toggle={toggle}
             processPhoneData={processPhoneData}
             data={phoneData}
+            onCountryCodeChange={onCountryCodeChange}
           />
         )
         : (
@@ -23,6 +24,7 @@ export default function MobileLogin({ phoneData, processPhoneData }) {
             toggle={toggle}
             processPhoneData={processPhoneData}
             data={phoneData}
+            onCountryCodeChange={onCountryCodeChange}
           />
         )}
     </>
