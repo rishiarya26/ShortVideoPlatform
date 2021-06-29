@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export const devices = ['mobile', 'desktop'];
+export const devices = ['desktop', 'mobile'];
 
 export const getDeviceType = () => {
   let device = 'desktop';
@@ -17,15 +17,8 @@ function useDevice(types = devices, values, defaultValue) {
     const index = types.indexOf(device);
     return values[index] ? values[index] : defaultValue;
   };
+  const [varient] = useState(getVariant);
 
-  const [value, setValue] = useState(getVariant);
-
-  useEffect(
-    () => {
-      setValue(getDeviceType);
-    },
-    []
-  );
-  return value;
+  return varient;
 }
 export default useDevice;

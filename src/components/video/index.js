@@ -64,7 +64,7 @@ function Video(props) {
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full bg-black"
+      className="video_card relative w-full bg-black overflow-hidden rounded-sm"
       style={{ height: `${videoHeight}px` }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
