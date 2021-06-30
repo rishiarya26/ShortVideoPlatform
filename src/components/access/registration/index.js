@@ -9,7 +9,15 @@ import Toggle from '../../commons/svgicons/toggle';
 
 const Registration = ({ router }) => {
   const [data, setData] = useState({
-    type: '', value: '', gender: 'Male', firstName: '', lastName: '', password: '', name: ''
+    type: '',
+    value: '',
+    gender: 'Male',
+    firstName: '',
+    lastName: '',
+    password: '',
+    name: '',
+    birthday: '',
+    age: ''
   });
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
@@ -24,11 +32,17 @@ const Registration = ({ router }) => {
     dataToUpdate.value = info[type];
     setData(dataToUpdate);
   }, []);
-
+  /* eslint-disable no-param-reassign */
   const splitName = (fullName = '', data) => {
     const [firstName, lastName] = fullName?.split(' ');
     data.firstName = firstName;
     data.lastName = lastName;
+    return data;
+  };
+  /* eslint-disable no-param-reassign */
+  const retrieveYearFromAge = (age, data) => {
+    const currentYear = new Date().getFullYear();
+    data.birthday = currentYear - age;
     return data;
   };
 
@@ -37,6 +51,12 @@ const Registration = ({ router }) => {
       const { id } = e.target;
       const { value } = e.target;
       data[id] = value;
+      if (id === 'name') {
+        data = splitName(value, data);
+      }
+      if (id === 'age') {
+        data = retrieveYearFromAge(value, data);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -47,9 +67,6 @@ const Registration = ({ router }) => {
     try {
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
-      if (e.target?.id === 'name') {
-        dataToUpdate = splitName(e.target?.value, dataToUpdate);
-      }
       setData(dataToUpdate);
     } catch (error) {
       console.log(error);
@@ -119,6 +136,18 @@ const Registration = ({ router }) => {
           type="password"
           name="phone"
           placeholder="Password"
+        />
+      </div>
+      <div className="mt-4">
+        <input
+          required
+          id="age"
+          value={data.age}
+          onChange={processPhoneData}
+          className=" w-full border-b-2 border-grey-300 px-4 py-2"
+          type="number"
+          name="age"
+          placeholder="Age"
         />
       </div>
       <div className="mt-10">

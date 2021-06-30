@@ -3,11 +3,15 @@ import { useState } from 'react';
 import Tabs from '../commons/tabs';
 import { BackButton } from '../commons/button/back';
 import MobileSignup from '../access/mobile-signup';
-import EmailSignup from '../access/email-signup';
+import Email from '../access/email';
+import useTranslation from '../../hooks/use-translation';
 
 const Signup = ({ router }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
-  const [emailData, setEmailData] = useState({ email: '', password: '' });
+  const [emailData, setEmailData] = useState({ email: '' });
+  const [pending, setPending] = useState(false);
+
+  const { t } = useTranslation();
   const { type } = router.query;
   const tabs = [{ display: 'Phone', path: '/signup/phone' }, { display: 'Email', path: '/signup/email' }];
 
@@ -36,6 +40,16 @@ const Signup = ({ router }) => {
     setPhoneData(data);
   };
 
+  const redirectToRegistration = async e => {
+    e.preventDefault();
+    setPending(true);
+    router.push({
+      pathname: '/registration',
+      query: { email: emailData?.email }
+    });
+    setTimeout(() => { setPending(false); }, 2000);
+  };
+
   return (
     <>
       <div>
@@ -43,7 +57,7 @@ const Signup = ({ router }) => {
           <div className="p-4 h-full flex items-center justify-center">
             <BackButton back={router.back} />
           </div>
-          <div className="font-bold flex justify-center align-center w-9/12">Sign up</div>
+          <div className="font-bold flex justify-center align-center w-9/12">{t('SIGN_UP')}</div>
         </div>
       </div>
       <div className="fixed mt-10 z-10 w-full">
@@ -58,7 +72,16 @@ const Signup = ({ router }) => {
             onCountryCodeChange={onCountryCodeChange}
           />
         )}
-        {type === 'email' && <EmailSignup data={emailData} processEmailData={processEmailData} />}
+        {type === 'email'
+           && (
+             <Email
+               data={emailData}
+               processEmailData={processEmailData}
+               submit={redirectToRegistration}
+               pending={pending}
+               info="signup"
+             />
+           )}
       </div>
     </>
   );

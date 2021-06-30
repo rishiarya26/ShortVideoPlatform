@@ -54,5 +54,7 @@
   "ENTER_DETAILS":"Use your Name, Gender and other info for better result. You can update this info anytime.",
   "POLICY":" By continuing, you agree to Hipi'sTerms of Use and confirm that you have read Hipi's Privacy Policy.if you sign up with SMS, SMS fee may apply.",
   "NEXT":"Next",
-  "REGISTERED":"mobile no is already registered. Please Log in"
+  "REGISTERED":"mobile no is already registered. Please Log in",
+  "SIGN_UP":"Sign up",
+  "LOGIN":"Log in"
   }
