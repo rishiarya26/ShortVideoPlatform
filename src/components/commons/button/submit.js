@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CircularProgress from '../circular-loader-small';
 
-export const SubmitButton = ({ fetchData, text }) => {
+export const SubmitButton = ({ fetchData, text, disable = false }) => {
   const [pending, setPending] = useState(false);
 
   const submit = async () => {
@@ -17,7 +17,7 @@ export const SubmitButton = ({ fetchData, text }) => {
   return (
     <>
       <button
-        disabled={pending}
+        disabled={disable || pending}
         onClick={submit}
         onKeyDown={submit}
         className="bg-red-400 w-full px-4 py-2 text-white font-semibold relative"

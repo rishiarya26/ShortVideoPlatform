@@ -82,6 +82,7 @@ function SnackBar(
     >
       {visible && (
         <>
+          {' '}
           <div className="w-10 border-r px-2">
             <Icon />
           </div>

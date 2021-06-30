@@ -1,32 +1,39 @@
 import { withRouter } from 'next/router';
 import { useState } from 'react';
 import Tabs from '../commons/tabs';
-import MobileLogin from '../access/mobile-login';
-import EmailLogin from '../access/email-login';
 import { BackButton } from '../commons/button/back';
+import MobileSignup from '../access/mobile-signup';
+import EmailSignup from '../access/email-signup';
 
-const Login = ({ router }) => {
-  const [phoneData, setPhoneData] = useState({});
-  const [emailData, setEmailData] = useState({});
-  const type = router.query.id;
-  const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
+const Signup = ({ router }) => {
+  const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
+  const [emailData, setEmailData] = useState({ email: '', password: '' });
+  const { type } = router.query;
+  const tabs = [{ display: 'Phone', path: '/signup/phone' }, { display: 'Email', path: '/signup/email' }];
 
-  const handleChangePhone = e => {
-    const currentData = { ...phoneData };
-    const inputType = e.target.id;
+  const getMappings = (e, data) => {
+    const { id } = e.target;
     const { value } = e.target;
-    inputType === 'phone' && (currentData.mobile = value);
-    inputType === 'password' && (currentData.password = value);
-    setPhoneData(currentData);
+    data[id] = value;
+    return data;
   };
 
-  const handleChangeEmail = e => {
-    const currentData = { ...emailData };
-    const inputType = e.target.id;
-    const { value } = e.target;
-    inputType === 'email' && (currentData.email = value);
-    inputType === 'password' && (currentData.password = value);
-    setEmailData(currentData);
+  const processPhoneData = e => {
+    let data = { ...phoneData };
+    data = getMappings(e, data);
+    setPhoneData(data);
+  };
+
+  const processEmailData = e => {
+    let data = { ...emailData };
+    data = getMappings(e, data);
+    setEmailData(data);
+  };
+
+  const onCountryCodeChange = selectedData => {
+    const data = { ...phoneData };
+    data.countryCode = selectedData.code;
+    setPhoneData(data);
   };
 
   return (
@@ -36,18 +43,25 @@ const Login = ({ router }) => {
           <div className="p-4 h-full flex items-center justify-center">
             <BackButton back={router.back} />
           </div>
-          <div className="font-bold flex justify-center align-center w-9/12">Log in</div>
+          <div className="font-bold flex justify-center align-center w-9/12">Sign up</div>
         </div>
       </div>
       <div className="fixed mt-10 z-10 w-full">
         <Tabs items={tabs} />
       </div>
       <div className="mt-20">
-        {type === 'phone' && <MobileLogin phoneData={phoneData} handleChangePhone={handleChangePhone} />}
-        {type === 'email' && <EmailLogin emailData={emailData} handleChangeEmail={handleChangeEmail} />}
+        {type === 'phone'
+        && (
+          <MobileSignup
+            data={phoneData}
+            processPhoneData={processPhoneData}
+            onCountryCodeChange={onCountryCodeChange}
+          />
+        )}
+        {type === 'email' && <EmailSignup data={emailData} processEmailData={processEmailData} />}
       </div>
     </>
   );
 };
 
-export default withRouter(Login);
+export default withRouter(Signup);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
+import { withRouter } from 'next/router';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
@@ -20,17 +21,21 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function Feed({ id }) {
+function Feed({ router }) {
   const [items, setItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
+  const { id } = router?.query;
+  let { videoId = '' } = router?.query;
 
   const onDataFetched = data => {
+    videoId === '' && (videoId = data?.data?.[0]?.content_id);
     data && setItems(data?.data);
-    data && setActiveVideoId(data?.data?.[0]?.content_id);
+    data && setActiveVideoId(videoId);
+    router.replace(`/feed/${id}?videoId=${videoId}`);
   };
   const dataFetcher = () => getHomeFeed({ type: id });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
@@ -98,12 +103,17 @@ export default function Feed({ id }) {
         calculateheight="true"
         mousewheel
         scrollbar={{ draggable: true }}
+        onSwiper={swiper => {
+          const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+          swiper?.slideTo(slideToId, 0);
+        }}
         onSlideChange={swiperCore => {
           const {
             activeIndex, slides
           } = swiperCore;
           const activeId = slides[activeIndex]?.id;
           setActiveVideoId(activeId);
+          router.replace(`/feed/${id}?videoId=${activeId}`);
         }}
       >
         {
@@ -165,3 +175,5 @@ export default function Feed({ id }) {
 
   );
 }
+
+export default withRouter(Feed);
