@@ -16,14 +16,14 @@ export default function Login({ toggle }) {
       </div>
       <div className="socail flex flex-col w-full my-4">
         <Link href="/login/phone">
-          <div onClick={() => close()} className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
+          <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">
               <p>Use phone or email</p>
             </div>
           </div>
         </Link>
-        <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
+        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with facebook</p>
@@ -51,7 +51,7 @@ export default function Login({ toggle }) {
       <div className="my-2 ">
         <p>
           Don't have an account?
-          <span onClick={() => toggle('signup')} className="text-red-600">Sign Up</span>
+          <span onClick={() => toggle('signup')} className="text-red-600 font-medium">Sign Up</span>
         </p>
       </div>
     </div>

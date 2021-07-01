@@ -9,21 +9,21 @@ import useDrawer from '../../hooks/use-drawer';
 export default function Signup({ toggle }) {
   const { close } = useDrawer();
   return (
-    <div className="px-4 py-4 flex flex-col items-center">
+    <div className="px-4 py-2 flex flex-col items-center">
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Sign Up to Hipi</h1>
         <p className="text-center text-sm">Create a profile, follow other accounts, make your own videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
         <Link href="/signup/phone">
-          <div onClick={() => close()} className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
+          <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">
               <p>Use phone or email</p>
             </div>
           </div>
         </Link>
-        <div className="flex border border-2 border-gray-300 py-2 px-4 w-full my-2">
+        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with facebook</p>

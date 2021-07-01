@@ -9,7 +9,7 @@ const Img = ({
     <Image
       className={`
         position-relative overflow-hidden
-        animate-appear bg-gray-400
+        animate-appear bg-gray-500
         `}
       // style={{ paddingBottom: `${aspectRatio}%` }}
       loading={loading}
