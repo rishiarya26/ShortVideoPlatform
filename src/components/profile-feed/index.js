@@ -25,12 +25,13 @@ function ProfileFeed({ router }) {
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
 
-  const { id } = router.query;
+  const { id } = router?.query;
+  const { videoId = items?.[0]?.content_id } = router?.query;
 
   const dataFetcher = () => getProfileVideos({ id });
   const onDataFetched = data => {
     data && setItems(data?.data);
-    data && setActiveVideoId(data?.data?.[0]?.content_id);
+    data && setActiveVideoId(videoId);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -85,6 +86,11 @@ function ProfileFeed({ router }) {
         </div>
         <Swiper
           direction="vertical"
+          onSwiper={swiper => {
+            const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+            swiper?.slideTo(slideToId, 0);
+            router.replace(`/profile-feed/${id}`);
+          }}
           draggable="true"
           spaceBetween={0}
           calculateheight="true"
