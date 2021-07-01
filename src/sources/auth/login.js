@@ -8,6 +8,11 @@ import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 const login = async ({ accessToken, refreshToken }) => {
   let response = {};
   try {
+    // TO-DO segregate doamin fetcing code
+    const url = window?.location?.href;
+    let domain = (new URL(url));
+    domain = domain?.hostname;
+    console.log(domain);
     const urlencoded = new URLSearchParams();
     urlencoded.append('zee5Token', accessToken);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
@@ -19,7 +24,7 @@ const login = async ({ accessToken, refreshToken }) => {
       accessToken,
       refreshToken
     };
-    setItem('tokens', JSON.stringify(tokens), { path: '/', domain: 'localhost' });
+    setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     response.data.accessToken = accessToken;
     response.data.status = 200;
     response.data.message = 'success';

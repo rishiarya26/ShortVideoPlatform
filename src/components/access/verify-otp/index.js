@@ -8,10 +8,20 @@ import { SubmitButton } from '../../commons/button/submit';
 
 const VerifyOTP = ({ router }) => {
   const [otp, setOtp] = useState('');
-  const { id } = router.query;
+  const { ref } = router?.query;
+  const { mobile } = router?.query;
   const { t } = useTranslation();
-
   const { showSnackbar } = useSnackbar();
+
+  const types = {
+    login: {
+      pathname: '/feed/for-you'
+    },
+    signup: {
+      pathname: '/registration',
+      query: { mobile }
+    }
+  };
 
   const handleOtpChange = e => {
     const otp = e.currentTarget.value;
@@ -20,15 +30,13 @@ const VerifyOTP = ({ router }) => {
 
   const fetchData = async () => {
     const payload = {
-      mobile: id,
+      mobile,
       otp
     };
     try {
       const response = await verifyOTP(payload);
       if (response.data.status === 200) {
-        router.push({
-          pathname: '/feed/for-you'
-        });
+        router.push(types[ref]);
         showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (error) {
@@ -37,10 +45,10 @@ const VerifyOTP = ({ router }) => {
   };
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={() => { router.push('/phone/otp'); }} />
+      <BackButton back={router.back} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">Enter 4-digit code</p>
-        <p className="text-gray-400 text-xs">{`Your code was messaged to +${id}`}</p>
+        <p className="text-gray-400 text-xs">{`Your code was messaged to +${mobile}`}</p>
       </div>
       <div className="mt-4">
         <input

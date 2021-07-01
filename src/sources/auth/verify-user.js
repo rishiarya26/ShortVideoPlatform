@@ -1,7 +1,7 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
+import { transformError, transformSuccess } from '../transform/auth/verify-user';
 import { sendOTP } from './send-otp';
 
 const getUserVerify = async mobile => {

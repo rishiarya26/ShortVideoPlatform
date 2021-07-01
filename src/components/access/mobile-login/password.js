@@ -11,6 +11,7 @@ export default function PasswordLogin({
   const router = useRouter();
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
+  const disable = (!!(data.mobile.length === 0) || !!(data.password.length === 0));
 
   const fetchData = async () => {
     try {
@@ -62,7 +63,7 @@ export default function PasswordLogin({
         <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
       </div>
       <div className="mt-10">
-        <SubmitButton fetchData={fetchData} text="Log in" />
+        <SubmitButton disable={disable} fetchData={fetchData} text="Log in" />
       </div>
     </div>
   );

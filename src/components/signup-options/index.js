@@ -57,7 +57,7 @@ export default function Signup({ toggle }) {
         </p>
         <p>
           Already have an account?
-          <span onClick={() => toggle('login')} className="text-red-600">Log in</span>
+          <span onClick={() => toggle('login')} className="text-red-600 font-medium"> Log in</span>
         </p>
       </div>
     </div>
