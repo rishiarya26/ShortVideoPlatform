@@ -102,6 +102,7 @@ function Feed({ router }) {
         </div>
 
         <Swiper
+          className="max-h-full"
           direction="vertical"
           draggable="true"
           spaceBetween={0}
