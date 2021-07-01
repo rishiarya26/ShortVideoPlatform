@@ -1,6 +1,6 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const withSourceMaps = require('@zeit/next-source-maps');
-
+const WebpackObfuscator = require('webpack-obfuscator');
 // const withPWA = require('next-pwa');
 
 const {
@@ -34,10 +34,10 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-  pwa: {
-    swSrc: './src/service-worker.js',
-    dest: 'public'
-  },
+  // pwa: {
+  //   swSrc: './src/service-worker.js',
+  //   dest: 'public'
+  // },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -70,6 +70,9 @@ const nextConfig = {
         assetsSort: 'size'
       }
     }));
+    // config.plugins.push(new WebpackObfuscator({
+    //   rotateStringArray: true
+    // }));
     return config;
   }
 };
