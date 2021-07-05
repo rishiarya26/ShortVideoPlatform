@@ -8,6 +8,7 @@ export const apiBaseEndPoints = {
     stagingMobile: 'https://stagingmobile.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
     login: 'https://whapi.zee5.com/v1/user',
+    whapi: 'https://whapi-prod-node.zee5.com',
     charmboard:
     'https://stagingmobile.charmboard.com',
     otp: 'https://b2bapi.zee5.com',
@@ -22,6 +23,7 @@ export const apiBaseEndPoints = {
     'https://stagingmobile.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
     login: 'https://whapi.zee5.com/v1/user',
+    whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com'
   },
@@ -33,6 +35,7 @@ export const apiBaseEndPoints = {
     charmboard:
       'https://stagingmobile.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
+    whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com'
   },
@@ -44,6 +47,7 @@ export const apiBaseEndPoints = {
     charmboard:
     'https://stagingmobile.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
+    whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com'
 
