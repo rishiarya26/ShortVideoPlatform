@@ -1,7 +1,6 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
-
 // const withPWA = require('next-pwa');
 
 const {
@@ -38,10 +37,10 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-  pwa: {
-    swSrc: './src/service-worker.js',
-    dest: 'public'
-  },
+  // pwa: {
+  //   swSrc: './src/service-worker.js',
+  //   dest: 'public'
+  // },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -50,13 +49,9 @@ const nextConfig = {
     appEnv: APP_ENV
   },
   generateBuildId: async () => appVersion,
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.node = {
-        fs: 'empty'
-      };
-    }
+  webpack: config => {
     config.output.publicPath = '';
+    config.resolve.fallback = { ...config.resolve.fallback, ...{ fs: false } };
     config.plugins.push(new BundleAnalyzerPlugin({
       openAnalyzer: false,
       generateStatsFile: true,
@@ -78,10 +73,9 @@ const nextConfig = {
         assetsSort: 'size'
       }
     }));
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader']
-    });
+    // config.plugins.push(new WebpackObfuscator({
+    //   rotateStringArray: true
+    // }));
     return config;
   }
 };
@@ -89,3 +83,4 @@ const nextConfig = {
 // eslint-disable-next-line no-nested-ternary
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
 module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+
