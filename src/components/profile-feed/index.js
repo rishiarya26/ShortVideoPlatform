@@ -11,6 +11,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
 import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
+import useWindowSize from '../../hooks/use-window-size';
 
 SwiperCore.use([Mousewheel]);
 
@@ -25,12 +26,13 @@ function ProfileFeed({ router }) {
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
 
-  const { id } = router.query;
+  const { id } = router?.query;
+  const { videoId = items?.[0]?.content_id } = router?.query;
 
   const dataFetcher = () => getProfileVideos({ id });
   const onDataFetched = data => {
     data && setItems(data?.data);
-    data && setActiveVideoId(data?.data?.[0]?.content_id);
+    data && setActiveVideoId(videoId);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -73,6 +75,9 @@ function ProfileFeed({ router }) {
     setsaveLook(!saveLook);
   };
 
+  const size = useWindowSize();
+  const videoHeight = `${size.height}`;
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -80,69 +85,77 @@ function ProfileFeed({ router }) {
       ErrorComp={ErrorComp}
     >
       <>
-        <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
-          <Back />
-        </div>
-        <Swiper
-          direction="vertical"
-          draggable="true"
-          spaceBetween={0}
-          calculateheight="true"
-          mousewheel
-          scrollbar={{ draggable: true }}
-          onSlideChange={swiperCore => {
-            const {
-              activeIndex, slides
-            } = swiperCore;
-            const activeId = slides[activeIndex]?.id;
-            setActiveVideoId(activeId);
-          }}
-        >
-          {
-            items?.map(
-              item => (
-                <SwiperSlide
-                  key={item.content_id}
-                  id={item.content_id}
-
-                >
-                  <Video
-                    updateSeekbar={updateSeekbar}
-                    socialId={item.getSocialId}
-                    url={item.video_url}
+        <div style={{ height: `${videoHeight}px` }}>
+          <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
+            <Back />
+          </div>
+          <Swiper
+            className="max-h-full"
+            direction="vertical"
+            onSwiper={swiper => {
+              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              swiper?.slideTo(slideToId, 0);
+              router.replace(`/profile-feed/${id}`);
+            }}
+            draggable="true"
+            spaceBetween={0}
+            calculateheight="true"
+            mousewheel
+            scrollbar={{ draggable: true }}
+            onSlideChange={swiperCore => {
+              const {
+                activeIndex, slides
+              } = swiperCore;
+              const activeId = slides[activeIndex]?.id;
+              setActiveVideoId(activeId);
+            }}
+          >
+            {
+              items?.map(
+                item => (
+                  <SwiperSlide
+                    key={item.content_id}
                     id={item.content_id}
-                    comments={item.commentsCount}
-                    likes={item.likesCount}
-                    music={item.musicCoverTitle}
-                    musicTitle={item.music_title}
-                    profilePic={item.userProfilePicUrl}
-                    userName={item.userName}
-                    musicCoverTitle={item.musicCoverTitle}
-                    videoid={item.content_id}
-                    hashTags={item.hashTags}
-                    videoOwnersId={item.videoOwnersId}
-                    thumbnail={item.poster_image_url}
-                    canShop={shop.isShoppable}
-                    shopCards={shop.data}
-                    handleSaveLook={handleSaveLook}
-                    saveLook={saveLook}
-                    saved={item.saveLook}
-                    activeVideoId={activeVideoId}
-                    comp="profile"
-                    profileFeed
-                  />
 
-                </SwiperSlide>
+                  >
+                    <Video
+                      updateSeekbar={updateSeekbar}
+                      socialId={item.getSocialId}
+                      url={item.video_url}
+                      id={item.content_id}
+                      comments={item.commentsCount}
+                      likes={item.likesCount}
+                      music={item.musicCoverTitle}
+                      musicTitle={item.music_title}
+                      profilePic={item.userProfilePicUrl}
+                      userName={item.userName}
+                      musicCoverTitle={item.musicCoverTitle}
+                      videoid={item.content_id}
+                      hashTags={item.hashTags}
+                      videoOwnersId={item.videoOwnersId}
+                      thumbnail={item.poster_image_url}
+                      canShop={shop.isShoppable}
+                      shopCards={shop.data}
+                      handleSaveLook={handleSaveLook}
+                      saveLook={saveLook}
+                      saved={item.saveLook}
+                      activeVideoId={activeVideoId}
+                      comp="profile"
+                      profileFeed
+                    />
+
+                  </SwiperSlide>
+                )
               )
-            )
-          }
-        </Swiper>
-        {validItemsLength ? seekedPercentage
-          ? <Seekbar seekedPercentage={seekedPercentage} />
-          : <SeekbarLoading />
-          : ''}
-        <div id="cb_tg_d_wrapper">
-          <div className="playkit-player" />
+            }
+          </Swiper>
+          {validItemsLength ? seekedPercentage
+            ? <Seekbar seekedPercentage={seekedPercentage} />
+            : <SeekbarLoading />
+            : ''}
+          <div id="cb_tg_d_wrapper">
+            <div className="playkit-player" />
+          </div>
         </div>
       </>
     </ComponentStateHandler>

@@ -1,17 +1,10 @@
-import { withRouter } from 'next/router';
 import Feed from '../../src/components/feed';
 
-function Hipi({ router }) {
-  const { id } = router.query;
-
+export default function Hipi() {
   return (
     <>
-      <Feed
-        id={id}
-      />
+      <Feed />
     </>
   );
 }
-
-export default withRouter(Hipi);
 

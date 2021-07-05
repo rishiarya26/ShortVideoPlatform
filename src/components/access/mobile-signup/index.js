@@ -2,33 +2,33 @@ import { useRouter } from 'next/router';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { verifyUser } from '../../../sources/auth/verify-user';
-import { SubmitButton } from '../../commons/button/submit';
 import { CountryCode } from '../../commons/button/country-code';
+import { SubmitButton } from '../../commons/button/submit';
 
-export default function OtpLogin({
-  toggle, processPhoneData, data, onCountryCodeChange
-}) {
+export default function MobileSignup({ processPhoneData, data, onCountryCodeChange }) {
   const router = useRouter();
-  const phoneNo = data && data.mobile;
+  const phoneNo = data?.mobile;
   const { showSnackbar } = useSnackbar();
   const { t } = useTranslation();
-
   const disable = !!(data.mobile.length === 0);
 
+  /* if 404 then user not registered and can proceed with Sign Up flow. */
+  /* TO-DO to make it in success from transform */
   const fetchData = async () => {
     try {
       const mobile = `${data?.countryCode}${phoneNo}`;
       const response = await verifyUser(mobile);
       if (response.status === 'success') {
-        router.push({
-          pathname: '/verify-otp',
-          query: { ref: 'login', mobile }
-        });
-        showSnackbar({ message: t('SUCCESS_OTP') });
+        showSnackbar({ message: t('REGISTERED') });
       }
     } catch (e) {
       if (e.errorCode === 404) {
-        showSnackbar({ message: t('NOT_REGISTERED') });
+        showSnackbar({ message: t('SUCCESS_OTP') });
+        const mobile = `${data?.countryCode}${phoneNo}`;
+        router.push({
+          pathname: '/verify-otp',
+          query: { ref: 'signup', mobile }
+        });
       }
     }
   };
@@ -50,13 +50,11 @@ export default function OtpLogin({
           placeholder="Phone Number"
         />
       </div>
-      <button
-        onClick={() => toggle('password')}
-        onKeyDown={() => toggle('password')}
-        className="flex justify-end text-sm font-semibold mt-2 px-2"
-      >
-        <p className="text-blue-400">Login with Password</p>
-      </button>
+      <div className="flex justify-end text-sm font-semibold mt-2 px-2">
+        <p className="text-gray-400 text-xs">
+          {t('POLICY')}
+        </p>
+      </div>
       <div className="mt-10">
         <SubmitButton disable={disable} fetchData={fetchData} text="Send OTP" />
       </div>

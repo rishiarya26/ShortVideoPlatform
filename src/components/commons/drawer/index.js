@@ -9,7 +9,7 @@ const Drawer = ({
       height: 'h-1/3'
     },
     medium: {
-      height: 'h-3/4'
+      height: 'h-4/5'
     },
     big: {
       height: 'h-5/6'

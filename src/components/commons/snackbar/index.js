@@ -80,15 +80,20 @@ function SnackBar(
       mx-auto
     `}
     >
-      <div className="w-10 border-r px-2">
-        <Icon />
-      </div>
+      {visible && (
+        <>
+          {' '}
+          <div className="w-10 border-r px-2">
+            <Icon />
+          </div>
 
-      <div className="flex items-center py-3">
-        <div className="mx-3">
-          <p>{message}</p>
-        </div>
-      </div>
+          <div className="flex items-center py-3">
+            <div className="mx-3">
+              <p>{message}</p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

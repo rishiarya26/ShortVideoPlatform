@@ -22,13 +22,6 @@ function UserProfile({
     setVideoData(videos);
   }, [fetchState]);
 
-  const handleVideoClick = () => {
-    router.push({
-      pathname: '/profile-feed/[pid]',
-      query: { pid: id }
-    });
-  };
-
   const handleBackClick = () => {
     router.back();
   };
@@ -80,7 +73,12 @@ function UserProfile({
         </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      <VideoGallery handleClick={handleVideoClick} items={videoData.items} status={videoData.status} retry={retry && retry} />
+      <VideoGallery
+        items={videoData.items}
+        status={videoData.status}
+        retry={retry && retry}
+        userId={id}
+      />
     </div>
   );
 }

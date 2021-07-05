@@ -2,7 +2,7 @@
 
 const Shop = ({ text }) => (
   <div className="flex items-center px-2 py-2 bg-hipipink rounded-l-lg bg-opacity-30">
-    { text !== 'saved' ? (
+    { text !== 'SAVED' ? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="22"
@@ -36,7 +36,7 @@ const Shop = ({ text }) => (
           />
         </svg>
       )}
-    <p className="text-10 px-2">
+    <p className="w-12 text-10 px-2 text-sm font-medium leading-4">
       {text}
     </p>
   </div>
