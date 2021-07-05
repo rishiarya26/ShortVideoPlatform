@@ -7,10 +7,6 @@ import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
 const login = async ({ accessToken, refreshToken }) => {
   let response = {};
-  const url = window.location.href;
-  let domain = (new URL(url));
-  domain = domain.hostname;
-  console.log(domain);
   try {
     // TO-DO segregate doamin fetcing code
     const url = window?.location?.href;
