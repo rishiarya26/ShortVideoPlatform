@@ -22,7 +22,8 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
-    if (data.responseData?.length) {
+    const { responseData } = data;
+    if (responseData?.length > 0) {
       const payloadData = [];
       data.responseData.forEach(d => {
         const payloadObject = {};
@@ -47,7 +48,7 @@ function transformSuccess(resp) {
 
       payload.data = payloadData;
     } else {
-      return transformError(data);
+      payload.data = responseData;
     }
     payload.requestedWith = { ...data.requestedWith };
     return payload;

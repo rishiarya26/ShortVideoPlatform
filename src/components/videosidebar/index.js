@@ -5,7 +5,6 @@ import Like from '../commons/svgicons/like';
 import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
-import Share from '../commons/svgicons/share';
 import Shop from '../commons/svgicons/shop';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
@@ -15,6 +14,7 @@ import useDrawer from '../../hooks/use-drawer';
 // import useSnackBar from '../../hooks/use-snackbar';
 // import { postLike, deleteLike } from '../../sources/social';
 import useAuth from '../../hooks/use-auth';
+import { ShareComp } from '../commons/share';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -35,8 +35,8 @@ function VideoSidebar({
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed
 }) {
-  const router = useRouter();
   const { show } = useDrawer();
+  const router = useRouter();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
 
@@ -127,10 +127,7 @@ function VideoSidebar({
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-3  px-3 text-center items-end flex-col mb-12`}
       >
-        <div>
-          <Share />
-          <p className="text-sm text-center">Share</p>
-        </div>
+        <ShareComp />
       </div>
       {/* <div
         role="presentation"

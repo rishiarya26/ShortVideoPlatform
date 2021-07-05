@@ -3,16 +3,21 @@ import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { SubmitButton } from '../../commons/button/submit';
+import { CountryCode } from '../../commons/button/country-code';
 
-export default function PasswordLogin({ toggle, processPhoneData, data }) {
+export default function PasswordLogin({
+  toggle, processPhoneData, data, onCountryCodeChange
+}) {
   const router = useRouter();
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
+  const disable = (!!(data.mobile.length === 0) || !!(data.password.length === 0));
 
   const fetchData = async () => {
     try {
       const finalData = { ...data };
       finalData.type = 'Mobile';
+      finalData.mobile = `${data.countryCode}${data.mobile}`;
       const response = await userLogin(finalData);
       if (response.status === 'success') {
         router.push({
@@ -27,7 +32,11 @@ export default function PasswordLogin({ toggle, processPhoneData, data }) {
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <div className="mt-4">
+      <div className="mt-4 relative flex">
+        <CountryCode
+          onValueChange={onCountryCodeChange}
+          text={data.countryCode}
+        />
         <input
           id="mobile"
           value={data.mobile}
@@ -54,7 +63,7 @@ export default function PasswordLogin({ toggle, processPhoneData, data }) {
         <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
       </div>
       <div className="mt-10">
-        <SubmitButton fetchData={fetchData} text="Log in" />
+        <SubmitButton disable={disable} fetchData={fetchData} text="Log in" />
       </div>
     </div>
   );
