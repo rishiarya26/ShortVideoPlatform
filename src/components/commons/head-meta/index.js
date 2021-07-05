@@ -9,6 +9,7 @@ function HeadMeta() {
   const { t } = useTranslation();
   return (
     <>
+      <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
       <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -23,7 +24,7 @@ function HeadMeta() {
       <script type="text/javascript" src="/agents/instana.js" />
 
       <script type="text/javascript" src="/embeds/hipi.js" />
-      <meta name="theme-color" content="#100618" />
+      <meta name="theme-color" content="#00aae7" />
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -128,9 +129,7 @@ function HeadMeta() {
       {/* UC Browser  */}
       <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
-      <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
-
-      <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
+      <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />      
     </>
   );
 }

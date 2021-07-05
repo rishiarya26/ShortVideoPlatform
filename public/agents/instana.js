@@ -12,7 +12,9 @@ if(window.location.hostname === 'hipi.co.in') {
   ineum('key', 'KTWnCUDUQY65CEEOXClRJg');
 } else if(window.location.hostname === 'preprod.hipi.co.in') {
   ineum('key', '3BMdbtCkT2ecrgTw4sZxww');
-} else {
+} else if(window.location.hostname === 'mock.hipi.co.in') {
+  ineum('key', 'OX_MXEDcSy21zxRMIPodGw');
+}  else {
   ineum('key', window.location.hostname);
 }
 

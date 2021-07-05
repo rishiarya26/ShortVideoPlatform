@@ -27,11 +27,11 @@
     "lodash": "^4.17.21",
     "miragejs": "^0.1.41",
     "mq-polyfill": "^1.1.8",
-    "next": "^10.2.3",
+    "next": "^11.0.1",
     "next-pwa": "^5.0.5",
     "next-seo": "^4.23.0",
     "parse-link-header": "^1.0.1",
-    "postcss": "^8.2.4",
+    "postcss": "^8.3.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^3.1.0",
     "react": "^17.0.2",
@@ -46,7 +46,8 @@
     "workbox-precaching": "^6.1.1",
     "workbox-routing": "^6.1.1",
     "workbox-strategies": "^6.1.1",
-    "workbox-window": "^6.1.0"
+    "workbox-window": "^6.1.0",
+    "webpack-bundle-analyzer": "^4.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
@@ -83,6 +84,7 @@
     "eslint-plugin-tree-shaking": "^1.7.4",
     "file-loader": "^6.0.0",
     "fs": "0.0.1-security",
+    "javascript-obfuscator": "^2.15.5",
     "jest": "^24.0.0",
     "jest-dom": "^4.0.0",
     "jest-html-reporter": "^2.5.0",
@@ -90,6 +92,7 @@
     "jest-svg-transformer": "^1.0.0",
     "lint-staged": "^8.1.0",
     "next-compose-plugins": "^2.2.0",
+    "next-secure-headers": "^2.2.0",
     "nodemon": "^1.12.1",
     "parse-git": "^1.1.2",
     "path": "^0.12.7",
@@ -100,8 +103,8 @@
     "rimraf": "^2.6.2",
     "source-map-explorer": "^2.4.2",
     "url-loader": "^4.1.1",
-    "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-clear-console": "^1.0.3"
+    "webpack-clear-console": "^1.0.3",
+    "webpack-obfuscator": "^3.3.2"
   },
   "scripts": {
     "lhci:serve": "ws --directory out --static.maxage 1000000 --static.extensions html --static.index index.html --http2 --compress",
