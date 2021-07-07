@@ -6,7 +6,6 @@ import { SeoMeta } from './seo-meta';
 
 function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
-  // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
   return (
     <>
