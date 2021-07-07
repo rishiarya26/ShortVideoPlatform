@@ -127,7 +127,7 @@ function HeadMeta() {
       {/* Android  */}
       <link href={withBasePath('icons/android-chrome-192x192.png')} rel="icon" sizes="192x192" />
       <link href={withBasePath('icons/android-chrome-192x192.png')} rel="icon" sizes="128x128" />
-
+      {/* eslint-disable no-trailing-spaces */}
       {/* Others */}
       <link href={withBasePath('icons/favicon.icon')} rel="shortcut icon" type="image/x-icon" />
 
