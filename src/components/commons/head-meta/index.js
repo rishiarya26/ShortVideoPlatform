@@ -19,6 +19,11 @@ function HeadMeta() {
 
       <link rel="dns-prefetch" href="https://eum.instana.io" />
       <link rel="dns-prefetch" href="https://eum-blue-saas.instana.io" />
+      <link rel="dns-prefetch" href="https://mock.hipi.co.in" />
+      <link rel="dns-prefetch" href="https://assets2.charmboard.com" />
+      <link rel="dns-prefetch" href="https://media.charmboard.com" />
+      <link rel="dns-prefetch" href="https://www.hipi.co.in" />
+      <link rel="dns-prefetch" href="https://devqa2.charmboard.com" />
 
       <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
