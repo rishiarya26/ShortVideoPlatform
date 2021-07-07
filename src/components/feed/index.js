@@ -54,6 +54,7 @@ function Feed({ router }) {
 
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
+    console.log('')
   };
 
   const getCanShop = async () => {
