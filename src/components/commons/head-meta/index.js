@@ -130,7 +130,6 @@ function HeadMeta() {
       <link href={withBasePath('icons/android-chrome-192x192.png')} rel="icon" sizes="128x128" />
 
       {/* Others */}
-
       <link href={withBasePath('icons/favicon.icon')} rel="shortcut icon" type="image/x-icon" />
 
       {/* UC Browser  */}
