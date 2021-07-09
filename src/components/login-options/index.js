@@ -15,7 +15,7 @@ export default function Login({ toggle }) {
         <p className="text-center text-sm">Manage your account, check notifications, comment on videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
-        <Link href="/login/phone">
+        <Link href="/login/phone?option=password">
           <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">

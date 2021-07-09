@@ -10,6 +10,8 @@ const VerifyOTP = ({ router }) => {
   const [otp, setOtp] = useState('');
   const { ref } = router?.query;
   const { mobile } = router?.query;
+  const [countryCode, phone] = mobile?.split('-');
+  const phoneNo = `${countryCode}${phone}`;
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
 
@@ -19,7 +21,7 @@ const VerifyOTP = ({ router }) => {
     },
     signup: {
       pathname: '/registration',
-      query: { mobile }
+      query: { mobile: phoneNo }
     }
   };
 
@@ -30,7 +32,7 @@ const VerifyOTP = ({ router }) => {
 
   const fetchData = async () => {
     const payload = {
-      mobile,
+      mobile: phoneNo,
       otp
     };
     try {
@@ -45,7 +47,11 @@ const VerifyOTP = ({ router }) => {
   };
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={router.back} />
+      <BackButton back={() => router.push({
+        pathname: '/login/phone',
+        query: { option: 'otp', mobile }
+      })}
+      />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">Enter 4-digit code</p>
         <p className="text-gray-400 text-xs">{`Your code was messaged to +${mobile}`}</p>

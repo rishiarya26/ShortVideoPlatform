@@ -1,12 +1,55 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
+import { userLogin } from '../../../sources/auth';
 import CircularProgress from '../../commons/circular-loader-small';
 
 export default function Email({
-  data, processEmailData, info, pending, submit
+  data, processEmailData, type
 }) {
+  const [pending, setPending] = useState(false);
   const { t } = useTranslation();
+  const { showSnackbar } = useSnackbar();
+  const router = useRouter();
 
-  const type = {
+  const submit = {
+    login: async e => {
+      e.preventDefault();
+      setPending(true);
+      try {
+        const finalData = { ...data };
+        finalData.type = 'email';
+        const response = await userLogin(finalData);
+        if (response.status === 'success') {
+          router.push({
+            pathname: '/feed/for-you'
+          });
+          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          setPending(false);
+        }
+      } catch (e) {
+        showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
+        setPending(false);
+      }
+    },
+    signup: async e => {
+      e.preventDefault();
+      setPending(true);
+      router.push({
+        pathname: '/registration',
+        query: { email: data?.email }
+      });
+      setTimeout(() => { setPending(false); }, 2000);
+    }
+  };
+
+  const submitText = {
+    login: t('LOGIN'),
+    signup: t('NEXT')
+  };
+
+  const info = {
     login:
   <>
     <div className="mt-4">
@@ -35,7 +78,7 @@ export default function Email({
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <form onSubmit={submit}>
+      <form onSubmit={submit[type]}>
         <div className="mt-4">
           <input
             id="email"
@@ -47,7 +90,7 @@ export default function Email({
             placeholder="Email address"
           />
         </div>
-        { type[info] }
+        { info[type] }
         <div className="mt-10">
           <button
             type="submit"
@@ -55,7 +98,7 @@ export default function Email({
             className="bg-red-400 w-full px-4 py-2 text-white font-semibold relative"
           >
             {' '}
-            {t('NEXT')}
+            {submitText[type]}
             {!pending ? '' : <CircularProgress />}
           </button>
         </div>

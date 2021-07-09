@@ -2,14 +2,13 @@ import { withRouter } from 'next/router';
 import { useState } from 'react';
 import Tabs from '../commons/tabs';
 import { BackButton } from '../commons/button/back';
-import MobileSignup from '../access/mobile-signup';
 import Email from '../access/email';
 import useTranslation from '../../hooks/use-translation';
+import Mobile from '../access/mobile';
 
 const Signup = ({ router }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
   const [emailData, setEmailData] = useState({ email: '' });
-  const [pending, setPending] = useState(false);
 
   const { t } = useTranslation();
   const { type } = router.query;
@@ -40,22 +39,12 @@ const Signup = ({ router }) => {
     setPhoneData(data);
   };
 
-  const redirectToRegistration = async e => {
-    e.preventDefault();
-    setPending(true);
-    router.push({
-      pathname: '/registration',
-      query: { email: emailData?.email }
-    });
-    setTimeout(() => { setPending(false); }, 2000);
-  };
-
   return (
     <>
       <div>
         <div className="w-full flex h-16  bg-white items-center">
           <div className="p-4 h-full flex items-center justify-center">
-            <BackButton back={router.back} />
+            <BackButton back={() => router.push('/feed/for-you')} />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">{t('SIGN_UP')}</div>
         </div>
@@ -65,23 +54,22 @@ const Signup = ({ router }) => {
       </div>
       <div className="mt-20">
         {type === 'phone'
-        && (
-          <MobileSignup
-            data={phoneData}
-            processPhoneData={processPhoneData}
-            onCountryCodeChange={onCountryCodeChange}
-          />
-        )}
+          && (
+            <Mobile
+              data={phoneData}
+              processPhoneData={processPhoneData}
+              onCountryCodeChange={onCountryCodeChange}
+              type="signup"
+            />
+          )}
         {type === 'email'
-           && (
-             <Email
-               data={emailData}
-               processEmailData={processEmailData}
-               submit={redirectToRegistration}
-               pending={pending}
-               info="signup"
-             />
-           )}
+          && (
+            <Email
+              data={emailData}
+              processEmailData={processEmailData}
+              type="signup"
+            />
+          )}
       </div>
     </>
   );

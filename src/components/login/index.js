@@ -1,22 +1,39 @@
 import { withRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tabs from '../commons/tabs';
-import MobileLogin from '../access/mobile-login';
 import Email from '../access/email';
 import { BackButton } from '../commons/button/back';
-import useSnackbar from '../../hooks/use-snackbar';
-import { userLogin } from '../../sources/auth';
 import useTranslation from '../../hooks/use-translation';
+import Mobile from '../access/mobile';
 
 const Login = ({ router }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', password: '', countryCode: '91' });
   const [emailData, setEmailData] = useState({ email: '', password: '' });
-  const [pending, setPending] = useState(false);
-  const { type } = router.query;
-  const { showSnackbar } = useSnackbar();
+  const [loginOption, setLoginOption] = useState(router?.query?.option);
+
+  const { type } = router?.query;
+
   const { t } = useTranslation();
 
-  const tabs = [{ display: 'Phone', path: '/login/phone' }, { display: 'Email', path: '/login/email' }];
+  useEffect(() => {
+    const updatePhoneData = { ...phoneData };
+    const { mobile = '' } = router?.query;
+    if (mobile.length !== 0) {
+      const [countryCode, phoneNo] = mobile.split('-');
+      updatePhoneData.countryCode = countryCode;
+      updatePhoneData.mobile = phoneNo;
+      setPhoneData(updatePhoneData);
+      router.replace(`/login/phone?option=${router?.query?.option}`);
+    }
+  }, []);
+
+  const toggle = selected => {
+    setLoginOption(selected);
+    selected && router.replace(`/login/phone?option=${selected}`);
+  };
+
+  const tabs = [{ display: 'Phone', path: `/login/phone?option=${loginOption}` },
+    { display: 'Email', path: '/login/email' }];
 
   const getMappings = (e, data) => {
     const { id } = e.target;
@@ -43,32 +60,12 @@ const Login = ({ router }) => {
     setPhoneData(data);
   };
 
-  const submitEmail = async e => {
-    e.preventDefault();
-    setPending(true);
-    try {
-      const finalData = { ...emailData };
-      finalData.type = 'email';
-      const response = await userLogin(finalData);
-      if (response.status === 'success') {
-        router.push({
-          pathname: '/feed/for-you'
-        });
-        showSnackbar({ message: t('SUCCESS_LOGIN') });
-        setPending(false);
-      }
-    } catch (e) {
-      showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
-      setPending(false);
-    }
-  };
-
   return (
     <>
       <div>
         <div className="w-full flex h-16  bg-white items-center">
           <div className="p-4 h-full flex items-center justify-center">
-            <BackButton back={router.back} />
+            <BackButton back={() => router.push('/feed/for-you')} />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">{t('LOGIN')}</div>
         </div>
@@ -78,21 +75,21 @@ const Login = ({ router }) => {
       </div>
       <div className="mt-20">
         {type === 'phone'
-        && (
-          <MobileLogin
-            phoneData={phoneData}
-            processPhoneData={processPhoneData}
-            onCountryCodeChange={onCountryCodeChange}
-          />
-        )}
+       && (
+         <Mobile
+           toggle={toggle}
+           processPhoneData={processPhoneData}
+           data={phoneData}
+           onCountryCodeChange={onCountryCodeChange}
+           type={loginOption === 'password' ? 'loginPassword' : 'loginOtp'}
+         />
+       )}
         {type === 'email'
        && (
          <Email
            data={emailData}
            processEmailData={processEmailData}
-           submit={submitEmail}
-           pending={pending}
-           info="login"
+           type="login"
          />
        )}
       </div>
