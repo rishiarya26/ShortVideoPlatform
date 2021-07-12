@@ -129,7 +129,7 @@ function HeadMeta() {
       {/* UC Browser  */}
       <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
-      <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />      
+      <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
     </>
   );
 }
