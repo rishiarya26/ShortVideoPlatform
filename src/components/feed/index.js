@@ -89,6 +89,7 @@ function Feed({ router }) {
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
+  consoe.lgo('')
 
   return (
     <ComponentStateHandler
