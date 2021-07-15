@@ -66,7 +66,7 @@ export const forYouEmbedFeed = {
               id: '9be36232-d594-4609-ba0a-0ba609a58a85'
             },
             {
-              name: 'BounceTheBall\n\nChallenge',
+              name: 'BounceTheBallChallenge',
               id: 'd044b357-a3d6-45dd-b5f6-35cacf1a2713'
             }
           ],

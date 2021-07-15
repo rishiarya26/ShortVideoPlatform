@@ -20,12 +20,12 @@ function VideoFooter({
       className={type[comp]}
     >
       <div className="videoFooter__text w-2/3">
-
+        {/*
         {canShop === 'success' && (
           <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 text-sm ">
             Shoppable
           </div>
-        )}
+        )} */}
 
         <h3 className=" mb-1 mt-1.5 font-semibold text-sm ">{userName}</h3>
         <div className="font-bold text-xs mb-3 mt-2">

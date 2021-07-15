@@ -9,7 +9,7 @@ import {
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import EmbedSeekbar from '../../src/components/emded-seekbar';
 import { getEffectiveVideoUrl } from '../../src/utils/content';
-import { Shop } from '../../src/components/commons/button/shop';
+// import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -25,9 +25,9 @@ export default function Hipi(params) {
     message,
     status
   } = params;
-
+  const canShop = item?.canShop?.status || 'fail';
+  const shopCards = item?.canShop?.data;
   const videoId = item?.content_id;
-  const { canShop = 'fail' } = item;
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
@@ -97,11 +97,13 @@ export default function Hipi(params) {
         musicCoverTitle={item.musicCoverTitle}
         hashTags={item.hashTags}
         canShop={canShop}
+        shopCards={shopCards}
+        videoId={videoId}
         poster={item.thumbnail}
       />
-      <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
+      {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <Shop videoId={videoId} canShop={canShop} />
-      </div>
+      </div> */}
       <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
   );

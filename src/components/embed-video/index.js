@@ -4,6 +4,7 @@ import EmbedVideoSidebar from '../embed-video-sidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
+import ProductCards from '../product-cards';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -96,6 +97,13 @@ function Embedvideo(props) {
             canShop={props.canShop}
             comp="embed"
           />
+          {props.canShop === 'success'
+         && (
+           <ProductCards
+             shopCards={props.shopCards}
+             videoId={props.videoId}
+           />
+         )}
         </div>
       </div>
     </div>

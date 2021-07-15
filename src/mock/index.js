@@ -9,6 +9,7 @@ import { userLogin } from './req-handlers/auth';
 import { hipiLogin } from './req-handlers/auth/hipi-login';
 import { editUserProfile } from './req-handlers/users/profile-edit';
 import { getUserProfileVideos } from './req-handlers/users/profile-videos';
+import { getShopDetails } from './req-handlers/can-shop';
 
 function mockServer(environment = 'development', callback) {
   console.log('running in mock mode');
@@ -39,6 +40,7 @@ function mockServer(environment = 'development', callback) {
       // login
       this.post('https://whapi.zee5.com/v1/user/loginemail_v2.php', userLogin);
       this.post('https://hipigwapi.zee5.com/api/v1/shorts/login', hipiLogin);
+      this.get('https://stagingmobile.charmboard.com/v3.6/video/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/charm', getShopDetails);
     }
 
   });

@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import ProductWidget from '../product-widget';
+import ProductCards from '../product-cards';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
@@ -137,7 +138,7 @@ function Video(props) {
             />
           )
         ) : (
-          <ProductWidget
+          <ProductCards
             shopCards={props.shopCards}
             handleSaveLook={props.handleSaveLook}
             videoId={props.activeVideoId}
