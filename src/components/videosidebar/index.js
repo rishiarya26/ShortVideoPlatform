@@ -6,6 +6,7 @@ import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
+import EmbedIcon from '../commons/svgicons/embedicon';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
@@ -125,9 +126,18 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col mb-12`}
+        } "relative py-3  px-3 text-center items-end flex-col `}
       >
         <ShareComp />
+      </div>
+      <div className={`${
+        type === 'feed' ? 'flex' : 'hidden'
+      } "relative py-3  px-3 text-center items-end flex-col mb-8`}
+      >
+        <div>
+          <EmbedIcon />
+          <p className="text-sm text-center">embed</p>
+        </div>
       </div>
       {/* <div
         role="presentation"
@@ -159,6 +169,7 @@ function VideoSidebar({
           </div>
         )
       )}
+
     </div>
   );
 }

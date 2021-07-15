@@ -88,10 +88,11 @@ function Embedvideo(props) {
             likes={props.likes}
             comment={props.comments}
             share={777}
+            type="embed"
           />
           <VideoFooter
             musicTitle={props.musicTitle}
-            userName={props.userName}
+            userName={`@${props.userName}`}
             musicCoverTitle={props.musicCoverTitle}
             hashTags={props.hashTags}
             canShop={props.canShop}
