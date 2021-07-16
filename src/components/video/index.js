@@ -61,7 +61,6 @@ function Video(props) {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
-
   return (
     <div
       ref={rootRef}
@@ -125,6 +124,7 @@ function Video(props) {
         canShop={props.canShop}
         saved={props.saved}
         profileFeed={props?.profileFeed}
+        videoId={props.id}
       />
 
       {/* TO-DO  comdition acc to comp */}

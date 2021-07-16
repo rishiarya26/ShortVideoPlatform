@@ -16,6 +16,7 @@ import useDrawer from '../../hooks/use-drawer';
 // import { postLike, deleteLike } from '../../sources/social';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
+import useDialog from '../../hooks/use-dialog';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -31,12 +32,21 @@ const login = dynamic(
   }
 );
 
+const copyEmbedUrl = dynamic(
+  () => import('../copy-embed-code.js'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed
+  profileFeed, videoId
 }) {
   const { show } = useDrawer();
+  const { show: showDialog } = useDialog();
   const router = useRouter();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
@@ -134,7 +144,7 @@ function VideoSidebar({
         type === 'feed' ? 'flex' : 'hidden'
       } "relative py-3  px-3 text-center items-end flex-col mb-8`}
       >
-        <div>
+        <div onClick={() => showDialog('Embed Code', copyEmbedUrl, { videoId })}>
           <EmbedIcon />
           <p className="text-sm text-center">embed</p>
         </div>
