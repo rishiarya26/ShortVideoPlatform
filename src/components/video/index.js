@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import ProductWidget from '../product-widget';
+import ProductCards from '../product-cards';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
@@ -60,7 +61,6 @@ function Video(props) {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
-
   return (
     <div
       ref={rootRef}
@@ -124,6 +124,7 @@ function Video(props) {
         canShop={props.canShop}
         saved={props.saved}
         profileFeed={props?.profileFeed}
+        videoId={props.id}
       />
 
       {/* TO-DO  comdition acc to comp */}
@@ -137,11 +138,12 @@ function Video(props) {
             />
           )
         ) : (
-          <ProductWidget
+          <ProductCards
             shopCards={props.shopCards}
             handleSaveLook={props.handleSaveLook}
             videoId={props.activeVideoId}
             profileFeed={props.profileFeed}
+            comp="profile"
           />
         )
       )}

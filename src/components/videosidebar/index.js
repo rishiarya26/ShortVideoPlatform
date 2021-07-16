@@ -6,6 +6,7 @@ import Liked from '../commons/svgicons/liked';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
+import EmbedIcon from '../commons/svgicons/embedicon';
 // import { share } from '../../utils/app';
 // import { CopyToClipBoard } from '../../utils/web';
 // import { getCurrentUri } from '../../utils/location';
@@ -15,6 +16,9 @@ import useDrawer from '../../hooks/use-drawer';
 // import { postLike, deleteLike } from '../../sources/social';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
+import useDialog from '../../hooks/use-dialog';
+import CopyEmbedCode from '../copy-embed-code.js';
+import useSnackbar from '../../hooks/use-snackbar';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -33,9 +37,11 @@ const login = dynamic(
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed
+  profileFeed, videoId
 }) {
   const { show } = useDrawer();
+  const { showSnackbar } = useSnackbar();
+  const { show: showDialog } = useDialog();
   const router = useRouter();
   // const { showSnackbar } = useSnackBar();
   const [liked, setLiked] = useState(false);
@@ -59,6 +65,10 @@ function VideoSidebar({
     });
   };
 
+  const onEmbedCopy = () => {
+    showSnackbar({ message: 'Copied to Clipboard' });
+  };
+
   return (
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
@@ -67,7 +77,7 @@ function VideoSidebar({
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
-            className="usrimg w-12 h-12 rounded-full"
+            className="usrimg w-10 h-10 rounded-full"
             src={profilePic}
           />
           <div
@@ -125,9 +135,18 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col mb-12`}
+        } "relative py-3  px-3 text-center items-end flex-col `}
       >
         <ShareComp />
+      </div>
+      <div className={`${
+        type === 'feed' ? 'flex' : 'hidden'
+      } "relative py-3  px-3 text-center items-end flex-col mb-8`}
+      >
+        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
+          <EmbedIcon />
+          <p className="text-sm text-center">embed</p>
+        </div>
       </div>
       {/* <div
         role="presentation"
@@ -152,13 +171,14 @@ function VideoSidebar({
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            } relative py-3 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
             <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />
           </div>
         )
       )}
+
     </div>
   );
 }
