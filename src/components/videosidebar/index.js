@@ -171,7 +171,7 @@ function VideoSidebar({
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 mt-8 text-center flex flex-col items-center`}
+            } relative py-3 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
             <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />

@@ -11,9 +11,9 @@ function VideoFooter({
 }) {
   // TO-DO common classes
   const type = {
-    profile: `${canShop === 'success' ? 'bottom-40' : 'bottom-12'} videoFooter absolute left-0  flex text-white ml-2`,
-    feed: `${saveLook ? ' bottom-12 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`,
-    embed: `${canShop === 'success' ? 'bottom-32' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`
+    profile: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`,
+    feed: `${saveLook ? ' bottom-16 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`,
+    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`
   };
   return (
     <div
