@@ -1,15 +1,12 @@
 /* eslint-disable max-len */
-import useSnackbar from '../../hooks/use-snackbar';
 import { CopyToClipBoard } from '../../utils/web';
 
-const CopyEmbedCode = ({ videoId = '' }) => {
-  console.log('v', videoId);
-  const embedCode = `<blockquote className="hipi-media" cite="https://preprod.hipi.co.in/"><div id="embed-hipi" style={{position: 'relative',margin: '0 auto',height: '640px',width: '360px',overflow: 'hidden'}} > <iframe className="h-full w-full" src="https://preprod.hipi.co.in/embed/${videoId}" loading="lazy" title="hipi" name="hipi" frameBorder="0" marginWidth="0" marginHeight="0" scrolling="no" /> </div> </blockquote>`;
-  const { showSnackbar } = useSnackbar();
+const CopyEmbedCode = ({ videoId = '', onEmbedCopy }) => {
+  const embedCode = videoId && `<blockquote className="hipi-media" cite="https://preprod.hipi.co.in/"><div id="embed-hipi" style={{position: 'relative',margin: '0 auto',height: '640px',width: '360px',overflow: 'hidden'}} > <iframe className="h-full w-full" src="https://preprod.hipi.co.in/embed/${videoId}" loading="lazy" title="hipi" name="hipi" frameBorder="0" marginWidth="0" marginHeight="0" scrolling="no" /> </div> </blockquote>`;
 
   const copy = () => {
     CopyToClipBoard(embedCode);
-    showSnackbar({ message: 'Copied to Clipboard' });
+    onEmbedCopy();
   };
 
   return (
