@@ -61,7 +61,6 @@ function Feed({ router }) {
     const shopContent = { ...shop };
     try {
       const response = await canShop({ videoId: activeVideoId });
-      console.log('h', response);
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
     } catch (e) {

@@ -18,6 +18,7 @@ import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
 import useDialog from '../../hooks/use-dialog';
 import CopyEmbedCode from '../copy-embed-code.js';
+import useSnackbar from '../../hooks/use-snackbar';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -39,6 +40,7 @@ function VideoSidebar({
   profileFeed, videoId
 }) {
   const { show } = useDrawer();
+  const { showSnackbar } = useSnackbar();
   const { show: showDialog } = useDialog();
   const router = useRouter();
   // const { showSnackbar } = useSnackBar();
@@ -61,6 +63,10 @@ function VideoSidebar({
       pathname: '/users/[pid]',
       query: { pid: videoOwnersId }
     });
+  };
+
+  const onEmbedCopy = () => {
+    showSnackbar({ message: 'Copied to Clipboard' });
   };
 
   return (
@@ -137,7 +143,7 @@ function VideoSidebar({
         type === 'feed' ? 'flex' : 'hidden'
       } "relative py-3  px-3 text-center items-end flex-col mb-8`}
       >
-        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId })}>
+        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-sm text-center">embed</p>
         </div>
