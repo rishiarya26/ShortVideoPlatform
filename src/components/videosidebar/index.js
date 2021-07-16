@@ -17,6 +17,7 @@ import useDrawer from '../../hooks/use-drawer';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
 import useDialog from '../../hooks/use-dialog';
+import CopyEmbedCode from '../copy-embed-code.js';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -144,7 +145,7 @@ function VideoSidebar({
         type === 'feed' ? 'flex' : 'hidden'
       } "relative py-3  px-3 text-center items-end flex-col mb-8`}
       >
-        <div onClick={() => showDialog('Embed Code', copyEmbedUrl, { videoId })}>
+        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId })}>
           <EmbedIcon />
           <p className="text-sm text-center">embed</p>
         </div>

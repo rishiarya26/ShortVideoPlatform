@@ -62,7 +62,7 @@ function Feed({ router }) {
     try {
       const response = await canShop({ videoId: activeVideoId });
       console.log('h', response);
-      isShoppable = response?.canShop;
+      isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
     } catch (e) {
       isShoppable = false;

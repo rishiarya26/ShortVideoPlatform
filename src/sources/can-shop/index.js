@@ -10,7 +10,6 @@ async function verifyVideoForShop({ videoId }) {
       'charmboard'
     )}/v3.6/video/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/charm?video_id=${videoId}`;
     response = await get(apiPath);
-    console.log(response);
     response.data.requestedWith = { videoId };
     return Promise.resolve(response);
   } catch (err) {
