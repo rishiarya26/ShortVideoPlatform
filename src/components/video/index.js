@@ -143,6 +143,7 @@ function Video(props) {
             handleSaveLook={props.handleSaveLook}
             videoId={props.activeVideoId}
             profileFeed={props.profileFeed}
+            comp="profile"
           />
         )
       )}

@@ -6,7 +6,7 @@ import Img from '../commons/image';
 import { Loading } from './loading';
 
 function ProductCards({
-  shopCards, videoId
+  shopCards, videoId, comp
 }) {
   const [loading, setLoading] = useState(true);
   const loaded = () => {
@@ -18,10 +18,13 @@ function ProductCards({
 
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
-
+  const type = {
+    profile: 'bottom-12 flex w-6/12 h-24 justify-between items-center p-2 absolute',
+    embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute'
+  };
   return (
     <div
-      className="flex w-6/12 h-24 justify-between items-center p-2 absolute bottom-14"
+      className={type[comp]}
     >
       <div className="flex flex-col">
         <div className="flex">

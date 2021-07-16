@@ -103,6 +103,7 @@ function Embedvideo(props) {
            <ProductCards
              shopCards={props.shopCards}
              videoId={props.videoId}
+             comp="embed"
            />
          )}
         </div>
