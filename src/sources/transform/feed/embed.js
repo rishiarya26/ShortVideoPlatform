@@ -7,6 +7,7 @@ const msgMap = {
 };
 
 function transformError(error = {}) {
+  console.log('err', error);
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -38,7 +39,7 @@ function transformSuccess(resp) {
         payloadObject.videoOwnersId = d.videoOwnersId;
         payloadObject.getSocialId = d.getSocialId;
         payloadObject.id = d.id;
-        payloadObject.genre = d.genre;
+        payloadObject.genre = d?.genre || null;
         payloadObject.userProfilePicUrl = d.videoOwners.profilePicImgUrl;
         payloadObject.userName = d.videoOwners.userName;
         payloadObject.likesCount = d.lCount;
@@ -55,10 +56,22 @@ function transformSuccess(resp) {
     } else {
       return transformError(data);
     }
-    payload.data.canShop = data?.canShop ? 'success' : 'fail';
+    console.log('shop', data.canShop);
+    const { canShop = {} } = data;
+    const { isShoppable = false } = canShop;
+    const shop = {};
+    if (isShoppable) {
+      shop.status = 'success';
+      shop.data = canShop?.data;
+    } else {
+      shop.status = 'fail';
+    }
+    payload.data.canShop = shop;
     payload.requestedWith = { ...data.requestedWith };
+    console.log('payload', payload);
     return payload;
   } catch (err) {
+    // console.log("err",error)
     data.appError = err.message;
     return transformError(data);
   }
