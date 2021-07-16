@@ -78,7 +78,7 @@ function VideoSidebar({
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
-            className="usrimg w-12 h-12 rounded-full"
+            className="usrimg w-10 h-10 rounded-full"
             src={profilePic}
           />
           <div
