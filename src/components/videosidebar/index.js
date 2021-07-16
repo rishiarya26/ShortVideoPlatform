@@ -33,14 +33,6 @@ const login = dynamic(
   }
 );
 
-const copyEmbedUrl = dynamic(
-  () => import('../copy-embed-code.js'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
@@ -79,7 +71,7 @@ function VideoSidebar({
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
-            className="usrimg w-12 h-12 rounded-full"
+            className="usrimg w-10 h-10 rounded-full"
             src={profilePic}
           />
           <div

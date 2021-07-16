@@ -20,7 +20,7 @@ const Dialog = ({
       <>
         {' '}
         <div data-testid="dialog-header flex w-full justify-between relative">
-          <div data-testid="dialog-title">{title}</div>
+          <div className=" flex justify-center text-xl font-semibold" data-testid="dialog-title">{title}</div>
           <div
             data-testid="dialog-close"
             role="presentation"
