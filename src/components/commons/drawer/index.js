@@ -6,7 +6,7 @@ const Drawer = ({
 }) => {
   const design = {
     small: {
-      height: 'h-1/3'
+      height: 'h-2/5'
     },
     medium: {
       height: 'h-4/5'
