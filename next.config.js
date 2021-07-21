@@ -1,6 +1,7 @@
-/*eslint-disable max-len */
+/* eslint-disable max-len */
+
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { createSecureHeaders } = require('next-secure-headers');
+// const { createSecureHeaders } = require('next-secure-headers');
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
 
@@ -22,16 +23,16 @@ const appVersion = require('./app-version');
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
 
 const nextConfig = {
-  async headers() {
-    return [{
-      source: '/(.*)',
-      headers: [
-        { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
-        { key: 'X-Download-Options', value: 'noopen' },
-        { key: 'X-Content-Type-Options', value: 'false' },
-        { key: 'X-XSS-Protection', value: '1' }]
-    }];
-  },
+  // async headers() {
+  //   return [{
+  //     source: '/(.*)',
+  //     headers: [
+  //       { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+  //       { key: 'X-Download-Options', value: 'noopen' },
+  //       { key: 'X-Content-Type-Options', value: 'false' },
+  //       { key: 'X-XSS-Protection', value: '1' }]
+  //   }];
+  // },
   images: {
     domains: ['akamaividz2.zee5.com', 'assets2.charmboard.com']
   },
