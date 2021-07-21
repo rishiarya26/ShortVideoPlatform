@@ -68,10 +68,9 @@ function SnackBar(
   return (
     <div className={`
     ${visible ? 'animate-fade-in-bottom bottom-14' : 'animate-fade-out-bottom'}      
-    fixed w-full flex items-center justify-center
+    fixed w-full flex items-center justify-center z-20    
   `}>
       <div className={`      
-      z-20    
       text-white max-w-sm w-5/6
       flex items-center justify-center
       ${SnackType[type] || SnackType.info}

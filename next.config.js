@@ -22,7 +22,12 @@ console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV
 
 const nextConfig = {
   async headers() {
-    return [{ source: '/(.*)', headers: createSecureHeaders() }];
+    return [{
+      source: '/(.*)',
+      headers: createSecureHeaders({
+        nosniff: false
+      })
+    }];
   },
   images: {
     domains: ['akamaividz2.zee5.com', 'assets2.charmboard.com']
