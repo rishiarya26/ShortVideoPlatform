@@ -1,5 +1,6 @@
+/*eslint-disable max-len */
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { createSecureHeaders } = require("next-secure-headers");
+const { createSecureHeaders } = require('next-secure-headers');
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
 
@@ -24,9 +25,11 @@ const nextConfig = {
   async headers() {
     return [{
       source: '/(.*)',
-      headers: createSecureHeaders({
-        nosniff: false
-      })
+      headers: [
+        { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+        { key: 'X-Download-Options', value: 'noopen' },
+        { key: 'X-Content-Type-Options', value: 'false' },
+        { key: 'X-XSS-Protection', value: '1' }]
     }];
   },
   images: {
