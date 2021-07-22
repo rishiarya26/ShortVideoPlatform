@@ -1,19 +1,38 @@
 import { withRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tabs from '../commons/tabs';
-import Email from '../access/email';
 import { BackButton } from '../commons/button/back';
+import Email from '../access/email';
 import useTranslation from '../../hooks/use-translation';
 import Mobile from '../access/mobile';
 
-const Login = ({ router }) => {
-  const [phoneData, setPhoneData] = useState({ mobile: '', password: '', countryCode: '91' });
-  const [emailData, setEmailData] = useState({ email: '', password: '' });
+const Auth = ({ router, authType }) => {
+  const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
+  const [emailData, setEmailData] = useState({ email: '' });
   const [loginOption, setLoginOption] = useState(router?.query?.option);
 
-  const { type } = router?.query;
-
   const { t } = useTranslation();
+  const { type } = router.query;
+
+  const heading = {
+    login: 'LOGIN',
+    signup: 'SIGN_UP'
+
+  };
+  const info = {
+    login: { phone: loginOption === 'password' ? 'loginPassword' : 'loginOtp', email: 'login' },
+    signup: { phone: 'signup', email: 'signup' }
+  };
+
+  const tabs = {
+    login: [{ display: 'Phone', path: `/login/phone?option=${loginOption}` }, { display: 'Email', path: '/login/email' }],
+    signup: [{ display: 'Phone', path: '/signup/phone' }, { display: 'Email', path: '/signup/email' }]
+  };
+
+  const urlReplace = {
+    login: `/login/phone?option=${router?.query?.option}`,
+    signup: '/signup/phone'
+  };
 
   useEffect(() => {
     const updatePhoneData = { ...phoneData };
@@ -23,7 +42,7 @@ const Login = ({ router }) => {
       updatePhoneData.countryCode = countryCode;
       updatePhoneData.mobile = phoneNo;
       setPhoneData(updatePhoneData);
-      router.replace(`/login/phone?option=${router?.query?.option}`);
+      router.replace(urlReplace[authType]);
     }
   }, []);
 
@@ -31,9 +50,6 @@ const Login = ({ router }) => {
     setLoginOption(selected);
     selected && router.replace(`/login/phone?option=${selected}`);
   };
-
-  const tabs = [{ display: 'Phone', path: `/login/phone?option=${loginOption}` },
-    { display: 'Email', path: '/login/email' }];
 
   const getMappings = (e, data) => {
     const { id } = e.target;
@@ -67,11 +83,11 @@ const Login = ({ router }) => {
           <div className="p-4 h-full flex items-center justify-center">
             <BackButton back={() => router.push('/feed/for-you')} />
           </div>
-          <div className="font-bold flex justify-center align-center w-9/12">{t('LOGIN')}</div>
+          <div className="font-bold flex justify-center align-center w-9/12">{t(heading[authType])}</div>
         </div>
       </div>
       <div className="fixed mt-10 z-10 w-full">
-        <Tabs items={tabs} />
+        <Tabs items={tabs[authType]} />
       </div>
       <div className="mt-20">
         {type === 'phone'
@@ -81,7 +97,7 @@ const Login = ({ router }) => {
            processPhoneData={processPhoneData}
            data={phoneData}
            onCountryCodeChange={onCountryCodeChange}
-           type={loginOption === 'password' ? 'loginPassword' : 'loginOtp'}
+           type={info?.[authType]?.phone}
          />
        )}
         {type === 'email'
@@ -89,7 +105,7 @@ const Login = ({ router }) => {
          <Email
            data={emailData}
            processEmailData={processEmailData}
-           type="login"
+           type={info?.[authType]?.email}
          />
        )}
       </div>
@@ -97,4 +113,4 @@ const Login = ({ router }) => {
   );
 };
 
-export default withRouter(Login);
+export default withRouter(Auth);

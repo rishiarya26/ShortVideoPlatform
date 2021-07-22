@@ -48,7 +48,7 @@ const VerifyOTP = ({ router }) => {
   return (
     <div className="flex flex-col px-4 pt-10">
       <BackButton back={() => router.push({
-        pathname: '/login/phone',
+        pathname: `/${ref}/phone`,
         query: { option: 'otp', mobile }
       })}
       />
