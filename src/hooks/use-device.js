@@ -1,12 +1,9 @@
+/* eslint-disable max-len */
 import { useState } from 'react';
 
 export const devices = ['desktop', 'mobile'];
 
-export const getDeviceType = userAgent => {
-  let device = 'desktop';
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) device = 'mobile';
-  return device;
-};
+export const getDeviceType = userAgent => ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) ? 'mobile' : 'desktop');
 
 function useDevice(types = devices, values, defaultValue) {
   const getVariant = () => {

@@ -7,7 +7,9 @@ class Hipi extends Document {
   static async getInitialProps(ctx) {
     const userAgent = ctx?.req?.headers?.['user-agent'];
     const device = getDeviceType(userAgent);
-    ctx?.res?.setHeader('Set-Cookie', `deviceType=${device}; HttpOnly; MaxAge=${(365 * 24 * 60 * 60)}; Path=/`);
+    const maxAge = (365 * 24 * 60 * 60)
+    ctx?.res?.setHeader('Set-Cookie', `device-type=${device}; HttpOnly; MaxAge=${maxAge};`);
+    console.log("response-deasers",ctx.res)
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
