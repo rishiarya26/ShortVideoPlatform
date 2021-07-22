@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, {
+  createContext, useContext, useRef, useState
+} from 'react';
 import Dialog from '../components/commons/dialog';
 import useOverLay from './use-overlay';
 
@@ -12,8 +14,10 @@ const DialogContext = createContext({
 export const DialogProvider = ({ children }) => {
   const [state, setState] = useState({ visible: false, message: '' });
   const { show: showOverLay, hide: hideOverLay } = useOverLay();
+  const ComponentProps = useRef({});
 
-  const show = (title, content) => {
+  const show = (title, content, props) => {
+    ComponentProps.current = props;
     showOverLay();
     DialogContent = content;
     setState({
@@ -35,7 +39,7 @@ export const DialogProvider = ({ children }) => {
     <DialogContext.Provider value={{ show, close }}>
       {children}
       <Dialog visible={state.visible} close={close} title={state.title}>
-        {DialogContent && <DialogContent />}
+        {DialogContent && <DialogContent {...ComponentProps.current} />}
       </Dialog>
     </DialogContext.Provider>
   );

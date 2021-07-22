@@ -3,6 +3,7 @@ import Like from '../commons/svgicons/like';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
+import EmbedIcon from '../commons/svgicons/embedicon';
 
 function VideoSidebar() {
   // TODO add useTranslation for alt tags as well
@@ -29,6 +30,10 @@ function VideoSidebar() {
       </div>
       <div className="relative p-2 text-center flex flex-col items-center">
         <Share />
+        <p className="text-sm h-6" />
+      </div>
+      <div className="relative p-2 text-center flex flex-col items-center">
+        <EmbedIcon />
         <p className="text-sm h-6" />
       </div>
     </div>

@@ -42,7 +42,7 @@ export default function SampleEmbed() {
         >
           <iframe
             className="h-full w-full"
-            src="https://preprod.hipi.co.in/embed/09b322e4-ad5d-4e68-a48b-82ab8850ccd0"
+            src="https://preprod.hipi.co.in/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
             loading="lazy"
             title="hipi"
             name="hipi"

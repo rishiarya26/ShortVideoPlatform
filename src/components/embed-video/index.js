@@ -4,6 +4,7 @@ import EmbedVideoSidebar from '../embed-video-sidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
+import ProductCards from '../product-cards';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -78,26 +79,31 @@ function Embedvideo(props) {
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
-      <div className="flex flex-col absolute bottom-12 justify-items-end w-full">
-        <div className="flex justify-between items-end">
 
-          <EmbedVideoSidebar
-            socialId={props.socialId}
-            profilePic={props.profilePic}
-            likes={props.likes}
-            comment={props.comments}
-            share={777}
-          />
-          <VideoFooter
-            musicTitle={props.musicTitle}
-            userName={props.userName}
-            musicCoverTitle={props.musicCoverTitle}
-            hashTags={props.hashTags}
-            canShop={props.canShop}
-            comp="embed"
-          />
-        </div>
-      </div>
+      <EmbedVideoSidebar
+        socialId={props.socialId}
+        profilePic={props.profilePic}
+        likes={props.likes}
+        comment={props.comments}
+        share={777}
+        type="embed"
+      />
+      <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={`@${props.userName}`}
+        musicCoverTitle={props.musicCoverTitle}
+        hashTags={props.hashTags}
+        canShop={props.canShop}
+        comp="embed"
+      />
+      {props.canShop === 'success'
+         && (
+           <ProductCards
+             shopCards={props.shopCards}
+             videoId={props.videoId}
+             comp="embed"
+           />
+         )}
     </div>
   );
 }

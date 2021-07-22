@@ -1,4 +1,4 @@
-import Logo from '../commons/svgicons/hipi-logo';
+import HipiLogo from '../commons/svgicons/hipi-logo-black';
 import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
 
@@ -10,9 +10,9 @@ export default function downloadAppWidget() {
 
   return (
     <>
-      <div className=" flex items-center justify-center flex-col bg-gray-900 w-full ">
-        <Logo />
-        <p className="text-white text-lg my-2">The best experience is in App</p>
+      <div className=" flex items-center flex-col w-full mt-10">
+        <HipiLogo />
+        <p className="text-sm my-2 text-center px-4 py-3">For best experience kindly download the Hipi Mobile App from Google PlayStore</p>
         <img src={withBasePath(storeImages[`${getOS()}`])} className="" alt="playicon" />
       </div>
     </>

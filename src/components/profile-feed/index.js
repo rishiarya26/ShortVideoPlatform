@@ -52,7 +52,7 @@ function ProfileFeed({ router }) {
     shopContent.isShoppable = 'fail';
     try {
       const response = await canShop({ videoId: activeVideoId });
-      response?.canShop ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
+      response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
     } catch (e) {
       console.log('error in canShop');
@@ -128,7 +128,7 @@ function ProfileFeed({ router }) {
                       music={item.musicCoverTitle}
                       musicTitle={item.music_title}
                       profilePic={item.userProfilePicUrl}
-                      userName={item.userName}
+                      userName={`@${item.userName}`}
                       musicCoverTitle={item.musicCoverTitle}
                       videoid={item.content_id}
                       hashTags={item.hashTags}

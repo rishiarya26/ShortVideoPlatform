@@ -67,33 +67,34 @@ function SnackBar(
 
   return (
     <div className={`
-      ${visible ? 'animate-fade-in-bottom bottom-14' : 'animate-fade-out-bottom'}      
-      fixed
-      z-20              
-      left-1/3
+    ${visible ? 'animate-fade-in-bottom bottom-14' : 'animate-fade-out-bottom'}      
+    fixed w-full flex items-center justify-center z-20    
+  `}>
+      <div className={`      
+      text-white max-w-sm w-5/6
       flex items-center justify-center
-      text-white max-w-sm w-1/3 
       ${SnackType[type] || SnackType.info}
       shadow-md
       rounded-lg
       overflow-hidden
       mx-auto
     `}
-    >
-      {visible && (
-        <>
-          {' '}
-          <div className="w-10 border-r px-2">
-            <Icon />
-          </div>
-
-          <div className="flex items-center py-3">
-            <div className="mx-3">
-              <p>{message}</p>
+      >
+        {visible && (
+          <>
+            {' '}
+            <div className="w-10 border-r px-2">
+              <Icon />
             </div>
-          </div>
-        </>
-      )}
+
+            <div className="flex items-center py-3">
+              <div className="mx-3">
+                <p>{message}</p>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
