@@ -13,8 +13,8 @@ export function getOS() {
 }
 
 export function getNetworkConnection() {
-  const networkInformation = navigator.connection;
-  const { effectiveType } = networkInformation;
+  const networkInformation = navigator?.connection;
+  const effectiveType = networkInformation?.effectiveType;
   let networkStrength = 'low';
   if (effectiveType === '4g') {
     networkStrength = 'fast';
