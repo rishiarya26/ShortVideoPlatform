@@ -18,7 +18,7 @@ function Explore() {
     console.log('d', data);
     setData(data?.data);
   };
-  const dataFetcher = () => getRecommendations();
+  const dataFetcher = () => getSearchData();
   const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);
 
   const validateData = data?.length > 0;

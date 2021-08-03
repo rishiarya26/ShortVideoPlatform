@@ -25,7 +25,7 @@ async function fetchSearchData({ limit = '5', offset = '1' }) {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/discover?limit=${limit}&offset=${offset}`;
     response = await Promise.all([get(apiPath), fetchRecommendations()]);
     // response[0].data?.responseData = response[0].data?.responseData + response[1].data?.responseData
-    // console.log("respppp",response)
+    console.log("respppp",response)
     response.data.requestedWith = { };
     return Promise.resolve(response);
   } catch (err) {
