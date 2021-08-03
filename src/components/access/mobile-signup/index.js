@@ -43,7 +43,7 @@ export default function MobileSignup({ processPhoneData, data, onCountryCodeChan
         <input
           id="mobile"
           value={data.mobile}
-          onChange={processPhoneData} 
+          onChange={processPhoneData}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="number"
           name="phone"

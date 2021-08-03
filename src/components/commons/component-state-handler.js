@@ -27,13 +27,13 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
     try {
       const data = await dataFetcher();
       if (data.status === 'fail') {
-        console.log("failed")
+        console.log('failed');
         setFetchState('fail');
         return;
       }
       setData(data);
       if (onDataFetched) onDataFetched(data);
-      console.log("success", data)
+      console.log('success', data);
       setFetchState('success');
     } catch (e) {
       setFetchState('fail');

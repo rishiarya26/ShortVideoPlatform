@@ -37,3 +37,10 @@
     outline: none;
   }
   
+.bg_grad{
+  background: linear-gradient(270deg, #D428B6 0%, #BE2ADE 24.59%, #8330C7 50.56%, #5C2ADE 74.51%, #2928D4 100%);
+}
+
+.no_bar::-webkit-scrollbar {
+  display: none;
+}

@@ -3,7 +3,7 @@ import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 function transformError(error = {}) {
-  console.log("Errore",error)
+  console.log('Errore', error);
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -54,7 +54,7 @@ function transformSuccess(resp) {
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
-    console.log("err,",err)
+    console.log('err,', err);
     data.appError = err.message;
     return transformError(data);
   }

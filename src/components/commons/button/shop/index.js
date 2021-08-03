@@ -16,7 +16,7 @@ export const Shop = ({
     // charmboard_plugin- multiple object(player)
   }, []);
 
-  console.log(loading,canShop)
+  console.log(loading, canShop);
   return (
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (
