@@ -3,14 +3,15 @@ import { getApiBasePath } from '../../config';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
 import { setItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
 const login = async ({ accessToken, refreshToken }) => {
   let response = {};
-  const url = window.location.href;
-  let domain = (new URL(url));
-  domain = domain.hostname;
-  console.log(domain);
+  // const url = window.location.href;
+  // let domain = (new URL(url));
+  // domain = domain.hostname;
+  // console.log(domain);
   try {
     // TO-DO segregate doamin fetcing code
     const url = window?.location?.href;
@@ -29,6 +30,8 @@ const login = async ({ accessToken, refreshToken }) => {
       refreshToken
     };
     setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
+    const userId = response?.data?.userDetails?.id
+    localStorage.set('user-id',userId);
     response.data.accessToken = accessToken;
     response.data.status = 200;
     response.data.message = 'success';

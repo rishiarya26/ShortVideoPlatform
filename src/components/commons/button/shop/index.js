@@ -15,6 +15,8 @@ export const Shop = ({
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // charmboard_plugin- multiple object(player)
   }, []);
+
+  console.log(loading,canShop)
   return (
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (

@@ -13,6 +13,16 @@ const options = (methodName, body, headersOpt = {}) => {
         ...headersOpt
       }
     };
+    case 'multipart/form-data': return {
+      method: methodName,
+      ...body && { body },
+      headers: {
+        Accept: '*/*',
+        'content-type': 'multipart/form-data',
+        // 'guest-token': getUserId(),
+        ...headersOpt
+      }
+    };
     case 'application/json': return {
       method: methodName,
       ...body && { body: JSON.stringify(body) },

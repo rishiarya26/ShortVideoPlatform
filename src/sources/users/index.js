@@ -1,6 +1,7 @@
 import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/users/send-otp';
 
 async function sendOtp({ lang }) {
@@ -38,21 +39,40 @@ async function forgotPassword({ lang }) {
     return Promise.reject(err);
   }
 }
-async function updateProfile(payload) {
+async function updateProfile({id=null, profilePic, firstName, lastName="", dateOfBirth, userHandle, onboarding, profileType, bio,  }) {
   let response = {};
   try {
-    // const resp = await preCondition();
-    // const { data = {} } = resp;
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
-    response = await put(apiPath, payload);
-    //   , payload, {
-    //   'Content-Type': 'multipart/form-data',
-    //   Authorization: `Bearer ${data.authToken}`,
-    //   'access-token': data.accessToken
-    // });
+     let tokens = getItem('tokens');
+     tokens = tokens && JSON.parse(tokens);
+     const { shortsAuthToken = '' } = tokens;
+     const { accessToken = '' } = tokens;
+     const payload = {
+       "id":id, 
+       "profilePic":profilePic, 
+       "firstName":firstName, 
+       "lastName":lastName, 
+       "dateOfBirth":dateOfBirth, 
+       "userHandle":userHandle, 
+       "onboarding":null, 
+       "profileType":null, 
+       "bio":bio
+    }
+     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
+     let formData = new FormData();
+     console.log(formData)
+     formData.append("request", "{\"id\":\"f999f4de-5c13-4b9f-8467-dfc417548169\", \"profilePic\":null, \"firstName\":\"Rishi\", \"lastName\":\"arya\", \"dateOfBirth\":\"10/11/2020\", \"userHandle\":\"rishi_arya\", \"onboarding\":null, \"profileType\":null, \"bio\":\"awesome\"}");
+     for(let p of formData.entries()){
+      console.log(p[0]+ ', '+ p[1])
+    }
+     console.log(formData)
+    response = await put(apiPath,formData, {Authorization: `Bearer ${shortsAuthToken}`,'content-type': 'multipart/form-data',
+        'access-token': accessToken
+    });
+    console.log("Update-Profile",response)
     response.data.requestedWith = { payload };
     return Promise.resolve(response);
   } catch (err) {
+    console.log("Update-Profile-catch",err)
     return Promise.reject(err);
   }
 }
@@ -99,7 +119,7 @@ async function getComments() {
 const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError);
 const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError);
 const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError);
-const [srUpdateProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError);
+const [updateUserProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError,{requiresAuth: true} );
 const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError);
 
 export {
@@ -109,6 +129,6 @@ export {
   srSendOtp,
   srVerifyOtpPassword,
   srForgotPassword,
-  srUpdateProfile,
+  updateUserProfile,
   srReportProfile
 };
