@@ -12,6 +12,7 @@ function transformError(error = {}) {
 
   return payload;
 }
+    //TO-DO merge both responseData & align accordingly
 
 function transformSuccess(resp) {
   console.log('in trans', resp);
@@ -26,6 +27,7 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
+
     const responseData = [];
     // responseData.map((data,))
     recommendationData?.data?.responseData.push(searchData?.data?.responseData);
