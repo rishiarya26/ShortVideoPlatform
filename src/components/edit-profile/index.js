@@ -5,6 +5,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import { Back } from '../commons/svgicons/back';
 import Error from './error';
 import Loader from './loader';
+import RightArrow from '../commons/svgicons/right-arrow';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -28,8 +29,8 @@ const EditProfile = ({ router }) => {
       ErrorComp={ErrorComp}
     >
       <div>
-        <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
-          <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
+        <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
+          <div onClick={handleBackClick} className="p-4 h-16 flex items-center justify-center absolute top-0 left-0">
             <Back />
           </div>
           <div className="font-bold">Edit Profile</div>
@@ -39,27 +40,36 @@ const EditProfile = ({ router }) => {
             <div className="w-24 h-24 rounded-full overflow-hidden">
               <img src={userData?.profilePic} alt="PP" className="object-cover" />
             </div>
-            <p className="font-medium p-2 text-sm">Change photo</p>
+            <p className="p-2 text-sm">Change photo</p>
           </div>
         </div>
-        <div className="relative">
-          <div className="flex relative m-20 ">
-            <div className="mr-2">Name</div>
+        <div className="flex p-4 flex-col">
+          <div className="flex justify-between m-4">
+            <div className="mr-2 font-medium">Name</div>
+            <div className="flex">
             <Link href={`/edit/${userId}?field=name`}>
-              <div className="">{`${userData?.firstName} ${userData?.lastName}`}</div>
+              <div className="text-gray-500">{`${userData?.firstName} ${userData?.lastName}`}</div>
             </Link>
+            <RightArrow />
+            </div>
           </div>
-          <div className="flex relative m-20">
-            <div className="mr-2">Username</div>
+          <div className="flex justify-between m-4">
+            <div className="mr-2 font-medium">Username</div>
+            <div className="flex">
             <Link href={`/edit/${userId}?field=userHandle`}>
-              <div className=" ">{userData?.userName}</div>
+              <div className="text-gray-500">{userData?.userName}</div>
             </Link>
+            <RightArrow />
+            </div>
           </div>
-          <div className="flex relative m-20 ">
-            <div className="mr-2">Bio</div>
+          <div className="flex justify-between m-4">
+            <div className="mr-2 font-medium">Bio</div>
+            <div className="flex">
             <Link href={`/edit/${userId}?field=bio`}>
-              <div className="">{userData?.bio}</div>
+              <div className="text-gray-500">{userData?.bio}</div>
             </Link>
+            <RightArrow />
+            </div>
           </div>
         </div>
       </div>

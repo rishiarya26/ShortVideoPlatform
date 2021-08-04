@@ -6,6 +6,7 @@ import Error from './error';
 import Loader from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import { getUserProfile } from '../../sources/users/profile';
+import Cancel from '../commons/svgicons/Cancel';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -80,15 +81,20 @@ const EditProfileField = ({ router }) => {
       ErrorComp={ErrorComp}
     >
       <div>
-        <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
-          <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
+        <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between p-4">
+          <div onClick={handleBackClick} className="h-full flex items-center justify-center text-gray-400">
             Cancel
           </div>
           <div className="font-bold">{info[type]}</div>
-          <div onClick={toUpdateValue} className="font-bold">SAVE</div>
+          <div onClick={toUpdateValue} className="text-red-500 font-medium">Save</div>
         </div>
-        <div>Name</div>
-        <div><input id={type} type="text" onChange={onValueChange} /></div>
+        <div className="flex p-4 flex-col">
+            <div className="py-2 text-gray-400">Name</div>
+            <div className="flex justify-between py-4">
+                <input id={type} type="text" onChange={onValueChange} className="text-lg text-gray-700" placeholder="Guest User"/>
+                <Cancel />
+            </div>
+        </div>
         {/* <div className="relative">
         <div className="flex relative m-20 ">
             <div className="">Name</div>
