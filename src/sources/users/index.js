@@ -1,5 +1,5 @@
-/*eslint-disable max-len*/
-/*eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 
 import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
@@ -63,10 +63,10 @@ async function updateProfile({
       bio
     };
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
-       /*eslint-disable no-restricted-syntax */
+    /* eslint-disable no-restricted-syntax */
     const formData = new FormData();
     console.log(formData);
- 
+
     formData.append('request', '{"id":"f999f4de-5c13-4b9f-8467-dfc417548169", "profilePic":null, "firstName":"Rishi", "lastName":"arya", "dateOfBirth":"10/11/2020", "userHandle":"rishi_arya", "onboarding":null, "profileType":null, "bio":"awesome"}');
     for (const p of formData.entries()) {
       console.log(`${p[0]}, ${p[1]}`);

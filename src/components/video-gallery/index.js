@@ -16,23 +16,23 @@ export default function VideoGallery({
 
   const noData = {
     all: <>
-         <p className="font-semibold">{t('NO_VIDEOS')}</p>
-         <p className="text-center text-sm text-gray-500 my-2">
-         {t('NO_VIDEOS_PUBLISHED')}
-         </p>
-         </>,
+      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        {t('NO_VIDEOS_PUBLISHED')}
+      </p>
+    </>,
     PRIVATE: <>
-             <p className="font-semibold">{t('NO_VIDEOS')}</p>
-             <p className="text-center text-sm text-gray-500 my-2">
-             {t('NO_VIDEOS_PUBLISHED')}
-             </p>
-             </>,
+      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        {t('NO_VIDEOS_PUBLISHED')}
+      </p>
+    </>,
     liked: <>
-           <p className="font-semibold">No Liked Videos</p>
-           <p className="text-center text-sm text-gray-500 my-2">
-           Videos Liked by this user will appear here
-           </p>
-           </>
+      <p className="font-semibold">No Liked Videos</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        Videos Liked by this user will appear here
+      </p>
+    </>
   };
   setRetry = retry;
   const validItemsLength = items?.length > 0;

@@ -89,11 +89,11 @@ const EditProfileField = ({ router }) => {
           <div onClick={toUpdateValue} className="text-red-500 font-medium">Save</div>
         </div>
         <div className="flex p-4 flex-col">
-            <div className="py-2 text-gray-400">Name</div>
-            <div className="flex justify-between py-4">
-                <input id={type} type="text" onChange={onValueChange} className="text-lg text-gray-700" placeholder="Guest User"/>
-                <Cancel />
-            </div>
+          <div className="py-2 text-gray-400">Name</div>
+          <div className="flex justify-between py-4">
+            <input id={type} type="text" onChange={onValueChange} className="text-lg text-gray-700" placeholder="Guest User" />
+            <Cancel />
+          </div>
         </div>
         {/* <div className="relative">
         <div className="flex relative m-20 ">

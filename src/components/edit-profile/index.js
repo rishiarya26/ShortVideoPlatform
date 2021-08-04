@@ -47,28 +47,28 @@ const EditProfile = ({ router }) => {
           <div className="flex justify-between m-4">
             <div className="mr-2 font-medium">Name</div>
             <div className="flex">
-            <Link href={`/edit/${userId}?field=name`}>
-              <div className="text-gray-500">{`${userData?.firstName} ${userData?.lastName}`}</div>
-            </Link>
-            <RightArrow />
+              <Link href={`/edit/${userId}?field=name`}>
+                <div className="text-gray-500">{`${userData?.firstName} ${userData?.lastName}`}</div>
+              </Link>
+              <RightArrow />
             </div>
           </div>
           <div className="flex justify-between m-4">
             <div className="mr-2 font-medium">Username</div>
             <div className="flex">
-            <Link href={`/edit/${userId}?field=userHandle`}>
-              <div className="text-gray-500">{userData?.userName}</div>
-            </Link>
-            <RightArrow />
+              <Link href={`/edit/${userId}?field=userHandle`}>
+                <div className="text-gray-500">{userData?.userName}</div>
+              </Link>
+              <RightArrow />
             </div>
           </div>
           <div className="flex justify-between m-4">
             <div className="mr-2 font-medium">Bio</div>
             <div className="flex">
-            <Link href={`/edit/${userId}?field=bio`}>
-              <div className="text-gray-500">{userData?.bio}</div>
-            </Link>
-            <RightArrow />
+              <Link href={`/edit/${userId}?field=bio`}>
+                <div className="text-gray-500">{userData?.bio}</div>
+              </Link>
+              <RightArrow />
             </div>
           </div>
         </div>

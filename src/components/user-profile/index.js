@@ -52,7 +52,7 @@ function UserProfile({
           <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2
            .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
           />
-                </svg>,
+        </svg>,
         self: ''
       },
       settings: {
@@ -68,7 +68,7 @@ function UserProfile({
         <button className="font-semibold text-sm border rounded-sm px-2 py-1">
           --
         </button>
-              </>,
+      </>,
       self: <>
         <Link href={`/edit-profile/${id}`}>
           <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
@@ -78,7 +78,7 @@ function UserProfile({
         <button className="font-semibold text-sm border rounded-sm px-2 py-1">
           --
         </button>
-            </>
+      </>
     },
     tabs: {
       others: [
