@@ -68,7 +68,7 @@ function transformSuccess(resp) {
     // });
     // payload.data = tResponse;
     payload.data = payloadData;
-    payload.requestedWith = { ...data.requestedWith };
+    // payload.requestedWith = data.requestedWith;
     return payload;
   } catch (err) {
     data.appError = err.message;

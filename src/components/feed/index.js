@@ -36,11 +36,12 @@ function Feed({ router }) {
   let { videoId = '' } = router?.query;
 
   const onDataFetched = data => {
+    console.log("this",data)
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
       //get feed data from session storage
       // const feed = sessionStorage.get("feedList")
-      // if(feed){
+    // if(feed){
         // incase of soft redirect.. concat the data in session storage & update items & toShow Data
       //  feed = feed.concat(data?.data);
       //  sessionStorage.set("feedList",feed)
