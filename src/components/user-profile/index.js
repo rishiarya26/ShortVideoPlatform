@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element */
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';

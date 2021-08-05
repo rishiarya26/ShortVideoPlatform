@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element*/
 import { useState } from 'react';
 import DeskVideo from '../desk-video';
 import Error from './error';
@@ -45,6 +46,7 @@ export default function DeskFeed() {
               items.map(
                 item => (
                   <DeskVideo
+                    key={item.content_id}
                     url={item.video_url}
                     id={item.content_id}
                     comments={item.commentsCount}

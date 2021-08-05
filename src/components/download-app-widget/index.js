@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element*/
+/*eslint-disable react/jsx-key */
 import HipiLogo from '../commons/svgicons/hipi-logo-black';
 import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
