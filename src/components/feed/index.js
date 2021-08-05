@@ -15,6 +15,7 @@ import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
+import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
 
@@ -37,11 +38,29 @@ function Feed({ router }) {
   const onDataFetched = data => {
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
+      //get feed data from session storage
+      // const feed = sessionStorage.get("feedList")
+      // if(feed){
+        // incase of soft redirect.. concat the data in session storage & update items & toShow Data
+      //  feed = feed.concat(data?.data);
+      //  sessionStorage.set("feedList",feed)
+      //  setItems(feed);
+      //  const indexToRedirect = feed?.findIndex((data)=>(data?.content_id === videoId));
+      //  if(indexToRedirect !== -1){
+      //   let insertItemIndex = (indexToRedirect*2)+3
+      //   const updateIndex = feed.length-1 >= insertItemIndex && insertItemIndex || items.length-1
+      //   const updateShowItems =  feed?.slice(0,updateIndex);
+      //  setToShowItems(updateShowItems);
+      //  setVideoActiveIndex(indexToRedirect);
+      // }
+      // }else{
+        // sessionStorage.set("feedList",data?.data)
       setItems(data?.data);
       let toUpdateShowData = [...toShowItems];
       toUpdateShowData.push(data?.data[0]);
       setToShowItems(toUpdateShowData);
       setActiveVideoId(videoId);
+      // }
     }
     // router.replace(`/feed/${id}?videoId=${videoId}`);
   };
@@ -89,14 +108,14 @@ function Feed({ router }) {
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
-    const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-    if(indexToRedirect !== -1){
-     let insertItemIndex = (indexToRedirect*2)+3
-     const updateIndex = items.length-1 >= insertItemIndex && insertItemIndex || items.length-1
-     const updateShowItems =  items?.slice(0,updateIndex);
-    setToShowItems(updateShowItems);
-    setVideoActiveIndex(indexToRedirect);
-   }
+      const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+       if(indexToRedirect !== -1){
+        let insertItemIndex = (indexToRedirect*2)+3
+        const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items.length-1
+        const updateShowItems =  items?.slice(0,updateIndex);
+       setToShowItems(updateShowItems);
+       setVideoActiveIndex(indexToRedirect);
+       }
   },[items])
 
   useEffect(()=>{
@@ -144,14 +163,20 @@ function Feed({ router }) {
           mousewheel
           scrollbar={{ draggable: true }}
           onSwiper={swiper => {
-            const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-            swiper?.slideTo(slideToId, 0);
+            if(videoId){
+              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              swiper?.slideTo(slideToId, 0);
+            }
+          }}
+          onReachEnd={swiperCore =>{
+            console.log("reachEnd")
           }}
           onSlideChange={swiperCore => {
             const {
               activeIndex, slides
             } = swiperCore;
             const activeId = slides[activeIndex]?.id;
+            console.log(activeIndex,">", videoActiveIndex)
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }
