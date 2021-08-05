@@ -15,7 +15,10 @@ import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
+<<<<<<< HEAD
 import {sessionStorage} from "../../utils/storage"
+=======
+>>>>>>> a68948ddf34d12d327b4d9ca8f7e5f6269805662
  
 SwiperCore?.use([Mousewheel]);
 
