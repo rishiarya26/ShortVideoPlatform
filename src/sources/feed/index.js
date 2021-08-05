@@ -3,7 +3,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/feed';
 
-async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5 }) {
+async function fetchHomeFeed({ type = 'forYou', page = 2, total = 5 }) {
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
