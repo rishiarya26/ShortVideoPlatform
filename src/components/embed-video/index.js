@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element*/
 import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
 import EmbedVideoSidebar from '../embed-video-sidebar/index';

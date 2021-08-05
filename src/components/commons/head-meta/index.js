@@ -1,4 +1,5 @@
 /* eslint-disable no-trailing-spaces */
+/*eslint-disable @next/next/no-sync-scripts */
 import useTranslation from '../../../hooks/use-translation';
 import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
@@ -10,7 +11,7 @@ function HeadMeta() {
   const { t } = useTranslation();
   return (
     <>
-      <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
+      <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
       <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
