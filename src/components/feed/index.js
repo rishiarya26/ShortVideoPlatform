@@ -15,8 +15,8 @@ import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
-
-SwiperCore.use([Mousewheel]);
+ 
+SwiperCore?.use([Mousewheel]);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -24,8 +24,10 @@ const LoadComp = () => (<Loading />);
 
 function Feed({ router }) {
   const [items, setItems] = useState([]);
+  const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
+  const [videoActiveIndex, setVideoActiveIndex] = useState(0)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
@@ -34,9 +36,14 @@ function Feed({ router }) {
 
   const onDataFetched = data => {
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
-    data && setItems(data?.data);
-    data && setActiveVideoId(videoId);
-    router.replace(`/feed/${id}?videoId=${videoId}`);
+    if(data){
+      setItems(data?.data);
+      let toUpdateShowData = [...toShowItems];
+      toUpdateShowData.push(data?.data[0]);
+      setToShowItems(toUpdateShowData);
+      setActiveVideoId(videoId);
+    }
+    // router.replace(`/feed/${id}?videoId=${videoId}`);
   };
   const dataFetcher = () => getHomeFeed({ type: id });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
@@ -49,7 +56,7 @@ function Feed({ router }) {
     retry = (status && !dataLength > 0) && retry;
   }
 
-  const validItemsLength = items?.length > 0;
+  const validItemsLength = toShowItems?.length > 0;
   setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
@@ -70,11 +77,38 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
+ const incrementShowItems =() =>{
+  // let updateByValues = 1;
+  let updateShowItems = [...toShowItems];
+  for(let i=1; i<=2; i++){
+    let insertItemIndex = (videoActiveIndex*2)+i
+    items.length-1 >= insertItemIndex && updateShowItems?.push(items[insertItemIndex]);
+  }
+  setToShowItems(updateShowItems);
+ }
+
+  useEffect(()=>{
+    toShowItems.length > 0 && incrementShowItems();
+    const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+    if(indexToRedirect !== -1){
+     let insertItemIndex = (indexToRedirect*2)+3
+     const updateIndex = items.length-1 >= insertItemIndex && insertItemIndex || items.length-1
+     const updateShowItems =  items?.slice(0,updateIndex);
+    setToShowItems(updateShowItems);
+    setVideoActiveIndex(indexToRedirect);
+   }
+  },[items])
+
+  useEffect(()=>{
+    toShowItems.length > 0 && incrementShowItems();
+  },[videoActiveIndex])
+
   useEffect(() => {
     setShop({ isShoppable: 'pending' });
     getCanShop();
     setSaveLook(true);
   }, [activeVideoId]);
+
 
   const toggleSaveLook = () => {
     const data = [...items];
@@ -118,12 +152,15 @@ function Feed({ router }) {
               activeIndex, slides
             } = swiperCore;
             const activeId = slides[activeIndex]?.id;
+            if(activeIndex > videoActiveIndex){
+              setVideoActiveIndex(activeIndex)
+            }
             setActiveVideoId(activeId);
             router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
         >
           {
-            (validItemsLength ? items.map((
+            (validItemsLength ? toShowItems.map((
               item, id
             ) => (
               <SwiperSlide
