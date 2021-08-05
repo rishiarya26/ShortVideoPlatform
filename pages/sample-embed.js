@@ -1,6 +1,8 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable max-len */
+/*eslint-disable @next/next/no-img-element*/
+
 
 export default function SampleEmbed() {
   return (

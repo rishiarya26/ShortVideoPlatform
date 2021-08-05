@@ -1,5 +1,5 @@
 // TODO call like here for comment send comment id as input
-
+/*eslint-disable @next/next/no-img-element*/
 // TODO add likeCount to params
 function Comment({
   comment, timeSince, user, profilePic

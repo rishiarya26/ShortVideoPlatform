@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-// const { createSecureHeaders } = require('next-secure-headers');
+// const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
 
@@ -23,23 +23,24 @@ const appVersion = require('./app-version');
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
 
 const nextConfig = {
-  // async headers() {
-  //   return [{
-  //     source: '/(.*)',
-  //     headers: [
-  //       { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
-  //       { key: 'X-Download-Options', value: 'noopen' },
-  //       { key: 'X-Content-Type-Options', value: 'false' },
-  //       { key: 'X-XSS-Protection', value: '1' }]
-  //   }];
-  // },
+  async headers() {
+    return [{
+      source: '/(.*)',
+      headers: [
+        { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+        { key: 'X-Download-Options', value: 'noopen' },
+        { key: 'X-Content-Type-Options', value: 'false' },
+        { key: 'X-XSS-Protection', value: '1' }]
+    }];
+  },
   images: {
     domains: ['akamaividz2.zee5.com', 'assets2.charmboard.com']
   },
   // would suggest keeping this false
   trailingSlash: false, // https://github.com/zeit/next.js/issues/8119
   experimental: { // this takes the module/nomodule approach - https://nextjs.org/blog/next-9-1#module--nomodule
-    modern: true
+    modern: true,
+    optimizeCss: true
   },
   i18n: {
     localeDetection: false,
