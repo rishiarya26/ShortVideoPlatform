@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
