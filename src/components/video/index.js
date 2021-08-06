@@ -61,6 +61,7 @@ function Video(props) {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
+
   return (
     <div
       ref={rootRef}
@@ -81,7 +82,7 @@ function Video(props) {
         key={props.url}
       >
         <source
-          src={props.url}
+          src={""}
           type="video/mp4"
         />
       </video>

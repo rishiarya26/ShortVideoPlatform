@@ -9,6 +9,7 @@ function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
+  console.log(withBasePath(`manifest.json?v=${appVersion}`))
   return (
     <>
       <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
