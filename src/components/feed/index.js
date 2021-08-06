@@ -35,6 +35,8 @@ function Feed({ router }) {
   const { id } = router?.query;
   let { videoId = '' } = router?.query;
 
+console.log("router",router)
+
   const getFeedData = async() =>{
     let updateItems = [...items];
      try{
@@ -272,8 +274,8 @@ function Feed({ router }) {
                   // videoid={item.content_id}
                   hashTags={item.hashtags}
                   videoOwnersId={item.videoOwnersId}
-                  // thumbnail={item.thumbnail}
-                  thumbnail={item.poster_image_url}
+                  thumbnail={item.thumbnail}
+                  // thumbnail={item.poster_image_url}
                   canShop={shop.isShoppable}
                   shopCards={shop.data}
                   handleSaveLook={toggleSaveLook}

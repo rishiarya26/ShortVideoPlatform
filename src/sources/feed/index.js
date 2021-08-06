@@ -10,6 +10,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5 }) {
     // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     response = await get(apiPath);
+    console.log("IMAGE_URL",response)
     response.data.requestedWith = { page, total };
     // console.log(type);
     return Promise.resolve(response);
