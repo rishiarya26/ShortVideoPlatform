@@ -15,7 +15,7 @@ import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
-import {sessionStorage} from "../../utils/storage"
+// import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
 
@@ -23,6 +23,7 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+//TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
   const [toShowItems, setToShowItems] = useState([])
@@ -36,15 +37,11 @@ function Feed({ router }) {
   let { videoId = '' } = router?.query;
 
   const getFeedData = async() =>{
-    
-    console.log("test storage get",sessionStorage.get("feedList"));
     let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
      try{
        const response =  await getHomeFeed({ type: id });
        updateItems = updateItems.concat(response?.data);
-       console.log(updateItems);
        window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
-      //  setItems(updateItems);
       }
      catch(err){
      }
@@ -52,16 +49,11 @@ function Feed({ router }) {
   } 
 
   const onDataFetched = data => {
-    console.log("this",data)
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
-      //get feed data from session storage
       const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
-      console.log("session-storage",feed)
       const dataItems = feed || data?.data
       setItems(dataItems);
-      console.log("test storage store",sessionStorage.set("feedList",dataItems));
-
       window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
       if(dataItems.length<=6){
         window.sessionStorage.clear();
@@ -73,8 +65,7 @@ function Feed({ router }) {
       }
     }
   }
-    // router.replace(`/feed/${id}?videoId=${videoId}`);
-  // };
+
   const dataFetcher = () => getHomeFeed({ type: id });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
 
@@ -116,7 +107,6 @@ function Feed({ router }) {
     const arr = dataItem.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
   }
-  console.log("updateShowItems",updateShowItems)
   setToShowItems(updateShowItems);
  }
 
@@ -128,28 +118,18 @@ useEffect(()=>{
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
-    console.log("called items", toShowItems)
-
-    // const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"))
-    // if(dataItem){
       const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-      console.log("insertToRedirect",indexToRedirect)
       if(indexToRedirect !== -1){
       let insertItemIndex = (indexToRedirect*2)+3
-      console.log("till this index insert items",insertItemIndex)
       const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
       const updateShowItems =  items?.slice(0,updateIndex);
-      console.log("updatedItems",updateShowItems)
      setToShowItems(updateShowItems);
      setVideoActiveIndex(indexToRedirect);
-    // }
 }
   },[items])
 
   useEffect(()=>{
-
     toShowItems.length > 0 && incrementShowItems();
-    console.log("called active id", toShowItems)
   },[videoActiveIndex])
 
   useEffect(() => {
@@ -164,13 +144,7 @@ useEffect(()=>{
     const resp = data.findIndex(item => (item.content_id === activeVideoId));
     data[resp].saveLook = true;
     setToShowItems(data);
-    // setItems(data);
     setSaveLook(!saveLook);
-    // const data = [...items];
-    // const resp = data.findIndex(item => (item.content_id === activeVideoId));
-    // data[resp].saveLook = true;
-    // setItems(data);
-    // setSaveLook(!saveLook);
   };
 
   const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
@@ -199,34 +173,11 @@ useEffect(()=>{
           mousewheel
           scrollbar={{ draggable: true }}
           onSwiper={swiper => {
-      //       const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
-      //        const indexToRedirect = dataItem?.findIndex((data)=>(data?.content_id === videoId));
-      //        console.log("insertToRedirect",indexToRedirect)
-      //  if(indexToRedirect !== -1){
-      //   let insertItemIndex = (indexToRedirect*2)+3
-      //   console.log("till this index insert items",insertItemIndex)
-      //   const updateIndex = dataItem?.length-1 >= insertItemIndex && insertItemIndex || dataItem.length-1
-        
-      //   const updateShowItems =  dataItem?.slice(0,updateIndex);
-      //   console.log("updatedItems",updateShowItems)
-      //  setToShowItems(updateShowItems);
-      //  setVideoActiveIndex(indexToRedirect);
-     
-      //  }
             if(videoId){
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               console.log("slideId",slideToId)
               swiper?.slideTo(slideToId, 0);
             }
-          }}
-          onReachEnd={swiperCore =>{
-            const {
-              activeIndex, slides
-            } = swiperCore;
-            // if(activeIndex !== 0){
-            //   getFeedData();
-            //   console.log("reach end")
-            // }
           }}
           onSlideChange={swiperCore => {
             const {

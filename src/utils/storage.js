@@ -26,7 +26,7 @@ export const localStorage = {
 export const sessionStorage = {
   set(key, val) {
     if (!key || !val) return false;
-    return window.sessionStorage.setItem(key, JSON.stringify(val));
+     return window.sessionStorage.setItem(key, JSON.stringify(val));
   },
   remove(key = '') {
     return window.sessionStorage.removeItem(key);
@@ -45,7 +45,7 @@ export const sessionStorage = {
     return data;
   },
   clear(){
-    window.sessionStorage.clear();
+    return window.sessionStorage.clear();
   }
 };
 

@@ -719,7 +719,7 @@ export const feed = {
     "message": "ok",
     "meta": {},
     "data": [
-        {
+        {"watch":0,
             "data_id": "3c1d2dfd-fb14-4ef9-9898-36d13f081a11",
             "content_id": "3c1d2dfd-fb14-4ef9-9898-36d13f081a11",
             "video_url": "https://z5shorts.akamaized.net/2021/4/5/3c1d2dfd-fb14-4ef9-9898-36d13f081a11/3c1d2dfd-fb14-4ef9-9898-36d13f081a11_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
@@ -764,7 +764,7 @@ export const feed = {
             "thumbnail": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1620389107/hipi/videos/3c1d2dfd-fb14-4ef9-9898-36d13f081a11/3c1d2dfd-fb14-4ef9-9898-36d13f081a11_00.webp",
             "saveLook": false
         },
-        {
+        {"watch":1,
             "data_id": "3b2ad5a4-ff91-48f4-b0b4-326edaeee556",
             "content_id": "3b2ad5a4-ff91-48f4-b0b4-326edaeee556",
             "video_url": "https://z5shorts.akamaized.net/2021/0/11/3b2ad5a4-ff91-48f4-b0b4-326edaeee556/3b2ad5a4-ff91-48f4-b0b4-326edaeee556_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
@@ -806,7 +806,7 @@ export const feed = {
             "thumbnail": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1610396019/hipi/videos/3b2ad5a4-ff91-48f4-b0b4-326edaeee556/3b2ad5a4-ff91-48f4-b0b4-326edaeee556.webp",
             "saveLook": false
         },
-        {
+        {"watch":2,
             "data_id": "b9b80407-3807-41f8-a5a6-7ae0f5a4b222",
             "content_id": "b9b80407-3807-41f8-a5a6-7ae0f5a4b222",
             "video_url": "https://z5shorts.akamaized.net/2021/5/23/b9b80407-3807-41f8-a5a6-7ae0f5a4b222/b9b80407-3807-41f8-a5a6-7ae0f5a4b222_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
@@ -855,7 +855,7 @@ export const feed = {
             "thumbnail": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1624450554/hipi/videos/b9b80407-3807-41f8-a5a6-7ae0f5a4b222/b9b80407-3807-41f8-a5a6-7ae0f5a4b222_00.webp",
             "saveLook": false
         },
-        {
+        {"watch":3,
             "data_id": "6c60018c-2c54-466d-81cd-3d61d9924025",
             "content_id": "6c60018c-2c54-466d-81cd-3d61d9924025",
             "video_url": "https://z5shorts.akamaized.net/2021/7/5/6c60018c-2c54-466d-81cd-3d61d9924025/6c60018c-2c54-466d-81cd-3d61d9924025_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
@@ -891,7 +891,7 @@ export const feed = {
             "thumbnail": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1628144490/hipi/videos/6c60018c-2c54-466d-81cd-3d61d9924025/6c60018c-2c54-466d-81cd-3d61d9924025_00.webp",
             "saveLook": false
         },
-        {
+        {"watch":4,
             "data_id": "29044698-a78c-4ddd-a39d-9dc4bf7bf97f",
             "content_id": "29044698-a78c-4ddd-a39d-9dc4bf7bf97f",
             "video_url": "https://z5shorts.akamaized.net/2021/7/5/29044698-a78c-4ddd-a39d-9dc4bf7bf97f/29044698-a78c-4ddd-a39d-9dc4bf7bf97f_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
@@ -947,7 +947,7 @@ export const feed = {
             "thumbnail": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1628167269/hipi/videos/29044698-a78c-4ddd-a39d-9dc4bf7bf97f/29044698-a78c-4ddd-a39d-9dc4bf7bf97f_00.webp",
             "saveLook": false
         },
-        {
+        {"watch":5,
             "data_id": "c601c78b-4756-4030-9c12-b4a4b0776fbe",
             "content_id": "c601c78b-4756-4030-9c12-b4a4b0776fbe",
             "video_url": "https://z5shorts.akamaized.net/2021/7/5/c601c78b-4756-4030-9c12-b4a4b0776fbe/c601c78b-4756-4030-9c12-b4a4b0776fbe_512.mp4?hdnea=st=1628176283~exp=1628190683~acl=/*~hmac=2f0f54809e5ee27e4b0ebef7b779b5737e4849a2fe269c8bba2a393235c7f838",
