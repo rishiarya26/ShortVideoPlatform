@@ -184,7 +184,6 @@ useEffect(()=>{
               activeIndex, slides
             } = swiperCore;
             const activeId = slides[activeIndex]?.id;
-            console.log(activeIndex,">", videoActiveIndex)
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }

@@ -33,7 +33,6 @@ function transformSuccess(resp) {
 
     // COMMENTED - for production feed api
     const networkConnection = getNetworkConnection();
-
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
