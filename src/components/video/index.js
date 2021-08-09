@@ -50,7 +50,6 @@ function Video(props) {
       }
     }
   };
-
   const [ref] = useIntersect({
     callback: handlePlay,
     rootMargin: '50px',

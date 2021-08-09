@@ -43,6 +43,9 @@ export const sessionStorage = {
       data = null;
     }
     return data;
+  },
+  clear(){
+    window.sessionStorage.clear();
   }
 };
 

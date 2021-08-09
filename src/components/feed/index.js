@@ -35,19 +35,18 @@ function Feed({ router }) {
   const { id } = router?.query;
   let { videoId = '' } = router?.query;
 
-console.log("router",router)
-
   const getFeedData = async() =>{
-    let updateItems = [...items];
+    
+    console.log("test storage get",sessionStorage.get("feedList"));
+    let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
      try{
        const response =  await getHomeFeed({ type: id });
        updateItems = updateItems.concat(response?.data);
        console.log(updateItems);
        window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
-       setItems(updateItems);
+      //  setItems(updateItems);
       }
      catch(err){
-
      }
      return updateItems;
   } 
@@ -60,39 +59,18 @@ console.log("router",router)
       const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
       console.log("session-storage",feed)
       const dataItems = feed || data?.data
-//       if(feed){
-//     const indexToRedirect = feed?.findIndex((data)=>(data?.content_id === videoId));
-//     console.log("insertToRedirect",indexToRedirect)
-//     if(indexToRedirect !== -1){
-//     let insertItemIndex = (indexToRedirect*2)+3
-//     console.log("till this index insert items",insertItemIndex)
-//     const updateIndex = feed?.length-1 >= insertItemIndex && insertItemIndex || dataItem.length-1
-//     const updateShowItems =  feed?.slice(0,updateIndex);
-//     console.log("updatedItems",updateShowItems)
-//    setToShowItems(updateShowItems);
-//    setVideoActiveIndex(indexToRedirect);
-// }
-//       }
-    // if(feed){
-    //   setItems(dataItems);
-    // }
-    //   console.log("if")
-        //incase of soft redirect.. concat the data in session storage & update items & toShow Data
-      //  feed = feed.concat(data?.data);
-      //  sessionStorage.set("feedList",feed)
-      //  setItems(feed);
-      // }else{
-      //   console.log("else")
-      // feed && window.sessionStorage.removeItem("feedList")  
       setItems(dataItems);
+      console.log("test storage store",sessionStorage.set("feedList",dataItems));
+
+      window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
       if(dataItems.length<=6){
+        window.sessionStorage.clear();
         window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
         toUpdateShowData.push(data?.data[0]);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoId);
       }
-      // }
     }
   }
     // router.replace(`/feed/${id}?videoId=${videoId}`);
@@ -132,34 +110,40 @@ console.log("router",router)
  const incrementShowItems =async() =>{
   // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
-  // const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
+  const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
   for(let i=1; i<=2; i++){
     let insertItemIndex = (videoActiveIndex*2)+i
-    const arr = items.length-1 >= insertItemIndex ? items : await getFeedData();
-    updateShowItems?.push(arr[insertItemIndex]);
+    const arr = dataItem.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    arr && updateShowItems?.push(arr[insertItemIndex]);
   }
   console.log("updateShowItems",updateShowItems)
   setToShowItems(updateShowItems);
  }
 
+useEffect(()=>{
+  window.onunload = function () {
+   window.sessionStorage.removeItem('feedList');
+  }
+},[])
+
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
     console.log("called items", toShowItems)
 
-//     const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"))
-//     if(dataItem){
-//       const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-//       console.log("insertToRedirect",indexToRedirect)
-//       if(indexToRedirect !== -1){
-//       let insertItemIndex = (indexToRedirect*2)+3
-//       console.log("till this index insert items",insertItemIndex)
-//       const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || dataItem.length-1
-//       const updateShowItems =  items?.slice(0,updateIndex);
-//       console.log("updatedItems",updateShowItems)
-//      setToShowItems(updateShowItems);
-//      setVideoActiveIndex(indexToRedirect);
-//     }
-// }
+    // const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"))
+    // if(dataItem){
+      const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+      console.log("insertToRedirect",indexToRedirect)
+      if(indexToRedirect !== -1){
+      let insertItemIndex = (indexToRedirect*2)+3
+      console.log("till this index insert items",insertItemIndex)
+      const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
+      const updateShowItems =  items?.slice(0,updateIndex);
+      console.log("updatedItems",updateShowItems)
+     setToShowItems(updateShowItems);
+     setVideoActiveIndex(indexToRedirect);
+    // }
+}
   },[items])
 
   useEffect(()=>{
@@ -176,11 +160,17 @@ console.log("router",router)
 
 
   const toggleSaveLook = () => {
-    const data = [...items];
+    const data = [...toShowItems];
     const resp = data.findIndex(item => (item.content_id === activeVideoId));
     data[resp].saveLook = true;
-    setItems(data);
+    setToShowItems(data);
+    // setItems(data);
     setSaveLook(!saveLook);
+    // const data = [...items];
+    // const resp = data.findIndex(item => (item.content_id === activeVideoId));
+    // data[resp].saveLook = true;
+    // setItems(data);
+    // setSaveLook(!saveLook);
   };
 
   const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
@@ -209,25 +199,25 @@ console.log("router",router)
           mousewheel
           scrollbar={{ draggable: true }}
           onSwiper={swiper => {
-            const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
-             const indexToRedirect = dataItem?.findIndex((data)=>(data?.content_id === videoId));
-             console.log("insertToRedirect",indexToRedirect)
-       if(indexToRedirect !== -1){
-        let insertItemIndex = (indexToRedirect*2)+3
-        console.log("till this index insert items",insertItemIndex)
-        const updateIndex = dataItem?.length-1 >= insertItemIndex && insertItemIndex || dataItem.length-1
+      //       const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
+      //        const indexToRedirect = dataItem?.findIndex((data)=>(data?.content_id === videoId));
+      //        console.log("insertToRedirect",indexToRedirect)
+      //  if(indexToRedirect !== -1){
+      //   let insertItemIndex = (indexToRedirect*2)+3
+      //   console.log("till this index insert items",insertItemIndex)
+      //   const updateIndex = dataItem?.length-1 >= insertItemIndex && insertItemIndex || dataItem.length-1
         
-        const updateShowItems =  dataItem?.slice(0,updateIndex);
-        console.log("updatedItems",updateShowItems)
-       setToShowItems(updateShowItems);
+      //   const updateShowItems =  dataItem?.slice(0,updateIndex);
+      //   console.log("updatedItems",updateShowItems)
+      //  setToShowItems(updateShowItems);
       //  setVideoActiveIndex(indexToRedirect);
-       swiper?.slideTo(indexToRedirect, 0);
-       }
-            // if(videoId){
-            //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-            //   console.log("slideId",slideToId)
-            //   swiper?.slideTo(slideToId, 0);
-            // }
+     
+      //  }
+            if(videoId){
+              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              console.log("slideId",slideToId)
+              swiper?.slideTo(slideToId, 0);
+            }
           }}
           onReachEnd={swiperCore =>{
             const {
