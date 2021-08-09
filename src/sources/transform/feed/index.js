@@ -18,12 +18,15 @@ function transformError(error = {}) {
 }
 
 function transformSuccess(resp) {
+  console.log("transformSuccess",resp)
+
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
+
     payload.status = 'success';
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
@@ -33,29 +36,31 @@ function transformSuccess(resp) {
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
-    videos?.forEach(d => {
+    videos?.forEach((d,z) => {
       const payloadObject = {};
-      payloadObject.data_id = d.objectID;
-      payloadObject.content_id = d.id;
+      payloadObject.watch=z;
+      payloadObject.data_id = d?.objectID;
+      payloadObject.content_id = d?.id;
       let videoUrls = {}
-      videoUrls.fast = d.videoUrl?.AkamaiURL?.[2];
-      videoUrls.medium = d.videoUrl?.AkamaiURL?.[1];
-      videoUrls.low = d.akamaiUrl;
+      videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+      videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+      videoUrls.low = d?.akamaiUrl;
       const videoUrl = videoUrls[networkConnection];
       payloadObject.video_url = videoUrl;
-      payloadObject.content_description = d.description;
-      payloadObject.userId = d.videoOwnersId;
-      payloadObject.videoOwnersId = d.videoOwnersId;
-      payloadObject.getSocialId = d.getSocialId;
-      payloadObject.id = d.id;
-      payloadObject.genre = d.genre;
-      payloadObject.userProfilePicUrl = d.videoOwners.profilePicImgUrl;
-      payloadObject.userName = d.videoOwners.userName;
-      payloadObject.likesCount = d.lCount;
-      payloadObject.music_title = d.sound.name;
-      payloadObject.hashtags = d.hashtags;
-      payloadObject.thumbnail = d.thumbnailUrl;
+      payloadObject.content_description = d?.description;
+      payloadObject.userId = d?.videoOwnersId;
+      payloadObject.videoOwnersId = d?.videoOwnersId;
+      payloadObject.getSocialId = d?.getSocialId;
+      payloadObject.id = d?.id;
+      payloadObject.genre = d?.genre;
+      payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
+      payloadObject.userName = d?.videoOwners?.userName;
+      payloadObject.likesCount = d?.lCount;
+      payloadObject.music_title = d?.sound?.name;
+      payloadObject.hashtags = d?.hashtags;
+      payloadObject.thumbnail = d?.thumbnailUrl;
       payloadObject.saveLook = false;
+      
 
       payloadData.push(payloadObject);
     });

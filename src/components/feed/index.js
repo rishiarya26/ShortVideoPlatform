@@ -23,48 +23,49 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+//TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [videoActiveIndex, setVideoActiveIndex] = useState(0)
+  const [videoActiveIndex, setVideoActiveIndex] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const { t } = useTranslation();
   const { id } = router?.query;
   let { videoId = '' } = router?.query;
 
+  const getFeedData = async() =>{
+    let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
+     try{
+       const response =  await getHomeFeed({ type: id });
+       updateItems = updateItems.concat(response?.data);
+       window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
+      }
+     catch(err){
+     }
+     return updateItems;
+  } 
+
   const onDataFetched = data => {
-    console.log("this",data)
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
-      //get feed data from session storage
-      // const feed = sessionStorage.get("feedList")
-    // if(feed){
-        // incase of soft redirect.. concat the data in session storage & update items & toShow Data
-      //  feed = feed.concat(data?.data);
-      //  sessionStorage.set("feedList",feed)
-      //  setItems(feed);
-      //  const indexToRedirect = feed?.findIndex((data)=>(data?.content_id === videoId));
-      //  if(indexToRedirect !== -1){
-      //   let insertItemIndex = (indexToRedirect*2)+3
-      //   const updateIndex = feed.length-1 >= insertItemIndex && insertItemIndex || items.length-1
-      //   const updateShowItems =  feed?.slice(0,updateIndex);
-      //  setToShowItems(updateShowItems);
-      //  setVideoActiveIndex(indexToRedirect);
-      // }
-      // }else{
-        // sessionStorage.set("feedList",data?.data)
-      setItems(data?.data);
-      let toUpdateShowData = [...toShowItems];
-      toUpdateShowData.push(data?.data[0]);
-      setToShowItems(toUpdateShowData);
-      setActiveVideoId(videoId);
-      // }
+      const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
+      const dataItems = feed || data?.data
+      setItems(dataItems);
+      window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
+      if(dataItems.length<=6){
+        window.sessionStorage.clear();
+        window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
+        let toUpdateShowData = [...toShowItems];
+        toUpdateShowData.push(data?.data[0]);
+        setToShowItems(toUpdateShowData);
+        setActiveVideoId(videoId);
+      }
     }
-    // router.replace(`/feed/${id}?videoId=${videoId}`);
-  };
+  }
+
   const dataFetcher = () => getHomeFeed({ type: id });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
 
@@ -97,26 +98,34 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
- const incrementShowItems =() =>{
+ const incrementShowItems =async() =>{
   // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
+  const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
   for(let i=1; i<=2; i++){
     let insertItemIndex = (videoActiveIndex*2)+i
-    items.length-1 >= insertItemIndex && updateShowItems?.push(items[insertItemIndex]);
+    const arr = dataItem.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    arr && updateShowItems?.push(arr[insertItemIndex]);
   }
   setToShowItems(updateShowItems);
  }
 
+useEffect(()=>{
+  window.onunload = function () {
+   window.sessionStorage.removeItem('feedList');
+  }
+},[])
+
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
       const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-       if(indexToRedirect !== -1){
-        let insertItemIndex = (indexToRedirect*2)+3
-        const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items.length-1
-        const updateShowItems =  items?.slice(0,updateIndex);
-       setToShowItems(updateShowItems);
-       setVideoActiveIndex(indexToRedirect);
-       }
+      if(indexToRedirect !== -1){
+      let insertItemIndex = (indexToRedirect*2)+3
+      const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
+      const updateShowItems =  items?.slice(0,updateIndex);
+     setToShowItems(updateShowItems);
+     setVideoActiveIndex(indexToRedirect);
+}
   },[items])
 
   useEffect(()=>{
@@ -131,10 +140,10 @@ function Feed({ router }) {
 
 
   const toggleSaveLook = () => {
-    const data = [...items];
+    const data = [...toShowItems];
     const resp = data.findIndex(item => (item.content_id === activeVideoId));
     data[resp].saveLook = true;
-    setItems(data);
+    setToShowItems(data);
     setSaveLook(!saveLook);
   };
 
@@ -166,18 +175,15 @@ function Feed({ router }) {
           onSwiper={swiper => {
             if(videoId){
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              console.log("slideId",slideToId)
               swiper?.slideTo(slideToId, 0);
             }
-          }}
-          onReachEnd={swiperCore =>{
-            console.log("reachEnd")
           }}
           onSlideChange={swiperCore => {
             const {
               activeIndex, slides
             } = swiperCore;
             const activeId = slides[activeIndex]?.id;
-            console.log(activeIndex,">", videoActiveIndex)
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }
@@ -208,8 +214,8 @@ function Feed({ router }) {
                   // videoid={item.content_id}
                   hashTags={item.hashtags}
                   videoOwnersId={item.videoOwnersId}
-                  // thumbnail={item.thumbnail}
-                  thumbnail={item.poster_image_url}
+                  thumbnail={item.thumbnail}
+                  // thumbnail={item.poster_image_url}
                   canShop={shop.isShoppable}
                   shopCards={shop.data}
                   handleSaveLook={toggleSaveLook}
