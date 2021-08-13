@@ -1,5 +1,6 @@
 import Marquee from '../commons/text-marquee';
 import Music from '../commons/svgicons/music';
+import MusicBlack from '../commons/svgicons/music-black';
 
 function VideoFooter({
   userName,
@@ -13,7 +14,7 @@ function VideoFooter({
   const type = {
     profile: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`,
     feed: `${saveLook ? ' bottom-16 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`,
-    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`
+    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`
   };
   return (
     <div
@@ -37,6 +38,7 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
         <div className="w-8/12 my-1 xxs:text-sm xs:text-base">
           <Music />
+          <MusicBlack/>
           <span className=" my-1 xxs:text-sm xs:text-base w-4/12">
             <Marquee text={musicTitle} />
           </span>

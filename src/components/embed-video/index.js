@@ -49,6 +49,7 @@ function Embedvideo(props) {
   };
 
   return (
+    <div className="flex flex-col">
     <div
       ref={rootRef}
       className="video_card relative w-full h-screen scroll-snap-start bg-black"
@@ -89,14 +90,7 @@ function Embedvideo(props) {
         share={777}
         type="embed"
       />
-      <VideoFooter
-        musicTitle={props.musicTitle}
-        userName={`@${props.userName}`}
-        musicCoverTitle={props.musicCoverTitle}
-        hashTags={props.hashTags}
-        canShop={props.canShop}
-        comp="embed"
-      />
+      
       {props.canShop === 'success'
          && (
            <ProductCards
@@ -105,6 +99,20 @@ function Embedvideo(props) {
              comp="embed"
            />
          )}
+    </div>
+    <div className="flex relative flex-col p-3">
+    <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={`@${props.userName}`}
+        musicCoverTitle={props.musicCoverTitle}
+        hashTags={props.hashTags}
+        canShop={props.canShop}
+        comp="embed"
+      />
+      <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
+              <button className="bg-red-400 text-white px-4 py-2 font-semibold">Discover more on Hipi</button>
+      </div>
+    </div>
     </div>
   );
 }
