@@ -15,6 +15,7 @@ import { Shop } from '../commons/button/shop';
 import { getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
+import FooterMenu from '../footer-menu';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -231,18 +232,17 @@ useEffect(()=>{
               </div>
             ))
           }
-          <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-            <Shop
-              videoId={activeVideoId}
-              canShop={shop.isShoppable}
-            />
-          </div>
-        </Swiper>
-
-        {validItemsLength ? seekedPercentage
+          {validItemsLength ? seekedPercentage
           ? <Seekbar seekedPercentage={seekedPercentage} />
           : <SeekbarLoading />
           : ''}
+          <FooterMenu 
+           videoId={activeVideoId}
+           canShop={shop.isShoppable}
+           />
+        </Swiper>
+
+        
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

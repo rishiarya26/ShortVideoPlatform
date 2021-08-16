@@ -6,8 +6,9 @@ import Profile from '../commons/svgicons/profile';
 // import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 import SnackBar from '../commons/snackbar';
+import { Shop } from '../commons/button/shop';
 
-function FooterMenu() {
+function FooterMenu( { videoId,canShop} ){
   const vobj = { videoId: 'cbvtest1mq99gi6b' };
   // console.log(props.id);
   // const { show } = useDrawer();
@@ -17,21 +18,12 @@ function FooterMenu() {
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
         <Home />
         <Search />
-        <button
-          className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-          // eslint-disable-next-line no-undef
-          onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-        >
-          <span className={`transform-gpu -translate-y-1
-          rounded-full text-white py-1 px-4 bg-hipipink 
-          font-medium tracking-wide xxs:text-sm xs:text-base
-          group-active:translate-y-0`}
-          >
-            SHOP
-            {' '}
-            {/* {t('shop')} */}
-          </span>
-        </button>
+        <div>
+        <Shop
+              videoId={videoId}
+              canShop={canShop}
+            />
+            </div>
         <Add />
         <Profile />
       </div>
