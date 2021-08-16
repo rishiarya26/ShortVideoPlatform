@@ -233,8 +233,8 @@ useEffect(()=>{
             ))
           }
           {validItemsLength ? seekedPercentage
-          ? <Seekbar seekedPercentage={seekedPercentage} />
-          : <SeekbarLoading />
+          ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
+          : <SeekbarLoading type={'aboveFooterMenu'}/>
           : ''}
           <FooterMenu 
            videoId={activeVideoId}
