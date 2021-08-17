@@ -86,19 +86,21 @@ function Explore() {
                     </div>
                   </div>
                   <div className="flex min-w-full overflow-x-auto min-h-32 no_bar py-4">
-                    <div className="m-1 px-2 flex flex-col justify-center items-center">
+                    
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                         console.log('dddkklll', d);
                         return (
                           <>
-                            <div key={id} className="bg-gray-300 min-w-1/6  min-h-1/6 rounded-full relative">
+                    <div className="my-1 px-2 flex flex-col justify-center items-center">
+                            <div key={id} className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
                               <Img data={d?.user?.profilePicImgUrl} title={d?.user?.userName} />
                             </div>
-                            <p className="text-sm">{d?.user?.userName}</p>
+                            <p className="text-xs pt-2">{d?.user?.userName}</p>
+                          
+                    </div>
                           </>
                         );
                       })}
-                    </div>
                   </div>
                 </div>
               ));
