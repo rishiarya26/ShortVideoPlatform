@@ -18,7 +18,6 @@ function transformSuccess(resp) {
   
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
-  console.log('in trans', data);
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -28,7 +27,6 @@ function transformSuccess(resp) {
     payload['http-status'] = data.status;
     payload.data = data?.responseData;
     payload.requestedWith = data?.requestedWith;
-    console.log('recommendations list -', data?.responseData);
     return payload;
   } catch (err) {
     data.appError = err.message;

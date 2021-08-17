@@ -1,4 +1,4 @@
-import Link from 'next/link';
+/*eslint-disable react/display-name*/
 import Home from '../commons/svgicons/home';
 import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';

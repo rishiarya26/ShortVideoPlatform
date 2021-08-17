@@ -81,7 +81,7 @@ function VideoSidebar({
           <img
             alt="profile-pic"
             className="usrimg w-10 h-10 rounded-full"
-            src={profilePic}
+            src={profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
           />
           <div
             className={`${

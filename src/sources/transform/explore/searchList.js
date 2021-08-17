@@ -3,7 +3,6 @@ import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 function transformError(error = {}) {
-  console.log(error)
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -23,14 +22,12 @@ function transformSuccess(resp) {
     }
     const { recommendations = []} = data;
     const { responseData = []} = data;
-    console.log(recommendations, responseData)
     const updateData = recommendations?.concat(responseData);
     payload.data = updateData;
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
     payload.requestedWith = data?.requestedWith;
-    console.log('final list -', updateData);
     return payload;
   } catch (err) {
     data.appError = err.message;

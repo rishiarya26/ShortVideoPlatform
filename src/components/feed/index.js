@@ -12,7 +12,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import { getHomeFeed } from '../../sources/feed';
+import { clearHomeFeed, getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
@@ -106,15 +106,15 @@ function Feed({ router }) {
   const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
   for(let i=1; i<=2; i++){
     let insertItemIndex = (videoActiveIndex*2)+i
-    const arr = dataItem.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
   }
   setToShowItems(updateShowItems);
  }
 
-useEffect(()=>{
-  router.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
-},[])
+  useEffect(()=>{
+    router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
+  },[])
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
@@ -243,7 +243,6 @@ useEffect(()=>{
            />
         </Swiper>
 
-        
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

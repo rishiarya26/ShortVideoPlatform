@@ -46,7 +46,6 @@ function Explore() {
         <div className="poster w-full" />
 
         {validateData && data?.map((content, id) => {
-          console.log('C', content);
           return (
             content?.widgetContentType === 'Video' ? (
               <div key={id} className="p-2 tray">
@@ -67,7 +66,6 @@ function Explore() {
 
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
-                    console.log('ddfgdf', d);
                     return (
                       <div key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
@@ -88,7 +86,6 @@ function Explore() {
                   <div className="flex min-w-full overflow-x-auto min-h-32 no_bar py-4">
                     
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
-                        console.log('dddkklll', d);
                         return (
                           <>
                     <div className="my-1 px-2 flex flex-col justify-center items-center">

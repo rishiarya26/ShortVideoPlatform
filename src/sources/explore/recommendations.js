@@ -8,7 +8,6 @@ async function fetchRecommendations() {
   try {
     const apiPath = `${getApiBasePath('hipi')}/v2/shorts/discover/recommendation`;
     response = await get(apiPath);
-    console.log("response recommnedations",response);
     response.data.requestedWith = { };
     return Promise.resolve(response);
   } catch (err) {
