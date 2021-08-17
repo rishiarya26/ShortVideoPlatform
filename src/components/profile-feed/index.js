@@ -28,8 +28,9 @@ function ProfileFeed({ router }) {
 
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
+  const { type = 'all' } = router?.query;
 
-  const dataFetcher = () => getProfileVideos({ id });
+  const dataFetcher = () => getProfileVideos({ id, type });
   const onDataFetched = data => {
     data && setItems(data?.data);
     data && setActiveVideoId(videoId);

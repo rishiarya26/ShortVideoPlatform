@@ -10,7 +10,7 @@ function ProductWidget({
   shopCards, handleSaveLook, videoId
 }) {
   const [loading, setLoading] = useState(true);
-
+  console.log(shopCards);
   const loaded = () => {
     setLoading(false);
   };

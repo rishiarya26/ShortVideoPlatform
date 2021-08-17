@@ -60,6 +60,7 @@ function Feed({ router }) {
         window.sessionStorage.clear();
         window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
+        //set first one item in showItems
         toUpdateShowData.push(data?.data[0]);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoId);
@@ -112,13 +113,12 @@ function Feed({ router }) {
  }
 
 useEffect(()=>{
-  window.onunload = function () {
-   window.sessionStorage.removeItem('feedList');
-  }
+  router.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
 },[])
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
+
       const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
       if(indexToRedirect !== -1){
       let insertItemIndex = (indexToRedirect*2)+3

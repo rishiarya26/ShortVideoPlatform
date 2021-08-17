@@ -92,7 +92,7 @@ function Embedvideo(props) {
       />
       
       {props.canShop === 'success'
-         && (
+         && ( 
            <ProductCards
              shopCards={props.shopCards}
              videoId={props.videoId}

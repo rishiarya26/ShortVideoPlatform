@@ -1,9 +1,9 @@
 import Error from 'next/error';
 import {
   SeoMeta
-} from '../../src/components/commons/head-meta/seo-meta';
-import UserProfile from '../../src/components/user-profile';
-import { getUserProfile } from '../../src/sources/users/profile';
+} from '../src/components/commons/head-meta/seo-meta';
+import UserProfile from '../src/components/user-profile';
+import { getUserProfile } from '../src/sources/users/profile';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -59,7 +59,7 @@ export default function Hipi(params) {
         profilePic={item.profilePic}
         firstName={item.firstName}
         id={item.id}
-        type="others"
+        type="self"
       />
     </>
   );

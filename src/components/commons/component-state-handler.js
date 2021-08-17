@@ -22,18 +22,22 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
   const [fetchState, setFetchState] = useState('pending');
   const [retry, setRetry] = useState(false);
   const [data, setData] = useState(null);
-
+  console.log(dataFetcher, onDataFetched)
   const dataFetch = async () => {
     try {
       const data = await dataFetcher();
+      console.log('dataaaaaa', data);
       if (data.status === 'fail') {
+        console.log('failed');
         setFetchState('fail');
         return;
       }
       setData(data);
       if (onDataFetched) onDataFetched(data);
+      console.log('success', data);
       setFetchState('success');
     } catch (e) {
+      console.log("data",data)
       setFetchState('fail');
     }
   };
