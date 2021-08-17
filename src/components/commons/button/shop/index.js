@@ -20,7 +20,7 @@ export const Shop = ({
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (
         <button
-          className="rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base uppercase"
+          className="rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase"
           // eslint-disable-next-line no-undef
           onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
         >
@@ -29,7 +29,7 @@ export const Shop = ({
       )
         : (
           <button
-            className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipipink  tracking-wide xxs:text-sm xs:text-base uppercase"
+            className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase"
           >
             {t('SHOP')}
           </button>

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 const Shop = ({ text }) => (
-  <div className="flex items-center px-2 py-2 bg-hipipink rounded-l-lg bg-opacity-30">
+  <div className="flex items-center px-2 py-2 bg-gray-400 rounded-l-lg bg-opacity-30 mb-4">
     { text !== 'SAVED' ? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
