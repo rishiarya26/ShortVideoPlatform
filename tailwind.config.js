@@ -17,6 +17,20 @@ module.exports = {
         10: ['10px', '14px'],
         8: ['8px', '12px']
       },
+      minWidth: {
+        '0': '0',
+        '1/6':'16.6vw',
+        '1/4': '25%',
+        '28':'28vw',
+        '1/2': '50%',
+        '3/4': '75%',
+        'full': '100%',
+        
+       },
+       minHeight: {
+        '38':'38vw',
+        '1/6':'16.6vw',
+       },
       spacing:{
         22: "5.5rem"
       },
@@ -102,7 +116,7 @@ module.exports = {
         DEFAULT: '#100618'
       },
       hipired: {
-        DEFAULT: '#e65252'
+        DEFAULT: '#D21404'
       },
       black: colors.black,
       white: colors.white,

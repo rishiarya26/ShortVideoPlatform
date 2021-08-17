@@ -1,4 +1,4 @@
-{
+{ "Hello" : { "hi": "hi"},
   "welcome": "Welcome to web starter kit",
   "shop": "SHOP",
   "link": "Git Hub Repos",

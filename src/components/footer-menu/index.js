@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name*/
 import Home from '../commons/svgicons/home';
 import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';
@@ -6,34 +7,78 @@ import Profile from '../commons/svgicons/profile';
 // import useTranslation from '../../hooks/use-translation';
 // import ShoppingWidget from '../shopping-widget';
 import SnackBar from '../commons/snackbar';
+import { Shop } from '../commons/button/shop';
+import useDrawer from '../../hooks/use-drawer';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import useAuth from "../../hooks/use-auth"
 
-function FooterMenu() {
-  const vobj = { videoId: 'cbvtest1mq99gi6b' };
+const detectDeviceModal = dynamic(
+  () => import('../download-app-widget'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+function FooterMenu( { videoId,canShop, type="noShop"} ){
+  const router = useRouter();
+  // const [liked, setLiked] = useState(false);
+  const { show } = useDrawer();
+
+const info ={
+  shop:  <Shop
+  videoId={videoId}
+  canShop={canShop}
+/>,
+ noShop: null
+}
+
+  const showLoginOptions = () => {
+    show('', login, 'medium');
+  };
+
+  const toSearch = () => router.push({pathname: '/profile'});
+
+  const selected = useAuth(showLoginOptions, toSearch);
+
+  const toShow = () => {
+    selected();
+  };
+
+  // const vobj = { videoId: 'cbvtest1mq99gi6b' };
   // console.log(props.id);
   // const { show } = useDrawer();
   // const { t } = useTranslation();
   return (
     <div>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
+      <div onClick = {()=>router.push("/feed/for-you")}>
         <Home />
+     </div> 
+     <div onClick = {()=>router.push("/explore")}>
         <Search />
-        <button
-          className="rounded-full text-white py-0.5 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-          // eslint-disable-next-line no-undef
-          onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-        >
-          <span className={`transform-gpu -translate-y-1
-          rounded-full text-white py-1 px-4 bg-hipipink 
-          font-medium tracking-wide xxs:text-sm xs:text-base
-          group-active:translate-y-0`}
-          >
-            SHOP
-            {' '}
-            {/* {t('shop')} */}
-          </span>
-        </button>
-        <Add />
+     </div>
+        <div>
+          {info[type]}
+        </div>
+            <div
+              onClick={() => show('', detectDeviceModal, 'small')}
+              className="relative py-3  px-1 text-center flex flex-col items-center"
+             >
+                <Add />
+             </div>    
+      <div onClick={()=>toShow()}>
         <Profile />
+      </div>
       </div>
       <SnackBar />
       <div id="cb_tg_d_wrapper">

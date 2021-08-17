@@ -31,20 +31,20 @@ export default function SampleEmbed() {
       </nav>
 
       <div className="p-10" />
-      <blockquote className="hipi-media" cite="https://preprod.hipi.co.in/">
+      <blockquote className="hipi-media" cite="http://localhost:3000/">
         <div
           id="embed-hipi"
           style={{
             position: 'relative',
             margin: '0 auto',
-            height: '640px',
+            height: '820px',
             width: '360px',
             overflow: 'hidden'
           }}
         >
           <iframe
             className="h-full w-full"
-            src="https://preprod.hipi.co.in/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
+            src="http://localhost:3000/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
             loading="lazy"
             title="hipi"
             name="hipi"

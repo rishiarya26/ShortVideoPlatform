@@ -28,8 +28,9 @@ function ProfileFeed({ router }) {
 
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
+  const { type = 'all' } = router?.query;
 
-  const dataFetcher = () => getProfileVideos({ id });
+  const dataFetcher = () => getProfileVideos({ id, type });
   const onDataFetched = data => {
     data && setItems(data?.data);
     data && setActiveVideoId(videoId);
@@ -150,8 +151,8 @@ function ProfileFeed({ router }) {
             }
           </Swiper>
           {validItemsLength ? seekedPercentage
-            ? <Seekbar seekedPercentage={seekedPercentage} />
-            : <SeekbarLoading />
+            ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
+            : <SeekbarLoading type={'onBottom'}/>
             : ''}
           <div id="cb_tg_d_wrapper">
             <div className="playkit-player" />

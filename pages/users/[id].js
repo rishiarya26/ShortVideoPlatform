@@ -59,6 +59,7 @@ export default function Hipi(params) {
         profilePic={item.profilePic}
         firstName={item.firstName}
         id={item.id}
+        type="others"
       />
     </>
   );
