@@ -29,16 +29,24 @@ const login = dynamic(
   }
 );
 
-function FooterMenu( { videoId,canShop} ){
+function FooterMenu( { videoId,canShop, type="noShop"} ){
   const router = useRouter();
   // const [liked, setLiked] = useState(false);
   const { show } = useDrawer();
+
+const info ={
+  shop:  <Shop
+  videoId={videoId}
+  canShop={canShop}
+/>,
+ noShop: null
+}
 
   const showLoginOptions = () => {
     show('', login, 'medium');
   };
 
-  const toSearch = () => router.push({pathname: '/explore'});
+  const toSearch = () => router.push({pathname: '/profile'});
 
   const selected = useAuth(showLoginOptions, toSearch);
 
@@ -60,10 +68,7 @@ function FooterMenu( { videoId,canShop} ){
         <Search />
      </div>
         <div>
-          <Shop
-                videoId={videoId}
-                canShop={canShop}
-          />
+          {info[type]}
         </div>
             <div
               onClick={() => show('', detectDeviceModal, 'small')}
