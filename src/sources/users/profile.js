@@ -97,7 +97,9 @@ async function fetchUserRecommendation({ lang }) {
   }
 }
 
-async function fetchUserProfileVideos({ id, limit = '10', offset = '1' }) {
+async function fetchUserProfileVideos({
+  id, limit = '10', offset = '1', type='all'
+}) {
   let response = {};
   // let tokens = getItem('tokens');
   // tokens = JSON.parse(tokens);
@@ -106,7 +108,7 @@ async function fetchUserProfileVideos({ id, limit = '10', offset = '1' }) {
 
   try {
     /* eslint-disable max-len */
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}`;
     response = await get(apiPath);
     //   , null, {
     //   Authorization: `Bearer ${shortsAuthToken}`,

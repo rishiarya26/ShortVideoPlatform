@@ -12,9 +12,10 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import { getHomeFeed } from '../../sources/feed';
+import { clearHomeFeed, getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
+import FooterMenu from '../footer-menu';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -59,6 +60,7 @@ function Feed({ router }) {
         window.sessionStorage.clear();
         window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
+        //set first one item in showItems
         toUpdateShowData.push(data?.data[0]);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoId);
@@ -104,7 +106,7 @@ function Feed({ router }) {
   const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
   for(let i=1; i<=2; i++){
     let insertItemIndex = (videoActiveIndex*2)+i
-    const arr = dataItem.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
   }
   setToShowItems(updateShowItems);
@@ -115,6 +117,10 @@ useEffect(()=>{
    window.sessionStorage.removeItem('feedList');
   }
 },[])
+
+  useEffect(()=>{
+    router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
+  },[])
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
@@ -231,18 +237,17 @@ useEffect(()=>{
               </div>
             ))
           }
-          <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-            <Shop
-              videoId={activeVideoId}
-              canShop={shop.isShoppable}
-            />
-          </div>
+          {validItemsLength ? seekedPercentage
+          ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
+          : <SeekbarLoading type={'aboveFooterMenu'}/>
+          : ''}
+          <FooterMenu 
+           videoId={activeVideoId}
+           canShop={shop.isShoppable}
+           type="shop"
+           />
         </Swiper>
 
-        {validItemsLength ? seekedPercentage
-          ? <Seekbar seekedPercentage={seekedPercentage} />
-          : <SeekbarLoading />
-          : ''}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

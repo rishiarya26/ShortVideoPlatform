@@ -10,7 +10,7 @@ function ProductWidget({
   shopCards, handleSaveLook, videoId
 }) {
   const [loading, setLoading] = useState(true);
-
+  console.log(shopCards);
   const loaded = () => {
     setLoading(false);
   };
@@ -54,7 +54,7 @@ function ProductWidget({
       </div>
       <div className="flex p-4">
         <div
-          className="flex rounded-full h-10 w-10 bg-hipipink justify-center items-center text-white"
+          className="flex rounded-full h-10 w-10 bg-black bg-opacity-25 justify-center items-center text-white"
           onClick={handleSaveLook}
         >
           <Close />

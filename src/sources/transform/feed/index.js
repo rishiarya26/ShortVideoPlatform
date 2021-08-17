@@ -18,7 +18,6 @@ function transformError(error = {}) {
 }
 
 function transformSuccess(resp) {
-  console.log("transformSuccess",resp)
 
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
