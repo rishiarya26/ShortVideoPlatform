@@ -102,7 +102,7 @@ module.exports = {
         DEFAULT: '#100618'
       },
       hipired: {
-        DEFAULT: '#e65252'
+        DEFAULT: '#D21404'
       },
       black: colors.black,
       white: colors.white,

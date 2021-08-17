@@ -18,7 +18,7 @@ function FooterMenu( { videoId,canShop} ){
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
         <Home />
         <Search />
-        <div>
+        <div className="w-1/5 flex justify-center">
         <Shop
               videoId={videoId}
               canShop={canShop}
