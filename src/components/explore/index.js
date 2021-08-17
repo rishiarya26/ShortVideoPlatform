@@ -7,6 +7,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Error from './error';
 import Loader from './loader';
 import Img from '../commons/image';
+import FooterMenu from '../footer-menu';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -103,6 +104,7 @@ function Explore() {
               ));
         })}
       </div>
+      <FooterMenu/>
     </ComponentStateHandler>
   );
 }

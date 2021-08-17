@@ -2,6 +2,7 @@ import Error from 'next/error';
 import {
   SeoMeta
 } from '../src/components/commons/head-meta/seo-meta';
+import FooterMenu from '../src/components/footer-menu';
 import UserProfile from '../src/components/user-profile';
 import { getUserProfile } from '../src/sources/users/profile';
 
@@ -61,6 +62,7 @@ export default function Hipi(params) {
         id={item.id}
         type="self"
       />
+      <FooterMenu/>
     </>
   );
 }
@@ -70,8 +72,9 @@ export async function getServerSideProps(ctx) {
   const {
     req, params
   } = ctx;
+  const id = req?.cookies['user-id'];
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
-  const { id } = params;
+//   const { id } = params;
   let data = {};
   try {
     data = await getUserProfile(id);

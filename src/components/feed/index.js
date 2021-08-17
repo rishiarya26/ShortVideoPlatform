@@ -239,6 +239,7 @@ useEffect(()=>{
           <FooterMenu 
            videoId={activeVideoId}
            canShop={shop.isShoppable}
+           type="shop"
            />
         </Swiper>
 
