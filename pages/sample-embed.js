@@ -31,7 +31,7 @@ export default function SampleEmbed() {
       </nav>
 
       <div className="p-10" />
-      <blockquote className="hipi-media" cite="http://localhost:3000/">
+      <blockquote className="hipi-media" cite="http://preprod.hipi.co.in/">
         <div
           id="embed-hipi"
           style={{
@@ -44,7 +44,7 @@ export default function SampleEmbed() {
         >
           <iframe
             className="h-full w-full"
-            src="http://localhost:3000/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
+            src="http://preprod.hipi.co.in:3000/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
             loading="lazy"
             title="hipi"
             name="hipi"

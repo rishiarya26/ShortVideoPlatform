@@ -16,6 +16,7 @@ import { clearHomeFeed, getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
+import dynamic from 'next/dynamic';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -23,6 +24,15 @@ SwiperCore?.use([Mousewheel]);
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {

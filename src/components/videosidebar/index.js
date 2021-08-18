@@ -37,6 +37,15 @@ const login = dynamic(
   }
 );
 
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
@@ -47,18 +56,24 @@ function VideoSidebar({
   const { show: showDialog } = useDialog();
   const router = useRouter();
   // const { showSnackbar } = useSnackBar();
-  const [liked, setLiked] = useState(false);
 
   const showLoginOptions = () => {
     show('', login, 'medium');
   };
 
-  const like = () => setLiked(true);
-  const selected = useAuth(showLoginOptions, like);
+  const like = () => show('', detectDeviceModal, 'extraSmall', {text: "like"});
+  const comment = () => show('', detectDeviceModal, 'extraSmall', {text: "comment"});
+  
+  const selectedLike = useAuth(showLoginOptions, like);
+  const selectedComment = useAuth(showLoginOptions, comment);
 
-  const handleLike = () => {
-    selected();
-    // postLike({ socialId });
+  const handleOperation = (e) => {
+    const options = {
+      like : selectedLike,
+      comment : selectedComment
+    }
+    const operation = e.currentTarget.id;
+    options?.[operation]();
   };
 
   const handleProfileClick = () => {
@@ -97,7 +112,7 @@ function VideoSidebar({
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-3  px-3 text-center justify-end`}
       >
-        {liked ? (
+        {/* {liked ? (
           <div>
             <div
               role="presentation"
@@ -111,18 +126,18 @@ function VideoSidebar({
 
             <p className="text-sm text-center">{likes + 1}</p>
           </div>
-        ) : (
+        ) : ( */}
           <div>
             <div
+              id="like"
               role="presentation"
-              onClick={handleLike}
-
+              onClick={handleOperation}
             >
               <Like />
             </div>
             <p className="text-sm text-center">{likes}</p>
           </div>
-        )}
+        {/* )} */}
 
       </div>
       <div
@@ -130,7 +145,11 @@ function VideoSidebar({
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-3  px-3 text-center items-end flex-col`}
       >
-        <div>
+        <div 
+           id="comment"
+           role="presentation"
+           onClick={handleOperation}
+        >
           <Comment />
           <p className="text-sm text-center">0</p>
         </div>

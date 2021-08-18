@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import useAuth from "../../hooks/use-auth"
 
 const detectDeviceModal = dynamic(
-  () => import('../download-app-widget'),
+  () => import('../open-in-app'),
   {
     loading: () => <div />,
     ssr: false
@@ -46,9 +46,9 @@ const info ={
     show('', login, 'medium');
   };
 
-  const toSearch = () => router.push({pathname: '/profile'});
+  const toProfile = () => router.push({pathname: '/profile'});
 
-  const selected = useAuth(showLoginOptions, toSearch);
+  const selected = useAuth(showLoginOptions, toProfile);
 
   const toShow = () => {
     selected();
@@ -71,7 +71,7 @@ const info ={
           {info[type]}
         </div>
             <div
-              onClick={() => show('', detectDeviceModal, 'small')}
+              onClick={() => show('', detectDeviceModal, 'extraSmall')}
               className="relative py-3  px-1 text-center flex flex-col items-center"
              >
                 <Add />

@@ -5,18 +5,18 @@ import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
 import useDevice, { devices } from '../../hooks/use-device';
 
-export default function DownloadAppWidget() {
+export default function DownloadAppWidget({text}) {
   const storeImages = {
     android: 'icons/play_store.png',
     ios: 'icons/app_store.png'
   };
 
-  const value = useDevice(devices, [
-    <div className="flex justify-center">
-      <img src={withBasePath(storeImages.android)} className="mr-2" alt="playicon" />
-      <img src={withBasePath(storeImages.ios)} className="" alt="playicon" />
-    </div>,
-    <img src={withBasePath(storeImages[`${getOS()}`])} className="" alt="playicon" />]);
+  // const value = useDevice(devices, [
+  //   <div className="flex justify-center">
+  //     <img src={withBasePath(storeImages.android)} className="mr-2" alt="playicon" />
+  //     <img src={withBasePath(storeImages.ios)} className="" alt="playicon" />
+  //   </div>,
+  //   <img src={withBasePath(storeImages[`${getOS()}`])} className="" alt="playicon" />]);
 
   return (
     <>
@@ -27,7 +27,7 @@ export default function DownloadAppWidget() {
           </div>
           <div className="flex w-3/4 flex-col p-1">
             <p className="font-semibold text-xl ">Hipi -  Open in the app</p>
-            <p className="text-md text-gray-500">Open in Hipi to create your own video</p>
+            <p className="text-md text-gray-500">Open in Hipi to {text}</p>
           </div>
           </div>
         <div className="flex w-full border-t-2 border-gray-200 h-12">
@@ -35,6 +35,7 @@ export default function DownloadAppWidget() {
             <p className="text-lg">Not now</p>
           </div>
           <div className="flex justify-center items-center  border-l-2 border-gray-200 w-1/2">
+            {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
           <p className="text-red-400 font-semibold text-lg">Open in app</p>
           </div>
         </div>
