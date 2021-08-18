@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
@@ -13,7 +14,7 @@ export default function VideoGallery({
   items, status, retry, userId, type = 'all'
 }) {
   const { t } = useTranslation();
-
+  const router = useRouter();
   const noData = {
     all: <>
          <p className="font-semibold">{t('NO_VIDEOS')}</p>
@@ -49,11 +50,11 @@ export default function VideoGallery({
             ? (
               <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
                 { items.map((data, id) => (
-                  <Link key={id} href={`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}>
+                  <span key={id} onClick={()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
                     <span className="w-1/3 p-1">
                       <VideoCard data={data} id={id} />
                     </span>
-                  </Link>
+                  </span>
                 ))}
               </div>
             )
