@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
