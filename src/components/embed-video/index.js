@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
+import EmbedSeekbar from '../emded-seekbar';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -67,6 +68,8 @@ function Embedvideo(props) {
       >
         <source src={props.url} type="video/mp4" />
       </video>
+      
+      <EmbedSeekbar seekedPercentage={props.seekedPercentage} />
       <div
         onClick={handleVideoPress}
         className="absolute top-2/5 justify-center w-full"

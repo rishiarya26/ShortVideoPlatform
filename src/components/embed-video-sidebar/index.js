@@ -23,7 +23,7 @@ function EmbedVideoSidebar(props) {
   return (
     <div className="absolute right-0 text-white bottom-20">
       <div
-        onClick={() => show('', detectDeviceModal, 'small')}
+        onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "see profile"})}
         className="relative py-3  px-1 text-center flex justify-center"
       >
         <img
@@ -32,28 +32,28 @@ function EmbedVideoSidebar(props) {
           src={props.profilePic}
         />
         <div
-          onClick={() => show('', detectDeviceModal, 'small')}
+          onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "follow"})}
           className="absolute bottom-0 left-1/3"
         >
           <Follow />
         </div>
       </div>
       <div
-        onClick={() => show('', detectDeviceModal, 'small')}
+        onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "like"})}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Like />
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
-        onClick={() => show('', detectDeviceModal, 'small')}
+        onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "comment"})}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Comment />
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
-        onClick={() => show('', detectDeviceModal, 'small')}
+        onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "share"})}
         className="relative py-3  px-1 text-center flex flex-col items-center"
       >
         <Share />
