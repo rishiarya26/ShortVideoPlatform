@@ -28,6 +28,15 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
