@@ -88,25 +88,25 @@ function UserProfile({
     tabs: {
       others: [
         {
-          icon: '<Listings />',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: '<LikedList/>',
+          icon: <LikedList/>,
           type: 'liked'
         }
       ],
       self: [
         {
-          icon: '<Listings />',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: '<LikedList/>',
+          icon: <LikedList/>,
           type: 'liked'
         },
         {
-          icon: '<Lock />',
+          icon: <Lock />,
           type: 'PRIVATE'
         }
       ]

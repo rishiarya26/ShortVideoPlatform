@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 
 const LikedList = () => (
-  
 <svg
       x="0"
       y="0"

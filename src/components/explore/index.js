@@ -104,7 +104,7 @@ function Explore() {
               ));
         })}
       </div>
-      <FooterMenu/>
+      <FooterMenu selectedTab="search"/>
     </ComponentStateHandler>
   );
 }

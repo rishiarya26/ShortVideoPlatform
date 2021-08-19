@@ -257,6 +257,7 @@ useEffect(()=>{
            videoId={activeVideoId}
            canShop={shop.isShoppable}
            type="shop"
+           selectedTab="home"
            />
         </Swiper>
 

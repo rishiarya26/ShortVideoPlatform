@@ -62,7 +62,7 @@ export default function Hipi(params) {
         id={item.id}
         type="self"
       />
-      <FooterMenu/>
+      <FooterMenu selectedTab="profile"/>
     </>
   );
 }
