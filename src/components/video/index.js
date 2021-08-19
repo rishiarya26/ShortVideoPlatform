@@ -11,7 +11,7 @@ import ProductCards from '../product-cards';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
   // const [pause, setPause] = useState(false);
