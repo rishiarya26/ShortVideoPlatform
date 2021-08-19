@@ -8,6 +8,7 @@ import Error from './error';
 import Loader from './loader';
 import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
+import Router from '../../../router';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -67,7 +68,7 @@ function Explore() {
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                     return (
-                      <div key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
+                      <div onClick={()=>Router.pushState("profile-feed")} key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
                       </div>
                     );

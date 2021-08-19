@@ -11,7 +11,7 @@ import ProductCards from '../product-cards';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
   // const [pause, setPause] = useState(false);
@@ -73,6 +73,8 @@ function Video(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        // autoPlay
+        // muted
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
