@@ -12,6 +12,10 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import useAuth from "../../hooks/use-auth"
+import SearchBlack from '../commons/svgicons/search-black';
+import ProfileActive from '../commons/svgicons/profile-active';
+import SearchActive from '../commons/svgicons/search-active';
+import HomeActive from '../commons/svgicons/home-active';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -29,7 +33,7 @@ const login = dynamic(
   }
 );
 
-function FooterMenu( { videoId,canShop, type="noShop"} ){
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();
   // const [liked, setLiked] = useState(false);
   const { show } = useDrawer();
@@ -62,10 +66,10 @@ const info ={
     <div>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
       <div onClick = {()=>router.push("/feed/for-you")}>
-        <Home />
+       {selectedTab === 'home' ? <HomeActive/> : <Home/>} 
      </div> 
      <div onClick = {()=>router.push("/explore")}>
-        <Search />
+       {selectedTab === 'search' ? <SearchActive/> : <Search/>} 
      </div>
         <div>
           {info[type]}
@@ -77,7 +81,7 @@ const info ={
                 <Add />
              </div>    
       <div onClick={()=>toShow()}>
-        <Profile />
+      {selectedTab === 'profile' ? <ProfileActive/> : <Profile/>} 
       </div>
       </div>
       <SnackBar />
