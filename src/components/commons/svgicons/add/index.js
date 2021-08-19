@@ -1,13 +1,12 @@
 /* eslint-disable max-len */
 
 const Add = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g opacity="0.3">
-<rect x="1.1" y="1.1" width="21.8" height="21.8" rx="10.9" stroke="white" strokeWidth="1.8"/>
-<path d="M12 7.5V16.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M7.5 12L16.5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-</g>
-</svg>
+  <svg viewBox="0 0 20 20" fill="white" width="20px" height="20px">
+    <g>
+      <path d="M14.2,9.5h-3.6V5.8c0-0.3-0.2-0.5-0.5-0.5c-0.3,0-0.5,0.2-0.5,0.5v3.6H5.8c-0.3,0-0.5,0.2-0.5,0.5s0.2,0.5,0.5,0.5h3.6v3.6c0,0.3,0.2,0.5,0.5,0.5c0.3,0,0.5-0.2,0.5-0.5v-3.6h3.6c0.3,0,0.5-0.2,0.5-0.5S14.5,9.5,14.2,9.5z" />
+      <path d="M15.3,0.9H4.5c-2.1,0-3.8,1.7-3.8,3.8v10.8c0,2.1,1.7,3.8,3.8,3.8h10.8c2.1,0,3.8-1.7,3.8-3.8V4.7C19.1,2.6,17.4,0.9,15.3,0.9z M15.3,18H4.5C3.1,18,2,16.9,2,15.5V4.7c0-1.4,1.1-2.5,2.5-2.5h10.8c1.4,0,2.5,1.1,2.5,2.5v10.8C17.8,16.9,16.7,18,15.3,18z" />
+    </g>
+  </svg>
 
 );
 export default Add;

@@ -9,6 +9,9 @@ import { useFetcher } from '../commons/component-state-handler';
 import { Back } from '../commons/svgicons/back';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
+import LikedList from '../commons/svgicons/liked-list';
+import Lock from '../commons/svgicons/lock';
+import Listing from '../commons/svgicons/listing';
 
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
@@ -85,25 +88,25 @@ function UserProfile({
     tabs: {
       others: [
         {
-          icon: 'all',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: 'liked',
+          icon: <LikedList/>,
           type: 'liked'
         }
       ],
       self: [
         {
-          icon: 'all',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: 'liked',
+          icon: <LikedList/>,
           type: 'liked'
         },
         {
-          icon: 'private',
+          icon: <Lock />,
           type: 'PRIVATE'
         }
       ]

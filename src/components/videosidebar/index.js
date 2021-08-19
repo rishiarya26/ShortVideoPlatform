@@ -91,7 +91,7 @@ function VideoSidebar({
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={handleProfileClick} className="relative py-3 px-3 text-center justify-end flex">
+      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
@@ -110,7 +110,7 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center justify-end`}
+        } "relative py-2  px-3 text-center justify-end`}
       >
         {/* {liked ? (
           <div>
@@ -143,7 +143,7 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col`}
+        } "relative py-2  px-3 text-center items-end flex-col`}
       >
         <div 
            id="comment"
@@ -157,13 +157,13 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col `}
+        } "relative py-2  px-3 text-center items-end flex-col `}
       >
         <ShareComp />
       </div>
       <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-3  px-3 text-center items-end flex-col mb-8`}
+      } "relative py-2  px-3 text-center items-end flex-col mb-8`}
       >
         <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
@@ -174,7 +174,7 @@ function VideoSidebar({
         role="presentation"
         className={`${
           props.type === 'feed' ? 'block' : 'hidden'
-        } relative py-3  px-1 text-center flex flex-col items-center`}
+        } relative py-2  px-1 text-center flex flex-col items-center`}
         onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
@@ -193,7 +193,7 @@ function VideoSidebar({
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 text-center flex flex-col items-center`}
+            } relative py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
             <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />

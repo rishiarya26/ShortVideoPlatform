@@ -18,6 +18,8 @@ import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
+import Play from '../commons/svgicons/play';
+import Img from '../commons/image';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -44,6 +46,7 @@ function Feed({ router }) {
   const [videoActiveIndex, setVideoActiveIndex] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
+  const [initialPlayButton, setInitialPlayButton] = useState(true)
   const { t } = useTranslation();
   const { id } = router?.query;
   let { videoId = '' } = router?.query;
@@ -94,6 +97,7 @@ function Feed({ router }) {
   setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
+    setInitialPlayButton(false)
     setSeekedPercentage(percentage);
   };
 
@@ -248,6 +252,13 @@ useEffect(()=>{
               </div>
             ))
           }
+          <div
+             onClick={()=>setInitialPlayButton(false)}
+             className="absolute top-1/2 justify-center w-screen"
+             style={{ display: initialPlayButton ? 'flex' : 'none' }}
+          >
+            <Play/>
+          </div>
           {validItemsLength ? seekedPercentage
           ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
           : <SeekbarLoading type={'aboveFooterMenu'}/>
@@ -256,6 +267,7 @@ useEffect(()=>{
            videoId={activeVideoId}
            canShop={shop.isShoppable}
            type="shop"
+           selectedTab="home"
            />
         </Swiper>
 
