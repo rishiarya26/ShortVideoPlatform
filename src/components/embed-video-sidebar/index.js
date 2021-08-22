@@ -9,6 +9,7 @@ import Share from '../commons/svgicons/share';
 import useDrawer from '../../hooks/use-drawer';
 
 const detectDeviceModal = dynamic(
+  //() => import('../download-app-widget'),
   () => import('../open-in-app'),
   {
     loading: () => <div />,

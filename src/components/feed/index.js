@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -26,6 +27,15 @@ SwiperCore?.use([Mousewheel]);
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {

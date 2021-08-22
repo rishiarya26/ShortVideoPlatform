@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { isObjectEmpty } from '../../../network/utils';
 
 function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
@@ -18,6 +19,7 @@ function transformSuccess(resp) {
   
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
+  const {responseData} = data;
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -25,7 +27,8 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
-    payload.data = data?.responseData;
+    const respData = isObjectEmpty(responseData) ? [] : (responseData?.length > 0 && responseData);
+    payload.data = respData;
     payload.requestedWith = data?.requestedWith;
     return payload;
   } catch (err) {

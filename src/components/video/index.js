@@ -1,4 +1,4 @@
-
+/*eslint-disable react/jsx-no-duplicate-props*/
 import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
@@ -75,6 +75,12 @@ function Video(props) {
       <video
         // autoPlay
         // muted
+        playsInline
+        webkit-playsInline
+        webkit-playsInline="true"
+        playsInline="true"
+        webkit-playsInline={true}
+        playsInline={true}
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
