@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Hash from '../commons/svgicons/hash';
 import Search from '../commons/svgicons/search-black';
 import RightArrow from '../commons/svgicons/right-arrow';
@@ -9,19 +9,33 @@ import Loader from './loader';
 import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
 import Router from '../../../router';
+import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
-const ErrorComp = () => (<Error />);
+let toRetry;
+const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
 const LoadComp = () => (<Loader />);
 
 function Explore() {
   const [data, setData] = useState([]);
+  const router = useRouter();
 
   const onDataFetched = data => {
+    window.sessionStorage.removeItem('search-feed');
+    window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
     setData(data?.data);
   };
   const dataFetcher = () => getSearchData();
   const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);
+  toRetry = retry;
   const validateData = data?.length > 0;
+
+  const toSearchFeed = (e, videoId)=>{
+    let hashTag = e.currentTarget.id;   
+    console.log(hashTag)
+    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    router.push(`/search-feed/${videoId}?ref=${hashTag}`);
+  }
 
   return (
     <ComponentStateHandler
@@ -67,8 +81,9 @@ function Explore() {
 
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
+                    console.log(content.widgetName)
                     return (
-                      <div onClick={()=>Router.pushState("profile-feed")} key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
+                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
                       </div>
                     );
@@ -89,13 +104,12 @@ function Explore() {
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                         return (
                           <>
-                    <div className="my-1 px-2 flex flex-col justify-center items-center">
-                            <div key={id} className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
+                      <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                            <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
                               <Img data={d?.user?.profilePicImgUrl} title={d?.user?.userName} />
                             </div>
                             <p className="text-xs pt-2">{d?.user?.userName}</p>
-                          
-                    </div>
+                      </div>
                           </>
                         );
                       })}
