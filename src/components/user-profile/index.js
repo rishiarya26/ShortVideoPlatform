@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element */
+
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -7,6 +9,9 @@ import { useFetcher } from '../commons/component-state-handler';
 import { Back } from '../commons/svgicons/back';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
+import LikedList from '../commons/svgicons/liked-list';
+import Lock from '../commons/svgicons/lock';
+import Listing from '../commons/svgicons/listing';
 
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
@@ -70,11 +75,11 @@ function UserProfile({
         </button>
       </>,
       self: <>
-        <Link href={`/edit-profile/${id}`}>
+        {/* <Link href={`/edit-profile/${id}`}> */}
           <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
             Edit Profile
           </button>
-        </Link>
+        {/* </Link> */}
         <button className="font-semibold text-sm border rounded-sm px-2 py-1">
           --
         </button>
@@ -83,25 +88,25 @@ function UserProfile({
     tabs: {
       others: [
         {
-          icon: 'all',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: 'liked',
+          icon: <LikedList/>,
           type: 'liked'
         }
       ],
       self: [
         {
-          icon: 'all',
+          icon: <Listing />,
           type: 'all'
         },
         {
-          icon: 'liked',
+          icon: <LikedList/>,
           type: 'liked'
         },
         {
-          icon: 'private',
+          icon: <Lock />,
           type: 'PRIVATE'
         }
       ]

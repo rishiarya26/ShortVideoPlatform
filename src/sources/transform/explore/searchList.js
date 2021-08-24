@@ -14,20 +14,20 @@ function transformError(error = {}) {
 }
 
 function transformSuccess(resp) {
-  console.log('in trans', resp);
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
-  console.log('in trans', data);
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
+    const { recommendations = []} = data;
+    const { responseData = []} = data;
+    const updateData = recommendations?.concat(responseData);
+    payload.data = updateData;
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
-    payload.data = data?.responseData;
     payload.requestedWith = data?.requestedWith;
-    console.log('recommendations list -', data?.responseData);
     return payload;
   } catch (err) {
     data.appError = err.message;

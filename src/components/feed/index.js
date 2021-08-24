@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -12,32 +13,75 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import { getHomeFeed } from '../../sources/feed';
+import { clearHomeFeed, getHomeFeed } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
-
-SwiperCore.use([Mousewheel]);
+import FooterMenu from '../footer-menu';
+import dynamic from 'next/dynamic';
+import Play from '../commons/svgicons/play';
+import Img from '../commons/image';
+// import {sessionStorage} from "../../utils/storage"
+ 
+SwiperCore?.use([Mousewheel]);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
+//TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
+  const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
+  const [videoActiveIndex, setVideoActiveIndex] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
+  const [initialPlayButton, setInitialPlayButton] = useState(true)
   const { t } = useTranslation();
   const { id } = router?.query;
   let { videoId = '' } = router?.query;
 
+  const getFeedData = async() =>{
+    let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
+     try{
+       const response =  await getHomeFeed({ type: id });
+       updateItems = updateItems.concat(response?.data);
+       window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
+      }
+     catch(err){
+     }
+     return updateItems;
+  } 
+
   const onDataFetched = data => {
     videoId === '' && (videoId = data?.data?.[0]?.content_id);
-    data && setItems(data?.data);
-    data && setActiveVideoId(videoId);
-    router.replace(`/feed/${id}?videoId=${videoId}`);
-  };
+    if(data){
+      const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
+      const dataItems = feed || data?.data
+      setItems(dataItems);
+      window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
+      if(dataItems.length<=6){
+        window.sessionStorage.clear();
+        window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
+        let toUpdateShowData = [...toShowItems];
+        //set first one item in showItems
+        toUpdateShowData.push(data?.data[0]);
+        setToShowItems(toUpdateShowData);
+        setActiveVideoId(videoId);
+      }
+    }
+  }
+
   const dataFetcher = () => getHomeFeed({ type: id });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
 
@@ -49,10 +93,11 @@ function Feed({ router }) {
     retry = (status && !dataLength > 0) && retry;
   }
 
-  const validItemsLength = items?.length > 0;
+  const validItemsLength = toShowItems?.length > 0;
   setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
+    setInitialPlayButton(false)
     setSeekedPercentage(percentage);
   };
 
@@ -70,17 +115,56 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
+ const incrementShowItems =async() =>{
+  // let updateByValues = 1;
+  let updateShowItems = [...toShowItems];
+  const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
+  for(let i=1; i<=2; i++){
+    let insertItemIndex = (videoActiveIndex*2)+i
+    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    arr && updateShowItems?.push(arr[insertItemIndex]);
+  }
+  setToShowItems(updateShowItems);
+ }
+
+useEffect(()=>{
+  window.onunload = function () {
+   window.sessionStorage.removeItem('feedList');
+  }
+},[])
+
+  useEffect(()=>{
+    router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
+  },[])
+
+  useEffect(()=>{
+    toShowItems.length > 0 && incrementShowItems();
+      const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+      if(indexToRedirect !== -1){
+      let insertItemIndex = (indexToRedirect*2)+3
+      const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
+      const updateShowItems =  items?.slice(0,updateIndex);
+     setToShowItems(updateShowItems);
+     setVideoActiveIndex(indexToRedirect);
+}
+  },[items])
+
+  useEffect(()=>{
+    toShowItems.length > 0 && incrementShowItems();
+  },[videoActiveIndex])
+
   useEffect(() => {
     setShop({ isShoppable: 'pending' });
     getCanShop();
     setSaveLook(true);
   }, [activeVideoId]);
 
+
   const toggleSaveLook = () => {
-    const data = [...items];
+    const data = [...toShowItems];
     const resp = data.findIndex(item => (item.content_id === activeVideoId));
     data[resp].saveLook = true;
-    setItems(data);
+    setToShowItems(data);
     setSaveLook(!saveLook);
   };
 
@@ -110,20 +194,26 @@ function Feed({ router }) {
           mousewheel
           scrollbar={{ draggable: true }}
           onSwiper={swiper => {
-            const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-            swiper?.slideTo(slideToId, 0);
+            if(videoId){
+              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              console.log("slideId",slideToId)
+              swiper?.slideTo(slideToId, 0);
+            }
           }}
           onSlideChange={swiperCore => {
             const {
               activeIndex, slides
             } = swiperCore;
             const activeId = slides[activeIndex]?.id;
+            if(activeIndex > videoActiveIndex){
+              setVideoActiveIndex(activeIndex)
+            }
             setActiveVideoId(activeId);
             router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
         >
           {
-            (validItemsLength ? items.map((
+            (validItemsLength ? toShowItems.map((
               item, id
             ) => (
               <SwiperSlide
@@ -145,8 +235,8 @@ function Feed({ router }) {
                   // videoid={item.content_id}
                   hashTags={item.hashtags}
                   videoOwnersId={item.videoOwnersId}
-                  // thumbnail={item.thumbnail}
-                  thumbnail={item.poster_image_url}
+                  thumbnail={item.thumbnail}
+                  // thumbnail={item.poster_image_url}
                   canShop={shop.isShoppable}
                   shopCards={shop.data}
                   handleSaveLook={toggleSaveLook}
@@ -162,18 +252,25 @@ function Feed({ router }) {
               </div>
             ))
           }
-          <div className="w-full fixed bottom-2 py-2 flex justify-around items-center">
-            <Shop
-              videoId={activeVideoId}
-              canShop={shop.isShoppable}
-            />
+          <div
+             onClick={()=>setInitialPlayButton(false)}
+             className="absolute top-1/2 justify-center w-screen"
+             style={{ display: initialPlayButton ? 'flex' : 'none' }}
+          >
+            <Play/>
           </div>
+          {validItemsLength ? seekedPercentage
+          ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
+          : <SeekbarLoading type={'aboveFooterMenu'}/>
+          : ''}
+          <FooterMenu 
+           videoId={activeVideoId}
+           canShop={shop.isShoppable}
+           type="shop"
+           selectedTab="home"
+           />
         </Swiper>
 
-        {validItemsLength ? seekedPercentage
-          ? <Seekbar seekedPercentage={seekedPercentage} />
-          : <SeekbarLoading />
-          : ''}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

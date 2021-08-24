@@ -1,5 +1,5 @@
-
-import React, { useState, useRef } from 'react';
+/*eslint-disable react/jsx-no-duplicate-props*/
+import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
@@ -7,6 +7,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import ProductWidget from '../product-widget';
 import ProductCards from '../product-cards';
+// import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
@@ -50,12 +51,15 @@ function Video(props) {
       }
     }
   };
-
   const [ref] = useIntersect({
     callback: handlePlay,
     rootMargin: '50px',
     threshold: [0.30, 0.75]
   });
+
+  // useEffect(() => {
+  //   setPlayer(ref.current);
+  // }, [])
 
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
@@ -69,6 +73,10 @@ function Video(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        // autoPlay
+        // muted
+        playsInline
+        webkit-playsInline
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}

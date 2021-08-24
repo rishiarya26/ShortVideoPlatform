@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
+
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { createSecureHeaders } = require("next-secure-headers");
+// const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
 
@@ -24,9 +26,11 @@ const nextConfig = {
   async headers() {
     return [{
       source: '/(.*)',
-      headers: createSecureHeaders({
-        nosniff: false
-      })
+      headers: [
+        { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+        { key: 'X-Download-Options', value: 'noopen' },
+        { key: 'X-Content-Type-Options', value: 'false' },
+        { key: 'X-XSS-Protection', value: '1' }]
     }];
   },
   images: {
@@ -36,7 +40,7 @@ const nextConfig = {
   trailingSlash: false, // https://github.com/zeit/next.js/issues/8119
   experimental: { // this takes the module/nomodule approach - https://nextjs.org/blog/next-9-1#module--nomodule
     modern: true
-  },
+    },
   i18n: {
     localeDetection: false,
     locales: ['en-in', 'hi-in', 'bn-in'],

@@ -151,8 +151,8 @@ function ProfileFeed({ router }) {
             }
           </Swiper>
           {validItemsLength ? seekedPercentage
-            ? <Seekbar seekedPercentage={seekedPercentage} />
-            : <SeekbarLoading />
+            ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
+            : <SeekbarLoading type={'onBottom'}/>
             : ''}
           <div id="cb_tg_d_wrapper">
             <div className="playkit-player" />

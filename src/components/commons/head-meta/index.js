@@ -1,4 +1,5 @@
 /* eslint-disable no-trailing-spaces */
+/*eslint-disable @next/next/no-sync-scripts */
 import useTranslation from '../../../hooks/use-translation';
 import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
@@ -8,9 +9,10 @@ function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
+  console.log(withBasePath(`manifest.json?v=${appVersion}`))
   return (
     <>
-      <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
+      <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
       <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

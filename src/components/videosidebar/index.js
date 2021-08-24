@@ -1,3 +1,6 @@
+/*eslint-disable react/no-unescaped-entities*/
+/*eslint-disable @next/next/no-img-element*/
+/*eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -34,6 +37,15 @@ const login = dynamic(
   }
 );
 
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
@@ -44,18 +56,24 @@ function VideoSidebar({
   const { show: showDialog } = useDialog();
   const router = useRouter();
   // const { showSnackbar } = useSnackBar();
-  const [liked, setLiked] = useState(false);
 
   const showLoginOptions = () => {
     show('', login, 'medium');
   };
 
-  const like = () => setLiked(true);
-  const selected = useAuth(showLoginOptions, like);
+  const like = () => show('', detectDeviceModal, 'extraSmall', {text: "like"});
+  const comment = () => show('', detectDeviceModal, 'extraSmall', {text: "comment"});
+  
+  const selectedLike = useAuth(showLoginOptions, like);
+  const selectedComment = useAuth(showLoginOptions, comment);
 
-  const handleLike = () => {
-    selected();
-    // postLike({ socialId });
+  const handleOperation = (e) => {
+    const options = {
+      like : selectedLike,
+      comment : selectedComment
+    }
+    const operation = e.currentTarget.id;
+    options?.[operation]();
   };
 
   const handleProfileClick = () => {
@@ -73,12 +91,12 @@ function VideoSidebar({
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={handleProfileClick} className="relative py-3 px-3 text-center justify-end flex">
+      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
             className="usrimg w-10 h-10 rounded-full"
-            src={profilePic}
+            src={profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
           />
           <div
             className={`${
@@ -92,9 +110,9 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center justify-end`}
+        } "relative py-2  px-3 text-center justify-end`}
       >
-        {liked ? (
+        {/* {liked ? (
           <div>
             <div
               role="presentation"
@@ -108,26 +126,30 @@ function VideoSidebar({
 
             <p className="text-sm text-center">{likes + 1}</p>
           </div>
-        ) : (
+        ) : ( */}
           <div>
             <div
+              id="like"
               role="presentation"
-              onClick={handleLike}
-
+              onClick={handleOperation}
             >
               <Like />
             </div>
             <p className="text-sm text-center">{likes}</p>
           </div>
-        )}
+        {/* )} */}
 
       </div>
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col`}
+        } "relative py-2  px-3 text-center items-end flex-col`}
       >
-        <div>
+        <div 
+           id="comment"
+           role="presentation"
+           onClick={handleOperation}
+        >
           <Comment />
           <p className="text-sm text-center">0</p>
         </div>
@@ -135,13 +157,13 @@ function VideoSidebar({
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-3  px-3 text-center items-end flex-col `}
+        } "relative py-2  px-3 text-center items-end flex-col `}
       >
         <ShareComp />
       </div>
       <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-3  px-3 text-center items-end flex-col mb-8`}
+      } "relative py-2  px-3 text-center items-end flex-col mb-8`}
       >
         <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
@@ -152,7 +174,7 @@ function VideoSidebar({
         role="presentation"
         className={`${
           props.type === 'feed' ? 'block' : 'hidden'
-        } relative py-3  px-1 text-center flex flex-col items-center`}
+        } relative py-2  px-1 text-center flex flex-col items-center`}
         onClick={() => show(` ${props.comment} comments`, CommentTray, 'md', props)}
       >
         <Comment />
@@ -171,7 +193,7 @@ function VideoSidebar({
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } relative py-3 px-0 text-center flex flex-col items-center`}
+            } relative py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
             <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />

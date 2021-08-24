@@ -98,7 +98,7 @@ async function fetchUserRecommendation({ lang }) {
 }
 
 async function fetchUserProfileVideos({
-  id, limit = '10', offset = '1', type
+  id, limit = '10', offset = '1', type='all'
 }) {
   let response = {};
   // let tokens = getItem('tokens');

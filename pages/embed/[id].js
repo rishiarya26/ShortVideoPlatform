@@ -7,7 +7,6 @@ import {
   VideoJsonLd
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
-import EmbedSeekbar from '../../src/components/emded-seekbar';
 import { getEffectiveVideoUrl } from '../../src/utils/content';
 // import { Shop } from '../../src/components/commons/button/shop';
 
@@ -100,11 +99,11 @@ export default function Hipi(params) {
         shopCards={shopCards}
         videoId={videoId}
         poster={item.thumbnail}
+        seekedPercentage={seekedPercentage}
       />
       {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <Shop videoId={videoId} canShop={canShop} />
       </div> */}
-      <EmbedSeekbar seekedPercentage={seekedPercentage} />
     </>
   );
 }

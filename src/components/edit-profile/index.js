@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { getUserProfile } from '../../sources/users/profile';
@@ -11,9 +12,7 @@ const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
 
 const EditProfile = ({ router }) => {
-  console.log(router);
   const userId = router?.query?.id;
-  console.log(userId);
   const dataFetcher = () => getUserProfile(userId);
   const [fetchState, retry, data] = useFetcher(dataFetcher);
   const userData = data?.data;

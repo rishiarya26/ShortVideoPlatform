@@ -6,6 +6,7 @@ import { feed, feedFail } from '../../../factories/feed';
 
 describe('transforms for feed', () => {
   it('should return the expected transform for success state', () => {
+    console.log("tests%%%%%%%%%%%%%%%%%%%",transformSuccess(forYouFeed), feed)
     expect(transformSuccess(forYouFeed)).toMatchObject(feed);
   });
 

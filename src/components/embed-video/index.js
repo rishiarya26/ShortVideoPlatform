@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element*/
 import React, { useState, useRef } from 'react';
 import VideoFooter from '../videofooter/index';
 import EmbedVideoSidebar from '../embed-video-sidebar/index';
@@ -5,6 +6,7 @@ import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
+import EmbedSeekbar from '../emded-seekbar';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -48,9 +50,10 @@ function Embedvideo(props) {
   };
 
   return (
+    <div className="flex flex-col">
     <div
       ref={rootRef}
-      className="video_card relative w-full h-screen scroll-snap-start bg-black"
+      className="video_card relative w-full  scroll-snap-start bg-black"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -65,6 +68,8 @@ function Embedvideo(props) {
       >
         <source src={props.url} type="video/mp4" />
       </video>
+      
+      <EmbedSeekbar seekedPercentage={props.seekedPercentage} />
       <div
         onClick={handleVideoPress}
         className="absolute top-2/5 justify-center w-full"
@@ -88,7 +93,18 @@ function Embedvideo(props) {
         share={777}
         type="embed"
       />
-      <VideoFooter
+      
+      {props.canShop === 'success'
+         && ( 
+           <ProductCards
+             shopCards={props.shopCards}
+             videoId={props.videoId}
+             comp="embed"
+           />
+         )}
+    </div>
+    <div className="flex relative flex-col p-3">
+    <VideoFooter
         musicTitle={props.musicTitle}
         userName={`@${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
@@ -96,14 +112,10 @@ function Embedvideo(props) {
         canShop={props.canShop}
         comp="embed"
       />
-      {props.canShop === 'success'
-         && (
-           <ProductCards
-             shopCards={props.shopCards}
-             videoId={props.videoId}
-             comp="embed"
-           />
-         )}
+      <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
+              <button className="bg-red-400 text-white px-4 py-2 font-semibold">Discover more on Hipi</button>
+      </div>
+    </div>
     </div>
   );
 }

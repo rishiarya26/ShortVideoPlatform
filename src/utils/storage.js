@@ -22,3 +22,30 @@ export const localStorage = {
     return data;
   }
 };
+
+export const sessionStorage = {
+  set(key, val) {
+    if (!key || !val) return false;
+     return window.sessionStorage.setItem(key, JSON.stringify(val));
+  },
+  remove(key = '') {
+    return window.sessionStorage.removeItem(key);
+  },
+  get(key) {
+    if (!key) return false;
+    let data = window.sessionStorage.getItem(key);
+    if (!data) {
+      return null;
+    }
+    try {
+      data = JSON.parse(data);
+    } catch (e) {
+      data = null;
+    }
+    return data;
+  },
+  clear(){
+    return window.sessionStorage.clear();
+  }
+};
+

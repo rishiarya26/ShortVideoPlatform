@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name*/
 import { useState, useRef, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { getComments, clearComments, postComment } from '../../sources/social';
