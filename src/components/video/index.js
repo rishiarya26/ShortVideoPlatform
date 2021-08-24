@@ -11,7 +11,7 @@ import ProductCards from '../product-cards';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
   // const [pause, setPause] = useState(false);
@@ -77,10 +77,6 @@ function Video(props) {
         // muted
         playsInline
         webkit-playsInline
-        webkit-playsInline="true"
-        playsInline="true"
-        webkit-playsInline={true}
-        playsInline={true}
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}

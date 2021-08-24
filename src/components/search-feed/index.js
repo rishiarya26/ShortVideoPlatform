@@ -30,7 +30,6 @@ function SearchFeed({ router }) {
 
   const { id } = router?.query;
   const { ref } = router?.query;
-  console.log(router)
 //   const path = router?.asPath
 //   console.log(path)
   const { videoId = items?.[0]?.content_id } = router?.query;
