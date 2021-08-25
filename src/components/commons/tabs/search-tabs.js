@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const Tabs = ({ items, defaultValue = 0, compToRender }) => {
-    const [selected, setSelected] = useState(null)
-
-    useEffect(()=>{
-        setSelected(defaultValue)
-    },[])
+const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
 
     const onTabClick = (selected)=>{
-        setSelected(selected);
-        compToRender(selected);
+        onTabChange(selected);
     }
   return (
     <div className="flex items-center w-full text-gray-400 justify-center font-semibold">
@@ -18,12 +12,12 @@ const Tabs = ({ items, defaultValue = 0, compToRender }) => {
                key={id}
                id={id}
                onClick={()=>onTabClick(id)}
-               className={ id === selected 
+               className={ id === selectedIndex 
               ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2'
               : ' py-2 w-1/2 flex justify-center align-center'}
           >
             <span className={
-                id === selected ? 'text-black ' : ''}>{data}</span>
+                id === selectedIndex ? 'text-black ' : ''}>{data}</span>
           </div>
       )) }
     </div>

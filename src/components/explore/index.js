@@ -34,7 +34,7 @@ function Explore() {
     let hashTag = e.currentTarget.id;   
     console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
-    router.push(`/search-feed/${videoId}?ref=${hashTag}`);
+    router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
   return (

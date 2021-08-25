@@ -18,8 +18,6 @@ async function fetchSearchResult({
   }
 }
 
-fetchSearchResult();
-
 const [getSounds, clearSounds] = apiMiddleWare(fetchSearchResult, transformSuccess, transformError);
 
 export { getSounds, clearSounds };

@@ -1,13 +1,7 @@
 
-import Hash from '../../commons/svgicons/hash';
 import Search from '../../commons/svgicons/search-black';
-import RightArrow from '../../commons/svgicons/right-arrow'
 import { withRouter } from 'next/router';
-import ComponentStateHandler, { useFetcher } from '../../commons/component-state-handler';
-import { useState } from 'react';
-import { getTopSearches } from '../../../sources/explore/top';
-import Img from '../../commons/image';
-import { numberFormatter } from '../../../utils/convert-to-K';
+import { useEffect, useState } from 'react';
 import Tabs from '../../commons/tabs/search-tabs';
 import TopItems from '../top';
 import Users from '../users';
@@ -15,20 +9,28 @@ import Videos from '../videos';
 import Sounds from '../sounds';
 import Hashtags from '../hash-tags';
 
-
 function SearchResult({router}) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [compToShow, setCompToshow] = useState();
+
   const {item = ''} = router?.query;
-  const components = [<TopItems item={item} />, <Users/>,<Videos/>, <Sounds/>, <Hashtags/>]; 
-  const [compToShow, setCompToshow] = useState(components[0]);
+  const redirectTab = (selected) =>{
+    setSelectedIndex(selected)
+  }
+  const components = [<TopItems item={item} redirectTab={redirectTab}/>, <Users item={item}/>,<Videos item={item}/>, <Sounds/>, <Hashtags item={item}/>]; 
 
  const items = {
    display : ['Top','Users', 'Videos', 'Sounds', 'Hashtags'],
-   defaultValue : 0
+   defaultValue : selectedIndex
  }
 
- const compToRender = (compNo)=>{
-  setCompToshow(components[compNo]);
+ const onTabChange = (compNo)=>{
+   setSelectedIndex(compNo)
  }
+
+ useEffect(()=>{
+   setCompToshow(components[selectedIndex])
+ },[selectedIndex])
 
   return (
     <div>
@@ -48,7 +50,7 @@ function SearchResult({router}) {
           <div />
         </div>
 
-        <Tabs  items={items} compToRender={compToRender}/>
+        <Tabs  items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
        {compToShow}
       </div>
     </div>

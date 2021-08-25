@@ -11,7 +11,7 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId, type = 'all'
+  items, status, retry, userId, type = 'all', page ='profile'
 }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -35,6 +35,7 @@ export default function VideoGallery({
       </p>
     </>
   };
+
   setRetry = retry;
   const validItemsLength = items?.length > 0;
 
@@ -50,7 +51,7 @@ export default function VideoGallery({
             ? (
               <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
                 { items.map((data, id) => (
-                  <span className="w-1/3 p-1" key={id} onClick={()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
+                  <span className="w-1/3 p-1" key={id} onClick={page === 'search' ? ()=> router.push(`/search-feed/${data?.content_id}?type=normal`) : ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
                       <VideoCard data={data} id={id} />
                   </span>
                 ))}

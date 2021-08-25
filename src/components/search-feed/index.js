@@ -29,11 +29,12 @@ function SearchFeed({ router }) {
   const [shop, setShop] = useState({ isShoppable: 'pending' });
 
   const { id } = router?.query;
-  const { ref } = router?.query;
+  const { ref = '' } = router?.query;
+  const { type = 'normal'} = router?.query;
 //   const path = router?.asPath
 //   console.log(path)
   const { videoId = items?.[0]?.content_id } = router?.query;
-  
+
   const transformResponse = (data) =>{  
     const networkConnection = getNetworkConnection();
     const feedData = data.filter((content) => (content.widgetName === `#${ref}`));
@@ -54,8 +55,12 @@ function SearchFeed({ router }) {
 
   const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
   const onDataFetched = data => {
-      const transformedData = transformResponse(data)
-      data && setItems(transformedData);
+      console.log(data)
+    const info={
+        normal : data,
+        withHash : transformResponse(data)
+    }
+      data && setItems(info[type]);
       data && setActiveVideoId(videoId);
   };
 
