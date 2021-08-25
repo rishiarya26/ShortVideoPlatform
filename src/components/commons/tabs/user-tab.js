@@ -17,7 +17,6 @@ const UserTab = ({
             ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2'
             : ' py-2 w-1/2 flex justify-center align-center'}
         >
-
           <span className={data?.type === selected ? 'text-black ' : ''}>{data?.icon}</span>
 
         </div>
