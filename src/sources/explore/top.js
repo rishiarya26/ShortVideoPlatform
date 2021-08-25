@@ -16,8 +16,6 @@ async function fetchSearchResult(keyword) {
   }
 }
 
-fetchSearchResult();
-
 const [getTopSearches, clearTopSearches] = apiMiddleWare(fetchSearchResult, transformSuccess, transformError);
 
 export { getTopSearches, clearTopSearches };

@@ -12,7 +12,7 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loader />);
 
-const TopItems = ({item}) =>{
+const TopItems = ({item, redirectTab}) =>{
     const [data, setData] = useState();
 
     const onDataFetched=(data)=>{
@@ -38,7 +38,7 @@ const TopItems = ({item}) =>{
                       <p className="text-base font-medium">USERS</p>
                       <p className="text-sm text-gray-400">{numberFormatter(data?.count?.users)} results</p>
                     </div>
-                    <div className="flex items-center justify-center text-gray-400">
+                    <div onClick={()=>redirectTab(1)} className="flex items-center justify-center text-gray-400">
                       See more
                       <RightArrow />
                     </div>
@@ -69,7 +69,7 @@ const TopItems = ({item}) =>{
                       <p className="text-base font-medium">HASHTAGS</p>
                       <p className="text-sm text-gray-400">{numberFormatter(data?.count?.hashtags)} results</p>
                     </div>
-                    <div className="flex items-center justify-center text-gray-400">
+                    <div onClick={()=>redirectTab(4)} className="flex items-center justify-center text-gray-400">
                       See more
                       <RightArrow />
                     </div>
@@ -102,7 +102,7 @@ const TopItems = ({item}) =>{
                       <p className="text-base font-medium">VIDEOS</p>
                       <p className="text-sm text-gray-400">{numberFormatter(data?.count?.videos)} results</p>
                     </div>
-                    <div className="flex items-center justify-center text-gray-400">
+                    <div onClick={()=>redirectTab(2)} className="flex items-center justify-center text-gray-400">
                       See more
                       <RightArrow />
                     </div>
@@ -126,7 +126,7 @@ const TopItems = ({item}) =>{
                       <p className="text-base font-medium">SOUNDS</p>
                       <p className="text-sm text-gray-400">{numberFormatter(data?.count?.sounds)} results</p>
                     </div>
-                    <div className="flex items-center justify-center text-gray-400">
+                    <div onClick={()=>redirectTab(3)} className="flex items-center justify-center text-gray-400">
                       See more
                       <RightArrow />
                     </div>
