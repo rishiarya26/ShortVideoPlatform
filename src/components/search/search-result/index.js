@@ -1,11 +1,37 @@
 
-import Hash from '../commons/svgicons/hash';
-import Search from '../commons/svgicons/search-black';
-import RightArrow from '../commons/svgicons/right-arrow'
+import Hash from '../../commons/svgicons/hash';
+import Search from '../../commons/svgicons/search-black';
+import RightArrow from '../../commons/svgicons/right-arrow'
+import { withRouter } from 'next/router';
+import ComponentStateHandler, { useFetcher } from '../../commons/component-state-handler';
+import { useState } from 'react';
+import { getSearchData } from '../../../sources/explore';
+import Loader from './loader';
+import Error from './error';
 
-function SearchResult() {
+let setRetry;
+const ErrorComp = () => (<Error retry={setRetry} />);
+const LoadComp = () => (<Loader />);
+
+function SearchResult({router}) {
+//  const [data, setData] = useState();
+ const {item = ''} = router?.query;
+
+//  const onDataFetched=()=>{
+
+//  }
+const dataFetcher = ()=> item && getSearchData({item});
+ const [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched)
+ setRetry = retry;
+ const validData = data?.length > 0;
+
 
   return (
+    <ComponentStateHandler
+    state={fetchState}
+    Loader={LoadComp}
+    ErrorComp={ErrorComp}
+  >
     <div>
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
@@ -158,14 +184,10 @@ function SearchResult() {
                 </div>
           </div>
         </div>
-
-
-
-        
-        
       </div>
     </div>
-      
+    </ComponentStateHandler>
   );
+  
 }
-export default SearchResult;
+export default withRouter(SearchResult);

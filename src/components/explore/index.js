@@ -46,7 +46,13 @@ function Explore() {
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
           <div className="relative">
+            {/* <button 
+             className=" w-full bg-gray-100 px-4 py-2 pl-8"
+             onClick={()=>router.push('/search')}
+             >
+             </button> */}
             <input
+            onClick={()=>window.history.pushState({urlPath:'/search-items'},"",'/search-items')}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
               type="text"
               name="Search"

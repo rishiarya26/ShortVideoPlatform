@@ -1,4 +1,4 @@
-import FooterMenu from '../footer-menu';
+import FooterMenu from '../../footer-menu';
 
 function Error({ retry }) {
   return (
