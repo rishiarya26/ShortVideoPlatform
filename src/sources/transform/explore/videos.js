@@ -16,6 +16,7 @@ function transformError(error = {}) {
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
+  const {responseData = {}} = data;
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -23,7 +24,7 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
-    payload.data = { ...data.responseData };
+    payload.data = responseData;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
@@ -31,5 +32,6 @@ function transformSuccess(resp) {
     return transformError(data);
   }
 }
+
 
 export { transformSuccess, transformError };

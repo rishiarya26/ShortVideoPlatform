@@ -18,7 +18,7 @@ function HashTag() {
             </div>
             <div className="flex  border-2 border-gray-300 p-2">
               <Save />
-              {' '}
+          
               <p className="pl-2 font-medium">Add to favorites</p>
             </div>
           </div>
@@ -27,7 +27,7 @@ function HashTag() {
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took
             <span className="font-medium text-gray-500">#hashtag</span>
-            {' '}
+           
             of type and scrambled it to make a type specimen book.
           </p>
         </div>

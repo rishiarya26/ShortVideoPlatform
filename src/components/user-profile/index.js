@@ -12,6 +12,7 @@ import VideoGallery from '../video-gallery';
 import LikedList from '../commons/svgicons/liked-list';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
+import { numberFormatter } from '../../utils/convert-to-K';
 
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
@@ -133,15 +134,15 @@ function UserProfile({
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
           <div className="flex flex-col items-center">
-            <p className="font-semibold text-sm">{following}</p>
+            <p className="font-semibold text-sm">{numberFormatter(following)}</p>
             <p className="text-xs">Following</p>
           </div>
           <div className="flex flex-col items-center px-9">
-            <p className="font-semibold text-sm">{followers}</p>
+            <p className="font-semibold text-sm">{numberFormatter(followers)}</p>
             <p className="text-xs">Followers</p>
           </div>
           <div className="flex flex-col items-center">
-            <p className="font-semibold text-sm">{totalLikes}</p>
+            <p className="font-semibold text-sm">{numberFormatter(totalLikes)}</p>
             <p className="text-xs">Likes</p>
           </div>
         </div>
