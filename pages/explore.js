@@ -3,7 +3,9 @@ import SearchResult from '../src/components/search-result'
 
 export default function Hipi() {
   return (
-    //<Explore />
+    <div>
+    {/* <Explore /> */}
     <SearchResult />
+    </div>
   );
 }
