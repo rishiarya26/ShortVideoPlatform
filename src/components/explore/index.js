@@ -31,6 +31,13 @@ function Explore() {
   toRetry = retry;
   const validateData = data?.length > 0;
 
+const toUserList = (value)=>{
+    let hashTag = value;   
+    console.log(hashTag)
+    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    router.push(`/user-list?ref=${hashTag}`);
+}
+
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
     console.log(hashTag)
@@ -77,7 +84,7 @@ function Explore() {
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center">
+                  <div  className="flex items-center justify-center">
                     <RightArrow />
                   </div>
                 </div>
@@ -98,7 +105,7 @@ function Explore() {
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
                     <p className="text-base font-medium">{content?.widgetName}</p>
-                    <div className="flex items-center justify-center">
+                    <div onClick={()=> toUserList(content?.widgetName)} className="flex items-center justify-center">
                       <RightArrow />
                     </div>
                   </div>

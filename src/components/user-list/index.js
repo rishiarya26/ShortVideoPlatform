@@ -1,6 +1,9 @@
 import { Back } from '../commons/svgicons/back';
+import { withRouter } from 'next/router';
 
-function UserList() {
+function UserList({router}) {
+  const {ref} =  router?.query
+
   return (
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center p-4 justify-center">
@@ -29,4 +32,4 @@ function UserList() {
     </div>
   );
 }
-export default UserList;
+export default withRouter(UserList);

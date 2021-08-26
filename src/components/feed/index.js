@@ -36,7 +36,6 @@ const detectDeviceModal = dynamic(
   }
 );
 
-
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);

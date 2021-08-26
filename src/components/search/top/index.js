@@ -20,7 +20,7 @@ const TopItems = ({item, redirectTab}) =>{
       }
      
      const dataFetcher = ()=> item && getTopSearches(item && item)
-     const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);
+     const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched, item);
 
      setRetry = retry && retry;
     return (
@@ -78,7 +78,7 @@ const TopItems = ({item, redirectTab}) =>{
                 </div>
              
                  <div className="flex min-w-full overflow-x-auto no_bar">
-                 {data?.items?.hashtags.map((item, id)=>(
+                 {data?.items?.hashtags?.map((item, id)=>(
                  <div key={id}  className="m-1 flex relative">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
@@ -110,7 +110,7 @@ const TopItems = ({item, redirectTab}) =>{
                     </div>
                 </div>
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
-                   {data?.items?.videos.map((item, id)=>(
+                   {data?.items?.videos?.map((item, id)=>(
                     <div key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
@@ -134,7 +134,7 @@ const TopItems = ({item, redirectTab}) =>{
                     </div>
                 </div>
                 <div className="card_list flex min-w-full overflow-x-auto no_bar">
-                {data?.items?.sounds.map((item, id)=>(
+                {data?.items?.sounds?.map((item, id)=>(
 
                     <div key={id} className="flex p-2 min-w-3/5 mr-2">
                         <div className=" w-16.6v flex h-16.6v bg-gray-300 relative " />

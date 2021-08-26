@@ -53,8 +53,7 @@ function SearchFeed({ router }) {
     const finalTData = []
     widgetList.forEach((d)=>{
         const video = d?.video;
-        selectVideoUrl(video);
-        video.selected_video_url = videoUrl;
+        video.selected_video_url = selectVideoUrl(video);;
         finalTData.push(video);
     })
     console.log("f",finalTData)
@@ -67,6 +66,7 @@ function SearchFeed({ router }) {
           normal : data,
           withHash : transformResponse(data)
       }
+      console.log(type)
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
@@ -132,7 +132,7 @@ function SearchFeed({ router }) {
             const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
             console.log(videoId,slideToId)
             swiper?.slideTo(slideToId, 0);
-              router.replace(`/search-feed/${id}`);
+            //   router.replace(`/search-feed/${id}`);
             }}
             draggable="true"
             spaceBetween={0}

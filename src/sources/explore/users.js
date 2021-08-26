@@ -7,8 +7,10 @@ import { transformSuccess, transformError } from '../transform/explore/users';
 async function fetchSearchResult({
   keyword, limit='20', offset='1'
 }) {
+  console.log("keyword",keyword)
   let response = {};
   try {
+    console.log(keyword)
     const apiPath = `${getApiBasePath('hipi')}/v2/shorts/search/result/users?keyword=${keyword}&limit=${limit}&offset=${offset}`;
     response = await get(apiPath);
     response.data.requestedWith = { keyword };

@@ -1,4 +1,9 @@
 import React from 'react';
+import HashTags from '../../search/hash-tags';
+import Sounds from '../../search/sounds';
+import TopItems from '../../search/top';
+import Users from '../../search/users';
+import Videos from '../../search/videos';
 
 const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
 

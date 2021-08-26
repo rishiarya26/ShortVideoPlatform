@@ -1,5 +1,4 @@
 
-import Search from '../../commons/svgicons/search-black';
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Tabs from '../../commons/tabs/search-tabs';
@@ -12,13 +11,30 @@ import SearchItems from '../../search-items';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [compToShow, setCompToshow] = useState();
+  const [searchTerm, setSearchTerm] = useState('')
 
-  const {item = ''} = router?.query;
+  useEffect(()=>{
+    const item = router?.query?.item;
+    console.log(item)
+    setSearchTerm(item)
+  },[])
+
+  useEffect(()=>{
+    const item = router?.query?.item;
+    console.log(item)
+    setSearchTerm(item)
+  },[router.asPath])
+ 
   const redirectTab = (selected) =>{
     setSelectedIndex(selected)
   }
-  const components = [<TopItems item={item} redirectTab={redirectTab}/>, <Users item={item}/>,<Videos item={item}/>, <Sounds/>, <Hashtags item={item}/>]; 
+  const components = [
+      <TopItems item={searchTerm} redirectTab={redirectTab}/>, 
+      <Users item={searchTerm}/>,
+      <Videos item={searchTerm}/>, 
+      <Sounds/>, 
+      <Hashtags item={searchTerm}/>
+  ]; 
 
  const items = {
    display : ['Top','Users', 'Videos', 'Sounds', 'Hashtags'],
@@ -29,31 +45,15 @@ function SearchResult({router}) {
    setSelectedIndex(compNo)
  }
 
- useEffect(()=>{
-   setCompToshow(components[selectedIndex])
- },[selectedIndex])
-
   return (
     <div>
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
-          <SearchItems/>
-          {/* <div className="relative">
-            <input
-              className=" w-full bg-gray-100 px-4 py-2 pl-8"
-              type="text"
-              name="Search"
-              placeholder="Search" 
-            />
-            <div className="absolute left-1 top-2">
-              <Search />
-            </div>
-          </div> */}
+        <SearchItems/>
           <div />
         </div>
-
-        <Tabs  items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
-       {compToShow}
+        <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
+        {components[selectedIndex]}
       </div>
     </div>
   );

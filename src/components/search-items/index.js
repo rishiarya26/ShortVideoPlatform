@@ -3,18 +3,19 @@ import { useState } from "react";
 
 const SearchItems = ()=>{
     const [searchTerm, setSearchTerm] = useState(null);
-    const toSearch=(e)=>{
-       setSearchTerm(e?.currentTarget?.value)
+
+    const onTermChange=(e)=>{
+       setSearchTerm(e.currentTarget.value)
     }
 
     const handleSearch=()=>{
-       Router.push(`/search-results/${searchTerm}`)
+        Router.push(`/search-results/${searchTerm}`);
     }
 
     return(
         <div>
             <input
-              onChange={toSearch}
+              onChange={onTermChange}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
               type="text"
               name="Search"
@@ -23,8 +24,6 @@ const SearchItems = ()=>{
             <button onClick={handleSearch}>
                 Go
             </button>
-
-
         </div>
     )
 }

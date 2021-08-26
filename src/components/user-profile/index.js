@@ -13,6 +13,16 @@ import LikedList from '../commons/svgicons/liked-list';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
 import { numberFormatter } from '../../utils/convert-to-K';
+import useDrawer from '../../hooks/use-drawer';
+import dynamic from 'next/dynamic';
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 function UserProfile({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
@@ -20,6 +30,7 @@ function UserProfile({
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
 
+  const { show } = useDrawer();
   const { t } = useTranslation();
 
   const onTabChange = selected => {
@@ -77,7 +88,7 @@ function UserProfile({
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+          <button onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "edit Profile"})}  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
             Edit Profile
           </button>
         {/* </Link> */}
