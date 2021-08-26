@@ -29,9 +29,9 @@ const Users = ({item}) =>{
                 Loader={LoadComp}
                 ErrorComp={ErrorComp}
             >
-           <div>
+           <div className="flex flex-col">
                  {items?.map((item, id)=>(
-                  <div key={id} className="flex border-2 border-gray-200 p-2 min-w-3/5 mr-2">
+                  <div key={id} className=" p-2 min-w-3/5 mr-2">
                       <div className=" w-16.6v flex h-16.6v bg-gray-300 relative rounded-full" >
                           <Img data={item?.userIcon} alt="image"/>
                           </div>
