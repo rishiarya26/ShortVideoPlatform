@@ -8,6 +8,7 @@ import Users from '../users';
 import Videos from '../videos';
 import Sounds from '../sounds';
 import Hashtags from '../hash-tags';
+import SearchItems from '../../search-items';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -36,7 +37,8 @@ function SearchResult({router}) {
     <div>
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
-          <div className="relative">
+          <SearchItems/>
+          {/* <div className="relative">
             <input
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
               type="text"
@@ -46,7 +48,7 @@ function SearchResult({router}) {
             <div className="absolute left-1 top-2">
               <Search />
             </div>
-          </div>
+          </div> */}
           <div />
         </div>
 

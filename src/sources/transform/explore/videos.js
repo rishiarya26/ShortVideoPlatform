@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { getNetworkConnection } from '../../../utils/device-details';
 
 function transformError(error = {}) {
   const { payload } = getNewObjectCopy(transformModel);
@@ -24,7 +25,18 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
+    const networkConnection = getNetworkConnection();
+    responseData?.videos.map((d)=>{
+      let videoUrls = {}
+      videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+      videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+      videoUrls.low = d?.akamaiUrl;
+      const videoUrl =  videoUrls[networkConnection];
+      d.selected_video_url = videoUrl;
+    })
+    // console.log("tresp",responseData.videos)
     payload.data = responseData?.videos;
+    console.log("tresp",payload.data)
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

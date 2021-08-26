@@ -14,6 +14,8 @@ import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
 import { getNetworkConnection } from '../../utils/device-details';
+import SwiperSlideComp from '../swiper.js';
+
 
 SwiperCore.use([Mousewheel]);
 
@@ -30,37 +32,42 @@ function SearchFeed({ router }) {
 
   const { id } = router?.query;
   const { ref = '' } = router?.query;
-  const { type = 'normal'} = router?.query;
+  const {type = 'normal'} = router?.query;
 //   const path = router?.asPath
 //   console.log(path)
   const { videoId = items?.[0]?.content_id } = router?.query;
 
-  const transformResponse = (data) =>{  
+  const selectVideoUrl = (video) => {
     const networkConnection = getNetworkConnection();
+    let videoUrls = {}
+    videoUrls.fast = video?.videoUrl?.AkamaiURL?.[2];
+    videoUrls.medium = video?.videoUrl?.AkamaiURL?.[1];
+    videoUrls.low = video?.akamaiUrl;
+    return videoUrls[networkConnection];
+  }
+
+  const transformResponse = (data) =>{  
     const feedData = data.filter((content) => (content.widgetName === `#${ref}`));
     const [content = []] = feedData;
     const {widgetList= []} = content;
+    const finalTData = []
     widgetList.forEach((d)=>{
         const video = d?.video;
-        let videoUrls = {}
-        videoUrls.fast = video?.videoUrl?.AkamaiURL?.[2];
-        videoUrls.medium = video?.videoUrl?.AkamaiURL?.[1];
-        videoUrls.low = video?.akamaiUrl;
-        const videoUrl = videoUrls[networkConnection];
+        selectVideoUrl(video);
         video.selected_video_url = videoUrl;
+        finalTData.push(video);
     })
-    console.log("f",widgetList)
-    return widgetList;
+    console.log("f",finalTData)
+    return finalTData;
   }
 
   const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
   const onDataFetched = data => {
-      console.log(data)
-    const info={
-        normal : data,
-        withHash : transformResponse(data)
-    }
-      data && setItems(info[type]);
+      const info = {
+          normal : data,
+          withHash : transformResponse(data)
+      }
+      data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
 
@@ -118,13 +125,14 @@ function SearchFeed({ router }) {
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
             <Back />
           </div>
-          <Swiper
+            <Swiper
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
-              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              swiper?.slideTo(slideToId, 0);
-            //   router.replace(`/search-feed/${id}`);
+            const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
+            console.log(videoId,slideToId)
+            swiper?.slideTo(slideToId, 0);
+              router.replace(`/search-feed/${id}`);
             }}
             draggable="true"
             spaceBetween={0}
@@ -132,52 +140,50 @@ function SearchFeed({ router }) {
             mousewheel
             scrollbar={{ draggable: true }}
             onSlideChange={swiperCore => {
-              const {
+            const {
                 activeIndex, slides
-              } = swiperCore;
-              const activeId = slides[activeIndex]?.id;
-              setActiveVideoId(activeId);
+            } = swiperCore;
+            const activeId = slides[activeIndex]?.id;
+            setActiveVideoId(activeId);
             }}
-          >
-            {
-              items?.map(
-                item => (
-                  <SwiperSlide
-                    key={item.content_id}
-                    id={item.content_id}
+        >
+    {   items?.map(
+            item => (
+                <SwiperSlide
+                key={item?.id}
+                id={item?.id}
 
-                  >
-                    <Video
-                      updateSeekbar={updateSeekbar}
-                      socialId={item.getSocialId}
-                      url={item.video.selected_video_url}
-                      id={item.id}
-                      comments={item.commentsCount}
-                      likes={item.likesCount}
-                      music={item.musicCoverTitle}
-                      musicTitle={item.music_title}
-                      profilePic={item.userProfilePicUrl}
-                      userName={`@${item.video?.videoOwners?.userName}`}
-                      musicCoverTitle={item.musicCoverTitle}
-                      videoid={item.content_id}
-                      hashTags={item.hashTags}
-                      videoOwnersId={item.videoOwnersId}
-                      thumbnail={item.video.thumbnailUrl}
-                      canShop={shop.isShoppable}
-                      shopCards={shop.data}
-                      handleSaveLook={handleSaveLook}
-                      saveLook={saveLook}
-                      saved={item.saveLook}
-                      activeVideoId={activeVideoId}
-                      comp="profile"
-                      profileFeed
-                    />
+              >
+          <Video
+             updateSeekbar={updateSeekbar}
+             socialId={item.getSocialId}
+             url={item?.selected_video_url}
+             id={item?.id}
+             comments={item.commentsCount}
+             likes={item.likesCount}
+             music={item.musicCoverTitle}
+             musicTitle={item?.sound?.name}
+             profilePic={item.userProfilePicUrl}
+             userName={`@${item.videoOwners?.userName}`}
+             musicCoverTitle={item.musicCoverTitle}
+             videoid={item.content_id}
+             hashTags={item.hashTags}
+             videoOwnersId={item.videoOwnersId}
+             thumbnail={item.thumbnailUrl}
+             canShop={shop.isShoppable}
+             shopCards={shop.data}
+             handleSaveLook={handleSaveLook}
+             saveLook={saveLook}
+             saved={item.saveLook}
+             activeVideoId={activeVideoId}
+             comp="profile"
+             profileFeed
+          />
+          </SwiperSlide>
+          ))}
+      
+         </Swiper>
 
-                  </SwiperSlide>
-                )
-              )
-            }
-          </Swiper>
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>

@@ -51,7 +51,10 @@ export default function VideoGallery({
             ? (
               <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
                 { items.map((data, id) => (
-                  <span className="w-1/3 p-1" key={id} onClick={page === 'search' ? ()=> router.push(`/search-feed/${data?.content_id}?type=normal`) : ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
+                  <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
+                   ? ()=> router.push(`/search-feed/${data?.id}?type=normal`)
+                   : ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
+                    {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${data?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
                       <VideoCard data={data} id={id} />
                   </span>
                 ))}

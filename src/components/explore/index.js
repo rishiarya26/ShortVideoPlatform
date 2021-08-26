@@ -10,6 +10,7 @@ import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
 import Router from '../../../router';
 import { useRouter } from 'next/router';
+import SearchItems from '../search-items';
 // import { useRouter } from 'next/router';
 
 let toRetry;
@@ -45,12 +46,8 @@ function Explore() {
     >
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
-          <div className="relative">
-            {/* <button 
-             className=" w-full bg-gray-100 px-4 py-2 pl-8"
-             onClick={()=>router.push('/search')}
-             >
-             </button> */}
+        <SearchItems/>
+          {/* <div className="relative">
             <input
             onClick={()=>window.history.pushState({urlPath:'/search-items'},"",'/search-items')}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
@@ -61,7 +58,7 @@ function Explore() {
             <div className="absolute left-1 top-2">
               <Search />
             </div>
-          </div>
+          </div> */}
           <div />
         </div>
         <div className="poster w-full" />
