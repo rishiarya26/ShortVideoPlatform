@@ -9,13 +9,13 @@ import Sounds from '../src/components/search/sounds';
 export default function Hipi() {
   return (
     <div>
-    {/* <Explore /> */}
+    <Explore />
     {/* <SearchResult/> */}
     {/* <ExploreUserList/> */}
     {/* <HashTag/> */}
-    <Hashtags/>
+    {/* <Hashtags/>
     <Users/>
-    <Sounds/>
+    <Sounds/> */}
     </div>
   );
 }

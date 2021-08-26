@@ -44,8 +44,8 @@ function Explore() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="h-screen  w-screen flex flex-col ">
-        <div className="search_box p-4 w-full">
+      <div className="h-screen  w-screen flex flex-col relative">
+        <div className="search_box w-full z-10 fixed top-0">
         <SearchItems/>
           {/* <div className="relative">
             <input
@@ -61,7 +61,7 @@ function Explore() {
           </div> */}
           <div />
         </div>
-        <div className="poster w-full" />
+        <div className="poster w-full mt-40" />
 
         {validateData && data?.map((content, id) => {
           return (
