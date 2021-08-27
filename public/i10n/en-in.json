@@ -56,5 +56,6 @@
   "NEXT":"Next",
   "REGISTERED":"mobile no is already registered. Please Log in",
   "SIGN_UP":"Sign up",
-  "LOGIN":"Log in"
+  "LOGIN":"Log in",
+  "SEND_OTP":"Send OTP"
   }

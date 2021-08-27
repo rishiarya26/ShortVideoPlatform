@@ -1,8 +1,9 @@
 import { withRouter } from 'next/router';
-import Signup from '../../src/components/signup';
+import Auth from '../../src/components/auth';
+// import Signup from '../../src/components/signup';
 
 const Hipi = () => (
-  <Signup />
+  <Auth authType="signup" />
 );
 
 export default withRouter(Hipi);
