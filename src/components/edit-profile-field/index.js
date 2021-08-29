@@ -6,7 +6,7 @@ import Error from './error';
 import Loader from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import { getUserProfile } from '../../sources/users/profile';
-import Cancel from '../commons/svgicons/Cancel';
+import Cancel from '../commons/svgicons/cancel';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
