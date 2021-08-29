@@ -1,4 +1,4 @@
-import Close from '../svgicons/close';
+import Close from '../svgicons/close-black';
 
 const Dialog = ({
   children, title, close, visible
@@ -7,7 +7,7 @@ const Dialog = ({
     data-testid="dialog-container"
     className={`
       w-3/4
-      ${visible ? 'visible' : 'invisible'} 
+      ${children && visible ? 'block' : 'hidden'} 
       z-10 fixed rounded-lg p-4 bg-white 
       overflow-y-auto
       transition-all duration-300
@@ -16,21 +16,26 @@ const Dialog = ({
       motion-reduce:transition-none motion-reduce:transform-none
     `}
   >
-    <div data-testid="dialog-header flex w-full justify-between relative">
-      <div data-testid="dialog-title">{title}</div>
-      <div
-        data-testid="dialog-close"
-        role="presentation"
-        onClick={() => (close())}
-        className="w-6 h-6 absolute right-3 top-3"
-      >
-        <Close />
-      </div>
+    {children && (
+      <>
+        {' '}
+        <div data-testid="dialog-header flex w-full justify-between relative">
+          <div className=" flex justify-center text-xl font-semibold" data-testid="dialog-title">{title}</div>
+          <div
+            data-testid="dialog-close"
+            role="presentation"
+            onClick={() => (close())}
+            className="w-6 h-6 absolute right-3 top-3"
+          >
+            <Close />
+          </div>
 
-    </div>
-    <div data-testid="dialog-content w-full">
-      {children}
-    </div>
+        </div>
+        <div data-testid="dialog-content w-full">
+          {children}
+        </div>
+      </>
+    )}
   </div>
 );
 export default Dialog;

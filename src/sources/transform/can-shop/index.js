@@ -3,7 +3,7 @@ import { getNewObjectCopy } from '../../../utils/app';
 
 function transformError() {
   const { payload } = getNewObjectCopy(transformModel);
-  payload.canShop = false;
+  payload.isShoppable = false;
   return payload;
 }
 
@@ -14,11 +14,12 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
-    payload.canShop = false;
+    payload.isShoppable = false;
     if (
       data.data?.[0]?.topCharms?.length > 0
     ) {
-      payload.canShop = true;
+      payload.data = data.data[0].topCharms?.[0]?.contentImageUrlArray;
+      payload.isShoppable = true;
     }
     return payload;
   } catch (err) {

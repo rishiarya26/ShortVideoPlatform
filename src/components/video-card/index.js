@@ -1,11 +1,9 @@
-import ImageComp from '../commons/image';
+import Img from '../commons/image';
 
 export default function VideoCard({ data, id }) {
   return (
-    <div>
-      <div key={id} className="p-0.5 m-px">
-        <ImageComp data={data.thumbnailUrl} title={data.videoTitle} />
-      </div>
+    <div key={id} className="video-card relative">
+      <Img data={data.thumbnailUrl} title={data.videoTitle} />
     </div>
   );
 }

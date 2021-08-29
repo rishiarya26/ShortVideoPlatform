@@ -22,3 +22,25 @@
   .swiper-wrapper{
     max-height: 100vh;
   }
+  
+  .video-card{
+    width: 31vw;
+    height: 55.8vw;
+    box-sizing: border-box;
+  }
+  .vdo_player{
+    box-sizing: border-box;
+    object-fit: cover!important;
+    height: 100%;
+  }
+  input:focus-visible{
+    outline: none;
+  }
+  
+.bg_grad{
+  background: linear-gradient(270deg, #D428B6 0%, #BE2ADE 24.59%, #8330C7 50.56%, #5C2ADE 74.51%, #2928D4 100%);
+}
+
+.no_bar::-webkit-scrollbar {
+  display: none;
+}

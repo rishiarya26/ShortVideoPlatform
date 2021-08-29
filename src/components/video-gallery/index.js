@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
@@ -9,11 +11,33 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  handleClick, items, status, retry
+  items, status, retry, userId, type = 'all', page ='profile'
 }) {
+  const { t } = useTranslation();
+  const router = useRouter();
+  const noData = {
+    all: <>
+      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        {t('NO_VIDEOS_PUBLISHED')}
+      </p>
+    </>,
+    PRIVATE: <>
+      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        {t('NO_VIDEOS_PUBLISHED')}
+      </p>
+    </>,
+    liked: <>
+      <p className="font-semibold">No Liked Videos</p>
+      <p className="text-center text-sm text-gray-500 my-2">
+        Videos Liked by this user will appear here
+      </p>
+    </>
+  };
+
   setRetry = retry;
   const validItemsLength = items?.length > 0;
-  const { t } = useTranslation();
 
   return (
     <>
@@ -23,22 +47,27 @@ export default function VideoGallery({
           Loader={LoadComp}
           ErrorComp={ErrorComp}
         >
-          <div className="flex flex-wrap flex-row w-full space-x space-y">
-            {validItemsLength
-              ? items.map((data, id) => (
-                <span key={id} onClick={() => handleClick()}>
-                  <VideoCard data={data} id={id} />
-                </span>
-              ))
-              : (
-                <div className="video-layout flex flex-col p-10 items-center">
-                  <p className="font-semibold">{t('NO_VIDEOS')}</p>
-                  <p className="text-center text-sm text-gray-500 my-2">
-                    {t('NO_VIDEOS_PUBLISHED')}
-                  </p>
+          {validItemsLength
+            ? (
+              <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
+                { items.map((data, id) => (
+                  <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
+                   ? ()=> router.push(`/search-feed/${data?.id}?type=normal`)
+                   : ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)}>
+                    {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${data?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
+                      <VideoCard data={data} id={id} />
+                  </span>
+                ))}
+              </div>
+            )
+            : (
+              <div className="flex flex-wrap flex-row w-full space-x space-y p-1 justify-center">
+                <div className="video-layout flex flex-col p-10 items-center ">
+                  {noData[type]}
                 </div>
-              )}
-          </div>
+              </div>
+            )}
+
         </ComponentStateHandler>
       )}
     </>

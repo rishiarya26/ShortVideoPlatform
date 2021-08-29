@@ -1,10 +1,13 @@
-
-import React, { useState, useRef } from 'react';
+/*eslint-disable react/jsx-no-duplicate-props*/
+import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
+import ProductWidget from '../product-widget';
+import ProductCards from '../product-cards';
+// import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
 
 function Video(props) {
@@ -48,35 +51,42 @@ function Video(props) {
       }
     }
   };
-
   const [ref] = useIntersect({
     callback: handlePlay,
     rootMargin: '50px',
     threshold: [0.30, 0.75]
   });
 
+  // useEffect(() => {
+  //   setPlayer(ref.current);
+  // }, [])
+
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
-
   return (
     <div
       ref={rootRef}
-      className="video_card relative w-full bg-black"
+      className="video_card relative w-screen bg-black overflow-hidden rounded-sm"
       style={{ height: `${videoHeight}px` }}
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        // autoPlay
+        // muted
+        playsInline
+        webkit-playsInline
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
         onClick={handleVideoPress}
         className="vdo_player"
-        width={size.width}
-        height={videoHeight}
+        // width={size.width}
+        // height={videoHeight}
         poster={props.thumbnail}
         objectfit="cover"
+        key={props.url}
       >
         <source
           src={props.url}
@@ -98,6 +108,17 @@ function Video(props) {
         <Pause />
       </div> */}
 
+      <VideoFooter
+        musicTitle={props.musicTitle}
+        userName={props.userName}
+        musicCoverTitle={props.musicCoverTitle}
+        type="feed"
+        hashTags={props.hashTags}
+        canShop={props.canShop}
+        saveLook={props.saveLook}
+        comp={props?.comp}
+      />
+      {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
         videoOwnersId={props.videoOwnersId}
         socialId={props.socialId}
@@ -106,17 +127,34 @@ function Video(props) {
         comment={props.comments}
         share={777}
         type="feed"
+        handleSaveLook={props.handleSaveLook}
+        saveLook={props.saveLook}
+        canShop={props.canShop}
+        saved={props.saved}
+        profileFeed={props?.profileFeed}
+        videoId={props.id}
       />
 
-      <VideoFooter
-        musicTitle={props.musicTitle}
-        userName={props.userName}
-        musicCoverTitle={props.musicCoverTitle}
-        type="feed"
-        hashTags={props.hashTags}
-        videoShopData={props.videoShopData}
-        id={props.id}
-      />
+      {/* TO-DO  comdition acc to comp */}
+      {props.canShop === 'success' && (!props.profileFeed
+        ? (!props.saveLook
+          && (
+            <ProductWidget
+              shopCards={props.shopCards}
+              handleSaveLook={props.handleSaveLook}
+              videoId={props.activeVideoId}
+            />
+          )
+        ) : (
+          <ProductCards
+            shopCards={props.shopCards}
+            handleSaveLook={props.handleSaveLook}
+            videoId={props.activeVideoId}
+            profileFeed={props.profileFeed}
+            comp="profile"
+          />
+        )
+      )}
 
     </div>
   );

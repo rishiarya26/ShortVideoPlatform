@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Error from 'next/error';
-import EmbedVideo from '../../src/components/embedvideo';
+import EmbedVideo from '../../src/components/embed-video';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import {
   SeoMeta,
   VideoJsonLd
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
-import EmbedSeekbar from '../../src/components/emded-seekbar';
+import { getEffectiveVideoUrl } from '../../src/utils/content';
+// import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -16,18 +17,25 @@ const languageCodes = Object.keys(supportedLanguages).map(
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
+  const [videoUrl, setVideoUrl] = useState(null);
   const {
     data: item = {},
     errorCode,
     message,
     status
   } = params;
-  const vobj = { videoId: item.content_id };
-  const canShop = !!item?.canShop;
-
+  const canShop = item?.canShop?.status || 'fail';
+  const shopCards = item?.canShop?.data;
+  const videoId = item?.content_id;
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
+
+  useEffect(() => {
+    const videoUrl = getEffectiveVideoUrl(item.video_urls);
+    setVideoUrl(videoUrl);
+  }, []);
+
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -77,7 +85,7 @@ export default function Hipi(params) {
       <EmbedVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
-        url={item.video_url}
+        url={videoUrl}
         id={item.content_id}
         comments={item.commentsCount}
         likes={item.likesCount}
@@ -88,20 +96,14 @@ export default function Hipi(params) {
         musicCoverTitle={item.musicCoverTitle}
         hashTags={item.hashTags}
         canShop={canShop}
+        shopCards={shopCards}
+        videoId={videoId}
+        poster={item.thumbnail}
+        seekedPercentage={seekedPercentage}
       />
-      <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
-        {canShop
-          && (
-            <button
-              className="rounded-md text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base"
-              // eslint-disable-next-line no-undef
-              onClick={() => cbplugin && cbplugin.cbTouch(vobj)}
-            >
-              SHOP
-            </button>
-          )}
-      </div>
-      <EmbedSeekbar seekedPercentage={seekedPercentage} />
+      {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
+        <Shop videoId={videoId} canShop={canShop} />
+      </div> */}
     </>
   );
 }
@@ -129,7 +131,6 @@ export async function getServerSideProps(ctx) {
       message: e.message
     };
   }
-
   return {
     props: {
       uri,

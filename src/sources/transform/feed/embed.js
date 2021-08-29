@@ -33,27 +33,42 @@ function transformSuccess(resp) {
       videos.forEach(d => {
         payloadObject.data_id = d.objectID;
         payloadObject.content_id = d.id;
-        payloadObject.video_url = d.akamaiUrl;
         payloadObject.content_description = d.description;
         payloadObject.userId = d.videoOwnersId;
         payloadObject.videoOwnersId = d.videoOwnersId;
         payloadObject.getSocialId = d.getSocialId;
         payloadObject.id = d.id;
-        payloadObject.genre = d.genre;
+        payloadObject.genre = d?.genre || null;
         payloadObject.userProfilePicUrl = d.videoOwners.profilePicImgUrl;
         payloadObject.userName = d.videoOwners.userName;
         payloadObject.likesCount = d.lCount;
         payloadObject.music_title = d.sound.name;
         payloadObject.hashTags = d.hashtags;
+        const videoUrls = {};
+        videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+        videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+        videoUrls.low = d.akamaiUrl;
+        payloadObject.video_urls = videoUrls;
+        payloadObject.thumbnail = d.thumbnailUrl;
       });
       payload.data = payloadObject;
     } else {
       return transformError(data);
     }
-    payload.data.canShop = data.canShop;
+    const { canShop = {} } = data;
+    const { isShoppable = false } = canShop;
+    const shop = {};
+    if (isShoppable) {
+      shop.status = 'success';
+      shop.data = canShop?.data;
+    } else {
+      shop.status = 'fail';
+    }
+    payload.data.canShop = shop;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
+    // console.log("err",error)
     data.appError = err.message;
     return transformError(data);
   }

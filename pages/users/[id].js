@@ -13,6 +13,7 @@ export default function Hipi(params) {
     message,
     status
   } = params;
+
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -58,6 +59,7 @@ export default function Hipi(params) {
         profilePic={item.profilePic}
         firstName={item.firstName}
         id={item.id}
+        type="others"
       />
     </>
   );

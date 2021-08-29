@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/*eslint-disable @next/next/no-sync-scripts */
 import useTranslation from '../../../hooks/use-translation';
 import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
@@ -7,23 +9,30 @@ function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
+  console.log(withBasePath(`manifest.json?v=${appVersion}`))
   return (
     <>
+      <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
       <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       {/* <title>{APP_NAME}</title> */}
 
-      <link rel="preload" href="https://hipi.co.in/feed" as="document" />
+      <link rel="preload" href="https://hipi.co.in/feed/for-you" as="document" />
 
-      {/* charmboard plugin */}
-      <script type="text/javascript" src="https://devqa2.charmboard.com/zee5/kaltura_plugin.js" />
+      <link rel="dns-prefetch" href="https://eum.instana.io" />
+      <link rel="dns-prefetch" href="https://eum-blue-saas.instana.io" />
+      <link rel="dns-prefetch" href="https://mock.hipi.co.in" />
+      <link rel="dns-prefetch" href="https://assets2.charmboard.com" />
+      <link rel="dns-prefetch" href="https://media.charmboard.com" />
+      <link rel="dns-prefetch" href="https://www.hipi.co.in" />
+      <link rel="dns-prefetch" href="https://devqa2.charmboard.com" />
 
       <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
       <script type="text/javascript" src="/embeds/hipi.js" />
-      <meta name="theme-color" content="#100618" />
+      <meta name="theme-color" content="#00aae7" />
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -129,8 +138,6 @@ function HeadMeta() {
       <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
-
-      <link rel="manifest" href={withBasePath(`/manifest.json?v=${appVersion}`)} />
     </>
   );
 }

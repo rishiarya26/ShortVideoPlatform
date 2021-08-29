@@ -1,7 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath, isMockMode } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
-import { preCondition } from '../auth/pre-condition';
+// import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/users/profile';
 import {
   transformSuccess as transformProfileVideoSuccess,
@@ -14,9 +14,11 @@ async function fetchUserProfile(id) {
   try {
     if (isMockMode()) {
       apiPath = `${getApiBasePath('app')}/api/user`;
-    } else {
-      apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+      response = await get(apiPath);
+      return Promise.resolve(response);
     }
+    apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+
     response = await get(apiPath);
     return Promise.resolve(response);
   } catch (err) {
@@ -95,16 +97,23 @@ async function fetchUserRecommendation({ lang }) {
   }
 }
 
-async function fetchUserProfileVideos({ id, limit = '1', offset = '5' }) {
+async function fetchUserProfileVideos({
+  id, limit = '10', offset = '1', type='all'
+}) {
   let response = {};
+  // let tokens = getItem('tokens');
+  // tokens = JSON.parse(tokens);
+  // const { shortsAuthToken = '' } = tokens;
+  // const { accessToken = '' } = tokens;
+
   try {
-    const resp = await preCondition();
-    const { data = {} } = resp;
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=all&limit=${limit}&offset=${offset}`;
-    response = await get(apiPath, null, {
-      Authorization: `Bearer ${data.shortsAuthToken}`,
-      'access-token': data.accessToken
-    });
+    /* eslint-disable max-len */
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}`;
+    response = await get(apiPath);
+    //   , null, {
+    //   Authorization: `Bearer ${shortsAuthToken}`,
+    //   'access-token': accessToken
+    // });
     response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {

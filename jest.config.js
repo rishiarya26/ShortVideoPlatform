@@ -26,7 +26,7 @@ module.exports = {
 
   collectCoverage: true,
 
-  coverageReporters: ['json', 'html', 'cobertura'],
+  coverageReporters: ['json', 'html', 'cobertura', 'json-summary'],
 
   // An array of file extensions your modules use
   moduleFileExtensions: ['js', 'json', 'jsx'],
@@ -57,11 +57,18 @@ module.exports = {
   verbose: false,
 
   reporters: [
-    'jest-junit',
     'default',
-    ['./node_modules/jest-html-reporter', {
-      pageTitle: 'JPB Test Report'
-    }]
+    ['jest-junit',
+      {
+        suiteName: 'jest tests',
+        outputDirectory: 'perf/reports',
+        outputName: 'junit.xml',
+        uniqueOutputName: 'false',
+        classNameTemplate: '{classname}-{title}',
+        titleTemplate: '{classname}-{title}',
+        ancestorSeparator: ' › ',
+        usePathForSuiteName: 'true'
+      }
+    ]
   ]
-
 };

@@ -17,6 +17,41 @@ module.exports = {
         10: ['10px', '14px'],
         8: ['8px', '12px']
       },
+      width: {
+        '0v': '0',
+        '10v':'10vw',
+        '16.6v':'16.6vw',
+        '20v':'20vw',
+        '28v':'28vw',
+        '25v':'25vw',
+       },
+       height: {
+        '0': '0',
+        '10v':'10vw',
+        '16.6v':'16.6vw',
+        '28v':'28vw',
+        '25v':'25vw',
+        '20v':'20vw',
+       },
+      minWidth: {
+        '0': '0',
+        '1/6':'16.6vw',
+        '1/4': '25%',
+        '28':'28vw',
+        '25':'25vw',
+        '1/2': '50%',
+        '3/5': '60%',
+        '3/4': '75%',
+        'full': '100%',
+       },
+       minHeight: {
+        '38':'38vw',
+        '1/6':'16.6vw',
+        '25':'25vw',
+       },
+      spacing:{
+        22: "5.5rem"
+      },
       screens: {
         xxs: '300px',
         xs: '375px'
@@ -99,7 +134,7 @@ module.exports = {
         DEFAULT: '#100618'
       },
       hipired: {
-        DEFAULT: '#e65252'
+        DEFAULT: '#D21404'
       },
       black: colors.black,
       white: colors.white,

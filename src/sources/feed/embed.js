@@ -10,13 +10,20 @@ async function fetchEmbedFeed({ id }) {
   try {
     if (isMockMode()) {
       apiPath = `${getApiBasePath('app')}/api/embed`;
-    } else {
-      apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+      response = await get(apiPath);
+      response.data.requestedWith = { id };
+
+      return Promise.resolve(response.data);
     }
+    apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+
     response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
-    response[0].data.requestedWith = { id };
-    response[0].data.canShop = response[1].canShop;
-    return Promise.resolve(response[0]);
+    const [resp, shop] = response;
+    console.log('resp', resp, 'shop', shop);
+    resp.data.requestedWith = { id };
+    resp.data.canShop = shop;
+    console.log('final', resp);
+    return Promise.resolve(resp);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -27,3 +34,4 @@ const [getSingleFeed, clearSingleFeed] = apiMiddleWare(fetchEmbedFeed, transform
 export {
   getSingleFeed, clearSingleFeed
 };
+

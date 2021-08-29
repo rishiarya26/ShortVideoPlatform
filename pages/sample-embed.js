@@ -1,6 +1,8 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable max-len */
+/*eslint-disable @next/next/no-img-element*/
+
 
 export default function SampleEmbed() {
   return (
@@ -29,20 +31,20 @@ export default function SampleEmbed() {
       </nav>
 
       <div className="p-10" />
-      <blockquote className="hipi-media" cite="https://hipi.co.in/">
+      <blockquote className="hipi-media" cite="http://preprod.hipi.co.in/">
         <div
           id="embed-hipi"
           style={{
             position: 'relative',
             margin: '0 auto',
-            height: '640px',
+            height: '820px',
             width: '360px',
             overflow: 'hidden'
           }}
         >
           <iframe
             className="h-full w-full"
-            src="https://hipi.co.in/embed/09b322e4-ad5d-4e68-a48b-82ab8850ccd0"
+            src="http://preprod.hipi.co.in:3000/embed/72cc05cb-fe62-493c-a40c-7de24390233e"
             loading="lazy"
             title="hipi"
             name="hipi"

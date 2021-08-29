@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Embedvideo from '../embedvideo';
+import Embedvideo from '../embed-video';
 import Error from './error';
 import Loading from './loader';
 // import useDrawer from '../../hooks/use-drawer';
@@ -54,7 +54,7 @@ export default function EmbedFeed() {
       <div className="w-full fixed bottom-28 py-2 flex justify-around items-center">
         {item.canShop
           && (
-            <button className="rounded-sm text-white py-1 px-4 bg-hipipink font-medium tracking-wide xxs:text-sm xs:text-base">
+            <button className="rounded-sm text-white py-1 px-4 bg-hipired font-medium tracking-wide xxs:text-sm xs:text-base">
               SHOP
             </button>
           )}

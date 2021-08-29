@@ -22,7 +22,6 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
   const [fetchState, setFetchState] = useState('pending');
   const [retry, setRetry] = useState(false);
   const [data, setData] = useState(null);
-
   const dataFetch = async () => {
     try {
       const data = await dataFetcher();
