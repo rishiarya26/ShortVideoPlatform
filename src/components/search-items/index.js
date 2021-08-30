@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getSuggestions } from "../../sources/explore/suggestions";
 import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
+import RightArrow from "../commons/svgicons/right-arrow";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
@@ -73,7 +74,7 @@ const SearchItems = ()=>{
     },[])
 
     const toShowList = {
-        searchHistory :   <div className="bg-white absolute top-40 h-screen w-full flex flex-col" >
+        searchHistory :   <div className="bg-white absolute top-14 h-screen w-full flex flex-col" >
       
            <div  className="p-3 flex w-full flex justify-between">
            <p className="font-semibold">Recent Searches</p>
@@ -93,7 +94,7 @@ const SearchItems = ()=>{
         ))}
        </div>,
 
-       suggestions:   <div className="bg-white absolute top-40 h-screen w-full flex flex-col" >
+       suggestions:   <div className="bg-white absolute top-20 h-screen w-full flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
          <div key={id} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
@@ -109,7 +110,7 @@ const SearchItems = ()=>{
     }
 
     return(
-        <div className="relative h-40 bg-white w-full bg-white">
+        <div className="relative h-20 bg-white w-full bg-white">
             <div className="flex relative bg-white p-4">
             <input
               onChange={onTermChange}
@@ -118,8 +119,8 @@ const SearchItems = ()=>{
               name="Search"
               placeholder="Search" 
             />
-            <button className="absolute right-0 top-0 p-8 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
-                G0
+            <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
+                <RightArrow/>
             </button>
             </div>
             {searchTerm ? toShowList['suggestions'] : toShowList['searchHistory']}
