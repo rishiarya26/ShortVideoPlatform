@@ -53,7 +53,7 @@ export default function VideoGallery({
             { items?.map((data, id) => (
                <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
                ? ()=> router.push(`/search-feed/${data?.id}?type=normal`)  
-               : page === 'hashTag' 
+               : page === 'profile' 
                   ? ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)
                   : ()=>router.push(`/profile-feed/${hashTag}?videoId=${data?.content_id}&type=${type}`)}>
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${data?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
