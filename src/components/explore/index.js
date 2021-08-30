@@ -31,12 +31,12 @@ function Explore() {
   toRetry = retry;
   const validateData = data?.length > 0;
 
-const toUserList = (value)=>{
+  const toUserList = (value)=>{
     let hashTag = value;   
     console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
     router.push(`/user-list?ref=${hashTag}`);
-}
+  }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   

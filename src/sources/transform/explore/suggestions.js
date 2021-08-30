@@ -24,7 +24,14 @@ function transformSuccess(resp) {
     payload.status = 'success';
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
-    payload.data = responseData;
+    let payloadData = []
+    responseData?.some((data,id)=>{
+       payloadData.push(data)
+       if(id>1){
+           return true;
+       }
+    })
+    payload.data = payloadData;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {

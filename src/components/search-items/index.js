@@ -49,51 +49,55 @@ const SearchItems = ({router,type})=>{
     }
 
     const handleSearch=()=>{
+        setShowSuggestions(false)
         console.log(searchHistory)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
-        searchHis.push(searchTerm)
+        searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
         Router.push(`/search-results/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
-        console.log('value',value)
+        setShowSuggestions(false)
         if(id === 'suggestions'){
             console.log(searchHistory)
             const searchHis = [...searchHistory];
-                const result = searchHis.includes(value);
-                if(value && typeof(value) === 'string' && !result){
-                    searchHis.push(value)
-                    localStorage.set('search-suggestions-history',searchHis);
-                    setSearchHistory(searchHis);
-                }  
+            const result = searchHis.includes(value);
+            if(value && typeof(value) === 'string' && !result){
+               searchHis.unshift(value)
+               localStorage.set('search-suggestions-history',searchHis);
+               setSearchHistory(searchHis);
+            }  
         }   
-        console.log('value',value)
         Router.push(`/search-results/${value}`);
     }
 
     useEffect(()=>{ 
         try{
             const searchHistory = localStorage.get('search-suggestions-history');
-            console.log("setting history",searchHistory)
-            searchHistory && setSearchHistory(searchHistory);
+            let trimSearchHistory = []
+            if(searchHistory){
+                searchHistory?.some((data, id)=>{
+                    trimSearchHistory.push(data)
+                    if(id>1){
+                        return true;
+                }})
+            }
+            searchHistory && setSearchHistory(trimSearchHistory);
         }
         catch(e){
-            console.log("error in extracting data from local Storage", e)
+          console.log("error in extracting data from local Storage", e)
         }
-   
     },[])
 
     const toShowList = {
         searchHistory :   <div className="bg-white absolute top-40 h-screen w-full flex flex-col" >
-      
            <div  className="p-3 flex w-full flex justify-between">
            <p className="font-semibold">Recent Searches</p>
            <p className="text-gray-400">Clear All</p>
            </div>
-           {searchHistory?.map((result,id)=>
-           (
+           {searchHistory?.map((result,id)=>(
            <div key={id} className="flex flex-col w-full p-3 bg-white">
            <div className="flex justify-between w-full">
                <div onClick={(e)=>searchFromList(e,'history',result)} className="flex items-center">
@@ -123,12 +127,13 @@ const SearchItems = ({router,type})=>{
 
     const info = {
         list : {
-            explore :   (searchTerm?.length > 2 ? toShowList['suggestions'] : toShowList['searchHistory']),
-            results :   (searchTerm?.length > 2 && toShowList['suggestions'])
+            explore : (searchTerm?.length > 2 ? toShowList['suggestions'] : toShowList['searchHistory']),
+            results : (searchTerm?.length > 2 && toShowList['suggestions'])
         },
         back : {
-            explore : ()=>showSuggestions(false),
-            results : ()=>router.back()
+            // if show suggestions is true then show back button on explore 
+            explore : showSuggestions && <div onClick={()=>setShowSuggestions(false)}><Back/></div>,
+            results : <div onClick={()=>router.back()}><Back/></div>
         }
     }
 
@@ -137,23 +142,24 @@ const SearchItems = ({router,type})=>{
     return(
         <div className="relative h-40 bg-white w-full bg-white">
             <div className="flex relative bg-white p-4">
-            {searchTerm && 
-            <div onClick={()=>setShowSuggestions(false)}><Back/></div>
-            }
+              {info.back[type]}
             <input
               onChange={onTermChange}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
               type="text"
+              autoComplete="off"
               name="Search"
               value={searchTerm && searchTerm}
               placeholder="Search" 
               onClick={()=>setShowSuggestions(true)}
             />
-            <button className="absolute right-0 top-0 p-8 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
+            <button 
+             className="absolute right-0 top-0 p-8 text-semibold text-gray-600 text-sm" 
+             onClick={handleSearch}
+            >
                 G0
             </button>
             </div>
-            {console.log("2",showSuggestions)}
            {showSuggestions === true && info.list[type]}
         </div>
     )
