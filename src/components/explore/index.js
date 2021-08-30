@@ -53,7 +53,7 @@ const toUserList = (value)=>{
     >
       <div className="h-screen  w-screen flex flex-col relative">
         <div className="search_box w-full z-10 fixed top-0">
-        <SearchItems/>
+        <SearchItems type='explore'/>
           {/* <div className="relative">
             <input
             onClick={()=>window.history.pushState({urlPath:'/search-items'},"",'/search-items')}

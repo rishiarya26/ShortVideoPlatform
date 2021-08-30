@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { withRouter } from "next/router";
 import Clock from "../commons/svgicons/clock";
 import Close from "../commons/svgicons/close-black"
 import SearchXs from "../commons/svgicons/search-xs";
@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { getSuggestions } from "../../sources/explore/suggestions";
 import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
+import { Back } from "../commons/svgicons/back";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
-    console.log("called")
         try{
           const response = await getSuggestions(searchTerm); 
           if(response.status === 'success'){
-              console.log(response)
+              console.log("res",response)
               setSuggestions(response?.data)
           }
           }
@@ -25,11 +25,24 @@ async function search(searchTerm, setSuggestions) {
   
   const optimisedSearch = debounce(search, 400);
 
-const SearchItems = ()=>{
-    const [searchTerm, setSearchTerm] = useState(null);
+const SearchItems = ({router,type})=>{
+    const [searchTerm, setSearchTerm] = useState(undefined);
     const [suggestions, setSuggestions] = useState([]);
     const [searchHistory, setSearchHistory] = useState([])
+    const [showSuggestions,setShowSuggestions] = useState(false)
     
+    console.log("term",searchTerm, router)
+
+    useEffect(()=>{
+        if(type === 'results'){
+            const {item = ''} = router?.query;
+            if(item?.length > 0){
+                setSearchTerm(item);
+                search(item,setSuggestions)
+            }
+        }
+    },[])
+
     const onTermChange=(e)=>{
        optimisedSearch(e.currentTarget.value, setSuggestions);
        setSearchTerm(e.currentTarget.value)
@@ -108,23 +121,42 @@ const SearchItems = ()=>{
        </div>
     }
 
+    const info = {
+        list : {
+            explore :   (searchTerm?.length > 2 ? toShowList['suggestions'] : toShowList['searchHistory']),
+            results :   (searchTerm?.length > 2 && toShowList['suggestions'])
+        },
+        back : {
+            explore : ()=>showSuggestions(false),
+            results : ()=>router.back()
+        }
+    }
+
+    useEffect(()=>{console.log("changed sug",showSuggestions)},[showSuggestions])
+
     return(
         <div className="relative h-40 bg-white w-full bg-white">
             <div className="flex relative bg-white p-4">
+            {searchTerm && 
+            <div onClick={()=>setShowSuggestions(false)}><Back/></div>
+            }
             <input
               onChange={onTermChange}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
               type="text"
               name="Search"
+              value={searchTerm && searchTerm}
               placeholder="Search" 
+              onClick={()=>setShowSuggestions(true)}
             />
             <button className="absolute right-0 top-0 p-8 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
                 G0
             </button>
             </div>
-            {searchTerm ? toShowList['suggestions'] : toShowList['searchHistory']}
+            {console.log("2",showSuggestions)}
+           {showSuggestions === true && info.list[type]}
         </div>
     )
 }
 
-export default SearchItems
+export default withRouter(SearchItems)
