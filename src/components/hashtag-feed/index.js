@@ -20,19 +20,20 @@ let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
 
-function ProfileFeed({ router }) {
+function HashTagFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
 
-  const { id } = router?.query;
+  const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
 
-  const dataFetcher = () => getHashTagVideos({ keyword : id });
+  const dataFetcher = () => getHashTagVideos({ keyword : item });
   const onDataFetched = data => {
+    console.log(data?.data)
     data && setItems(data?.data);
     data && setActiveVideoId(videoId);
   };
@@ -97,7 +98,7 @@ function ProfileFeed({ router }) {
             onSwiper={swiper => {
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               swiper?.slideTo(slideToId, 0);
-              router.replace(`/profile-feed/${id}`);
+              router.replace(`/hashtag-feed/${item}`);
             }}
             draggable="true"
             spaceBetween={0}
@@ -162,6 +163,6 @@ function ProfileFeed({ router }) {
       </>
     </ComponentStateHandler>
   );
-}
+};
 
-export default withRouter(ProfileFeed);
+export default withRouter(HashTagFeed);

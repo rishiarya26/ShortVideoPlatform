@@ -45,7 +45,7 @@ function Explore() {
 
   const toHashtagDetails = (hashTag)=>{
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
-    router.push(`/hashTag/${hashTag}`);
+    router.push(`/hashtag/${hashTag}`);
   }
 
   return (
