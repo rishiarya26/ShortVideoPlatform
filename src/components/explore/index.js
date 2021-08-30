@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Hash from '../commons/svgicons/hash';
-import Search from '../commons/svgicons/search-black';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { getSearchData } from '../../sources/explore';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
@@ -8,10 +7,9 @@ import Error from './error';
 import Loader from './loader';
 import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
-import Router from '../../../router';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
-// import { useRouter } from 'next/router';
+
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -45,6 +43,11 @@ function Explore() {
     router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
+  const toHashtagDetails = (hashTag)=>{
+    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    router.push(`/hashTag/${hashTag}`);
+  }
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -54,18 +57,6 @@ function Explore() {
       <div className="h-screen  w-screen flex flex-col relative">
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
-          {/* <div className="relative">
-            <input
-            onClick={()=>window.history.pushState({urlPath:'/search-items'},"",'/search-items')}
-              className=" w-full bg-gray-100 px-4 py-2 pl-8"
-              type="text"
-              name="Search"
-              placeholder="Search"
-            />
-            <div className="absolute left-1 top-2">
-              <Search />
-            </div>
-          </div> */}
           <div />
         </div>
         <div className="poster w-full mt-40" />
@@ -84,7 +75,7 @@ function Explore() {
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
-                  <div  className="flex items-center justify-center">
+                  <div onClick={()=>toHashtagDetails(content?.widgetName)} className="flex items-center justify-center">
                     <RightArrow />
                   </div>
                 </div>
