@@ -33,7 +33,6 @@ function HashTagFeed({ router }) {
 
   const dataFetcher = () => getHashTagVideos({ keyword : item });
   const onDataFetched = data => {
-    console.log(data?.data)
     data && setItems(data?.data);
     data && setActiveVideoId(videoId);
   };

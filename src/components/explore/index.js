@@ -31,14 +31,12 @@ function Explore() {
 
   const toUserList = (value)=>{
     let hashTag = value;   
-    console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
     router.push(`/user-list?ref=${hashTag}`);
   }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
-    console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
     router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
@@ -82,7 +80,6 @@ function Explore() {
 
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
-                    console.log(content.widgetName)
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />

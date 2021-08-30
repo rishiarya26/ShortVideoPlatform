@@ -1,7 +1,7 @@
-import Users from '../src/components/search/users';
+import UserList from '../src/components/user-list';
 
 export default function Hipi() {
   return (
-    <Users type='withFollow'/>
+    <UserList />
   );
 }

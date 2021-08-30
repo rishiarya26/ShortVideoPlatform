@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import { withRouter } from 'next/router';
 import Video from '../video';
-import Error from '../profile-feed/error';
+import Error from './error';
 import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
@@ -33,8 +33,7 @@ function SearchFeed({ router }) {
   const { id } = router?.query;
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
-//   const path = router?.asPath
-//   console.log(path)
+
   const { videoId = items?.[0]?.content_id } = router?.query;
 
   const selectVideoUrl = (video) => {
@@ -56,7 +55,6 @@ function SearchFeed({ router }) {
         video.selected_video_url = selectVideoUrl(video);;
         finalTData.push(video);
     })
-    console.log("f",finalTData)
     return finalTData;
   }
 
@@ -66,7 +64,6 @@ function SearchFeed({ router }) {
           normal : data,
           withHash : transformResponse(data)
       }
-      console.log(type)
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
@@ -130,7 +127,6 @@ function SearchFeed({ router }) {
             direction="vertical"
             onSwiper={swiper => {
             const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
-            console.log(videoId,slideToId)
             swiper?.slideTo(slideToId, 0);
             //   router.replace(`/search-feed/${id}`);
             }}

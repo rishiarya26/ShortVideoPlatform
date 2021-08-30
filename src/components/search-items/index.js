@@ -31,8 +31,6 @@ const SearchItems = ({router,type})=>{
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     
-    console.log("term",searchTerm, router)
-
     useEffect(()=>{
         if(type === 'results'){
             const {item = ''} = router?.query;
@@ -50,7 +48,6 @@ const SearchItems = ({router,type})=>{
 
     const handleSearch=()=>{
         setShowSuggestions(false)
-        console.log(searchHistory)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
@@ -61,7 +58,6 @@ const SearchItems = ({router,type})=>{
     const searchFromList = (e,id,value) =>{
         setShowSuggestions(false)
         if(id === 'suggestions'){
-            console.log(searchHistory)
             const searchHis = [...searchHistory];
             const result = searchHis.includes(value);
             if(value && typeof(value) === 'string' && !result){
@@ -137,8 +133,6 @@ const SearchItems = ({router,type})=>{
             results : <div onClick={()=>router.back()}><Back/></div>
         }
     }
-
-    useEffect(()=>{console.log("changed sug",showSuggestions)},[showSuggestions])
 
     return(
         <div className="relative h-20 bg-white w-full bg-white">
