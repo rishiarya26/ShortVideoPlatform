@@ -152,7 +152,7 @@ const SearchItems = ({router,type})=>{
                 <RightArrow/>
             </button>
             </div>
-           {showSuggestions === true && info.list[type]}
+           {showSuggestions && info.list[type]}
         </div>
     )
 }
