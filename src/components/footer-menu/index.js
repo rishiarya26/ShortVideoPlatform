@@ -64,13 +64,13 @@ const info ={
   // const { t } = useTranslation();
   return (
     <div>
-      <div className="w-full bg-black fixed bottom-0 py-1 flex justify-around items-center h-16">
+      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-16">
       <div onClick = {()=>router.push("/feed/for-you")} className="flex flex-col text-white text-xs items-center">
-       {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1">Home</p></> } 
+       {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
        
      </div> 
      <div onClick = {()=>router.push("/explore")} className="flex flex-col text-white text-xs items-center">
-       {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1">Explore</p></> } 
+       {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5">Explore</p></> } 
        
      </div>
         <div>
@@ -81,10 +81,10 @@ const info ={
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
-                <p className="text-gray-400 text-xs mt-1">Create</p>
+                <p className="text-gray-400 text-xs mt-1.5">Create</p>
              </div>    
       <div onClick={()=>toShow()} className="flex flex-col  items-center justify-between">
-      {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1">Profile</p></>} 
+      {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5">Profile</p></>} 
       
       </div>
       </div>

@@ -179,6 +179,7 @@ useEffect(()=>{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+      <>
       <div style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
@@ -274,6 +275,7 @@ useEffect(()=>{
           <div className="playkit-player" />
         </div>
       </div>
+</>
     </ComponentStateHandler>
 
   );

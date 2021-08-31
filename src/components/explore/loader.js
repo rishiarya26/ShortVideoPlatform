@@ -13,7 +13,7 @@ function Loader() {
   return (
     <>
        <div className="h-screen  w-screen flex flex-col ">
-        <div className="search_box p-4 w-full">
+        <div className="search_box w-full z-10 fixed top-0">
           <div className="relative">
             <input
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
