@@ -15,13 +15,11 @@ function SearchResult({router}) {
 
   useEffect(()=>{
     const item = router?.query?.item;
-    console.log(item)
     setSearchTerm(item)
   },[])
 
   useEffect(()=>{
     const item = router?.query?.item;
-    console.log(item)
     setSearchTerm(item)
   },[router.asPath])
  
@@ -49,7 +47,7 @@ function SearchResult({router}) {
     <div>
       <div className="h-screen  w-screen flex flex-col ">
         <div className="search_box p-4 w-full">
-        {/* <SearchItems/> */}
+        <SearchItems type='results'/>
           <div />
         </div>
         <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>

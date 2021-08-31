@@ -14,11 +14,8 @@ const LoadComp = () => (<Loader />);
 
 const Users = ({item, type = 'normal', router}) =>{
     const [items, setItems] = useState();
-    console.log(router, type)
     const {ref = ''} = router?.query;
-   console.log(ref)
     const onDataFetched=(data)=>{
-        console.log(data)
       setItems(data?.data);
       }
      

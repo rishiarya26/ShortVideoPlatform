@@ -3,7 +3,7 @@ import {
   SeoMeta
 } from '../src/components/commons/head-meta/seo-meta';
 import FooterMenu from '../src/components/footer-menu';
-import UserProfile from '../src/components/user-profile';
+import Users from '../src/components/users';
 import { getUserProfile } from '../src/sources/users/profile';
 
 // TODO enable mock mode here
@@ -52,7 +52,7 @@ export default function Hipi(params) {
           }
         }}
       />
-      <UserProfile
+      <Users
         followers={item.followers}
         following={item.following}
         totalLikes={item.totalLikes}

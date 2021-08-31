@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Hash from '../commons/svgicons/hash';
-import Search from '../commons/svgicons/search-black';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { getSearchData } from '../../sources/explore';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
@@ -8,10 +7,9 @@ import Error from './error';
 import Loader from './loader';
 import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
-import Router from '../../../router';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
-// import { useRouter } from 'next/router';
+
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -31,18 +29,21 @@ function Explore() {
   toRetry = retry;
   const validateData = data?.length > 0;
 
-const toUserList = (value)=>{
+  const toUserList = (value)=>{
     let hashTag = value;   
-    console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
     router.push(`/user-list?ref=${hashTag}`);
-}
+  }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
-    console.log(hashTag)
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
     router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
+  }
+
+  const toHashtagDetails = (hashTag)=>{
+    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    router.push(`/hashtag/${hashTag}`);
   }
 
   return (
@@ -53,19 +54,7 @@ const toUserList = (value)=>{
     >
       <div className="h-screen  w-screen flex flex-col relative">
         <div className="search_box w-full z-10 fixed top-0">
-        <SearchItems/>
-          {/* <div className="relative">
-            <input
-            onClick={()=>window.history.pushState({urlPath:'/search-items'},"",'/search-items')}
-              className=" w-full bg-gray-100 px-4 py-2 pl-8"
-              type="text"
-              name="Search"
-              placeholder="Search"
-            />
-            <div className="absolute left-1 top-2">
-              <Search />
-            </div>
-          </div> */}
+        <SearchItems type='explore'/>
           <div />
         </div>
         <div className="poster w-full mt-40" />
@@ -84,14 +73,13 @@ const toUserList = (value)=>{
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
-                  <div  className="flex items-center justify-center">
+                  <div onClick={()=>toHashtagDetails(content?.widgetName)} className="flex items-center justify-center">
                     <RightArrow />
                   </div>
                 </div>
 
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
-                    console.log(content.widgetName)
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
