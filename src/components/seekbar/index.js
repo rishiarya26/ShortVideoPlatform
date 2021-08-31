@@ -5,7 +5,7 @@ function Seekbar({seekedPercentage, type}) {
 
   const design = {
     onBottom : "bottom-0",
-    aboveFooterMenu : "bottom-12"
+    aboveFooterMenu : "bottom-16"
   }
   return (
     <div className={`w-full h-1 fixed ${design[type]} seekbar`}>

@@ -64,24 +64,28 @@ const info ={
   // const { t } = useTranslation();
   return (
     <div>
-      <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-12">
-      <div onClick = {()=>router.push("/feed/for-you")}>
-       {selectedTab === 'home' ? <HomeActive/> : <Home/>} 
+      <div className="w-full bg-black fixed bottom-0 py-1 flex justify-around items-center h-16">
+      <div onClick = {()=>router.push("/feed/for-you")} className="flex flex-col text-white text-xs items-center">
+       {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1">Home</p></> } 
+       
      </div> 
-     <div onClick = {()=>router.push("/explore")}>
-       {selectedTab === 'search' ? <SearchActive/> : <Search/>} 
+     <div onClick = {()=>router.push("/explore")} className="flex flex-col text-white text-xs items-center">
+       {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1">Explore</p></> } 
+       
      </div>
         <div>
           {info[type]}
         </div>
             <div
               onClick={() => show('', detectDeviceModal, 'extraSmall')}
-              className="relative py-3  px-1 text-center flex flex-col items-center"
+              className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
+                <p className="text-gray-400 text-xs mt-1">Create</p>
              </div>    
-      <div onClick={()=>toShow()}>
-      {selectedTab === 'profile' ? <ProfileActive/> : <Profile/>} 
+      <div onClick={()=>toShow()} className="flex flex-col  items-center justify-between">
+      {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1">Profile</p></>} 
+      
       </div>
       </div>
       <SnackBar />
