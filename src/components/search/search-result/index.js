@@ -46,7 +46,7 @@ function SearchResult({router}) {
   return (
     <div>
       <div className="h-screen  w-screen flex flex-col ">
-        <div className="search_box p-4 w-full">
+        <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='results'/>
           <div />
         </div>

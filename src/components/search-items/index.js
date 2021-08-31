@@ -107,7 +107,7 @@ const SearchItems = ({router,type})=>{
         ))}
        </div>,
 
-       suggestions:   <div className="bg-white absolute top-20 h-screen w-full flex flex-col" >
+       suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
          <div key={id} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
@@ -130,13 +130,13 @@ const SearchItems = ({router,type})=>{
         back : {
             // if show suggestions is true then show back button on explore 
             explore : showSuggestions && <div onClick={()=>setShowSuggestions(false)}><Back/></div>,
-            results : <div onClick={()=>router.back()}><Back/></div>
+            results : <div onClick={()=>router.back()} className="flex items-center"><Back/></div>
         }
     }
 
     return(
         <div className="relative h-20 bg-white w-full bg-white">
-            <div className="flex relative bg-white p-4">
+            <div className="flex relative bg-white p-4 items-center">
               {info.back[type]}
             <input
               onChange={onTermChange}
