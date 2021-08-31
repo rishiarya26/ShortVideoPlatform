@@ -9,6 +9,7 @@ import Sounds from '../src/components/search/sounds';
 export default function Hipi() {
   return (
     <div>
+      
     <Explore />
     {/* <SearchResult/> */}
     {/* <ExploreUserList/> */}

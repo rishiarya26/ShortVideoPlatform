@@ -1,4 +1,3 @@
-/*eslint-disable react/jsx-no-duplicate-props */
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -13,9 +12,7 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
-import { getNetworkConnection } from '../../utils/device-details';
-import SwiperSlideComp from '../swiper.js';
-
+import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 
 SwiperCore.use([Mousewheel]);
 
@@ -23,49 +20,21 @@ let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
 
-function SearchFeed({ router }) {
+function HashTagFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
 
-  const { id } = router?.query;
-  const { ref = '' } = router?.query;
-  const {type = 'normal'} = router?.query;
-
+  const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
+  const { type = 'all' } = router?.query;
 
-  const selectVideoUrl = (video) => {
-    const networkConnection = getNetworkConnection();
-    let videoUrls = {}
-    videoUrls.fast = video?.videoUrl?.AkamaiURL?.[2];
-    videoUrls.medium = video?.videoUrl?.AkamaiURL?.[1];
-    videoUrls.low = video?.akamaiUrl;
-    return videoUrls[networkConnection];
-  }
-
-  const transformResponse = (data) =>{  
-    const feedData = data.filter((content) => (content.widgetName === `#${ref}`));
-    const [content = []] = feedData;
-    const {widgetList= []} = content;
-    const finalTData = []
-    widgetList.forEach((d)=>{
-        const video = d?.video;
-        video.selected_video_url = selectVideoUrl(video);;
-        finalTData.push(video);
-    })
-    return finalTData;
-  }
-
-  const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
+  const dataFetcher = () => getHashTagVideos({ keyword : item });
   const onDataFetched = data => {
-      const info = {
-          normal : data,
-          withHash : transformResponse(data)
-      }
-      data && setItems(info?.[type]);
-      data && setActiveVideoId(videoId);
+    data && setItems(data?.data);
+    data && setActiveVideoId(videoId);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -122,13 +91,13 @@ function SearchFeed({ router }) {
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
             <Back />
           </div>
-            <Swiper
+          <Swiper
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
-            const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
-            swiper?.slideTo(slideToId, 0);
-            //   router.replace(`/search-feed/${id}`);
+              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              swiper?.slideTo(slideToId, 0);
+              router.replace(`/hashtag-feed/${item}`);
             }}
             draggable="true"
             spaceBetween={0}
@@ -136,50 +105,52 @@ function SearchFeed({ router }) {
             mousewheel
             scrollbar={{ draggable: true }}
             onSlideChange={swiperCore => {
-            const {
+              const {
                 activeIndex, slides
-            } = swiperCore;
-            const activeId = slides[activeIndex]?.id;
-            setActiveVideoId(activeId);
+              } = swiperCore;
+              const activeId = slides[activeIndex]?.id;
+              setActiveVideoId(activeId);
             }}
-        >
-    {   items?.map(
-            item => (
-                <SwiperSlide
-                key={item?.id}
-                id={item?.id}
+          >
+            {
+              items?.map(
+                item => (
+                  <SwiperSlide
+                    key={item.content_id}
+                    id={item.content_id}
 
-              >
-          <Video
-             updateSeekbar={updateSeekbar}
-             socialId={item.getSocialId}
-             url={item?.selected_video_url}
-             id={item?.id}
-             comments={item.commentsCount}
-             likes={item.likesCount}
-             music={item.musicCoverTitle}
-             musicTitle={item?.sound?.name}
-             profilePic={item.userProfilePicUrl}
-             userName={`@${item.videoOwners?.userName}`}
-             musicCoverTitle={item.musicCoverTitle}
-             videoid={item.content_id}
-             hashTags={item.hashTags}
-             videoOwnersId={item.videoOwnersId}
-             thumbnail={item.thumbnailUrl}
-             canShop={shop.isShoppable}
-             shopCards={shop.data}
-             handleSaveLook={handleSaveLook}
-             saveLook={saveLook}
-             saved={item.saveLook}
-             activeVideoId={activeVideoId}
-             comp="profile"
-             profileFeed
-          />
-          </SwiperSlide>
-          ))}
-      
-         </Swiper>
+                  >
+                    <Video
+                      updateSeekbar={updateSeekbar}
+                      socialId={item.getSocialId}
+                      url={item.video_url}
+                      id={item.content_id}
+                      comments={item.commentsCount}
+                      likes={item.likesCount}
+                      music={item.musicCoverTitle}
+                      musicTitle={item.music_title}
+                      profilePic={item.userProfilePicUrl}
+                      userName={`@${item.userName}`}
+                      musicCoverTitle={item.musicCoverTitle}
+                      videoid={item.content_id}
+                      hashTags={item.hashTags}
+                      videoOwnersId={item.videoOwnersId}
+                      thumbnail={item.poster_image_url}
+                      canShop={shop.isShoppable}
+                      shopCards={shop.data}
+                      handleSaveLook={handleSaveLook}
+                      saveLook={saveLook}
+                      saved={item.saveLook}
+                      activeVideoId={activeVideoId}
+                      comp="profile"
+                      profileFeed
+                    />
 
+                  </SwiperSlide>
+                )
+              )
+            }
+          </Swiper>
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>
@@ -191,6 +162,6 @@ function SearchFeed({ router }) {
       </>
     </ComponentStateHandler>
   );
-}
+};
 
-export default withRouter(SearchFeed);
+export default withRouter(HashTagFeed);

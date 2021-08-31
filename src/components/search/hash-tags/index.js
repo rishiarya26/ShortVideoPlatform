@@ -14,7 +14,6 @@ function HashTags({item}) {
   const [items, setItems] = useState();
 
     const onDataFetched=(data)=>{
-      console.log("hashtags",data)
       setItems(data?.data);
       }
      

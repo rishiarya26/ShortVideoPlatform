@@ -24,7 +24,7 @@ const detectDeviceModal = dynamic(
   }
 );
 
-function UserProfile({
+function Users({
   userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
 }) {
   const [videoData, setVideoData] = useState({});
@@ -174,9 +174,10 @@ function UserProfile({
         retry={retry && retry}
         userId={id}
         type={selectedTab}
+        page='profile'
       />
     </div>
   );
 }
 
-export default withRouter(UserProfile);
+export default withRouter(Users);
