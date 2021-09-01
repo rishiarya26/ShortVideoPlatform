@@ -205,7 +205,6 @@ function Feed({ router }) {
           calculateheight="true"
           slidesPerView={1}
           mousewheel
-          initialSlide={1}
           // speed = '2000'
           scrollbar={{ draggable: true }}
           autoplay= {{
@@ -252,7 +251,7 @@ function Feed({ router }) {
             ) => (
               <SwiperSlide
                 key={id}
-                id={item.content_id}
+                id={item?.content_id}
   
               >
                 <Video

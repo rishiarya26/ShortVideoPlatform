@@ -22,6 +22,11 @@ const TopItems = ({item, redirectTab}) =>{
      const dataFetcher = ()=> item && getTopSearches(item && item)
      const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched, item);
 
+    //  const fetchCounts = (data) =>{
+    //   return numberFormatter(data);
+    //  } 
+
+     console.log(data)
      setRetry = retry && retry;
     return (
         <>
@@ -36,7 +41,7 @@ const TopItems = ({item, redirectTab}) =>{
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
                       <p className="text-base font-medium">USERS</p>
-                      <p className="text-sm text-gray-400">{numberFormatter(data?.count?.users)} results</p>
+                      {/* <p className="text-sm text-gray-400">{data?.count?.users && `${fetchCounts(data?.count?.users)}results`}</p> */}
                     </div>
                     <div onClick={()=>redirectTab(1)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -69,7 +74,7 @@ const TopItems = ({item, redirectTab}) =>{
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
                       <p className="text-base font-medium">HASHTAGS</p>
-                      <p className="text-sm text-gray-400">{numberFormatter(data?.count?.hashtags)} results</p>
+                      {/* <p className="text-sm text-gray-400">{data?.count?.hashtags && `${fetchCounts(data?.count?.hashtags)}results`}</p> */}
                     </div>
                     <div onClick={()=>redirectTab(4)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -102,7 +107,7 @@ const TopItems = ({item, redirectTab}) =>{
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
                       <p className="text-base font-medium">VIDEOS</p>
-                      <p className="text-sm text-gray-400">{numberFormatter(data?.count?.videos)} results</p>
+                      {/* <p className="text-sm text-gray-400">{data?.count?.videos && `${fetchCounts(data?.count?.videos)}results`}</p> */}
                     </div>
                     <div onClick={()=>redirectTab(2)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -121,7 +126,7 @@ const TopItems = ({item, redirectTab}) =>{
         </div>
 
 {/* SOUNDS */}
-        <div className="flex flex-col p-4">
+        {/* <div className="flex flex-col p-4">
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
@@ -148,7 +153,7 @@ const TopItems = ({item, redirectTab}) =>{
                     ))}
                 </div>
           </div>
-        </div>
+        </div> */}
         </ComponentStateHandler>
         </>
     )

@@ -26,7 +26,7 @@ async function search(searchTerm, setSuggestions) {
   const optimisedSearch = debounce(search, 400);
 
 const SearchItems = ({router,type})=>{
-    const [searchTerm, setSearchTerm] = useState(undefined);
+    const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
@@ -46,9 +46,18 @@ const SearchItems = ({router,type})=>{
        setSearchTerm(e.currentTarget.value)
     }
 
+   const removeItem = (arr) =>{
+    const index = arr.indexOf(5);
+    if (index > -1) {
+    arr.splice(index, 1);
+    }
+    return arr;
+   }
+
     const handleSearch=()=>{
         setShowSuggestions(false)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
+        searchHis && removeItem(searchHis);
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
@@ -61,6 +70,8 @@ const SearchItems = ({router,type})=>{
             const searchHis = [...searchHistory];
             const result = searchHis.includes(value);
             if(value && typeof(value) === 'string' && !result){
+                setSearchTerm(value)
+               searchHis && removeItem(searchHis);
                searchHis.unshift(value)
                localStorage.set('search-suggestions-history',searchHis);
                setSearchHistory(searchHis);
@@ -76,7 +87,7 @@ const SearchItems = ({router,type})=>{
             if(searchHistory){
                 searchHistory?.some((data, id)=>{
                     trimSearchHistory.push(data)
-                    if(id>1){
+                    if(id>5){
                         return true;
                 }})
             }

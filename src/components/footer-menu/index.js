@@ -89,9 +89,7 @@ const info ={
       </div>
       </div>
       <SnackBar />
-      <div id="cb_tg_d_wrapper">
-        <div className="playkit-player" />
-      </div>
+      
     </div>
   );
 }

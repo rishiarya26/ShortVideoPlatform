@@ -33,7 +33,10 @@ function transformSuccess(resp) {
       videoUrls.low = d?.akamaiUrl;
       const videoUrl =  videoUrls[networkConnection];
       d.selected_video_url = videoUrl;
+      d.shoppable = d?.shoppable || false;
+      d.likesCount = d?.likeCount
     })
+    console.log(responseData.videos)
     // console.log("tresp",responseData.videos)
     payload.data = responseData?.videos;
     console.log("tresp",payload.data)

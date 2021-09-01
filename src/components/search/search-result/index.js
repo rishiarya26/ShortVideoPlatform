@@ -30,7 +30,7 @@ function SearchResult({router}) {
       <TopItems item={searchTerm} redirectTab={redirectTab}/>, 
       <Users item={searchTerm}/>,
       <Videos item={searchTerm}/>, 
-      <Sounds/>, 
+      // <Sounds/>, 
       <Hashtags item={searchTerm}/>
   ]; 
 
@@ -49,7 +49,7 @@ function SearchResult({router}) {
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='results'/>
           <div />
-        </div>
+        </div >
         <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
         {components[selectedIndex]}
       </div>

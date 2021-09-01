@@ -93,7 +93,7 @@ function Explore() {
                 </div>
               </div>
             )
-              : (
+              : content?.widgetContentType === 'User' &&  (
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
                     <p className="text-base font-medium">{content?.widgetName}</p>
