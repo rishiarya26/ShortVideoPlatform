@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { getNetworkConnection } from '../../../utils/device-details';
 
 function transformError(error = {}) {
   console.log('Errore', error);
@@ -24,13 +25,19 @@ function transformSuccess(resp) {
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
     const { responseData = [] } = data;
+    const networkConnection = getNetworkConnection();
     if (responseData?.length > 0) {
       const payloadData = [];
       data.responseData.forEach(d => {
         const payloadObject = {};
         payloadObject.data_id = d?.objectID;
         payloadObject.content_id = d?.id;
-        payloadObject.video_url = d?.akamaiUrl;
+        let videoUrls = {}
+        videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
+        videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];
+        videoUrls.low = d?.akamaiUrl;
+        const videoUrl = videoUrls[networkConnection];
+        payloadObject.video_url = videoUrl;
         payloadObject.content_description = d?.description;
         payloadObject.userId = d?.videoOwnersId;
         payloadObject.videoOwnersId = d?.videoOwnersId;
@@ -43,6 +50,8 @@ function transformSuccess(resp) {
         payloadObject.music_title = d?.sound?.name;
         payloadObject.hashTags = d?.hashtags;
         payloadObject.thumbnailUrl = d?.thumbnailUrl;
+        payloadObject.viewCount = d?.viewCount;
+        payloadObject.shoppable = d?.shoppable || false
 
         payloadData.push(payloadObject);
       });

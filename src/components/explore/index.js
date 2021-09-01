@@ -10,7 +10,6 @@ import FooterMenu from '../footer-menu';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
 
-
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
 const LoadComp = () => (<Loader />);
@@ -24,26 +23,31 @@ function Explore() {
     window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
     setData(data?.data);
   };
+
   const dataFetcher = () => getSearchData();
   const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);
   toRetry = retry;
   const validateData = data?.length > 0;
 
-  const toUserList = (value)=>{
-    let hashTag = value;   
+  const trimHash = (hashTag) =>{
     hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    return hashTag
+  }
+
+  const toUserList = (value)=>{
+    const hashTag = trimHash(value);
     router.push(`/user-list?ref=${hashTag}`);
   }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
-    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+    hashTag = trimHash(hashTag);
     router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
   const toHashtagDetails = (hashTag)=>{
-    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
-    router.push(`/hashtag/${hashTag}`);
+    hashTag = trimHash(hashTag);
+    router.push(`/tag/${hashTag}`);
   }
 
   return (
@@ -89,7 +93,7 @@ function Explore() {
                 </div>
               </div>
             )
-              : (
+              : content?.widgetContentType === 'User' &&  (
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
                     <p className="text-base font-medium">{content?.widgetName}</p>
@@ -102,12 +106,12 @@ function Explore() {
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                         return (
                           <>
-                      <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
-                            <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
-                              <Img data={d?.user?.profilePicImgUrl} title={d?.user?.userName} />
-                            </div>
-                            <p className="text-xs pt-2">{d?.user?.userName}</p>
-                      </div>
+                          <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                                <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
+                                  <Img data={d?.user?.profilePicImgUrl} title={d?.user?.userName} />
+                                </div>
+                                <p className="text-xs pt-2">{d?.user?.userName}</p>
+                          </div>
                           </>
                         );
                       })}

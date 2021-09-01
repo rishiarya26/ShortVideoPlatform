@@ -53,6 +53,8 @@ function transformSuccess(resp) {
         payloadObject.music_title = d?.sound?.name;
         payloadObject.hashTags = d?.hashtags;
         payloadObject.thumbnailUrl = d?.thumbnailUrl;
+        payloadObject.shoppable = d?.shoppable || false
+        payloadObject.viewCount = d?.viewCount
 
         payloadData.push(payloadObject);
       });

@@ -30,12 +30,12 @@ function SearchResult({router}) {
       <TopItems item={searchTerm} redirectTab={redirectTab}/>, 
       <Users item={searchTerm}/>,
       <Videos item={searchTerm}/>, 
-      <Sounds/>, 
+      // <Sounds/>, 
       <Hashtags item={searchTerm}/>
   ]; 
 
  const items = {
-   display : ['Top','Users', 'Videos', 'Sounds', 'Hashtags'],
+   display : ['Top','Users', 'Videos', 'Hashtags'],
    defaultValue : selectedIndex
  }
 
@@ -46,10 +46,10 @@ function SearchResult({router}) {
   return (
     <div>
       <div className="h-screen  w-screen flex flex-col ">
-        <div className="search_box p-4 w-full">
+        <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='results'/>
           <div />
-        </div>
+        </div >
         <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
         {components[selectedIndex]}
       </div>

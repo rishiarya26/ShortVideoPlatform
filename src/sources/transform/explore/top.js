@@ -17,7 +17,7 @@ function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   const {responseData = {}} = data;
-  const {facets = {}} = data;
+  const count = {}
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -27,7 +27,10 @@ function transformSuccess(resp) {
     payload['http-status'] = data.status;
     let tData = {}
     tData.items = responseData;
-    tData.count = facets;
+    count.users = data?.facets?.users || '';
+    count.hashtags = data?.facets?.hashtags || '';
+    count.videos = data?.faccets?.videos || '';
+    tData.count = count;
     payload.data = tData;
     payload.requestedWith = { ...data.requestedWith };
     return payload;

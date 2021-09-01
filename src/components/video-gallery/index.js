@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
@@ -13,8 +14,21 @@ const LoadComp = () => (<Loading />);
 export default function VideoGallery({
   items, status, retry, userId='', type = 'all', page ='profile', hashTag=''
 }) {
+  // const [data, setData] = useState(items || []);
+  // const [isFetching, setIsFetching] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
+
+  // useEffect(() => {
+  //   window?.addEventListener('scroll', handleScroll);
+  //   return () => window?.removeEventListener('scroll', handleScroll);
+  // }, []);
+
+  // function handleScroll() {
+  //   if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
+  //   console.log('Fetch more list items!');
+  // }
+
   const noData = {
     all: <>
       <p className="font-semibold">{t('NO_VIDEOS')}</p>
@@ -50,14 +64,21 @@ export default function VideoGallery({
           {validItemsLength
             ? (
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
-            { items?.map((data, id) => (
+            { items?.map((item, id) => (
                <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
-               ? ()=> router.push(`/search-feed/${data?.id}?type=normal`)  
+               ? ()=> router.push(`/search-feed/${item?.id}?type=normal`)  
                : page === 'profile' 
-                  ? ()=>router.push(`/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`)
-                  : ()=>router.push(`/hashtag-feed/${hashTag}?videoId=${data?.content_id}&type=${type}`)}>
-               {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${data?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
-                <VideoCard data={data} id={id} />
+                  ? ()=>router.push(`/profile-feed/${userId}?videoId=${item?.content_id}&type=${type}`)
+                  : ()=>router.push(`/hashtag-feed/${hashTag}?videoId=${item?.content_id}&type=${type}`)}>
+               {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
+                <VideoCard 
+                  thumbnailUrl={item?.thumbnailUrl} 
+                  videoTitle ={item?.videoTitle} 
+                  viewCount={item.viewCount} 
+                  likesCount={item.likescount}
+                  shoppable = {item.shoppable}
+                  id={id} 
+                />
              </span>
              ))}
             </div>
