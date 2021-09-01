@@ -4,7 +4,7 @@ import Play from '../commons/svgicons/play-outlined';
 
 export default function VideoCard({ data, id }) {
   return (
-    <div key={id} className="video-card relative">
+    <div key={id} className="video-card relative z-0">
       <div className="absolute top-2 right-2 z-10">
         <Cart/>
       </div>
