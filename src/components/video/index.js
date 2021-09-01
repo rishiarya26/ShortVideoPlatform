@@ -76,7 +76,6 @@ function Video(props) {
         // autoPlay
         // muted
         playsInline
-        webkit-playsInline
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}

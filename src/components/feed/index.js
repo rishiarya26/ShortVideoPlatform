@@ -43,12 +43,13 @@ function Feed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [videoActiveIndex, setVideoActiveIndex] = useState(null)
+  const [videoActiveIndexUp, setVideoActiveIndexUp] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const { t } = useTranslation();
   const { id } = router?.query;
-  let { videoId = '' } = router?.query;
+  // let { videoId = '' } = router?.query;
 
   const getFeedData = async() =>{
     let updateItems = [...items];
@@ -117,15 +118,23 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
- const incrementShowItems =async() =>{
+ const incrementShowItems = async() =>{
   // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
   for(let i=1; i<=2; i++){
-    let insertItemIndex = (videoActiveIndex*2)+i
+    // let deleteItemIndex = (videoActiveIndex/2)-i;
+    // const checkIndex = (videoActiveIndex%2 === 0)
+    // if(deleteItemIndex > 0 && videoActiveIndex >=6 && checkIndex){
+    //   const indexToRemove = 0;
+    //   const numberToRemove = 2;
+    //   updateShowItems.splice(indexToRemove, numberToRemove);
+    // }
+    let insertItemIndex = (videoActiveIndex*2)+i;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
   }
+  console.log("increment",items,updateShowItems)
   setToShowItems(updateShowItems);
  }
 
@@ -193,8 +202,15 @@ function Feed({ router }) {
           draggable="true"
           spaceBetween={0}
           calculateheight="true"
+          slidesPerView={1}
           mousewheel
+          // speed = '2000'
           scrollbar={{ draggable: true }}
+          autoplay= {{
+              delay: 2000,
+              // delay: 5000,
+              disableOnInteraction: false
+          }}
           // onSwiper={swiper => {
           //   if(videoId){
           //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
@@ -210,6 +226,15 @@ function Feed({ router }) {
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }
+            // else{
+            //   if(active)
+            //   setVideoActiveIndexUp(activeIndex)
+            // }
+            (items.map((data)=>{
+              if(data.content_id === activeId){
+                console.log("v_URL",data.video_url)
+              }
+            }))
             // setActiveVideoId(activeId);
             // router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
@@ -219,7 +244,7 @@ function Feed({ router }) {
               item, id
             ) => (
               <SwiperSlide
-                key={id}
+                key={item.content_id}
                 id={item.content_id}
   
               >
