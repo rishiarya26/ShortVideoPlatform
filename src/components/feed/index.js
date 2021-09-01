@@ -51,11 +51,13 @@ function Feed({ router }) {
   let { videoId = '' } = router?.query;
 
   const getFeedData = async() =>{
-    let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
+    let updateItems = [...items];
+    // let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
      try{
-       const response =  await getHomeFeed({ type: id });
-       updateItems = updateItems.concat(response?.data);
-       window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
+       const data =  await getHomeFeed({ type: id });
+       updateItems = updateItems.concat(data?.data);
+       setItems(updateItems);
+      //  window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
       }
      catch(err){
      }
@@ -63,21 +65,22 @@ function Feed({ router }) {
   } 
 
   const onDataFetched = data => {
-    videoId === '' && (videoId = data?.data?.[0]?.content_id);
+    // videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
-      const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
-      const dataItems = feed || data?.data
-      setItems(dataItems);
-      window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
-      if(dataItems.length<=6){
-        window.sessionStorage.clear();
-        window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
+      // const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
+      // const dataItems = data?.data
+      // setItems(dataItems);
+      // window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
+      // if(dataItems.length<=6){
+      //   window.sessionStorage.clear();
+      //   window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
         //set first one item in showItems
         toUpdateShowData.push(data?.data[0]);
+        setItems(data?.data);
         setToShowItems(toUpdateShowData);
-        setActiveVideoId(videoId);
-      }
+        // setActiveVideoId(videoId);
+      // }
     }
   }
 
@@ -96,8 +99,8 @@ function Feed({ router }) {
   setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
-    setInitialPlayButton(false)
     setSeekedPercentage(percentage);
+    setInitialPlayButton(false)
   };
 
   const getCanShop = async () => {
@@ -117,7 +120,7 @@ function Feed({ router }) {
  const incrementShowItems =async() =>{
   // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
-  const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
+  const dataItem = [...items]
   for(let i=1; i<=2; i++){
     let insertItemIndex = (videoActiveIndex*2)+i
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
@@ -126,26 +129,25 @@ function Feed({ router }) {
   setToShowItems(updateShowItems);
  }
 
-useEffect(()=>{
-  window.onunload = function () {
-   window.sessionStorage.removeItem('feedList');
-  }
-},[])
+// useEffect(()=>{
+//   window.onunload = function () {
+//    window.sessionStorage.removeItem('feedList');
+//   }
+// },[])
 
-  useEffect(()=>{
-    router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
-  },[])
+//   useEffect(()=>{
+//     router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
+//   },[])
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
-      const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-      if(indexToRedirect !== -1){
-      let insertItemIndex = (indexToRedirect*2)+3
-      const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
-      const updateShowItems =  items?.slice(0,updateIndex);
-     setToShowItems(updateShowItems);
-     setVideoActiveIndex(indexToRedirect);
-}
+    //   const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+    //   if(indexToRedirect !== -1){
+    //   let insertItemIndex = (indexToRedirect*2)+3
+    //   const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
+    //   const updateShowItems =  items?.slice(0,updateIndex);
+    //  setToShowItems(updateShowItems);
+    //  setVideoActiveIndex(indexToRedirect);
   },[items])
 
   useEffect(()=>{
@@ -193,13 +195,13 @@ useEffect(()=>{
           calculateheight="true"
           mousewheel
           scrollbar={{ draggable: true }}
-          onSwiper={swiper => {
-            if(videoId){
-              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              console.log("slideId",slideToId)
-              swiper?.slideTo(slideToId, 0);
-            }
-          }}
+          // onSwiper={swiper => {
+          //   if(videoId){
+          //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+          //     console.log("slideId",slideToId)
+          //     swiper?.slideTo(slideToId, 0);
+          //   }
+          // }}
           onSlideChange={swiperCore => {
             const {
               activeIndex, slides
@@ -208,8 +210,8 @@ useEffect(()=>{
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }
-            setActiveVideoId(activeId);
-            router.replace(`/feed/${id}?videoId=${activeId}`);
+            // setActiveVideoId(activeId);
+            // router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
         >
           {
@@ -219,6 +221,7 @@ useEffect(()=>{
               <SwiperSlide
                 key={id}
                 id={item.content_id}
+  
               >
                 <Video
                   updateSeekbar={updateSeekbar}

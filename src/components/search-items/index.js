@@ -52,7 +52,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        Router.push(`/search-results/${searchTerm}`);
+        Router.push(`/search/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -66,7 +66,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        Router.push(`/search-results/${value}`);
+        Router.push(`/search/${value}`);
     }
 
     useEffect(()=>{ 
