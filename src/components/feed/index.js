@@ -43,19 +43,23 @@ function Feed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [videoActiveIndex, setVideoActiveIndex] = useState(null)
+  // const [videoActiveIndexUp, setVideoActiveIndexUp] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
+  const [currentTime, setCurrentTime] = useState(null)
   const { t } = useTranslation();
   const { id } = router?.query;
-  let { videoId = '' } = router?.query;
+  // let { videoId = '' } = router?.query;
 
   const getFeedData = async() =>{
-    let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
+    let updateItems = [...items];
+    // let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
      try{
-       const response =  await getHomeFeed({ type: id });
-       updateItems = updateItems.concat(response?.data);
-       window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
+       const data =  await getHomeFeed({ type: id });
+       updateItems = updateItems.concat(data?.data);
+       setItems(updateItems);
+      //  window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
       }
      catch(err){
      }
@@ -63,21 +67,22 @@ function Feed({ router }) {
   } 
 
   const onDataFetched = data => {
-    videoId === '' && (videoId = data?.data?.[0]?.content_id);
+    // videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
-      const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
-      const dataItems = feed || data?.data
-      setItems(dataItems);
-      window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
-      if(dataItems.length<=6){
-        window.sessionStorage.clear();
-        window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
+      // const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
+      // const dataItems = data?.data
+      // setItems(dataItems);
+      // window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
+      // if(dataItems.length<=6){
+      //   window.sessionStorage.clear();
+      //   window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
         //set first one item in showItems
         toUpdateShowData.push(data?.data[0]);
+        setItems(data?.data);
         setToShowItems(toUpdateShowData);
-        setActiveVideoId(videoId);
-      }
+        // setActiveVideoId(videoId);
+      // }
     }
   }
 
@@ -114,38 +119,45 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
- const incrementShowItems =async() =>{
+ const incrementShowItems = async() =>{
   // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
-  const dataItem = JSON.parse(window.sessionStorage.getItem("feedList"));
+  const dataItem = [...items]
   for(let i=1; i<=2; i++){
-    let insertItemIndex = (videoActiveIndex*2)+i
+    // let deleteItemIndex = (videoActiveIndex/2)-i;
+    // const checkIndex = (videoActiveIndex%2 === 0)
+    // if(deleteItemIndex > 0 && videoActiveIndex >=6 && checkIndex){
+    //   const indexToRemove = 0;
+    //   const numberToRemove = 2;
+    //   updateShowItems.splice(indexToRemove, numberToRemove);
+    // }
+    let insertItemIndex = (videoActiveIndex*2)+i;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
   }
+  console.log("increment",items,updateShowItems)
   setToShowItems(updateShowItems);
  }
 
-useEffect(()=>{
-  window.onunload = function () {
-   window.sessionStorage.removeItem('feedList');
-  }
-},[])
+// useEffect(()=>{
+//   window.onunload = function () {
+//    window.sessionStorage.removeItem('feedList');
+//   }
+// },[])
 
-  useEffect(()=>{
-    router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
-  },[])
+//   useEffect(()=>{
+//     router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
+//   },[])
 
   useEffect(()=>{
     toShowItems.length > 0 && incrementShowItems();
-      const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-      if(indexToRedirect !== -1){
-      let insertItemIndex = (indexToRedirect*2)+3
-      const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
-      const updateShowItems =  items?.slice(0,updateIndex);
-     setToShowItems(updateShowItems);
-     setVideoActiveIndex(indexToRedirect);
-}
+    //   const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
+    //   if(indexToRedirect !== -1){
+    //   let insertItemIndex = (indexToRedirect*2)+3
+    //   const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
+    //   const updateShowItems =  items?.slice(0,updateIndex);
+    //  setToShowItems(updateShowItems);
+    //  setVideoActiveIndex(indexToRedirect);
   },[items])
 
   useEffect(()=>{
@@ -179,6 +191,7 @@ useEffect(()=>{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+      <>
       <div style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
@@ -190,25 +203,46 @@ useEffect(()=>{
           draggable="true"
           spaceBetween={0}
           calculateheight="true"
+          slidesPerView={1}
           mousewheel
+          // speed = '2000'
           scrollbar={{ draggable: true }}
-          onSwiper={swiper => {
-            if(videoId){
-              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              console.log("slideId",slideToId)
-              swiper?.slideTo(slideToId, 0);
-            }
+          autoplay= {{
+              delay: 2000,
+              // delay: 5000,
+              disableOnInteraction: false
           }}
+          // onSwiper={swiper => {
+          //   if(videoId){
+          //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+          //     console.log("slideId",slideToId)
+          //     swiper?.slideTo(slideToId, 0);
+          //   }
+          // }}
           onSlideChange={swiperCore => {
             const {
               activeIndex, slides
             } = swiperCore;
+            if(slides[activeIndex].firstChild.firstChild.currentTime > 0){
+              slides[activeIndex].firstChild.firstChild.currentTime = 0
+            }
+            console.log(slides)
+            // slides[activeIndex]?.firstChild?.firstChild?.currentTime = '0'
             const activeId = slides[activeIndex]?.id;
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
             }
+            // else{
+            //   if(active)
+            //   setVideoActiveIndexUp(activeIndex)
+            // }
+            (items.map((data)=>{
+              if(data.content_id === activeId){
+                console.log("v_URL",data.video_url)
+              }
+            }))
             setActiveVideoId(activeId);
-            router.replace(`/feed/${id}?videoId=${activeId}`);
+            // router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
         >
           {
@@ -217,7 +251,8 @@ useEffect(()=>{
             ) => (
               <SwiperSlide
                 key={id}
-                id={item.content_id}
+                id={item?.content_id}
+  
               >
                 <Video
                   updateSeekbar={updateSeekbar}
@@ -243,6 +278,7 @@ useEffect(()=>{
                   saved={item.saveLook}
                   activeVideoId={activeVideoId}
                   comp="feed"
+                  currentTime={currentTime}
                 />
               </SwiperSlide>
             )) : (
@@ -274,6 +310,7 @@ useEffect(()=>{
           <div className="playkit-player" />
         </div>
       </div>
+</>
     </ComponentStateHandler>
 
   );

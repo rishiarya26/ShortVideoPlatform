@@ -107,6 +107,9 @@ function ProfileFeed({ router }) {
               const {
                 activeIndex, slides
               } = swiperCore;
+              if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
+                slides[activeIndex].firstChild.firstChild.currentTime = 0
+              }
               const activeId = slides[activeIndex]?.id;
               setActiveVideoId(activeId);
             }}

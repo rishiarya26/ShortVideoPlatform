@@ -38,7 +38,7 @@ function HashTag({router}) {
       </div>
       <div className="w-full flex flex-col p-4">
         <div className="flex w-full">
-          <div className="min-w-25 flex min-h-25 bg-gray-300 relative" >
+          <div className="min-w-25 flex min-h-25 bg-gray-300 relative rounded-full" >
             <Img data={details?.hashTagImage} alt='img'/>
           </div>
           <div className="flex flex-col px-4 justify-between">

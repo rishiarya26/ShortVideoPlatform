@@ -26,7 +26,7 @@ async function search(searchTerm, setSuggestions) {
   const optimisedSearch = debounce(search, 400);
 
 const SearchItems = ({router,type})=>{
-    const [searchTerm, setSearchTerm] = useState(undefined);
+    const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
@@ -46,13 +46,22 @@ const SearchItems = ({router,type})=>{
        setSearchTerm(e.currentTarget.value)
     }
 
+   const removeItem = (arr) =>{
+    const index = arr.indexOf(5);
+    if (index > -1) {
+    arr.splice(index, 1);
+    }
+    return arr;
+   }
+
     const handleSearch=()=>{
         setShowSuggestions(false)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
+        searchHis && removeItem(searchHis);
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        Router.push(`/search-results/${searchTerm}`);
+        Router.push(`/search/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -61,12 +70,14 @@ const SearchItems = ({router,type})=>{
             const searchHis = [...searchHistory];
             const result = searchHis.includes(value);
             if(value && typeof(value) === 'string' && !result){
+                setSearchTerm(value)
+               searchHis && removeItem(searchHis);
                searchHis.unshift(value)
                localStorage.set('search-suggestions-history',searchHis);
                setSearchHistory(searchHis);
             }  
         }   
-        Router.push(`/search-results/${value}`);
+        Router.push(`/search/${value}`);
     }
 
     useEffect(()=>{ 
@@ -76,7 +87,7 @@ const SearchItems = ({router,type})=>{
             if(searchHistory){
                 searchHistory?.some((data, id)=>{
                     trimSearchHistory.push(data)
-                    if(id>1){
+                    if(id>5){
                         return true;
                 }})
             }
@@ -107,7 +118,7 @@ const SearchItems = ({router,type})=>{
         ))}
        </div>,
 
-       suggestions:   <div className="bg-white absolute top-20 h-screen w-full flex flex-col" >
+       suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
          <div key={id} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
@@ -130,13 +141,13 @@ const SearchItems = ({router,type})=>{
         back : {
             // if show suggestions is true then show back button on explore 
             explore : showSuggestions && <div onClick={()=>setShowSuggestions(false)}><Back/></div>,
-            results : <div onClick={()=>router.back()}><Back/></div>
+            results : <div onClick={()=>router.back()} className="flex items-center"><Back/></div>
         }
     }
 
     return(
         <div className="relative h-20 bg-white w-full bg-white">
-            <div className="flex relative bg-white p-4">
+            <div className="flex relative bg-white p-4 items-center">
               {info.back[type]}
             <input
               onChange={onTermChange}

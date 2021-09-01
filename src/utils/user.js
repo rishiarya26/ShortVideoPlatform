@@ -5,6 +5,8 @@ import { getItem } from './cookie';
 // check user status login or not
 export const getUserId = () => (getItem(USER_TOKEN) || getItem(GUEST_TOKEN) || (generateUUID(true)));
 
+console.log("token",getUserId())
+
 export const getUserIdHash = () => {
   const userId = getUserId();
   let hash = 0;

@@ -41,14 +41,16 @@ function HashTags({item}) {
                     </div>
                 </div> */}
              
-             <div className="flex flex-col w-full p-4">
+             <div className="flex flex-col w-full ">
                  {items?.map((item, id)=>(
-                 <div key={id}  className="flex justify-between my-4">
+                 <div key={id}  className="flex justify-between my-4 items-center">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
                              </div>
+                             <p className="ml-4">
                                {item?.hashtag}
+                               </p>
                          </div>
                          <div className="text-sm text-gray-300 items-center">
                             2k views
