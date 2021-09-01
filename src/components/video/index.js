@@ -57,14 +57,22 @@ function Video(props) {
     threshold: [0.30, 0.75]
   });
 
-  // useEffect(() => {
-  //   setPlayer(ref.current);
-  // }, [])
+  useEffect(() => {
+    // rootRef?.current?.children[0]?.load();
+  }, [])
+
+  // const resetCurrentTime = (e) => {
+
+  // }
 
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
+
+  // const resetCurrentTime =(e)=>{
+  //   console.log("e",e)
+  // }
   return (
     <div
       ref={rootRef}
@@ -75,6 +83,7 @@ function Video(props) {
       <video
         // autoPlay
         // muted
+        // onLoadCapture ={resetCurrentTime}
         playsInline
         onTimeUpdate={handleUpdateSeekbar}
         loop

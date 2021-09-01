@@ -43,10 +43,11 @@ function Feed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [videoActiveIndex, setVideoActiveIndex] = useState(null)
-  const [videoActiveIndexUp, setVideoActiveIndexUp] = useState(null)
+  // const [videoActiveIndexUp, setVideoActiveIndexUp] = useState(null)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
+  const [currentTime, setCurrentTime] = useState(null)
   const { t } = useTranslation();
   const { id } = router?.query;
   // let { videoId = '' } = router?.query;
@@ -100,8 +101,8 @@ function Feed({ router }) {
   setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
-    setSeekedPercentage(percentage);
     setInitialPlayButton(false)
+    setSeekedPercentage(percentage);
   };
 
   const getCanShop = async () => {
@@ -222,6 +223,11 @@ function Feed({ router }) {
             const {
               activeIndex, slides
             } = swiperCore;
+            if(slides[activeIndex].firstChild.firstChild.currentTime > 0){
+              slides[activeIndex].firstChild.firstChild.currentTime = 0
+            }
+            console.log(slides)
+            // slides[activeIndex]?.firstChild?.firstChild?.currentTime = '0'
             const activeId = slides[activeIndex]?.id;
             if(activeIndex > videoActiveIndex){
               setVideoActiveIndex(activeIndex)
@@ -235,7 +241,7 @@ function Feed({ router }) {
                 console.log("v_URL",data.video_url)
               }
             }))
-            // setActiveVideoId(activeId);
+            setActiveVideoId(activeId);
             // router.replace(`/feed/${id}?videoId=${activeId}`);
           }}
         >
@@ -244,7 +250,7 @@ function Feed({ router }) {
               item, id
             ) => (
               <SwiperSlide
-                key={item.content_id}
+                key={id}
                 id={item.content_id}
   
               >
@@ -272,6 +278,7 @@ function Feed({ router }) {
                   saved={item.saveLook}
                   activeVideoId={activeVideoId}
                   comp="feed"
+                  currentTime={currentTime}
                 />
               </SwiperSlide>
             )) : (
