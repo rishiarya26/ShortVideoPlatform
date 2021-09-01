@@ -205,6 +205,7 @@ function Feed({ router }) {
           calculateheight="true"
           slidesPerView={1}
           mousewheel
+          initialSlide={1}
           // speed = '2000'
           scrollbar={{ draggable: true }}
           autoplay= {{
