@@ -40,8 +40,7 @@ const TopItems = ({item, redirectTab}) =>{
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
-                      <p className="text-base font-medium">USERS</p>
-                      {/* <p className="text-sm text-gray-400">{data?.count?.users && `${fetchCounts(data?.count?.users)}results`}</p> */}
+                      <p className="text-sm font-bold">USERS</p>
                     </div>
                     <div onClick={()=>redirectTab(1)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -51,14 +50,14 @@ const TopItems = ({item, redirectTab}) =>{
            
                   <div className="card_list flex min-w-full overflow-x-auto no_bar">
                   {data?.items?.users?.map((item, id)=>(
-                  <div key={id} className="flex border-2 border-gray-200 p-2 min-w-3/5 mr-2">
-                      <div className=" w-16.6v flex h-16.6v bg-gray-300 relative rounded-full" >
+                  <div key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
+                      <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} alt="image"/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-medium text-lg text-gray-700">{item?.userId} </p>
-                        <p className="text- text-gray-400">{item?.userId}</p>
-                        <p className="text- text-gray-400">{numberFormatter(item?.followers)} Followers</p>
+                        <p className="font-bold text-sm text-gray-700">{item?.userId} </p>
+                        <p className="text-xs text-gray-400">{item?.userId}</p>
+                        <p className="text-xs text-gray-400 whitespace-nowrap">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>
                        )) }
@@ -73,8 +72,7 @@ const TopItems = ({item, redirectTab}) =>{
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
-                      <p className="text-base font-medium">HASHTAGS</p>
-                      {/* <p className="text-sm text-gray-400">{data?.count?.hashtags && `${fetchCounts(data?.count?.hashtags)}results`}</p> */}
+                      <p className="text-sm font-bold">HASHTAGS</p>
                     </div>
                     <div onClick={()=>redirectTab(4)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -89,7 +87,7 @@ const TopItems = ({item, redirectTab}) =>{
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
                              </div>
-                               {item?.hashtag}
+                               <p className="mx-3">{item?.hashtag}</p>
                          </div>
                        </div>
                        )) }
@@ -106,8 +104,7 @@ const TopItems = ({item, redirectTab}) =>{
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
-                      <p className="text-base font-medium">VIDEOS</p>
-                      {/* <p className="text-sm text-gray-400">{data?.count?.videos && `${fetchCounts(data?.count?.videos)}results`}</p> */}
+                      <p className="text-sm font-bold">VIDEOS</p>
                     </div>
                     <div onClick={()=>redirectTab(2)} className="flex items-center justify-center text-gray-400">
                       See more
@@ -124,36 +121,7 @@ const TopItems = ({item, redirectTab}) =>{
                 
           </div>
         </div>
-
-{/* SOUNDS */}
-        {/* <div className="flex flex-col p-4">
-          <div className="users flex flex-col">
-                <div className=" head w-full flex mb-2 justify-between">
-                    <div className="head flex flex-col">
-                      <p className="text-base font-medium">SOUNDS</p>
-                      <p className="text-sm text-gray-400">{numberFormatter(data?.count?.sounds)} results</p>
-                    </div>
-                    <div onClick={()=>redirectTab(3)} className="flex items-center justify-center text-gray-400">
-                      See more
-                      <RightArrow />
-                    </div>
-                </div>
-                <div className="card_list flex min-w-full overflow-x-auto no_bar">
-                {data?.items?.sounds?.map((item, id)=>(
-
-                    <div key={id} className="flex p-2 min-w-3/5 mr-2">
-                        <div className=" w-16.6v flex h-16.6v bg-gray-300 relative " />
-                        <div className="flex flex-col justify-between pl-2 pb-2">
-                        <audio src={item?.musicUrl} controls></audio>
-                          <p className="font-medium text-lg text-gray-700"> {item?.musicTitle}</p>
-                          <p className="text- text-gray-400">{item?.musicArtistName}</p>
-                          <p className="text- text-gray-400">22:20</p>
-                      </div>
-                    </div>
-                    ))}
-                </div>
-          </div>
-        </div> */}
+     
         </ComponentStateHandler>
         </>
     )

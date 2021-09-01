@@ -6,7 +6,7 @@ import Play from '../commons/svgicons/play-outlined';
 export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable, id }) {
   const formattedViewCount =  numberFormatter(viewCount)
   return (
-    <div key={id} className="video-card relative">
+    <div key={id} className="video-card relative z-0">
      {shoppable && <div className="absolute top-2 right-2 z-10">
         <Cart/>
       </div>}

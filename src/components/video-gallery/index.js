@@ -14,20 +14,20 @@ const LoadComp = () => (<Loading />);
 export default function VideoGallery({
   items, status, retry, userId='', type = 'all', page ='profile', hashTag=''
 }) {
-  const [data, setData] = useState(items || []);
-  const [isFetching, setIsFetching] = useState(false);
+  // const [data, setData] = useState(items || []);
+  // const [isFetching, setIsFetching] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
 
-  useEffect(() => {
-    window?.addEventListener('scroll', handleScroll);
-    return () => window?.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   window?.addEventListener('scroll', handleScroll);
+  //   return () => window?.removeEventListener('scroll', handleScroll);
+  // }, []);
 
-  function handleScroll() {
-    if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
-    console.log('Fetch more list items!');
-  }
+  // function handleScroll() {
+  //   if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
+  //   console.log('Fetch more list items!');
+  // }
 
   const noData = {
     all: <>
@@ -51,7 +51,7 @@ export default function VideoGallery({
   };
 
   setRetry = retry;
-  const validItemsLength = data?.length > 0;
+  const validItemsLength = items?.length > 0;
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function VideoGallery({
           {validItemsLength
             ? (
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
-            { data?.map((item, id) => (
+            { items?.map((item, id) => (
                <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
                ? ()=> router.push(`/search-feed/${item?.id}?type=normal`)  
                : page === 'profile' 

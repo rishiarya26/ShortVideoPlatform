@@ -36,7 +36,7 @@ function transformSuccess(resp) {
       d.shoppable = d?.shoppable || false;
       d.likesCount = d?.likeCount
     })
-    console.log(responseData.videos)
+    console.log("d",responseData.videos)
     // console.log("tresp",responseData.videos)
     payload.data = responseData?.videos;
     console.log("tresp",payload.data)

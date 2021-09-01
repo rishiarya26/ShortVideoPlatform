@@ -35,7 +35,7 @@ function SearchResult({router}) {
   ]; 
 
  const items = {
-   display : ['Top','Users', 'Videos', 'Sounds', 'Hashtags'],
+   display : ['Top','Users', 'Videos', 'Hashtags'],
    defaultValue : selectedIndex
  }
 
