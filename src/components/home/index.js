@@ -5,11 +5,11 @@ function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col ">
       <div className="w-full h-28 bg-hipidblue flex items-center justify-center lg:justify-start lg:px-10 ">
-        {/* <img className="w-12" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> */}
+        <img className="w-12" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="bg_grad flex items-center p-10 relative">
         <div className="flex justify-end pr-10 items-center w-5/12 ">
-          {/* <img className="w-60" src={withBasePath('images/hipi_screenshot.png')} alt="hipi logo" /> */}
+          <img className="w-60" src={withBasePath('images/hipi_screenshot.png')} alt="hipi logo" /> 
         </div>
         <div className="flex items-start justify-start flex-col w-7/12 text-white pr-60">
           <h1 className="text-5xl leading-snug font-semibold py-10">Hipi is best experienced on mobile device.</h1>
@@ -21,8 +21,8 @@ function Home() {
             on your mobile.
           </p>
           <div className="flex w-full mt-6">
-            {/* <img className="pr-2" src={withBasePath('icons/play_store.png')} alt="hipi logo" />
-            <img src={withBasePath('icons/app_store.png')} alt="hipi logo" /> */}
+           <img className="pr-2" src={withBasePath('icons/play_store.png')} alt="hipi logo" />
+            <img src={withBasePath('icons/app_store.png')} alt="hipi logo" /> 
           </div>
         </div>
         <div className="absolute z-0">
