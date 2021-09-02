@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col ">
       <div className="w-full h-28 bg-hipidblue flex items-center justify-center lg:justify-start lg:px-10 ">
-        <img className="w-12" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        <img className="w-20" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="bg_grad flex items-center p-10 relative">
         <div className="flex justify-end pr-10 items-center w-5/12 ">
@@ -15,7 +15,7 @@ function Home() {
           <h1 className="text-5xl leading-snug font-semibold py-10">Hipi is best experienced on mobile device.</h1>
           <p className="font-medium leading-normal mb-4 text-2xl font-light">
             Hipi is a mobile only platform.
-            Download the app on your Android and iOS devices, or visit
+            Download the app on your Android and iOS devices, or visit 
             <a href="https://hipi.co.in/">www.hipi.co.in</a>
             {' '}
             on your mobile.
