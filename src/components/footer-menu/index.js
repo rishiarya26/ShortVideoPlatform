@@ -37,7 +37,7 @@ function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();
   // const [liked, setLiked] = useState(false);
   const { show } = useDrawer();
-
+console.log("this is the thing",videoId);
 const info ={
   shop:  <Shop
   videoId={videoId}
