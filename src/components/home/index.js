@@ -4,8 +4,8 @@ import { withBasePath } from '../../config';
 function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col ">
-      <div className="w-full h-28 bg-hipidblue flex items-center justify-center lg:justify-start lg:px-10 ">
-        <img className="w-20" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+      <div className="w-full h-28 bg-black flex items-center justify-center lg:justify-start lg:px-10 ">
+        <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="bg_grad flex items-center p-10 relative">
         <div className="flex justify-end pr-10 items-center w-5/12 ">
@@ -25,27 +25,15 @@ function Home() {
             <img src={withBasePath('icons/app_store.png')} alt="hipi logo" /> 
           </div>
         </div>
-        <div className="absolute z-0">
-          <svg width="442" height="558" viewBox="0 0 442 558" fill="none">
-            <path fillRule="evenodd" clipRule="evenodd" d="M442 239.988C442 195.324 418.286 156.238 382.773 134.53C382.497 134.187 382.215 133.831 381.944 133.659V133.543L156.434 -19.1661C147.73 -25.0694 137.784 -29.0372 127.328 -30.2089C122.672 -30.7288 117.942 -31 113.144 -31C73.8288 -31 38.7209 -13.0663 15.5148 15.0569C5.21306 27.54 0 43.4587 0 59.6411V103.549C0 103.549 0.60466 39.262 64.0895 82.3162L277.947 227.139C286.806 233.138 291.235 236.138 291.237 240.38C291.238 244.623 286.81 247.625 277.955 253.63L54.176 405.369C1.36858 439.783 0 510.145 0 510.145V662C0.0248833 661.96 5.8227 643.88 33.0052 623.794L94.2033 581.849C113.433 569.396 120.53 558.759 130.67 536.377L130.804 536.327C130.804 536.327 138.585 514.717 169.707 491.159C174.096 488.263 393.159 339.497 406.569 326.554C429.058 304.846 442 273.713 442 239.988Z" fill="white" fillOpacity="0.1" />
-          </svg>
-        </div>
-        <div className="absolute right-48 top-0 z-0">
-          <svg width="275" height="339" viewBox="0 0 275 339" fill="none">
-            <path fillRule="evenodd" clipRule="evenodd" d="M275 76.5364C275 48.7585 260.246 24.4494 238.15 10.9487C237.979 10.7352 237.804 10.514 237.635 10.4072V10.3345L97.3288 -84.6401C91.9133 -88.3115 85.7253 -90.7793 79.2199 -91.508C76.3233 -91.8314 73.3802 -92 70.3953 -92C45.9342 -92 24.0911 -80.8464 9.65284 -63.3557C3.24342 -55.592 0 -45.6916 0 -35.6273V-8.31972C0 -8.31972 0.376203 -48.3017 39.8747 -21.5248L165.534 63.5382C174.397 69.5378 178.829 72.5376 178.83 76.7812C178.831 81.0248 174.402 84.0273 165.542 90.0322L33.7068 179.392C0.851493 200.796 0 244.556 0 244.556V339C0.0154817 338.975 3.62272 327.73 20.5349 315.239L58.6106 289.152C70.5749 281.407 74.9903 274.791 81.2991 260.871L81.3827 260.84C81.3827 260.84 86.2238 247.4 105.587 232.748C108.318 230.947 244.613 138.425 252.956 130.375C266.948 116.874 275 97.5114 275 76.5364Z" fill="white" fillOpacity="0.1" />
-          </svg>
-        </div>
       </div>
-      <div className="w-full h-60 bg-hipidblue flex py-3 justify-between flex-col px-10 text-gray-300">
+      <div className="w-full h-60 bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
         <div className="flex w-full text-sm">
           <div className="flex w-1/2">
-            <a href="#" className="pr-2 cursor-pointer">About Us</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="#" className="px-2 cursor-pointer">Help Center</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="#" className="px-2 cursor-pointer">Privacy Policy</a>
+            <a href="#" className="px-2 cursor-pointer">Community Guidelines</a>
             <p className="text-xs leading-5 text-gray-500">|</p>
             <a href="#" className="px-2 cursor-pointer">Terms of Use</a>
+            <p className="text-xs leading-5 text-gray-500">|</p>
+            <a href="#" className="px-2 cursor-pointer">Community Centre</a>
           </div>
           <div className="flex justify-end w-1/2">
             <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
