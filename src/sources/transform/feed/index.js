@@ -34,8 +34,16 @@ function transformSuccess(resp) {
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     const payloadData = [];
+    // for(let i=1;i<=videos.length;i++){
+    //   payloadObject.watchId = ((data.requestedWith.offset * data.requestedWith.offset+1) + z);
+    // }
     videos?.forEach((d,z) => {
       const payloadObject = {};
+      //   if(data.requestedWith.offset >=1){
+      //     payloadObject.watchId = ((6 * (data.requestedWith.offset)) + z);
+      // }else{
+      //     payloadObject.watchId = z;
+      // }
       payloadObject.watch=z;
       payloadObject.data_id = d?.objectID;
       payloadObject.content_id = d?.id;
