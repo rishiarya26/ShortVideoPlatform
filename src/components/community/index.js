@@ -30,7 +30,7 @@ function Community() {
         Do not post Content that explicitly depicts sexual organs / sexual activities for the purpose of sexual gratification. In particular, do not post material which includes, but is not limited to:
         </p>
        
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>
           Sexual activities including sexual intercourse, stimulation of genitalia, oral sex, sexual arousal, sexual fetish, non-penetrative sex and non-consensual sex.
           </li>
@@ -56,7 +56,7 @@ function Community() {
           1. Child Pornography, Nudity and Abuse
         </p>
         <p>Do not post any Sexually Explicit Content in relation to, or that captures minors (those under the age of 18) as well as any full or partial nudity of minors including, but not limited to depictions of genitalia, uncovered buttocks or exposed breasts. Sexually Explicit Content involving children would also include but is not limited to:</p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>Depiction of children engaging in Sexually Explicit Content, either filmed or in a computer generated, or animated form.</li>
           <li>Links to third party websites that host material of children engaging in Sexually Explicit Content. </li>
           <li>Sharing fantasies/desires/expressing interest in engaging in Sexually Explicit Content involving children.</li>
@@ -70,7 +70,7 @@ function Community() {
           2. Tips for Parents / Caregivers/Guardians
         </p>
         <p>A few tips for parents, caregivers and guardians are below:</p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>Do not post nude/partially nude images of your children. While we understand that people like to share pictures of their children, we may remove images or videos of nude or partially nude children even when they are shared with good intentions as per our polices. This is to prevent others from reusing these images in inappropriate ways.</li>
           <li>Do not post information (either in a post or via comments) that reveals personal information, or the location of your children online. This would include full names / birth date / home address / uniforms that would identify a particular school / schedules of your children.</li>
           <li>Always check with the parents/caregivers/guardians before sharing information about other children. </li>
@@ -92,7 +92,7 @@ function Community() {
           1. Violence
         </p>
         <p>Do not upload Content that is gratuitously shocking, sadistic, or excessively graphic, or Content that glorifies violence or celebrates the suffering or humiliation of others, including but not limited to:</p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>Depictions or enactment of or threats of violence or cruelty against people or animals, or of dying or wounded people, or animals .</li>
           <li>Depictions of dismembered, mutilated, charred, or burned human or animal remains.</li>
           <li>Depictions of gore in which an open wound or injury is the core focus.</li>
@@ -123,7 +123,7 @@ function Community() {
           6. Human and animal exploitation 
         </p>
         <p>Do not post Content that promotes human exploitation, human or animal trafficking, or bestiality, including but not limited to: </p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>Depicts humans forcing animals to attack each other (except in the wild), such as cockfighting. </li>
           <li>Depicts humans abusing an animal for sexual gratification or otherwise.</li>
           <li>Depicts humans hunting animals, or any animal remains from hunting (including trophy hunting).</li>
@@ -142,7 +142,7 @@ function Community() {
           8. Irresponsible behavior
         </p>
         <p>Do not post Content that:</p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>Depicts the consumption or possession of drugs, alcohol, tobacco, e-cigarettes, or any other substance by adults. </li>
           <li>May risk the safety of any humans or animals should it be recreated (such as dangerous pranks, imitable stunts, etc ). </li>
           <li>Includes any profanity, vulgar or mocking language.</li>
@@ -163,7 +163,7 @@ function Community() {
         G. Fake News & Defamatory Content 
         </div>
         <p>Do not post Content that is:  </p>
-        <ul class="list-disc mx-8 my-2">
+        <ul className="list-disc mx-8 my-2">
           <li>fake or may spread fake news/ information that may cause harm; or</li>
           <li>derogatory, disparaging, demeaning or defamatory to any individual or organisation.</li>
         </ul>
