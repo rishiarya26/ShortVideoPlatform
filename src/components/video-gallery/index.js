@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
@@ -12,22 +12,16 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId='', type = 'all', page ='profile', hashTag=''
+  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', isFetching
 }) {
-  // const [data, setData] = useState(items || []);
-  // const [isFetching, setIsFetching] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   window?.addEventListener('scroll', handleScroll);
-  //   return () => window?.removeEventListener('scroll', handleScroll);
-  // }, []);
-
-  // function handleScroll() {
-  //   if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
-  //   console.log('Fetch more list items!');
-  // }
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 0);
+    }
+  },[])
 
   const noData = {
     all: <>
@@ -81,6 +75,7 @@ export default function VideoGallery({
                 />
              </span>
              ))}
+             {isFetching && 'Loading more items...'}
             </div>
             )
             : (

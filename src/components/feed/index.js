@@ -20,6 +20,7 @@ import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
 import Play from '../commons/svgicons/play';
 import Img from '../commons/image';
+import usePreviousValue from '../../hooks/use-previous';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -42,24 +43,23 @@ function Feed({ router }) {
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [videoActiveIndex, setVideoActiveIndex] = useState(null)
-  // const [videoActiveIndexUp, setVideoActiveIndexUp] = useState(null)
+  const [videoActiveIndex, setVideoActiveIndex] = useState(0)
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const [currentTime, setCurrentTime] = useState(null)
+  const [offset, setOffset] = useState(1)
+  const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
   const { id } = router?.query;
-  // let { videoId = '' } = router?.query;
 
   const getFeedData = async() =>{
     let updateItems = [...items];
-    // let updateItems = JSON.parse(window.sessionStorage?.getItem("feedList"));
      try{
-       const data =  await getHomeFeed({ type: id });
+       const data =  await getHomeFeed({ type: id , offset: offset });
        updateItems = updateItems.concat(data?.data);
+       setOffset(offset+1)
        setItems(updateItems);
-      //  window.sessionStorage.setItem("feedList",JSON.stringify(updateItems));
       }
      catch(err){
      }
@@ -67,22 +67,16 @@ function Feed({ router }) {
   } 
 
   const onDataFetched = data => {
-    // videoId === '' && (videoId = data?.data?.[0]?.content_id);
     if(data){
-      // const feed = JSON.parse(window.sessionStorage.getItem("feedList"));
-      // const dataItems = data?.data
-      // setItems(dataItems);
-      // window.sessionStorage.setItem("feedList",JSON.stringify(dataItems));
-      // if(dataItems.length<=6){
-      //   window.sessionStorage.clear();
-      //   window.sessionStorage.setItem("feedList",JSON.stringify(data?.data));
         let toUpdateShowData = [...toShowItems];
-        //set first one item in showItems
-        toUpdateShowData.push(data?.data[0]);
+        const videoIdInitialItem = data?.data?.[0]?.content_id
+        //set first three item in showItems
+        toUpdateShowData.push(data?.data?.[0]);
+        toUpdateShowData.push(data?.data?.[1]);
+        toUpdateShowData.push(data?.data?.[2]);
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
-        // setActiveVideoId(videoId);
-      // }
+        setActiveVideoId(videoIdInitialItem);
     }
   }
 
@@ -120,48 +114,58 @@ function Feed({ router }) {
   };
 
  const incrementShowItems = async() =>{
-  // let updateByValues = 1;
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  for(let i=1; i<=2; i++){
-    // let deleteItemIndex = (videoActiveIndex/2)-i;
-    // const checkIndex = (videoActiveIndex%2 === 0)
-    // if(deleteItemIndex > 0 && videoActiveIndex >=6 && checkIndex){
-    //   const indexToRemove = 0;
-    //   const numberToRemove = 2;
-    //   updateShowItems.splice(indexToRemove, numberToRemove);
-    // }
-    let insertItemIndex = (videoActiveIndex*2)+i;
+
+  /* Increment */
+    const incrementGap = 2;
+    let insertItemIndex = videoActiveIndex+incrementGap;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
-  }
-  console.log("increment",items,updateShowItems)
+    // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
+
+  /* Delete */
+    const decrementGap = 3;
+    let deleteItemIndex = videoActiveIndex-decrementGap;
+    if(deleteItemIndex >=0 && videoActiveIndex >=3){
+      updateShowItems[deleteItemIndex] = null;
+      // console.log('deleted', updateShowItems)
+      // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
+    }
+  // console.log("increment",items,updateShowItems);
   setToShowItems(updateShowItems);
  }
 
-// useEffect(()=>{
-//   window.onunload = function () {
-//    window.sessionStorage.removeItem('feedList');
-//   }
-// },[])
+ const decrementingShowItems = async() =>{
+  let updateShowItems = [...toShowItems];
+  const dataItem = [...items]
 
-//   useEffect(()=>{
-//     router?.asPath === '/feed/for-you' &&  window.sessionStorage.clear();
-//   },[])
+  /* Add */
+  const  incrementGap = 2;
+  let insertItemIndex = videoActiveIndex-incrementGap;
+  if(insertItemIndex >=0 && videoActiveIndex >=2){
+    updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
+    // console.log('added', updateShowItems)
+    // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
+  }
+
+  /* Delete */
+    const  decrementGap=  3;
+    let deleteItemIndex = videoActiveIndex+decrementGap;
+     deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+    // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
+    // console.log("increment",items,updateShowItems);
+    setToShowItems(updateShowItems);
+ }
 
   useEffect(()=>{
-    toShowItems.length > 0 && incrementShowItems();
-    //   const indexToRedirect = items?.findIndex((data)=>(data?.content_id === videoId));
-    //   if(indexToRedirect !== -1){
-    //   let insertItemIndex = (indexToRedirect*2)+3
-    //   const updateIndex = items?.length-1 >= insertItemIndex && insertItemIndex || items?.length-1
-    //   const updateShowItems =  items?.slice(0,updateIndex);
-    //  setToShowItems(updateShowItems);
-    //  setVideoActiveIndex(indexToRedirect);
-  },[items])
-
-  useEffect(()=>{
-    toShowItems.length > 0 && incrementShowItems();
+    if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
+      //swipe-down
+      toShowItems.length > 0 && incrementShowItems();
+    }else{
+      //swipe-up
+      toShowItems.length > 0 && decrementingShowItems();
+    }
   },[videoActiveIndex])
 
   useEffect(() => {
@@ -170,10 +174,9 @@ function Feed({ router }) {
     setSaveLook(true);
   }, [activeVideoId]);
 
-
   const toggleSaveLook = () => {
     const data = [...toShowItems];
-    const resp = data.findIndex(item => (item.content_id === activeVideoId));
+    const resp = data.findIndex(item => (item?.content_id === activeVideoId));
     data[resp].saveLook = true;
     setToShowItems(data);
     setSaveLook(!saveLook);
@@ -205,10 +208,10 @@ function Feed({ router }) {
           calculateheight="true"
           slidesPerView={1}
           mousewheel
-          // speed = '2000'
+          // speed = '5000'
           scrollbar={{ draggable: true }}
           autoplay= {{
-              delay: 2000,
+              // delay: 2000,
               // delay: 5000,
               disableOnInteraction: false
           }}
@@ -223,26 +226,13 @@ function Feed({ router }) {
             const {
               activeIndex, slides
             } = swiperCore;
-            if(slides[activeIndex].firstChild.firstChild.currentTime > 0){
+            if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
               slides[activeIndex].firstChild.firstChild.currentTime = 0
             }
-            console.log(slides)
-            // slides[activeIndex]?.firstChild?.firstChild?.currentTime = '0'
-            const activeId = slides[activeIndex]?.id;
-            if(activeIndex > videoActiveIndex){
-              setVideoActiveIndex(activeIndex)
-            }
-            // else{
-            //   if(active)
-            //   setVideoActiveIndexUp(activeIndex)
-            // }
-            (items.map((data)=>{
-              if(data.content_id === activeId){
-                console.log("v_URL",data.video_url)
-              }
-            }))
-            setActiveVideoId(activeId);
-            // router.replace(`/feed/${id}?videoId=${activeId}`);
+           
+            const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+            activeIndex && setVideoActiveIndex(activeIndex);
+            activeId && setActiveVideoId(activeId);
           }}
         >
           {
@@ -251,35 +241,35 @@ function Feed({ router }) {
             ) => (
               <SwiperSlide
                 key={id}
-                id={item?.content_id}
-  
+                id={item?.watchId}
+                itemID={item?.content_id}
               >
-                <Video
+              {item !==null &&  <Video
                   updateSeekbar={updateSeekbar}
-                  socialId={item.getSocialId}
-                  url={item.video_url}
-                  id={item.content_id}
-                  comments={item.commentsCount}
-                  likes={item.likesCount}
-                  music={item.musicCoverTitle}
-                  musicTitle={item.music_title}
-                  profilePic={item.userProfilePicUrl}
-                  userName={item.userName}
-                  musicCoverTitle={item.musicCoverTitle}
+                  socialId={item?.getSocialId}
+                  url={item?.video_url}
+                  id={item?.content_id}
+                  comments={item?.commentsCount}
+                  likes={item?.likesCount}
+                  music={item?.musicCoverTitle}
+                  musicTitle={item?.music_title}
+                  profilePic={item?.userProfilePicUrl}
+                  userName={item?.userName}
+                  musicCoverTitle={item?.musicCoverTitle}
                   // videoid={item.content_id}
-                  hashTags={item.hashtags}
-                  videoOwnersId={item.videoOwnersId}
-                  thumbnail={item.thumbnail}
+                  hashTags={item?.hashtags}
+                  videoOwnersId={item?.videoOwnersId}
+                  thumbnail={item?.thumbnail}
                   // thumbnail={item.poster_image_url}
-                  canShop={shop.isShoppable}
-                  shopCards={shop.data}
+                  canShop={shop?.isShoppable}
+                  shopCards={shop?.data}
                   handleSaveLook={toggleSaveLook}
                   saveLook={saveLook}
-                  saved={item.saveLook}
+                  saved={item?.saveLook}
                   activeVideoId={activeVideoId}
                   comp="feed"
                   currentTime={currentTime}
-                />
+                />}
               </SwiperSlide>
             )) : (
               <div className="h-screen bg-black flex justify-center items-center">
