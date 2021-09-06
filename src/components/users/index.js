@@ -15,6 +15,7 @@ import Listing from '../commons/svgicons/listing';
 import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
+import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -29,6 +30,32 @@ function Users({
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [showLoading, setShowLoading] = useState(isFetching)
+  const [offset, setOffset] = useState(2)
+
+  async function fetchMoreListItems() {
+   try{
+    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
+    console.log(response)
+    if(response?.data?.length > 0){
+      let data = {...videoData};
+      data.items = data?.items?.concat(response?.data);
+      console.log("items",data)
+      setVideoData(data);
+      setOffset(offset+1);
+      setIsFetching(false);
+    }
+    setShowLoading(false)
+   }
+   catch(e){
+     console.log("e",e)
+   }
+  }
+
+  // useEffect(()=>{
+  //   document?.documentElement?.scrollTop(0);
+  // },[])
 
   const { show } = useDrawer();
   const { t } = useTranslation();
@@ -127,7 +154,7 @@ function Users({
 
   return (
     <div>
-      <div className="headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
+      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
           { info.menu.button[type] }
         </div>
@@ -175,6 +202,8 @@ function Users({
         userId={id}
         type={selectedTab}
         page='profile'
+        isFetching={showLoading}
+        fetchMoreListItems={fetchMoreListItems}
       />
     </div>
   );
