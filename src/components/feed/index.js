@@ -13,7 +13,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import { clearHomeFeed, getHomeFeed } from '../../sources/feed';
+import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
@@ -21,6 +21,8 @@ import dynamic from 'next/dynamic';
 import Play from '../commons/svgicons/play';
 import Img from '../commons/image';
 import usePreviousValue from '../../hooks/use-previous';
+import useAuth from '../../hooks/use-auth';
+import LoginFollowing from '../login-following';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -28,14 +30,6 @@ SwiperCore?.use([Mousewheel]);
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
-
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
@@ -48,27 +42,23 @@ function Feed({ router }) {
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const [currentTime, setCurrentTime] = useState(null)
-  const [offset, setOffset] = useState(1)
+  const [autoplay, setAutoplay] = useState(false);
+  // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
   const { id } = router?.query;
 
-  const getFeedData = async() =>{
-    let updateItems = [...items];
-     try{
-       const data =  await getHomeFeed({ type: id , offset: offset });
-       updateItems = updateItems.concat(data?.data);
-       setOffset(offset+1)
-       setItems(updateItems);
-      }
-     catch(err){
-     }
-     return updateItems;
-  } 
-
   const onDataFetched = data => {
     if(data){
-        let toUpdateShowData = [...toShowItems];
+      // console.log('showItems', toShowItems)
+      // console.log('items',items)
+      // console.log('currentIndex',videoActiveIndex)
+      // console.log('id',activeVideoId)
+      // console.log('preId',preActiveVideoId)
+      //   setVideoActiveIndex(0)
+      //   setActiveVideoId(null)
+        
+        let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         //set first three item in showItems
         toUpdateShowData.push(data?.data?.[0]);
@@ -80,8 +70,34 @@ function Feed({ router }) {
     }
   }
 
+  // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id });
-  let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id });
+
+  const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
+
+  const getFeedData = async() =>{
+    let updateItems = [...items];
+     try{
+       const data =  await fetchData({ type: id });
+       console.log(data)
+       updateItems = updateItems.concat(data?.data);
+      //  setOffset(offset+1)
+       setItems(updateItems);
+      }
+     catch(err){
+     }
+     return updateItems;
+  } 
+
+  let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
+
+  useEffect(()=>{
+    setToShowItems([]),
+    setItems([])
+    setVideoActiveIndex(0)
+    setActiveVideoId(null)
+  },[id])
 
   if (id === 'for-you') {
     const status = fetchState === 'success';
@@ -117,14 +133,12 @@ function Feed({ router }) {
  const incrementShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-
   /* Increment */
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     arr && updateShowItems?.push(arr[insertItemIndex]);
     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
-
   /* Delete */
     const decrementGap = 3;
     let deleteItemIndex = videoActiveIndex-decrementGap;
@@ -140,7 +154,6 @@ function Feed({ router }) {
  const decrementingShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-
   /* Add */
   const  incrementGap = 2;
   let insertItemIndex = videoActiveIndex-incrementGap;
@@ -149,7 +162,6 @@ function Feed({ router }) {
     // console.log('added', updateShowItems)
     // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
   }
-
   /* Delete */
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
@@ -189,6 +201,117 @@ function Feed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
+  const onPlayClick =()=>{
+    setAutoplay(true);
+    setInitialPlayButton(false);
+  }
+
+  const swiper = () => <Swiper
+              className="max-h-full"
+              direction="vertical"
+              draggable="true"
+              spaceBetween={0}
+              calculateheight="true"
+              slidesPerView={1}
+              mousewheel
+              // speed = '5000'
+              scrollbar={{ draggable: true }}
+              autoplay= {{
+                  // delay: 2000,
+                  // delay: 5000,
+                  disableOnInteraction: false
+              }}
+              // onSwiper={swiper => {
+              //   if(videoId){
+              //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              //     console.log("slideId",slideToId)
+              //     swiper?.slideTo(slideToId, 0);
+              //   }
+              // }}
+              onSlideChange={swiperCore => {
+                const {
+                  activeIndex, slides
+                } = swiperCore;
+                if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
+                  slides[activeIndex].firstChild.firstChild.currentTime = 0
+                }
+              
+                const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+                activeIndex && setVideoActiveIndex(activeIndex);
+                activeId && setActiveVideoId(activeId);
+              }}
+            >
+              {
+                (validItemsLength ? toShowItems.map((
+                  item, id
+                ) => (
+                  <SwiperSlide
+                    key={id}
+                    id={item?.watchId}
+                    itemID={item?.content_id}
+                  >
+                  {item !==null &&  <Video
+                      updateSeekbar={updateSeekbar}
+                      socialId={item?.getSocialId}
+                      url={item?.video_url}
+                      id={item?.content_id}
+                      comments={item?.commentsCount}
+                      likes={item?.likesCount}
+                      music={item?.musicCoverTitle}
+                      musicTitle={item?.music_title}
+                      profilePic={item?.userProfilePicUrl}
+                      userName={item?.userName}
+                      musicCoverTitle={item?.musicCoverTitle}
+                      // videoid={item.content_id}
+                      hashTags={item?.hashtags}
+                      videoOwnersId={item?.videoOwnersId}
+                      thumbnail={item?.thumbnail}
+                      // thumbnail={item.poster_image_url}
+                      canShop={shop?.isShoppable}
+                      shopCards={shop?.data}
+                      handleSaveLook={toggleSaveLook}
+                      saveLook={saveLook}
+                      saved={item?.saveLook}
+                      activeVideoId={activeVideoId}
+                      comp="feed"
+                      currentTime={currentTime}
+                      autoplay={autoplay}
+                    />}
+                  </SwiperSlide>
+                )) : (
+                  <div className="h-screen bg-black flex justify-center items-center">
+                    <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
+                  </div>
+                ))
+              }
+              <div
+                onClick={onPlayClick}
+                className="absolute top-1/2 justify-center w-screen"
+                style={{ display: initialPlayButton ? 'flex' : 'none' }}
+              >
+                <Play/>
+              </div>
+              {validItemsLength ? seekedPercentage
+              ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
+              : <SeekbarLoading type={'aboveFooterMenu'}/>
+              : ''}
+              <FooterMenu 
+              videoId={activeVideoId}
+              canShop={shop.isShoppable}
+              type="shop"
+              selectedTab="home"
+              />
+            </Swiper>
+
+  const showLoginFollowing = ()=> <LoginFollowing/>;
+  
+  const toShowFollowing = useAuth(showLoginFollowing, swiper);
+
+  const info = {
+    'for-you' : swiper,
+    'following' : toShowFollowing
+  }
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -200,103 +323,7 @@ function Feed({ router }) {
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
-
-        <Swiper
-          className="max-h-full"
-          direction="vertical"
-          draggable="true"
-          spaceBetween={0}
-          calculateheight="true"
-          slidesPerView={1}
-          mousewheel
-          // speed = '5000'
-          scrollbar={{ draggable: true }}
-          autoplay= {{
-              // delay: 2000,
-              // delay: 5000,
-              disableOnInteraction: false
-          }}
-          // onSwiper={swiper => {
-          //   if(videoId){
-          //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-          //     console.log("slideId",slideToId)
-          //     swiper?.slideTo(slideToId, 0);
-          //   }
-          // }}
-          onSlideChange={swiperCore => {
-            const {
-              activeIndex, slides
-            } = swiperCore;
-            if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
-              slides[activeIndex].firstChild.firstChild.currentTime = 0
-            }
-           
-            const activeId = slides[activeIndex]?.attributes?.itemid?.value;
-            activeIndex && setVideoActiveIndex(activeIndex);
-            activeId && setActiveVideoId(activeId);
-          }}
-        >
-          {
-            (validItemsLength ? toShowItems.map((
-              item, id
-            ) => (
-              <SwiperSlide
-                key={id}
-                id={item?.watchId}
-                itemID={item?.content_id}
-              >
-              {item !==null &&  <Video
-                  updateSeekbar={updateSeekbar}
-                  socialId={item?.getSocialId}
-                  url={item?.video_url}
-                  id={item?.content_id}
-                  comments={item?.commentsCount}
-                  likes={item?.likesCount}
-                  music={item?.musicCoverTitle}
-                  musicTitle={item?.music_title}
-                  profilePic={item?.userProfilePicUrl}
-                  userName={item?.userName}
-                  musicCoverTitle={item?.musicCoverTitle}
-                  // videoid={item.content_id}
-                  hashTags={item?.hashtags}
-                  videoOwnersId={item?.videoOwnersId}
-                  thumbnail={item?.thumbnail}
-                  // thumbnail={item.poster_image_url}
-                  canShop={shop?.isShoppable}
-                  shopCards={shop?.data}
-                  handleSaveLook={toggleSaveLook}
-                  saveLook={saveLook}
-                  saved={item?.saveLook}
-                  activeVideoId={activeVideoId}
-                  comp="feed"
-                  currentTime={currentTime}
-                />}
-              </SwiperSlide>
-            )) : (
-              <div className="h-screen bg-black flex justify-center items-center">
-                <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
-              </div>
-            ))
-          }
-          <div
-             onClick={()=>setInitialPlayButton(false)}
-             className="absolute top-1/2 justify-center w-screen"
-             style={{ display: initialPlayButton ? 'flex' : 'none' }}
-          >
-            <Play/>
-          </div>
-          {validItemsLength ? seekedPercentage
-          ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
-          : <SeekbarLoading type={'aboveFooterMenu'}/>
-          : ''}
-          <FooterMenu 
-           videoId={activeVideoId}
-           canShop={shop.isShoppable}
-           type="shop"
-           selectedTab="home"
-           />
-        </Swiper>
-
+        {info?.[id]()}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>
