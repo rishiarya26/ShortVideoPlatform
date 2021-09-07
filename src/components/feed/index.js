@@ -183,8 +183,8 @@ function Feed({ router }) {
     setSaveLook(!saveLook);
   };
 
-  const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
-    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` }];
+  const tabs = [
+    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
