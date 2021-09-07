@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Mousewheel } from 'swiper';
 import Hash from '../commons/svgicons/hash';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { getSearchData } from '../../sources/explore';
@@ -61,7 +63,22 @@ function Explore() {
         <SearchItems type='explore'/>
           <div />
         </div>
-        <div className="poster w-full mt-40" />
+        {/* <div className="poster w-full mt-40" />  */}
+        <div className="explore_carousel flex min-w-full overflow-x-auto min-h-38 no_bar mt-20">
+            <div className="carousel_item bg-gray-300 m-1 min-w-full min-h-38 relative">
+
+            </div>
+            <div className=" carousel_item bg-green-300 m-1 min-w-full min-h-38 relative">
+
+            </div>
+            <div className=" carousel_item bg-red-300 m-1 min-w-full min-h-38 relative">
+
+            </div>
+        </div>
+
+
+
+
 
         {validateData && data?.map((content, id) => {
           return (

@@ -59,7 +59,7 @@ function Video(props) {
 
   useEffect(() => {
 
-    rootRef.current.children[0].autoPlay = true;
+    // rootRef.current.children[0].autoPlay = true;
     // console.log(rootRef.current.children[0].muted,"muted")
     // props.setMuted(false);
     // rootRef.current.children[0].muted = false;

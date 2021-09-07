@@ -91,6 +91,7 @@ function Feed({ router }) {
   } 
 
   let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
+  setRetry = retry && retry
 
   useEffect(()=>{
     setToShowItems([]),
@@ -108,7 +109,7 @@ function Feed({ router }) {
   }
 
   const validItemsLength = toShowItems?.length > 0;
-  setRetry = retry && retry;
+  // setRetry = retry && retry;
 
   const updateSeekbar = percentage => {
     setInitialPlayButton(false)
@@ -195,8 +196,8 @@ function Feed({ router }) {
     setSaveLook(!saveLook);
   };
 
-  const tabs = [{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` },
-    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` }];
+  const tabs = [
+    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
@@ -326,7 +327,7 @@ function Feed({ router }) {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <>
+    <>
       <div style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
@@ -336,7 +337,7 @@ function Feed({ router }) {
           <div className="playkit-player" />
         </div>
       </div>
-</>
+    </>
     </ComponentStateHandler>
 
   );
