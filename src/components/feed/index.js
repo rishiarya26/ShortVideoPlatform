@@ -42,7 +42,7 @@ function Feed({ router }) {
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const [currentTime, setCurrentTime] = useState(null)
-  const [autoplay, setAutoplay] = useState(false);
+  const [muted, setMuted] = useState(true);
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
@@ -201,10 +201,10 @@ function Feed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-  const onPlayClick =()=>{
-    setAutoplay(true);
-    setInitialPlayButton(false);
-  }
+  // const onPlayClick =()=>{
+  //   setAutoplay(true);
+  //   setInitialPlayButton(false);
+  // }
 
   const swiper = () => <Swiper
               className="max-h-full"
@@ -275,7 +275,8 @@ function Feed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="feed"
                       currentTime={currentTime}
-                      autoplay={autoplay}
+                      muted={muted}
+                      // setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -285,12 +286,19 @@ function Feed({ router }) {
                 ))
               }
               <div
-                onClick={onPlayClick}
+                onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: initialPlayButton ? 'flex' : 'none' }}
               >
                 <Play/>
               </div>
+              {<div
+                onClick={()=>setMuted(false)}
+                className="absolute top-1/2 justify-center w-screen"
+                style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
+              >
+               <p className='text-gray-300 font-medium'>Tap To Unmute</p>
+              </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
