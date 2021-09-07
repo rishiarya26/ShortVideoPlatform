@@ -24,17 +24,17 @@ function ProductWidget({
 
   return (
     <div
-      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-14"
+      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-16"
     >
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">
           {t('PRODUCT_CAN_BUY')}
-          {' '}
+          {/* {' '}
           |
           {' '}
           {shopCardsLength}
           {' '}
-          {t('ITEMS')}
+          {t('ITEMS')} */}
         </div>
         <div className="flex">
           {!loading ? shopCardsLength > 0 && shopCards.map((data, id) => (
@@ -54,7 +54,7 @@ function ProductWidget({
       </div>
       <div className="flex p-4">
         <div
-          className="flex rounded-full h-10 w-10 bg-black bg-opacity-25 justify-center items-center text-white"
+          className="flex rounded-full h-10 w-10 bg-red-600 justify-center items-center text-white"
           onClick={handleSaveLook}
         >
           <Close />

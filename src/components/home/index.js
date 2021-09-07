@@ -4,7 +4,7 @@ import { withBasePath } from '../../config';
 function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col ">
-      <div className="w-full h-28 bg-black flex items-center justify-center lg:justify-start lg:px-10 ">
+      <div className="w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 ">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="bg_grad flex items-center p-10 relative">
