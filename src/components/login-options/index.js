@@ -24,30 +24,30 @@ export default function Login({ toggle }) {
             </div>
           </div>
         </Link>
-        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with facebook</p>
           </div>
-        </div>
-        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        </div> */}
+        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Google /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with google</p>
           </div>
-        </div>
-        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        </div> */}
+        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Twitter /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with Twitter</p>
           </div>
-        </div>
-        <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        </div> */}
+        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Instagram /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Continue with Instagram</p>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="my-2 ">
         <p>

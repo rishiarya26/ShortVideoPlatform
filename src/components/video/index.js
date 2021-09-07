@@ -58,21 +58,25 @@ function Video(props) {
   });
 
   useEffect(() => {
+
+    rootRef.current.children[0].autoPlay = true;
+    // console.log(rootRef.current.children[0].muted,"muted")
+    // props.setMuted(false);
+    // rootRef.current.children[0].muted = false;
     // rootRef?.current?.children[0]?.load();
   }, [])
 
-  // const resetCurrentTime = (e) => {
-
-  // }
-
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
-    props.updateSeekbar(percentage);
+    percentage && props.updateSeekbar(percentage);
   };
 
-  // const resetCurrentTime =(e)=>{
-  //   console.log("e",e)
+  // const unMute =(e)=>{
+  //   rootRef.current.children[0].muted = false;
+  //   console.log(rootRef.current.children[0].muted,"muted")
+  //   props.setMuted(false);
   // }
+
   return (
     <div
       ref={rootRef}
@@ -81,8 +85,8 @@ function Video(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        autoPlay
-        muted
+        autoPlay = {props.autoplay ? true : false}
+        // muted={props.unmute ? false : true}
         // onLoadCapture ={resetCurrentTime}
         playsInline
         onTimeUpdate={handleUpdateSeekbar}
