@@ -1,10 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-<<<<<<< HEAD
 import { useEffect, useState } from 'react';
-=======
-import { useState } from 'react';
->>>>>>> b05310c79cd183b44a3b8075862cf4106b3ba5e1
 import useTranslation from '../../hooks/use-translation';
 import ComponentStateHandler from '../commons/component-state-handler';
 import VideoCard from '../video-card';
@@ -23,23 +19,11 @@ export default function VideoGallery({
   const { t } = useTranslation();
   const router = useRouter();
 
-<<<<<<< HEAD
   useEffect(()=>{
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
   },[])
-=======
-  // useEffect(() => {
-  //   window?.addEventListener('scroll', handleScroll);
-  //   return () => window?.removeEventListener('scroll', handleScroll);
-  // }, []);
-
-  // function handleScroll() {
-  //   if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
-  //   console.log('Fetch more list items!');
-  // }
->>>>>>> b05310c79cd183b44a3b8075862cf4106b3ba5e1
 
   const noData = {
     all: <>

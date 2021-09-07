@@ -36,6 +36,11 @@ function HeadMeta() {
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+      {/* to avoid search engies to read web page */}
+      <meta name="robots" content="noindex"/>
+      <meta name="robots" content="nofollow"/>
+      <meta name="googlebot" content="noindex"/>
+
       {/* IOS */}
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />

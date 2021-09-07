@@ -270,11 +270,7 @@ function Feed({ router }) {
                   activeVideoId={activeVideoId}
                   comp="feed"
                   currentTime={currentTime}
-<<<<<<< HEAD
                 />}
-=======
-                />
->>>>>>> b05310c79cd183b44a3b8075862cf4106b3ba5e1
               </SwiperSlide>
             )) : (
               <div className="h-screen bg-black flex justify-center items-center">
