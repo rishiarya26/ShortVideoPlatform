@@ -345,7 +345,7 @@ function Feed({ router }) {
       ErrorComp={ErrorComp}
     >
     <>
-      <div style={{ height: `${videoHeight}px` }}>
+      <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>

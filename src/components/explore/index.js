@@ -19,6 +19,7 @@ const LoadComp = () => (<Loader />);
 
 function Explore() {
   const [data, setData] = useState([]);
+  const [crousalItems, setCrousalItems] = useState([]);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
@@ -31,6 +32,9 @@ function Explore() {
        let updateData = [...data];
        updateData = updateData?.concat(response?.data);
        console.log("items",updateData)
+       let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
+       sessionData = sessionData?.concat(response?.data);
+       window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
        setData(updateData);
        setOffset(offset+1);
        setIsFetching(false);
@@ -45,8 +49,10 @@ function Explore() {
   const router = useRouter();
 
   const onDataFetched = data => {
+    const crousalData = (data?.data?.[0]?.widgetType === 'carousel_banner') && data?.data?.[0]?.widgetList;
     window.sessionStorage.removeItem('search-feed');
     window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
+    setCrousalItems(crousalData)
     setData(data?.data);
   };
 
@@ -82,22 +88,26 @@ function Explore() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="h-full w-full flex flex-col relative">
+      <div className="h-full  w-screen flex flex-col relative overflow-scroll pb-16">
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
           <div />
         </div>
         {/* <div className="poster w-full mt-40" />  */}
         <div className="explore_carousel flex min-w-full overflow-x-auto min-h-38 no_bar mt-20">
-            <div className="carousel_item bg-gray-300 m-1 min-w-full min-h-38 relative">
-
+           {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
+             console.log(data)
+             return(
+            <div key={id} onClick={()=>router.push(`/tag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-1 min-w-full min-h-38 relative">
+                 <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
             </div>
-            <div className=" carousel_item bg-green-300 m-1 min-w-full min-h-38 relative">
+           )})}
+            {/* <div className=" carousel_item bg-green-300 m-1 min-w-full min-h-38 relative">
 
             </div>
             <div className=" carousel_item bg-red-300 m-1 min-w-full min-h-38 relative">
 
-            </div>
+            </div> */}
         </div>
 
         {validateData && data?.map((content, id) => {
@@ -138,7 +148,7 @@ function Explore() {
                       <RightArrow />
                     </div>
                   </div>
-                  <div className="flex min-w-full overflow-x-auto min-h-32 no_bar py-4">
+                  <div className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
                     
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                         return (
