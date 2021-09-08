@@ -24,7 +24,7 @@ function ProductWidget({
 
   return (
     <div
-      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-16"
+      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-16 mb-1"
     >
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">

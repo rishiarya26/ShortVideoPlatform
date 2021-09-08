@@ -16,6 +16,8 @@ function HeadMeta() {
       <SeoMeta />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      {/* font family include */}
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
       {/* <title>{APP_NAME}</title> */}
 
       <link rel="preload" href="https://hipi.co.in/feed/for-you" as="document" />

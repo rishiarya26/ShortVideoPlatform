@@ -58,7 +58,7 @@ function Explore() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="h-screen  w-screen flex flex-col relative">
+      <div className="h-screen  w-screen flex flex-col relative overflow-scroll pb-16">
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
           <div />
@@ -118,7 +118,7 @@ function Explore() {
                       <RightArrow />
                     </div>
                   </div>
-                  <div className="flex min-w-full overflow-x-auto min-h-32 no_bar py-4">
+                  <div className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
                     
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                         return (
