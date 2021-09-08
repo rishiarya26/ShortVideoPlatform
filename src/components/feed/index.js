@@ -214,6 +214,11 @@ function Feed({ router }) {
               spaceBetween={0}
               calculateheight="true"
               slidesPerView={1}
+              onClick={(swiper)=> {
+                if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
+                  swiper.slides[0].firstChild.firstChild.muted = false;
+                }
+              }}
               mousewheel
               // speed = '5000'
               scrollbar={{ draggable: true }}
@@ -222,13 +227,20 @@ function Feed({ router }) {
                   // delay: 5000,
                   disableOnInteraction: false
               }}
-              // onSwiper={swiper => {
-              //   if(videoId){
-              //     const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              //     console.log("slideId",slideToId)
-              //     swiper?.slideTo(slideToId, 0);
-              //   }
-              // }}
+              onSwiper={swiper => {
+                const {
+                  activeIndex, slides
+                } = swiper;
+                console.log(swiper)
+                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
+                //   slides[activeIndex].firstChild.firstChild.muted = false;
+                // }
+                // if(videoId){
+                //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+                //   console.log("slideId",slideToId)
+                //   swiper?.slideTo(slideToId, 0);
+                // }
+              }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
@@ -236,7 +248,11 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-                 console.log(slides)
+                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
+                  slides[activeIndex].firstChild.firstChild.muted = false
+                }
+                console.log(slides)
+              
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
@@ -300,8 +316,7 @@ function Feed({ router }) {
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>
-              } */}
+              </div>} */}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>

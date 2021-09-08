@@ -101,9 +101,9 @@ function Video(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        autoPlay
+        // autoPlay
         // muted
-        onPlay={handleFirstPlay}
+        // muted={props.muted ? true : false}
         webkit-playsinline = "true"
         // onLoadCapture ={resetCurrentTime}
         playsInline
