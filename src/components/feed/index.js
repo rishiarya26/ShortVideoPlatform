@@ -214,11 +214,11 @@ function Feed({ router }) {
               spaceBetween={0}
               calculateheight="true"
               slidesPerView={1}
-              onClick={(swiper)=> {
-                if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
-                  swiper.slides[0].firstChild.firstChild.muted = false;
-                }
-              }}
+              // onClick={(swiper)=> {
+              //   if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
+              //     swiper.slides[0].firstChild.firstChild.muted = false;
+              //   }
+              // }}
               mousewheel
               // speed = '5000'
               scrollbar={{ draggable: true }}
@@ -310,13 +310,13 @@ function Feed({ router }) {
               >
                 <Play/>
               </div>
-              {/* {<div
+              {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>} */}
+              </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
