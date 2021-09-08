@@ -11,6 +11,7 @@ import Img from '../commons/image';
 import FooterMenu from '../footer-menu';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
+import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -18,6 +19,29 @@ const LoadComp = () => (<Loader />);
 
 function Explore() {
   const [data, setData] = useState([]);
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [showLoading, setShowLoading] = useState(isFetching)
+  const [offset, setOffset] = useState(2)
+
+  async function fetchMoreListItems() {
+    try{
+     const response = await getSearchData({ offset: `${offset}` });
+     console.log(response)
+     if(response?.data?.length > 0){
+       let updateData = [...data];
+       updateData = updateData?.concat(response?.data);
+       console.log("items",updateData)
+       setData(updateData);
+       setOffset(offset+1);
+       setIsFetching(false);
+     }
+     setShowLoading(false)
+    }
+    catch(e){
+      console.log("e",e)
+    }
+   }
+
   const router = useRouter();
 
   const onDataFetched = data => {
@@ -58,7 +82,7 @@ function Explore() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="h-screen  w-screen flex flex-col relative">
+      <div className="h-full w-full flex flex-col relative">
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
           <div />
@@ -75,10 +99,6 @@ function Explore() {
 
             </div>
         </div>
-
-
-
-
 
         {validateData && data?.map((content, id) => {
           return (
@@ -136,6 +156,7 @@ function Explore() {
                 </div>
               ));
         })}
+        {showLoading && 'Loading more items...'}
       </div>
       <FooterMenu selectedTab="search"/>
     </ComponentStateHandler>
