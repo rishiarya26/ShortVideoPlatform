@@ -104,7 +104,7 @@ function Video(props) {
         autoPlay
         muted
         // muted={props.muted ? true : false}
-        webkit-playsinline = "true"
+        // webkit-playsinline = "true"
         // onLoadCapture ={resetCurrentTime}
         playsInline
         onTimeUpdate={handleUpdateSeekbar}
