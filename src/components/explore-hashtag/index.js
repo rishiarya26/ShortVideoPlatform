@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import VideoGallery from '../video-gallery';
 import Img from '../commons/image';
+import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -17,7 +18,31 @@ const LoadComp = () => (<Loading />);
 function HashTag({router}) {
   const [items,setItems] = useState([]);
   const [details, setDetails] = useState({})
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [showLoading, setShowLoading] = useState(isFetching)
+  const [offset, setOffset] = useState(2)
+
   const {item = ''} = router?.query;
+
+  async function fetchMoreListItems() {
+    try{
+     const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
+     console.log("resp1",response)
+     if(response?.data?.length > 0){
+       console.log("resp",response?.data)
+       let updateData = [...items];
+       updateData = updateData?.concat(response?.data);
+       console.log("items",updateData)
+       setItems(updateData);
+       setOffset(offset+1);
+       setIsFetching(false);
+     }
+     setShowLoading(false)
+    }
+    catch(e){
+      console.log("e",e)
+    }
+   }
 
   const onDataFetched = data => {
       setDetails(data?.details);
@@ -37,7 +62,7 @@ function HashTag({router}) {
       <div onClick={()=>router.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
         <Back />
       </div>
-      <div className="w-full flex flex-col p-4">
+      <div className="w-full h-full flex flex-col p-4">
         <div className="flex w-full">
           <div className="min-w-25 flex min-h-25 bg-gray-300 relative rounded-full" >
             <Img data={details?.hashTagImage} alt='img'/>
@@ -66,6 +91,7 @@ function HashTag({router}) {
         retry={retry && retry}
         hashTag={item}
         page='hashTag'
+        isFetching={showLoading}
       />
     </div>
     </ComponentStateHandler>
