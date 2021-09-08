@@ -248,9 +248,9 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                  slides[activeIndex].firstChild.firstChild.muted = false
-                }
+                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
+                //   slides[activeIndex].firstChild.firstChild.muted = false
+                // }
                 console.log(slides)
               
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
