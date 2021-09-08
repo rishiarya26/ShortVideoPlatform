@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
-import { getProfileVideos } from '../../sources/users/profile';
+import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import { Back } from '../commons/svgicons/back';
 import UserTab from '../commons/tabs/user-tab';
@@ -72,6 +72,7 @@ function Users({
   const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
+  console.log(data)
 
   useEffect(() => {
     const videos = {};
@@ -83,6 +84,15 @@ function Users({
   const handleBackClick = () => {
     router.back();
   };
+
+  // const handleFollow = async()=>{
+  //   let response = {}
+  //   try{
+  //   response = await toFollow({followerId:id})
+  //   }catch(e){
+
+  //   }
+  // }
 
   const info = {
     menu: {
@@ -106,7 +116,9 @@ function Users({
     },
     function: {
       others: <>
-        <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+        <button 
+        // onClick={handleFollow} 
+        className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
           {t('FOLLOW')}
         </button>
         <button className="font-semibold text-sm border rounded-sm px-2 py-1">

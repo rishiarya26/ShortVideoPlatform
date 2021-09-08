@@ -1,3 +1,4 @@
+/*eslint-disable react/no-unescaped-entities */
 import Save from '../commons/svgicons/save';
 import { Back } from '../commons/svgicons/back';
 import { withRouter } from 'next/router';

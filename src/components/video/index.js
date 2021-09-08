@@ -71,11 +71,27 @@ function Video(props) {
     percentage && props.updateSeekbar(percentage);
   };
 
+  props.initialPlayButton === false && rootRef.current.children[0].play()
+
   // const unMute =(e)=>{
   //   rootRef.current.children[0].muted = false;
   //   console.log(rootRef.current.children[0].muted,"muted")
   //   props.setMuted(false);
   // }
+
+  let hasPlayed = false;
+  function handleFirstPlay(event) {
+  if(hasPlayed === false) {
+    hasPlayed = true;
+
+    let vid = event.target;
+
+    vid.onplay = null;
+    // props.initialPlayButton === false && rootRef.current.children[0].play()
+
+    // Start whatever you need to do after first playback has started
+  }
+}
 
   return (
     <div
@@ -88,6 +104,7 @@ function Video(props) {
         // autoPlay
         // muted
         // muted={props.muted ? true : false}
+        webkit-playsinline = "true"
         // onLoadCapture ={resetCurrentTime}
         playsInline
         onTimeUpdate={handleUpdateSeekbar}

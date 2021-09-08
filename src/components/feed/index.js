@@ -232,9 +232,9 @@ function Feed({ router }) {
                   activeIndex, slides
                 } = swiper;
                 console.log(swiper)
-                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                  slides[activeIndex].firstChild.firstChild.muted = false;
-                }
+                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
+                //   slides[activeIndex].firstChild.firstChild.muted = false;
+                // }
                 // if(videoId){
                 //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
                 //   console.log("slideId",slideToId)
@@ -292,6 +292,7 @@ function Feed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="feed"
                       currentTime={currentTime}
+                      initialPlayButton={initialPlayButton}
                       muted={muted}
                       // setMuted={setMuted}
                     />}
