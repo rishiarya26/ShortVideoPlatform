@@ -10,6 +10,10 @@ import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
 import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
+import { inject } from '../src/analytics/async-script-loader';
+import { oneTapGoogle } from '../src/utils/social/one-tap-google';
+import { GOOGLE_ONE_TAP } from '../src/constants';
+
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
 
@@ -131,12 +135,25 @@ export function reportWebVitals() {
 function Hipi({
   Component, pageProps, locales, locale
 }) {
-  useEffect(() => {
-    // if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
+  const [loading, setLoading] = useState(true);
+  
+  const loaded = ()=>{
+    setLoading(false)
+  }
+
+  useEffect(()=>{
+        // if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
     //   // registerSW();
     // }
     console.log('mounted');
-  }, []);
+    inject(GOOGLE_ONE_TAP , null, loaded);
+    },[])
+
+    useEffect(()=>{
+      if(loading === false){
+        oneTapGoogle();
+      }
+    },[loading])
   return (
     <>
       <Head>
