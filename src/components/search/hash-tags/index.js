@@ -5,6 +5,7 @@ import ComponentStateHandler, { useFetcher } from "../../commons/component-state
 import Loader from "./loader";
 import Error from "./error";
 import Hash from "../../commons/svgicons/hash";
+// import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);

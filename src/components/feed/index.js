@@ -236,7 +236,7 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-              
+                 console.log(slides)
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
@@ -276,6 +276,7 @@ function Feed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="feed"
                       currentTime={currentTime}
+                      initialPlayButton={initialPlayButton}
                       muted={muted}
                       // setMuted={setMuted}
                     />}
@@ -293,13 +294,14 @@ function Feed({ router }) {
               >
                 <Play/>
               </div>
-              {<div
+              {/* {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>}
+              </div>
+              } */}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
