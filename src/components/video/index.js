@@ -7,6 +7,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import ProductWidget from '../product-widget';
 import ProductCards from '../product-cards';
+import { PreviousMap } from 'postcss';
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
 
@@ -102,7 +103,7 @@ function Video(props) {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         playsInline
-        muted
+        muted={props.muted ? true : false}
         autoPlay
         // muted
         // webkit-playsinline = "true"
