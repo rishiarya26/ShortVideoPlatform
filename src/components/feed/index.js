@@ -250,13 +250,17 @@ function Feed({ router }) {
                 }
       
                 setTimeout(()=>{
+                  console.log('in')
                 if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                   slides[activeIndex].firstChild.firstChild.muted = false
+                  console.log('in muted',slides[activeIndex].firstChild.firstChild.muted)
                 }
-                if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
-                  slides[activeIndex].firstChild.firstChild.autoplay = true
+                if(slides[activeIndex]?.firstChild?.firstChild?.autoPlay === false){
+                  slides[activeIndex].firstChild.firstChild.autoPlay = true
+                  console.log('in autoplay',slides[activeIndex].firstChild.firstChild.autoPlay)
                 }
-                },1000)
+                console.log( "mute", slides[activeIndex].firstChild.firstChild.muted,"autoplay", slides[activeIndex].firstChild.firstChild.autoplay )
+                },500)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
@@ -312,13 +316,13 @@ function Feed({ router }) {
                   </div>
                 ))
               }
-              {/* <div
+              <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: initialPlayButton ? 'flex' : 'none' }}
               >
                 <Play/>
-              </div> */}
+              </div>
               {/* {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
