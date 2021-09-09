@@ -23,6 +23,7 @@ const getToken = async(response)=>{
 }
 
 export const oneTapGoogle = () =>{
+  try{
      google.accounts.id.initialize({
          //TO-DO clinet_id will come from env
         client_id: '1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com',
@@ -33,4 +34,7 @@ export const oneTapGoogle = () =>{
      google.accounts.id.prompt(notification =>{
         console.log('on prompt', notification)
     })
+  }catch(e){
+    console.log("one-tap-error",e)
+  }
 }

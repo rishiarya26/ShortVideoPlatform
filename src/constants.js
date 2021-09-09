@@ -5,3 +5,5 @@ export const DEFAULT_ERROR_CODE = 400;
 export const SW_IGNORE = ['embed/*'];
 export const CHARMBOARD_PLUGIN_URL = 'https://devqa2.charmboard.com/zee5/kaltura_plugin.js';
 export const API_KEY_SHOP = 'HVKJWV0-6V4MYV1-NBT0TBD-PM9EBTF';
+export const GOOGLE_ONE_TAP = 'https://accounts.google.com/gsi/client';
+export const GOOGLE_PLATFORM = 'https://apis.google.com/js/platform.js';

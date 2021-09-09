@@ -13,6 +13,7 @@ import HeadMeta from '../src/components/commons/head-meta';
 import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
 import { GOOGLE_ONE_TAP } from '../src/constants';
+import { getItem } from '../src/utils/cookie';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -142,17 +143,31 @@ function Hipi({
   }
 
   useEffect(()=>{
+   try{ 
         // if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
     //   // registerSW();
     // }
     console.log('mounted');
     inject(GOOGLE_ONE_TAP , null, loaded);
+    }
+    catch(e){
+    
+    }
     },[])
 
     useEffect(()=>{
-      if(loading === false){
-        oneTapGoogle();
-      }
+  //  try{   
+  //   let tokens = getItem('tokens');
+  //   tokens = tokens && JSON.parse(tokens);
+  
+  //   if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+  //    }else{
+  //     if(loading === false){
+  //       oneTapGoogle();
+  //   }
+  //     }}catch(e){
+
+  //     }
     },[loading])
   return (
     <>

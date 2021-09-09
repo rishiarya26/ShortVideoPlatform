@@ -6,8 +6,9 @@ import Instagram from '../commons/svgicons/instagram';
 import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
+import {GoogleButton} from '../social-login/google'
 
-export default function Login({ toggle }) {
+export default function Login({ toggle, loading }) {
   const { close } = useDrawer();
   return (
     <div className="px-4 py-2 flex flex-col items-center">
@@ -24,6 +25,7 @@ export default function Login({ toggle }) {
             </div>
           </div>
         </Link>
+        {/* <GoogleButton loading={loading}/> */}
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">
