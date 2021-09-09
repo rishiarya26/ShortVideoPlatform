@@ -310,13 +310,13 @@ function Feed({ router }) {
               >
                 <Play/>
               </div>
-              {<div
+              {/* {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>}
+              </div>} */}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
