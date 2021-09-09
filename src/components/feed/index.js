@@ -151,6 +151,9 @@ function Feed({ router }) {
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+    if(arr !== dataItem){
+      show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+    }
     arr && updateShowItems?.push(arr[insertItemIndex]);
     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
   /* Delete */
