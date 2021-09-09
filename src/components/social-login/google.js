@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { inject } from "../../../analytics/async-script-loader";
-import { login } from "../../../sources/social/google/login";
-import {  GOOGLE_PLATFORM } from '../../../constants';
-import Google from '../../commons/svgicons/google';
-import useDrawer from "../../../hooks/use-drawer";
-import useSnackbar from "../../../hooks/use-snackbar";
+import { login } from "../../sources/social/google/login";
+import useDrawer from "../../hooks/use-drawer";
+import useSnackbar from "../../hooks/use-snackbar";
+import Google from "../commons/svgicons/google";
 
 export const GoogleButton =({loading}) =>{
     const {close} = useDrawer();

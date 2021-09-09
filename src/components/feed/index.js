@@ -227,11 +227,11 @@ function Feed({ router }) {
                   // delay: 5000,
                   disableOnInteraction: false
               }}
-              onSwiper={swiper => {
-                const {
-                  activeIndex, slides
-                } = swiper;
-                console.log(swiper)
+              // onSwiper={swiper => {
+              //   const {
+              //     activeIndex, slides
+              //   } = swiper;
+              //   console.log(swiper)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false;
                 // }
@@ -240,7 +240,7 @@ function Feed({ router }) {
                 //   console.log("slideId",slideToId)
                 //   swiper?.slideTo(slideToId, 0);
                 // }
-              }}
+              // }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
