@@ -248,15 +248,6 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-      
-                setTimeout(()=>{
-                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                  slides[activeIndex].firstChild.firstChild.muted = false
-                }
-                if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
-                  slides[activeIndex].firstChild.firstChild.autoplay = true
-                }
-                },1000)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
@@ -312,13 +303,13 @@ function Feed({ router }) {
                   </div>
                 ))
               }
-              {/* <div
+              <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: initialPlayButton ? 'flex' : 'none' }}
               >
                 <Play/>
-              </div> */}
+              </div>
               {/* {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"

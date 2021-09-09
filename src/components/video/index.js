@@ -101,12 +101,12 @@ function Video(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        autoPlay
+        playsInline
         muted
+        autoPlay
         // muted
         // webkit-playsinline = "true"
         // onLoadCapture ={resetCurrentTime}
-        playsInline
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
