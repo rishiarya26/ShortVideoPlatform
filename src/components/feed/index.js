@@ -40,8 +40,6 @@ const detectDeviceModal = dynamic(
   }
 );
 
-
-
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
@@ -147,13 +145,15 @@ function Feed({ router }) {
  const incrementShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
+  setMuted(false)
   /* Increment */
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
-    if(arr !== dataItem){
-      show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
-    }
+    
+    // if(arr !== dataItem){
+    //   show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+    // }
     arr && updateShowItems?.push(arr[insertItemIndex]);
     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
   /* Delete */
@@ -171,6 +171,7 @@ function Feed({ router }) {
  const decrementingShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
+  setMuted(false)
   /* Add */
   const  incrementGap = 2;
   let insertItemIndex = videoActiveIndex-incrementGap;
@@ -264,12 +265,14 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
+                setMuted(false)
+                setMuted(true)
                 console.log(slides[activeIndex]?.firstChild?.firstChild?.autoplay)
 
-                if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
-                  show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
-                  slides[activeIndex].firstChild.firstChild.autoplay = true;
-                }
+                // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
+                //   show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+                //   slides[activeIndex].firstChild.firstChild.autoplay = true;
+                // }
                 // if(activeIndex === 5)
                 
                 // setTimeout(()=>{
