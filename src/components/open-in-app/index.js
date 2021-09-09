@@ -4,6 +4,7 @@ import HipiLogo from '../commons/svgicons/hipi-logo-black';
 import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
 import useDevice, { devices } from '../../hooks/use-device';
+import useDrawer from '../../hooks/use-drawer';
 
 export default function DownloadAppWidget({text, setMuted}) {
   const storeImages = {
@@ -11,12 +12,19 @@ export default function DownloadAppWidget({text, setMuted}) {
     ios: 'icons/app_store.png'
   };
 
+  const {close} = useDrawer();
+
   // const value = useDevice(devices, [
   //   <div className="flex justify-center">
   //     <img src={withBasePath(storeImages.android)} className="mr-2" alt="playicon" />
   //     <img src={withBasePath(storeImages.ios)} className="" alt="playicon" />
   //   </div>,
   //   <img src={withBasePath(storeImages[`${getOS()}`])} className="" alt="playicon" />]);
+
+const handleWeb=()=>{
+  setMuted(true);
+  close();
+}
 
   return (
     <>
@@ -39,7 +47,7 @@ export default function DownloadAppWidget({text, setMuted}) {
           <p className="text-red-400 font-semibold text-lg">Open in app</p>
           </div>
           <div>
-          <p onClick={()=>setMuted(true)} className="text-red-400 font-semibold text-lg">continue with web</p>
+          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg">continue with web</p>
           </div>
         </div>
        
