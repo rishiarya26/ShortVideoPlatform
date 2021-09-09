@@ -23,6 +23,7 @@ import Img from '../commons/image';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
+import useDrawer from '../../hooks/use-drawer';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -30,6 +31,16 @@ SwiperCore?.use([Mousewheel]);
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
@@ -47,6 +58,8 @@ function Feed({ router }) {
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
   const { id } = router?.query;
+
+ const {show} = useDrawer();
 
   const onDataFetched = data => {
     if(data){
@@ -248,19 +261,26 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-      
-                setTimeout(()=>{
-                  console.log('in')
-                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                  slides[activeIndex].firstChild.firstChild.muted = false
-                  console.log('in muted',slides[activeIndex].firstChild.firstChild.muted)
+                console.log(slides[activeIndex]?.firstChild?.firstChild?.autoplay)
+
+                if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
+                  show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+                  slides[activeIndex].firstChild.firstChild.autoplay = true;
                 }
-                if(slides[activeIndex]?.firstChild?.firstChild?.autoPlay === false){
-                  slides[activeIndex].firstChild.firstChild.autoPlay = true
-                  console.log('in autoplay',slides[activeIndex].firstChild.firstChild.autoPlay)
-                }
-                console.log( "mute", slides[activeIndex].firstChild.firstChild.muted,"autoplay", slides[activeIndex].firstChild.firstChild.autoplay )
-                },500)
+                // if(activeIndex === 5)
+                
+                // setTimeout(()=>{
+                //   console.log('in')
+                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
+                //   slides[activeIndex].firstChild.firstChild.muted = false
+                //   console.log('in muted',slides[activeIndex].firstChild.firstChild.muted)
+                // }
+                // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
+                //   slides[activeIndex].firstChild.firstChild.autoplay = true
+                //   console.log('in autoplay',slides[activeIndex].firstChild.firstChild.autoPlay)
+                // }
+                // console.log( "mute", slides[activeIndex].firstChild.firstChild.muted,"autoplay", slides[activeIndex].firstChild.firstChild.autoplay )
+                // },500)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
@@ -323,13 +343,13 @@ function Feed({ router }) {
               >
                 <Play/>
               </div>
-              {/* {<div
+              {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>} */}
+              </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>

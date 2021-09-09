@@ -5,7 +5,7 @@ import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
 import useDevice, { devices } from '../../hooks/use-device';
 
-export default function DownloadAppWidget({text}) {
+export default function DownloadAppWidget({text, setMuted}) {
   const storeImages = {
     android: 'icons/play_store.png',
     ios: 'icons/app_store.png'
@@ -37,6 +37,9 @@ export default function DownloadAppWidget({text}) {
           <div className="flex justify-center items-center  border-l-2 border-gray-200 w-1/2">
             {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
           <p className="text-red-400 font-semibold text-lg">Open in app</p>
+          </div>
+          <div>
+          <p onClick={()=>setMuted(true)} className="text-red-400 font-semibold text-lg">continue with web</p>
           </div>
         </div>
        
