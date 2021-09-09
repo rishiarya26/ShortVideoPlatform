@@ -131,55 +131,57 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
- const incrementShowItems = async() =>{
-  let updateShowItems = [...toShowItems];
-  const dataItem = [...items]
-  /* Increment */
-    const incrementGap = 2;
-    let insertItemIndex = videoActiveIndex+incrementGap;
-    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
-    arr && updateShowItems?.push(arr[insertItemIndex]);
-    // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
-  /* Delete */
-    const decrementGap = 3;
-    let deleteItemIndex = videoActiveIndex-decrementGap;
-    if(deleteItemIndex >=0 && videoActiveIndex >=3){
-      updateShowItems[deleteItemIndex] = null;
-      // console.log('deleted', updateShowItems)
-      // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
-    }
-  // console.log("increment",items,updateShowItems);
-  setToShowItems(updateShowItems);
- }
+//  const incrementShowItems = async() =>{
+//   let updateShowItems = [...toShowItems];
+//   const dataItem = [...items]
+//   /* Increment */
+//     const incrementGap = 2;
+//     let insertItemIndex = videoActiveIndex+incrementGap;
+//     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+//     arr && updateShowItems?.push(arr[insertItemIndex]);
+//     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
+//   /* Delete */
+//     const decrementGap = 3;
+//     let deleteItemIndex = videoActiveIndex-decrementGap;
+//     if(deleteItemIndex >=0 && videoActiveIndex >=3){
+//       updateShowItems[deleteItemIndex] = null;
+//       // console.log('deleted', updateShowItems)
+//       // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
+//     }
+//   // console.log("increment",items,updateShowItems);
+//   setToShowItems(updateShowItems);
+//  }
 
- const decrementingShowItems = async() =>{
-  let updateShowItems = [...toShowItems];
-  const dataItem = [...items]
-  /* Add */
-  const  incrementGap = 2;
-  let insertItemIndex = videoActiveIndex-incrementGap;
-  if(insertItemIndex >=0 && videoActiveIndex >=2){
-    updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-    // console.log('added', updateShowItems)
-    // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
-  }
-  /* Delete */
-    const  decrementGap=  3;
-    let deleteItemIndex = videoActiveIndex+decrementGap;
-     deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-    // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
-    // console.log("increment",items,updateShowItems);
-    setToShowItems(updateShowItems);
- }
+//  const decrementingShowItems = async() =>{
+//   let updateShowItems = [...toShowItems];
+//   const dataItem = [...items]
+//   /* Add */
+//   const  incrementGap = 2;
+//   let insertItemIndex = videoActiveIndex-incrementGap;
+//   if(insertItemIndex >=0 && videoActiveIndex >=2){
+//     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
+//     // console.log('added', updateShowItems)
+//     // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
+//   }
+//   /* Delete */
+//     const  decrementGap=  3;
+//     let deleteItemIndex = videoActiveIndex+decrementGap;
+//      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+//     // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
+//     // console.log("increment",items,updateShowItems);
+//     setToShowItems(updateShowItems);
+//  }
 
   useEffect(()=>{
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
       //swipe-down
-      toShowItems.length > 0 && incrementShowItems();
-    }else{
-      //swipe-up
-      toShowItems.length > 0 && decrementingShowItems();
+      toShowItems.length > 0 && toInsertElements === activeIndex && incrementShowItems();
+      setToInsertElemants(toInsertElements +6);
     }
+    // else{
+    //   //swipe-up
+    //   toShowItems.length > 0 && decrementingShowItems();
+    // }
   },[videoActiveIndex])
 
   useEffect(() => {
