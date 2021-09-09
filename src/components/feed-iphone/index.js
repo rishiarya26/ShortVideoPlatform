@@ -248,19 +248,6 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-      
-                setTimeout(()=>{
-                  console.log('in')
-                if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                  slides[activeIndex].firstChild.firstChild.muted = false
-                  console.log('in muted',slides[activeIndex].firstChild.firstChild.muted)
-                }
-                if(slides[activeIndex]?.firstChild?.firstChild?.autoPlay === false){
-                  slides[activeIndex].firstChild.firstChild.autoPlay = true
-                  console.log('in autoplay',slides[activeIndex].firstChild.firstChild.autoPlay)
-                }
-                console.log( "mute", slides[activeIndex].firstChild.firstChild.muted,"autoplay", slides[activeIndex].firstChild.firstChild.autoplay )
-                },500)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
