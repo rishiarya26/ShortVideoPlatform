@@ -1,11 +1,11 @@
 export function getOS() {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const userAgent = window?.navigator.userAgent || window?.navigator.vendor || window?.opera;
 
   if (/android/i.test(userAgent)) {
     return 'android';
   }
 
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window?.MSStream) {
     return 'ios';
   }
 
@@ -13,7 +13,7 @@ export function getOS() {
 }
 
 export function getNetworkConnection() {
-  const networkInformation = navigator?.connection;
+  const networkInformation = window?.navigator?.connection;
   const effectiveType = networkInformation?.effectiveType;
   let networkStrength = 'low';
   if (effectiveType === '4g') {
