@@ -145,7 +145,7 @@ function Feed({ router }) {
  const incrementShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  setMuted(false)
+  // setMuted(false)
   /* Increment */
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
@@ -171,7 +171,7 @@ function Feed({ router }) {
  const decrementingShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  setMuted(false)
+  // setMuted(false)
   /* Add */
   const  incrementGap = 2;
   let insertItemIndex = videoActiveIndex-incrementGap;
@@ -265,8 +265,8 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-                setMuted(false)
-                setMuted(true)
+                // setMuted(false)
+                // setMuted(true)
                 console.log(slides[activeIndex]?.firstChild?.firstChild?.autoplay)
 
                 // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
