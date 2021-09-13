@@ -265,8 +265,8 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-                setMuted(false)
-                setMuted(true)
+                // setMuted(false)
+                // setMuted(true)
                 console.log(slides[activeIndex]?.firstChild?.firstChild?.autoplay)
 
                 // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
