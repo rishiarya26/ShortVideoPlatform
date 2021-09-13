@@ -23,16 +23,25 @@ import Img from '../commons/image';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
+import useDrawer from '../../hooks/use-drawer';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 //TO-DO segregate SessionStorage
-function Feed({ router }) {
+function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
@@ -43,10 +52,13 @@ function Feed({ router }) {
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const [currentTime, setCurrentTime] = useState(null)
   const [muted, setMuted] = useState(true);
+  const [toInsertElements, setToInsertElements] = useState(4);
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
   const { id } = router?.query;
+
+  const {show} = useDrawer();
 
   const onDataFetched = data => {
     if(data){
@@ -61,11 +73,11 @@ function Feed({ router }) {
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         //set first three item in showItems
-        toUpdateShowData.push(data?.data?.[0]);
-        toUpdateShowData.push(data?.data?.[1]);
-        toUpdateShowData.push(data?.data?.[2]);
+        // toUpdateShowData.push(data?.data?.[0]);
+        // toUpdateShowData.push(data?.data?.[1]);
+        // toUpdateShowData.push(data?.data?.[2]);
         setItems(data?.data);
-        setToShowItems(toUpdateShowData);
+        setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
     }
   }
@@ -76,10 +88,25 @@ function Feed({ router }) {
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
+  // const getFeedData = async() =>{
+  //   let updateItems = [...items];
+  //    try{
+  //      const data =  await fetchData({ type: id });
+  //      console.log(data)
+  //      updateItems = updateItems.concat(data?.data);
+  //     //  setOffset(offset+1)
+  //      setItems(updateItems);
+  //     }
+  //    catch(err){
+  //    }
+  //    return updateItems;
+  // } 
+
   const getFeedData = async() =>{
     let updateItems = [...items];
+    let data = []
      try{
-       const data =  await fetchData({ type: id });
+       data =  await fetchData({ type: id });
        console.log(data)
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
@@ -87,7 +114,7 @@ function Feed({ router }) {
       }
      catch(err){
      }
-     return updateItems;
+     return data?.data;
   } 
 
   let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
@@ -131,9 +158,23 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
-//  const incrementShowItems = async() =>{
-//   let updateShowItems = [...toShowItems];
-//   const dataItem = [...items]
+ const incrementShowItems = async() =>{
+ try{ let updateShowItems = [...toShowItems];
+  console.log('adding items')
+  // const dataItem = [...items]
+  const arr = await getFeedData();
+  console.log(arr)
+  show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+  // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
+  arr && (updateShowItems = updateShowItems?.concat(arr));
+  console.log("updated",updateShowItems)
+  setToShowItems(updateShowItems);
+
+}
+  catch(e){
+
+  }
+}
 //   /* Increment */
 //     const incrementGap = 2;
 //     let insertItemIndex = videoActiveIndex+incrementGap;
@@ -174,9 +215,12 @@ function Feed({ router }) {
 
   useEffect(()=>{
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
+      console.log(toInsertElements, videoActiveIndex);
       //swipe-down
-      toShowItems.length > 0 && toInsertElements === activeIndex && incrementShowItems();
-      setToInsertElemants(toInsertElements +6);
+      if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
+        incrementShowItems();
+        setToInsertElements(toInsertElements +6);
+      }
     }
     // else{
     //   //swipe-up
@@ -312,13 +356,13 @@ function Feed({ router }) {
               >
                 <Play/>
               </div>
-              {/* {<div
+              {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <p className='text-gray-300 font-medium'>Tap To Unmute</p>
-              </div>} */}
+              </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
@@ -362,4 +406,4 @@ function Feed({ router }) {
   );
 }
 
-export default withRouter(Feed);
+export default withRouter(FeedIphone);
