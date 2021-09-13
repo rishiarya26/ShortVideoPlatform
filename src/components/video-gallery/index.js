@@ -23,6 +23,17 @@ export default function VideoGallery({
     }
   },[])
 
+  // useEffect(() => {
+  //   window?.addEventListener('scroll', handleScroll);
+  //   return () => window?.removeEventListener('scroll', handleScroll);
+  // }, []);
+
+  // function handleScroll() {
+  //   if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight) return;
+  //   console.log('Fetch more list items!');
+  // }
+
+
   const noData = {
     all: <>
       <p className="font-semibold">{t('NO_VIDEOS')}</p>

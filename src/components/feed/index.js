@@ -145,7 +145,7 @@ function Feed({ router }) {
  const incrementShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  setMuted(false)
+  // setMuted(false)
   /* Increment */
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
@@ -171,7 +171,7 @@ function Feed({ router }) {
  const decrementingShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  setMuted(false)
+  // setMuted(false)
   /* Add */
   const  incrementGap = 2;
   let insertItemIndex = videoActiveIndex-incrementGap;
