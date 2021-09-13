@@ -164,12 +164,12 @@ function FeedIphone({ router }) {
   // const dataItem = [...items]
   const arr = await getFeedData();
   console.log(arr)
-  show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
+  setMuted(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   arr && (updateShowItems = updateShowItems?.concat(arr));
   console.log("updated",updateShowItems)
   setToShowItems(updateShowItems);
-
 }
   catch(e){
 
