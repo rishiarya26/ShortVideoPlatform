@@ -156,18 +156,18 @@ function Hipi({
     },[])
 
     useEffect(()=>{
-  //  try{   
-  //   let tokens = getItem('tokens');
-  //   tokens = tokens && JSON.parse(tokens);
+   try{   
+    let tokens = getItem('tokens');
+    tokens = tokens && JSON.parse(tokens);
   
-  //   if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-  //    }else{
-  //     if(loading === false){
-  //       oneTapGoogle();
-  //   }
-  //     }}catch(e){
+    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+     }else{
+      if(loading === false){
+        oneTapGoogle();
+    }
+      }}catch(e){
 
-  //     }
+      }
     },[loading])
   return (
     <>

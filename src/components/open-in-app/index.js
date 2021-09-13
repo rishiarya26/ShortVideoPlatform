@@ -38,7 +38,7 @@ const handleWeb=()=>{
             <p className="text-md text-gray-500">Open in Hipi to {text}</p>
           </div>
           </div>
-        <div className="flex w-full border-t-2 border-gray-200 h-12">
+        <div className="flex w-full border-t-2 border-b-2 border-gray-200 h-12">
           <div className="flex justify-center items-center w-1/2 ">
             <p className="text-lg">Not now</p>
           </div>
@@ -46,11 +46,11 @@ const handleWeb=()=>{
             {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
           <p className="text-red-400 font-semibold text-lg">Open in app</p>
           </div>
-          <div>
-          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg">continue with web</p>
-          </div>
+          
         </div>
-       
+        <div>
+          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg p-4">continue with web</p>
+          </div>
         {/* {value && value} */}
 
       </div>

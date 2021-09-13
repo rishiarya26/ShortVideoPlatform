@@ -95,4 +95,4 @@ const info ={
 }
 
 export default FooterMenu;
-
+ 
