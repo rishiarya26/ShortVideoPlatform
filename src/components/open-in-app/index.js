@@ -48,9 +48,9 @@ const handleWeb=()=>{
           </div>
           
         </div>
-        <div>
+       {setMuted && <div>
           <p onClick={handleWeb} className="text-red-400 font-semibold text-lg p-4">continue with web</p>
-          </div>
+        </div>}
         {/* {value && value} */}
 
       </div>
