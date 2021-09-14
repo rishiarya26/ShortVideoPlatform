@@ -1,6 +1,7 @@
 /*eslint-disable react/no-unescaped-entities*/
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/display-name */
+import { withBasePath } from '../../config';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -164,7 +165,7 @@ function VideoSidebar({
       </div>
       <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-8`}
+      } "relative py-2  px-3 text-center items-end flex-col mb-28`}
       >
         <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
@@ -194,7 +195,7 @@ function VideoSidebar({
           <div
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } relative py-2 px-0 text-center flex flex-col items-center`}
+            } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
             <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />
