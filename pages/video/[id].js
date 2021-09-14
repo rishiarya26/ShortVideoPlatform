@@ -8,6 +8,7 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import { getEffectiveVideoUrl } from '../../src/utils/content';
+import SingleVideo from '../../src/components/single-video';
 // import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
@@ -24,7 +25,6 @@ export default function Hipi(params) {
     message,
     status
   } = params;
-  console.log(item)
   const canShop = item?.canShop?.status || 'fail';
   const shopCards = item?.canShop?.data;
   const videoId = item?.content_id;
@@ -83,7 +83,7 @@ export default function Hipi(params) {
         watchCount={item.likesCount}
         regionsAllowed={languageCodes}
       />
-      <EmbedVideo
+      <SingleVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
         url={videoUrl}

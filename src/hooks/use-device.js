@@ -9,7 +9,7 @@ export const getDeviceInfo = userAgent => ((/Android|android/i.test(userAgent)) 
 
 function useDevice(types = devices, values, defaultValue) {
   const getVariant = () => {
-    const device = getDeviceType(navigator?.userAgent);
+    const device = getDeviceType(window?.navigator?.userAgent);
     const index = types.indexOf(device);
     return values[index] ? values[index] : defaultValue;
   };

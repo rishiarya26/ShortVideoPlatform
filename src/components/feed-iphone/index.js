@@ -53,8 +53,11 @@ function FeedIphone({ router }) {
   const [currentTime, setCurrentTime] = useState(null)
   const [muted, setMuted] = useState(true);
   const [toInsertElements, setToInsertElements] = useState(4);
+  const [deletedTill, setDeletedTill] = useState();
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
+  const pretoInsertElemant = usePreviousValue({toInsertElements});
+
   const { t } = useTranslation();
   const { id } = router?.query;
 
@@ -159,20 +162,46 @@ function FeedIphone({ router }) {
   };
 
  const incrementShowItems = async() =>{
- try{ let updateShowItems = [...toShowItems];
+ try{ 
+  let updateShowItems = [...toShowItems];
+  let deletedTill = pretoInsertElemant?.toInsertElements-12;
+  let dataItem = [...items];
+
   console.log('adding items')
-  // const dataItem = [...items]
   const arr = await getFeedData();
+  arr && (dataItem = dataItem?.concat(arr));
+  //add
+  for(let i=0;i<=5;i++){
+    if(dataItem?.[videoActiveIndex+i+2]){ 
+      updateShowItems.push(dataItem[videoActiveIndex+i+2])
+    }
+    // else{
+
+    // updateShowItems.push(dataItem[videoActiveIndex+i+2]);
+    // }
+  }
+  //delete
+  if(videoActiveIndex >= 10)
+  { for(let i=0;i<=pretoInsertElemant?.toInsertElements-6-1;i++){
+    console.log("delete",updateShowItems[i])
+    updateShowItems[i] && (updateShowItems[i] = null);
+   
+    // items?.[videoActiveIndex+i+2] && updateShowItems.push(items[videoActiveIndex+i+2]);
+  }
+  }
+  deletedTill = pretoInsertElemant?.toInsertElements-6-1;
+  console.log(deletedTill)
+  setDeletedTill(deletedTill);
   console.log(arr)
   setMuted(true);
   show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
-  arr && (updateShowItems = updateShowItems?.concat(arr));
-  console.log("updated",updateShowItems)
+  // arr && (updateShowItems = updateShowItems?.concat(arr));
+  console.log("updated",updateShowItems,videoActiveIndex,pretoInsertElemant?.toInsertElements)
   setToShowItems(updateShowItems);
 }
   catch(e){
-
+console.log('error',e)
   }
 }
 //   /* Increment */
@@ -193,7 +222,22 @@ function FeedIphone({ router }) {
 //   setToShowItems(updateShowItems);
 //  }
 
-//  const decrementingShowItems = async() =>{
+ const decrementingShowItems = async() =>{
+
+  let updateShowItems = [...toShowItems];
+  console.log(updateShowItems)
+  console.log(deletedTill,",",pretoInsertElemant?.toInsertElements-13);
+  const dataItem = [...items];
+  for(let i=0;i<=5;i++){
+    console.log(dataItem[deletedTill-i])
+    updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
+  }
+  setMuted(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  console.log('updated',updateShowItems)
+  setDeletedTill(deletedTill-5);
+  setToShowItems(updateShowItems);
+ }
 //   let updateShowItems = [...toShowItems];
 //   const dataItem = [...items]
 //   /* Add */
@@ -222,10 +266,14 @@ function FeedIphone({ router }) {
         setToInsertElements(toInsertElements +6);
       }
     }
-    // else{
-    //   //swipe-up
-    //   toShowItems.length > 0 && decrementingShowItems();
-    // }
+    else{
+      console.log(".....deltet....",deletedTill, videoActiveIndex )
+      //swipe-up
+      if(toShowItems.length > 0 && deletedTill === videoActiveIndex){
+        console.log(".....deltet....")
+       decrementingShowItems();
+      }
+    }
   },[videoActiveIndex])
 
   useEffect(() => {

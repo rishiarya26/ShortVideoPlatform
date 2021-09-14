@@ -19,10 +19,8 @@ async function fetchEmbedFeed({ id }) {
 
     response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
     const [resp, shop] = response;
-    console.log('resp', resp, 'shop', shop);
     resp.data.requestedWith = { id };
     resp.data.canShop = shop;
-    console.log('final', resp);
     return Promise.resolve(resp);
   } catch (err) {
     return Promise.reject(err);

@@ -155,20 +155,20 @@ function Hipi({
     }
     },[])
 
-    useEffect(()=>{
-   try{   
-    let tokens = getItem('tokens');
-    tokens = tokens && JSON.parse(tokens);
+  //   useEffect(()=>{
+  //  try{   
+  //   let tokens = getItem('tokens');
+  //   tokens = tokens && JSON.parse(tokens);
   
-    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-     }else{
-      if(loading === false){
-        oneTapGoogle();
-    }
-      }}catch(e){
+  //   if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+  //    }else{
+  //     if(loading === false){
+  //       oneTapGoogle();
+  //   }
+  //     }}catch(e){
 
-      }
-    },[loading])
+  //     }
+  //   },[loading])
   return (
     <>
       <Head>
