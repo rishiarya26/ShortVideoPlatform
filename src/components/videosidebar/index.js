@@ -29,13 +29,13 @@ import useSnackbar from '../../hooks/use-snackbar';
 //   ssr: false
 // });
 
-const login = dynamic(
-  () => import('../auth-options'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const login = dynamic(
+//   () => import('../auth-options'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -91,7 +91,7 @@ function VideoSidebar({
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
+      <div onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
           <img
             alt="profile-pic"
@@ -99,6 +99,7 @@ function VideoSidebar({
             src={profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
           />
           <div
+          onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "follow"})}
             className={`${
               type === 'feed' ? 'block' : 'hidden'
             } absolute bottom-0`}
@@ -131,7 +132,7 @@ function VideoSidebar({
             <div
               id="like"
               role="presentation"
-              onClick={handleOperation}
+              onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "like"})}
             >
               <Like />
             </div>
@@ -148,7 +149,7 @@ function VideoSidebar({
         <div 
            id="comment"
            role="presentation"
-           onClick={handleOperation}
+           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "comment"})}
         >
           <Comment />
           <p className="text-sm text-center">0</p>

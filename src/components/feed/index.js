@@ -214,7 +214,7 @@ function Feed({ router }) {
   };
 
   const tabs = [
-    { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
+    { display: `${t('FOLLOWING')}`, path: `${t('FOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
