@@ -56,8 +56,6 @@ export default function SingleVideo(props){
     props.updateSeekbar(percentage);
   };
 
-console.log(play)
-
   return (
     <div className="flex flex-col">
     <div

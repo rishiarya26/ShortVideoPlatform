@@ -14,7 +14,6 @@ export default function Hipi(params) {
     status
   } = params;
 
-  console.log(item.id)
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }

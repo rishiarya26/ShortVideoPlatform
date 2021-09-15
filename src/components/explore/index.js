@@ -27,11 +27,9 @@ function Explore() {
   async function fetchMoreListItems() {
     try{
      const response = await getSearchData({ offset: `${offset}` });
-     console.log(response)
      if(response?.data?.length > 0){
        let updateData = [...data];
        updateData = updateData?.concat(response?.data);
-       console.log("items",updateData)
        let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
        sessionData = sessionData?.concat(response?.data);
        window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
@@ -96,7 +94,6 @@ function Explore() {
         {/* <div className="poster w-full mt-40" />  */}
         <div className="explore_carousel flex min-w-full overflow-x-auto min-h-38 no_bar mt-20">
            {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
-             console.log(data)
              return(
             <div key={id} onClick={()=>router.push(`/tag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-1 min-w-full min-h-38 relative">
                  <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>

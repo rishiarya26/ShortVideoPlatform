@@ -24,7 +24,6 @@ export default function Hipi(params) {
     message,
     status
   } = params;
-  console.log(item)
   const canShop = item?.canShop?.status || 'fail';
   const shopCards = item?.canShop?.data;
   const videoId = item?.content_id;

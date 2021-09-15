@@ -118,7 +118,6 @@ function FeedIphone({ router }) {
     let data = []
      try{
        data =  await fetchData({ type: id });
-       console.log(data)
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
        setItems(updateItems);
@@ -198,76 +197,33 @@ function FeedIphone({ router }) {
   }
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
-  console.log(deletedTill)
   setDeletedTill(deletedTill);
-  console.log(arr)
   setMuted(true);
   show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
-  console.log("updated",updateShowItems,videoActiveIndex,pretoInsertElemant?.toInsertElements)
   setToShowItems(updateShowItems);
 }
   catch(e){
 console.log('error',e)
   }
 }
-//   /* Increment */
-//     const incrementGap = 2;
-//     let insertItemIndex = videoActiveIndex+incrementGap;
-//     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
-//     arr && updateShowItems?.push(arr[insertItemIndex]);
-//     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
-//   /* Delete */
-//     const decrementGap = 3;
-//     let deleteItemIndex = videoActiveIndex-decrementGap;
-//     if(deleteItemIndex >=0 && videoActiveIndex >=3){
-//       updateShowItems[deleteItemIndex] = null;
-//       // console.log('deleted', updateShowItems)
-//       // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
-//     }
-//   // console.log("increment",items,updateShowItems);
-//   setToShowItems(updateShowItems);
-//  }
 
  const decrementingShowItems = async() =>{
 
   let updateShowItems = [...toShowItems];
-  console.log(updateShowItems)
-  console.log(deletedTill,",",pretoInsertElemant?.toInsertElements-13);
   const dataItem = [...items];
   for(let i=0;i<=5;i++){
-    console.log(dataItem[deletedTill-i])
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
   show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-  console.log('updated',updateShowItems)
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
  }
-//   let updateShowItems = [...toShowItems];
-//   const dataItem = [...items]
-//   /* Add */
-//   const  incrementGap = 2;
-//   let insertItemIndex = videoActiveIndex-incrementGap;
-//   if(insertItemIndex >=0 && videoActiveIndex >=2){
-//     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-//     // console.log('added', updateShowItems)
-//     // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
-//   }
-//   /* Delete */
-//     const  decrementGap=  3;
-//     let deleteItemIndex = videoActiveIndex+decrementGap;
-//      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-//     // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
-//     // console.log("increment",items,updateShowItems);
-//     setToShowItems(updateShowItems);
-//  }
 
   useEffect(()=>{
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
-      console.log(toInsertElements, videoActiveIndex);
       //swipe-down
       if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
         incrementShowItems();
@@ -275,10 +231,8 @@ console.log('error',e)
       }
     }
     else{
-      console.log(".....deltet....",deletedTill, videoActiveIndex )
       //swipe-up
       if(toShowItems.length > 0 && deletedTill === videoActiveIndex){
-        console.log(".....deltet....")
        decrementingShowItems();
       }
     }
@@ -304,11 +258,6 @@ console.log('error',e)
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-  // const onPlayClick =()=>{
-  //   setAutoplay(true);
-  //   setInitialPlayButton(false);
-  // }
-
   const swiper = () => <Swiper
               className="max-h-full"
               direction="vertical"
@@ -316,33 +265,12 @@ console.log('error',e)
               spaceBetween={0}
               calculateheight="true"
               slidesPerView={1}
-              // onClick={(swiper)=> {
-              //   if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
-              //     swiper.slides[0].firstChild.firstChild.muted = false;
-              //   }
-              // }}
               mousewheel
-              // speed = '5000'
               scrollbar={{ draggable: true }}
               autoplay= {{
-                  // delay: 2000,
-                  // delay: 5000,
                   disableOnInteraction: false
               }}
-              // onSwiper={swiper => {
-              //   const {
-              //     activeIndex, slides
-              //   } = swiper;
-              //   console.log(swiper)
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false;
-                // }
-                // if(videoId){
-                //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-                //   console.log("slideId",slideToId)
-                //   swiper?.slideTo(slideToId, 0);
-                // }
-              // }}
+          
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
@@ -353,12 +281,11 @@ console.log('error',e)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
-                console.log(slides)
-              
+                     
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 const dataItems = [...items];
                 const seoItem = dataItems?.find(item => item?.content_id === activeId);
-                console.log(seoItem)
+
                 seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
