@@ -44,21 +44,21 @@ const info ={
        {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
        
      </div> 
-     <div  onClick={() => show('', detectDeviceModal, 'extraSmall')} className="flex flex-col text-white text-xs items-center">
+     <div  onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "Explore"})} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5">Explore</p></> } 
        
      </div>
         <div>
           {info[type]}
-        </div>
+        </div> 
             <div
-              onClick={() => show('', detectDeviceModal, 'extraSmall')}
+              onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "create"})}
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
                 <p className="text-gray-400 text-xs mt-1.5">Create</p>
              </div>    
-      <div  onClick={() => show('', detectDeviceModal, 'extraSmall')} className="flex flex-col  items-center justify-between">
+      <div  onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "view profile"})} className="flex flex-col  items-center justify-between">
       {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5">Profile</p></>} 
       
       </div>

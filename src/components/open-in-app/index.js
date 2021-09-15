@@ -36,7 +36,7 @@ const handleWeb=()=>{
       <div className=" flex flex-col items-center w-full ">
         <div className="flex w-full py-4">
           <div className="flex w-1/4 justify-center px-4">
-              <HipiLogo />
+              <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
             <p className="font-semibold text-xl ">Hipi -  Open in the app</p>
