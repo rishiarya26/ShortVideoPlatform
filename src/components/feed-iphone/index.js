@@ -364,11 +364,11 @@ console.log('error',e)
 
   const showLoginFollowing = ()=> <LoginFollowing/>;
   
-  const toShowFollowing = useAuth(showLoginFollowing, swiper);
+  // const toShowFollowing = useAuth(showLoginFollowing, swiper);
 
   const info = {
     'for-you' : swiper,
-    'following' : toShowFollowing
+    'following' : showLoginFollowing
   }
 
   let hostname;
@@ -384,31 +384,31 @@ console.log('error',e)
     >
        <SeoMeta
         data={{
-          title: item.music_title,
-          image: item.thumbnail,
-          description: item.content_description,
-          canonical: hostname,
+          title: item?.music_title,
+          image: item?.thumbnail,
+          description: item?.content_description,
+          canonical: hostname || '',
           openGraph: {
-            title: item.music_title,
-            description: item.content_description,
-            url: hostname,
+            title: item?.music_title,
+            description: item?.content_description,
+            url: hostname || '',
             images: [
               {
-                url: item.thumbnail,
+                url: item?.thumbnail,
                 width: 800,
                 height: 600,
-                alt: item.music_title
+                alt: item?.music_title
               },
-              { url: item.userProfilePicUrl }
+              { url: item?.userProfilePicUrl }
             ],
             type: 'video.movie',
             video: {
               actors: [
                 {
-                  role: item.userName
+                  role: item?.userName
                 }
               ],
-              tag: item.genre
+              tag: item?.genre
             },
             site_name: 'Hipi'
           }
