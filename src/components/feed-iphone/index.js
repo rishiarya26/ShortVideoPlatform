@@ -82,6 +82,7 @@ function FeedIphone({ router }) {
         setItems(data?.data);
         setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
+        setToInsertElements(4)
     }
   }
 

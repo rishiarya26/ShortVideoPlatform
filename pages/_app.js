@@ -136,39 +136,11 @@ export function reportWebVitals() {
 function Hipi({
   Component, pageProps, locales, locale
 }) {
-  const [loading, setLoading] = useState(true);
-  
-  const loaded = ()=>{
-    setLoading(false)
-  }
 
   useEffect(()=>{
-   try{ 
-        // if (!doesStringMatch(SW_IGNORE, window.location.pathname)) {
-    //   // registerSW();
-    // }
     console.log('mounted');
-    inject(GOOGLE_ONE_TAP , null, loaded);
-    }
-    catch(e){
-    
-    }
     },[])
 
-  //   useEffect(()=>{
-  //  try{   
-  //   let tokens = getItem('tokens');
-  //   tokens = tokens && JSON.parse(tokens);
-  
-  //   if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-  //    }else{
-  //     if(loading === false){
-  //       oneTapGoogle();
-  //   }
-  //     }}catch(e){
-
-  //     }
-  //   },[loading])
   return (
     <>
       <Head>
