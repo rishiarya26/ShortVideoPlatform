@@ -45,7 +45,7 @@ function transformSuccess(resp) {
       //     payloadObject.watchId = z;
       // }
       payloadObject.watch=z;
-      payloadObject.data_id = d?.objectID;
+      payloadObject.data_id = d?.objectID || null;
       payloadObject.content_id = d?.id;
       let videoUrls = {}
       videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
@@ -58,7 +58,7 @@ function transformSuccess(resp) {
       payloadObject.videoOwnersId = d?.videoOwnersId;
       payloadObject.getSocialId = d?.getSocialId;
       payloadObject.id = d?.id;
-      payloadObject.genre = d?.genre;
+      payloadObject.genre = d?.genre || null;
       payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
       payloadObject.userName = d?.videoOwners?.userName;
       payloadObject.likesCount = d?.lCount;
@@ -66,8 +66,8 @@ function transformSuccess(resp) {
       payloadObject.hashtags = d?.hashtags;
       payloadObject.thumbnail = d?.thumbnailUrl;
       payloadObject.saveLook = false;
+      payloadObject.thumbnailUrls = d?.optionalThumbnail;
       
-
       payloadData.push(payloadObject);
     });
 
