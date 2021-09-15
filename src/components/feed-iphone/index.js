@@ -24,6 +24,11 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
+import Mute from '../commons/svgicons/mute';
+import {
+  SeoMeta,
+  VideoJsonLd
+} from '../../components/commons/head-meta/seo-meta';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -43,6 +48,7 @@ const LoadComp = () => (<Loading />);
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
+  const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -82,7 +88,8 @@ function FeedIphone({ router }) {
         setItems(data?.data);
         setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
-        setToInsertElements(4)
+        setToInsertElements(4);
+        setSeoItem(data?.data[0]);
     }
   }
 
@@ -349,6 +356,10 @@ console.log('error',e)
                 console.log(slides)
               
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+                const dataItems = [...items];
+                const seoItem = dataItems?.find(item => item?.content_id === activeId);
+                console.log(seoItem)
+                seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
               }}
@@ -407,10 +418,10 @@ console.log('error',e)
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               <p className='text-gray-300 font-medium'>Tap To Unmute</p>
+               <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
@@ -433,12 +444,57 @@ console.log('error',e)
     'following' : toShowFollowing
   }
 
+  let hostname;
+  if (typeof window !== 'undefined') {
+    hostname = window?.location?.hostname;
+ }
+
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+       <SeoMeta
+        data={{
+          title: item.music_title,
+          image: item.thumbnail,
+          description: item.content_description,
+          canonical: hostname,
+          openGraph: {
+            title: item.music_title,
+            description: item.content_description,
+            url: hostname,
+            images: [
+              {
+                url: item.thumbnail,
+                width: 800,
+                height: 600,
+                alt: item.music_title
+              },
+              { url: item.userProfilePicUrl }
+            ],
+            type: 'video.movie',
+            video: {
+              actors: [
+                {
+                  role: item.userName
+                }
+              ],
+              tag: item.genre
+            },
+            site_name: 'Hipi'
+          }
+        }}
+      />
+      {/* <VideoJsonLd
+        name={item.music_title}
+        description={item.content_description}
+        contentUrl={item.video_url}
+        embedUrl={hostname}
+        thumbnailUrls={item.thumbnailUrls}
+        watchCount={item.likesCount}
+      /> */}
     <>
       <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">

@@ -7,6 +7,7 @@ import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
 import EmbedSeekbar from '../emded-seekbar';
+import FooterMenu from '../footer-menu';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
 export default function SingleVideo(props){
@@ -56,7 +57,7 @@ export default function SingleVideo(props){
     <div className="flex flex-col">
     <div
       ref={rootRef}
-      className="video_card relative w-full  scroll-snap-start bg-black"
+      className="video_card relative w-full  scroll-snap-start bg-black h-screen"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -94,7 +95,7 @@ export default function SingleVideo(props){
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
         canShop={props.canShop}
-        comp="embed"
+        comp="feed"
       />
        <EmbedVideoSidebar
         socialId={props.socialId}
@@ -102,7 +103,7 @@ export default function SingleVideo(props){
         likes={props.likes}
         comment={props.comments}
         share={777}
-        type="embed"
+        type="feed"
       />
     {/* </div> */}
       {props.canShop === 'success'
@@ -110,11 +111,15 @@ export default function SingleVideo(props){
            <ProductCards
              shopCards={props.shopCards}
              videoId={props.videoId}
-             comp="embed"
+             comp="feed"
            />
-         )}
+         )} 
     </div>
- 
+    <FooterMenu 
+              
+              type="shop"
+              selectedTab="home"
+              />
     </div>
   );
 }

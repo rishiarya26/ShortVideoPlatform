@@ -9,7 +9,6 @@ import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-// import FooterMenu from '../footer-menu';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
@@ -275,7 +274,7 @@ function Feed({ router }) {
 
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 const dataItems = [...items];
-                const seoItem = dataItems.find(item => item?.content_id === activeId);
+                const seoItem = dataItems?.find(item => item?.content_id === activeId);
                 seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
@@ -335,10 +334,9 @@ function Feed({ router }) {
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               
                <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage
@@ -405,14 +403,14 @@ function Feed({ router }) {
           }
         }}
       />
-      <VideoJsonLd
+      {/* <VideoJsonLd
         name={item.music_title}
         description={item.content_description}
         contentUrl={item.video_url}
         embedUrl={hostname}
         thumbnailUrls={item.thumbnailUrls}
         watchCount={item.likesCount}
-      />
+      /> */}
     <>
       <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
