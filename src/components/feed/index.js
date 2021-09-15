@@ -9,7 +9,6 @@ import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-// import FooterMenu from '../footer-menu';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
@@ -352,7 +351,7 @@ function Feed({ router }) {
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                
