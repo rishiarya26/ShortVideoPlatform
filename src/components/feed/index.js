@@ -20,6 +20,7 @@ import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
 import Play from '../commons/svgicons/play';
 import Img from '../commons/image';
+import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
@@ -354,7 +355,8 @@ function Feed({ router }) {
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               <p className='text-gray-300 font-medium'>Tap To Unmute</p>
+               
+               <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
