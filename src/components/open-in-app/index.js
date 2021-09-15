@@ -7,12 +7,17 @@ import useDevice, { devices } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 
 export default function DownloadAppWidget({text, setMuted}) {
-  const storeImages = {
-    android: 'icons/play_store.png',
-    ios: 'icons/app_store.png'
+  const stores = {
+    android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
   };
 
   const {close} = useDrawer();
+
+  const onStoreRedirect =()=>{
+    const device = getOS();
+    device && (window.location.href = `${stores[device]}`);
+  }
 
   // const value = useDevice(devices, [
   //   <div className="flex justify-center">
@@ -44,7 +49,7 @@ const handleWeb=()=>{
           </div>
           <div className="flex justify-center items-center  border-l-2 border-gray-200 w-1/2">
             {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
-          <p className="text-red-400 font-semibold text-lg">Open in app</p>
+          <p onClick={onStoreRedirect} className="text-red-400 font-semibold text-lg">Open in app</p>
           </div>
           
         </div>
