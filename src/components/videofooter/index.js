@@ -14,7 +14,8 @@ function VideoFooter({
   const type = {
     profile: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`,
     feed: `${saveLook ? ' bottom-16 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2`,
-    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`
+    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`,
+    single: `${canShop === 'success' ? 'bottom-36' : 'bottom-18'} videoFooter absolute left-0  flex text-white ml-2`,
   };
 
   const music = {

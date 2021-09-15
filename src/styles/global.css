@@ -6,7 +6,7 @@
     font-family: "Open Sans";   
 }
 @media screen and (orientation: landscape) {
-  body {
+  .feed_screen {
     transform: rotate(-90deg);
     transform-origin: left top;
     width: 100vh;
