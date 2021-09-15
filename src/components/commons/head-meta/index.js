@@ -146,9 +146,6 @@ function HeadMeta() {
 
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
 
-      {/* for shop  */}
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-      <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet"/>
     </>
   );
 }

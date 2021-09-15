@@ -32,13 +32,10 @@ export const generateUUID = persist => {
     const r = Math.random() * 16 | 0;
     // eslint-disable-next-line no-bitwise
     const v = c === 'x' ? r : ((r & 0x3) | 0x8);
-    console.log("in uuid gen")
     return v.toString(16);
   });
   if (persist) {
-    console.log("yes persist", uuid)
     setItem('guest-token',uuid,{ path: '/' });
-    console.log("saved", uuid)
   }
   return uuid;
 };

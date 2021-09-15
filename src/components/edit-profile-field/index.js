@@ -63,9 +63,7 @@ const EditProfileField = ({ router }) => {
       bio: data?.bio
     };
     try {
-      console.log(payload);
       response = await updateUserProfile(payload);
-      console.log('edit-profile-comp', response);
       if (response.status === 'success') {
         //    router.back();
         router.push(`/edit-profile/${response?.data?.id}`);

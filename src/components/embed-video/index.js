@@ -7,10 +7,26 @@ import useIntersect from '../../hooks/use-intersect';
 import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
 import EmbedSeekbar from '../emded-seekbar';
+import { getItem } from '../../utils/cookie';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [play, setPlay] = useState(false)
+
+  const stores = {
+    android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+  };
+
+  const onStoreRedirect =()=>{
+   try{ 
+     const device = getItem('device-info')
+    device && (window.location.href = `${stores[device]}`);}
+    catch(e){
+
+    }
+  }
 
   const rootRef = useRef(null);
   const size = useWindowSize();
@@ -19,10 +35,12 @@ function Embedvideo(props) {
       rootRef.current.children[0].pause();
       setPlaying(false);
       setClicked(false);
+      setPlay(false)
     } else {
       rootRef.current.children[0].play();
       setPlaying(true);
       setClicked(true);
+      setPlay(true)
     }
   };
 
@@ -69,8 +87,8 @@ function Embedvideo(props) {
         <source src={props.url} type="video/mp4" />
       </video>
       
-      <EmbedSeekbar seekedPercentage={props.seekedPercentage} />
-      <div
+      <EmbedSeekbar type='embed' seekedPercentage={props.seekedPercentage} />
+    {!play &&  <div
         onClick={handleVideoPress}
         className="absolute top-2/5 justify-center w-full"
         style={{ display: playing ? 'none' : 'flex' }}
@@ -80,7 +98,7 @@ function Embedvideo(props) {
           className="w-12 h-12"
           alt="playicon"
         />
-      </div>
+      </div>}
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
@@ -113,7 +131,7 @@ function Embedvideo(props) {
         comp="embed"
       />
       <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
-              <button className="bg-red-400 text-white px-4 py-2 font-semibold">Discover more on Hipi</button>
+              <button onClick={onStoreRedirect} className="bg-red-400 text-white px-4 py-2 font-semibold">Discover more on Hipi</button>
       </div>
     </div>
     </div>

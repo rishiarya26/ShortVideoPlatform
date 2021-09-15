@@ -9,7 +9,6 @@ import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-// import FooterMenu from '../footer-menu';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
@@ -67,13 +66,6 @@ function Feed({ router }) {
 
   const onDataFetched = data => {
     if(data){
-      // console.log('showItems', toShowItems)
-      // console.log('items',items)
-      // console.log('currentIndex',videoActiveIndex)
-      // console.log('id',activeVideoId)
-      // console.log('preId',preActiveVideoId)
-      //   setVideoActiveIndex(0)
-      //   setActiveVideoId(null)
         
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
@@ -98,7 +90,6 @@ function Feed({ router }) {
     let updateItems = [...items];
      try{
        const data =  await fetchData({ type: id });
-       console.log(data)
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
        setItems(updateItems);
@@ -137,7 +128,6 @@ function Feed({ router }) {
   const getCanShop = async () => {
     let isShoppable = false;
     const shopContent = { ...shop };
-    console.log(activeVideoId);
     try {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.isShoppable;
@@ -152,26 +142,19 @@ function Feed({ router }) {
  const incrementShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  // setMuted(false)
   /* Increment */
     const incrementGap = 2;
     let insertItemIndex = videoActiveIndex+incrementGap;
     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     
-    // if(arr !== dataItem){
-    //   show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
-    // }
     arr && updateShowItems?.push(arr[insertItemIndex]);
-    // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
   /* Delete */
     const decrementGap = 3;
     let deleteItemIndex = videoActiveIndex-decrementGap;
     if(deleteItemIndex >=0 && videoActiveIndex >=3){
       updateShowItems[deleteItemIndex] = null;
-      // console.log('deleted', updateShowItems)
-      // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
     }
-  // console.log("increment",items,updateShowItems);
+
   setToShowItems(updateShowItems);
  }
 
@@ -184,15 +167,11 @@ function Feed({ router }) {
   let insertItemIndex = videoActiveIndex-incrementGap;
   if(insertItemIndex >=0 && videoActiveIndex >=2){
     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-    // console.log('added', updateShowItems)
-    // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
   }
   /* Delete */
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-    // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
-    // console.log("increment",items,updateShowItems);
     setToShowItems(updateShowItems);
  }
 
@@ -226,11 +205,6 @@ function Feed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-  // const onPlayClick =()=>{
-  //   setAutoplay(true);
-  //   setInitialPlayButton(false);
-  // }
-
   const swiper = () => <Swiper
               className="max-h-full"
               direction="vertical"
@@ -238,11 +212,6 @@ function Feed({ router }) {
               spaceBetween={0}
               calculateheight="true"
               slidesPerView={1}
-              // onClick={(swiper)=> {
-              //   if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
-              //     swiper.slides[0].firstChild.firstChild.muted = false;
-              //   }
-              // }}
               mousewheel
               // speed = '5000'
               scrollbar={{ draggable: true }}
@@ -275,7 +244,7 @@ function Feed({ router }) {
 
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 const dataItems = [...items];
-                const seoItem = dataItems.find(item => item?.content_id === activeId);
+                const seoItem = dataItems?.find(item => item?.content_id === activeId);
                 seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
@@ -335,10 +304,9 @@ function Feed({ router }) {
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               
                <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage
@@ -405,14 +373,14 @@ function Feed({ router }) {
           }
         }}
       />
-      <VideoJsonLd
+      {/* <VideoJsonLd
         name={item.music_title}
         description={item.content_description}
         contentUrl={item.video_url}
         embedUrl={hostname}
         thumbnailUrls={item.thumbnailUrls}
         watchCount={item.likesCount}
-      />
+      /> */}
     <>
       <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">

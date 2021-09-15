@@ -9,6 +9,8 @@ import {
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import { getEffectiveVideoUrl } from '../../src/utils/content';
 import SingleVideo from '../../src/components/single-video';
+import { getItem } from '../../src/utils/cookie';
+import { useRouter } from 'next/router';
 // import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
@@ -19,6 +21,8 @@ const languageCodes = Object.keys(supportedLanguages).map(
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [videoUrl, setVideoUrl] = useState(null);
+
+  const router = useRouter();
   const {
     data: item = {},
     errorCode,
@@ -40,6 +44,14 @@ export default function Hipi(params) {
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
+
+  const device = getItem('device-type')
+
+  if(device === 'desktop'){
+    router.push('/');
+    return null;
+  }
+
   return (
     <>
       <SeoMeta

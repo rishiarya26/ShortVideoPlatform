@@ -24,6 +24,11 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
+import Mute from '../commons/svgicons/mute';
+import {
+  SeoMeta,
+  VideoJsonLd
+} from '../../components/commons/head-meta/seo-meta';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -43,6 +48,7 @@ const LoadComp = () => (<Loading />);
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
+  const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -82,7 +88,8 @@ function FeedIphone({ router }) {
         setItems(data?.data);
         setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
-        setToInsertElements(4)
+        setToInsertElements(4);
+        setSeoItem(data?.data[0]);
     }
   }
 
@@ -111,7 +118,6 @@ function FeedIphone({ router }) {
     let data = []
      try{
        data =  await fetchData({ type: id });
-       console.log(data)
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
        setItems(updateItems);
@@ -191,76 +197,33 @@ function FeedIphone({ router }) {
   }
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
-  console.log(deletedTill)
   setDeletedTill(deletedTill);
-  console.log(arr)
   setMuted(true);
   show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
-  console.log("updated",updateShowItems,videoActiveIndex,pretoInsertElemant?.toInsertElements)
   setToShowItems(updateShowItems);
 }
   catch(e){
 console.log('error',e)
   }
 }
-//   /* Increment */
-//     const incrementGap = 2;
-//     let insertItemIndex = videoActiveIndex+incrementGap;
-//     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
-//     arr && updateShowItems?.push(arr[insertItemIndex]);
-//     // console.log(videoActiveIndex,"+",incrementGap,insertItemIndex, updateShowItems)
-//   /* Delete */
-//     const decrementGap = 3;
-//     let deleteItemIndex = videoActiveIndex-decrementGap;
-//     if(deleteItemIndex >=0 && videoActiveIndex >=3){
-//       updateShowItems[deleteItemIndex] = null;
-//       // console.log('deleted', updateShowItems)
-//       // console.log(videoActiveIndex,"-",decrementGap,deleteItemIndex, updateShowItems)
-//     }
-//   // console.log("increment",items,updateShowItems);
-//   setToShowItems(updateShowItems);
-//  }
 
  const decrementingShowItems = async() =>{
 
   let updateShowItems = [...toShowItems];
-  console.log(updateShowItems)
-  console.log(deletedTill,",",pretoInsertElemant?.toInsertElements-13);
   const dataItem = [...items];
   for(let i=0;i<=5;i++){
-    console.log(dataItem[deletedTill-i])
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
   show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-  console.log('updated',updateShowItems)
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
  }
-//   let updateShowItems = [...toShowItems];
-//   const dataItem = [...items]
-//   /* Add */
-//   const  incrementGap = 2;
-//   let insertItemIndex = videoActiveIndex-incrementGap;
-//   if(insertItemIndex >=0 && videoActiveIndex >=2){
-//     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-//     // console.log('added', updateShowItems)
-//     // console.log(videoActiveIndex,"-",incrementGap,insertItemIndex, updateShowItems)
-//   }
-//   /* Delete */
-//     const  decrementGap=  3;
-//     let deleteItemIndex = videoActiveIndex+decrementGap;
-//      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-//     // console.log(videoActiveIndex,"+",decrementGap,deleteItemIndex, updateShowItems)
-//     // console.log("increment",items,updateShowItems);
-//     setToShowItems(updateShowItems);
-//  }
 
   useEffect(()=>{
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
-      console.log(toInsertElements, videoActiveIndex);
       //swipe-down
       if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
         incrementShowItems();
@@ -268,10 +231,8 @@ console.log('error',e)
       }
     }
     else{
-      console.log(".....deltet....",deletedTill, videoActiveIndex )
       //swipe-up
       if(toShowItems.length > 0 && deletedTill === videoActiveIndex){
-        console.log(".....deltet....")
        decrementingShowItems();
       }
     }
@@ -297,11 +258,6 @@ console.log('error',e)
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-  // const onPlayClick =()=>{
-  //   setAutoplay(true);
-  //   setInitialPlayButton(false);
-  // }
-
   const swiper = () => <Swiper
               className="max-h-full"
               direction="vertical"
@@ -309,33 +265,12 @@ console.log('error',e)
               spaceBetween={0}
               calculateheight="true"
               slidesPerView={1}
-              // onClick={(swiper)=> {
-              //   if(swiper?.slides[0]?.firstChild?.firstChild?.muted === true){
-              //     swiper.slides[0].firstChild.firstChild.muted = false;
-              //   }
-              // }}
               mousewheel
-              // speed = '5000'
               scrollbar={{ draggable: true }}
               autoplay= {{
-                  // delay: 2000,
-                  // delay: 5000,
                   disableOnInteraction: false
               }}
-              // onSwiper={swiper => {
-              //   const {
-              //     activeIndex, slides
-              //   } = swiper;
-              //   console.log(swiper)
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false;
-                // }
-                // if(videoId){
-                //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-                //   console.log("slideId",slideToId)
-                //   swiper?.slideTo(slideToId, 0);
-                // }
-              // }}
+          
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
@@ -346,9 +281,12 @@ console.log('error',e)
                 // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
                 //   slides[activeIndex].firstChild.firstChild.muted = false
                 // }
-                console.log(slides)
-              
+                     
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+                const dataItems = [...items];
+                const seoItem = dataItems?.find(item => item?.content_id === activeId);
+
+                seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
               }}
@@ -407,10 +345,10 @@ console.log('error',e)
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               <p className='text-gray-300 font-medium'>Tap To Unmute</p>
+               <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
@@ -433,12 +371,57 @@ console.log('error',e)
     'following' : toShowFollowing
   }
 
+  let hostname;
+  if (typeof window !== 'undefined') {
+    hostname = window?.location?.hostname;
+ }
+
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+       <SeoMeta
+        data={{
+          title: item.music_title,
+          image: item.thumbnail,
+          description: item.content_description,
+          canonical: hostname,
+          openGraph: {
+            title: item.music_title,
+            description: item.content_description,
+            url: hostname,
+            images: [
+              {
+                url: item.thumbnail,
+                width: 800,
+                height: 600,
+                alt: item.music_title
+              },
+              { url: item.userProfilePicUrl }
+            ],
+            type: 'video.movie',
+            video: {
+              actors: [
+                {
+                  role: item.userName
+                }
+              ],
+              tag: item.genre
+            },
+            site_name: 'Hipi'
+          }
+        }}
+      />
+      {/* <VideoJsonLd
+        name={item.music_title}
+        description={item.content_description}
+        contentUrl={item.video_url}
+        embedUrl={hostname}
+        thumbnailUrls={item.thumbnailUrls}
+        watchCount={item.likesCount}
+      /> */}
     <>
       <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">

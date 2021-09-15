@@ -9,11 +9,9 @@ class Hipi extends Document {
   if(userAgent){  
     const device = getDeviceType(userAgent);
     const deviceOs = getDeviceInfo(userAgent);
-    console.log(device, deviceOs)
     const maxAge = (365 * 24 * 60 * 60);
     ctx?.res?.setHeader('Set-Cookie', [`device-type=${device}; MaxAge=${maxAge}; Path=/;`,`device-info=${deviceOs}; MaxAge=${maxAge}; Path=/;`]);
   }
-  console.log("ctx",ctx?.res)
    const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }

@@ -32,7 +32,7 @@ export const Shop = ({
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (
         <button
-          className="rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase"
+          className="rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           // eslint-disable-next-line no-undef
           onClick={handleShop}
         >
@@ -41,7 +41,7 @@ export const Shop = ({
       )
         : (
           <button
-            className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase"
+            className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           >
             {t('SHOP')}
           </button>

@@ -8,6 +8,8 @@ import {
 } from '../../src/components/commons/head-meta/seo-meta';
 import { supportedLanguages } from '../../src/hooks/use-translation';
 import { getEffectiveVideoUrl } from '../../src/utils/content';
+import { getItem } from '../../src/utils/cookie';
+import { useRouter } from 'next/router';
 // import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
@@ -18,13 +20,14 @@ const languageCodes = Object.keys(supportedLanguages).map(
 export default function Hipi(params) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [videoUrl, setVideoUrl] = useState(null);
+
+  const router = useRouter();
   const {
     data: item = {},
     errorCode,
     message,
     status
   } = params;
-  console.log(item)
   const canShop = item?.canShop?.status || 'fail';
   const shopCards = item?.canShop?.data;
   const videoId = item?.content_id;
@@ -40,6 +43,14 @@ export default function Hipi(params) {
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
+
+  const device = getItem('device-type')
+
+  if(device === 'desktop'){
+    router.push('/');
+    return null;
+  }
+
   return (
     <>
       <SeoMeta

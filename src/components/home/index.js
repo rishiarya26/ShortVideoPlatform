@@ -2,6 +2,17 @@
 import { withBasePath } from '../../config';
 
 function Home() {
+  const stores = {
+    android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+  };
+
+  // const {close} = useDrawer();
+
+  const onStoreRedirect =(device)=>{
+    device && (window.location.href = `${stores[device]}`);
+  }
+
   return (
     <div className="h-screen  w-screen flex flex-col ">
       <div className="w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 ">
@@ -21,8 +32,8 @@ function Home() {
             on your mobile.
           </p>
           <div className="flex w-full mt-6">
-           <img className="pr-2" src={withBasePath('icons/play_store.png')} alt="hipi logo" />
-            <img src={withBasePath('icons/app_store.png')} alt="hipi logo" /> 
+           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-2" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} alt="hipi logo" /> </div>
           </div>
         </div>
       </div>

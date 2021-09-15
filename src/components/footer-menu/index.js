@@ -40,7 +40,7 @@ const info ={
   return (
     <div>
       <div className="w-full bg-black fixed bottom-0 py-2 flex justify-around items-center h-16">
-      <div onClick={()=>router.push('feed/for-you')} className="flex flex-col text-white text-xs items-center">
+      <div onClick={()=>router.push('/feed/for-you')} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
        
      </div> 

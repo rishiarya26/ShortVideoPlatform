@@ -3,7 +3,19 @@
 @tailwind utilities;
 *{
     margin: 0;
-    font-family: "Open Sans";
+    font-family: "Open Sans";   
+}
+@media screen and (orientation: landscape) {
+  .feed_screen {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 100vw;
+  }
 }
 /* body{
 } */
