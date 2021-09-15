@@ -25,6 +25,10 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
+import {
+  SeoMeta,
+  VideoJsonLd
+} from '../../components/commons/head-meta/seo-meta';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -44,6 +48,7 @@ const detectDeviceModal = dynamic(
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
+  const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -79,6 +84,7 @@ function Feed({ router }) {
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
+        setSeoItem(data?.data[0]);
     }
   }
 
@@ -266,34 +272,11 @@ function Feed({ router }) {
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-                // setMuted(false)
-                // setMuted(true)
-                console.log(slides[activeIndex]?.firstChild?.firstChild?.autoplay)
 
-                // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
-                //   show('', detectDeviceModal, 'extraSmall', {text: "like", setMuted:setMuted});
-                //   slides[activeIndex].firstChild.firstChild.autoplay = true;
-                // }
-                // if(activeIndex === 5)
-                
-                // setTimeout(()=>{
-                //   console.log('in')
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false
-                //   console.log('in muted',slides[activeIndex].firstChild.firstChild.muted)
-                // }
-                // if(slides[activeIndex]?.firstChild?.firstChild?.autoplay === false){
-                //   slides[activeIndex].firstChild.firstChild.autoplay = true
-                //   console.log('in autoplay',slides[activeIndex].firstChild.firstChild.autoPlay)
-                // }
-                // console.log( "mute", slides[activeIndex].firstChild.firstChild.muted,"autoplay", slides[activeIndex].firstChild.firstChild.autoplay )
-                // },500)
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false
-                // }
-                console.log(slides)
-              
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+                const dataItems = [...items];
+                const seoItem = dataItems.find(item => item?.content_id === activeId);
+                seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
               }}
@@ -379,12 +362,57 @@ function Feed({ router }) {
     'following' : toShowFollowing
   }
 
+  let hostname;
+  if (typeof window !== 'undefined') {
+    hostname = window?.location?.hostname;
+ }
+
   return (
     <ComponentStateHandler
       state={fetchState}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
+       <SeoMeta
+        data={{
+          title: item.music_title,
+          image: item.thumbnail,
+          description: item.content_description,
+          canonical: hostname,
+          openGraph: {
+            title: item.music_title,
+            description: item.content_description,
+            url: hostname,
+            images: [
+              {
+                url: item.thumbnail,
+                width: 800,
+                height: 600,
+                alt: item.music_title
+              },
+              { url: item.userProfilePicUrl }
+            ],
+            type: 'video.movie',
+            video: {
+              actors: [
+                {
+                  role: item.userName
+                }
+              ],
+              tag: item.genre
+            },
+            site_name: 'Hipi'
+          }
+        }}
+      />
+      <VideoJsonLd
+        name={item.music_title}
+        description={item.content_description}
+        contentUrl={item.video_url}
+        embedUrl={hostname}
+        thumbnailUrls={item.thumbnailUrls}
+        watchCount={item.likesCount}
+      />
     <>
       <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
         <div className="fixed mt-10 z-10 w-full">
