@@ -145,6 +145,10 @@ function HeadMeta() {
       <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
+
+      {/* for shop  */}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet"/>
     </>
   );
 }
