@@ -59,10 +59,10 @@ export default function SingleVideo(props){
 
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-hidden">
     <div
       ref={rootRef}
-      className="video_card relative w-full  scroll-snap-start bg-black h-screen overflow-hidden"
+      className="video_card relative w-full  scroll-snap-start bg-black h-full overflow-hidden"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -71,6 +71,7 @@ export default function SingleVideo(props){
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
+        loop
         poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
@@ -110,7 +111,7 @@ export default function SingleVideo(props){
         likes={props.likes}
         comment={props.comments}
         share={777}
-        type="feed"
+        type="single"
       />
     {/* </div> */}
       {props.canShop === 'success'
