@@ -2,7 +2,7 @@ import VideoSidebar from '../videosidebar/loader';
 import VideoFooter from '../videofooter/loader';
 import Seekbar from '../seekbar/loader';
 import FooterMenu from '../footer-menu';
-import Like from '../commons/svgicons/like';
+import CircularProgress from '../commons/circular-loader'
 
 function Loader() {
   return (
@@ -11,10 +11,10 @@ function Loader() {
         <VideoSidebar />
         <VideoFooter />
         <div
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-1/2 left-1/2 justify-center w-screen"
                 style={{ display: 'flex text-white' }}
               >
-                <Like/>
+                <CircularProgress/>
               </div>
         <Seekbar type={'aboveFooterMenu'} />
       </div>
