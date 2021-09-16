@@ -12,6 +12,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
+import Landscape from '../landscape'
 import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
@@ -328,6 +329,7 @@ function Feed({ router }) {
               selectedTab="home"
               />
             </Swiper>
+            
 
   const showLoginFollowing = ()=> <LoginFollowing/>;
   
@@ -399,6 +401,7 @@ function Feed({ router }) {
           <div className="playkit-player" />
         </div>
       </div>
+      <Landscape/>
     </>
     </ComponentStateHandler>
 
