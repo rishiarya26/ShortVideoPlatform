@@ -12,6 +12,7 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
+import Landscape from '../landscape'
 import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
@@ -28,8 +29,10 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../../components/commons/head-meta/seo-meta';
-import Spinner from '../commons/svgicons/spinner';
-import Like from '../commons/svgicons/like';
+// import Spinner from '../commons/svgicons/spinner';
+// import Like from '../commons/svgicons/like';
+import CircularProgress from '../commons/circular-loader'
+
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -301,7 +304,7 @@ function Feed({ router }) {
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
-              <Like/>
+             <CircularProgress/>
               </div>
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}
@@ -328,6 +331,7 @@ function Feed({ router }) {
               selectedTab="home"
               />
             </Swiper>
+            
 
   const showLoginFollowing = ()=> <LoginFollowing/>;
   
@@ -399,6 +403,7 @@ function Feed({ router }) {
           <div className="playkit-player" />
         </div>
       </div>
+      <Landscape/>
     </>
     </ComponentStateHandler>
 

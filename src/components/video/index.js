@@ -7,6 +7,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import ProductWidget from '../product-widget';
 import ProductCards from '../product-cards';
+import CircularProgress from '../commons/circular-loader'
 import { PreviousMap } from 'postcss';
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -130,6 +131,7 @@ function Video(props) {
         style={{ display: play ? 'flex' : 'none' }}
       >
         <Play />
+        
       </div>
       {/* <div
         onClick={handleVideoPress}
@@ -149,6 +151,7 @@ function Video(props) {
         saveLook={props.saveLook}
         comp={props?.comp}
       />
+      
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
         videoOwnersId={props.videoOwnersId}
