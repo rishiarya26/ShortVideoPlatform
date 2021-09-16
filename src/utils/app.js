@@ -50,11 +50,12 @@ export const share = (id) => {
   // console.log(`https://${domain}/video/${id}`)
   // console.log(finalUrl)
   if (navigator.share) {
-   try{ const url = document?.location?.href;
+   try{ 
+    const url = document?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;
     const finalUrl = (id && domain && `https://${domain}/video/${id}`) || document?.location?.href;
-    alert('success', finalUrl)
+    alert(`success${finalUrl}`)
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
