@@ -3,10 +3,10 @@ import useDrawer from '../../../hooks/use-drawer';
 import { share } from '../../../utils/app';
 import Share from '../svgicons/share';
 
-export const ShareComp = () => {
+export const ShareComp = ({videoId}) => {
   const { show } = useDrawer();
 
-  const type = { desktop: (() => show('Share', null, 'medium')), mobile: share };
+  const type = { desktop: (() => show('Share', null, 'medium')), mobile: ()=>share(videoId) };
 
   const value = useDevice(devices, [type.desktop, type.mobile]);
 
