@@ -55,17 +55,16 @@ export const share = (id) => {
     let domain = (new URL(url));
     domain = domain?.hostname;
     const finalUrl = (id && domain && `https://${domain}/video/${id}`) || document?.location?.href;
-    alert(`success${finalUrl}`)
+   
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
-      finalUrl
+      url : finalUrl
     });
   }catch(e){
     alert('something went wrong',e)
   }
   }
-  alert('out')
   return Promise.reject(NO_SUPPORT);
 };
 
