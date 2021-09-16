@@ -41,9 +41,11 @@ export const generateUUID = persist => {
 };
 
 export const share = () => {
+  console.log('share-1',  document.location.href)
   if (navigator.share) {
-    const canonicalElement = document.querySelector('link[rel=canonical]');
-    const url = canonicalElement?.href || document.location.href;
+      const url = document?.location?.href;
+    // const canonicalElement = document.querySelector('link[rel=canonical]');
+    // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
       url
     });
