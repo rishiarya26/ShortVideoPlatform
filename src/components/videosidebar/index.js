@@ -170,7 +170,7 @@ function VideoSidebar({
       >
         <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
-          <p className="text-sm text-center">embed</p>
+          <p className="text-sm text-center">Embed</p>
         </div>
       </div>
       {/* <div
