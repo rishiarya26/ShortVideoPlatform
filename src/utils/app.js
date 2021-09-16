@@ -40,15 +40,20 @@ export const generateUUID = persist => {
   return uuid;
 };
 
-export const share = () => {
-  console.log('share-1',  document.location.href)
+export const share = (id) => {
   if (navigator.share) {
-      const url = document?.location?.href;
+   try{ const url = document?.location?.href;
+    let domain = (new URL(url));
+    domain = domain?.hostname;
+    const finalUrl = (id && domain && `https://${domain}/video${id}`) || document?.location?.href;
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
-      url
+      finalUrl
     });
+  }catch(e){
+    
+  }
   }
   return Promise.reject(NO_SUPPORT);
 };
