@@ -161,7 +161,7 @@ function VideoSidebar({
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}
       >
-      {  videoId && <ShareComp videoId={videoId}/>}
+      <ShareComp videoId={videoId}/>
       </div>
       <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
