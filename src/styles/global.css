@@ -87,3 +87,9 @@
   top: 50%;
 }
 
+
+@media (orientation: portrait) {
+  .landscape_screen {
+    display: none;
+  }
+}
