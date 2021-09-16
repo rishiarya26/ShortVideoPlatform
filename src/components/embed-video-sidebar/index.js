@@ -17,11 +17,17 @@ const detectDeviceModal = dynamic(
   }
 );
 
+
 function EmbedVideoSidebar(props) {
   const { show } = useDrawer();
 
+  const info = {
+    single : 'bottom-36',
+    embed : 'bottom-20'
+  }
+
   return (
-    <div className="absolute right-0 text-white bottom-20">
+    <div className={`absolute right-0 text-white ${info[props.type]}`}>
       <div
         onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "see profile"})}
         className="relative py-2 px-3 text-center flex justify-center"

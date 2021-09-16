@@ -11,8 +11,8 @@ import { getItem } from '../../utils/cookie';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
-  const [clicked, setClicked] = useState(false);
-  const [play, setPlay] = useState(false)
+  // const [clicked, setClicked] = useState(false);
+  // const [play, setPlay] = useState(false)
 
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
@@ -34,33 +34,33 @@ function Embedvideo(props) {
     if (playing) {
       rootRef.current.children[0].pause();
       setPlaying(false);
-      setClicked(false);
-      setPlay(false)
+      // setClicked(false);
+      // setPlay(false)
     } else {
       rootRef.current.children[0].play();
       setPlaying(true);
-      setClicked(true);
-      setPlay(true)
+      // setClicked(true);
+      // setPlay(true)
     }
   };
 
-  const handlePlay = entry => {
-    if (clicked) {
-      if (entry.isIntersecting) {
-        rootRef.current.children[0].play();
-        setPlaying(true);
-      } else {
-        rootRef.current.children[0].pause();
-        setPlaying(false);
-      }
-    }
-  };
+  // const handlePlay = entry => {
+  //   if (clicked) {
+  //     if (entry.isIntersecting) {
+  //       rootRef.current.children[0].play();
+  //       setPlaying(true);
+  //     } else {
+  //       rootRef.current.children[0].pause();
+  //       setPlaying(false);
+  //     }
+  //   }
+  // };
 
-  const [ref] = useIntersect({
-    callback: handlePlay,
-    rootMargin: '50px',
-    threshold: [0.30, 0.75]
-  });
+  // const [ref] = useIntersect({
+  //   callback: handlePlay,
+  //   rootMargin: '50px',
+  //   threshold: [0.30, 0.75]
+  // });
 
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
@@ -76,9 +76,10 @@ function Embedvideo(props) {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         playsInline
+        loop
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
-        ref={ref}
+        // ref={ref}
         poster={props.poster}
         onClick={handleVideoPress}
         className="vdo_player"
@@ -89,7 +90,7 @@ function Embedvideo(props) {
       </video>
       
       <EmbedSeekbar type='embed' seekedPercentage={props.seekedPercentage} />
-    {!play &&  <div
+    {!playing &&  <div
         onClick={handleVideoPress}
         className="absolute top-2/5 justify-center w-full"
         style={{ display: playing ? 'none' : 'flex' }}
