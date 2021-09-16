@@ -58,7 +58,7 @@ export const share = (id) => {
       finalUrl
     });
   }catch(e){
-    
+    alert('something went wrong',e)
   }
   }
   return Promise.reject(NO_SUPPORT);
