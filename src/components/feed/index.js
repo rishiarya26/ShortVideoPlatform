@@ -28,6 +28,8 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../../components/commons/head-meta/seo-meta';
+import Spinner from '../commons/svgicons/spinner';
+import Like from '../commons/svgicons/like';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -295,21 +297,27 @@ function Feed({ router }) {
                   </div>
                 ))
               }
-              <div
+                 <div
+                className="absolute top-1/2 justify-center w-screen"
+                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+              >
+              <Like/>
+              </div>
+              {/* <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: initialPlayButton ? 'flex' : 'none' }}
               >
                 <Play/>
-              </div>
+              </div> */}
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <Mute/>
               </div>}
-              {validItemsLength ? seekedPercentage
+              {validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}

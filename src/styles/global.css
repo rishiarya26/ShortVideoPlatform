@@ -67,3 +67,10 @@
 .no_bar::-webkit-scrollbar {
   display: none;
 }
+
+.header_landing{
+    height: 112px;
+}
+.static_footer{
+  height: 256px;
+}

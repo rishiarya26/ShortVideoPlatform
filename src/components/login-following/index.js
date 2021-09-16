@@ -1,6 +1,7 @@
 /*eslint-disable react/display-name */
 import dynamic from "next/dynamic";
 import useDrawer from "../../hooks/use-drawer";
+import { getOS } from "../../utils/device-details";
 import Door from "../commons/svgicons/door-open";
 import FooterMenu from "../footer-menu";
 
@@ -21,11 +22,22 @@ const detectDeviceModal = dynamic(
 );
 
 const LoginFollowing = () =>{
-    const {show} = useDrawer();
+    // const {show} = useDrawer();
 
-    const showLoginOptions = () => {
-        show('', detectDeviceModal, 'extraSmall');
-      };
+    const stores = {
+      android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+      ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    };
+    
+    const onStoreRedirect =()=>{
+      const device = getOS();
+      device && (window.location.href = `${stores[device]}`);
+    }
+  
+
+    // const showLoginOptions = () => {
+    //     show('', detectDeviceModal, 'extraSmall');
+    //   };
     
     return(
       <div className="h-screen bg-black  w-screen flex flex-col items-center justify-center">
@@ -38,7 +50,7 @@ const LoginFollowing = () =>{
         <div className="text-white mt-3 text-wrap wrap">
           Kindly download the app to start following other users
         </div>
-        <button onClick={showLoginOptions} className='bg-red-400 rounded px-12 py-2 flex justify-center items-center text-white mt-8'>
+        <button onClick={onStoreRedirect} className='bg-hipired rounded px-12 py-2 flex justify-center items-center text-white mt-8'>
               Download
           </button>
         <div className="absolute left-0 bottom-0">
