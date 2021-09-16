@@ -40,6 +40,8 @@ export const generateUUID = persist => {
   return uuid;
 };
 
+
+
 export const share = (id) => {
   // const url = document?.location?.href;
   // let domain = (new URL(url));
@@ -52,6 +54,7 @@ export const share = (id) => {
     let domain = (new URL(url));
     domain = domain?.hostname;
     const finalUrl = (id && domain && `https://${domain}/video/${id}`) || document?.location?.href;
+    alert('success')
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
@@ -61,6 +64,7 @@ export const share = (id) => {
     alert('something went wrong',e)
   }
   }
+  alert('out')
   return Promise.reject(NO_SUPPORT);
 };
 

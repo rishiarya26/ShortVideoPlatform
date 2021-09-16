@@ -1,6 +1,17 @@
 import Marquee from '../commons/text-marquee';
 import Music from '../commons/svgicons/music';
 import MusicBlack from '../commons/svgicons/music-black';
+import useDrawer from '../../hooks/use-drawer';
+import dynamic from 'next/dynamic';
+
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 function VideoFooter({
   userName,
@@ -17,6 +28,7 @@ function VideoFooter({
     embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`,
     single: `${canShop === 'success' ? 'bottom-36' : 'bottom-16'} videoFooter absolute left-0  flex text-white ml-2`,
   };
+  const { show } = useDrawer();
 
   const music = {
     profile:    <Music />,
@@ -35,11 +47,11 @@ function VideoFooter({
           </div>
         )} */}
 
-        <h3 className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
+        <h3 onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
         <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (
-              <span key={id}>{`#${data.name}${' '}`}</span>
+              <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} key={id}>{`#${data.name}${' '}`}</span>
             ))}
         </div>
         {/* {musicCoverTitle}</p> */}
