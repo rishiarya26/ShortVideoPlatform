@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import Marquee from '../commons/text-marquee';
 import Music from '../commons/svgicons/music';
 import MusicBlack from '../commons/svgicons/music-black';
