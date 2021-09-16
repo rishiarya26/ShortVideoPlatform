@@ -5,7 +5,7 @@
     margin: 0;
     font-family: "Open Sans";   
 }
-@media screen and (orientation: landscape) {
+/* @media screen and (orientation: landscape) {
   .feed_screen {
     transform: rotate(-90deg);
     transform-origin: left top;
@@ -16,7 +16,7 @@
     left: 0;
     height: 100vw;
   }
-}
+} */
 /* body{
 } */
 .Video_sheet{
@@ -73,4 +73,23 @@
 }
 .static_footer{
   height: 256px;
+}
+
+.Circle_loader {
+  height: 0;
+  width: 0;
+  padding: 15px;
+  border: 6px solid #ccc;
+  border-right-color: #888;
+  border-radius: 22px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+
+@media (orientation: portrait) {
+  .landscape_screen {
+    display: none;
+  }
 }
