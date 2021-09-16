@@ -58,7 +58,7 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
         <div className="w-8/12 my-1 xxs:text-sm xs:text-base">
           {music[comp]}
-          <span className=" my-1 xxs:text-sm xs:text-base w-4/12">
+          <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" my-1 xxs:text-sm xs:text-base w-4/12">
             <Marquee text={musicTitle} />
           </span>
         </div>

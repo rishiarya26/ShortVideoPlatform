@@ -67,6 +67,7 @@ export default function SingleVideo(props){
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         // autoPlay
+        playsInline
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}

@@ -75,6 +75,7 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+        playsInline
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
         ref={ref}
