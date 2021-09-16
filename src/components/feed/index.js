@@ -125,7 +125,6 @@ function Feed({ router }) {
   const updateSeekbar = percentage => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
-    console.log(percentage);
   };
 
   const getCanShop = async () => {
