@@ -28,8 +28,10 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../../components/commons/head-meta/seo-meta';
-import Spinner from '../commons/svgicons/spinner';
-import Like from '../commons/svgicons/like';
+// import Spinner from '../commons/svgicons/spinner';
+// import Like from '../commons/svgicons/like';
+import CircularProgress from '../commons/circular-loader'
+
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -301,7 +303,7 @@ function Feed({ router }) {
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
-              <Like/>
+             <CircularProgress/>
               </div>
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}

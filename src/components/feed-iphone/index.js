@@ -29,7 +29,8 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../../components/commons/head-meta/seo-meta';
-import Like from '../commons/svgicons/like';
+// import Like from '../commons/svgicons/like';
+import CircularProgress from '../commons/circular-loader'
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -341,7 +342,7 @@ console.log('error',e)
                 className="absolute top-1/2 justify-center w-screen"
                 style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
-                  <Like/>
+                <CircularProgress/>
               </div>
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}
