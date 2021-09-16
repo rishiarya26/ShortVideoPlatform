@@ -10,12 +10,12 @@ function Loader() {
       <div className="video_card relative flex w-full h-screen scroll-snap-start bg-hipidblue">
         <VideoSidebar />
         <VideoFooter />
-        <div
-                className="absolute top-1/2 left-1/2 justify-center w-screen"
+             <div
+                className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: 'flex text-white' }}
               >
                 <CircularProgress/>
-              </div>
+             </div>
         <Seekbar type={'aboveFooterMenu'} />
       </div>
       <FooterMenu />
