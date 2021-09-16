@@ -12,7 +12,7 @@ import FooterMenu from '../footer-menu';
 
 export default function SingleVideo(props){
   const [playing, setPlaying] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   const [play, setPlay] = useState(false);
 
   const rootRef = useRef(null);
@@ -21,42 +21,40 @@ export default function SingleVideo(props){
     if (playing) {
       rootRef.current.children[0].pause();
       setPlaying(false);
-      setClicked(false);
+      // setClicked(false);
       setPlay(false);
     } else {
       rootRef.current.children[0].play();
       setPlaying(true);
-      setClicked(true);
+      // setClicked(true);
       setPlay(true);
     }
   };
 
-  const handlePlay = entry => {
-    if (clicked) {
-      if (entry.isIntersecting) {
-        rootRef.current.children[0].play();
-        setPlaying(true);
+  // const handlePlay = entry => {
+  //   if (clicked) {
+  //     if (entry.isIntersecting) {
+  //       rootRef.current.children[0].play();
+  //       setPlaying(true);
         
-      } else {
-        rootRef.current.children[0].pause();
-        setPlaying(false);
+  //     } else {
+  //       rootRef.current.children[0].pause();
+  //       setPlaying(false);
        
-      }
-    }
-  };
+  //     }
+  //   }
+  // };
 
-  const [ref] = useIntersect({
-    callback: handlePlay,
-    rootMargin: '50px',
-    threshold: [0.30, 0.75]
-  });
+  // const [ref] = useIntersect({
+  //   callback: handlePlay,
+  //   rootMargin: '50px',
+  //   threshold: [0.30, 0.75]
+  // });
 
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     props.updateSeekbar(percentage);
   };
-
-
 
   return (
     <div className="flex flex-col overflow-hidden">
@@ -70,7 +68,7 @@ export default function SingleVideo(props){
         playsInline
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
-        ref={ref}
+        // ref={ref}
         loop
         poster={props.poster}
         onClick={handleVideoPress}
