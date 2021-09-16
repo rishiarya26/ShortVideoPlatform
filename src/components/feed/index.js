@@ -304,7 +304,7 @@ function Feed({ router }) {
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-2"
+                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <Mute/>

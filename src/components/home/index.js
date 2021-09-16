@@ -15,7 +15,7 @@ function Home() {
 
   return (
     <div className="h-screen  w-screen flex flex-col ">
-      <div className="w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 ">
+      <div className=" header_landing w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 py-2">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="bg_grad flex items-center p-10 relative">
@@ -26,10 +26,10 @@ function Home() {
           <h1 className="text-5xl leading-snug font-semibold py-10">Hipi is best experienced on mobile device.</h1>
           <p className="font-medium leading-normal mb-4 text-2xl font-light">
             Hipi is a mobile only platform.
-            Download the app on your Android and iOS devices, or visit 
+            Download the app on your Android and iOS devices, or hit  
             <a href="https://hipi.co.in/">www.hipi.co.in</a>
             {' '}
-            on your mobile.
+            on your mobile device.
           </p>
           <div className="flex w-full mt-6">
            <div onClick={()=>onStoreRedirect('android')}> <img className="pr-2" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
@@ -37,7 +37,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full h-60 bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
+      <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
         <div className="flex w-full text-sm">
           <div className="flex w-1/2">
             <a href="#" className="px-2 cursor-pointer">Community Guidelines</a>

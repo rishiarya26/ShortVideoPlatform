@@ -38,7 +38,7 @@ const LoginFollowing = () =>{
         <div className="text-white mt-3 text-wrap wrap">
           Kindly download the app to start following other users
         </div>
-        <button onClick={showLoginOptions} className='bg-red-400 rounded px-12 py-2 flex justify-center items-center text-white mt-8'>
+        <button onClick={showLoginOptions} className='bg-hipired rounded px-12 py-2 flex justify-center items-center text-white mt-8'>
               Download
           </button>
         <div className="absolute left-0 bottom-0">

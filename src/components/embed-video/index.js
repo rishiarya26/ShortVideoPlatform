@@ -68,7 +68,7 @@ function Embedvideo(props) {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-2 border-gray-200">
     <div
       ref={rootRef}
       className="video_card relative w-full  scroll-snap-start bg-black"
@@ -133,7 +133,7 @@ function Embedvideo(props) {
         comp="embed"
       />
       <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
-              <button onClick={onStoreRedirect} className="bg-red-400 text-white px-4 py-2 font-semibold">Discover more on Hipi</button>
+              <button onClick={onStoreRedirect} className="bg-hipired text-white px-4 py-2 font-semibold">View more on Hipi</button>
       </div>
     </div>
     </div>

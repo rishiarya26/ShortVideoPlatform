@@ -34,13 +34,13 @@ const handleWeb=()=>{
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
-        <div className="flex w-full py-4">
-          <div className="flex w-1/4 justify-center px-4">
+        <div className="flex w-full py-4 items-center">
+          <div className="flex w-20v h-16v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
-            <p className="font-semibold text-xl ">Hipi -  Open in the app</p>
-            <p className="text-md text-gray-500">Open in Hipi to {text}</p>
+            <p className="font-semibold text-xl ">Hipi -  Open in the App</p>
+            {/* <p className="text-md text-gray-500">Open in Hipi to {text}</p> */}
           </div>
           </div>
         <div className="flex w-full border-t-2 border-b-2 border-gray-200 h-12">
@@ -49,12 +49,12 @@ const handleWeb=()=>{
           </div>
           <div className="flex justify-center items-center  border-l-2 border-gray-200 w-1/2">
             {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
-          <p onClick={onStoreRedirect} className="text-red-400 font-semibold text-lg">Open in app</p>
+          <p onClick={onStoreRedirect} className="text-hipired font-semibold text-lg">Open in App</p>
           </div>
           
         </div>
        {setMuted && <div>
-          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg p-4">continue with web</p>
+          <p onClick={handleWeb} className="text-hipired font-semibold text-lg p-4">continue with web</p>
         </div>}
         {/* {value && value} */}
 
