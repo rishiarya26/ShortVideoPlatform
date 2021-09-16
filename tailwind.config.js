@@ -17,6 +17,7 @@ module.exports = {
         10: ['10px', '14px'],
         8: ['8px', '12px']
       },
+     
       width: {
         '0v': '0',
         '10v':'10vw',
