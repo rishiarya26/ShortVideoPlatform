@@ -45,17 +45,17 @@ const handleWeb=()=>{
           </div>
         <div className="flex w-full border-t-2 border-b-2 border-gray-200 h-12">
           <div className="flex justify-center items-center w-1/2 ">
-            <p onClick={()=>close()} className="text-lg">Not now</p>
+            <p onClick={handleWeb} className="text-lg">Not now</p>
           </div>
           <div className="flex justify-center items-center  border-l-2 border-gray-200 w-1/2">
             {/* To-Do send download links to useDevice in second param & onClick call whatever is returned.  */}
-          <p onClick={onStoreRedirect} className="text-hipired font-semibold text-lg">Open in App</p>
+          <p onClick={onStoreRedirect} className="text-red-400 font-semibold text-lg">Open in App</p>
           </div>
           
         </div>
-       {setMuted && <div>
-          <p onClick={handleWeb} className="text-hipired font-semibold text-lg p-4">continue with web</p>
-        </div>}
+       {/* {setMuted && <div>
+          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg p-4">continue with web</p>
+        </div>} */}
         {/* {value && value} */}
 
       </div>
