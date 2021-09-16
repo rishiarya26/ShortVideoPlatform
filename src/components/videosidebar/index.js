@@ -1,6 +1,7 @@
 /*eslint-disable react/no-unescaped-entities*/
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/display-name */
+// /*eslint-disable react/display-name */
 import { withBasePath } from '../../config';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
