@@ -126,7 +126,7 @@ function Embedvideo(props) {
     <div className="flex relative flex-col p-3">
     <VideoFooter
         musicTitle={props.musicTitle}
-        userName={`@${props.userName}`}
+        userName={`${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
         canShop={props.canShop}
