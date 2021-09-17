@@ -301,7 +301,7 @@ function Feed({ router }) {
                 ))
               }
                  <div
-                className="absolute top-1/2 justify-center w-screen"
+                className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>

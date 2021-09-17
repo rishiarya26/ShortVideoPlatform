@@ -27,7 +27,7 @@ function VideoFooter({
     profile: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`,
     feed: `${saveLook ? ' bottom-16 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2 mb-2`,
     embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`,
-    single: `${canShop === 'success' ? 'bottom-36' : 'bottom-28'} videoFooter absolute left-0  flex text-white ml-2`,
+    single: `${canShop === 'success' ? 'bottom-40' : 'bottom-16 mb-2'} videoFooter fixed left-0  flex text-white ml-2`,
   };
   const { show } = useDrawer();
 
@@ -35,6 +35,7 @@ function VideoFooter({
     profile:    <Music />,
     feed:   <Music />,
     embed : <MusicBlack/>,
+    single : <Music />,
   }
   return (
     <div
@@ -56,9 +57,9 @@ function VideoFooter({
             ))}
         </div>
         {/* {musicCoverTitle}</p> */}
-        <div className="w-8/12 my-1 text-xs">
+        <div className="w-8/12 my-1 text-sm">
           {music[comp]}
-          <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" my-1 text-xs w-4/12">
+          <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>
         </div>

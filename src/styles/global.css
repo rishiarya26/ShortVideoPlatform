@@ -71,20 +71,16 @@
 .header_landing{
     height: 112px;
 }
-.static_footer{
+/* .static_footer{
   height: 256px;
-}
+} */
 
 .Circle_loader {
-  height: 0;
-  width: 0;
   padding: 15px;
   border: 6px solid #ccc;
   border-right-color: #888;
   border-radius: 22px;
   position: absolute;
-  left: 50%;
-  top: 50%;
 }
 
 
@@ -93,3 +89,53 @@
     display: none;
   }
 }
+
+
+
+/* static pages */
+
+.tray-container p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+}
+.tray-container h1 {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+  .static_body {
+	  margin: 0;
+    font-family: "Work Sans", Arial, sans-serif;
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 400;
+    color: #666666;
+    background: #000;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b0025), color-stop(100%, #000));
+    background: -webkit-linear-gradient(top, #2b0025, #000);
+    background: -webkit-gradient(linear, left top, left bottom, from(#2b0025), to(#000));
+    background: linear-gradient(
+180deg
+, #2b0025 0, #000);
+}
+	.tray-container {
+	    padding: 0 7.5% 24px;
+	}
+	.tnc-text{
+		color: #fff;
+		overflow-y: auto;
+	    height: 100%;
+	    font-size: 14px;
+	    padding: 0 20px;
+	}
+	@media only screen and (max-width: 1200px){
+		.tray-container {
+		    padding: 0 0 16px 16px;
+		}
+	}
