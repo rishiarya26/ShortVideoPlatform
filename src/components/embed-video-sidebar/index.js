@@ -22,12 +22,12 @@ function EmbedVideoSidebar(props) {
   const { show } = useDrawer();
 
   const info = {
-    single : 'bottom-28',
-    embed : 'bottom-20'
+    single : 'bottom-28 fixed',
+    embed : 'bottom-20 absolute'
   }
 
   return (
-    <div className={`absolute right-0 text-white ${info[props.type]}`}>
+    <div className={`right-0 text-white ${info[props.type]}`}>
       <div
         onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "see profile"})}
         className="relative py-2 px-3 text-center flex justify-center"
