@@ -237,7 +237,7 @@ function Community() {
 
           </div>
         </div>
-        <div className="flex w-full text-gray-400 text-xs">
+        <div className="flex w-full text-gray-400 text-xs mt-10">
           <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
 
