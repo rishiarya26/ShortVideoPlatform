@@ -33,7 +33,7 @@ function Home() {
           <p className="font-medium leading-normal mb-4 text-2xl font-light">
             Hipi is a mobile only platform.
             Download the app on your Android and iOS devices, or hit  
-            <a href="https://hipi.co.in/">www.hipi.co.in</a>
+            <a href="https://hipi.co.in/"> www.hipi.co.in</a>
             {' '}
             on your mobile device.
           </p>
@@ -81,7 +81,7 @@ function Home() {
 
           </div>
         </div>
-        <div className="flex w-full text-gray-400 text-xs">
+        <div className="flex w-full text-gray-400 text-xs mt-10">
           <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
 
