@@ -13,13 +13,16 @@ function StaticFooter() {
   return (
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
         <div className="flex w-full text-sm">
-          <div className="flex w-1/2">
+          {/* <div className="flex w-1/2">
             <a href="/community" className="px-2 cursor-pointer">Community Guidelines</a>
             <p className="text-xs leading-5 text-gray-500">|</p>
             <a href="/terms" className="px-2 cursor-pointer">Terms of Use</a>
             <p className="text-xs leading-5 text-gray-500">|</p>
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
-          </div>
+          </div> */}
+          <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
+          <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
+        </div>
           <div className="flex justify-end w-1/2">
             <a href={links.facebook} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -49,9 +52,7 @@ function StaticFooter() {
 
           </div>
         </div>
-        <div className="flex w-full text-gray-400 text-xs mt-10">
-          <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
-        </div>
+        
 
       </div>
   );
