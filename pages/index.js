@@ -2,8 +2,6 @@
 import HomePage from '../src/components/home-page';
 
 const Hipi = () => {
-
-
   return (
    <HomePage/>
   );
