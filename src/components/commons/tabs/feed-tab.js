@@ -5,7 +5,6 @@ import { withRouter } from 'next/router';
 const FeedTabs = ({ items = [], router }) => {
   const selected = router.query.id;
 
-  console.log(selected, items[0].path)
   // console.log(items[0].path)
   return (
     <div className="h-2 p-1 flex items-center text-white justify-center">

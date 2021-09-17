@@ -43,6 +43,7 @@ export const generateUUID = persist => {
 
 
 export const share = (id) => {
+  console.log(id)
   // const url = document?.location?.href;
   // let domain = (new URL(url));
   // domain = domain?.hostname;
