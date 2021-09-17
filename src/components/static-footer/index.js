@@ -1,4 +1,5 @@
 /*eslint-disable @next/next/no-img-element */
+ /*eslint-disable @next/next/no-html-link-for-pages*/
 import { withBasePath } from '../../config';
 
 function StaticFooter() {
@@ -9,7 +10,6 @@ function StaticFooter() {
     instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en'
   }
 
-  
   return (
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
         <div className="flex w-full text-sm">
