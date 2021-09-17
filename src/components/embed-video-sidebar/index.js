@@ -56,7 +56,7 @@ function EmbedVideoSidebar(props) {
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Comment />
-        <p className="text-sm">{props.likes}</p>
+        {/* <p className="text-sm">{props.likes}</p> */}
       </div>
       <div
         onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "share"})}
