@@ -349,7 +349,7 @@ function Feed({ router }) {
 
   return (
     <ComponentStateHandler
-      state={fetchState}
+      state={'pending'}
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
