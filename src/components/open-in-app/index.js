@@ -34,7 +34,7 @@ const handleWeb=()=>{
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
-        <div onClick={onStoreRedirect} className="flex w-full py-4 items-center">
+        <div onClick={onStoreRedirect} className="flex py-4 items-center">
           <div className="flex w-20v h-16v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
