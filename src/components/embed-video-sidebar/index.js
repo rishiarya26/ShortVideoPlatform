@@ -22,12 +22,12 @@ function EmbedVideoSidebar(props) {
   const { show } = useDrawer();
 
   const info = {
-    single : 'bottom-36',
-    embed : 'bottom-20'
+    single : 'bottom-28 fixed',
+    embed : 'bottom-20 absolute'
   }
 
   return (
-    <div className={`absolute right-0 text-white ${info[props.type]}`}>
+    <div className={`right-0 text-white ${info[props.type]}`}>
       <div
         onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "see profile"})}
         className="relative py-2 px-3 text-center flex justify-center"
@@ -56,13 +56,15 @@ function EmbedVideoSidebar(props) {
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Comment />
-        <p className="text-sm">{props.likes}</p>
+        {/* <p className="text-sm">{props.likes}</p> */}
       </div>
       <div
         onClick={() => show('', detectDeviceModal, 'extraSmall',{text: "share"})}
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Share />
+        
+        <p className="text-sm text-center">Share</p>
       </div>
     </div>
   );

@@ -24,6 +24,8 @@ import { ShareComp } from '../commons/share';
 import useDialog from '../../hooks/use-dialog';
 import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
+import { share } from '../../utils/app';
+import useDevice, { devices } from '../../hooks/use-device';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -54,6 +56,12 @@ function VideoSidebar({
   profileFeed, videoId
 }) {
   const { show } = useDrawer();
+
+  const info = { desktop: 'desktop', mobile: 'mobile' };
+
+  const value = useDevice(devices, [info.desktop, info.mobile]);
+
+
   const { showSnackbar } = useSnackbar();
   const { show: showDialog } = useDialog();
   const router = useRouter();
@@ -154,15 +162,16 @@ function VideoSidebar({
            onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "comment"})}
         >
           <Comment />
-          <p className="text-sm text-center">0</p>
+          {/* <p className="text-sm text-center">0</p> */}
         </div>
       </div>
       <div
+        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>share(videoId))}
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}
       >
-      <ShareComp videoId={videoId}/>
+      <ShareComp />
       </div>
       <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
