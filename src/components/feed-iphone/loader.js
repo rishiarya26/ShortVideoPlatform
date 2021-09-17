@@ -12,7 +12,7 @@ function Loader() {
         <VideoSidebar />
         <VideoFooter />
             <div
-                className="absolute top-1/2 justify-center w-full flex"
+                className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: 'flex text-white' }}
               >
                 <CircularProgress/>
