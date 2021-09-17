@@ -38,7 +38,7 @@ const handleWeb=()=>{
           <div className="flex w-20v h-16v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
-          <div className="flex w-3/4 flex-col p-1">
+          <div onClick={onStoreRedirect} className="flex w-3/4 flex-col p-1">
             <p className="font-semibold text-xl ">Hipi -  Open in the App</p>
             {/* <p className="text-md text-gray-500">Open in Hipi to {text}</p> */}
           </div>
