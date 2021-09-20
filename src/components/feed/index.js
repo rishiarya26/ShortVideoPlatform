@@ -315,10 +315,11 @@ function Feed({ router }) {
               </div> */}
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-4"
+                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               <Mute/>
+               
+                <Mute/>
               </div>}
               {validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
