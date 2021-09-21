@@ -45,7 +45,7 @@ export default function DownloadAppWidget({text, setMuted}) {
         </div>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
-            <p onClick={()=>close()} className="text-lg text-hipired">Not now</p>
+            <p onClick={()=>close()} className="text-base font-semibold text-hipired">Not now</p>
           </div>
         </div>
        {/* {setMuted && <div>

@@ -12,6 +12,7 @@ import FooterMenu from '../footer-menu';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
+import DynamicImg from '../commons/image-dynamic';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -130,7 +131,7 @@ function Explore() {
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
-                        <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120'/>
                       </div>
                     );
                   })}

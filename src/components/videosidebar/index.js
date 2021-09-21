@@ -162,7 +162,7 @@ function VideoSidebar({
            onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "comment"})}
         >
           <Comment />
-          <p className="text-sm text-center">0</p>
+          {/* <p className="text-sm text-center">0</p> */}
         </div>
       </div>
       <div
