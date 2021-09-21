@@ -16,8 +16,8 @@ const useInfiniteScroll = (callback) => {
   }, [isFetching]);
 
   function handleScroll() {
-    console.log(window.innerHeight,"+",document?.documentElement?.scrollTop,"==",document?.documentElement?.offsetHeight ,"||",isFetching)
-    if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight-20 || isFetching) return;
+    console.log(window.innerHeight,"+",document?.documentElement?.scrollTop,'=',window.innerHeight+document?.documentElement?.scrollTop,"==",document?.documentElement?.offsetHeight ,"||",isFetching)
+    if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight || isFetching) return;
     setIsFetching(true);
   }
 
