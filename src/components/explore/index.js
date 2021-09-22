@@ -131,7 +131,7 @@ function Explore() {
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
-                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120'/>
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_100'/>
                       </div>
                     );
                   })}
