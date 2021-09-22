@@ -20,13 +20,14 @@ function Embedvideo(props) {
   };
 
   const onStoreRedirect =()=>{
+    let deviceInfo = 'android';
    try{ 
-     const device = getItem('device-info')
-    device && (window.location.href = `${stores[device]}`);}
+     deviceInfo = getItem('device-info')
+     deviceInfo && (window.open(`${stores[deviceInfo]}`));
+   }
     catch(e){
-
+      return `${stores[deviceInfo]}`}
     }
-  }
 
   const rootRef = useRef(null);
   const size = useWindowSize();
@@ -133,7 +134,7 @@ function Embedvideo(props) {
         comp="embed"
       />
       <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
-              <button onClick={onStoreRedirect} className="bg-hipired text-white px-4 py-2 font-semibold">View more on Hipi</button>
+            <button onClick={onStoreRedirect} className="bg-hipired text-white px-4 py-2 font-semibold">View more on Hipi</button>
       </div>
     </div>
     </div>
