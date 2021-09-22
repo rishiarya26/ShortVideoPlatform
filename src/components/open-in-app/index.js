@@ -5,6 +5,7 @@ import { withBasePath } from '../../config';
 import { getOS } from '../../utils/device-details';
 import useDevice, { devices } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
+import { getItem } from '../../utils/cookie';
 
 export default function DownloadAppWidget({text, setMuted}) {
   const stores = {
@@ -15,8 +16,12 @@ export default function DownloadAppWidget({text, setMuted}) {
   const {close} = useDrawer();
 
   const onStoreRedirect =()=>{
-    const device = getOS();
-    device && (window.location.href = `${stores[device]}`);
+  try{
+      const device = getItem('device-info')
+      device && window.open(`${stores[device]}`);
+  }catch(e){
+    console.log('something went wrong in download links')
+  }
   }
 
   // const value = useDevice(devices, [
@@ -48,11 +53,6 @@ export default function DownloadAppWidget({text, setMuted}) {
             <p onClick={()=>close()} className="text-base font-semibold text-hipired">Not now</p>
           </div>
         </div>
-       {/* {setMuted && <div>
-          <p onClick={handleWeb} className="text-red-400 font-semibold text-lg p-4">continue with web</p>
-        </div>} */}
-        {/* {value && value} */}
-
       </div>
     </>
   );
