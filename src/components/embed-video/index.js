@@ -71,7 +71,7 @@ function Embedvideo(props) {
     <div className="flex flex-col border-2 border-gray-200">
     <div
       ref={rootRef}
-      className="video_card relative w-full  scroll-snap-start bg-black"
+      className="video_card relative w-screen h-screen scroll-snap-start bg-black"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
