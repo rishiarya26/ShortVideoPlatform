@@ -12,6 +12,7 @@ import FooterMenu from '../footer-menu';
 import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
+import DynamicImg from '../commons/image-dynamic';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -128,9 +129,10 @@ function Explore() {
 
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
+                     if(id > 5) return null;
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
-                        <Img data={d?.video?.thumbnailUrl} title={d?.videoTitle} />
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_100'/>
                       </div>
                     );
                   })}
@@ -148,11 +150,12 @@ function Explore() {
                   <div className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
                     
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
+                         if(id > 5) return null;
                         return (
                           <>
                           <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
-                                  <Img data={d?.user?.profilePicImgUrl} title={d?.user?.userName} />
+                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_100'/>
                                 </div>
                                 <p className="text-xs pt-2">{d?.user?.userName}</p>
                           </div>
