@@ -7,8 +7,6 @@ import { getItem } from "../../utils/cookie";
    try{ const device = getItem('device-type');
     const deviceInfo = getItem('device-info');
 
-       
-        
         const params = router?.pathname;
         var webHeaders = new Headers(); // Currently empty
         var HTTP_X_ZEE5RD=webHeaders.get('HTTP_X_ZEE5RD');
