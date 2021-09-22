@@ -52,7 +52,7 @@ const detectDeviceModal = dynamic(
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
-  const [item,setSeoItem] = useState({})
+  // const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -81,7 +81,7 @@ function Feed({ router }) {
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
-        setSeoItem(data?.data[0]);
+        // setSeoItem(data?.data[0]);
     }
   }
 
@@ -248,9 +248,9 @@ function Feed({ router }) {
                 }
 
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
-                const dataItems = [...items];
-                const seoItem = dataItems?.find(item => item?.content_id === activeId);
-                seoItem && setSeoItem(seoItem);
+                // const dataItems = [...items];
+                // const seoItem = dataItems?.find(item => item?.content_id === activeId);
+                // seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
               }}
@@ -356,34 +356,34 @@ function Feed({ router }) {
     >
      {id === 'for-you' &&  <SeoMeta
         data={{
-          title: item?.music_title,
-          image: item?.thumbnail,
-          description: item?.content_description,
-          canonical: hostname || '',
-          openGraph: {
-            title: item?.music_title,
-            description: item?.content_description,
-            url: hostname || '',
-            images: [
-              {
-                url: item?.thumbnail,
-                width: 800,
-                height: 600,
-                alt: item?.music_title
-              },
-              { url: item?.userProfilePicUrl }
-            ],
-            type: 'video.movie',
-            video: {
-              actors: [
-                {
-                  role: item?.userName
-                }
-              ],
-              tag: item?.genre
-            },
-            site_name: 'Hipi'
-          }
+          title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
+          // image: item?.thumbnail,
+          description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
+          // canonical: hostname || '',
+          // openGraph: {
+          //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
+          //   description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
+          //   url: hostname || '',
+          //   images: [
+          //     {
+          //       url: item?.thumbnail,
+          //       width: 800,
+          //       height: 600,
+          //       alt: item?.music_title
+          //     },
+          //     { url: item?.userProfilePicUrl }
+          //   ],
+          //   type: 'video.movie',
+          //   video: {
+          //     actors: [
+          //       {
+          //         role: item?.userName
+          //       }
+          //     ],
+          //     tag: item?.genre
+          //   },
+          //   site_name: 'HiPi'
+          // }
         }}
       />}
       {/* <VideoJsonLd

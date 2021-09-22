@@ -50,7 +50,7 @@ const LoadComp = () => (<Loading />);
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
-  const [item,setSeoItem] = useState({})
+  // const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -91,7 +91,7 @@ function FeedIphone({ router }) {
         setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
         setToInsertElements(4);
-        setSeoItem(data?.data[0]);
+        // setSeoItem(data?.data[0]);
     }
   }
 
@@ -285,10 +285,10 @@ console.log('error',e)
                 // }
                      
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
-                const dataItems = [...items];
-                const seoItem = dataItems?.find(item => item?.content_id === activeId);
+                // const dataItems = [...items];
+                // const seoItem = dataItems?.find(item => item?.content_id === activeId);
 
-                seoItem && setSeoItem(seoItem);
+                // seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 activeId && setActiveVideoId(activeId);
               }}
@@ -392,34 +392,9 @@ console.log('error',e)
     >
        <SeoMeta
         data={{
-          title: item?.music_title,
-          image: item?.thumbnail,
-          description: item?.content_description,
-          canonical: hostname || '',
-          openGraph: {
-            title: item?.music_title,
-            description: item?.content_description,
-            url: hostname || '',
-            images: [
-              {
-                url: item?.thumbnail,
-                width: 800,
-                height: 600,
-                alt: item?.music_title
-              },
-              { url: item?.userProfilePicUrl }
-            ],
-            type: 'video.movie',
-            video: {
-              actors: [
-                {
-                  role: item?.userName
-                }
-              ],
-              tag: item?.genre
-            },
-            site_name: 'Hipi'
-          }
+          title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
+          // image: item?.thumbnail,
+          description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
         }}
       />
       {/* <VideoJsonLd
