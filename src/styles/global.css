@@ -5,6 +5,9 @@
     margin: 0;
     font-family: "Open Sans";   
 }
+img{
+  object-fit: cover;
+}
 /* @media screen and (orientation: landscape) {
   .feed_screen {
     transform: rotate(-90deg);
