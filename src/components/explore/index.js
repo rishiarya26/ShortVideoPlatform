@@ -14,6 +14,7 @@ import SearchItems from '../search-items';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import DynamicImg from '../commons/image-dynamic';
 import Play from '../commons/svgicons/play-outlined';
+import Like from '../commons/svgicons/like-outlined';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -134,8 +135,11 @@ function Explore() {
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_100'/>
-                        <div className="absolute bottom-2 left-2 z-10 text-white flex items-center">
-        <Play/> count
+                        <div className="absolute bottom-1 left-1 z-10 text-white flex items-center">
+        <Play/> 2
+      </div>
+      <div className="absolute bottom-1 right-1 z-10 text-white flex items-center">
+        <Like/> 2
       </div>
                       </div>
                     );
