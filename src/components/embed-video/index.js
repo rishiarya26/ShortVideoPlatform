@@ -8,6 +8,7 @@ import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
 import EmbedSeekbar from '../emded-seekbar';
 import { getItem } from '../../utils/cookie';
+import { getOS } from '../../utils/device-details';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -23,9 +24,9 @@ function Embedvideo(props) {
     console.log('clicked')
     let deviceInfo = 'android';
    try{ 
-     deviceInfo = getItem('device-info')
+     deviceInfo = getOS();
      deviceInfo && (window.open(`${stores[deviceInfo]}`));
-     console.log('clicked','window',window.open,`${stores[deviceInfo]}`)
+     console.log('clicked','window',window.open,'e',deviceInfo,'f',`${stores[deviceInfo]}`)
    }
     catch(e){
       console.log('error in store redirect')

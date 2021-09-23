@@ -19,9 +19,9 @@ export default function DownloadAppWidget({text, setMuted}) {
   console.log('clicked')
   let deviceInfo = 'android';
  try{ 
-   deviceInfo = getItem('device-info')
+   deviceInfo = getOS();
    deviceInfo && (window.open(`${stores[deviceInfo]}`));
-   console.log('clicked','window',window.open,`${stores[deviceInfo]}`)
+   console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
  }
   catch(e){
     console.log('error in store redirect')

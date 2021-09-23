@@ -9,7 +9,7 @@ export function getOS() {
     return 'ios';
   }
 
-  return 'unknown';
+  return 'android';
 }
 
 export function getNetworkConnection() {
