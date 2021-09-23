@@ -24,7 +24,7 @@ function EmbedVideoSidebar(props) {
 
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    ios: 'https://hipi.onelink.me/tMco/1e3e4b5e'
   };
 
   const onStoreRedirect =()=>{
