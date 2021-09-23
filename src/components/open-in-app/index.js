@@ -6,11 +6,12 @@ import { getOS } from '../../utils/device-details';
 import useDevice, { devices } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 import { getItem } from '../../utils/cookie';
+import { useEffect } from 'react';
 
 export default function DownloadAppWidget({text, setMuted}) {
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-    ios: 'https://hipi.onelink.me/tMco/1e3e4b5e'
+    ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
   };
 
   const {close} = useDrawer();
@@ -38,6 +39,8 @@ export default function DownloadAppWidget({text, setMuted}) {
 //   setMuted(true);
 //   close();
 // }
+
+useEffect(()=>{setMuted(true)},[])
 
   return (
     <>
