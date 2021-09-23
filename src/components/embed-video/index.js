@@ -17,7 +17,7 @@ function Embedvideo(props) {
 
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
   };
 
   const onStoreRedirect =()=>{
