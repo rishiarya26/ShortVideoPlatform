@@ -20,12 +20,15 @@ function Embedvideo(props) {
   };
 
   const onStoreRedirect =()=>{
+    console.log('clicked')
     let deviceInfo = 'android';
    try{ 
      deviceInfo = getItem('device-info')
      deviceInfo && (window.open(`${stores[deviceInfo]}`));
+     console.log('clicked','window',window.open,`${stores[deviceInfo]}`)
    }
     catch(e){
+      console.log('error in store redirect')
       return `${stores[deviceInfo]}`}
     }
 

@@ -16,14 +16,17 @@ export default function DownloadAppWidget({text, setMuted}) {
   const {close} = useDrawer();
 
   const onStoreRedirect =()=>{
-  try{
-      const device = getItem('device-info')
-      device && window.open(`${stores[device]}`);
-  }catch(e){
-    console.log('something went wrong in download links')
+  console.log('clicked')
+  let deviceInfo = 'android';
+ try{ 
+   deviceInfo = getItem('device-info')
+   deviceInfo && (window.open(`${stores[deviceInfo]}`));
+   console.log('clicked','window',window.open,`${stores[deviceInfo]}`)
+ }
+  catch(e){
+    console.log('error in store redirect')
+    return `${stores[deviceInfo]}`}
   }
-  }
-
   // const value = useDevice(devices, [
   //   <div className="flex justify-center">
   //     <img src={withBasePath(storeImages.android)} className="mr-2" alt="playicon" />
@@ -43,7 +46,7 @@ export default function DownloadAppWidget({text, setMuted}) {
           <div className="flex w-20v h-16v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
-          <div onClick={onStoreRedirect} className="flex w-3/4 flex-col p-1">
+          <div className="flex w-3/4 flex-col p-1">
             <p className="font-semibold text-xl ">Hipi -  Open in the App</p>
             <p className="text-xs text-gray-500">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
