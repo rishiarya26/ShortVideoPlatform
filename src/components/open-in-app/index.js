@@ -40,6 +40,8 @@ export default function DownloadAppWidget({text, setMuted}) {
 //   close();
 // }
 
+useEffect(()=>{setMuted(true)},[])
+
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
