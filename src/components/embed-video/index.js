@@ -8,6 +8,7 @@ import { withBasePath } from '../../config';
 import ProductCards from '../product-cards';
 import EmbedSeekbar from '../emded-seekbar';
 import { getItem } from '../../utils/cookie';
+import { getOS } from '../../utils/device-details';
 
 function Embedvideo(props) {
   const [playing, setPlaying] = useState(false);
@@ -16,17 +17,21 @@ function Embedvideo(props) {
 
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-    ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
   };
 
   const onStoreRedirect =()=>{
+    console.log('clicked')
+    let deviceInfo = 'android';
    try{ 
-     const device = getItem('device-info')
-    device && (window.location.href = `${stores[device]}`);}
+     deviceInfo = getOS();
+     deviceInfo && (window.open(`${stores[deviceInfo]}`));
+     console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
+   }
     catch(e){
-
+      console.log('error in store redirect')
+      return `${stores[deviceInfo]}`}
     }
-  }
 
   const rootRef = useRef(null);
   const size = useWindowSize();
@@ -71,7 +76,7 @@ function Embedvideo(props) {
     <div className="flex flex-col border-2 border-gray-200">
     <div
       ref={rootRef}
-      className="video_card relative w-full  scroll-snap-start bg-black"
+      className="video_card relative w-full h-full scroll-snap-start bg-black"
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
@@ -133,7 +138,7 @@ function Embedvideo(props) {
         comp="embed"
       />
       <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">
-              <button onClick={onStoreRedirect} className="bg-hipired text-white px-4 py-2 font-semibold">View more on Hipi</button>
+            <button onClick={onStoreRedirect} className="bg-hipired text-white px-4 py-2 font-semibold  text-sm">View more on Hipi</button>
       </div>
     </div>
     </div>

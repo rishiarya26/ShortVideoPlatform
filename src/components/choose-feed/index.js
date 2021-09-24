@@ -8,7 +8,7 @@ try{
 device = getItem('device-info')
 }
 catch(e){
-  console.log('cookie error')
+  console.log('cookie error ')
 }
   return (
     <>

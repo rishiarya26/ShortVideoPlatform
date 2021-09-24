@@ -2,7 +2,7 @@
 import { CopyToClipBoard } from '../../utils/web';
 
 const CopyEmbedCode = ({ videoId = '', onEmbedCopy }) => {
-  const embedCode = videoId && `<blockquote className="hipi-media" cite="https://www.hipi.co.in/"><div id="embed-hipi" style="position: relative; margin: 0 auto; height: 820px; width: 360px; overflow: hidden" > <iframe style="height: 100%; width: 100%" src="https://www.hipi.co.in/embed/${videoId}" loading="lazy" title="hipi" name="hipi" frameBorder="0" marginWidth="0" marginHeight="0" scrolling="no" /> </div> </blockquote>`;
+  const embedCode = videoId && `<blockquote className="hipi-media" cite="https://www.hipi.co.in/"><div id="embed-hipi" style="position: relative; margin: 0 auto; height: 850px; width: 350px; overflow: hidden" > <iframe style="height: 100%; width: 100%" src="https://www.hipi.co.in/embed/${videoId}" loading="lazy" title="hipi" name="hipi" frameBorder="0" marginWidth="0" marginHeight="0" scrolling="no" /> </div> </blockquote>`;
 
   const copy = () => {
     CopyToClipBoard(embedCode);
