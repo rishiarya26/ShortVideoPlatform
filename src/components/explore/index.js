@@ -78,7 +78,7 @@ function Explore() {
 
   const toHashtagDetails = (hashTag)=>{
     hashTag = trimHash(hashTag);
-    router.push(`/tag/${hashTag}`);
+    router.push(`/hashtag/${hashTag}`);
   }
 
   return (
