@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "C9REGPB46C.com.zeeTV.DIDS4",
+        "paths": [
+          "*"
+        ]
+      },{
+        "appID": "C9REGPB46C.com.zee5.hipi",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
