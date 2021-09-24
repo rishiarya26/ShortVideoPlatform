@@ -260,7 +260,7 @@ console.log('error',e)
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-  const swiper = () => <Swiper
+  const swiper = <Swiper
               className="max-h-full"
               direction="vertical"
               draggable="true"
@@ -370,7 +370,7 @@ console.log('error',e)
               />
             </Swiper>
 
-  const showLoginFollowing = ()=> <LoginFollowing/>;
+  const showLoginFollowing = <LoginFollowing/>;
   
   // const toShowFollowing = useAuth(showLoginFollowing, swiper);
 
@@ -410,7 +410,7 @@ console.log('error',e)
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
-        {info?.[id]()}
+        {info?.[id]}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>
