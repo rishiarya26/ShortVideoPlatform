@@ -120,7 +120,7 @@ function Explore() {
                       <Hash />
                     </div>
                     <div className="head flex flex-col">
-                      <p className="text-base font-medium">{content?.widgetName}</p>
+                      <p className="text-sm font-semibold">{content?.widgetName}</p>
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
@@ -135,10 +135,10 @@ function Explore() {
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_100'/>
-                        <div className="absolute bottom-1 left-1 z-10 text-white flex items-center">
+                        <div className="absolute bottom-1 left-1 text-white flex items-center">
         <Play/> 2
       </div>
-      <div className="absolute bottom-1 right-1 z-10 text-white flex items-center">
+      <div className="absolute bottom-1 right-1 text-white flex items-center">
         <Like/> 2
       </div>
                       </div>
@@ -150,7 +150,7 @@ function Explore() {
               : content?.widgetContentType === 'User' &&  (
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
-                    <p className="text-base font-medium">{content?.widgetName}</p>
+                    <p className="text-sm font-semibold font-medium">{content?.widgetName}</p>
                     <div onClick={()=> toUserList(content?.widgetName)} className="flex items-center justify-center">
                       <RightArrow />
                     </div>
