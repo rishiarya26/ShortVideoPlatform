@@ -51,6 +51,7 @@ function HashTag({router}) {
 
   const dataFetcher = () => item && getHashTagVideos({ keyword:  item });
   let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched);
+  setRetry = retry;
 
   return (
     <ComponentStateHandler
