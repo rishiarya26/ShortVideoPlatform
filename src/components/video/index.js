@@ -9,6 +9,8 @@ import ProductWidget from '../product-widget';
 import ProductCards from '../product-cards';
 import CircularProgress from '../commons/circular-loader'
 import { PreviousMap } from 'postcss';
+import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
 
@@ -16,6 +18,7 @@ function Video(props) {
   const [playing, setPlaying] = useState(true);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
+
   // const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
   const size = useWindowSize();
@@ -59,14 +62,15 @@ function Video(props) {
     threshold: [0.30, 0.75]
   });
 
-  useEffect(() => {
 
-    // rootRef.current.children[0].autoPlay = true;
-    // console.log(rootRef.current.children[0].muted,"muted")
-    // props.setMuted(false);
-    // rootRef.current.children[0].muted = false;
-    // rootRef?.current?.children[0]?.load();
-  }, [])
+  // useEffect(() => {
+
+  //   // rootRef.current.children[0].autoPlay = true;
+  //   // console.log(rootRef.current.children[0].muted,"muted")
+  //   // props.setMuted(false);
+  //   // rootRef.current.children[0].muted = false;
+  //   // rootRef?.current?.children[0]?.load();
+  // }, [])
 
   const handleUpdateSeekbar = e => {
     const percentage = (e.target.currentTime / e.target.duration) * 100;
@@ -177,6 +181,7 @@ function Video(props) {
               shopCards={props.shopCards}
               handleSaveLook={props.handleSaveLook}
               videoId={props.activeVideoId}
+              loading={props.loading}
             />
           )
         ) : (
@@ -186,6 +191,7 @@ function Video(props) {
             videoId={props.activeVideoId}
             profileFeed={props.profileFeed}
             comp="profile"
+            loading={props.loading}
           />
         )
       )}

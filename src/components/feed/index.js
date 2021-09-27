@@ -32,6 +32,8 @@ import {
 // import Spinner from '../commons/svgicons/spinner';
 // import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
+import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 
 // import {sessionStorage} from "../../utils/storage"
  
@@ -62,6 +64,16 @@ function Feed({ router }) {
   const [initialPlayButton, setInitialPlayButton] = useState(true)
   const [currentTime, setCurrentTime] = useState(null)
   const [muted, setMuted] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const loaded = () => {
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  }, []);
+
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const { t } = useTranslation();
@@ -291,6 +303,7 @@ function Feed({ router }) {
                       currentTime={currentTime}
                       initialPlayButton={initialPlayButton}
                       muted={muted}
+                      loading={loading}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>

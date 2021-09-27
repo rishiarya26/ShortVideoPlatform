@@ -31,6 +31,8 @@ import {
 } from '../../components/commons/head-meta/seo-meta';
 // import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
+import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -62,6 +64,16 @@ function FeedIphone({ router }) {
   const [muted, setMuted] = useState(true);
   const [toInsertElements, setToInsertElements] = useState(4);
   const [deletedTill, setDeletedTill] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const loaded = () => {
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  }, []);
+
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const pretoInsertElemant = usePreviousValue({toInsertElements});
@@ -329,6 +341,7 @@ console.log('error',e)
                       currentTime={currentTime}
                       initialPlayButton={initialPlayButton}
                       muted={muted}
+                      loading={loading}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
