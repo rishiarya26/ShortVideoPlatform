@@ -7,7 +7,6 @@ const msgMap = {
 };
 
 function transformError(error = {}) {
-  console.log('tError ====',error)
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -53,7 +52,6 @@ function transformSuccess(resp) {
         payloadObject.thumbnail = d?.thumbnailUrl || null;
       });
       payload.data = payloadObject;
-      console.log('payloadObject',payloadObject)
     } else {
       return transformError(data);
     }
@@ -67,7 +65,6 @@ function transformSuccess(resp) {
       shop.status = 'fail';
     }
     payload.data.canShop = shop;
-    console.log('payloadFinal-----',payload.data)
     payload.requestedWith = { ...data?.requestedWith || null };
     return payload;
   } catch (err) {

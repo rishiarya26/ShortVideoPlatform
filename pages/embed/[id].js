@@ -135,7 +135,6 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
-    console.log('data----',data)
   } catch (e) {
     data = {
       status: e.status,
@@ -143,7 +142,6 @@ export async function getServerSideProps(ctx) {
       'http-status': e['http-status'],
       message: e.message
     };
-    console.log('error',e)
   }
   return {
     props: {
