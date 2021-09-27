@@ -39,10 +39,10 @@ function transformSuccess(resp) {
         payloadObject.getSocialId = d?.getSocialId || null;
         payloadObject.id = d?.id || null;
         payloadObject.genre = d?.genre || null || null;
-        payloadObject.userProfilePicUrl = d?.videoOwners.profilePicImgUrl || null;
-        payloadObject.userName = d?.videoOwners.userName || null;
+        payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl || null;
+        payloadObject.userName = d?.videoOwners?.userName || null;
         payloadObject.likesCount = d?.lCount || null;
-        payloadObject.music_title = d?.sound.name || null;
+        payloadObject.music_title = d?.sound?.name || null;
         payloadObject.hashTags = d?.hashtags || null;
         const videoUrls = {};
         videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
