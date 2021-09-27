@@ -7,17 +7,13 @@ import Close from '../commons/svgicons/close-white';
 import { Loading } from './loading';
 
 function ProductWidget({
-  shopCards, handleSaveLook, videoId
+  shopCards, handleSaveLook, videoId, loading
 }) {
-  const [loading, setLoading] = useState(true);
 
-  const loaded = () => {
-    setLoading(false);
-  };
 
-  useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-  }, []);
+  // useEffect(() => {
+  //   inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  // }, []);
 
   const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;

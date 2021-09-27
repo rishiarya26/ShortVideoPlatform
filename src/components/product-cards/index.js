@@ -6,15 +6,15 @@ import Img from '../commons/image';
 import { Loading } from './loading';
 
 function ProductCards({
-  shopCards, videoId, comp
+  shopCards, videoId, comp, loading
 }) {
-  const [loading, setLoading] = useState(true);
-  const loaded = () => {
-    setLoading(false);
-  };
-  useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-  }, []);
+  // const [loading, setLoading] = useState(true);
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
+  // useEffect(() => {
+  //   inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  // }, []);
 
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
