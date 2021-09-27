@@ -8,6 +8,7 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import useDrawer from '../../hooks/use-drawer';
 import { getOS } from '../../utils/device-details';
+import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 
 // const detectDeviceModal = dynamic(
 //   //() => import('../download-app-widget'),
@@ -23,22 +24,26 @@ function EmbedVideoSidebar(props) {
   // const { show } = useDrawer();
 
   const stores = {
-    android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-    ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
+    android: ANDROID_STORE,
+    ios: IOS_STORE
   };
 
-  const onStoreRedirect =()=>{
-    console.log('clicked')
-    let deviceInfo = 'android';
-   try{ 
-     deviceInfo = getOS();
-     deviceInfo && (window.open(`${stores[deviceInfo]}`));
-     console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
-   }
-    catch(e){
-      console.log('error in store redirect')
-      return `${stores[deviceInfo]}`}
-    }
+  // const onStoreRedirect =()=>{
+  //   console.log('clicked')
+  //   let deviceInfo = 'android';
+  //  try{ 
+  //    deviceInfo = getOS();
+  //    deviceInfo && (window.open(`${stores[deviceInfo]}`));
+  //    console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
+  //  }
+  //   catch(e){
+  //     console.log('error in store redirect')
+  //     return `${stores[deviceInfo]}`}
+  //   }
+
+     const onStoreRedirect =()=>{
+       window?.open(ONE_TAP_DOWNLOAD);
+     }
 
   const info = {
     single : 'bottom-28 fixed',
