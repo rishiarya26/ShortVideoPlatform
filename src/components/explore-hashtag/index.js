@@ -66,7 +66,7 @@ function HashTag({router}) {
       <div className="w-full h-full flex flex-col p-4">
         <div className="flex w-full">
           <div className="min-w-25 flex min-h-25 bg-gray-300 relative rounded-full" >
-            <Img data={details?.hashTagImage} alt='img'/>
+            <Img data={details?.hashTagImage} alt='img'/> 
           </div>
           <div className="flex flex-col px-4 justify-between">
             <div className="flex flex-col">
