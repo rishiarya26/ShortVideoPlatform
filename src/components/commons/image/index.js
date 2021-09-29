@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Image from 'next/image';
 
@@ -9,7 +10,7 @@ const Img = ({
 }) => {
   return (
     <>
-      <Image
+      <img
         className={`
         position-relative overflow-hidden
         animate-appear bg-gray-500
@@ -21,8 +22,8 @@ const Img = ({
         object-fit="cover"
         onClick={onClick}
         onKeyPress={() => true}
-        role="presentation"
-        loading="eager"
+        // role="presentation"
+        // loading="eager"
       // placeholder="blur"
       // blurDataURL={`data:image/jpeg;base64,
       // /9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj
