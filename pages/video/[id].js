@@ -38,6 +38,7 @@ export default function Hipi(params) {
 
   useEffect(() => {
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
+    console.log("vURL-----",videoUrl)
     setVideoUrl(videoUrl);
   }, []);
 
@@ -136,6 +137,7 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
+    console.log('data------',data)
   } catch (e) {
     data = {
       status: e.status,

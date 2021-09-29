@@ -19,7 +19,7 @@ const DynamicImg = ({
         position-relative overflow-hidden
         animate-appear bg-gray-500
         `}
-        loading={loading}
+        // loading={loading}
         src={finalSrc}
         alt={title}
         layout="fill"
@@ -27,6 +27,7 @@ const DynamicImg = ({
         onClick={onClick}
         onKeyPress={() => true}
         role="presentation"
+        priority="eager"
       // placeholder="blur"
       // blurDataURL={`data:image/jpeg;base64,
       // /9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj
