@@ -12,4 +12,4 @@ export const MIXPANEL_PROD = '28ad1bd3f9fbcda7356c70835a0b4d96';
 export const ONE_TAP_DOWNLOAD = 'https://hipi.onelink.me/tMco/1e3e4b5e';
 export const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.zee5.hipi';
 export const IOS_STORE = 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008';
-export const VERSION = '1.0.5'
+export const VERSION = '1.0.6'
