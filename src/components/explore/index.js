@@ -13,6 +13,8 @@ import { useRouter } from 'next/router';
 import SearchItems from '../search-items';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import DynamicImg from '../commons/image-dynamic';
+import Play from '../commons/svgicons/play-outlined';
+import Like from '../commons/svgicons/like-outlined';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -93,17 +95,17 @@ function Explore() {
           <div />
         </div>
         {/* <div className="poster w-full mt-40" />  */}
-        <div className="explore_carousel flex min-w-full overflow-x-auto min-h-38 no_bar mt-20">
+        <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 ">
            {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
              return(
-            <div key={id} onClick={()=>router.push(`/tag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-1 min-w-full min-h-38 relative">
+            <div key={id} onClick={()=>router.push(`/tag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
                  <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
             </div>
            )})}
-            {/* <div className=" carousel_item bg-green-300 m-1 min-w-full min-h-38 relative">
+            {/* <div className=" carousel_item bg-green-300 m-0.5 min-w-full min-h-38 relative">
 
             </div>
-            <div className=" carousel_item bg-red-300 m-1 min-w-full min-h-38 relative">
+            <div className=" carousel_item bg-red-300 m-0.5 min-w-full min-h-38 relative">
 
             </div> */}
         </div>
@@ -118,7 +120,7 @@ function Explore() {
                       <Hash />
                     </div>
                     <div className="head flex flex-col">
-                      <p className="text-base font-medium">{content?.widgetName}</p>
+                      <p className="text-sm font-semibold">{content?.widgetName}</p>
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
@@ -131,8 +133,14 @@ function Explore() {
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                      if(id > 5) return null;
                     return (
-                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
-                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_100'/>
+                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120'/>
+                        <div className="absolute bottom-1 left-1 text-white flex items-center">
+        <Play/> 2
+      </div>
+      <div className="absolute bottom-1 right-1 text-white flex items-center">
+        <Like/> 2
+      </div>
                       </div>
                     );
                   })}
@@ -142,7 +150,7 @@ function Explore() {
               : content?.widgetContentType === 'User' &&  (
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
-                    <p className="text-base font-medium">{content?.widgetName}</p>
+                    <p className="text-sm font-semibold font-medium">{content?.widgetName}</p>
                     <div onClick={()=> toUserList(content?.widgetName)} className="flex items-center justify-center">
                       <RightArrow />
                     </div>
@@ -154,10 +162,10 @@ function Explore() {
                         return (
                           <>
                           <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
-                                <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
-                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_100'/>
+                                <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
+                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120'/>
                                 </div>
-                                <p className="text-xs pt-2">{d?.user?.userName}</p>
+                                <p className="text-xs pt-2 truncate max-w-20v  text-center">{d?.user?.userName}</p>
                           </div>
                           </>
                         );
