@@ -5,6 +5,10 @@
     margin: 0;
     font-family: "Open Sans";   
 }
+img{
+  object-fit: cover;
+  width:100%;
+}
 /* @media screen and (orientation: landscape) {
   .feed_screen {
     transform: rotate(-90deg);
@@ -29,9 +33,7 @@
   .carousel_item{
     scroll-snap-align: start;
   }
-  .video_card{
-    /* scroll-snap-align: start; */
-  }
+ 
   .profile-bg{
     align-items: center;
     background-image: url("https://sf16-scmcdn-va.ibytedtos.com/goofy/tiktok/web/node/_next/static/images/album-628a1f27c2ed684e4454d53f4c042f7a.svg");
@@ -44,7 +46,8 @@
   
   .video-card{
     width: 31vw;
-    height: 55.8vw;
+    height: 54vw;
+    background-color: #ccc;
     box-sizing: border-box;
   }
   .vdo_player{

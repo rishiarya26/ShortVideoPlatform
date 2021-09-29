@@ -34,6 +34,8 @@ import {
 import CircularProgress from '../commons/circular-loader'
 import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import { track } from '../../analytics';
+import { getItem } from '../../utils/cookie';
 
 // import {sessionStorage} from "../../utils/storage"
  
@@ -72,6 +74,9 @@ function Feed({ router }) {
 
   useEffect(() => {
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    const guestId = getItem('guest-token');
+    track('guest-id', { 'guestId' : guestId });
+    
   }, []);
 
   // const [offset, setOffset] = useState(1)

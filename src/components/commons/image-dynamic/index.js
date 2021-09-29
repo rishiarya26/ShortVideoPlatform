@@ -1,9 +1,10 @@
+/*eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Image from 'next/image';
 
 // TODO we need a proper default image url for blurDataURL
 const DynamicImg = ({
-  onClick, loading = 'lazy',width, data="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp", title = 'hipi'
+  onClick,width, data="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp", title = 'hipi'
 }) => {
 
     let finalSrc = data;
@@ -14,7 +15,7 @@ const DynamicImg = ({
 
   return (
     <>
-      <Image
+      <img
         className={`
         position-relative overflow-hidden
         animate-appear bg-gray-500
@@ -26,8 +27,8 @@ const DynamicImg = ({
         object-fit="cover"
         onClick={onClick}
         onKeyPress={() => true}
-        role="presentation"
-        priority="eager"
+        // role="presentation"
+        // loading="eager"
       // placeholder="blur"
       // blurDataURL={`data:image/jpeg;base64,
       // /9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj

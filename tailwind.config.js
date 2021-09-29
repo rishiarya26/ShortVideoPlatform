@@ -26,6 +26,7 @@ module.exports = {
         '20v':'20vw',
         '28v':'28vw',
         '25v':'25vw',
+        '56v': '56.3vw',
        },
        height: {
         '0': '0',
@@ -35,6 +36,7 @@ module.exports = {
         '28v':'28vw',
         '25v':'25vw',
         '20v':'20vw',
+        '56v': '56.3vw',
        },
       minWidth: {
         '0': '0',
@@ -47,10 +49,15 @@ module.exports = {
         '3/4': '75%',
         'full': '100%',
        },
+    maxWidth: 
+    {
+      '20v':'20vw',
+     },
        minHeight: {
         '38':'38vw',
         '1/6':'16.6vw',
         '25':'25vw',
+        '49':'49vw'
        },
       spacing:{
         22: "5.5rem"
