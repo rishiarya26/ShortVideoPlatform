@@ -14,7 +14,7 @@ const Img = ({
         position-relative overflow-hidden
         animate-appear bg-gray-500
         `}
-        loading={loading}
+        // loading={loading}
         src={data || fallback}
         alt={title}
         layout="fill"
@@ -22,6 +22,7 @@ const Img = ({
         onClick={onClick}
         onKeyPress={() => true}
         role="presentation"
+        priority="eager"
       // placeholder="blur"
       // blurDataURL={`data:image/jpeg;base64,
       // /9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj
