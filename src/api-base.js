@@ -42,7 +42,7 @@ export const apiBaseEndPoints = {
   production: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
-    app: 'https://www.hipi.co.in',
+    app: 'https://www.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
     'https://stagingmobile.charmboard.com',
