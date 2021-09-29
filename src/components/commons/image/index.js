@@ -2,8 +2,6 @@
 import React from 'react';
 import Image from 'next/image';
 
-
-
 // TODO we need a proper default image url for blurDataURL
 const Img = ({
   onClick, fallback='https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp', data, title = 'hipi'
@@ -18,7 +16,7 @@ const Img = ({
         // loading={loading}
         src={data || fallback}
         alt={title}
-        layout="fill"
+        layout="fill" 
         object-fit="cover"
         onClick={onClick}
         onKeyPress={() => true}
