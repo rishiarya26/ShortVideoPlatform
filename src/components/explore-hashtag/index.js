@@ -10,6 +10,7 @@ import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import VideoGallery from '../video-gallery';
 import Img from '../commons/image';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
+import { withBasePath } from '../../config';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -66,7 +67,7 @@ function HashTag({router}) {
       <div className="w-full h-full flex flex-col p-4">
         <div className="flex w-full">
           <div className="min-w-25 flex min-h-25 bg-gray-300 relative rounded-full" >
-            <Img data={details?.hashTagImage} alt='img'/>
+            <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
           </div>
           <div className="flex flex-col px-4 justify-between">
             <div className="flex flex-col">

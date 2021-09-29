@@ -1,5 +1,6 @@
 /*eslint-disable react/display-name */
 import dynamic from "next/dynamic";
+import { ONE_TAP_DOWNLOAD } from "../../constants";
 import useDrawer from "../../hooks/use-drawer";
 import { getOS } from "../../utils/device-details";
 import Door from "../commons/svgicons/door-open";
@@ -24,16 +25,20 @@ const detectDeviceModal = dynamic(
 const LoginFollowing = () =>{
     // const {show} = useDrawer();
 
-    const stores = {
-      android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-      ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
-    };
+    // const stores = {
+    //   android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+    //   ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    // };
     
-    const onStoreRedirect =()=>{
-      const device = getOS();
-      device && (window.location.href = `${stores[device]}`);
-    }
+    // const onStoreRedirect =()=>{
+    //   const device = getOS();
+    //   device && (window.location.href = `${stores[device]}`);
+    // }
   
+       
+    const onStoreRedirect =()=>{
+      window.open(ONE_TAP_DOWNLOAD);
+    }
 
     // const showLoginOptions = () => {
     //     show('', detectDeviceModal, 'extraSmall');

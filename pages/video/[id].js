@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Error from 'next/error';
 import EmbedVideo from '../../src/components/embed-video';
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import {
@@ -11,6 +10,7 @@ import { getEffectiveVideoUrl } from '../../src/utils/content';
 import SingleVideo from '../../src/components/single-video';
 import { getItem } from '../../src/utils/cookie';
 import { useRouter } from 'next/router';
+import Error from '../../src/components/404';
 // import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
@@ -38,11 +38,12 @@ export default function Hipi(params) {
 
   useEffect(() => {
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
+    console.log("vURL-----",videoUrl)
     setVideoUrl(videoUrl);
   }, []);
 
   if (status === 'fail') {
-    return <Error message={message} statusCode={errorCode} />;
+    return <Error/> ;
   }
 
   const device = getItem('device-type')
@@ -136,6 +137,7 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
+    console.log('data------',data)
   } catch (e) {
     data = {
       status: e.status,
