@@ -51,7 +51,7 @@ export default function DownloadAppWidget({text, setMuted}) {
     <>
       <div className=" flex flex-col items-center w-full ">
         <div onClick={onStoreRedirect} className="flex py-3 items-center">
-          <div className="flex w-20v h-16v object-contain justify-center px-4">
+          <div className="flex w-20v h-13v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
