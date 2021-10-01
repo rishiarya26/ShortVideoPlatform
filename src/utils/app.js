@@ -2,6 +2,8 @@ import canUseDom from 'can-use-dom';
 import cloneDeep from 'lodash/cloneDeep';
 import { setItem } from './cookie';
 import { GUEST_TOKEN, NO_SUPPORT } from '../constants';
+import { commonEvents } from '../analytics/mixpanel/events';
+import { track } from '../analytics';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
@@ -41,8 +43,8 @@ export const generateUUID = persist => {
 };
 
 
-
-export const share = (id) => {
+export const share = (id, videoActiveIndex, toTrackMixpanel) => {
+ 
   console.log(id)
   // const url = document?.location?.href;
   // let domain = (new URL(url));
@@ -52,6 +54,7 @@ export const share = (id) => {
   // console.log(finalUrl)
   if (navigator.share) {
    try{ 
+    toTrackMixpanel(videoActiveIndex,'share');
     const url = document?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;

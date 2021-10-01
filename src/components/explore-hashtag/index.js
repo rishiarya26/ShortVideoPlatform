@@ -64,9 +64,9 @@ function HashTag({router}) {
       <div onClick={()=>router.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
         <Back />
       </div>
-      <div className="w-full h-full flex flex-col p-4">
+      <div className="w-full h-full flex flex-col p-4"> 
         <div className="flex w-full">
-          <div className="min-w-25 flex min-h-25 bg-gray-300 relative rounded-full" >
+          <div className="w-28v flex h-28v bg-gray-300 relative rounded-full" >
             <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
           </div>
           <div className="flex flex-col px-4 justify-between">

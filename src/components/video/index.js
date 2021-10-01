@@ -11,6 +11,7 @@ import CircularProgress from '../commons/circular-loader'
 import { PreviousMap } from 'postcss';
 import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import usePreviousValue from '../../hooks/use-previous';
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
 
@@ -18,6 +19,8 @@ function Video(props) {
   const [playing, setPlaying] = useState(true);
   const [clicked, setClicked] = useState(true);
   const [play, setPlay] = useState(false);
+
+  const prePlayState = usePreviousValue({play});
 
   // const [pause, setPause] = useState(false);
   const rootRef = useRef(null);
@@ -30,9 +33,9 @@ function Video(props) {
       setPlay(true);
       // setPause(false);
       setClicked(false);
-      setTimeout(() => {
-        setPlay(false);
-      }, 2000);
+      // setTimeout(() => {
+      //   setPlay(false);
+      // }, 2000);
     } else {
       rootRef.current.children[0].play();
       setPlaying(true);
@@ -44,6 +47,14 @@ function Video(props) {
       }, 2000);
     }
   };
+
+ 
+  // const duration = rootRef?.current?.children[0]?.duration;
+  // console.log(rootRef?.current?.children?.[0]?.duration)
+  // props.toTrackMixpanel(props.videoActiveIndex,'duration' ,{duration :duration})
+ 
+   
+
   // console.log(JSON.stringify(props))
   const handlePlay = entry => {
     if (clicked) {
@@ -62,42 +73,19 @@ function Video(props) {
     threshold: [0.30, 0.75]
   });
 
-
-  // useEffect(() => {
-
-  //   // rootRef.current.children[0].autoPlay = true;
-  //   // console.log(rootRef.current.children[0].muted,"muted")
-  //   // props.setMuted(false);
-  //   // rootRef.current.children[0].muted = false;
-  //   // rootRef?.current?.children[0]?.load();
-  // }, [])
+  useEffect(()=>{
+  if(props.initialPlayStarted && play === true){
+    props.toTrackMixpanel(props.videoActiveIndex,'pause');
+  }else{
+    prePlayState?.play === true && play === false && props.toTrackMixpanel(props.videoActiveIndex,'resume')
+  }
+  },[play])
 
   const handleUpdateSeekbar = e => {
+    props.initialPlayStarted && e.currentTarget.currentTime < 0.01 && props.toTrackMixpanel(props.videoActiveIndex,'replay')
     const percentage = (e.target.currentTime / e.target.duration) * 100;
-    percentage && props.updateSeekbar(percentage);
+    percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
   };
-
-  // props.initialPlayButton === false && rootRef.current.children[0].play()
-
-  // const unMute =(e)=>{
-  //   rootRef.current.children[0].muted = false;
-  //   console.log(rootRef.current.children[0].muted,"muted")
-  //   props.setMuted(false);
-  // }
-
-  // let hasPlayed = false;
-  // function handleFirstPlay(event) {
-  // if(hasPlayed === false) {
-  //   hasPlayed = true;
-
-  //   let vid = event.target;
-
-  //   vid.onplay = null;
-    // props.initialPlayButton === false && rootRef.current.children[0].play()
-
-    // Start whatever you need to do after first playback has started
-//   }
-// }
 
   return (
     <div
@@ -118,8 +106,10 @@ function Video(props) {
         ref={ref}
         onClick={handleVideoPress}
         className="vdo_player"
+        // onEnded={(e)=> onReplay(e)}
         // width={size.width}
         // height={videoHeight}
+        // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
         poster={props.thumbnail}
         objectfit="cover"
         key={props.url}
@@ -171,6 +161,8 @@ function Video(props) {
         saved={props.saved}
         profileFeed={props?.profileFeed}
         videoId={props.id}
+        videoActiveIndex={props.videoActiveIndex}
+        toTrackMixpanel={props.toTrackMixpanel}
       />
 
       {/* TO-DO  comdition acc to comp */}

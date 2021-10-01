@@ -54,7 +54,7 @@ function transformSuccess(resp) {
       const videoUrl = videoUrls[networkConnection];
       payloadObject.video_url = videoUrl;
       payloadObject.content_description = d?.description;
-      payloadObject.userId = d?.videoOwnersId;
+      payloadObject.userId = d?.videoOwnersId || d?.videoOwners?.id;
       payloadObject.videoOwnersId = d?.videoOwnersId;
       payloadObject.getSocialId = d?.getSocialId;
       payloadObject.id = d?.id;

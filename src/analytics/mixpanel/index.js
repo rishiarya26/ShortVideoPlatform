@@ -13,20 +13,18 @@ export async function init() {
 
 export const isLoaded = () => (window.mixpanel);
 
-export const flushQueue = () => {
-  queue.getAll().forEach(item => {
-    window.mixpanel && window.mixpanel.track(item);
-    queue.remove();
-  });
-};
+// export const flushQueue = () => {
+//   queue.getAll().forEach(item => {
+//     window.mixpanel && window.mixpanel.track(item);
+//     queue.remove();
+//   });
+// };
 
 export function track(event, payload) {
+  // console.log(event, payload)
   if (isLoaded()) { 
-    flushQueue();
-    window.mixpanel.track({
-      event,
-      ...payload
-    });
+    // flushQueue();
+     window?.mixpanel?.track(event,payload);
   } else {
     queue.push({
       event,

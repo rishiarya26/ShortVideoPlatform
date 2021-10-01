@@ -16,6 +16,7 @@ async function fetchEmbedFeed({ id }) {
       return Promise.resolve(response.data);
     }
     apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+    
 
     response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
     const [resp, shop] = response;

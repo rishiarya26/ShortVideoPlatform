@@ -8,31 +8,50 @@ import useDrawer from '../../hooks/use-drawer';
 import { getItem } from '../../utils/cookie';
 import { useEffect } from 'react';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 export default function DownloadAppWidget({text, setMuted}) {
-  // const stores = {
-  //   android: ANDROID_STORE,
-  //   ios: IOS_STORE
-  // };
+  const stores = {
+    android: ANDROID_STORE,
+    ios: IOS_STORE
+  };
+
+  useEffect(()=>{
+    toTrackMixpanel('launch');
+  },[])
 
   const {close} = useDrawer();
 
-  const onStoreRedirect =()=>{
-    window?.open(ONE_TAP_DOWNLOAD);
-  }
+  /******* Mixpanel *********/
+  const toTrackMixpanel = (type) =>{
+    const toTrack ={
+      'launch': () => track('Popup Launch', mixpanelEvents),
+      'downloadClick' : () => track('Popup CTAs Download', mixpanelEvents)
+    }
 
-//   const onStoreRedirect =()=>{
-//   console.log('clicked')
-//   let deviceInfo = 'android';
-//  try{ 
-//    deviceInfo = getOS();
-//    deviceInfo && (window.open(`${stores[deviceInfo]}`));
-//    console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
-//  }
-//   catch(e){
-//     console.log('error in store redirect')
-//     return `${stores[deviceInfo]}`}
-//   }
+    const mixpanelEvents = commonEvents();
+    toTrack?.[type]();
+  }
+  /***************************/
+
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
+
+  const onStoreRedirect =()=>{
+  console.log('clicked')
+  let deviceInfo = 'android';
+ try{ 
+   deviceInfo = getOS();
+   deviceInfo && (window.open(`${stores[deviceInfo]}`));
+   console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
+ }
+  catch(e){
+    console.log('error in store redirect')
+    return `${stores[deviceInfo]}`}
+  }
 
 
   // const value = useDevice(devices, [
@@ -51,7 +70,7 @@ export default function DownloadAppWidget({text, setMuted}) {
     <>
       <div className=" flex flex-col items-center w-full ">
         <div onClick={onStoreRedirect} className="flex py-3 items-center">
-          <div className="flex w-20v h-16v object-contain justify-center px-4">
+          <div className="flex w-20v h-13v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">

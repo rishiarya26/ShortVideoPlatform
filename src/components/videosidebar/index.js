@@ -53,7 +53,7 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex
 }) {
   const { show } = useDrawer();
 
@@ -166,7 +166,7 @@ function VideoSidebar({
         </div>
       </div>
       <div
-        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>share(videoId))}
+        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>share(videoId, videoActiveIndex, toTrackMixpanel))}
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}
