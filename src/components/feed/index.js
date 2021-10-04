@@ -68,7 +68,7 @@ function Feed({ router }) {
   const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [muted, setMuted] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [currentT, setCurrentT] = useState(0)
+  const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
 
   const loaded = () => {
     setLoading(false);
@@ -83,8 +83,8 @@ function Feed({ router }) {
 
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
-  const preCurrentT = usePreviousValue({currentT});
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
+  const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -160,14 +160,16 @@ function Feed({ router }) {
   const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
-    setCurrentT(currentTime);
-    // toTrackMixpanel(videoActiveIndex,'duration',{duration : duration})
-    // setDuration
+    const videoDurationDetail = {
+      currentT : currentTime,
+      totalDuration : duration
+    }
+    setVideoDurationDetails(videoDurationDetail);
     if(percentage > 0){
       setInitialPlayStarted(true);
      }
-     if(percentage > 99){
-       toTrackMixpanel(videoActiveIndex,'watchTime',{watchTime : 'Complete'})
+     if(percentage >= 98){
+       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
      }
     // toTrackMixpanel(videoActiveIndex,'play')
   };
@@ -224,7 +226,7 @@ function Feed({ router }) {
 
   useEffect(()=>{
     if(preVideoActiveIndex?.videoActiveIndex){
-      toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
+      // toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
     }
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
       //swipe-down
@@ -260,9 +262,15 @@ function Feed({ router }) {
     const item = items[activeIndex];
     const mixpanelEvents = commonEvents();
 
+    console.log(value)
+
     const toTrack = {
       'impression' : ()=> track('UGC Impression', mixpanelEvents),
-      'swipe' : ()=> track('UGC Swipe', mixpanelEvents),
+      'swipe' : ()=> {
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Swipe', mixpanelEvents)
+      },
       'play' : () => track('UGC Play', mixpanelEvents),
       'pause' : () => track('Pause', mixpanelEvents),
       'resume' : () => track('Resume', mixpanelEvents),
@@ -270,16 +278,10 @@ function Feed({ router }) {
       'replay' : () => track('UGC Replayed', mixpanelEvents),
       'watchTime' : () => {
         mixpanelEvents['UGC Consumption Type'] = value?.watchTime
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
         track('UGC Watch Time',mixpanelEvents)
       },
-      'duration' : () => {
-        mixpanelEvents['UGC Consumption Type'] = value?.duration
-        track('UGC Duration',mixpanelEvents)
-      },
-      'durationWatchTime' : () => {
-        mixpanelEvents['UGC Consumption Type'] = value?.watchTime
-        track('UGC Watch Duration',mixpanelEvents)
-      }
       // 'tabs' : () =>{
       //   mixpanelEvents['Page Name'] = 'feed';
       //   mixpanelEvents['Tab Name'] = id && id
@@ -323,8 +325,6 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
-                //Mixpanel
-                toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
                 toTrackMixpanel(activeIndex, 'impression');
               }}
@@ -332,19 +332,16 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiperCore;
-                //Mixpanel
                 setInitialPlayStarted(false);
+
+                //Mixpanel
                 toTrackMixpanel(activeIndex, 'impression');
-                toTrackMixpanel(activeIndex, 'swipe');
+                toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-
-                toTrackMixpanel(videoActiveIndex,'watchTime',{watchTime : 'Partial'})
-                toTrackMixpanel(activeIndex,'duration',{duration: slides[activeIndex]?.firstChild?.firstChild?.duration}) 
-               
-                // console.log(activeIndex,videoActiveIndex)
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 // const dataItems = [...items];
                 // const seoItem = dataItems?.find(item => item?.content_id === activeId);
@@ -395,6 +392,7 @@ function Feed({ router }) {
                       toTrackMixpanel={toTrackMixpanel}
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
+                      currentT={videoDurationDetails?.currentT}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>

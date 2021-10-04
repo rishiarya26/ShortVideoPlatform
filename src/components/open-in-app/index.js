@@ -27,11 +27,17 @@ export default function DownloadAppWidget({text, setMuted}) {
   const toTrackMixpanel = (type) =>{
     const toTrack ={
       'launch': () => track('Popup Launch', mixpanelEvents),
-      'downloadClick' : () => track('Popup CTAs Download', mixpanelEvents)
+      'downloadClick' : () => track('Popup CTAs Download App', mixpanelEvents)
     }
 
     const mixpanelEvents = commonEvents();
     toTrack?.[type]();
+  }
+  /***************************/
+
+  const onStoreRedirect =()=>{
+    toTrackMixpanel('downloadClick');
+    window?.open(ONE_TAP_DOWNLOAD);
   }
   /***************************/
 
@@ -40,18 +46,18 @@ export default function DownloadAppWidget({text, setMuted}) {
   //   window?.open(ONE_TAP_DOWNLOAD);
   // }
 
-  const onStoreRedirect =()=>{
-  console.log('clicked')
-  let deviceInfo = 'android';
- try{ 
-   deviceInfo = getOS();
-   deviceInfo && (window.open(`${stores[deviceInfo]}`));
-   console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
- }
-  catch(e){
-    console.log('error in store redirect')
-    return `${stores[deviceInfo]}`}
-  }
+//   const onStoreRedirect =()=>{
+//   console.log('clicked')
+//   let deviceInfo = 'android';
+//  try{ 
+//    deviceInfo = getOS();
+//    deviceInfo && (window.open(`${stores[deviceInfo]}`));
+//    console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
+//  }
+//   catch(e){
+//     console.log('error in store redirect')
+//     return `${stores[deviceInfo]}`}
+//   }
 
 
   // const value = useDevice(devices, [

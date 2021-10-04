@@ -68,8 +68,8 @@ function FeedIphone({ router }) {
   const [toInsertElements, setToInsertElements] = useState(4);
   const [deletedTill, setDeletedTill] = useState();
   const [loading, setLoading] = useState(true);
-  const [currentT, setCurrentT] = useState(0)
-
+  // const [currentT, setCurrentT] = useState(0)
+  const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
 
   const loaded = () => {
     setLoading(false);
@@ -84,8 +84,10 @@ function FeedIphone({ router }) {
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const pretoInsertElemant = usePreviousValue({toInsertElements});
-  const preCurrentT = usePreviousValue({currentT});
+  // const preCurrentT = usePreviousValue({currentT});
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
+  const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
+
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -181,16 +183,21 @@ function FeedIphone({ router }) {
   const validItemsLength = toShowItems?.length > 0;
   // setRetry = retry && retry;
 
-  const updateSeekbar = (percentage, currentTime) => {
+  const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
-    setCurrentT(currentTime);
+    const videoDurationDetail = {
+      currentT : currentTime,
+      totalDuration : duration
+    }
+    setVideoDurationDetails(videoDurationDetail);
+    // setCurrentT(currentTime);
     if(percentage > 0){
       setInitialPlayStarted(true);
      }
-     if(percentage > 99){
-       toTrackMixpanel(videoActiveIndex,'watchTime',{watchTime : 'Complete'})
-     }
+     if(percentage > 98){
+      toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+    }
   };
 
   const getCanShop = async () => {
@@ -263,9 +270,9 @@ console.log('error',e)
  }
 
   useEffect(()=>{
-    if(preVideoActiveIndex?.videoActiveIndex){
-      toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
-    }
+    // if(preVideoActiveIndex?.videoActiveIndex){
+    //   toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
+    // }
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
       //swipe-down
       if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
@@ -305,24 +312,21 @@ console.log('error',e)
 
     const toTrack = {
       'impression' : ()=> track('UGC Impression', mixpanelEvents),
-      'swipe' : ()=> track('UGC Swipe', mixpanelEvents),
-      'play' : () => track('UGC Play', mixpanelEvents),
+      'swipe' : ()=> {
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Swipe', mixpanelEvents)
+      },      'play' : () => track('UGC Play', mixpanelEvents),
       'pause' : () => track('Pause', mixpanelEvents),
       'resume' : () => track('Resume', mixpanelEvents),
       'share' : () => track('UGC Share Click', mixpanelEvents),
       'replay' : () => track('UGC Replayed', mixpanelEvents),
       'watchTime' : () => {
         mixpanelEvents['UGC Consumption Type'] = value?.watchTime
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
         track('UGC Watch Time',mixpanelEvents)
       },
-      'duration' : () => {
-        mixpanelEvents['UGC Consumption Type'] = value?.duration
-        track('UGC Duration',mixpanelEvents)
-      },
-      'durationWatchTime' : () => {
-        mixpanelEvents['UGC Consumption Type'] = value?.watchTime
-        track('UGC Watch Duration',mixpanelEvents)
-      }
       // 'tabs' : () =>{
       //   mixpanelEvents['Page Name'] = 'feed';
       //   mixpanelEvents['Tab Name'] = id && id
@@ -367,7 +371,7 @@ console.log('error',e)
                   activeIndex, slides
                 } = swiper;
                 //Mixpanel
-                toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
+                // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
                 toTrackMixpanel(activeIndex, 'impression');
               }}
@@ -378,21 +382,16 @@ console.log('error',e)
                 //Mixpanel
                 setInitialPlayStarted(false);
                 toTrackMixpanel(activeIndex, 'impression');
-                toTrackMixpanel(activeIndex, 'swipe');
+                toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
-                }
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false
-                // }
-                toTrackMixpanel(videoActiveIndex,'watchTime',{watchTime : 'Partial'})
-                toTrackMixpanel(activeIndex,'duration',{duration: slides[activeIndex]?.firstChild?.firstChild?.duration}) 
-                     
+                }    
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 // const dataItems = [...items];
                 // const seoItem = dataItems?.find(item => item?.content_id === activeId);
-
                 // seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
                 if(activeIndex === 0){
@@ -441,6 +440,7 @@ console.log('error',e)
                       toTrackMixpanel={toTrackMixpanel}
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
+                      currentT={videoDurationDetails?.currentT}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
