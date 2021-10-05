@@ -22,7 +22,7 @@ const detectDeviceModal = dynamic(
   }
 );
 
-const LoginFollowing = () =>{
+const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
     // const {show} = useDrawer();
 
     const stores = {
@@ -31,12 +31,14 @@ const LoginFollowing = () =>{
     };
     
     const onStoreRedirect =()=>{
+      toTrackMixpanel(activeIndex,'cta',{name: 'Download App', type: 'Link'})
       const device = getOS();
       device && (window.location.href = `${stores[device]}`);
     }
   
        
     // const onStoreRedirect =()=>{
+    //   toTrackMixpanel(activeIndex,'cta',{name: 'Download App', type: 'Link'})
     //   window.open(ONE_TAP_DOWNLOAD);
     // }
 

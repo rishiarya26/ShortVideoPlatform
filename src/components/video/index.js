@@ -82,7 +82,9 @@ function Video(props) {
   },[play])
 
   const handleUpdateSeekbar = e => {
-    props.initialPlayStarted && (e?.currentTarget?.currentTime < props?.currentT) && props.toTrackMixpanel(props.videoActiveIndex,'replay')
+    // props.initialPlayStarted && (e?.currentTarget?.currentTime < props?.currentT) && props.toTrackMixpanel(props.videoActiveIndex,'watchTime',{watchTime : 'Complete', duration : e?.target?.duration, durationWatchTime:e?.target?.duration})
+    // props.initialPlayStarted && (e?.currentTarget?.currentTime < props?.currentT) && props.toTrackMixpanel(props.videoActiveIndex,'replay')
+
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
   };

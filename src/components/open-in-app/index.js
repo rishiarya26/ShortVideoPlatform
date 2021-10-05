@@ -26,8 +26,16 @@ export default function DownloadAppWidget({text, setMuted}) {
   /******* Mixpanel *********/
   const toTrackMixpanel = (type) =>{
     const toTrack ={
-      'launch': () => track('Popup Launch', mixpanelEvents),
-      'downloadClick' : () => track('Popup CTAs Download App', mixpanelEvents)
+      'launch': () => {
+        mixpanelEvents['Popup Name'] = 'Download App'
+        track('Popup Launch', mixpanelEvents)
+      },
+      'downloadClick' : () => {
+        mixpanelEvents['Popup Name'] = 'Download App',
+        mixpanelEvents['Element'] = 'Download App',
+        mixpanelEvents['Button Type'] = 'Link',
+        track('Popup CTAs', mixpanelEvents)
+      }
     }
 
     const mixpanelEvents = commonEvents();
@@ -35,10 +43,16 @@ export default function DownloadAppWidget({text, setMuted}) {
   }
   /***************************/
 
-  const onStoreRedirect =()=>{
-    toTrackMixpanel('downloadClick');
-    window?.open(ONE_TAP_DOWNLOAD);
-  }
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
+  /***************************/
+
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
   /***************************/
 
   // const onStoreRedirect =()=>{
@@ -46,18 +60,19 @@ export default function DownloadAppWidget({text, setMuted}) {
   //   window?.open(ONE_TAP_DOWNLOAD);
   // }
 
-//   const onStoreRedirect =()=>{
-//   console.log('clicked')
-//   let deviceInfo = 'android';
-//  try{ 
-//    deviceInfo = getOS();
-//    deviceInfo && (window.open(`${stores[deviceInfo]}`));
-//    console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
-//  }
-//   catch(e){
-//     console.log('error in store redirect')
-//     return `${stores[deviceInfo]}`}
-//   }
+  const onStoreRedirect =()=>{
+     toTrackMixpanel('downloadClick');
+  console.log('clicked')
+  let deviceInfo = 'android';
+ try{ 
+   deviceInfo = getOS();
+   deviceInfo && (window.open(`${stores[deviceInfo]}`));
+   console.log('clicked','window',window.open, deviceInfo,`${stores[deviceInfo]}`)
+ }
+  catch(e){
+    console.log('error in store redirect')
+    return `${stores[deviceInfo]}`}
+  }
 
 
   // const value = useDevice(devices, [

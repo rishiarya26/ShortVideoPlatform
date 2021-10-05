@@ -62,11 +62,12 @@ function transformSuccess(resp) {
       payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
       payloadObject.userName = d?.videoOwners?.userName;
       payloadObject.likesCount = d?.lCount;
-      payloadObject.music_title = d?.sound?.name;
+      payloadObject.music_title = d?.sound?.name || null;
       payloadObject.hashtags = d?.hashtags;
       payloadObject.thumbnail = d?.thumbnailUrl;
       payloadObject.saveLook = false;
       payloadObject.thumbnailUrls = d?.optionalThumbnail;
+      payloadObject.creatorTag = d?.videoOwners?.tag || null;
       
       payloadData.push(payloadObject);
     });
