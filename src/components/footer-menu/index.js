@@ -16,14 +16,15 @@ import SearchBlack from '../commons/svgicons/search-black';
 import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active';
+import detectDeviceModal from '../open-in-app'
 
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const detectDeviceModal = dynamic(
+//   () => import('../open-in-app'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();
