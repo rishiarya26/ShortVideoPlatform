@@ -25,22 +25,22 @@ const detectDeviceModal = dynamic(
 const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
     // const {show} = useDrawer();
 
-    const stores = {
-      android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
-      ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
-    };
+    // const stores = {
+    //   android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+    //   ios: 'https://apps.apple.com/in/app/zee5-shows-live-tv-movies/id743691886'
+    // };
     
-    const onStoreRedirect =()=>{
-      toTrackMixpanel(activeIndex,'cta',{name: 'Download App', type: 'Link'})
-      const device = getOS();
-      device && (window.location.href = `${stores[device]}`);
-    }
-  
-       
     // const onStoreRedirect =()=>{
     //   toTrackMixpanel(activeIndex,'cta',{name: 'Download App', type: 'Link'})
-    //   window.open(ONE_TAP_DOWNLOAD);
+    //   const device = getOS();
+    //   device && (window.location.href = `${stores[device]}`);
     // }
+  
+       
+    const onStoreRedirect =()=>{
+      toTrackMixpanel(activeIndex,'cta',{name: 'Download App', type: 'Link'})
+      window.open(ONE_TAP_DOWNLOAD);
+    }
 
     // const showLoginOptions = () => {
     //     show('', detectDeviceModal, 'extraSmall');

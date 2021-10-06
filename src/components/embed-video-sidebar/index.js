@@ -23,27 +23,27 @@ import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 function EmbedVideoSidebar(props) {
   // const { show } = useDrawer();
 
-  const stores = {
-    android: ANDROID_STORE,
-    ios: IOS_STORE
-  };
+  // const stores = {
+  //   android: ANDROID_STORE,
+  //   ios: IOS_STORE
+  // };
 
-  const onStoreRedirect =()=>{
-    console.log('clicked')
-    let deviceInfo = 'android';
-   try{ 
-     deviceInfo = getOS();
-     deviceInfo && (window.open(`${stores[deviceInfo]}`));
-    //  console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
-   }
-    catch(e){
-      console.log('error in store redirect')
-      return `${stores[deviceInfo]}`}
-    }
+  // const onStoreRedirect =()=>{
+  //   console.log('clicked')
+  //   let deviceInfo = 'android';
+  //  try{ 
+  //    deviceInfo = getOS();
+  //    deviceInfo && (window.open(`${stores[deviceInfo]}`));
+  //   //  console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
+  //  }
+  //   catch(e){
+  //     console.log('error in store redirect')
+  //     return `${stores[deviceInfo]}`}
+  //   }
 
-    //  const onStoreRedirect =()=>{
-    //    window?.open(ONE_TAP_DOWNLOAD);
-    //  }
+     const onStoreRedirect =()=>{
+       window?.open(ONE_TAP_DOWNLOAD);
+     }
 
   const info = {
     single : 'bottom-28 fixed',

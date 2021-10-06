@@ -206,7 +206,6 @@ function FeedIphone({ router }) {
   const getCanShop = async () => {
     let isShoppable = false;
     const shopContent = { ...shop };
-    console.log(activeVideoId);
     try {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.isShoppable;
@@ -224,7 +223,6 @@ function FeedIphone({ router }) {
   let deletedTill = pretoInsertElemant?.toInsertElements-12;
   let dataItem = [...items];
 
-  console.log('adding items')
   const arr = await getFeedData();
   arr && (dataItem = dataItem?.concat(arr));
   //add
@@ -240,7 +238,6 @@ function FeedIphone({ router }) {
   //delete
   if(videoActiveIndex >= 10)
   { for(let i=0;i<=pretoInsertElemant?.toInsertElements-6-1;i++){
-    console.log("delete",updateShowItems[i])
     updateShowItems[i] && (updateShowItems[i] = null);
    
     // items?.[videoActiveIndex+i+2] && updateShowItems.push(items[videoActiveIndex+i+2]);

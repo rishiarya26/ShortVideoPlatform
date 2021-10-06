@@ -269,7 +269,6 @@ function Feed({ router }) {
     const item = items[activeIndex];
     const mixpanelEvents = commonEvents();
 
-    console.log(value)
 
     const toTrack = {
       'impression' : ()=> track('UGC Impression', mixpanelEvents),
