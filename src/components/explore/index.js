@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import Hash from '../commons/svgicons/hash';
@@ -129,6 +129,12 @@ function Explore() {
     hashTag = trimHash(hashTag);
     router.push(`/hashtag/${hashTag}`);
   }
+
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 1);
+    }
+  },[])
 
   return (
     <ComponentStateHandler

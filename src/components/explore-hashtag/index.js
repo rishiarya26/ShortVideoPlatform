@@ -5,7 +5,7 @@ import { withRouter } from 'next/router';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Error from './error';
 import Loading from './loader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import VideoGallery from '../video-gallery';
 import Img from '../commons/image';
@@ -32,6 +32,12 @@ function HashTag({router}) {
     show('', detectDeviceModal, 'extraSmall');
     setIsFetching(false);
   }
+
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 1);
+    }
+  },[])
 
   // async function fetchMoreListItems() {
   //   try{

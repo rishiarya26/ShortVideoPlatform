@@ -60,7 +60,7 @@ function Users({
 
   useEffect(()=>{
     window.onunload = function () {
-      window?.scrollTo(0, 0);
+      window?.scrollTo(0, 1);
     }
   },[])
 

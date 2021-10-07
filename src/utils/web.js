@@ -9,7 +9,12 @@ function CopyToClipBoard(value) {
   return true;
 }
 
+function ScrollToTop(){
+
+}
+
 export {
-  CopyToClipBoard
+  CopyToClipBoard,
+  ScrollToTop
 };
 
