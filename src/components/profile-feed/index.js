@@ -124,25 +124,25 @@ function ProfileFeed({ router }) {
                   >
                     <Video
                       updateSeekbar={updateSeekbar}
-                      socialId={item.getSocialId}
-                      url={item.video_url}
-                      id={item.content_id}
-                      comments={item.commentsCount}
-                      likes={item.likesCount}
-                      music={item.musicCoverTitle}
-                      musicTitle={item.music_title}
-                      profilePic={item.userProfilePicUrl}
-                      userName={`@${item.userName}`}
-                      musicCoverTitle={item.musicCoverTitle}
-                      videoid={item.content_id}
-                      hashTags={item.hashTags}
-                      videoOwnersId={item.videoOwnersId}
-                      thumbnail={item.poster_image_url}
-                      canShop={shop.isShoppable}
-                      shopCards={shop.data}
+                      socialId={item?.getSocialId}
+                      url={item?.video_url}
+                      id={item?.content_id}
+                      comments={item?.commentsCount}
+                      likes={item?.likesCount}
+                      music={item?.musicCoverTitle}
+                      musicTitle={item?.music_title}
+                      profilePic={item?.userProfilePicUrl}
+                      userName={item?.userName}
+                      musicCoverTitle={item?.musicCoverTitle}
+                      videoid={item?.content_id}
+                      hashTags={item?.hashTags}
+                      videoOwnersId={item?.videoOwnersId}
+                      thumbnail={item?.poster_image_url}
+                      canShop={shop?.isShoppable}
+                      shopCards={shop?.data}
                       handleSaveLook={handleSaveLook}
                       saveLook={saveLook}
-                      saved={item.saveLook}
+                      saved={item?.saveLook}
                       activeVideoId={activeVideoId}
                       comp="profile"
                       profileFeed

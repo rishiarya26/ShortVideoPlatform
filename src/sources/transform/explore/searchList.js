@@ -23,6 +23,7 @@ function transformSuccess(resp) {
     const { recommendations = []} = data;
     const { responseData = []} = data;
     const updateData = recommendations?.concat(responseData);
+    console.log(updateData)
     payload.data = updateData;
     payload.status = 'success';
     payload.message = getMessage(data, {});

@@ -54,7 +54,7 @@ export const share = (id, videoActiveIndex, toTrackMixpanel) => {
   // console.log(finalUrl)
   if (navigator.share) {
    try{ 
-    toTrackMixpanel(videoActiveIndex,'share');
+    // toTrackMixpanel && toTrackMixpanel(videoActiveIndex,'share');
     const url = document?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;

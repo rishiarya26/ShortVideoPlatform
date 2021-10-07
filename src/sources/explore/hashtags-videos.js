@@ -6,7 +6,7 @@ import { transformSuccess, transformError } from '../transform/explore/hashtags-
 import { getHashTagDetails } from './hashtags-detail';
 
 async function fetchSearchResult({
-   keyword, limit='9', offset='1'
+   keyword, limit='15', offset='1'
 }) {
   let response = {};
   try {

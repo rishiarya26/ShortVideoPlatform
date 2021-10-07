@@ -48,12 +48,6 @@ function Video(props) {
     }
   };
 
- 
-  // const duration = rootRef?.current?.children[0]?.duration;
-  // console.log(rootRef?.current?.children?.[0]?.duration)
-  // props.toTrackMixpanel(props.videoActiveIndex,'duration' ,{duration :duration})
- 
-   
 
   // console.log(JSON.stringify(props))
   const handlePlay = entry => {
@@ -74,17 +68,16 @@ function Video(props) {
   });
 
   useEffect(()=>{
-  if(props.initialPlayStarted && play === true){
-    props.toTrackMixpanel(props.videoActiveIndex,'pause');
-  }else{
-    prePlayState?.play === true && play === false && props.toTrackMixpanel(props.videoActiveIndex,'resume')
+  if(props?.comp === 'feed'){
+    if(props.initialPlayStarted && play === true){
+      props?.toTrackMixpanel(props.videoActiveIndex,'pause');
+    }else{
+      prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
+    }
   }
   },[play])
 
   const handleUpdateSeekbar = e => {
-    // props.initialPlayStarted && (e?.currentTarget?.currentTime < props?.currentT) && props.toTrackMixpanel(props.videoActiveIndex,'watchTime',{watchTime : 'Complete', duration : e?.target?.duration, durationWatchTime:e?.target?.duration})
-    // props.initialPlayStarted && (e?.currentTarget?.currentTime < props?.currentT) && props.toTrackMixpanel(props.videoActiveIndex,'replay')
-
     const percentage = (e.target.currentTime / e.target.duration) * 100;
     percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
   };
@@ -164,7 +157,7 @@ function Video(props) {
         profileFeed={props?.profileFeed}
         videoId={props.id}
         videoActiveIndex={props.videoActiveIndex}
-        toTrackMixpanel={props.toTrackMixpanel}
+        toTrackMixpanel={props?.toTrackMixpanel}
       />
 
       {/* TO-DO  comdition acc to comp */}

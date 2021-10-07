@@ -30,28 +30,39 @@ function Users({
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
 
-  async function fetchMoreListItems() {
-   try{
-    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
-    console.log(response)
-    if(response?.data?.length > 0){
-      let data = {...videoData};
-      data.items = data?.items?.concat(response?.data);
-      console.log("items",data)
-      setVideoData(data);
-      setOffset(offset+1);
-      setIsFetching(false);
-    }
-    setShowLoading(false)
-   }
-   catch(e){
-     console.log("e",e)
-   }
+
+  async function showPopUp(){
+    show('', detectDeviceModal, 'extraSmall');
+    setIsFetching(false);
   }
+  // async function fetchMoreListItems() {
+  //  try{
+  //   const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
+  //   console.log(response)
+  //   if(response?.data?.length > 0){
+  //     let data = {...videoData};
+  //     data.items = data?.items?.concat(response?.data);
+  //     console.log("items",data)
+  //     setVideoData(data);
+  //     setOffset(offset+1);
+  //     setIsFetching(false);
+  //   }
+  //   setShowLoading(false)
+  //  }
+  //  catch(e){
+  //    console.log("e",e)
+  //  }
+  // }
+
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 0);
+    }
+  },[])
 
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
@@ -214,8 +225,8 @@ function Users({
         userId={id}
         type={selectedTab}
         page='profile'
-        isFetching={showLoading}
-        fetchMoreListItems={fetchMoreListItems}
+        isFetching={isFetching}
+        // fetchMoreListItems={fetchMoreListItems}
       />
     </div>
   );

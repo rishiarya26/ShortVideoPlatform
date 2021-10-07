@@ -75,6 +75,7 @@ function Feed({ router }) {
   };
 
   useEffect(() => {
+    console.log("feed")
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
@@ -94,7 +95,7 @@ function Feed({ router }) {
 
   const onDataFetched = data => {
     if(data){
-        
+        console.log(data)
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         //set first three item in showItems

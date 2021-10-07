@@ -15,6 +15,9 @@ import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import DynamicImg from '../commons/image-dynamic';
 import Play from '../commons/svgicons/play-outlined';
 import Like from '../commons/svgicons/like-outlined';
+import { numberFormatter } from '../../utils/convert-to-K';
+import detectDeviceModal from "../open-in-app"
+import useDrawer from '../../hooks/use-drawer';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -23,29 +26,73 @@ const LoadComp = () => (<Loader />);
 function Explore() {
   const [data, setData] = useState([]);
   const [crousalItems, setCrousalItems] = useState([]);
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
 
-  async function fetchMoreListItems() {
-    try{
-     const response = await getSearchData({ offset: `${offset}` });
-     if(response?.data?.length > 0){
-       let updateData = [...data];
-       updateData = updateData?.concat(response?.data);
-       let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
-       sessionData = sessionData?.concat(response?.data);
-       window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
-       setData(updateData);
-       setOffset(offset+1);
-       setIsFetching(false);
-     }
-     setShowLoading(false)
-    }
-    catch(e){
-      console.log("e",e)
-    }
+  const {show} = useDrawer();
+
+  async function showPopUp() {
+    // try{
+    //  const response = await getSearchData({ offset: `${offset}` });
+    //  if(response?.data?.length > 0){
+    //    let updateData = [...data];
+    //    updateData = updateData?.concat(response?.data);
+    //    let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
+    //    sessionData = sessionData?.concat(response?.data);
+    //    window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
+    //    setData(updateData);
+    //    setOffset(offset+1);
+    
+    //  }else{
+    //   setIsFetching(false);
+    // if(offset === 2){
+      show('', detectDeviceModal, 'extraSmall');
+      setIsFetching(false);
+    //   setOffset(offset+1);
+    // }
+  
+      
+    //  }
+    //  console.log(showLoading)
+    // //  setIsFetching(false);
+    //  setShowLoading(false)
+    // }
+    // catch(e){
+    //   setIsFetching(false);
+
+    //   // setShowLoading(false);
+    //   console.log("error",e)
+    // }
    }
+
+  // async function fetchMoreListItems() {
+  //   try{
+  //    const response = await getSearchData({ offset: `${offset}` });
+  //    if(response?.data?.length > 0){
+  //      let updateData = [...data];
+  //      updateData = updateData?.concat(response?.data);
+  //      let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
+  //      sessionData = sessionData?.concat(response?.data);
+  //      window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
+  //      setData(updateData);
+  //      setOffset(offset+1);
+  //      setIsFetching(false);
+  //    }else{
+  //     setIsFetching(false);
+  //     show('', detectDeviceModal, 'extraSmall');
+  //    }
+  //    console.log(showLoading)
+  //   //  setIsFetching(false);
+  //    setShowLoading(false)
+  //   }
+  //   catch(e){
+  //     setIsFetching(false);
+
+  //     // setShowLoading(false);
+  //     console.log("error",e)
+  //   }
+  //  }
 
   const router = useRouter();
 
@@ -136,10 +183,10 @@ function Explore() {
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120'/>
                         <div className="absolute bottom-1 left-1 text-white flex items-center">
-        <Play/> 2
+        <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}
       </div>
       <div className="absolute bottom-1 right-1 text-white flex items-center">
-        <Like/> 2
+        <Like/>{numberFormatter(d?.video?.lCount) || numberFormatter(d?.video?.likeCount)}
       </div>
                       </div>
                     );
@@ -174,7 +221,7 @@ function Explore() {
                 </div>
               ));
         })}
-        {showLoading && 'Loading more items...'}
+        {/* {isFetching && <h1 className='bold font-black'>Loading more items...</h1>} */}
       </div>
       <FooterMenu selectedTab="search"/>
     </ComponentStateHandler>

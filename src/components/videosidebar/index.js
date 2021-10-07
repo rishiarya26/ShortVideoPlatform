@@ -166,7 +166,8 @@ function VideoSidebar({
         </div>
       </div>
       <div
-        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>share(videoId, videoActiveIndex, toTrackMixpanel))}
+        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
+          toTrackMixpanel ? ()=>share(videoId, videoActiveIndex, toTrackMixpanel) : ()=>share(videoId, videoActiveIndex))}
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}

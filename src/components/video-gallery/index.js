@@ -86,7 +86,7 @@ export default function VideoGallery({
                 />
              </span>
              ))}
-             {isFetching && 'Loading more items...'}
+             {/* {isFetching && 'Loading more items...'} */}
             </div>
             )
             : (

@@ -11,6 +11,8 @@ import VideoGallery from '../video-gallery';
 import Img from '../commons/image';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import { withBasePath } from '../../config';
+import useDrawer from '../../hooks/use-drawer';
+import detectDeviceModal from "../open-in-app"
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -19,31 +21,37 @@ const LoadComp = () => (<Loading />);
 function HashTag({router}) {
   const [items,setItems] = useState([]);
   const [details, setDetails] = useState({})
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
 
   const {item = ''} = router?.query;
+  const {show} = useDrawer();
 
-  async function fetchMoreListItems() {
-    try{
-     const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
-     console.log("resp1",response)
-     if(response?.data?.length > 0){
-       console.log("resp",response?.data)
-       let updateData = [...items];
-       updateData = updateData?.concat(response?.data);
-       console.log("items",updateData)
-       setItems(updateData);
-       setOffset(offset+1);
-       setIsFetching(false);
-     }
-     setShowLoading(false)
-    }
-    catch(e){
-      console.log("e",e)
-    }
-   }
+  async function showPopUp(){
+    show('', detectDeviceModal, 'extraSmall');
+    setIsFetching(false);
+  }
+
+  // async function fetchMoreListItems() {
+  //   try{
+  //    const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
+  //    console.log("resp1",response)
+  //    if(response?.data?.length > 0){
+  //      console.log("resp",response?.data)
+  //      let updateData = [...items];
+  //      updateData = updateData?.concat(response?.data);
+  //      console.log("items",updateData)
+  //      setItems(updateData);
+  //      setOffset(offset+1);
+  //      setIsFetching(false);
+  //    }
+  //    setShowLoading(false)
+  //   }
+  //   catch(e){
+  //     console.log("e",e)
+  //   }
+  //  }
 
   const onDataFetched = data => {
       setDetails(data?.details);
@@ -93,7 +101,7 @@ function HashTag({router}) {
         retry={retry && retry}
         hashTag={item}
         page='hashTag'
-        isFetching={showLoading}
+        isFetching={isFetching}
       />
     </div>
     </ComponentStateHandler>
