@@ -1,6 +1,5 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
-import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
@@ -18,6 +17,9 @@ import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
+import { getItem } from '../../utils/cookie';
+import { ShareComp } from '../commons/share';
+import { shareProfile } from '../../utils/app';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -173,12 +175,14 @@ function Users({
     }
   };
 
-  console.log(videoData?.items?.filter((data)=>(data?.shoppable === true)))
+  // console.log(videoData?.items?.filter((data)=>(data?.shoppable === true)))
 
   const toShowData = {
     all : videoData?.items,
     liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
   }
+
+  const value = getItem('device-type');
 
   return (
     <div>
@@ -187,9 +191,14 @@ function Users({
           { info.menu.button[type] }
         </div>
         <div className="font-bold">{userHandle}</div>
-        <div className="p-4 h-full flex items-center justify-center">
-          {/* { info.menu.notification[type] } */}
-        </div>
+        {/* <div className="p-4 h-full flex items-center justify-center"> */}
+        <div
+        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>shareProfile(id))}
+        className="flex relative py-2  px-3 text-center items-end flex-col"
+      >
+      <ShareComp type={'profile'}/>
+      </div>
+        {/* </div> */}
       </div>
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">

@@ -15,6 +15,11 @@ import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
 import { getNetworkConnection } from '../../utils/device-details';
 import SwiperSlideComp from '../swiper.js';
+import fallbackUser from "../../../public/images/users.png"
+import CircularProgress from '../commons/circular-loader'
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import { inject } from '../../analytics/async-script-loader';
+import Mute from '../commons/svgicons/mute';
 
 
 SwiperCore.use([Mousewheel]);
@@ -29,12 +34,24 @@ function SearchFeed({ router }) {
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
+  const [loading, setLoading] = useState(true);
+  const [muted, setMuted] = useState(true)
+  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
+
+  const loaded = () => {
+    setLoading(false);
+  };
 
   const { id } = router?.query;
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
 
   const { videoId = items?.[0]?.content_id } = router?.query;
+
+
+  useEffect(() => {
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  }, []);
 
   const selectVideoUrl = (video) => {
     const networkConnection = getNetworkConnection();
@@ -58,12 +75,18 @@ function SearchFeed({ router }) {
     return finalTData;
   }
 
+  useEffect(()=>{
+    if(initialPlayStarted === true){
+    }
+  },[initialPlayStarted])
+
   const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
   const onDataFetched = data => {
       const info = {
           normal : data,
           withHash : transformResponse(data)
       }
+      console.log(info[type])
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
@@ -73,6 +96,9 @@ function SearchFeed({ router }) {
   const validItemsLength = items?.length > 0;
 
   const updateSeekbar = percentage => {
+    if(percentage > 0){
+      setInitialPlayStarted(true);
+     }
     setSeekedPercentage(percentage);
   };
 
@@ -126,6 +152,7 @@ function SearchFeed({ router }) {
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
+              setInitialPlayStarted(false);
             const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
             swiper?.slideTo(slideToId, 0);
             //   router.replace(`/search-feed/${id}`);
@@ -139,6 +166,9 @@ function SearchFeed({ router }) {
             const {
                 activeIndex, slides
             } = swiperCore;
+            setSeekedPercentage(0)
+            setInitialPlayStarted(false);
+
             const activeId = slides[activeIndex]?.id;
             setActiveVideoId(activeId);
             }}
@@ -154,32 +184,47 @@ function SearchFeed({ router }) {
               >
           <Video
              updateSeekbar={updateSeekbar}
-             socialId={item.getSocialId}
+             socialId={item?.getSocialId}
              url={item?.selected_video_url}
              id={item?.id}
-             comments={item.commentsCount}
-             likes={item.likesCount}
-             music={item.musicCoverTitle}
+             comments={item?.commentsCount}
+             likes={item?.likesCount}
+             music={item?.musicCoverTitle}
              musicTitle={item?.sound?.name}
-             profilePic={item.userProfilePicUrl}
-             userName={item.videoOwners?.userName}
-             musicCoverTitle={item.musicCoverTitle}
-             videoid={item.content_id}
-             hashTags={item.hashTags}
-             videoOwnersId={item.videoOwnersId}
-             thumbnail={item.thumbnailUrl}
-             canShop={shop.isShoppable}
-             shopCards={shop.data}
+             profilePic={item?.videoOwners?.profilePicImgUrl}
+             userName={item?.videoOwners?.userName}
+             musicCoverTitle={item?.musicCoverTitle}
+             videoid={item?.content_id}
+             hashTags={item?.hashtags}
+             videoOwnersId={item?.videoOwnersId}
+             thumbnail={item?.thumbnailUrl}
+             canShop={shop?.isShoppable}
+             shopCards={shop?.data}
              handleSaveLook={handleSaveLook}
              saveLook={saveLook}
-             saved={item.saveLook}
+             saved={item?.saveLook}
              activeVideoId={activeVideoId}
              comp="profile"
              profileFeed
+             loading={loading}
+             muted={muted}
           />
           </SwiperSlide>
           )})}
-      
+            <div
+                className="absolute top-1/2 justify-center w-screen flex"
+                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+              >
+             <CircularProgress/>
+              </div>
+              {<div
+                onClick={()=>setMuted(false)}
+                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
+                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+              >
+               
+                <Mute/>
+              </div>}
          </Swiper>
 
           {validItemsLength ? seekedPercentage

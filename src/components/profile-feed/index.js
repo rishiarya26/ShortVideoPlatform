@@ -12,6 +12,10 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
+import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import Mute from '../commons/svgicons/mute';
+import CircularProgress from '../commons/circular-loader'
 
 SwiperCore.use([Mousewheel]);
 
@@ -25,6 +29,17 @@ function ProfileFeed({ router }) {
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
+  const [loading, setLoading] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
+
+  const loaded = () => {
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  }, []);
 
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
@@ -46,6 +61,9 @@ function ProfileFeed({ router }) {
   const validItemsLength = items?.length > 0;
 
   const updateSeekbar = percentage => {
+    if(percentage > 0){
+      setInitialPlayStarted(true)
+    }
     setSeekedPercentage(percentage);
   };
 
@@ -102,6 +120,7 @@ function ProfileFeed({ router }) {
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               swiper?.slideTo(slideToId, 0);
               router.replace(`/profile-feed/${id}`);
+              setInitialPlayStarted(false)
             }}
             draggable="true"
             spaceBetween={0}
@@ -112,6 +131,8 @@ function ProfileFeed({ router }) {
               const {
                 activeIndex, slides
               } = swiperCore;
+              setSeekedPercentage(0)
+              setInitialPlayStarted(false)
               if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                 slides[activeIndex].firstChild.firstChild.currentTime = 0
               }
@@ -151,12 +172,28 @@ function ProfileFeed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="profile"
                       profileFeed
+                      loading={loading}
+                      muted={muted}
                     />
 
                   </SwiperSlide>
                 )
               )
             }
+               <div
+                className="absolute top-1/2 justify-center w-screen flex"
+                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+              >
+             <CircularProgress/>
+              </div>
+              {<div
+                onClick={()=>setMuted(false)}
+                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
+                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+              >
+               
+                <Mute/>
+              </div>}
           </Swiper>
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>

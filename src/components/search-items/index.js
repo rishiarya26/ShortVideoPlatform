@@ -80,6 +80,14 @@ const SearchItems = ({router,type})=>{
         Router.push(`/search/${value}`);
     }
 
+//     const onSearchHistoryDelete =(e) =>{
+// console.log(e.currentTarget.id)
+//       const index = searchHistory.findIndex((data)=> data === e?.currentTarget?.id);
+//       const finalData = searchHistory.splice(index,1);
+//       setSearchHistory(finalData);
+//       console.log(finalData)
+//     }
+
     useEffect(()=>{ 
         try{
             const searchHistory = localStorage.get('search-suggestions-history');
@@ -112,7 +120,7 @@ const SearchItems = ({router,type})=>{
                    <Clock/>
                    <p className="pl-2">{result}</p>
                </div>
-           <Close />
+          {/* <div id={result} onClick={onSearchHistoryDelete}> <Close /></div> */}
            </div>
            </div>
         ))}
