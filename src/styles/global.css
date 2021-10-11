@@ -162,3 +162,6 @@ img{
     height: 100%;
     object-fit: cover;
   }
+  .cmbd_cat_tabs::-webkit-scrollbar , .cmbd_body::-webkit-scrollbar   {
+    display: none;
+    }

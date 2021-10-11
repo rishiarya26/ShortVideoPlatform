@@ -27,7 +27,7 @@ return (
       objectfit="cover"
       >
       <source
-         src="https://z5shorts.akamaized.net/2021/8/27/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_1536.mp4?hdnea=st=1633580236~exp=1633594636~acl=/*~hmac=9080090dd9431f2db4841620fd44a31edf15095adc1f036486a5a6edc2f32303"
+         src="https://z5shorts.akamaized.net/2021/8/27/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_1536.mp4?hdnea=st=1633927552~exp=1633941952~acl=/*~hmac=60edb50fe8cfc30c8240673177204f2bd3f85fca2385c78ed4b08de8d396d277"
          type="video/mp4"
          />
       </video>
@@ -44,7 +44,7 @@ return (
          <Close/>
       </div>
    </div>
-   <div className="flex w-4/12 h-screen bg-white flex-col">
+   <div className="flex w-4/12 h-screen overflow-hidden bg-white flex-col">
       <div className="head-sec flex ">
          <div className="videoFooter__text w-full p-6 pb-2">
             <div className="flex justify-between items-center pb-2">
@@ -73,7 +73,7 @@ return (
             </div>
          </div>
       </div>
-      <div className="flex px-6 py-2 justify-between">
+      <div className="flex px-6 py-2 justify-between border-b-2 border-gray-100">
          <div className="flex">
             <div className="pr-4">
                <Like />
@@ -89,12 +89,12 @@ return (
             <EmbedIcon />
          </div>
       </div>
-      <div className="container w-full h-full bg-white relative flex">
-         <div className="cmbd_iframe flex flex-col bg-white box-border h-full w-full">
+      <div className="container w-full h-full bg-white relative flex w-3/4">
+         <div className="cmbd_iframe flex flex-col bg-white box-border h-full w-full pb-48">
             <div className="cmbd_tabs flex w-full justify-around px-4 py-2 items-center">
                <div className="cmbd_look_tab flex justify-center cursor-pointer">
                   In this video
-                  <span className="flex justify-center items-center text-sm rounded-full bg-black text-white p-1 ml-2"> 10</span>
+                  <span className="flex justify-center items-center text-sm rounded-full bg-black text-white p-1 px-2 ml-2"> 10</span>
                </div>
                {/* <div class="cmbd_tab_pipe">
                   |
@@ -104,23 +104,23 @@ return (
                   <span> 10</span>
                </div> */}
             </div>
-            <div className="cmbd_body p-4 flex flex-col overflow-scroll">
+            <div className="cmbd_body p-4 py-2 flex flex-col overflow-scroll">
                <div className="cmbd_charm_card relative flex p-2 rounded-sm mb-2 shadow flex-col">
                   <div className="cmbd_tab_charm flex flex-col relative p-2 rounded-sm" id="Media_charm_2257127" data-title="Sarla Arora">
                      <div className="cmbd_tab_charm_title mb-1">
-                        <p className="cmbd_charm_title text-left w-full text-black">
+                        <p className="cmbd_charm_title text-left w-full text-black text-sm">
                            Sarla Arora featuring 
-                           <span className="cmbd_title_bond font-semibold">
+                           <span className="cmbd_title_bond font-semibold ml-1 text-sm">
                            Supriya Shukla
                            </span>
                         </p>
                      </div>
                      <div className="cmbd_tab_charm_disp flex w-full">
-                        <div className="cmbd_disp_img  h-16 flex rounded-sm overflow-hidden">
+                        <div className="cmbd_disp_img  h-16 w-16 flex rounded-sm overflow-hidden">
                            <img className="charm-card-img " data-src="https://assets2.charmboard.com/ik-seo/im/lc/2257127/2257127.jpg?tr=cm-extract:w-150" id="charm-image_2257127" src="https://assets2.charmboard.com/ik-seo/im/lc/2257127/2257127.jpg?tr=cm-extract:w-150" />
                         </div>
-                        <div className="cmbd_card_img flex flex-col w-48">
-                           <div className="charm-related-products-wrapper-nm w-48">
+                        <div className="cmbd_card_img flex flex-col w-44">
+                           <div className="charm-related-products-wrapper-nm w-44">
                               <img className="cld-responsive" data-src="" data-width="200" src="https://assets2.charmboard.com/x_0,y_0,h_100,ar_1,r_5,bo_5px_solid_rgb:ffffff,g_north_west,q_auto:best,c_thumb,e_sharpen/l_im:lk:2257348/fl_layer_apply,h_100,ar_1,x_140,y_0,r_5,bo_5px_solid_rgb:ffffff,g_north_west,q_auto:best,c_thumb,e_sharpen/l_im:lk:2257349/fl_layer_apply,h_100,ar_1,x_280,y_0,r_5,bo_5px_solid_rgb:ffffff,g_north_west,q_auto:best,c_thumb,e_sharpen/w_200,dpr_2.0,r_5,bo_5px_solid_rgb:ffffff,g_north_west,q_auto:best,c_thumb,e_sharpen/im/lk/2257347.jpg" />
                            </div>
                            <a onClick="alert('added to look')" className="cmbd_add_to_my_looks text-blue-400 cursor-pointer text-xs pl-1">Add to my look</a>
