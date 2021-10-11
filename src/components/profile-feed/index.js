@@ -30,9 +30,14 @@ function ProfileFeed({ router }) {
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
 
-  const dataFetcher = () => getProfileVideos({ id, type });
+
+  const dataFetcher = () => getProfileVideos({ id, type:'all' });
   const onDataFetched = data => {
-    data && setItems(data?.data);
+    let items = data?.data;
+    if(type === "liked"){
+      items = data?.data?.filter((item)=>(item?.shoppable === true));
+    }
+    data && setItems(items);
     data && setActiveVideoId(videoId);
   };
 

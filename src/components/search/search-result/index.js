@@ -43,6 +43,8 @@ function SearchResult({router}) {
    setSelectedIndex(compNo)
  }
 
+//  console.log("si",selectedIndex)
+
   return (
     <div>
       <div className="h-screen  w-screen flex flex-col ">

@@ -43,7 +43,7 @@ export const generateUUID = persist => {
 };
 
 
-export const share = (id, videoActiveIndex, toTrackMixpanel) => {
+export const share = (id, videoActiveIndex=null, toTrackMixpanel=null) => {
  
   console.log(id)
   // const url = document?.location?.href;
@@ -53,8 +53,8 @@ export const share = (id, videoActiveIndex, toTrackMixpanel) => {
   // console.log(`https://${domain}/video/${id}`)
   // console.log(finalUrl)
   if (navigator.share) {
+    toTrackMixpanel && videoActiveIndex && toTrackMixpanel(videoActiveIndex,'share');
    try{ 
-    // toTrackMixpanel && toTrackMixpanel(videoActiveIndex,'share');
     const url = document?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;

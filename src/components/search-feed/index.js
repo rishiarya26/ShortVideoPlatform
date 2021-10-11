@@ -46,7 +46,7 @@ function SearchFeed({ router }) {
   }
 
   const transformResponse = (data) =>{  
-    const feedData = data.filter((content) => (content.widgetName === `#${ref}`));
+    const feedData = data.filter((content) => (content.widgetName === `#${ref}` || content.widgetName === `${ref}`));
     const [content = []] = feedData;
     const {widgetList= []} = content;
     const finalTData = []
@@ -144,7 +144,9 @@ function SearchFeed({ router }) {
             }}
         >
     {   items?.map(
-            item => (
+            (item,id) => {
+              if(id > 5) return null;
+              return(
                 <SwiperSlide
                 key={item?.id}
                 id={item?.id}
@@ -160,7 +162,7 @@ function SearchFeed({ router }) {
              music={item.musicCoverTitle}
              musicTitle={item?.sound?.name}
              profilePic={item.userProfilePicUrl}
-             userName={`@${item.videoOwners?.userName}`}
+             userName={item.videoOwners?.userName}
              musicCoverTitle={item.musicCoverTitle}
              videoid={item.content_id}
              hashTags={item.hashTags}
@@ -176,7 +178,7 @@ function SearchFeed({ router }) {
              profileFeed
           />
           </SwiperSlide>
-          ))}
+          )})}
       
          </Swiper>
 

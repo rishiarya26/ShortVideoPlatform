@@ -26,6 +26,8 @@ import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
 import { share } from '../../utils/app';
 import useDevice, { devices } from '../../hooks/use-device';
+import fallbackUser from "../../../public/images/users.png"
+import Img from '../commons/image';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -88,7 +90,7 @@ function VideoSidebar({
 
   const handleProfileClick = () => {
     router.push({
-      pathname: '/users/[pid]',
+      pathname: '/profile/[pid]',
       query: { pid: videoOwnersId }
     });
   };
@@ -101,15 +103,17 @@ function VideoSidebar({
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className="relative py-2 px-3 text-center justify-end flex">
+      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
-          <img
-            alt="profile-pic"
-            className="usrimg w-10 h-10 rounded-full"
-            src={profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
+          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+          <Img
+            title="Hipi"
+            data={profilePic}
+            fallbakck={fallbackUser?.src}
           />
+          </div>
           <div
-          onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "follow"})}
+          onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})}
             className={`${
               type === 'feed' ? 'block' : 'hidden'
             } absolute bottom-0`}

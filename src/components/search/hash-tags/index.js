@@ -5,6 +5,7 @@ import ComponentStateHandler, { useFetcher } from "../../commons/component-state
 import Loader from "./loader";
 import Error from "./error";
 import Hash from "../../commons/svgicons/hash";
+import useTranslation from "../../../hooks/use-translation";
 // import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
@@ -13,6 +14,7 @@ const LoadComp = () => (<Loader />);
 
 function HashTags({item}) {
   const [items, setItems] = useState();
+  const {t} = useTranslation();
 
     const onDataFetched=(data)=>{
       setItems(data?.data);
@@ -43,7 +45,7 @@ function HashTags({item}) {
                 </div> */}
              
              <div className="flex flex-col w-full ">
-                 {items?.map((item, id)=>(
+                 {items?.length > 0 ? items.map((item, id)=>(
                  <div key={id}  className="flex justify-between my-4 items-center">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
@@ -57,7 +59,9 @@ function HashTags({item}) {
                             2k views
                         </div>
                        </div>
-                       )) }
+                       )):
+                       <div className="flex w-full h-36 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
+                       }
                  </div>
           </div>
         </div>

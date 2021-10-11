@@ -1,9 +1,11 @@
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 // import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import { Loading } from './loading';
+import fallbackShop from '../../../public/images/shop.png';
 
 function ProductCards({
   shopCards, videoId, comp, loading
@@ -37,7 +39,7 @@ function ProductCards({
               // eslint-disable-next-line no-undef
               onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
             >
-              <Img data={data} height={120} width={120} />
+              <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
             </div>
           ))
             : (

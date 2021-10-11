@@ -88,9 +88,9 @@ function HashTag({router}) {
               <p className="font-medium text-lg">{details?.hashtagName}</p>
               <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
             </div>
-            <div className="flex  border-2 border-gray-300 p-2">
+            <div className="flex items-center border-2 border-gray-300 p-1">
               <Save />
-              <p className="pl-2 font-medium">Add to favorites</p>
+              <p className="pl-2 text-sm font-medium">Add to favorites</p>
             </div>
           </div>
         </div>

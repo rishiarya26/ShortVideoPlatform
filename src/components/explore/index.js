@@ -18,6 +18,10 @@ import Like from '../commons/svgicons/like-outlined';
 import { numberFormatter } from '../../utils/convert-to-K';
 import detectDeviceModal from "../open-in-app"
 import useDrawer from '../../hooks/use-drawer';
+import { toLower } from 'lodash';
+import dynamic from 'next/dynamic';
+import fallbackUsers from '../../../public/images/users.png';
+import fallbackVideos from '../../../public/images/video.png';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -127,7 +131,8 @@ function Explore() {
 
   const toHashtagDetails = (hashTag)=>{
     hashTag = trimHash(hashTag);
-    router.push(`/hashtag/${hashTag}`);
+    const tHashtag = toLower(hashTag)
+    router.push(`/hashtag/${tHashtag}`);
   }
 
   useEffect(()=>{
@@ -151,7 +156,7 @@ function Explore() {
         <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 ">
            {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
              return(
-            <div key={id} onClick={()=>router.push(`/tag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
+            <div key={id} onClick={()=>router.push(`/hashtag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
                  <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
             </div>
            )})}
@@ -187,11 +192,11 @@ function Explore() {
                      if(id > 5) return null;
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
-                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120'/>
-                        <div className="absolute bottom-1 left-1 text-white flex items-center">
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
+                        <div className="absolute bottom-1 left-1 text-white text-xs flex items-center">
         <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}
       </div>
-      <div className="absolute bottom-1 right-1 text-white flex items-center">
+      <div className="absolute bottom-1 right-1 text-white flex text-xs items-center">
         <Like/>{numberFormatter(d?.video?.lCount) || numberFormatter(d?.video?.likeCount)}
       </div>
                       </div>
@@ -214,10 +219,10 @@ function Explore() {
                          if(id > 5) return null;
                         return (
                           <>
-                          <div key={id} onClick={()=>router.push(`/users/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} onClick={()=>router.push(`/profile/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
-                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120'/>
-                                </div>
+                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120' fallback={fallbackUsers?.src}/>
+                                 </div>
                                 <p className="text-xs pt-2 truncate max-w-20v  text-center">{d?.user?.userName}</p>
                           </div>
                           </>

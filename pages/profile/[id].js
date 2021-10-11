@@ -52,13 +52,15 @@ export default function Hipi(params) {
         }}
       />
       <Users
-        followers={item.followers}
-        following={item.following}
-        totalLikes={item.totalLikes}
-        userHandle={item.userHandle}
-        profilePic={item.profilePic}
-        firstName={item.firstName}
-        id={item.id}
+        followers={item?.followers}
+        following={item?.following}
+        totalLikes={item?.totalLikes}
+        userHandle={item?.userHandle}
+        profilePic={item?.profilePic}
+        firstName={item?.firstName}
+        lastName={item?.lastName}
+        id={item?.id}
+        bio={item?.bio}
         type="others"
       />
     </>

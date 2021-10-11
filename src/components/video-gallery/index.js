@@ -14,6 +14,7 @@ const LoadComp = () => (<Loading />);
 export default function VideoGallery({
   items, status, retry, userId='', type = 'all', page ='profile', hashTag='', isFetching
 }) {
+
   const { t } = useTranslation();
   const router = useRouter();
 

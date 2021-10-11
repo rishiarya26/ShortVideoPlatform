@@ -16,6 +16,8 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
+import Img from '../commons/image';
+import fallbackUser from '../../../public/images/users.png' 
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -26,7 +28,7 @@ const detectDeviceModal = dynamic(
 );
 
 function Users({
-  userHandle, profilePic, followers, following, totalLikes, firstName, id, router, type
+  userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio=''
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
@@ -76,13 +78,14 @@ function Users({
   };
 
   const onLikedVideosTab = selected => {
-    setSelectedTab(selected);
-    setVideoData([]);
+    // setSelectedTab(selected);
+    // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+  const dataFetcher = () => getProfileVideos({ id, type: 'all' });
   // eslint-disable-next-line no-unused-vars
-  const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
+  const [fetchState, retry, data] = useFetcher(dataFetcher);
+  // const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
   console.log(data)
 
   useEffect(() => {
@@ -128,12 +131,10 @@ function Users({
     function: {
       others: <>
         <button 
+        onClick={()=>show('',detectDeviceModal, 'extraSmall')}
         // onClick={handleFollow} 
         className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
           {t('FOLLOW')}
-        </button>
-        <button className="font-semibold text-sm border rounded-sm px-2 py-1">
-          --
         </button>
       </>,
       self: <>
@@ -142,9 +143,6 @@ function Users({
             Edit Profile
           </button>
         {/* </Link> */}
-        <button className="font-semibold text-sm border rounded-sm px-2 py-1">
-          --
-        </button>
       </>
     },
     tabs: {
@@ -175,6 +173,13 @@ function Users({
     }
   };
 
+  console.log(videoData?.items?.filter((data)=>(data?.shoppable === true)))
+
+  const toShowData = {
+    all : videoData?.items,
+    liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
+  }
+
   return (
     <div>
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
@@ -183,15 +188,15 @@ function Users({
         </div>
         <div className="font-bold">{userHandle}</div>
         <div className="p-4 h-full flex items-center justify-center">
-          { info.menu.notification[type] }
+          {/* { info.menu.notification[type] } */}
         </div>
       </div>
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <img src={profilePic} alt="PP" className="object-cover" />
+            <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
           </div>
-          <p className="font-medium p-2 text-sm">{firstName}</p>
+          <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
           <div className="flex flex-col items-center">
@@ -210,6 +215,9 @@ function Users({
         <div className="p-4 h-full flex items-center justify-center">
           {info.function[type]}
         </div>
+        <div className="p-4 px-12 text-gray-400 text-sm text-center h-full flex items-center justify-center">
+          {bio}
+        </div>
       </div>
       <div className="tabs flex justify-around  border-t-2 border-grey-600" />
       <UserTab
@@ -218,8 +226,9 @@ function Users({
         selected={selectedTab}
         onLikedVideosTab={onLikedVideosTab}
       />
+   
       <VideoGallery
-        items={videoData?.items}
+        items={toShowData?.[selectedTab]}
         status={videoData?.status}
         retry={retry && retry}
         userId={id}
@@ -228,6 +237,8 @@ function Users({
         isFetching={isFetching}
         // fetchMoreListItems={fetchMoreListItems}
       />
+     
+
     </div>
   );
 }

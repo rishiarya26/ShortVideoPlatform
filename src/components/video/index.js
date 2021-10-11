@@ -156,7 +156,7 @@ function Video(props) {
         saved={props.saved}
         profileFeed={props?.profileFeed}
         videoId={props.id}
-        videoActiveIndex={props.videoActiveIndex}
+        videoActiveIndex={props?.videoActiveIndex}
         toTrackMixpanel={props?.toTrackMixpanel}
       />
 

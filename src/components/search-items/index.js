@@ -155,7 +155,7 @@ const SearchItems = ({router,type})=>{
               type="text"
               autoComplete="off"
               name="Search"
-              value={searchTerm && searchTerm}
+              value={searchTerm}
               placeholder="Search" 
               onClick={()=>setShowSuggestions(true)}
             />
