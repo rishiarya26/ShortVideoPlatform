@@ -49,9 +49,9 @@ export default function VideoGallery({
       </p>
     </>,
     liked: <>
-      <p className="font-semibold">No Liked Videos</p>
+      <p className="font-semibold">No Shoppable Videos</p>
       <p className="text-center text-sm text-gray-500 my-2">
-        Videos Liked by this user will appear here
+        Shoppable videos of this user will appear here
       </p>
     </>
   };
