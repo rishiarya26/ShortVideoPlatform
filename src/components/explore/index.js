@@ -22,7 +22,7 @@ import { toLower } from 'lodash';
 import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
-import trimHash from '../../utils/string'
+import { trimHash } from '../../utils/string';
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -126,7 +126,7 @@ function Explore() {
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
-    hashTag = trimHash(hashTag);
+    hashTag = trimHash  (hashTag);
     router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
@@ -195,11 +195,11 @@ function Explore() {
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
                         <div className="absolute bottom-1 left-1 text-white text-xs flex items-center">
-        <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}
-      </div>
-      <div className="absolute bottom-1 right-1 text-white flex text-xs items-center">
-        <Like/>{numberFormatter(d?.video?.lCount) || numberFormatter(d?.video?.likeCount)}
-      </div>
+                          <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}
+                        </div>
+                        <div className="absolute bottom-1 right-1 text-white flex text-xs items-center">
+                          <Like/>{numberFormatter(d?.video?.lCount) || numberFormatter(d?.video?.likeCount)}
+                        </div>
                       </div>
                     );
                   })}

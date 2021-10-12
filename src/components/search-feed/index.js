@@ -20,6 +20,7 @@ import CircularProgress from '../commons/circular-loader'
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { inject } from '../../analytics/async-script-loader';
 import Mute from '../commons/svgicons/mute';
+import { numberFormatter } from '../../utils/convert-to-K';
 
 
 SwiperCore.use([Mousewheel]);
@@ -188,7 +189,7 @@ function SearchFeed({ router }) {
              url={item?.selected_video_url}
              id={item?.id}
              comments={item?.commentsCount}
-             likes={item?.likesCount}
+             likes={numberFormatter(item?.likeCount)}
              music={item?.musicCoverTitle}
              musicTitle={item?.sound?.name}
              profilePic={item?.videoOwners?.profilePicImgUrl}

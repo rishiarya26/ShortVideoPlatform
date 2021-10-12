@@ -88,7 +88,7 @@ function HashTag({router}) {
               <p className="font-medium text-lg">{details?.hashtagName}</p>
               <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
             </div>
-            <div className="flex items-center border-2 border-gray-300 p-1">
+            <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1">
               <Save />
               <p className="pl-2 text-sm font-medium">Add to favorites</p>
             </div>
