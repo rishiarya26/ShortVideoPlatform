@@ -22,6 +22,7 @@ import { toLower } from 'lodash';
 import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
+import trimHash from '../../utils/string'
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -113,10 +114,10 @@ function Explore() {
   toRetry = retry;
   const validateData = data?.length > 0;
 
-  const trimHash = (hashTag) =>{
-    hashTag = hashTag.replace(/^\#+|\#+$/g, '');
-    return hashTag
-  }
+  // const trimHash = (hashTag) =>{
+  //   hashTag = hashTag.replace(/^\#+|\#+$/g, '');
+  //   return hashTag
+  // }
 
   const toUserList = (value)=>{
     const hashTag = trimHash(value);
@@ -191,7 +192,7 @@ function Explore() {
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                      if(id > 5) return null;
                     return (
-                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
+                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
                         <div className="absolute bottom-1 left-1 text-white text-xs flex items-center">
         <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}

@@ -13,6 +13,11 @@ import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
+import { inject } from '../../analytics/async-script-loader';
+import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import CircularProgress from '../commons/circular-loader'
+import Mute from '../commons/svgicons/mute';
+
 
 SwiperCore.use([Mousewheel]);
 
@@ -26,6 +31,19 @@ function HashTagFeed({ router }) {
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
+  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
+  const [muted, setMuted] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const loaded = () => {
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    // const guestId = getItem('guest-token');
+  }, []);
+
 
   const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
@@ -42,6 +60,9 @@ function HashTagFeed({ router }) {
   const validItemsLength = items?.length > 0;
 
   const updateSeekbar = percentage => {
+    if(percentage > 0){
+      setInitialPlayStarted(true);
+     }
     setSeekedPercentage(percentage);
   };
 
@@ -88,13 +109,14 @@ function HashTagFeed({ router }) {
     >
       <>
         <div style={{ height: `${videoHeight}px` }}>
-          <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
+          <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4">
             <Back />
           </div>
           <Swiper
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
+              setInitialPlayStarted(false);
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               swiper?.slideTo(slideToId, 0);
               router.replace(`/hashtag-feed/${item}`);
@@ -108,6 +130,7 @@ function HashTagFeed({ router }) {
               const {
                 activeIndex, slides
               } = swiperCore;
+              setInitialPlayStarted(false);
               const activeId = slides[activeIndex]?.id;
               setActiveVideoId(activeId);
             }}
@@ -144,12 +167,29 @@ function HashTagFeed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="profile"
                       profileFeed
+                      muted={muted}
+                      loading={loading}
+                      initialPlayStarted={initialPlayStarted}
                     />
 
                   </SwiperSlide>
                 )
               )
             }
+              <div
+                className="absolute top-1/2 justify-center w-screen flex"
+                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+              >
+             <CircularProgress/>
+              </div>
+              {<div
+                onClick={()=>setMuted(false)}
+                className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
+                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+              >
+               
+                <Mute/>
+              </div>}
           </Swiper>
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>

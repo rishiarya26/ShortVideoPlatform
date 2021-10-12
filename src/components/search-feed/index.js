@@ -145,7 +145,7 @@ function SearchFeed({ router }) {
     >
       <>
         <div style={{ height: `${videoHeight}px` }}>
-          <div onClick={handleBackClick} className="fixed z-10 w-full p-4">
+          <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4">
             <Back />
           </div>
             <Swiper
@@ -219,7 +219,7 @@ function SearchFeed({ router }) {
               </div>
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
+                className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
               >
                

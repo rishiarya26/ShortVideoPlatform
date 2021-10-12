@@ -10,6 +10,7 @@ import Img from "../../commons/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import fallbackUsers from '../../../../public/images/users.png';
+import { trimHash } from "../../../utils/string";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -30,6 +31,11 @@ const TopItems = ({item, redirectTab}) =>{
     //  const fetchCounts = (data) =>{
     //   return numberFormatter(data);
     //  } 
+
+    const toHashtag =(value)=>{
+      const trimmedHash = trimHash(value)
+      router?.push(`/hashtag/${trimmedHash}`)
+    }
 
      setRetry = retry && retry;
     return (
@@ -85,7 +91,7 @@ const TopItems = ({item, redirectTab}) =>{
              
                  <div className="flex min-w-full overflow-x-auto no_bar">
                  {data?.items?.hashtags?.map((item, id)=>(
-                 <div onClick={()=>router.push(`/hashtag/${item?.hashtag}`)} key={id}  className="m-1 flex relative">
+                 <div onClick={()=>toHashtag(item?.hashtag)} key={id}  className="m-1 flex relative">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
@@ -114,7 +120,7 @@ const TopItems = ({item, redirectTab}) =>{
                 </div>
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                    {data?.items?.videos?.map((item, id)=>(
-                    <div onClick={()=>router.push(`/video/${item?.id}`)} key={id} className="bg-gray-300 m-1 min-w-28 min-h-38 relative">
+                    <div onClick={()=>router.push(`/video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 min-w-28 min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

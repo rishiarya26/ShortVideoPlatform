@@ -13,7 +13,7 @@ export const ShareComp = ({ videoId, type='normal'}) => {
   // const value = useDevice(devices, [type.desktop, type.mobile]);
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       {' '}
 { type === 'profile' ?  <ShareOutline/> :
       (

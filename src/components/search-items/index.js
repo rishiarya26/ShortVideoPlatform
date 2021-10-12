@@ -111,7 +111,7 @@ const SearchItems = ({router,type})=>{
       
            <div  className="p-3 flex w-full flex justify-between">
            <p className="font-semibold">Recent Searches</p>
-           <p className="text-gray-400">Clear All</p>
+           {/* <p className="text-gray-400">Clear All</p> */}
            </div>
            {searchHistory?.map((result,id)=>(
            <div key={id} className="flex flex-col w-full p-3 bg-white">

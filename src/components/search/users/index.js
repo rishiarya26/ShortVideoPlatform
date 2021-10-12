@@ -58,7 +58,7 @@ const Users = ({item, type = 'normal', router}) =>{
            <div>
            {heading[type]}
                  {items?.length > 0 ? items.map((item, id)=>(
-               <>
+               <span key={item?.id}>
                   <div onClick={()=>router.push(`/profile/${item?.id}`)} key={id} className="flex p-2 min-w-3/5 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                           <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
@@ -70,7 +70,7 @@ const Users = ({item, type = 'normal', router}) =>{
                     </div>
                   </div>
                  {followButton[type]}
-              </>
+              </span>
                  )): 
                  <div className="flex w-full h-1/3 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
                  }

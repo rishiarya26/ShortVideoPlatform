@@ -23,6 +23,10 @@ img{
 } */
 /* body{
 } */
+.video-card img, .trending_card img{
+  height: 100%;
+}
+
 .Video_sheet{
     /* scroll-snap-type: y mandatory; */
     height: 100vh;

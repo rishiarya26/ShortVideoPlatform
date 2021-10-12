@@ -6,6 +6,8 @@ import Loader from "./loader";
 import Error from "./error";
 import Hash from "../../commons/svgicons/hash";
 import useTranslation from "../../../hooks/use-translation";
+import { trimHash } from "../../../utils/string";
+import { useRouter } from "next/router";
 // import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
@@ -15,6 +17,7 @@ const LoadComp = () => (<Loader />);
 function HashTags({item}) {
   const [items, setItems] = useState();
   const {t} = useTranslation();
+  const router = useRouter();
 
     const onDataFetched=(data)=>{
       setItems(data?.data);
@@ -22,6 +25,11 @@ function HashTags({item}) {
      
      const dataFetcher = ()=> item && getHashTags({keyword: item})
      const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);
+
+     const toHashtag =(value)=>{
+      const trimmedHash = trimHash(value)
+      router?.push(`/hashtag/${trimmedHash}`)
+    }
 
      setRetry = retry && retry;
     return (
@@ -46,7 +54,7 @@ function HashTags({item}) {
              
              <div className="flex flex-col w-full ">
                  {items?.length > 0 ? items.map((item, id)=>(
-                 <div key={id}  className="flex justify-between my-4 items-center">
+                 <div key={id} onClick={()=>toHashtag(item?.hashtag)}  className="flex justify-between my-4 items-center">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
