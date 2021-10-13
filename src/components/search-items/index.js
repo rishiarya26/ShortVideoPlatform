@@ -153,6 +153,13 @@ const SearchItems = ({router,type})=>{
         }
     }
 
+    const onKeyboardEnter =(e) =>{
+        //it triggers by pressing the enter key
+        if (e?.keyCode === 13) {
+            handleSearch();
+        }
+    }
+
     return(
         <div className="relative h-20 bg-white w-full bg-white">
             <div className="flex relative bg-white p-4 items-center">
@@ -166,6 +173,7 @@ const SearchItems = ({router,type})=>{
               value={searchTerm}
               placeholder="Search" 
               onClick={()=>setShowSuggestions(true)}
+              onKeyPress={onKeyboardEnter}
             />
             <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
                 <RightArrow/>

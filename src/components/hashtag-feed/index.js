@@ -109,7 +109,7 @@ function HashTagFeed({ router }) {
     >
       <>
         <div style={{ height: `${videoHeight}px` }}>
-          <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4">
+          <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
           <Swiper
