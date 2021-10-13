@@ -24,6 +24,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
+import Landscape from '../landscape'
 import Mute from '../commons/svgicons/mute';
 import {
   SeoMeta,
@@ -535,6 +536,7 @@ console.log('error',e)
           <div className="playkit-player" />
         </div>
       </div>
+      <Landscape/>
     </>
     </ComponentStateHandler>
 

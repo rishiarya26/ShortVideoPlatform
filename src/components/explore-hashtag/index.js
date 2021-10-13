@@ -83,12 +83,12 @@ function HashTag({router}) {
           <div className="w-28v flex h-28v bg-gray-300 relative rounded-full" >
             <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
           </div>
-          <div className="flex flex-col px-4 justify-between">
+          <div className="flex flex-col px-4 ">
             <div className="flex flex-col">
               <p className="font-medium text-lg">{details?.hashtagName}</p>
-              <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
+              {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
-            <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1">
+            <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
               <Save />
               <p className="pl-2 text-sm font-medium">Add to favorites</p>
             </div>

@@ -20,6 +20,7 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
+import Landscape from '../landscape';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -249,7 +250,7 @@ function Users({
         // fetchMoreListItems={fetchMoreListItems}
       />
      
-
+<Landscape/>
     </div>
   );
 }

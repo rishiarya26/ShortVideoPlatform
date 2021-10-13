@@ -16,13 +16,15 @@ import DynamicImg from '../commons/image-dynamic';
 import Play from '../commons/svgicons/play-outlined';
 import Like from '../commons/svgicons/like-outlined';
 import { numberFormatter } from '../../utils/convert-to-K';
-import detectDeviceModal from "../open-in-app"
+import detectDeviceModal from "../open-in-app";
+import Landscape from '../landscape';
 import useDrawer from '../../hooks/use-drawer';
 import { toLower } from 'lodash';
 import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
 import { trimHash } from '../../utils/string';
+
 
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
@@ -154,7 +156,7 @@ function Explore() {
           <div />
         </div>
         {/* <div className="poster w-full mt-40" />  */}
-        <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 ">
+        <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 overflow-y-hidden">
            {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
              return(
             <div key={id} onClick={()=>toHashtagDetails(data?.displayName)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
@@ -236,6 +238,7 @@ function Explore() {
         {/* {isFetching && <h1 className='bold font-black'>Loading more items...</h1>} */}
       </div>
       <FooterMenu selectedTab="search"/>
+      <Landscape/>
     </ComponentStateHandler>
   );
 }
