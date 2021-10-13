@@ -128,9 +128,9 @@ const SearchItems = ({router,type})=>{
 
        suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
-         <div key={id} className="flex flex-col w-full p-3 bg-white">
+         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionTitle)} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
-                 <div onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionTitle)} className="flex items-center ">
+                 <div  className="flex items-center ">
                      <SearchXs/>
                      <p className="pl-2">{suggestion?.suggestionTitle}</p>
                  </div>
@@ -168,7 +168,7 @@ const SearchItems = ({router,type})=>{
             <input
               onChange={onTermChange}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
-              type="text"
+              type="search"
               autoComplete="off"
               name="Search"
               value={searchTerm}
@@ -176,9 +176,9 @@ const SearchItems = ({router,type})=>{
               onClick={()=>setShowSuggestions(true)}
               onKeyPress={onKeyboardEnter}
             />
-            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
+            {/* {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
             <Close />
-            </button>}
+            </button>} */}
             </div>
            {showSuggestions && info.list[type]}
         </div>

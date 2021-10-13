@@ -116,7 +116,7 @@ function VideoSidebar({
           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})}
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } absolute -bottom-2`}
+            } absolute -bottom-2 p-1`}
           >
             <Follow />
           </div>

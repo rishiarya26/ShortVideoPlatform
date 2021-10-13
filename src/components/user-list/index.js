@@ -7,6 +7,8 @@ import { useState } from 'react';
 import Img from '../commons/image';
 import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
+import useDrawer from '../../hooks/use-drawer';
+import detectDownload from '../open-in-app'
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
@@ -14,7 +16,8 @@ const LoadComp = () => (<Loading />);
 
 function UserList({router}) {
   const [items, setItems] = useState({})
-  const {ref} =  router?.query
+  const {ref} =  router?.query;
+  const {show} = useDrawer();
 
   const transformResponse = (data) =>{  
     const feedData = data.filter((content) => (content.widgetName === `${ref}`));
@@ -59,7 +62,7 @@ function UserList({router}) {
             </div>
           </div>
           <div className="flex items-center">
-            <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
+            <button onClick={()=>show('',detectDownload,'extraSmall')} className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
               Follow
             </button>
           </div>

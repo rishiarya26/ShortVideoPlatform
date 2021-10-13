@@ -24,6 +24,7 @@ import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
 import { trimHash } from '../../utils/string';
+import Cart from '../commons/svgicons/cart';
 
 
 let toRetry;
@@ -175,7 +176,7 @@ function Explore() {
           return (
             content?.widgetContentType === 'Video' ? (
               <div key={id} className="p-2 tray">
-                <div className="w-full flex mb-2 justify-between">
+                <div onClick={()=>toHashtagDetails(content?.widgetName)} className="w-full flex mb-2 justify-between">
                   <div className="flex">
                     <div className="p-2 rounded-full border-2 border-gray-300 mr-2">
                       <Hash />
@@ -185,7 +186,7 @@ function Explore() {
                       <p className="text-sm text-gray-400">trending</p>
                     </div>
                   </div>
-                  <div onClick={()=>toHashtagDetails(content?.widgetName)} className="flex items-center justify-center">
+                  <div  className="flex items-center justify-center">
                     <RightArrow />
                   </div>
                 </div>
@@ -196,6 +197,9 @@ function Explore() {
                     return (
                       <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
+                        {d?.video?.shoppable === true && <div className="absolute top-2 right-2 z-1">
+                           <Cart/>
+                         </div>}
                         <div className="absolute bottom-1 left-1 text-white text-xs flex items-center">
                           <Play/>{numberFormatter(d?.video?.vCount) || numberFormatter(d?.video?.viewCount)}
                         </div>
