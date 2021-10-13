@@ -5,8 +5,8 @@ import queue from '../queue';
 
 export async function init() {
   // TODO get this from env
-  console.log(process.env.APP_ENV)
-  const mixpanelID = process.env.APP_ENV === 'production' ? MIXPANEL_PROD : MIXPANEL_DEV
+  console.log(process?.env?.APP_ENV)
+  const mixpanelID = process?.env?.APP_ENV === 'production' ? MIXPANEL_PROD : MIXPANEL_DEV
   const mixpanelId = mixpanelID;
   console.log(mixpanelID)
   // eslint-disable-next-line quotes

@@ -28,7 +28,7 @@ if(device === 'mobile'){
 }
 
 return(
-    <Home/>
+   <>{device === 'desktop' && <Home/>}</>
 )
 }
 
