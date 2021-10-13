@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import useDrawer from '../../hooks/use-drawer';
 import detectDownload from '../open-in-app'
+import { numberFormatter } from '../../utils/convert-to-K';
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
@@ -57,8 +58,8 @@ function UserList({router}) {
               </div>
             <div className="flex flex-col justify-between pl-4 pb-2">
               <p className="font-medium text-base text-gray-700">{data?.user?.userName} </p>
-              <p className="text-sm text-gray-400">{data?.user?.firstName}{' '}{data?.user?.firstName}</p>
-              <p className="text-sm text-gray-400">{data?.user?.followers} Followers</p>
+              <p className="text-sm text-gray-400">{data?.user?.firstName}{' '}{data?.user?.lastName}</p>
+              <p className="text-sm text-gray-400">{numberFormatter(data?.user?.followers)} Followers</p>
             </div>
           </div>
           <div className="flex items-center">

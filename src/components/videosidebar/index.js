@@ -28,6 +28,7 @@ import { share } from '../../utils/app';
 import useDevice, { devices } from '../../hooks/use-device';
 import fallbackUser from "../../../public/images/users.png"
 import Img from '../commons/image';
+import { numberFormatter } from '../../utils/convert-to-K';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -150,7 +151,7 @@ function VideoSidebar({
             >
               <Like />
             </div>
-            <p className="text-sm text-center">{likes}</p>
+            <p className="text-sm text-center">{numberFormatter(likes)}</p>
           </div>
         {/* )} */}
 
