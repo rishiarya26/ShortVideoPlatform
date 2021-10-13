@@ -20,7 +20,6 @@ const useInfiniteScroll = (callback) => {
 
   function handleScroll() {
     // console.log((window?.scrollY) ,"<=", (document?.documentElement?.offsetHeight-window?.screen?.availHeight))
-    console.log((window?.screen?.availHeight - 93),"+",window?.scrollY,'=',window.innerHeight+document?.documentElement?.scrollTop,"<=",document?.documentElement?.offsetHeight-1 ,"||",isFetching)
     // if ((window?.scrollY) !== (document?.documentElement?.offsetHeight-window?.screen?.availHeight) || isFetching) return;
 
     if(device && device === 'android'){

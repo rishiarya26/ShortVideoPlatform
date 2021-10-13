@@ -43,11 +43,11 @@ function SearchFeed({ router }) {
     setLoading(false);
   };
 
-  const { id } = router?.query;
+  const { id : videoId = items?.[0]?.content_id } = router?.query;
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
 
-  const { videoId = items?.[0]?.content_id } = router?.query;
+  // const { videoId = items?.[0]?.content_id } = router?.query;
 
 
   useEffect(() => {
@@ -87,7 +87,6 @@ function SearchFeed({ router }) {
           normal : data,
           withHash : transformResponse(data)
       }
-      console.log(info[type])
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
@@ -154,7 +153,7 @@ function SearchFeed({ router }) {
             direction="vertical"
             onSwiper={swiper => {
               setInitialPlayStarted(false);
-            const slideToId = swiper?.slides?.findIndex(data => data?.id === id);
+            const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
             swiper?.slideTo(slideToId, 0);
             //   router.replace(`/search-feed/${id}`);
             }}

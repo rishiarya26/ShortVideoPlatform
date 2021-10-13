@@ -45,7 +45,6 @@ function Users({
     setIsFetching(false);
   }
 
-  useEffect(()=>{console.log(' in profile')},[])
   // async function fetchMoreListItems() {
   //  try{
   //   const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
@@ -91,7 +90,6 @@ function Users({
   // eslint-disable-next-line no-unused-vars
   const [fetchState, retry, data] = useFetcher(dataFetcher);
   // const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
-  console.log(data)
 
   useEffect(() => {
     const videos = {};

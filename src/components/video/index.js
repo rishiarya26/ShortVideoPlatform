@@ -165,20 +165,20 @@ function Video(props) {
         ? (!props.saveLook
           && (
             <ProductWidget
-              shopCards={props.shopCards}
-              handleSaveLook={props.handleSaveLook}
-              videoId={props.activeVideoId}
-              loading={props.loading}
+              shopCards={props?.shopCards}
+              handleSaveLook={props?.handleSaveLook}
+              videoId={props?.activeVideoId}
+              loading={props?.loading}
             />
           )
         ) : (
           <ProductCards
-            shopCards={props.shopCards}
-            handleSaveLook={props.handleSaveLook}
-            videoId={props.activeVideoId}
+            shopCards={props?.shopCards}
+            handleSaveLook={props?.handleSaveLook}
+            videoId={props?.activeVideoId}
             profileFeed={props.profileFeed}
             comp="profile"
-            loading={props.loading}
+            loading={props?.loading}
           />
         )
       )}

@@ -130,7 +130,11 @@ function HashTagFeed({ router }) {
               const {
                 activeIndex, slides
               } = swiperCore;
+              setSeekedPercentage(0)
               setInitialPlayStarted(false);
+              if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
+                slides[activeIndex].firstChild.firstChild.currentTime = 0
+              }
               const activeId = slides[activeIndex]?.id;
               setActiveVideoId(activeId);
             }}

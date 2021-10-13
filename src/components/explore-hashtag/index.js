@@ -28,6 +28,8 @@ function HashTag({router}) {
   const {item = ''} = router?.query;
   const {show} = useDrawer();
 
+  console.log(item)
+
   async function showPopUp(){
     show('', detectDeviceModal, 'extraSmall');
     setIsFetching(false);

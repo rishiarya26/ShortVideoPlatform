@@ -5,6 +5,7 @@ import MusicBlack from '../commons/svgicons/music-black';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { trimHash } from '../../utils/string';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -39,6 +40,14 @@ function VideoFooter({
     embed : <MusicBlack/>,
     single : <Music />,
   }
+
+  const toHashTag =(hashtag)=>{
+    let finalValue = hashtag;
+    if(hashtag?.includes('#')){
+      finalValue = trimHash(hashtag)
+    }
+    router?.push(`/hashtag/${finalValue}`)
+  }
   return (
     <div
       className={type[comp]}
@@ -55,7 +64,7 @@ function VideoFooter({
         <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (
-              <span onClick={()=>router?.push(`/hashtag/${data?.name}`)} key={id}>{`#${data?.name}${' '}`}</span>
+              <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))}
         </div>
         {/* {musicCoverTitle}</p> */}
