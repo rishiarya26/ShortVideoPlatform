@@ -154,8 +154,9 @@ const SearchItems = ({router,type})=>{
     }
 
     const onKeyboardEnter =(e) =>{
+        console.log("kp",e.keyCode, e.which, e)
         //it triggers by pressing the enter key
-        if (e?.keyCode === 13) {
+        if (e?.which === 13) {
             handleSearch();
         }
     }
