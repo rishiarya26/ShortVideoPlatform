@@ -43,6 +43,8 @@ function Users({
     show('', detectDeviceModal, 'extraSmall');
     setIsFetching(false);
   }
+
+  useEffect(()=>{console.log(' in profile')},[])
   // async function fetchMoreListItems() {
   //  try{
   //   const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
@@ -62,11 +64,11 @@ function Users({
   //  }
   // }
 
-  useEffect(()=>{
-    window.onunload = function () {
-      window?.scrollTo(0, 1);
-    }
-  },[])
+  // useEffect(()=>{
+  //   window.onunload = function () {
+  //     window?.scrollTo(0, 1);
+  //   }
+  // },[])
 
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);

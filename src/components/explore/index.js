@@ -131,9 +131,9 @@ function Explore() {
   }
 
   const toHashtagDetails = (hashTag)=>{
-    hashTag = trimHash(hashTag);
-    const tHashtag = toLower(hashTag)
-    router.push(`/hashtag/${tHashtag}`);
+    let tHashtag = trimHash(hashTag);
+    tHashtag = toLower(tHashtag);
+    router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
   }
 
   useEffect(()=>{
@@ -157,7 +157,7 @@ function Explore() {
         <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 ">
            {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
              return(
-            <div key={id} onClick={()=>router.push(`/hashtag/${data?.displayName}`)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
+            <div key={id} onClick={()=>toHashtagDetails(data?.displayName)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
                  <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
             </div>
            )})}
@@ -220,7 +220,7 @@ function Explore() {
                          if(id > 5) return null;
                         return (
                           <>
-                          <div key={id} onClick={()=>router.push(`/profile/${d?.user?.id}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} onClick={()=>router.push({pathname: '/profile/[pid]',query: { pid: d?.user?.id }})} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>
