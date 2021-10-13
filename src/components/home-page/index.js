@@ -23,7 +23,7 @@ if(device === 'mobile'){
       router?.push({pathname : `/video/${id}`});
       return null;
     }
-    router.push('/feed/for-you')
+    router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})
     return null;
 }
 
