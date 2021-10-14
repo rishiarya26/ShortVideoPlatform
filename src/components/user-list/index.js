@@ -43,7 +43,7 @@ function UserList({router}) {
   >
     <div>
       <div className="headbar w-full flex h-16 shadow-md bg-white items-center p-4 justify-center">
-        <div onClick={()=>router.back()} className="absolute left-2 h-16 top-0 flex items-center">
+        <div onClick={()=>router?.back()} className="absolute left-2 h-16 top-0 flex items-center">
           <Back />
         </div>
         <div className="font-bold">{items?.widgetName}</div>
@@ -52,7 +52,7 @@ function UserList({router}) {
      <div className="w-full flex flex-col p-4">
      {items?.widgetList?.map((data,id)=>(
         <div key={id} className="user_card flex justify-between py-2 "> 
-          <div onClick={()=>router.push(`/profile/${data?.user?.id}`)} className="flex">
+          <div onClick={()=>router?.push(`/profile/${data?.user?.id}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
               <Img data={data?.user?.profilePicImgUrl}  alt='image' fallback={fallbackUsers?.src}/>
               </div>

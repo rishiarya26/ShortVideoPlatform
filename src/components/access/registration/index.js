@@ -77,7 +77,7 @@ const Registration = ({ router }) => {
     try {
       const response = await registerUser(data);
       if (response.status === 'success') {
-        router.push('/feed/for-you');
+        router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });
       }
     } catch (e) {
@@ -95,7 +95,7 @@ const Registration = ({ router }) => {
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={router.back} />
+      <BackButton back={router?.back} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>

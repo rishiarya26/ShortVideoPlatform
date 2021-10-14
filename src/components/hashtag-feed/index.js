@@ -67,7 +67,7 @@ function HashTagFeed({ router }) {
   };
 
   const handleBackClick = () => {
-    router.back();
+    router?.back();
   };
 
   const getCanShop = async () => {

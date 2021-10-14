@@ -8,7 +8,7 @@ export default function Hipi() {
   // console.log('latest build')
 
   if(device === 'desktop'){
-    router.push('/');
+    router?.push('/');
     return null;
   }
 

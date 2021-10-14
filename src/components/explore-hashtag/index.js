@@ -77,7 +77,7 @@ function HashTag({router}) {
     ErrorComp={ErrorComp}
   >
     <div>
-      <div onClick={()=>router.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
+      <div onClick={()=>router?.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
         <Back />
       </div>
       <div className="w-full h-full flex flex-col p-4"> 

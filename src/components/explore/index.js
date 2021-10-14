@@ -124,19 +124,19 @@ function Explore() {
 
   const toUserList = (value)=>{
     const hashTag = trimHash(value);
-    router.push(`/user-list?ref=${hashTag}`);
+    router?.push(`/user-list?ref=${hashTag}`);
   }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
     hashTag = trimHash  (hashTag);
-    router.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
+    router?.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
   const toHashtagDetails = (hashTag)=>{
     let tHashtag = trimHash(hashTag);
     tHashtag = toLower(tHashtag);
-    router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
+    router?.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
   }
 
   useEffect(()=>{
@@ -226,7 +226,7 @@ function Explore() {
                          if(id > 5) return null;
                         return (
                           <>
-                          <div key={id} onClick={()=>router.push({pathname: '/profile/[pid]',query: { pid: d?.user?.id }})} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} onClick={()=>router?.push({pathname: '/profile/[pid]',query: { pid: d?.user?.id }})} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>

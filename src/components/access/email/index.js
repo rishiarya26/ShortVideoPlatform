@@ -22,7 +22,7 @@ export default function Email({
         finalData.type = 'email';
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router.push({
+          router?.push({
             pathname: '/feed/for-you'
           });
           showSnackbar({ message: t('SUCCESS_LOGIN') });
@@ -36,7 +36,7 @@ export default function Email({
     signup: async e => {
       e.preventDefault();
       setPending(true);
-      router.push({
+      router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });

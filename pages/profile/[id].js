@@ -14,12 +14,14 @@ export default function Hipi(params) {
     status
   } = params;
 
+  console.log("print",item)
+
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
   return (
     <>
-      <SeoMeta
+      {/* <SeoMeta
         data={{
           title: item.userHandle,
           image: item.profilePic,
@@ -50,7 +52,7 @@ export default function Hipi(params) {
             site_name: 'Hipi'
           }
         }}
-      />
+      /> */}
       <Users
         followers={item?.followers}
         following={item?.following}
@@ -72,23 +74,25 @@ export async function getServerSideProps(ctx) {
   const {
     req, params
   } = ctx;
-  const uri = new URL(req.url, `http://${req.headers.host}`).href;
+  // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
   try {
+    console.log("called api")
     data = await getUserProfile(id);
   } catch (e) {
+    console.log("error")
     data = {
-      status: e.status,
-      errorCode: e.errorCode,
+      status: e?.status || 400,
+      errorCode: e?.errorCode || 400,
       'http-status': e['http-status'],
-      message: e.message
+      message: e?.message || 'something went wrong'
     };
   }
 
   return {
     props: {
-      uri,
+      // uri,
       ...data
     }
   };

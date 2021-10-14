@@ -12,7 +12,7 @@ const Auth = ({ router, authType }) => {
   const [loginOption, setLoginOption] = useState(router?.query?.option);
 
   const { t } = useTranslation();
-  const { type } = router.query;
+  const { type } = router?.query;
 
   const heading = {
     login: 'LOGIN',
@@ -42,13 +42,13 @@ const Auth = ({ router, authType }) => {
       updatePhoneData.countryCode = countryCode;
       updatePhoneData.mobile = phoneNo;
       setPhoneData(updatePhoneData);
-      router.replace(urlReplace[authType]);
+      router?.replace(urlReplace[authType]);
     }
   }, []);
 
   const toggle = selected => {
     setLoginOption(selected);
-    selected && router.replace(`/login/phone?option=${selected}`);
+    selected && router?.replace(`/login/phone?option=${selected}`);
   };
 
   const getMappings = (e, data) => {
@@ -81,7 +81,7 @@ const Auth = ({ router, authType }) => {
       <div>
         <div className="w-full flex h-16  bg-white items-center">
           <div className="p-4 h-full flex items-center justify-center">
-            <BackButton back={() => router.push('/feed/for-you')} />
+            <BackButton back={() => router?.push('/feed/for-you')} />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">{t(heading[authType])}</div>
         </div>

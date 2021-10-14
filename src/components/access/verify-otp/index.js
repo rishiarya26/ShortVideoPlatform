@@ -38,7 +38,7 @@ const VerifyOTP = ({ router }) => {
     try {
       const response = await verifyOTP(payload);
       if (response.data.status === 200) {
-        router.push(types[ref]);
+        router?.push(types[ref]);
         showSnackbar({ message: t('SUCCESS_LOGIN') });
       }
     } catch (error) {
@@ -47,7 +47,7 @@ const VerifyOTP = ({ router }) => {
   };
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={() => router.push({
+      <BackButton back={() => router?.push({
         pathname: `/${ref}/phone`,
         query: { option: 'otp', mobile }
       })}

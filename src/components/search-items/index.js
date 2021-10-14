@@ -1,4 +1,4 @@
-import Router, { withRouter } from "next/router";
+import { withRouter } from "next/router";
 import Clock from "../commons/svgicons/clock";
 import Close from "../commons/svgicons/close-black"
 import SearchXs from "../commons/svgicons/search-xs";
@@ -61,7 +61,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        Router.push(`/search/${searchTerm}`);
+        router?.push(`/search/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -77,7 +77,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        Router.push(`/search/${value}`);
+        router?.push(`/search/${value}`);
     }
 
 //     const onSearchHistoryDelete =(e) =>{
@@ -149,7 +149,7 @@ const SearchItems = ({router,type})=>{
         back : {
             // if show suggestions is true then show back button on explore 
             explore : showSuggestions && <div onClick={()=>setShowSuggestions(false)}><Back/></div>,
-            results : <div onClick={()=>router.back()} className="flex items-center"><Back/></div>
+            results : <div onClick={()=>router?.back()} className="flex items-center"><Back/></div>
         }
     }
 

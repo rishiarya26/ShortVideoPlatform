@@ -27,7 +27,7 @@ export default function Mobile({
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router.push({
+          router?.push({
             pathname: '/feed/for-you'
           });
           showSnackbar({ message: t('SUCCESS_LOGIN') });
@@ -41,7 +41,7 @@ export default function Mobile({
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
-          router.push({
+          router?.push({
             pathname: '/verify-otp',
             query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
           });
@@ -63,7 +63,7 @@ export default function Mobile({
       } catch (e) {
         if (e.errorCode === 404) {
           showSnackbar({ message: t('SUCCESS_OTP') });
-          router.push({
+          router?.push({
             pathname: '/verify-otp',
             query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
           });

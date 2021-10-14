@@ -9,7 +9,7 @@ const device = getItem('device-type');
 const type = router?.query?.type;
 const id = type && (router?.query?.id || router?.query?.contentId);
 
-console.log("router",router);
+// console.log("router",router);
 
 // if(id?.length >0){
 //     console.log("id",id, id.length);

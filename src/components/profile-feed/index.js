@@ -68,7 +68,7 @@ function ProfileFeed({ router }) {
   };
 
   const handleBackClick = () => {
-    router.back();
+    router?.back();
   };
 
   const getCanShop = async () => {
@@ -119,7 +119,7 @@ function ProfileFeed({ router }) {
             onSwiper={swiper => {
               const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               swiper?.slideTo(slideToId, 0);
-              router.replace(`/profile-feed/${id}`);
+              router?.replace(`/profile-feed/${id}`);
               setInitialPlayStarted(false)
             }}
             draggable="true"

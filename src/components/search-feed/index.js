@@ -103,7 +103,7 @@ function SearchFeed({ router }) {
   };
 
   const handleBackClick = () => {
-    router.back();
+    router?.back();
   };
 
   const getCanShop = async () => {

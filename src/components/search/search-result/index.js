@@ -21,7 +21,7 @@ function SearchResult({router}) {
   useEffect(()=>{
     const item = router?.query?.item;
     setSearchTerm(item)
-  },[router.asPath])
+  },[router?.asPath])
  
   const redirectTab = (selected) =>{
     setSelectedIndex(selected)

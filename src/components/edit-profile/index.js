@@ -18,7 +18,7 @@ const EditProfile = ({ router }) => {
   const userData = data?.data;
 
   const handleBackClick = () => {
-    router.back();
+    router?.back();
   };
 
   return (
