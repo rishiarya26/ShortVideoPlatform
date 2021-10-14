@@ -62,8 +62,8 @@ function UserList({router}) {
               <p className="text-sm text-gray-400">{numberFormatter(data?.user?.followers)} Followers</p>
             </div>
           </div>
-          <div className="flex items-center">
-            <button onClick={()=>show('',detectDownload,'extraSmall')} className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
+          <div onClick={()=>show('',detectDownload,'extraSmall')} className="flex items-center">
+            <button  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
               Follow
             </button>
           </div>
