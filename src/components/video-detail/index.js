@@ -27,7 +27,7 @@ return (
       objectfit="cover"
       >
       <source
-         src="https://z5shorts.akamaized.net/2021/8/27/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_1536.mp4?hdnea=st=1633927552~exp=1633941952~acl=/*~hmac=60edb50fe8cfc30c8240673177204f2bd3f85fca2385c78ed4b08de8d396d277"
+         src="https://z5shorts.akamaized.net/2021/9/4/82752ae3-33b9-4503-8a35-cbe6d6440df1/82752ae3-33b9-4503-8a35-cbe6d6440df1_1536.mp4?hdnea=st=1634640919~exp=1634655319~acl=/*~hmac=f7868428a1de01ad986cd9603f77ef0c8f03a33706775cf11687f52a91baa298"
          type="video/mp4"
          />
       </video>
