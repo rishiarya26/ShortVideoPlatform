@@ -93,17 +93,21 @@ function Feed({ router }) {
  const {show} = useDrawer();
 
   const onDataFetched = data => {
-    if(data){
+    if(data?.data?.length > 0){
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         //set first three item in showItems
-        toUpdateShowData.push(data?.data?.[0]);
-        toUpdateShowData.push(data?.data?.[1]);
-        toUpdateShowData.push(data?.data?.[2]);
+        data?.data?.[0] && toUpdateShowData.push(data?.data?.[0]);
+        data?.data?.[1] && toUpdateShowData.push(data?.data?.[1]);
+        data?.data?.[2] && toUpdateShowData.push(data?.data?.[2]);
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
         // setSeoItem(data?.data[0]);
+    }else{
+      setItems([]);
+      setToShowItems([]);
+      setActiveVideoId(null);
     }
   }
 
@@ -155,6 +159,7 @@ function Feed({ router }) {
   }
 
   const validItemsLength = toShowItems?.length > 0;
+  console.log(toShowItems, validItemsLength)
   // setRetry = retry && retry;
 
   const updateSeekbar = (percentage, currentTime, duration) => {
@@ -412,12 +417,12 @@ function Feed({ router }) {
                   </div>
                 ))
               }
-                 <div
+              {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>
-              </div>
+              </div>}
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
@@ -448,11 +453,11 @@ function Feed({ router }) {
 
   const showLoginFollowing = <LoginFollowing toTrackMixpanel={toTrackMixpanel} videoActiveIndex={videoActiveIndex}/>;
   
-  // const toShowFollowing = useAuth(showLoginFollowing, swiper);
+  const toShowFollowing = useAuth(showLoginFollowing, swiper);
 
   const info = {
     'for-you' : swiper,
-    'following' : showLoginFollowing
+    'following' : toShowFollowing
   }
 
   let hostname;

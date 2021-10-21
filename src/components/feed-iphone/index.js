@@ -459,12 +459,12 @@ console.log('error',e)
                   </div>
                 ))
               }
-              <div
+              {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: ( seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
                 <CircularProgress/>
-              </div>
+              </div>}
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
@@ -472,7 +472,7 @@ console.log('error',e)
               >
                 <Play/>
               </div> */}
-              {<div
+              {validItemsLength && <div
                 onClick={()=>setMuted(false)}
                 className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
@@ -493,11 +493,11 @@ console.log('error',e)
 
   const showLoginFollowing = <LoginFollowing toTrackMixpanel={toTrackMixpanel} videoActiveIndex={videoActiveIndex}/>;
   
-  // const toShowFollowing = useAuth(showLoginFollowing, swiper);
+  const toShowFollowing = useAuth(showLoginFollowing, swiper);
 
   const info = {
     'for-you' : swiper,
-    'following' : showLoginFollowing
+    'following' : toShowFollowing
   }
 
   let hostname;

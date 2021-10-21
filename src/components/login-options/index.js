@@ -25,7 +25,7 @@ export default function Login({ toggle, loading }) {
             </div>
           </div>
         </Link>
-        {/* <GoogleButton loading={loading}/> */}
+        <GoogleButton loading={loading}/>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

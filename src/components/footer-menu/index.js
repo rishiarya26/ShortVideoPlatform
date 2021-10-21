@@ -17,14 +17,15 @@ import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
+import { getItem } from '../../utils/cookie';
 
-// const detectDeviceModal = dynamic(
-//   () => import('../open-in-app'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();
@@ -37,6 +38,20 @@ const info ={
 />,
  noShop: null
 }
+
+const toShow = {
+  login :  ()=>show('', login, 'medium'),
+  profile : ()=>{
+   try{ 
+     const userId = JSON.parse(getItem('user-id'));
+     router.push(`/profile/${userId}`)
+  }catch(e){
+     console.log('error occured while fetching user-id from cookies')
+  }
+  }
+}
+
+const chooseProfile = useAuth(toShow.login, toShow.profile);
 
   return (
     <div>
@@ -59,7 +74,7 @@ const info ={
                 <Add />
                 <p className="text-gray-400 text-xs mt-1.5">Create</p>
              </div>    
-      <div  onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "view profile"})} className="flex flex-col  items-center justify-between">
+      <div  onClick={chooseProfile} className="flex flex-col  items-center justify-between">
       {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5">Profile</p></>} 
       
       </div>

@@ -176,9 +176,9 @@ const SearchItems = ({router,type})=>{
               onClick={()=>setShowSuggestions(true)}
               onKeyPress={onKeyboardEnter}
             />
-            {/* {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
+            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
             <Close />
-            </button>} */}
+            </button>}
             </div>
            {showSuggestions && info.list[type]}
         </div>

@@ -21,6 +21,7 @@ import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
 import Landscape from '../landscape';
+import AddUser from '../commons/svgicons/add-user';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -76,6 +77,7 @@ function Users({
 
   const { show } = useDrawer();
   const { t } = useTranslation();
+  const deviceType = getItem('device-type');
 
   const onTabChange = selected => {
     setSelectedTab(selected);
@@ -112,23 +114,38 @@ function Users({
   // }
 
   const info = {
-    menu: {
-      button: {
+    header: {
+      leftButton: {
         others: <Back />,
-        self: '++'
-      },
+        self: <AddUser/>       },
       notification: {
-        others: <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2
-           .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-          />
-        </svg>,
-        self: ''
-      },
-      settings: {
-        others: 'share',
-        self: 'setting & logout'
+        others:'' ,
+        self: <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_1962:147)">
+        <path d="M13.5799 11.8549L13.2999 11.7095C12.4599 11.0549 11.8999 10.0367 11.8999 9.01855V5.45492C11.8999 3.56401 10.9199 1.74583 9.30992 0.727646C7.90992 -0.217809 6.08992 -0.217809 4.68992 0.727646C3.07992 1.74583 2.09992 3.49128 2.09992 5.45492V8.94583C2.09992 10.0367 1.60992 10.9822 0.699922 11.6367L0.419922 11.8549C0.0699219 12.1458 -0.0700781 12.5822 -7.81268e-05 13.0186C0.139922 13.4549 0.559922 13.7458 0.979922 13.7458H4.19992C4.47992 14.9822 5.59992 15.9276 6.92992 15.9276C8.25992 15.9276 9.30992 14.9822 9.65992 13.7458H12.8799C13.3699 13.7458 13.7199 13.4549 13.8599 13.0186C14.0699 12.6549 13.9299 12.1458 13.5799 11.8549ZM6.99992 14.5458C6.50992 14.5458 6.01992 14.2549 5.80992 13.8186H8.25992C7.97992 14.2549 7.48992 14.5458 6.99992 14.5458ZM9.79992 12.364H4.19992H2.09992C3.00992 11.4913 3.49992 10.2549 3.49992 8.94583V5.45492C3.49992 4.0731 4.19992 2.69128 5.45992 1.96401C6.43992 1.30946 7.62992 1.30946 8.60992 1.96401C9.79992 2.69128 10.4999 4.00037 10.4999 5.45492V8.94583C10.4999 10.2549 10.9899 11.4186 11.8999 12.364H9.79992Z" fill="#161722"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1962:147">
+        <rect width="14" height="16" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg>
+        ,
+       },
+      rightButton: {
+        others:   
+      <div
+        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
+        className="flex relative py-2  px-3 text-center items-end flex-col"
+      >
+      <ShareComp type={'profile'}/>
+      </div>, 
+        self: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>
+        <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#161722"/>
+        <path d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#161722"/>
+        </svg>
+        
       }
     },
     function: {
@@ -142,7 +159,7 @@ function Users({
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "edit Profile"})}  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+          <button onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "edit Profile"})}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>
         {/* </Link> */}
@@ -183,23 +200,17 @@ function Users({
     liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
   }
 
-  const value = getItem('device-type');
-
   return (
     <div>
-      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-between">
-        <div onClick={handleBackClick} className="p-4 h-full flex items-center justify-center">
-          { info.menu.button[type] }
+      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+        <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
+          { info.header.leftButton[type] }
         </div>
-        <div className="font-bold">{userHandle}</div>
-        {/* <div className="p-4 h-full flex items-center justify-center"> */}
-        <div
-        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>shareProfile(id))}
-        className="flex relative py-2  px-3 text-center items-end flex-col"
-      >
-      <ShareComp type={'profile'}/>
-      </div>
-        {/* </div> */}
+        <div className="font-bold ">{userHandle}</div>
+        <div className="p-4 h-full flex items-center justify-between  w-1/4 absolute right-0 top-0">
+        { info.header.notification[type] }
+        { info.header.rightButton[type] }
+       </div>
       </div>
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">

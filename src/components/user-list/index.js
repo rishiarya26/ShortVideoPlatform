@@ -21,7 +21,7 @@ function UserList({router}) {
   const {show} = useDrawer();
 
   const transformResponse = (data) =>{  
-    const feedData = data.filter((content) => (content.widgetName === `${ref}`));
+    const feedData = data?.filter((content) => (content.widgetName === `${ref}`));
     const [tData = {}] = feedData;
     return tData;
   }

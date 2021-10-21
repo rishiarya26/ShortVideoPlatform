@@ -11,7 +11,8 @@ export default function Hipi(params) {
     data: item = {},
     errorCode,
     message,
-    status
+    status,
+    type
   } = params;
 
   console.log("print",item)
@@ -63,7 +64,7 @@ export default function Hipi(params) {
         lastName={item?.lastName}
         id={item?.id}
         bio={item?.bio}
-        type="others"
+        type={type && type}
       />
     </>
   );
@@ -76,6 +77,9 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
+  let type = 'others'
+  const userId = req?.cookies['user-id'];
+  userId && (userId === id) && (type = 'self')
   let data = {};
   try {
     console.log("called api")
@@ -92,6 +96,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
+      type,
       // uri,
       ...data
     }

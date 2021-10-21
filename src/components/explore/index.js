@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Mousewheel } from 'swiper';
 import Hash from '../commons/svgicons/hash';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { getSearchData } from '../../sources/explore';
@@ -25,6 +24,18 @@ import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
 import { trimHash } from '../../utils/string';
 import Cart from '../commons/svgicons/cart';
+import 'swiper/swiper.min.css'
+
+// modules styles
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+
+import SwiperCore, {
+  Autoplay,Pagination,Navigation
+} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 
 let toRetry;
@@ -158,12 +169,39 @@ function Explore() {
         </div>
         {/* <div className="poster w-full mt-40" />  */}
         <div className="explore_carousel flex min-w-full overflow-x-auto h-56v no_bar mt-16 overflow-y-hidden">
-           {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
+        <Swiper
+              draggable="true"
+              spaceBetween={0}
+              slidesPerView={1}
+              centeredSlides={true} 
+              autoplay={{
+                "delay": 2500,
+                "disableOnInteraction": false
+              }} 
+              pagination={{"clickable": true}} 
+              className="mySwiper crousal-swiper"
+            > 
+              {crousalItems?.length > 0  && crousalItems.map((data,id)=>
+                 (
+                  <SwiperSlide
+                    key={id}
+                  >
+                    <div 
+                     key={id} 
+                     id={id} 
+                     onClick={()=>toHashtagDetails(data?.displayName)} 
+                     className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
+                       <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
+                    </div>
+                  </SwiperSlide>
+               ))}
+          </Swiper>
+           {/* {crousalItems?.length > 0  && crousalItems.map((data,id)=>{
              return(
-            <div key={id} onClick={()=>toHashtagDetails(data?.displayName)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
+            <div key={id} id={id} onClick={()=>toHashtagDetails(data?.displayName)} className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
                  <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
             </div>
-           )})}
+           )})} */}
             {/* <div className=" carousel_item bg-green-300 m-0.5 min-w-full min-h-38 relative">
 
             </div>

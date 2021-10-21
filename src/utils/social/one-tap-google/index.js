@@ -15,7 +15,7 @@ const getToken = async(response)=>{
   const googleToken = response?.credential;
   await login(googleToken);
  } catch (error) {
-   if(error.code === 2){
+   if(error.code === 2){  
      await registerUser(response?.credential);
    }
    console.log(error)
