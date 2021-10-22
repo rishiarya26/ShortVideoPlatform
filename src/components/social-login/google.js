@@ -27,6 +27,7 @@ export const GoogleButton =({loading}) =>{
             window.gapi.auth2.init({
                 // TO-DO client id should come from env
                 client_id:'1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com'
+                
             })
         })
     }    

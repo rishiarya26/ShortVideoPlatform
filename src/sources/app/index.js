@@ -21,7 +21,7 @@ async function getLocaleData(locale = 'en-in') {
     return JSON.parse(fileContents);
   }
   try {
-    response = await get(`${getApiBasePath('app')}/i10n/${locale}.json`);
+    response = await get(`${getApiBasePath('app')}/i10n/${locale}.json`,null,{'content-type':'noHeaders'});
     return response.data;
   } catch (err) {
     return Promise.reject(err);

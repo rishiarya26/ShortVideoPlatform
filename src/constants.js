@@ -14,4 +14,7 @@ export const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.
 export const IOS_STORE = 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008';
 export const VERSION = '1.2.0';
 export const APP_NAME = 'HiPi';
-export const LANGUAGE = 'en'
+export const LANGUAGE = 'en';
+export const GOOGLE_CLIENT_ID_PREROD = '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_ID_LOCAL = '1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com';
+

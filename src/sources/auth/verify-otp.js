@@ -11,7 +11,7 @@ async function validateOTP({
   try {
     /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('otp')}/device/verifyotp_v1.php?phoneno=${mobile}&otp=${otp}&guest_token=${guestToken}&platform=${platform}&aid=${mobile}&lotame_cookie_id=${cookieId}&version=${version}`;
-    const resp = await get(apiPath);
+    const resp = await get(apiPath,null,{'content-type':'noHeaders'});
     resp.data.requestedWith = {
       mobile, otp, platform, guestToken
     };

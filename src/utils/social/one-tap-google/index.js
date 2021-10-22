@@ -1,3 +1,4 @@
+import { GOOGLE_CLIENT_ID_PREROD } from "../../../constants";
 import { login } from "../../../sources/social/google/login-one-tap"
 import { register } from "../../../sources/social/google/register-one-tap";
 
@@ -26,7 +27,7 @@ export const oneTapGoogle = () =>{
   try{
      google.accounts.id.initialize({
          //TO-DO clinet_id will come from env
-        client_id: '1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com',
+        client_id: GOOGLE_CLIENT_ID_PREROD,
         // client_id : '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com',
         callback: getToken
     })
