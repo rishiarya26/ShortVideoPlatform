@@ -12,7 +12,8 @@ export default function Hipi(params) {
     errorCode,
     message,
     status,
-    type
+    type,
+    tokens
   } = params;
 
   console.log("print",item)
@@ -54,7 +55,7 @@ export default function Hipi(params) {
           }
         }}
       /> */}
-      <Users
+      {tokens ? <Users
         followers={item?.followers}
         following={item?.following}
         totalLikes={item?.totalLikes}
@@ -65,7 +66,7 @@ export default function Hipi(params) {
         id={item?.id}
         bio={item?.bio}
         type={type && type}
-      />
+      /> : 'Forbidden'}
     </>
   );
 }
@@ -79,6 +80,10 @@ export async function getServerSideProps(ctx) {
   const { id } = params;
   let type = 'others'
   const userId = req?.cookies['user-id'];
+  let tokens = req?.cookies['tokens'];
+  if(!tokens){
+  tokens = null;
+  }  
   userId && (userId === id) && (type = 'self')
   let data = {};
   try {
@@ -97,6 +102,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       type,
+      tokens,
       // uri,
       ...data
     }

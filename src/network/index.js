@@ -33,6 +33,14 @@ const options = (methodName, body, headersOpt = {}) => {
         ...headersOpt
       }
     };
+    case 'json': return {
+      method: methodName,
+      ...body && { body: JSON.stringify(body) },
+      headers: {
+        Accept: 'application/json',
+        'content-type': 'application/json',
+      }
+    };
     case 'noHeaders': return {
       method: methodName,
       ...body && { body: JSON.stringify(body) },

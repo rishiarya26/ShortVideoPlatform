@@ -101,7 +101,7 @@ export default function Mobile({
       />
     </div>
     <div className="flex justify-between text-sm font-semibold mt-2 px-2">
-      <p>Forgot password?</p>
+      <p onClick={() => router.push('/forgot-password?type=mobile')}>Forgot password?</p>
       <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
     </div>
   </>,

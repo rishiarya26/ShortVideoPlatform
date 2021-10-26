@@ -4,7 +4,7 @@
 *{
     margin: 0;
     font-family: "Open Sans";   
-    letter-spacing: 1px!important;
+    font-weight: normal;
 }
 img{
   object-fit: cover;

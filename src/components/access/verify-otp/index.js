@@ -1,13 +1,18 @@
+/* eslint-disable react/no-unescaped-entities */
 import { withRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
+import { resetPasswordMobile } from '../../../sources/auth/forgot-pass-mobile';
 import { verifyOTP } from '../../../sources/auth/verify-otp';
+import { verifyUser } from '../../../sources/auth/verify-user';
 import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 
 const VerifyOTP = ({ router }) => {
   const [otp, setOtp] = useState('');
+  const [seconds, setSeconds] = useState(59);
+
   const { ref } = router?.query;
   const { mobile } = router?.query;
   const [countryCode, phone] = mobile?.split('-');
@@ -22,6 +27,10 @@ const VerifyOTP = ({ router }) => {
     signup: {
       pathname: '/registration',
       query: { mobile: phoneNo }
+    },
+    'forgot-password':{
+      pathname: '/reset-password',
+      query: { mobile: phoneNo, code : otp }
     }
   };
 
@@ -30,21 +39,102 @@ const VerifyOTP = ({ router }) => {
     setOtp(otp);
   };
 
-  const fetchData = async () => {
-    const payload = {
-      mobile: phoneNo,
-      otp
-    };
-    try {
-      const response = await verifyOTP(payload);
-      if (response.data.status === 200) {
-        router?.push(types[ref]);
-        showSnackbar({ message: t('SUCCESS_LOGIN') });
+  const fetchData = {
+    login: async () => {
+      const payload = {
+        mobile: phoneNo,
+        otp
+      };
+      try {
+        const response = await verifyOTP(payload);
+        if (response.data.status === 200) {
+          router?.push(types[ref]);
+          showSnackbar({ message: t('SUCCESS_LOGIN') });
+        }
+      } catch (error) {
+        showSnackbar({ message: t('INCORRECT_OTP') });
       }
-    } catch (error) {
-      showSnackbar({ message: t('INCORRECT_OTP') });
+    },
+    signup: async () => {
+      const payload = {
+        mobile: phoneNo,
+        otp
+      };
+      try {
+        const response = await verifyOTP(payload);
+        if (response.data.status === 200) {
+          router?.push(types[ref]);
+          showSnackbar({ message: t('SUCCESS_LOGIN') });
+        }
+      } catch (error) {
+        showSnackbar({ message: t('INCORRECT_OTP') });
+      }
+    },
+    'forgot-password': async () => {
+      // try {
+      //   const response = await resetPasswordMobile(mobile);
+      //   if (response.data.status === 200) {
+          router?.push(types[ref]);
+          // showSnackbar({ message: t('SUCCESS_LOGIN') });
+      //   }
+      // } catch (error) {
+      //   showSnackbar({ message: t('INCORRECT_OTP') });
+      // }
+    },
+      
+  }
+
+  const resendOtp ={
+    'forgot-password' : async() => {
+      try{
+        const response = await resetPasswordMobile(phoneNo);
+        if (response.data.code === 1) { 
+          showSnackbar({message : 'Otp sent Successfully'});
+          setSeconds(59);
+        }
+    }catch(e){
+        showSnackbar({message : 'Error sending otp'})
+    }}
+    ,
+    login : async()=>{
+     try{ 
+       const response = await verifyUser(phoneNo);
+       if (response.status === 'success') {
+        showSnackbar({message : 'Otp sent Successfully'});
+        setSeconds(59);
+      }}catch(e){
+        showSnackbar({message : 'Error sending otp'})
+     }
     }
-  };
+  }
+
+  const updateTimer = ()=>{
+    if(seconds > 0){
+        setSeconds(seconds-1);
+    }
+  }
+
+  useEffect(()=>{
+    if(seconds > 0){
+    setTimeout(updateTimer,1000);
+    }
+  })
+
+  // const fetchData = async () => {
+  //   const payload = {
+  //     mobile: phoneNo,
+  //     otp
+  //   };
+  //   try {
+  //     const response = await verifyOTP(payload);
+  //     if (response.data.status === 200) {
+  //       router?.push(types[ref]);
+  //       showSnackbar({ message: t('SUCCESS_LOGIN') });
+  //     }
+  //   } catch (error) {
+  //     showSnackbar({ message: t('INCORRECT_OTP') });
+  //   }
+  // };
   return (
     <div className="flex flex-col px-4 pt-10">
       <BackButton back={() => router?.push({
@@ -66,8 +156,11 @@ const VerifyOTP = ({ router }) => {
           onChange={handleOtpChange}
         />
       </div>
-      <div className="mt-10">
-        <SubmitButton fetchData={fetchData} text={t('VERIFY_OTP')} />
+      <div className="mt-10 mb-4">
+        <SubmitButton fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
+      </div>
+      <div className="text-gray-500">
+      {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold" onClick={resendOtp[ref]}>send again</span></>}
       </div>
     </div>
   );

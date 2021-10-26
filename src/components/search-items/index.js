@@ -9,6 +9,7 @@ import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
 import { Back } from "../commons/svgicons/back";
 import RightArrow from "../commons/svgicons/right-arrow";
+import SearchBlack from "../commons/svgicons/search-black";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
@@ -179,6 +180,8 @@ const SearchItems = ({router,type})=>{
             {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
             <Close />
             </button>}
+            <div className="absolute left-0 top-2 p-4">
+        <SearchBlack/>       </div>
             </div>
            {showSuggestions && info.list[type]}
         </div>

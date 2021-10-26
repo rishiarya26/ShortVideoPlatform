@@ -117,7 +117,8 @@ function Users({
     header: {
       leftButton: {
         others: <Back />,
-        self: <AddUser/>       },
+        self: ''}, 
+        // <AddUser/>       },
       notification: {
         others:'' ,
         self: <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,11 +141,13 @@ function Users({
       >
       <ShareComp type={'profile'}/>
       </div>, 
-        self: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        self: <div onClick={()=>router?.push('/profile-settings')}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>
         <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#161722"/>
         <path d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#161722"/>
         </svg>
+        </div>
         
       }
     },
@@ -208,7 +211,7 @@ function Users({
         </div>
         <div className="font-bold ">{userHandle}</div>
         <div className="p-4 h-full flex items-center justify-between  w-1/4 absolute right-0 top-0">
-        { info.header.notification[type] }
+        {/* { info.header.notification[type] } */}
         { info.header.rightButton[type] }
        </div>
       </div>
@@ -220,11 +223,11 @@ function Users({
           <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
-          <div className="flex flex-col items-center">
+          <div onClick={()=>router?.push(`/profile-detail/${id}?type=following`)} className="flex flex-col items-center">
             <p className="font-semibold text-sm">{numberFormatter(following)}</p>
             <p className="text-xs">Following</p>
           </div>
-          <div className="flex flex-col items-center px-9">
+          <div onClick={()=>router?.push(`/profile-detail/${id}?type=followers`)} className="flex flex-col items-center px-9">
             <p className="font-semibold text-sm">{numberFormatter(followers)}</p>
             <p className="text-xs">Followers</p>
           </div>

@@ -3,9 +3,14 @@ import List from '../commons/svgicons/list';
 import Terms from '../commons/svgicons/terms';
 import PrivacyIco from '../commons/svgicons/privacy';
 import Logout from '../commons/svgicons/logout';
+import { useRouter } from 'next/router';
+import { removeItem } from '../../utils/cookie';
+import useDialog from '../../hooks/use-dialog';
+import LogoutPopup from '../logout-popup';
 
-function ProfMenu() {
-
+function ProfileMenu() {
+const router = useRouter();
+const {show : showDialog} = useDialog();
   return (
     <>
     <div className="headbar w-full flex h-16 shadow-md bg-white items-center p-4 justify-center">
@@ -17,29 +22,26 @@ function ProfMenu() {
 <div className="flex flex-col p-4">
     <div className="flex flex-col">
       <div className="text-xs  py-3">ABOUT</div>
-      <div className="flex items-center py-3">
+      <div onClick={()=>router.push('/community-guidlines.html')} className="flex items-center py-3">
         <List/>
         <p className="text-base px-3">Community Guidelines</p>
       </div>
-      <div className="flex items-center py-3">
+      <div onClick={()=>router.push('/privacy-policy.html')} className="flex items-center py-3">
         <PrivacyIco/>
         <p className="text-base px-3">Privacy Policy</p>
       </div>
      
-      <div className="flex items-center py-3">
+      <div onClick={()=>router.push('/terms-conditions.html')} className="flex items-center py-3">
         <Terms/>
         <p className="text-base px-3">Terms of Use</p>
       </div>
-      <div className="flex items-center py-3">
+      <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
         <Logout/>
         <p className="text-base px-3">Logout</p>
       </div>
     </div>
 </div>
-
-      
-
     </>
   );
 }
-export default ProfMenu;
+export default ProfileMenu;

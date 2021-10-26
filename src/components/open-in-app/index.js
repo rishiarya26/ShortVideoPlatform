@@ -99,6 +99,7 @@ export default function DownloadAppWidget({text, setMuted}) {
             <p className="text-xs text-gray-500">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
+        <button onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-9 my-4 bg-hipired text-white">Open Hipi app</button>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
             <p onClick={()=>close()} className="text-base font-semibold text-hipired">Not now</p>

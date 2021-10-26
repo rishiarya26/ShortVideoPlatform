@@ -63,7 +63,11 @@ export default function Email({
         placeholder="Password"
       />
     </div>
-    <div className="flex justify-start text-sm font-semibold mt-2 px-2">
+    <div onClick={()=>router.push(
+      {pathname: '/forgot-password',
+       query : {type : 'email'}
+    }
+    )} className="flex justify-start text-sm font-semibold mt-2 px-2">
       {/* TO-DO  forgot password */}
       <p>Forgot password?</p>
     </div>
@@ -95,7 +99,7 @@ export default function Email({
           <button
             type="submit"
             disabled={pending}
-            className="bg-red-400 w-full px-4 py-2 text-white font-semibold relative"
+            className="bg-hipired w-full px-4 py-2 text-white font-semibold relative"
           >
             {' '}
             {submitText[type]}

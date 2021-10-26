@@ -18,14 +18,15 @@ import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
 import { getItem } from '../../utils/cookie';
+import login from "../auth-options"
 
-const login = dynamic(
-  () => import('../auth-options'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const login = dynamic(
+//   () => import('../auth-options'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();

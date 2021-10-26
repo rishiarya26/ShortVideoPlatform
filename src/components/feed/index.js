@@ -159,7 +159,7 @@ function Feed({ router }) {
   }
 
   const validItemsLength = toShowItems?.length > 0;
-  console.log(toShowItems, validItemsLength)
+  // console.log(toShowItems, validItemsLength)
   // setRetry = retry && retry;
 
   const updateSeekbar = (percentage, currentTime, duration) => {
