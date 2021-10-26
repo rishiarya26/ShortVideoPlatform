@@ -22,6 +22,8 @@ import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
 import Landscape from '../landscape';
 import AddUser from '../commons/svgicons/add-user';
+import useAuth from '../../hooks/use-auth';
+import login from "../auth-options"
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -32,13 +34,15 @@ const detectDeviceModal = dynamic(
 );
 
 function Users({
-  userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio=''
+  userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',
+  isFollow=false
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
   const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
+  const [isFollowing,setIsFollowing] = useState(isFollow);
 
 
   async function showPopUp(){
@@ -113,6 +117,18 @@ function Users({
   //   }
   // }
 
+  const followUser = async(followerId,userId, follow) =>{
+    const response = await toFollow({ userId:userId,followerId:followerId,follow:follow});
+    if(response){
+     setIsFollowing(!isFollowing);
+  } 
+  }
+
+  const userId = getItem('user-id');
+  const followFunc = !isFollowing;
+
+  const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))
+
   const info = {
     header: {
       leftButton: {
@@ -154,10 +170,10 @@ function Users({
     function: {
       others: <>
         <button 
-        onClick={()=>show('',detectDeviceModal, 'extraSmall')}
+        onClick={toShowFollow}
         // onClick={handleFollow} 
         className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
-          {t('FOLLOW')}
+          {isFollowing ? 'Following' : t('FOLLOW')}
         </button>
       </>,
       self: <>
@@ -203,6 +219,10 @@ function Users({
     liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
   }
 
+  const toShowFollowing = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=following`))
+  const toShowFollowers = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=followers`))
+
+
   return (
     <div>
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
@@ -223,11 +243,11 @@ function Users({
           <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
-          <div onClick={()=>router?.push(`/profile-detail/${id}?type=following`)} className="flex flex-col items-center">
+          <div onClick={toShowFollowing} className="flex flex-col items-center">
             <p className="font-semibold text-sm">{numberFormatter(following)}</p>
             <p className="text-xs">Following</p>
           </div>
-          <div onClick={()=>router?.push(`/profile-detail/${id}?type=followers`)} className="flex flex-col items-center px-9">
+          <div onClick={toShowFollowers} className="flex flex-col items-center px-9">
             <p className="font-semibold text-sm">{numberFormatter(followers)}</p>
             <p className="text-xs">Followers</p>
           </div>

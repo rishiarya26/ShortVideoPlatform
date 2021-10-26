@@ -10,8 +10,12 @@ const {showSnackbar} = useSnackbar();
 
   const logout = () => {
   try{
-      const removed = removeItem('tokens');
-      if(removed === true){
+    const url = window?.location?.href;
+    let domain = (new URL(url));
+    domain = domain?.hostname;
+      const removed = removeItem('tokens',{domain: domain});
+      const removedUserId = removeItem('user-id',{domain: domain});
+      if(removed === true && removedUserId === true){
       close();
       router?.push('/feed/for-you');
       }else{

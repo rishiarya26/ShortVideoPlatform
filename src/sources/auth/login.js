@@ -17,7 +17,7 @@ const login = async ({ accessToken, refreshToken }) => {
     const url = window?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;
-    console.log(domain);
+    console.log("cookie set domain",domain);
     const urlencoded = new URLSearchParams();
     urlencoded.append('zee5Token', accessToken);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;

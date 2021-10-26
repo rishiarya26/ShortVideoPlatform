@@ -9,7 +9,9 @@ import Loader from "./loader";
 import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import { useRouter } from "next/router";
-
+import useInfiniteScroll from "../../hooks/use-infinite-scroll";
+import detectDeviceModal from "../open-in-app"
+import useDrawer from "../../hooks/use-drawer";
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -33,6 +35,30 @@ async function search(userId,searchTerm,setItems) {
     const [searchTerm, setSearchTerm] = useState('');
     const [items,setItems] = useState([]);
     const [refreshList, setrefreshList] = useState(0);
+    const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
+  
+    const {show} = useDrawer();
+  
+    async function showPopUp() {
+      // try{
+      //  const response = await getSearchData({ offset: `${offset}` });
+      //  if(response?.data?.length > 0){
+      //    let updateData = [...data];
+      //    updateData = updateData?.concat(response?.data);
+      //    let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
+      //    sessionData = sessionData?.concat(response?.data);
+      //    window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
+      //    setData(updateData);
+      //    setOffset(offset+1);
+      
+      //  }else{
+      //   setIsFetching(false);
+      // if(offset === 2){
+        show('', detectDeviceModal, 'extraSmall');
+        setIsFetching(false);
+      //   setOffset(offset+1);
+    }
+
     const router = useRouter();
 
     const onTermChange=(term)=>{

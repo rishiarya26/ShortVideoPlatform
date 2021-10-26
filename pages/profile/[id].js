@@ -12,8 +12,7 @@ export default function Hipi(params) {
     errorCode,
     message,
     status,
-    type,
-    tokens
+    type
   } = params;
 
   console.log("print",item)
@@ -66,6 +65,7 @@ export default function Hipi(params) {
         id={item?.id}
         bio={item?.bio}
         type={type && type}
+        isFollow={item?.isFollowing}
       /> 
     </>
   );
@@ -99,7 +99,6 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       type,
-      tokens,
       // uri,
       ...data
     }

@@ -79,7 +79,7 @@ async function fetchUserFollower({ lang }) {
     return Promise.reject(err);
   }
 }
-async function fetchUserFollowing({ id, limit ='10', offset='1', type='Following', keyword='' }) {
+async function fetchUserFollowing({ id, limit ='30', offset='1', type='Following', keyword='' }) {
   let response = {};
   try {
     let tokens = getItem('tokens');
