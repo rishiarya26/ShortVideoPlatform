@@ -55,7 +55,7 @@ export default function Hipi(params) {
           }
         }}
       /> */}
-      {tokens ? <Users
+  <Users
         followers={item?.followers}
         following={item?.following}
         totalLikes={item?.totalLikes}
@@ -66,7 +66,7 @@ export default function Hipi(params) {
         id={item?.id}
         bio={item?.bio}
         type={type && type}
-      /> : 'Forbidden'}
+      /> 
     </>
   );
 }
@@ -81,10 +81,7 @@ export async function getServerSideProps(ctx) {
   let type = 'others'
   const userId = req?.cookies['user-id'];
   let tokens = req?.cookies['tokens'];
-  if(!tokens){
-  tokens = null;
-  }  
-  userId && (userId === id) && (type = 'self')
+  userId && (userId === id) && tokens && (type = 'self')
   let data = {};
   try {
     console.log("called api")

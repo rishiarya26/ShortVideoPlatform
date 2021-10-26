@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities*/
 import { useRouter, withRouter } from "next/router";
 import { useState } from "react";
 import useSnackbar from "../../../hooks/use-snackbar";
