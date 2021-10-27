@@ -48,7 +48,7 @@ export default function VideoGallery({
         {t('NO_VIDEOS_PUBLISHED')}
       </p>
     </>,
-    liked: <>
+    shoppable: <>
       <p className="font-semibold">No Shoppable Videos</p>
       <p className="text-center text-sm text-gray-500 my-2">
         Shoppable videos of this user will appear here

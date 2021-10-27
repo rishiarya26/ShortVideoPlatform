@@ -22,7 +22,7 @@ const {show : showDialog} = useDialog();
 <div className="flex flex-col p-4">
     <div className="flex flex-col">
       <div className="text-xs  py-3">ABOUT</div>
-      <div onClick={()=>router.push('/community-guidlines.html')} className="flex items-center py-3">
+      <div onClick={()=>router.push('/community-guidelines.html')} className="flex items-center py-3">
         <List/>
         <p className="text-base px-3">Community Guidelines</p>
       </div>

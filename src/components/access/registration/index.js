@@ -23,7 +23,7 @@ const Registration = ({ router }) => {
   const { showSnackbar } = useSnackbar();
   const info = router?.query;
   const disable = (!!(data.name.length === 0)
-   || !!(data.gender.length === 0) || !!(data.password.length === 0));
+   || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
 
   useEffect(() => {
     const dataToUpdate = { ...data };
@@ -55,7 +55,11 @@ const Registration = ({ router }) => {
         data = splitName(value, data);
       }
       if (id === 'age') {
-        data = retrieveYearFromAge(value, data);
+        if(value < 18){
+           showSnackbar({message : 'Age should be above 18 years'})
+        }else{
+          data = retrieveYearFromAge(value, data);
+        }
       }
     } catch (e) {
       console.log(e);

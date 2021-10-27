@@ -92,10 +92,10 @@ function Users({
     // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: 'all' });
+  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   // eslint-disable-next-line no-unused-vars
-  const [fetchState, retry, data] = useFetcher(dataFetcher);
-  // const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
+  // const [fetchState, retry, data] = useFetcher(dataFetcher);
+  const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
   useEffect(() => {
     const videos = {};
@@ -192,7 +192,7 @@ function Users({
         },
         {
           icon: <LikedList/>,
-          type: 'liked'
+          type: 'shoppable'
         }
       ],
       self: [
@@ -202,7 +202,7 @@ function Users({
         },
         {
           icon: <LikedList/>,
-          type: 'liked'
+          type: 'shoppable'
         },
         {
           icon: <Lock />,
@@ -214,14 +214,13 @@ function Users({
 
   // console.log(videoData?.items?.filter((data)=>(data?.shoppable === true)))
 
-  const toShowData = {
-    all : videoData?.items,
-    liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
-  }
+  // const toShowData = {
+  //   all : videoData?.items,
+  //   liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
+  // }
 
   const toShowFollowing = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=following`))
   const toShowFollowers = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=followers`))
-
 
   return (
     <div>
@@ -272,7 +271,7 @@ function Users({
       />
    
       <VideoGallery
-        items={toShowData?.[selectedTab]}
+        items={videoData?.items}
         status={videoData?.status}
         retry={retry && retry}
         userId={id}
