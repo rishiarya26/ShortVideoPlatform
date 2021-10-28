@@ -15,9 +15,9 @@ const loginOneTap = async (
       const resp = await get(apiPath, null, {'content-type' : 'noHeaders'});
       resp.data.status = 200;
       resp.data.message = 'success';
-      const accessToken = resp?.data?.access_token;
-      const refreshToken = resp?.data?.refresh_token;
-      response = await hipiLogin({ accessToken, refreshToken });
+      const accessToken = resp?.token;
+      // const {refreshToken = ''} = resp;
+      response = await hipiLogin({ accessToken , refreshToken :'' });
       return Promise.resolve(response);
     } catch (err) {
       return Promise.reject(err);
