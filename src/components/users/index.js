@@ -24,6 +24,7 @@ import Landscape from '../landscape';
 import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
+import { localStorage } from '../../utils/storage';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -124,7 +125,7 @@ function Users({
   } 
   }
 
-  const userId = getItem('user-id');
+  const userId = localStorage.get('user-id');
   const followFunc = !isFollowing;
 
   const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))

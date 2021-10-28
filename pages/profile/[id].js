@@ -25,6 +25,7 @@ export default function Hipi(params) {
   try{ 
     const tokens = localStorage.get('tokens');
     const userId = localStorage.get('user-id')
+    console.log(tokens, userId, item?.id)
     tokens && userId && userId === item?.id && (userType = 'self');
   }catch(e){
     console.log('something went wrong with id')

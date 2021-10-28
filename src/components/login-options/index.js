@@ -7,9 +7,12 @@ import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 import {GoogleButton} from '../social-login/google'
+import { useRouter } from 'next/router';
 
 export default function Login({ toggle, loading }) {
   const { close } = useDrawer();
+  const router = useRouter();
+
   return (
     <div className="px-4 py-2 flex flex-col items-center">
       <div className="p-2 flex flex-col items-center">
@@ -17,7 +20,7 @@ export default function Login({ toggle, loading }) {
         <p className="text-center text-sm">Manage your account, check notifications, comment on videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
-        <div onClick={()=>router.push("/login/phone?option=password")}>
+        <div onClick={()=>router.push('/login/phone?option=password')}>
           <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">

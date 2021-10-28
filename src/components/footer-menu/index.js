@@ -19,6 +19,7 @@ import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
 import { getItem } from '../../utils/cookie';
 import login from "../auth-options"
+import { localStorage } from '../../utils/storage';
 
 // const login = dynamic(
 //   () => import('../auth-options'),
@@ -44,7 +45,7 @@ const toShow = {
   login :  ()=>show('', login, 'medium'),
   profile : ()=>{
    try{ 
-     const userId = JSON.parse(getItem('user-id'));
+     const userId = localStorage.get('user-id');
      router.push(`/profile/${userId}`)
   }catch(e){
      console.log('error occured while fetching user-id from cookies')
