@@ -1,21 +1,36 @@
 import Error from 'next/error';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import {
   SeoMeta
 } from '../../src/components/commons/head-meta/seo-meta';
 import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
+import { localStorage } from '../../src/utils/storage';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
+  const [type,setType] = useState();
   const {
     data: item = {},
     errorCode,
     message,
     status,
-    type
   } = params;
 
   console.log("print",item)
+
+  useEffect(()=>{
+    let userType = 'others'
+  try{ 
+    const tokens = localStorage.get('tokens');
+    const userId = localStorage.get('user-id')
+    tokens && userId && userId === item?.id && (userType = 'self');
+  }catch(e){
+    console.log('something went wrong with id')
+  }
+  setType(userType);
+  },[])
 
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
@@ -78,10 +93,6 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
-  let type = 'others'
-  const userId = req?.cookies['user-id'];
-  let tokens = req?.cookies['tokens'];
-  userId && (userId === id) && tokens && (type = 'self')
   let data = {};
   try {
     console.log("called api")
@@ -98,7 +109,6 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      type,
       // uri,
       ...data
     }

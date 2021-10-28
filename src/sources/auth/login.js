@@ -29,10 +29,11 @@ const login = async ({ accessToken, refreshToken }) => {
       accessToken,
       refreshToken
     };
-    setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
+    // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
+    localStorage.set('tokens',tokens);
     const userId = response?.data?.userDetails?.id;
     localStorage.set('user-id', userId);
-    setItem('user-id', JSON.stringify(userId), { path: '/', domain });
+    // setItem('user-id', JSON.stringify(userId), { path: '/', domain });
     response.data.accessToken = accessToken;
     response.data.status = 200;
     response.data.message = 'success';

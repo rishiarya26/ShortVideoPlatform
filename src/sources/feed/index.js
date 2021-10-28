@@ -3,6 +3,7 @@ import { getApiBasePath } from '../../config';
 import useAuth from '../../hooks/use-auth';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
 import { transformSuccess, transformError } from '../transform/feed';
 
 async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5 }) {
@@ -12,8 +13,8 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5 }) 
     const condition = type === 'for-you' ? 'forYou' : 'following';
     // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
-     let tokens = getItem('tokens');
-     tokens = JSON.parse(tokens);
+     let tokens = localStorage.get('tokens');
+    //  tokens = JSON.parse(tokens);
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
       response = await get(apiPath,null,{

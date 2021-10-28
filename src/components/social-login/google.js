@@ -3,6 +3,7 @@ import { login } from "../../sources/social/google/login";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
 import Google from "../commons/svgicons/google";
+import { GOOGLE_CLIENT_ID_PREROD } from "../../constants";
 
 export const GoogleButton =({loading}) =>{
     const {close} = useDrawer();
@@ -26,7 +27,7 @@ export const GoogleButton =({loading}) =>{
         window?.gapi?.load('auth2',()=>{
             window.gapi.auth2.init({
                 // TO-DO client id should come from env
-                client_id:'1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com'
+                client_id:GOOGLE_CLIENT_ID_PREROD
                 
             })
         })

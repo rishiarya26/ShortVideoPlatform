@@ -13,6 +13,7 @@ import {
   transformSuccess as transformSuccessFollow,
   transformError as transformErrorFollow
 } from '../transform/users/follow';
+import { localStorage } from '../../utils/storage';
 
 async function fetchUserProfile(id) {
   let response = {};
@@ -82,8 +83,8 @@ async function fetchUserFollower({ lang }) {
 async function fetchUserFollowing({ id, limit ='30', offset='1', type='Following', keyword='' }) {
   let response = {};
   try {
-    let tokens = getItem('tokens');
-    tokens = JSON.parse(tokens);
+    let tokens = localStorage.get('tokens');
+    // tokens = JSON.parse(tokens);
     const { shortsAuthToken = '' } = tokens;
     const { accessToken = '' } = tokens;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/followers?id=${id}&type=${type}&keyword=${keyword}&limit=${limit}&offset=${offset}`;
@@ -142,8 +143,8 @@ async function follow({
 {
   let response = {};
     try {
-    let tokens = getItem('tokens');
-    tokens = JSON.parse(tokens);
+    let tokens = localStorage.get('tokens');
+    // tokens = JSON.parse(tokens);
     const { shortsAuthToken = '' } = tokens;
     const { accessToken = '' } = tokens;
     const payload = {

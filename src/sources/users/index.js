@@ -5,6 +5,7 @@ import { get, post, put } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
 import { transformSuccess, transformError } from '../transform/users/send-otp';
 
 async function sendOtp({ lang }) {
@@ -47,8 +48,8 @@ async function updateProfile({
 }) {
   let response = {};
   try {
-    let tokens = getItem('tokens');
-    tokens = tokens && JSON.parse(tokens);
+    let tokens = localStorage.get('tokens');
+    // tokens = tokens && JSON.parse(tokens);
     const { shortsAuthToken = '' } = tokens;
     const { accessToken = '' } = tokens;
     const payload = {

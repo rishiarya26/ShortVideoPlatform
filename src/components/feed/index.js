@@ -453,7 +453,11 @@ function Feed({ router }) {
 
   const showLoginFollowing = <LoginFollowing toTrackMixpanel={toTrackMixpanel} videoActiveIndex={videoActiveIndex}/>;
   
-  const toShowFollowing = useAuth(showLoginFollowing, swiper);
+  const toShowFollowing =  useAuth(showLoginFollowing, swiper);
+
+  // useEffect(() => {
+  //   toShowFollowing.current = typeof window !== "undefined" && window.localStorage;
+  // }, []);
 
   const info = {
     'for-you' : swiper,

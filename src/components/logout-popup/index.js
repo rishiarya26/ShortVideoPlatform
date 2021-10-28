@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import useDialog from '../../hooks/use-dialog';
 import useSnackbar from '../../hooks/use-snackbar';
 import { removeItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
 
 const LogoutPopup = () => {
 const router = useRouter();
@@ -10,17 +11,10 @@ const {showSnackbar} = useSnackbar();
 
   const logout = () => {
   try{
-    const url = window?.location?.href;
-    let domain = (new URL(url));
-    domain = domain?.hostname;
-      const removed = removeItem('tokens',{domain: domain});
-      const removedUserId = removeItem('user-id',{domain: domain});
-      if(removed === true && removedUserId === true){
+      localStorage.remove('tokens');
+      localStorage.remove('user-id');
       close();
       router?.push('/feed/for-you');
-      }else{
-        showSnackbar({ message: 'Something went wrong' });
-      }
     }
     catch(e){
         showSnackbar({ message: 'Something went wrong' });

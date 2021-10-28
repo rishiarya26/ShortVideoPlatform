@@ -16,14 +16,14 @@ export default function Signup({ toggle }) {
         <p className="text-center text-sm">Create a profile, follow other accounts, make your own videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
-        <Link href="/signup/phone">
+        <div onClick={()=>('/signup/phone')}>
           <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">
               <p>Use phone or email</p>
             </div>
           </div>
-        </Link>
+        </div>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

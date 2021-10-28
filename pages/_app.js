@@ -14,6 +14,7 @@ import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
 import { GOOGLE_ONE_TAP } from '../src/constants';
 import { getItem } from '../src/utils/cookie';
+import { localStorage } from '../src/utils/storage';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -155,8 +156,8 @@ function Hipi({
 
     useEffect(()=>{
    try{   
-    let tokens = getItem('tokens');
-    tokens = tokens && JSON.parse(tokens);
+    let tokens = localStorage.get('tokens');
+    // tokens = tokens && JSON.parse(tokens);
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
      }else{

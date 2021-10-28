@@ -51,7 +51,6 @@ const toShow = {
   }
   }
 }
-
 const chooseProfile = useAuth(toShow.login, toShow.profile);
 
   return (
