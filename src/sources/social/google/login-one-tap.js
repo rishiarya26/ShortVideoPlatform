@@ -12,7 +12,7 @@ const loginOneTap = async (
     let response = {};
     try {
       const apiPath = `${getApiBasePath('userApi')}/v3/user/logingoogle?id_token=${token}`;
-      const resp = await get(apiPath, null, {'conetent-type' : 'noHeaders'});
+      const resp = await get(apiPath, null, {'content-type' : 'noHeaders'});
       resp.data.status = 200;
       resp.data.message = 'success';
       const accessToken = resp?.data?.access_token;
