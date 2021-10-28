@@ -98,6 +98,7 @@ import { Back } from "../../commons/svgicons/back"
             type="email"
             name="email"
             placeholder="Email"
+            autoComplete="off"
             required
         />,
             mobile :
@@ -113,6 +114,7 @@ import { Back } from "../../commons/svgicons/back"
                     className=" w-full border-b-2 border-grey-300 px-4 py-2"
                     type="number"
                     name="phone"
+                    autoComplete="off"
                     placeholder="Phone Number"
                     required
                 />

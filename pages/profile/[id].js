@@ -1,6 +1,5 @@
 import Error from 'next/error';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   SeoMeta
 } from '../../src/components/commons/head-meta/seo-meta';
@@ -10,7 +9,7 @@ import { localStorage } from '../../src/utils/storage';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
-  const [type,setType] = useState();
+  const [type,setType] = useState('others');
   const {
     data: item = {},
     errorCode,
@@ -21,16 +20,18 @@ export default function Hipi(params) {
   console.log("print",item)
 
   useEffect(()=>{
-    let userType = 'others'
   try{ 
+    console.log('in')
+    let userType = 'others'
     const tokens = localStorage.get('tokens');
     const userId = localStorage.get('user-id')
-    console.log(tokens, userId, item?.id)
+    console.log("****",tokens, userId, item?.id)
     tokens && userId && userId === item?.id && (userType = 'self');
+    setType(userType);
   }catch(e){
     console.log('something went wrong with id')
   }
-  setType(userType);
+
   },[])
 
   if (status === 'fail') {
@@ -80,7 +81,7 @@ export default function Hipi(params) {
         lastName={item?.lastName}
         id={item?.id}
         bio={item?.bio}
-        type={type && type}
+        type={type}
         isFollow={item?.isFollowing}
       /> 
     </>
@@ -94,12 +95,12 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
+  console.log("id",id);
   let data = {};
   try {
-    console.log("called api")
     data = await getUserProfile(id);
+    console.log("data",data);
   } catch (e) {
-    console.log("error")
     data = {
       status: e?.status || 400,
       errorCode: e?.errorCode || 400,

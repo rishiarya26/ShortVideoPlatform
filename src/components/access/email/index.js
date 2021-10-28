@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
+import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
 
 export default function Email({
@@ -36,12 +37,20 @@ export default function Email({
     signup: async e => {
       e.preventDefault();
       setPending(true);
+      let resp;
+   try{  
+      resp = await verifyUserOnly({email: data?.email, type:'email'});
+      if (resp.status === 'success') {
+      showSnackbar({message : 'User already registered. Please Sign In'})
+      setPending(false);
+    }
+    }catch(e){
       router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });
       setTimeout(() => { setPending(false); }, 2000);
-    }
+    }}
   };
 
   const submitText = {
@@ -61,6 +70,8 @@ export default function Email({
         type="password"
         name="phone"
         placeholder="Password"
+        autoComplete="off"
+        required
       />
     </div>
     <div onClick={()=>router.push(
@@ -92,6 +103,8 @@ export default function Email({
             type="email"
             name="phone"
             placeholder="Email address"
+            autoComplete="off"
+            required
           />
         </div>
         { info[type] }

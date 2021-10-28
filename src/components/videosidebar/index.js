@@ -90,10 +90,7 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
-    router?.push({
-      pathname: '/profile/[pid]',
-      query: { pid: videoOwnersId }
-    });
+    router?.push(`/profile/${videoOwnersId}`);
   };
 
   const onEmbedCopy = () => {
