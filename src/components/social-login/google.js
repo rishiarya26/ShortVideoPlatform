@@ -9,7 +9,7 @@ export const GoogleButton =({loading}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
     const onTokenFetched = async(data)=>{
-         const googleToken = data?.mc?.access_token;
+         const googleToken = data?.Lw?.Zb?.access_token;
          try{  
              const response = await login(googleToken);
              if(reponse.status === 'success'){
