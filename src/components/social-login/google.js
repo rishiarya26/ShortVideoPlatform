@@ -9,8 +9,8 @@ export const GoogleButton =({loading}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
     const onTokenFetched = async(data)=>{
-        console.log("got token... about to call api",data, "token", data?.Lw?.Zb?.access_token)
-         const googleToken = data?.Lw?.Zb?.access_token;
+        console.log("got token... about to call api",data, "token", data?.Zb?.access_token,  data?.access_token)
+         const googleToken = data?.access_token;
          try{  
              const response = await login({googleToken : googleToken});
              if(response.status === 'success'){
@@ -33,12 +33,14 @@ export const GoogleButton =({loading}) =>{
             })
         })
     }    
-    const loginGoogle =()=>{
+    const loginGoogle = async()=>{
             window?.gapi?.load('signin2',()=>{
                 const params = {
                     onsuccess :(resp)=>{
                        console.log('resp',resp);
-                      onTokenFetched(resp);
+                   if(resp){
+                    await onTokenFetched(resp);
+                   }
                     }
                 }
                 window.gapi.signin2.render('loginButton', params)
