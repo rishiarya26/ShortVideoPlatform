@@ -5,7 +5,7 @@ import { hipiLogin } from '../../auth/login';
 import { transformError, transformSuccess } from '../../transform/social/google/login-one-tap';
 
 const loginGoogle = async ({
-    googleToken = ''
+  googleToken = ''
   }) => {
     const payload = {
         access_token: googleToken
