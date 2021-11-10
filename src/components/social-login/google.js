@@ -13,10 +13,10 @@ export const GoogleButton =({loading}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
     const onTokenFetched = async(data)=>{
-        console.log("got token... about to call api",data, data?.Zb?.access_token)
+        console.log("got token... about to call api",data, data?.Zb?.id_token)
         //  const googleToken = data?.Zb?.access_token;
          try{  
-             const response = await login(data?.Zb?.access_token);
+             const response = await login(data?.Zb?.id_token);
              if(response.status === 'success'){
                 showSnackbar({ message: 'Login Successful' })
                  close();
