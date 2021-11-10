@@ -88,15 +88,15 @@ function onGoogleClick() {
     client_id: GOOGLE_CLIENT_ID_PREROD,
     callback: getToken
   });
-  google.accounts.id.renderButton(
-    document.getElementById("buttonDiv"),
-    { theme: "outline", size: "large" }  // customization attributes
-  );
+//   google.accounts.id.renderButton(
+//     document.getElementById("buttonDiv"),
+//     { theme: "outline", size: "large", text: "Continue with Google" }  // customization attributes
+//   );
 //   google.accounts.id.prompt(); // also display the One Tap dialog
   }
 
     return(
-     <div  id ='buttonDiv' onClick={onGoogleClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+     <div onClick={onGoogleClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Google/></div>
         <div className="flex justify-center w-full font-semibold">
           <p>Continue with google</p>

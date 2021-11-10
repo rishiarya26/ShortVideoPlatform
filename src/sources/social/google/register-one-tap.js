@@ -14,7 +14,7 @@ const regitserUserOneTap = async ({
     };
 
     const apiPath = `${getApiBasePath('userApi')}/v4/user/registergoogle`;
-    const resp = await post(apiPath, payload, {'conetent-type' : 'noHeaders'});
+    const resp = await post(apiPath, payload, {'conetent-type' : 'json'});
     resp.data.status = 200;
     resp.data.message = 'success';
     const accessToken = resp?.data?.token;
