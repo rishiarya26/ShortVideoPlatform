@@ -15,7 +15,7 @@ const loginGoogle = async ({
     try {
       console.log("inside source","| token :", googleToken, "payload : ",payload)
       const apiPath = `${getApiBasePath('userApi')}/v2/user/logingoogle`;
-      const resp = await post(apiPath,payload,{'content-type':'noHeaders'});
+      const resp = await post(apiPath,payload,{'content-type':'json'});
       console.log("api finished", resp)
       resp.data.status = 200;
       resp.data.message = 'success';
