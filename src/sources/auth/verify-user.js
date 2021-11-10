@@ -15,9 +15,10 @@ const getUserVerify = async (mobile) => {
     });
     response.data.status = 200;
     response.data.message = 'success';
-    const resp = await sendOTP(mobile);
-    response.data.sendOtp = resp.data;
-    return Promise.resolve(response);
+   if(response.data.code === 0){ 
+     const resp = await sendOTP(mobile);
+     response.data.sendOtp = resp.data;}
+     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
   }

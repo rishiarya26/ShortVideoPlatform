@@ -39,6 +39,13 @@ export default function Hipi(params) {
   }
   return (
     <>
+     <SeoMeta
+        data={{
+          title: `${item?.firstName} ${item?.lastName} on HiPi - Watch the latest short videos from Anjusha on HiPi`,
+          // image: item?.thumbnail,
+          description: `${item?.firstName} ${item?.lastName} videos - Check out ${item?.firstName} ${item?.lastName} videos and followers on HiPi community. Join HiPi and follow various users and celebrities for the best short video content`
+        }}
+     />
       {/* <SeoMeta
         data={{
           title: item.userHandle,

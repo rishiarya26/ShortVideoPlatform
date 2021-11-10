@@ -4,7 +4,8 @@ import { SubmitButton } from '../../commons/button/submit';
 import { CountryCode } from '../../commons/button/country-code';
 import useSnackbar from '../../../hooks/use-snackbar';
 import { userLogin } from '../../../sources/auth';
-import { verifyUser } from '../../../sources/auth/verify-user';
+import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
+import { sendOTP } from '../../../sources/auth/send-otp';
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type
@@ -18,6 +19,17 @@ export default function Mobile({
     loginOtp: !!(data.mobile?.length === 0),
     signup: !!(data.mobile?.length === 0)
   };
+
+  const dispatchOtp = async() => {
+    let resp = {data:{code : 1}}
+      try{
+      const mobile = `${data?.countryCode}${data?.mobile}`;
+      const response = await sendOTP(mobile);
+      resp = response
+    }catch(e){
+    }
+    return resp;
+  }
 
   const submit = {
     loginPassword: async () => {
@@ -56,17 +68,22 @@ export default function Mobile({
     signup: async () => {
       try {
         const mobile = `${data?.countryCode}${data?.mobile}`;
-        const response = await verifyUser(mobile);
+        const response = await verifyUserOnly({mobile: mobile, type:'mobile'});
         if (response.status === 'success') {
           showSnackbar({ message: t('REGISTERED') });
         }
       } catch (e) {
         if (e.errorCode === 404) {
-          showSnackbar({ message: t('SUCCESS_OTP') });
-          router?.push({
-            pathname: '/verify-otp',
-            query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
-          });
+          const resp = await dispatchOtp();
+          if(resp.data.code === 0){
+            showSnackbar({ message: t('SUCCESS_OTP') });
+            router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
+            });
+          }else{
+            showSnackbar({ message: 'Something went wrong' });
+          }
         }
       }
     }

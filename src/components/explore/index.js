@@ -33,6 +33,7 @@ import 'swiper/components/pagination/pagination.min.css'
 import SwiperCore, {
   Autoplay,Pagination,Navigation
 } from 'swiper';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
 
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
@@ -163,6 +164,13 @@ function Explore() {
       ErrorComp={ErrorComp}
     >
       <div className="h-full  w-screen flex flex-col relative overflow-scroll pb-16">
+      <SeoMeta
+        data={{
+          title: 'Explore and watch the latest, trending & viral short videos on HiPi',
+          // image: item?.thumbnail,
+          description: 'Find latest & popular hashtags, music, challenge videos and more on HiPi. Look out for videos of your favorite celebrities, influencers and join in to win exciting prizes'
+        }}
+     />
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
           <div />

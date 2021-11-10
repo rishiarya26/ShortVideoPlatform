@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { resetPasswordMobile } from '../../../sources/auth/forgot-pass-mobile';
+import { sendOTP } from '../../../sources/auth/send-otp';
 import { verifyOTP } from '../../../sources/auth/verify-otp';
 import { verifyUser } from '../../../sources/auth/verify-user';
 import { BackButton } from '../../commons/button/back';
@@ -98,14 +99,24 @@ const VerifyOTP = ({ router }) => {
     ,
     login : async()=>{
      try{ 
-       const response = await verifyUser(phoneNo);
-       if (response.status === 'success') {
+      const response = await sendOTP(phoneNo);
+        if (response.data.code === 0) {
         showSnackbar({message : 'Otp sent Successfully'});
         setSeconds(59);
       }}catch(e){
         showSnackbar({message : 'Error sending otp'})
      }
-    }
+    },
+    signup: async()=>{
+      try{ 
+        const response = await sendOTP(phoneNo);
+        if (response.data.code === 0) {
+         showSnackbar({message : 'Otp sent Successfully'});
+         setSeconds(59);
+       }}catch(e){
+         showSnackbar({message : 'Error sending otp'})
+      }
+     }
   }
 
   const updateTimer = ()=>{

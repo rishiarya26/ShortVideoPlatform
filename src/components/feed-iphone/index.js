@@ -36,6 +36,7 @@ import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import SwipeUp from '../commons/svgicons/swipe-up';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -70,6 +71,7 @@ function FeedIphone({ router }) {
   const [deletedTill, setDeletedTill] = useState();
   const [loading, setLoading] = useState(true);
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
+  const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
 
   const loaded = () => {
     setLoading(false);
@@ -200,7 +202,12 @@ function FeedIphone({ router }) {
     if(currentTime >= duration-0.2){
       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
+    /******************************/
+    if(currentTime >= duration-0.4){
+     if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+   }
     /******************************/
   };
 
@@ -388,6 +395,9 @@ console.log('error',e)
                 const {
                   activeIndex, slides
                 } = swiperCore;
+
+                setShowSwipeUp({count : 1, value:false});
+
                 //Mixpanel
                 setInitialPlayStarted(false);
                 toTrackMixpanel(activeIndex, 'impression');
@@ -464,6 +474,14 @@ console.log('error',e)
                 style={{ display: ( seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
                 <CircularProgress/>
+              </div>}
+              {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
+          "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
+               <div className="p-1 relative">
+                <SwipeUp/>
+               <div className="w-4 h-16 bg-white bg-opacity-20 rounded-full absolute top-1 left-1"></div>
+              </div>
+              <div className="flex py-2 px-4 bg-gray text-white font-semibold mt-12">Swipe up for next video</div>
               </div>}
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}

@@ -22,7 +22,7 @@ const Registration = ({ router }) => {
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
   const info = router?.query;
-  const disable = (!!(data.name.length === 0)
+  const disable = (!!(data.firstName.length === 0) || !!(data.lastName.length === 0) || !!(data.name.length === 0)
    || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
 
   useEffect(() => {

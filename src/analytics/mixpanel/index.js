@@ -23,7 +23,7 @@ export const isLoaded = () => (window.mixpanel);
 // };
 
 export function track(event, payload) {
-  // console.log(event, payload)
+  console.log(event, payload)
   if (isLoaded()) { 
     // flushQueue();
      window?.mixpanel?.track(event,payload);
