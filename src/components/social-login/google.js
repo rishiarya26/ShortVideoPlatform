@@ -39,7 +39,7 @@ export const GoogleButton =({loading}) =>{
                     onsuccess :(resp)=>{
                        console.log('resp',resp);
                    if(resp){
-                    await onTokenFetched(resp);
+                   onTokenFetched(resp);
                    }
                     }
                 }
