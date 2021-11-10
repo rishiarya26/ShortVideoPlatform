@@ -6,16 +6,17 @@ import Google from "../commons/svgicons/google";
 import { GOOGLE_CLIENT_ID_PREROD } from "../../constants";
 import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
+import {GoogleLogin} from "react-google-login"
 
 export const GoogleButton =({loading}) =>{
 
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
-    const onTokenFetched = async(token)=>{
-        console.log("got token... about to call api",token)
+    const onTokenFetched = async(response)=>{
+        console.log("got token... about to call api",response, response?.tokenId, res.getAuthResponse().id_token )
         //  const googleToken = data?.Zb?.access_token;
          try{  
-             const response = await login({googleToken : token});
+             const response = await login(response?.tokenId);
              if(response.status === 'success'){
                 showSnackbar({ message: 'Login Successful' })
                  close();
@@ -83,24 +84,43 @@ export const GoogleButton =({loading}) =>{
          console.log(error)
        }
       }
-function onGoogleClick() {
-  google.accounts.id.initialize({
-    client_id: GOOGLE_CLIENT_ID_PREROD,
-    callback: getToken
-  });
+
+      useEffect(()=>{
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID_PREROD,
+            callback: getToken
+          });
+          google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            {  }  // customization attributes
+          );
+      })
+// function onGoogleClick() {
+//   google.accounts.id.initialize({
+//     client_id: GOOGLE_CLIENT_ID_PREROD,
+//     callback: getToken
+//   });
 //   google.accounts.id.renderButton(
 //     document.getElementById("buttonDiv"),
 //     { theme: "outline", size: "large", text: "Continue with Google" }  // customization attributes
 //   );
 //   google.accounts.id.prompt(); // also display the One Tap dialog
-  }
+//   }
 
     return(
-     <div onClick={onGoogleClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-        <div className="justify-self-start"><Google/></div>
-        <div className="flex justify-center w-full font-semibold">
-          <p>Continue with google</p>
-        </div>
-     </div>
+        <>
+        <GoogleLogin
+        clientId={GOOGLE_CLIENT_ID_PREROD}
+        buttonText='Continue with Google'
+        onSuccess={onTokenFetched}
+        />
+
+        </>
+    //  <div  id ='buttonDiv' className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+    //     <div className="justify-self-start"><Google/></div>
+    //     <div className="flex justify-center w-full font-semibold">
+    //       <p>Continue with google</p>
+    //     </div>
+    //  </div>
         )
     }
