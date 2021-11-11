@@ -15,7 +15,7 @@ const Registration = ({ router }) => {
     value: '',
     gender: 'Male',
     firstName: '',
-    lastName: ' ',
+    lastName: '',
     password: '',
     name: '',
     birthday: '',

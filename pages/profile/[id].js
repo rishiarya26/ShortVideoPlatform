@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
   SeoMeta
 } from '../../src/components/commons/head-meta/seo-meta';
+import FooterMenu from '../../src/components/footer-menu';
 import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
 import { localStorage } from '../../src/utils/storage';
@@ -21,7 +22,7 @@ export default function Hipi(params) {
 
   useEffect(()=>{
   try{ 
-    console.log('in')
+    console.log('in', item)
     let userType = 'others'
     const tokens = localStorage.get('tokens');
     const userId = localStorage.get('user-id')
@@ -91,6 +92,9 @@ export default function Hipi(params) {
         type={type}
         isFollow={item?.isFollowing}
       /> 
+      <FooterMenu 
+              selectedTab="profile"
+              />
     </>
   );
 }

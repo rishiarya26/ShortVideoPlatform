@@ -15,7 +15,7 @@ const register = async ({
       type,
       value,
       first_name: firstName,
-      last_name: (lastName.length === 0) && ' ',
+      last_name: lastName,
       partner_key: 'zee5',
       password,
       birthday,

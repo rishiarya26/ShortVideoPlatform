@@ -119,7 +119,7 @@ function Users({
   // }
 
   const followUser = async(followerId,userId, follow) =>{
-    const response = await toFollow({ userId:userId,followerId:followerId,follow:follow});
+    const response = await toFollow({ userId:followerId,followerId:userId,follow:follow});
     if(response){
      setIsFollowing(!isFollowing);
   } 
@@ -173,7 +173,7 @@ function Users({
         <button 
         onClick={toShowFollow}
         // onClick={handleFollow} 
-        className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white">
+        className={isFollowing ? "font-semibold text-sm border border-black rounded-sm py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white"}>
           {isFollowing ? 'Following' : t('FOLLOW')}
         </button>
       </>,
