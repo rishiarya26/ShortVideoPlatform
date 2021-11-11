@@ -6,6 +6,8 @@ import { registerUser } from '../../../sources/auth/register-user';
 import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 import Toggle from '../../commons/svgicons/toggle';
+import CircularProgress from '../../commons/circular-loader-small';
+
 
 const Registration = ({ router }) => {
   const [data, setData] = useState({
@@ -19,10 +21,11 @@ const Registration = ({ router }) => {
     birthday: '',
     age: ''
   });
+  const [pending, setPending] = useState(false);
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
   const info = router?.query;
-  const disable = (!!(data.firstName.length === 0) || !!(data.lastName.length === 0) || !!(data.name.length === 0)
+  const disable = (!!(data.firstName?.length === 0) || !!(data.lastName?.length === 0) || !!(data.name.length === 0)
    || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
 
   useEffect(() => {
@@ -36,7 +39,10 @@ const Registration = ({ router }) => {
   const splitName = (fullName = '', data) => {
     const [firstName, lastName] = fullName?.split(' ');
     data.firstName = firstName;
-    data.lastName = lastName;
+    data.lastName = lastName || '';
+  //   if(data.lastName?.length < 1){
+  //     showSnackbar({message : 'Please Enter Last name'})
+  //  }
     return data;
   };
   /* eslint-disable no-param-reassign */
@@ -68,24 +74,45 @@ const Registration = ({ router }) => {
   };
 
   const processPhoneData = e => {
+    e.currentTarget.setCustomValidity("")
     try {
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
       setData(dataToUpdate);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
   };
 
+  const submit = async (e) => {
+    e.preventDefault();
+   if(data.lastName?.length > 0 && data.password.length > 5){ 
+     try {
+      setPending(true);
+      await sendData();
+      setPending(false);
+    } catch (e) {
+      setPending(false);
+    }}else{
+      if(data.lastName?.length  < 1){ 
+      showSnackbar({message : "Last name cant be left empty"})
+    }else if(data.password?.length <6){
+      showSnackbar({message : "Password length should be minimum of 6 characters"})
+    }
+  }};
+
   const sendData = async () => {
     try {
       const response = await registerUser(data);
+      console.log("user registered",response)
       if (response.status === 'success') {
         router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });
       }
     } catch (e) {
       if (e.status === 'fail') {
+        console.log("user not registered",e)
         showSnackbar({ message: e.message });
       }
     }
@@ -104,6 +131,7 @@ const Registration = ({ router }) => {
         <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>
       </div>
+      <form onSubmit={submit}>
       <div className="mt-4">
         <input
           id="name"
@@ -113,6 +141,10 @@ const Registration = ({ router }) => {
           type="text"
           name="Name"
           placeholder="Full Name"
+          required
+          pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
+          onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
+          // formNoValidate
         />
       </div>
       <div className="mt-4 flex relative">
@@ -124,6 +156,7 @@ const Registration = ({ router }) => {
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="text"
           placeholder="Gender"
+          required
         />
         <span className="absolute right-2 bottom-3">
           {' '}
@@ -132,7 +165,7 @@ const Registration = ({ router }) => {
       </div>
       <div className="mt-4">
         <input
-          required
+          
           id="password"
           value={data.password}
           onChange={processPhoneData}
@@ -140,11 +173,12 @@ const Registration = ({ router }) => {
           type="password"
           name="phone"
           placeholder="Password"
+          required
         />
       </div>
       <div className="mt-4">
         <input
-          required
+         
           id="age"
           value={data.age}
           onChange={processPhoneData}
@@ -152,11 +186,24 @@ const Registration = ({ router }) => {
           type="number"
           name="age"
           placeholder="Age"
+          required
         />
       </div>
       <div className="mt-10">
-        <SubmitButton type="submit" fetchData={sendData} disable={disable} text="Complete" />
+      <button
+        // disabled={disable || pending}
+        // onClick={()=>sendData()}
+        // onKeyDown={submit}
+        type="submit"
+        className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+      >
+        {' '}
+        {"Complete"}
+        {!pending ? '' : <CircularProgress />}
+      </button>
+        {/* <SubmitButton  fetchData={sendData} disable={disable} text="Complete" /> */}
       </div>
+      </form>
     </div>
   );
 };

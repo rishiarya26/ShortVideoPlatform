@@ -1,3 +1,4 @@
+/*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import useTranslation from '../../../hooks/use-translation';
 import { SubmitButton } from '../../commons/button/submit';
@@ -125,7 +126,13 @@ export default function Mobile({
     signup:
   <div className="flex justify-end text-sm font-semibold mt-2 px-2">
     <p className="text-gray-400 text-xs">
-      {t('POLICY')}
+       <p className="text-xs">
+          By continuing, you agree to Hipi's
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          and confirm that you have read Hipi's
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          .if you sign up with SMS, SMS fee may apply.
+        </p>
     </p>
   </div>
   };

@@ -53,12 +53,13 @@ export default function Signup({ toggle }) {
           </div>
         </div> */}
       </div>
+
       <div className="my-2 flex flex-col items-center">
         <p className="text-sm text-center mb-4 text-xs">
           By continuing, you agree to Hipi's
-          <span className="font-semibold"> Term of Use </span>
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
           and confirm that you have read Hipi's
-          <span className="font-semibold"> Privacy Policy </span>
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
         </p>
         <p>
           Already have an account?
