@@ -7,6 +7,7 @@ import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 import { useRouter } from 'next/router';
+import { GoogleButton } from '../social-login/google';
 
 export default function Signup({ toggle }) {
   const router= useRouter();
@@ -26,6 +27,7 @@ export default function Signup({ toggle }) {
             </div>
           </div>
         </div>
+        <GoogleButton/>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

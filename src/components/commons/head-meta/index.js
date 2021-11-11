@@ -43,6 +43,8 @@ function HeadMeta() {
       <meta name="robots" content="nofollow"/>
       <meta name="googlebot" content="noindex"/>
 
+      {/* <meta name="google-signin-client_id" content="1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com" /> */}
+
       {/* IOS */}
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />

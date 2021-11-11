@@ -12,6 +12,7 @@ export const GoogleButton =({loading}) =>{
 
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
+
     const onTokenFetched = async(data)=>{
         console.log("got token... about to call api",data, data?.Zb?.id_token)
         //  const googleToken = data?.Zb?.access_token;
@@ -24,10 +25,16 @@ export const GoogleButton =({loading}) =>{
            console.log(response);
         }
         catch(e){
-            showSnackbar({message: 'Something went wrong..'})
+            if(e.code === 2){  
+                const response = await registerUser(data?.Zb?.id_token);
+                
+               console.log(response);
+              }
+            // showSnackbar({message: 'Something went wrong..'})
             console.log('e',e)
         }
         }
+
     const initialzeGoogle =()=>{
         window?.gapi?.load('auth2',()=>{
             window.gapi.auth2.init({
@@ -37,19 +44,19 @@ export const GoogleButton =({loading}) =>{
             })
         })
     }    
-    const loginGoogle = async()=>{
-            window?.gapi?.load('signin2',()=>{
-                const params = {
-                    onsuccess :(resp)=>{
-                       console.log('resp',resp);
-                   if(resp){
-                   onTokenFetched(resp);
-                   }
-                    }
-                }
-                window.gapi.signin2.render('loginButton', params)
-            })
-        }
+    // const loginGoogle = async()=>{
+    //         window?.gapi?.load('signin2',()=>{
+    //             const params = {
+    //                 onsuccess :(resp)=>{
+    //                    console.log('resp',resp);
+    //                if(resp){
+    //                onTokenFetched(resp);
+    //                }
+    //                 }
+    //             }
+    //             window.gapi.signin2.render('loginButton', params)
+    //         })
+    //     }
       
     useEffect(()=>{
             if(loading === false){
@@ -66,35 +73,41 @@ export const GoogleButton =({loading}) =>{
 
     const registerUser = async(token) =>{
         try{
-          await register(token);
+          const response = await register({token : token});
+          console.log("register suucess", response)
+          if(response.status === 'success'){
+            showSnackbar({ message: 'Login Successful' })
+             close();
+         }
         }
         catch(error){
-           console.log(error)
+            showSnackbar({message: "Something went wrong.."})
+           console.log("register error",error)
         }
       }
       
-      const getToken = async(response)=>{
-       try {
-        const googleToken = response?.credential;
-        await login(googleToken);
-       } catch (error) {
-         if(error.code === 2){  
-           await registerUser(response?.credential);
-         }
-         console.log(error)
-       }
-      }
+    //   const getToken = async(response)=>{
+    //    try {
+    //     const googleToken = response?.credential;
+    //     await login(googleToken);
+    //    } catch (error) {
+    //      if(error.code === 2){  
+    //        await registerUser(response?.credential);
+    //      }
+    //      console.log(error)
+    //    }
+    //   }
 
-      useEffect(()=>{
-        google.accounts.id.initialize({
-            client_id: GOOGLE_CLIENT_ID_PREROD,
-            callback: getToken
-          });
-          google.accounts.id.renderButton(
-            document.getElementById("buttonDiv"),
-            {  }  // customization attributes
-          );
-      })
+    //   useEffect(()=>{
+    //     google.accounts.id.initialize({
+    //         client_id: GOOGLE_CLIENT_ID_PREROD,
+    //         callback: getToken
+    //       });
+    //     //   google.accounts.id.renderButton(
+    //     //     document.getElementById("buttonDiv"),
+    //     //     {  }  // customization attributes
+    //     //   );
+    //   })
 // function onGoogleClick() {
 //   google.accounts.id.initialize({
 //     client_id: GOOGLE_CLIENT_ID_PREROD,
@@ -111,6 +124,14 @@ export const GoogleButton =({loading}) =>{
         <>
         <GoogleLogin
         clientId={GOOGLE_CLIENT_ID_PREROD}
+        render={renderProps => (
+            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+         <div className="justify-self-start"><Google/></div>
+         <div className="flex justify-center w-full font-semibold">
+           <p>Continue with google</p>
+         </div>
+      </div></>
+          )}
         buttonText='Continue with Google'
         onSuccess={onTokenFetched}
         />
