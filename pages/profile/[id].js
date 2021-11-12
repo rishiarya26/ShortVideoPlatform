@@ -92,9 +92,11 @@ export default function Hipi(params) {
         type={type}
         isFollow={item?.isFollowing}
       /> 
-      <FooterMenu 
-              selectedTab="profile"
-              />
+     {type === 'self' &&
+       <FooterMenu 
+         selectedTab="profile"
+       />
+     }
     </>
   );
 }

@@ -230,7 +230,7 @@ function Users({
           { info.header.leftButton[type] }
         </div>
         <div className="font-bold ">{userHandle}</div>
-        <div className="p-4 h-full flex items-center justify-between  w-1/4 absolute right-0 top-0">
+        <div className="p-4 h-full flex items-center justify-between absolute right-0 top-0">
         {/* { info.header.notification[type] } */}
         { info.header.rightButton[type] }
        </div>

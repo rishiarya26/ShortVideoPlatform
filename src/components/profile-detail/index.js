@@ -39,7 +39,7 @@ import { FollowingDetail } from "../following-detail";
     ]; 
   
    const items = {
-     display : [`Following ${profileDetails?.following}`,`Followers ${profileDetails?.followers}`],
+     display : [`Following ${profileDetails?.following || ''}`,`Followers ${profileDetails?.followers || ''}`],
      defaultValue : selectedIndex
    }
   
