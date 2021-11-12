@@ -180,7 +180,7 @@ const SearchItems = ({router,type})=>{
             {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
             <Close />
             </button>}
-           {!showSuggestions && <div className="absolute left-0 top-2 p-4">
+           {type === 'explore' && !showSuggestions && <div className="absolute left-0 top-2 p-4">
               <SearchBlack/>       
             </div>}
             </div>
