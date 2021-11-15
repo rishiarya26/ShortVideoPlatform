@@ -28,6 +28,7 @@ function transformSuccess(resp) {
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
+    console.log("rrrr",responseData)
     if (videos?.length) {
       const payloadObject = {};
       videos.forEach(d => {

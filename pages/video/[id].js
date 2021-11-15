@@ -37,6 +37,7 @@ export default function Hipi(params) {
   };
 
   useEffect(() => {
+    console.log(item)
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
   }, []);
@@ -56,34 +57,34 @@ export default function Hipi(params) {
     <>
       <SeoMeta
         data={{
-          title: item.musicCoverTitle,
-          image: item.poster_image_url,
+          title: item.userName,
+          // image: item.poster_image_url,
           description: item.content_description,
-          canonical: params.uri,
-          openGraph: {
-            title: item.musicCoverTitle,
-            description: item.content_description,
-            url: params.uri,
-            images: [
-              {
-                url: item.poster_image_url,
-                width: 800,
-                height: 600,
-                alt: item.musicCoverTitle
-              },
-              { url: item.userProfilePicUrl }
-            ],
-            type: 'video.movie',
-            video: {
-              actors: [
-                {
-                  role: item.userName
-                }
-              ],
-              tag: item.genre
-            },
-            site_name: 'Hipi'
-          }
+          // canonical: params.uri,
+          // openGraph: {
+          //   title: item.musicCoverTitle,
+          //   description: item.content_description,
+          //   url: params.uri,
+          //   images: [
+          //     {
+          //       url: item.poster_image_url,
+          //       width: 800,
+          //       height: 600,
+          //       alt: item.musicCoverTitle
+          //     },
+          //     { url: item.userProfilePicUrl }
+          //   ],
+          //   type: 'video.movie',
+          //   video: {
+          //     actors: [
+          //       {
+          //         role: item.userName
+          //       }
+          //     ],
+          //     tag: item.genre
+          //   },
+          //   site_name: 'Hipi'
+          // }
         }}
       />
       <VideoJsonLd
@@ -113,6 +114,9 @@ export default function Hipi(params) {
         videoId={videoId}
         poster={item.thumbnail}
         seekedPercentage={seekedPercentage}
+        description={item?.content_description}
+        userId={item?.userId}
+        genre={item?.genre}
       />
       {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <Shop videoId={videoId} canShop={canShop} />
