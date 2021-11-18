@@ -38,13 +38,8 @@ function HeadMeta() {
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      {/* to avoid search engies to read web page */}
-      <meta name="robots" content="noindex"/>
-      <meta name="robots" content="nofollow"/>
-      <meta name="googlebot" content="noindex"/>
-
 {/* google verification for SEO */}
-      <meta name="google-site-verification" content="ENMIgg299KOVw-fxB4Auaasht3PjJSoPqDvgVZIC0to"/>
+      <meta name="google-site-verification" content="jd5aD11YRw26TgwlMe1HgaGSagejqeN2Hj27Av8nQnU" />
 
       {/* <meta name="google-signin-client_id" content="1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com" /> */}
 
