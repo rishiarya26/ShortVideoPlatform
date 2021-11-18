@@ -43,6 +43,9 @@ function HeadMeta() {
       <meta name="robots" content="nofollow"/>
       <meta name="googlebot" content="noindex"/>
 
+{/* google verification for SEO */}
+      <meta name="google-site-verification" content="ENMIgg299KOVw-fxB4Auaasht3PjJSoPqDvgVZIC0to"/>
+
       {/* <meta name="google-signin-client_id" content="1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com" /> */}
 
       {/* IOS */}
