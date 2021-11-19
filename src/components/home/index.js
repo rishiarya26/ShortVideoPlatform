@@ -17,11 +17,11 @@ function Home() {
   }
 
   return (
-    <div className="h-screen  w-screen flex flex-col ">
+    <div className="h-screen  w-screen flex flex-col justify-between">
       <div className=" header_landing w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 py-2">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
-      <div className="bg_grad flex items-center p-10 relative">
+      <div className="bg_grad flex items-center p-10 relative h-full">
         <div className="flex justify-end pr-10 items-center w-5/12 ">
           <img className="w-60" src={withBasePath('images/hipi_screenshot.png')} alt="hipi logo" /> 
         </div>
