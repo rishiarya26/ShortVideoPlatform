@@ -93,11 +93,6 @@ const nextConfig = {
           source: '/GOAT/',
           destination: '/goat/',
           permanent: true,
-        },
-        {
-          source: '/Goat/',
-          destination: '/goat/',
-          permanent: true,
         }
       ]
     }
