@@ -86,7 +86,16 @@ const nextConfig = {
     //   rotateStringArray: true
     // }));
     return config;
-  }
+  },
+  async redirects() {
+    return [
+        {
+            source: '/GOAT/',
+            destination: '/goat/',
+            permanent: true
+        }
+    ]
+}
 };
 
 // eslint-disable-next-line no-nested-ternary
