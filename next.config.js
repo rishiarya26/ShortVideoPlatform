@@ -87,12 +87,20 @@ const nextConfig = {
     // }));
     return config;
   },
-    async redirects() {
+    // async redirects() {
+    //   return [
+    //     {
+    //       source: '/(g|G)(o|O)(a|A)(t|T)/',
+    //       destination: '/goat',
+    //       permanent: true,
+    //     }
+    //   ]
+    // },
+    async rewrites() {
       return [
         {
-          source: '/(g|G)(o|O)(a|A)(t|T)/',
+          source: '/(g|G)(o|O)(a|A)(t|T)',
           destination: '/goat',
-          permanent: true,
         }
       ]
     }
