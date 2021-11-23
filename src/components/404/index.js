@@ -24,7 +24,7 @@ function Error() {
 </defs>
 </svg>
 <div className="text-lg font-bold p-4">
-OOPS Something went wrong!
+Oops Something went wrong!
 </div>
 <div  className="text-base font-semibold mt-6">
 Explore more on Hipi

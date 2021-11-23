@@ -87,15 +87,20 @@ const nextConfig = {
     // }));
     return config;
   },
-  async redirects() {
-    return [
+    async redirects() {
+      return [
         {
-            source: '/GOAT/',
-            destination: '/goat/',
-            permanent: true
+          source: '/GOAT/',
+          destination: '/goat/',
+          permanent: true,
+        },
+        {
+          source: '/Goat/',
+          destination: '/goat/',
+          permanent: true,
         }
-    ]
-}
+      ]
+    }
 };
 
 // eslint-disable-next-line no-nested-ternary
