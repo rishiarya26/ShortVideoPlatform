@@ -58,6 +58,10 @@ module.exports = {
       '30v':'30vw',
       '38v':'38vw',
      },
+     maxHeight: 
+    {
+      '90':'90%',
+     },
        minHeight: {
         '20':'20vw',
         '38':'38vw',

@@ -170,3 +170,32 @@ span.swiper-pagination-bullet {
   background-color: rgb(139, 139, 139);
   opacity: 1;
 }
+
+@media only screen and (min-width: 768px) {
+  .cookie_layout{
+    align-items: unset;
+  }
+  .cookie_wrapper{
+    margin-top: 5%;
+    flex-direction: row;
+    width: 65%;
+    max-height: 70%;
+    align-items: unset;
+  }
+  .cookie_wrapper p{
+    font-size:16px;
+  }
+  .cookie_button{
+    font-size:14px;
+  }
+  .cookie_wrapper a{
+    font-size:13px;
+  }
+  .h1_cookie{
+    font-size:28px!important;
+    text-align: left;
+  }
+  .button_cook{
+    justify-content: center;
+  }
+}

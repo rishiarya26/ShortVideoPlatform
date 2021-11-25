@@ -27,7 +27,7 @@ const onStoreRedirect =(device)=>{
    setItems(updateItem);
  }
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
        <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
