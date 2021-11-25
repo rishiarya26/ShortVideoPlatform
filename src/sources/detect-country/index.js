@@ -7,8 +7,8 @@ import { get } from 'network';
 async function detectCountry() {
   let response = {};
   try {
-    const apiPath = `http://ip-api.com/json`;
-    response = await get(apiPath);
+    const apiPath = `https://ipapi.co/json/`;
+    response = await get(apiPath,null, {'content-type':'noHeaders'});
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

@@ -149,8 +149,8 @@ function Hipi({
 
   const getCountry = async()=>{
     try{ const resp = await detectCountry();
-      console.log(resp?.data?.country)
-     setCountry(resp?.data?.country || 'India');
+      console.log(resp?.data?.country_name)
+     setCountry(resp?.data?.country_name || 'India');
     }
      catch(e){
 
