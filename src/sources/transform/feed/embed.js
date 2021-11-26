@@ -37,6 +37,7 @@ function transformSuccess(resp) {
         payloadObject.content_description = d?.description || null;
         payloadObject.userId = d?.videoOwnersId || null;
         payloadObject.videoOwnersId = d?.videoOwnersId || null;
+
         payloadObject.getSocialId = d?.getSocialId || null;
         payloadObject.id = d?.id || null;
         payloadObject.genre = d?.genre || null || null;
@@ -51,6 +52,7 @@ function transformSuccess(resp) {
         videoUrls.low = d?.akamaiUrl || null;
         payloadObject.video_urls = videoUrls;
         payloadObject.thumbnail = d?.thumbnailUrl || null;
+        payloadObject.videoOwnersDetail = d?.videoOwners || null;
       });
       payload.data = payloadObject;
     } else {

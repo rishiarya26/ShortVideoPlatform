@@ -17,6 +17,11 @@ import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
+import { viewEvents } from '../../sources/social';
+import usePreviousValue from '../../hooks/use-previous';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 
 SwiperCore.use([Mousewheel]);
@@ -29,11 +34,15 @@ function HashTagFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
+  const [videoActiveIndex, setVideoActiveIndex] = useState(0);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [muted, setMuted] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
+
+  const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
   const loaded = () => {
     setLoading(false);
@@ -42,12 +51,27 @@ function HashTagFeed({ router }) {
   useEffect(() => {
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Page Name'] = 'Hashtag Feed';
+    track('Screen View',mixpanelEvents );
   }, []);
 
 
   const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
+
+  useEffect(()=>{
+    if(initialPlayStarted === true){
+      toTrackMixpanel(videoActiveIndex,'play')
+      viewEventsCall(activeVideoId, 'user_video_start');
+    }
+  },[initialPlayStarted])
+
+  const viewEventsCall = async(id, event)=>{
+    console.log("event to send", id, event)
+   await viewEvents({id:id, event:event})
+  }
 
   const dataFetcher = () => getHashTagVideos({ keyword : item });
   const onDataFetched = data => {
@@ -59,11 +83,29 @@ function HashTagFeed({ router }) {
   retry = setRetry;
   const validItemsLength = items?.length > 0;
 
-  const updateSeekbar = percentage => {
+  const updateSeekbar = (percentage, currentTime, duration) => {
     if(percentage > 0){
       setInitialPlayStarted(true);
      }
+     const videoDurationDetail = {
+      currentT : currentTime,
+      totalDuration : duration
+    }
+    if(currentTime > 6.8 && currentTime < 7.1){
+      viewEventsCall(activeVideoId,'view')
+    }
+    setVideoDurationDetails(videoDurationDetail);
     setSeekedPercentage(percentage);
+    /********** Mixpanel ***********/
+    if(currentTime >= duration-0.2){
+      // toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      // toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      /*** view events ***/
+      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'user_video_start');
+      // if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+    }
+    /******************************/
   };
 
   const handleBackClick = () => {
@@ -98,6 +140,56 @@ function HashTagFeed({ router }) {
     setsaveLook(!saveLook);
   };
 
+  /*******  Mixpanel *************/
+  const toTrackMixpanel = (activeIndex, type, value) => {
+    const item = items[activeIndex];
+    const mixpanelEvents = commonEvents();
+
+    const toTrack = {
+      'impression' : ()=> track('UGC Impression', mixpanelEvents),
+      'swipe' : ()=> {
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Swipe', mixpanelEvents)
+      },
+      'play' : () => track('UGC Play', mixpanelEvents),
+      'pause' : () => track('Pause', mixpanelEvents),
+      'resume' : () => track('Resume', mixpanelEvents),
+      'share' : () => track('UGC Share Click', mixpanelEvents),
+      'replay' : () => track('UGC Replayed', mixpanelEvents),
+      'watchTime' : () => {
+        mixpanelEvents['UGC Consumption Type'] = value?.watchTime
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Watch Time',mixpanelEvents)
+      },
+      'cta' : ()=>{
+        mixpanelEvents['Element'] = value?.name
+        mixpanelEvents['Button Type'] = value?.type
+        track('CTAs', mixpanelEvents)
+      },
+      'savelook' : ()=>{
+        track('Save Look', mixpanelEvents)
+      }
+    }
+
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
+
+    mixpanelEvents['Creator ID'] = item?.userId;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+    mixpanelEvents['UGC ID'] = item?.content_id;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
+    mixpanelEvents['Page Name'] = 'Feed';
+
+    toTrack?.[type]();
+  }
+
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -108,6 +200,13 @@ function HashTagFeed({ router }) {
       ErrorComp={ErrorComp}
     >
       <>
+      <SeoMeta
+        data={{
+          title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
+          // image: item?.thumbnail,
+          description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`        
+        }}
+     />
         <div style={{ height: `${videoHeight}px` }}>
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
@@ -132,10 +231,22 @@ function HashTagFeed({ router }) {
               } = swiperCore;
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
+
+              toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
+                 /*** video events ***/
+                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                  viewEventsCall(activeVideoId,'skip')
+                }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
+                  viewEventsCall(activeVideoId,'no decision')
+                }
+                /***************/
+
               if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                 slides[activeIndex].firstChild.firstChild.currentTime = 0
               }
               const activeId = slides[activeIndex]?.id;
+              setVideoActiveIndex(activeIndex)
               setActiveVideoId(activeId);
             }}
           >

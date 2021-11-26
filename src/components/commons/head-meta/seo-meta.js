@@ -56,8 +56,8 @@ const SeoMeta = ({ data = {} }) => {
     <NextSeo
       // noindex
       // nofollow
-      // // eslint-disable-next-line react/jsx-props-no-spreading
-      // {...meta}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...meta}
     />
   );
 };

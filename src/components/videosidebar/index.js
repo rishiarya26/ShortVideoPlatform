@@ -211,7 +211,7 @@ function VideoSidebar({
             } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
-            <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />
+            <Shop text={!saved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK '} />
           </div>
         )
       )}

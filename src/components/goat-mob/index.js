@@ -41,7 +41,7 @@ const onStoreRedirect =(device)=>{
   </div>
 </div>
 <div className="flex w-full  section_2">
-    <img src={withBasePath('images/goat/mobile/3.jpg')}/>
+    <img className="h-full" src={withBasePath('images/goat/mobile/3.jpg')}/>
 </div>
 
 <div className="section_3 flex items-center flex-col section_2">
@@ -66,7 +66,7 @@ const onStoreRedirect =(device)=>{
 <>
   <div className="section_5 flex flex-col relative section_2">
   <img src={withBasePath('images/goat/mobile/8.jpg')}/>
-  <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in">hipigoat@hipi.co.in</a>for any information or queries relating to the contest</p>
+  <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in"> hipigoat@hipi.co.in </a> for any information or queries relating to the contest</p>
   </div>
   <div className="section_6 flex flex-col section_2">
   <img src={withBasePath('images/goat/mobile/9.jpg')}/>

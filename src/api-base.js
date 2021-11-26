@@ -12,7 +12,9 @@ export const apiBaseEndPoints = {
     charmboard:
     'https://stagingmobile.charmboard.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
   },
   development: {
     test: 'https://api.github.com',
@@ -25,7 +27,9 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
   },
   staging: {
     test: 'https://api.github.com',
@@ -37,7 +41,9 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
   },
   production: {
     test: 'https://api.github.com',
@@ -49,8 +55,9 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
-
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
   }
 };
 

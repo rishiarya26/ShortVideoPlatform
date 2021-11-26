@@ -8,8 +8,8 @@ import Videos from '../../search/videos';
 const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
     const onTabClick = (selected)=>{
         onTabChange(selected);
-        console.log(selected)
-        console.log(items[selected])
+        // console.log(selected)
+        // console.log(items[selected])
     }
   return (
     <div className="flex items-center w-full mt-20 text-gray-400 justify-center font-semibold">

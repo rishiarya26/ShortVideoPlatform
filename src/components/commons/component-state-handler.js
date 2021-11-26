@@ -23,11 +23,9 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
   const [retry, setRetry] = useState(false);
   const [data, setData] = useState(null);
   const dataFetch = async () => {
-    console.log("in")
     try {
       const data = await dataFetcher();
       if (data.status === 'fail') {
-        console.log("fail")
         setFetchState('fail');
         return;
       }

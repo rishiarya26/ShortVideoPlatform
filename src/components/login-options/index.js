@@ -24,7 +24,7 @@ export default function Login({ toggle, loading }) {
           <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">
-              <p>Use phone or email</p>
+              <p>Use phone or Email</p>
             </div>
           </div>
         </div>
@@ -56,8 +56,8 @@ export default function Login({ toggle, loading }) {
       </div>
       <div className="my-2 ">
         <p>
-          Don't have an account?
-          <span onClick={() => toggle('signup')} className="text-red-600 font-medium">Sign Up</span>
+          Don't have an account? 
+          <span onClick={() => toggle('signup')} className="text-red-600 font-medium"> Sign Up</span>
         </p>
       </div>
     </div>

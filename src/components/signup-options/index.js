@@ -23,7 +23,7 @@ export default function Signup({ toggle }) {
           <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
             <div className="justify-self-start"><Mobile /></div>
             <div className="flex justify-center w-full font-semibold">
-              <p>Use phone or email</p>
+              <p>Use phone or Email</p>
             </div>
           </div>
         </div>

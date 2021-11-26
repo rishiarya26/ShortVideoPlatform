@@ -7,6 +7,7 @@
     font-weight: normal;
 }
 img{
+  height: 100%;
   object-fit: cover;
   width:100%;
 }
@@ -59,6 +60,7 @@ img{
     box-sizing: border-box;
     object-fit: cover!important;
     height: 100%;
+    width: 100%;
   }
   input:focus-visible{
     outline: none;
@@ -171,6 +173,10 @@ span.swiper-pagination-bullet {
   opacity: 1;
 }
 
+@media only screen and (max-height: 670px){
+  .drawer-height{
+    height: 40%;
+  }}
 @media only screen and (min-width: 768px) {
   .cookie_layout{
     align-items: unset;

@@ -41,6 +41,13 @@ const options = (methodName, body, headersOpt = {}) => {
         'content-type': 'application/json',
       }
     };
+    // case 'customHeaders': return {
+    //   method: methodName,
+    //   ...body && { body: JSON.stringify(body) },
+    //   headers: {
+    //    ...headersOpt
+    //   }
+    // };
     case 'noHeaders': return {
       method: methodName,
       ...body && { body: JSON.stringify(body) },

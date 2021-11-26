@@ -23,7 +23,14 @@ function transformSuccess(resp) {
     }
     const { recommendations = []} = data;
     const { responseData = []} = data;
+    
+
     let updateData = recommendations?.concat(responseData);
+    const {additionalBanner = {}} = data;
+    additionalBanner && updateData.forEach((data)=>{
+      if(data?.widgetType === 'carousel_banner')
+      { data.widgetList[additionalBanner?.position || 0] = additionalBanner?.data}
+    })
     updateData = updateData?.filter((data)=>(data.widgetList =  data?.widgetContentType === 'Video' && data?.widgetList?.length >=8 ? data?.widgetList?.splice(0,8) : data?.widgetList ))
     payload.data = updateData;
     payload.status = 'success';

@@ -25,6 +25,8 @@ import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -79,6 +81,12 @@ function Users({
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
   // },[])
+  
+  useEffect(() => {
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Page Name'] = 'Profile';
+    track('Screen View',mixpanelEvents );
+  }, []);
 
   const { show } = useDrawer();
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import faq from '../../../public/goat-FAQ.json'
 import { withBasePath } from '../../config';
 
-function GoatDesk() {
+function GoatHipi() {
  const [items, setItems] = useState(faq?.faq);
 
  const links={
@@ -58,7 +58,7 @@ function GoatDesk() {
 <>
   <div className="section_5 flex flex-col relative section_2">
   <img src={withBasePath('images/goat/mobile/8.jpg')}/>
-  <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in">hipigoat@hipi.co.in</a>for any information or queries relating to the contest</p>
+  <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in">hipigoat@hipi.co.in</a> for any information or queries relating to the contest</p>
   </div>
   <div className="section_6 flex flex-col section_2">
   <img src={withBasePath('images/goat/mobile/9.jpg')}/>
@@ -131,5 +131,5 @@ function GoatDesk() {
   );
 }
 
-export default GoatDesk;
+export default GoatHipi;
 

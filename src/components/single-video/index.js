@@ -10,6 +10,7 @@ import EmbedSeekbar from '../emded-seekbar';
 import FooterMenu from '../footer-menu';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import { viewEvents } from '../../sources/social';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -50,9 +51,14 @@ export default function SingleVideo(props){
   useEffect(()=>{
       if(initialPlayStarted === true){
         toTrackMixpanel('play')
+        viewEventsCall(props?.id, 'user_video_start');
       }
     },[initialPlayStarted])
-  
+
+    const viewEventsCall = async(id, event)=>{
+      console.log("event to send", id, event)
+     await viewEvents({id:id, event:event})
+    }   
 
   useEffect(() => {
     // const guestId = getItem('guest-token');
@@ -62,6 +68,15 @@ export default function SingleVideo(props){
     toTrackMixpanel('impression');
     window.addEventListener("beforeunload", ()=>{
       toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
+       /*** video events ***/
+       if(watchedTime < 3){
+        viewEventsCall(props?.id,'skip')
+      }else if(watchedTime < 7){
+        viewEventsCall(props?.id,'no decision')
+      }else {
+        viewEventsCall(props?.id,'view')
+      }
+      /***************/
     });
   }, []);
 
@@ -156,6 +171,9 @@ export default function SingleVideo(props){
      if(currentTime >= duration-0.2){
       toTrackMixpanel('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration})
+       /*** view events ***/
+       viewEventsCall(props?.id, 'completed');
+       viewEventsCall(props?.id, 'user_video_start');
     }
     /******************************/
   };
@@ -164,8 +182,9 @@ export default function SingleVideo(props){
     <div className="flex flex-col overflow-hidden">
     <div
       ref={rootRef}
-      className="video_card relative w-full  scroll-snap-start bg-black h-full overflow-hidden"
+      className="video_card relative w-screen  scroll-snap-start bg-black h-screen overflow-hidden"
     >
+    
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         // autoPlay
@@ -179,6 +198,7 @@ export default function SingleVideo(props){
         className="vdo_player"
         width={size.width}
         height={size.height}
+        objectfit="cover"
       >
         <source src={props.url} type="video/mp4" />
       </video>
@@ -208,6 +228,7 @@ export default function SingleVideo(props){
         comp="single"
       />
        <EmbedVideoSidebar
+        videoId={props?.videoId}
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}
@@ -225,12 +246,12 @@ export default function SingleVideo(props){
            />
          )} 
     </div>
-    <FooterMenu 
+           <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
               type="shop"
               selectedTab=""
-              />
+            />
     </div>
   );
 }

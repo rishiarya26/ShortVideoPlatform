@@ -37,6 +37,7 @@ import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
+import { viewEvents } from '../../sources/social';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -124,8 +125,14 @@ function FeedIphone({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
+      viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
+
+  const viewEventsCall = async(id, event)=>{
+    console.log("event to send", id, event)
+   await viewEvents({id:id, event:event})
+  }
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id });
@@ -193,6 +200,9 @@ function FeedIphone({ router }) {
       currentT : currentTime,
       totalDuration : duration
     }
+    if(currentTime > 6.8 && currentTime < 7.1){
+      viewEventsCall(activeVideoId,'view')
+    }
     setVideoDurationDetails(videoDurationDetail);
     // setCurrentT(currentTime);
     if(percentage > 0){
@@ -202,6 +212,9 @@ function FeedIphone({ router }) {
     if(currentTime >= duration-0.2){
       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      /*** view events ***/
+      viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
     /******************************/
@@ -348,18 +361,18 @@ console.log('error',e)
         track('Save Look', mixpanelEvents)
       }
     }
-    const hashTags = item?.hashtags?.map((data)=> data.name);
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
 
     mixpanelEvents['Creator ID'] = item?.userId;
-    mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';;
     mixpanelEvents['UGC ID'] = item?.content_id;
-    mixpanelEvents['Short Post Date'] = 'NA';
-    mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    mixpanelEvents['Audio Name'] = item?.music_title ||'NA';
-    mixpanelEvents['UGC Genre'] = item?.genre;
-    mixpanelEvents['UGC Description'] = item?.content_description;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title ||'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
     mixpanelEvents['Page Name'] = 'Feed';
 
     toTrack?.[type]();
@@ -389,7 +402,7 @@ console.log('error',e)
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
-                toTrackMixpanel(0, 'impression');
+                // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {
                 const {
@@ -400,10 +413,17 @@ console.log('error',e)
 
                 //Mixpanel
                 setInitialPlayStarted(false);
-                toTrackMixpanel(activeIndex, 'impression');
-                toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                // toTrackMixpanel(activeIndex, 'impression');
+                // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-
+   
+                /*** video events ***/
+                if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                  viewEventsCall(activeVideoId,'skip')
+                }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
+                  viewEventsCall(activeVideoId,'no decision')
+                }
+                /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
@@ -492,7 +512,7 @@ console.log('error',e)
               </div> */}
               {validItemsLength && <div
                 onClick={()=>setMuted(false)}
-                className="absolute top-6 left-4 items-center bg-gray-200 bg-opacity-30 rounded-sm flex justify-center p-4"
+                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
                <Mute/>
@@ -531,9 +551,9 @@ console.log('error',e)
     >
        <SeoMeta
         data={{
-          title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
+          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
         }}
       />
       {/* <VideoJsonLd

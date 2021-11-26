@@ -57,36 +57,11 @@ export default function Hipi(params) {
     <>
       <SeoMeta
         data={{
-          title: item.userName,
-          // image: item.poster_image_url,
-          description: item.content_description,
-          // canonical: params.uri,
-          // openGraph: {
-          //   title: item.musicCoverTitle,
-          //   description: item.content_description,
-          //   url: params.uri,
-          //   images: [
-          //     {
-          //       url: item.poster_image_url,
-          //       width: 800,
-          //       height: 600,
-          //       alt: item.musicCoverTitle
-          //     },
-          //     { url: item.userProfilePicUrl }
-          //   ],
-          //   type: 'video.movie',
-          //   video: {
-          //     actors: [
-          //       {
-          //         role: item.userName
-          //       }
-          //     ],
-          //     tag: item.genre
-          //   },
-          //   site_name: 'Hipi'
-          // }
+          title: `${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName} videos on Hipi - Indian Short Video App`,
+          // image: item?.thumbnail,
+          description: `${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName} (@${item?.userName}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName}'s latest trending videos that you can enjoy and share with your friends.`        
         }}
-      />
+     />
       <VideoJsonLd
         name={item.musicCoverTitle}
         description={item.content_description}

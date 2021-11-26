@@ -34,6 +34,8 @@ import SwiperCore, {
   Autoplay,Pagination,Navigation
 } from 'swiper';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
@@ -120,6 +122,10 @@ function Explore() {
     const crousalData = (data?.data?.[0]?.widgetType === 'carousel_banner') && data?.data?.[0]?.widgetList;
     window.sessionStorage.removeItem('search-feed');
     window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
+    const additionalBanner = data?.data?.additionalBanner;
+    // console.log(data,additionalBanner, crousalData)
+    crousalData[additionalBanner?.position] = additionalBanner;
+    // console.log(crousalData)
     setCrousalItems(crousalData)
     setData(data?.data);
   };
@@ -148,10 +154,14 @@ function Explore() {
   const toHashtagDetails = (hashTag)=>{
     let tHashtag = trimHash(hashTag);
     tHashtag = toLower(tHashtag);
-    router?.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
+    router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
   }
 
   useEffect(()=>{
+
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Discover';
+      track('Screen View',mixpanelEvents );
     window.onunload = function () {
       window?.scrollTo(0, 1);
     }
@@ -163,14 +173,14 @@ function Explore() {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-      <div className="h-full  w-screen flex flex-col relative overflow-scroll pb-16">
-      <SeoMeta
+        <SeoMeta
         data={{
-          title: 'Explore and watch the latest, trending & viral short videos on HiPi',
+          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Find latest & popular hashtags, music, challenge videos and more on HiPi. Look out for videos of your favorite celebrities, influencers and join in to win exciting prizes'
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
         }}
      />
+      <div className="h-full  w-screen flex flex-col relative overflow-scroll pb-16">
         <div className="search_box w-full z-10 fixed top-0">
         <SearchItems type='explore'/>
           <div />
@@ -197,8 +207,8 @@ function Explore() {
                     <div 
                      key={id} 
                      id={id} 
-                     onClick={()=>toHashtagDetails(data?.displayName)} 
-                     className="carousel_item bg-gray-300 m-0.5 min-w-full relative">
+                     onClick={()=> (data?.bannerUrl && router.push(data.bannerUrl)) || toHashtagDetails(data?.displayName)} 
+                     className="carousel_item bg-gray-300 min-w-full relative">
                        <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
                     </div>
                   </SwiperSlide>

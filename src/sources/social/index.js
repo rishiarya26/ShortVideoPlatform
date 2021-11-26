@@ -2,11 +2,16 @@ import { get, post, del } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/social';
+import { transformSuccessViewCount, transformErrorViewCount } from '../transform/social/view-count';
 import { getEpochTime } from '../../utils/date';
 import { trimSpace } from '../../utils/string';
+import { getItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
+import { transformErrorOneLink, transformSuccessOneLink } from '../transform/social/get-one-link';
 
 const apiKey = '4dbc881836c2a0130cda9cfcec0f3383';
 const appId = 'YInJ8G70y098';
+const appsFlyerApiKey = '1b3u1l4h0010O00001prc0CQAQ1s6h3a2t';
 
 const middlewareSettings = {
   shouldCache: true,
@@ -113,12 +118,69 @@ const deleteLike = async ({ socialId }) => {
   }
 };
 
+const viewCountUpdate = async ({ id, event = 'user_video_start'}) => {
+  let response = {};
+ 
+  try {
+    const payload = {
+      "assetId": id,
+      "event": event
+  }
+  console.log("api called", payload)
+   const userId = localStorage.get('user-id') || null;
+   const guestToken =  getItem('guest-token') || null;
+    const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
+    response = await post(apiPath, payload, {
+      Authorization : userId || guestToken,
+      'content-type': 'application/json'
+    });
+    response.data.status = 'success';
+    response.data.message = '';
+    return Promise.resolve(response);
+  } catch (err) {
+    console.log(err)
+    return Promise.reject(err);
+  }
+};
+
+const getDynamicOneLink = async({videoId}) => {
+  let response = {};
+  try {
+    const payload = {
+      deep_link_value: `https://www.hipi.co.in/video/${videoId}`,
+      utm_source: 'pwa_mobile_install_cta',
+      utm_campaign: 'pwa',
+      is_retargeting: 'true'
+  }
+  console.log("api called", payload)
+    const apiPath = `${getApiBasePath('oneLink')}`;
+    response = await post(apiPath, payload, {
+      Authorization : appsFlyerApiKey ,
+      'content-type': 'application/json'
+    });
+    response.data.status = 'success';
+    response.data.message = '';
+    return Promise.resolve(response);
+  } catch (err) {
+    console.log(err)
+    return Promise.reject(err);
+  }
+}
+
+
 const [getComments, clearComments] = apiMiddleWare(getActivityFeed, transformSuccess, transformError, middlewareSettings);
+const [viewEvents, clearViewEvents] = apiMiddleWare(viewCountUpdate, transformSuccessViewCount , transformErrorViewCount);
+const [getOneLink, clearOneLink] = apiMiddleWare(getDynamicOneLink, transformSuccessOneLink , transformErrorOneLink);
+
 
 export {
   getComments,
   clearComments,
   postComment,
   postLike,
-  deleteLike
+  deleteLike,
+  viewEvents,
+  clearViewEvents,
+  getOneLink,
+  clearOneLink
 };

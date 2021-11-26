@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 import { withBasePath } from '../../config';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
 import StaticFooter from '../static-footer';
 
 function Home() {
@@ -17,9 +18,19 @@ function Home() {
   }
 
   return (
+    <>
+     <SeoMeta
+        data={{
+          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
+          // image: item?.thumbnail,
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
+        }}
+      />
     <div className="h-screen  w-screen flex flex-col justify-between">
       <div className=" header_landing w-full h-28 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 py-2">
-        <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        <div className="w-16">
+        <img  src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        </div>
       </div>
       <div className="bg_grad flex items-center p-10 relative h-full">
         <div className="flex justify-end pr-10 items-center w-5/12 ">
@@ -38,6 +49,7 @@ function Home() {
       </div>
       <StaticFooter/>
     </div>
+    </>
   );
 }
 

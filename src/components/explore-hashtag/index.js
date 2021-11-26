@@ -13,6 +13,9 @@ import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import { withBasePath } from '../../config';
 import useDrawer from '../../hooks/use-drawer';
 import detectDeviceModal from "../open-in-app"
+import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -28,14 +31,16 @@ function HashTag({router}) {
   const {item = ''} = router?.query;
   const {show} = useDrawer();
 
-  console.log(item)
-
   async function showPopUp(){
     show('', detectDeviceModal, 'extraSmall');
     setIsFetching(false);
   }
 
   useEffect(()=>{
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Hashtag Details';
+      track('Screen View',mixpanelEvents );
+
     window.onunload = function () {
       window?.scrollTo(0, 1);
     }
@@ -76,6 +81,13 @@ function HashTag({router}) {
     Loader={LoadComp}
     ErrorComp={ErrorComp}
   >
+    <SeoMeta
+        data={{
+          title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
+          // image: item?.thumbnail,
+          description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`        
+        }}
+     />
     <div>
       <div onClick={()=>router?.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
         <Back />

@@ -18,15 +18,12 @@ export default function Hipi(params) {
     status,
   } = params;
 
-  console.log("print",item)
 
   useEffect(()=>{
   try{ 
-    console.log('in', item)
     let userType = 'others'
     const tokens = localStorage.get('tokens');
     const userId = localStorage.get('user-id')
-    console.log("****",tokens, userId, item?.id)
     tokens && userId && userId === item?.id && (userType = 'self');
     setType(userType);
   }catch(e){
@@ -42,9 +39,9 @@ export default function Hipi(params) {
     <>
      <SeoMeta
         data={{
-          title: `${item?.firstName} ${item?.lastName} on HiPi - Watch the latest short videos from Anjusha on HiPi`,
+          title: `${item?.firstName} ${item?.lastName} on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
-          description: `${item?.firstName} ${item?.lastName} videos - Check out ${item?.firstName} ${item?.lastName} videos and followers on HiPi community. Join HiPi and follow various users and celebrities for the best short video content`
+          description: `${item?.firstName} ${item?.lastName} (${item?.userHandle}) on Hipi. Checkout latest trending videos from ${item?.firstName} ${item?.lastName} that you can enjoy and share with your friends.`        
         }}
      />
       {/* <SeoMeta
@@ -108,11 +105,9 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
-  console.log("id",id);
   let data = {};
   try {
     data = await getUserProfile(id);
-    console.log("data",data);
   } catch (e) {
     data = {
       status: e?.status || 400,

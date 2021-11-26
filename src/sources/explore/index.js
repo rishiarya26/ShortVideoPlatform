@@ -3,6 +3,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/explore/searchList';
 import { getRecommendations } from './recommendations';
+import { getAdditionalBanner } from './additional-banner';
 
 // async function fetchRecommendations() {
 //   let response = {};
@@ -26,6 +27,10 @@ async function fetchSearchData({ limit = '10', offset = '1' }) {
     response = await Promise.all([get(apiPath), getRecommendations()]);
     let [searchList, recommendationList] = response;
     searchList.data.recommendations = recommendationList?.data;
+    /* additional Banner */
+    const additionalBanner = await getAdditionalBanner();
+    searchList.data.additionalBanner = additionalBanner && additionalBanner;
+    /********************/
     searchList.data.requestedWith = { limit, offset};
     return Promise.resolve(searchList);
   } catch (err) {
