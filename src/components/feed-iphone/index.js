@@ -213,7 +213,7 @@ function FeedIphone({ router }) {
       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      viewEventsCall(activeVideoId, 'completed');
+      // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }

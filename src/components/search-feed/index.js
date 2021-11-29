@@ -130,8 +130,8 @@ function SearchFeed({ router }) {
     setSeekedPercentage(percentage);
       /********** Mixpanel ***********/
       if(currentTime >= duration-0.2){
-        // toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-        // toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+        toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+        toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
         /*** view events ***/
         viewEventsCall(activeVideoId, 'completed');
         viewEventsCall(activeVideoId, 'user_video_start');

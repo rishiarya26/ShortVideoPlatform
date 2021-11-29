@@ -42,18 +42,20 @@ function EmbedVideoSidebar(props) {
   //     return `${stores[deviceInfo]}`}
   //   }
 
-    //  const onStoreRedirect =()=>{
-    //    window?.open(ONE_TAP_DOWNLOAD);
-    //  }
+     const onStoreRedirect =()=>{
+       window?.open(ONE_TAP_DOWNLOAD);
+     }
 
-     const onStoreRedirect =async ()=>{
-     try{  const resp = await getOneLink({videoId : props?.videoId});
-       console.log("one link resp",resp);}
-       catch(e){
+    //  const onStoreRedirect =async ()=>{
+    //  try{  
+    //    const resp = await getOneLink({videoId : props?.videoId});
+    //    console.log("one link resp",resp);
+    //   }
+    //    catch(e){
 
-       }
-      // window?.open(ONE_TAP_DOWNLOAD);
-    }
+    //    }
+    //   // window?.open(ONE_TAP_DOWNLOAD);
+    // }
 
   const info = {
     single : 'bottom-28 fixed',
