@@ -74,8 +74,8 @@ function VideoSidebar({
     show('', login, 'medium');
   };
 
-  const like = () => show('', detectDeviceModal, 'extraSmall', {text: "like"});
-  const comment = () => show('', detectDeviceModal, 'extraSmall', {text: "comment"});
+  const like = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+  const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   
   const selectedLike = useAuth(showLoginOptions, like);
   const selectedComment = useAuth(showLoginOptions, comment);
@@ -144,7 +144,7 @@ function VideoSidebar({
             <div
               id="like"
               role="presentation"
-              onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "like"})}
+              onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
             >
               <Like />
             </div>
@@ -161,7 +161,7 @@ function VideoSidebar({
         <div 
            id="comment"
            role="presentation"
-           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "comment"})}
+           onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
         >
           <Comment />
           {/* <p className="text-sm text-center">0</p> */}

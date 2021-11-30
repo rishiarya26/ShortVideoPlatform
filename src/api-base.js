@@ -14,7 +14,7 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
+    staggingHipi: 'http://3.6.36.112:8000/api'
   },
   development: {
     test: 'https://api.github.com',
@@ -29,7 +29,7 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
+    staggingHipi: 'http://3.6.36.112:8000/api'
   },
   staging: {
     test: 'https://api.github.com',
@@ -43,7 +43,7 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
+    staggingHipi: 'http://3.6.36.112:8000/api'
   },
   production: {
     test: 'https://api.github.com',
@@ -57,7 +57,7 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    oneLink:'https://onelink.appsflyer.com/shortlink/v1/tMco'
+    staggingHipi: 'http://3.6.36.112:8000/api'
   }
 };
 

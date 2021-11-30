@@ -88,6 +88,19 @@ const onStoreRedirect =(device)=>{
             <a  href="https://www.facebook.com/TikTokForBusiness?refer=build_for_tiktok_facebook_icon" className="absolute w-12 h-12 bg-transparent border-0 left-3/4 top-0" ></a>
        </div> 
       </div> */}
+      <div className="w-full p-4 px-8 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
+        <div className="flex">
+            <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
+            <div className="flex flex-col justify-center ">
+              <p className="text-lg font-semibold">Download Hipi App</p>
+              <p className="text-md ">Participate in G.O.A.T</p>
+            </div>
+        </div>
+        <div className="flex">
+           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+            </div>
+      </div>
       <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
         <div className="flex w-full text-sm">
           {/* <div className="flex w-1/2">

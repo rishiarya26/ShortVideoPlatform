@@ -150,12 +150,13 @@ const getDynamicOneLink = async({videoId}) => {
       deep_link_value: `https://www.hipi.co.in/video/${videoId}`,
       utm_source: 'pwa_mobile_install_cta',
       utm_campaign: 'pwa',
-      is_retargeting: 'true'
-  }
-  console.log("api called", payload)
-    const apiPath = `${getApiBasePath('oneLink')}`;
-    response = await post(apiPath, payload, {
-      Authorization : appsFlyerApiKey ,
+      is_retargeting: 'true',
+      pid:"install",
+      af_dp:"zee5hipi://"
+    }
+    console.log("api called", payload)
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/appsflyer`;
+    response = await post(apiPath, {data: payload}, {
       'content-type': 'application/json'
     });
     response.data.status = 'success';

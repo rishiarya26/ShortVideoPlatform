@@ -10,8 +10,9 @@ import { useEffect } from 'react';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import { getOneLink } from '../../sources/social';
 
-export default function DownloadAppWidget({text, setMuted}) {
+export default function DownloadAppWidget({videoId}) {
   // const stores = {
   //   android: ANDROID_STORE,
   //   ios: IOS_STORE
@@ -49,10 +50,27 @@ export default function DownloadAppWidget({text, setMuted}) {
   // }
   /***************************/
 
-  const onStoreRedirect =()=>{
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
+
+  const onStoreRedirect =async ()=>{
     toTrackMixpanel('downloadClick');
-    window?.open(ONE_TAP_DOWNLOAD);
-  }
+    let link = ONE_TAP_DOWNLOAD;
+  try{  
+    if(videoId){
+      const resp = await getOneLink({videoId : videoId});
+      link = resp?.data;
+      console.log("one link resp",resp);
+    }
+   }
+    catch(e){
+
+    }
+    console.log("final onelink",link)
+    window?.open(link);
+ }
   /***************************/
 
   // const onStoreRedirect =()=>{

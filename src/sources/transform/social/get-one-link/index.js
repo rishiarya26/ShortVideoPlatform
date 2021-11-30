@@ -1,7 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../../index';
 import { getNewObjectCopy } from '../../../../utils/app';
 // import { trimLowerCase } from '../../../utils/string';
-import { DEFAULT_ERROR_CODE } from '../../../../constants';
+import { DEFAULT_ERROR_CODE, ONE_TAP_DOWNLOAD } from '../../../../constants';
 
 const msgMap = {
   200: 'ok'
@@ -20,7 +20,6 @@ function transformErrorOneLink(error = {}) {
 }
 
 function transformSuccessOneLink(resp) {
-    console.log("resp-onelink",resp)
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   try {
@@ -29,7 +28,8 @@ function transformSuccessOneLink(resp) {
     }
     payload.status = 'success';
     payload.message = getMessage(data, msgMap);
-    payload.data = data;
+    payload.data = data?.responseData || ONE_TAP_DOWNLOAD;
+    console.log("onelink selected", payload.data)
     return payload;
   } catch (err) {
     data.appError = err.message;
