@@ -10,6 +10,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { getOS } from '../../utils/device-details';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
+import { getItem } from '../../utils/cookie';
 
 // const detectDeviceModal = dynamic(
 //   //() => import('../download-app-widget'),
@@ -48,17 +49,19 @@ function EmbedVideoSidebar(props) {
 
      const onStoreRedirect =async ()=>{
        let link = ONE_TAP_DOWNLOAD;
+       const device = getItem('device-info');
+       console.log(device)
      try{  
+      if(device === 'android' && props?.videoId){ 
        const resp = await getOneLink({videoId : props?.videoId});
        link = resp?.data;
        console.log("one link resp",resp);
       }
+      }
        catch(e){
-
        }
-
        console.log("final link",link)
-      window?.open(link);
+       window?.open(link);
     }
 
   const info = {

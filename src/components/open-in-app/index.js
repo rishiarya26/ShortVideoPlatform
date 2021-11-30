@@ -55,20 +55,22 @@ export default function DownloadAppWidget({videoId}) {
   //   window?.open(ONE_TAP_DOWNLOAD);
   // }
 
-  const onStoreRedirect =async ()=>{
+// 
+  const onStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
     let link = ONE_TAP_DOWNLOAD;
+    const device = getItem('device-info');
+    console.log(device)
   try{  
-    if(videoId){
+   if(device === 'android' && videoId){ 
       const resp = await getOneLink({videoId : videoId});
       link = resp?.data;
       console.log("one link resp",resp);
     }
    }
     catch(e){
-
     }
-    console.log("final onelink",link)
+    console.log("final onelink",link);
     window?.open(link);
  }
   /***************************/
