@@ -24,11 +24,15 @@ async function fetchSearchData({ limit = '10', offset = '1' }) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/discover?limit=${limit}&offset=${offset}`;
+    console.log("in")
     response = await Promise.all([get(apiPath), getRecommendations()]);
     let [searchList, recommendationList] = response;
+    console.log("in",searchList, recommendationList)
     searchList.data.recommendations = recommendationList?.data;
     /* additional Banner */
     const additionalBanner = await getAdditionalBanner();
+    console.log("banner",additionalBanner)
+
     searchList.data.additionalBanner = additionalBanner && additionalBanner;
     /********************/
     searchList.data.requestedWith = { limit, offset};

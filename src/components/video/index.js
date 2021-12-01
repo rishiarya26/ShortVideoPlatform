@@ -136,6 +136,7 @@ function Video(props) {
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
+         userName={props.userName}
          videoOwnersId={props.videoOwnersId}
          socialId={props.socialId}
          profilePic={props.profilePic}

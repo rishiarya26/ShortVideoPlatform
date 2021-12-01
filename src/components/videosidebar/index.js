@@ -56,7 +56,7 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName
 }) {
   const { show } = useDrawer();
 
@@ -90,7 +90,7 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
-    router?.push(`/profile/${videoOwnersId}`);
+    router?.push(`/profile/${userName}`);
   };
 
   const onEmbedCopy = () => {

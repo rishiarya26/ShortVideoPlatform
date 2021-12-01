@@ -119,7 +119,9 @@ function Explore() {
   const router = useRouter();
 
   const onDataFetched = data => {
-    const crousalData = (data?.data?.[0]?.widgetType === 'carousel_banner') && data?.data?.[0]?.widgetList;
+    const crousalDataIndex = data?.data?.findIndex((item)=>(item?.widgetType === 'carousel_banner'))
+    console.log("crousalIndex",crousalDataIndex)
+    const crousalData = data?.data?.[crousalDataIndex]?.widgetList;
     window.sessionStorage.removeItem('search-feed');
     window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
     const additionalBanner = data?.data?.additionalBanner;

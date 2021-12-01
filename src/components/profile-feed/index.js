@@ -9,7 +9,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos } from '../../sources/users/profile';
+import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { inject } from '../../analytics/async-script-loader';
@@ -73,10 +73,11 @@ function ProfileFeed({ router }) {
 
   const getUserDetails = async(id)=>{
  try{   
-   data = await getUserProfile(id);
-   setUserDetails(data?.data?.responseData);
+   const data = await getUserProfile(id);
+   setUserDetails(data?.data);
+  //  console.log("userDetail",data)
   }catch(e){
-
+   console.log("get profile error",e)
   }
   }
   useEffect(()=>{
