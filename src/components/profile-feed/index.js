@@ -82,7 +82,7 @@ function ProfileFeed({ router }) {
   }
   useEffect(()=>{
     id && getUserDetails(id)
-  })
+  },[id])
 
   const dataFetcher = () => getProfileVideos({ id, type:'all' });
   const onDataFetched = data => {

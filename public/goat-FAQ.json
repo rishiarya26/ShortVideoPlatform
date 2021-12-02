@@ -1,7 +1,7 @@
 {"faq" : [
     
    {   "ques" : "Who can Participate?",
-       "ans" : "Indian citizen above 18yrs", "show": false},
+       "ans" : "Indian citizen above 18 years. If you are under 18 then parental/guardian approval is needed.", "show": false},
 
 { "ques" : "How to make account on Hipi App?",
     "ans" : "Download Hipi app from Play Store or App Store. Signup by answering a few questions and you are good to go.", "show": false},
@@ -18,7 +18,7 @@
     "ans" : "No, its free for all to participate. Just download Hipi, create account & upload videos", "show": false},
     
 { "ques" : "For how long is the contest?",
-    "ans" : "It is for 08 weeks starting 22 Nov and ends on 16th jan’22", "show": false},
+    "ans" : "It is for 08 weeks starting 22nd November 2021 and ends on 16th January 2022", "show": false},
     
 {"ques" : "What do I win?",
    "ans" : "This finale winner gets a chance to perform a duet with Shilpa on the SaReGaMaPa Finale live on Zee Tv on the 4th of Feb 2022. Weekly winner gets a chance to win cash prizes, duets with Rupali & mentoring session with Rupali Jagga or Shilpa Rao","show": false},
@@ -49,11 +49,11 @@
     
     { "ques" : "What is Leaderboard?",
     
-    "ans" : "Leaderboard is a list of Top performers in the contest.","show": false},
+    "ans" : "Leaderboard is a list of top performers in the contest.","show": false},
     
     { "ques" : "How is the winner or the top singer decided on leaderboard?",
     
-    "ans" : "In Round 1 & 2, Video with the highest engagement and likes will be on Top of the Leaderboard and Round 3, Leaderboard is combination of Engagement + Judges Points.","show": false},
+    "ans" : "In Round 1 & 2, video with the highest engagement and likes will be on top of the leaderboard and Round 3, leaderboard is combination of engagement + judge’s points.","show": false},
     
     { "ques" : "What is engagement rate?",
     
@@ -63,13 +63,13 @@
     
     "ans" : "You need to upload minimum 01 video to be eligible for the contest using the relevant hashtags of that round.","show": false},
     
-    { "ques" : "What to do if I have missed the entry date 22 Nov?",
+    { "ques" : "What to do if I have missed the entry date 22nd November 2021?",
     
-    "ans" : "Not to worry, upload your best singing video till 05th Dec. Do note, the earlier & the more videos you submit, the more are your chances of higher engagement rate & to be on Top of the leaderboard.","show": false},
+    "ans" : "Not to worry, upload your best singing video till 05th December 2021. Do note, the earlier & the more videos you submit, the more are your chances of higher engagement rate & to be on top of the leaderboard.","show": false},
     
-    { "ques" : "What to do if I want to join after 05th December?",
+    { "ques" : "What to do if I want to join after 05th December 2021?",
     
-    "ans" : "You can still participate by submitting one singing video with relevant hashtags to enter your name in Leaderboard. Once your name appears on Leaderboard then then you have to post videos with 04 themes of your choice from the 10 themes mentioned before 19th Dec","show": false},
+    "ans" : "You can still participate by submitting one singing video with relevant hashtags to enter your name in leaderboard. Once your name appears on leader board then you have to post videos with 04 themes of your choice from the 10 themes mentioned before 19th Dec 2021","show": false},
     
     { "ques" : "In Round 2, do we have to sing in all 10 themes?",
     
@@ -77,11 +77,11 @@
     
     { "ques" : "In Round 2, do we have to submit all 04 themes singing videos together?",
     
-    "ans" : "No. You can decide when you want to upload your videos theme wise. Do remember earlier the better as it increases the chances of engagement number & increase chance to be on Top of Leaderboard.","show": false},
+    "ans" : "No. You can decide when you want to upload your video theme wise. Do remember earlier the better as it increases the chances of engagement number & increase chance to be on top of leaderboard.","show": false},
     
-    { "ques" : "Do we need to upload everyday?",
+    { "ques" : "Do we need to upload every day?",
     
-    "ans" : "There is no compulsion as such. But the more videos, increases the chances of engagement number & increase the chance to be on Top of Leaderboard.","show": false},
+    "ans" : "There is no compulsion as such. But the more videos, increases the chances of engagement number & increase the chance to be on top of leaderboard.","show": false},
     
     { "ques" : "Can I submit video on my own theme?",
     
@@ -95,13 +95,13 @@
     
     "ans" : "No, you don’t need to come. Mentoring will happen online","show": false},
     
-    { "ques" : "Can I participate after round 2, 19 Dec’21?",
+    { "ques" : "Can I participate after Round 2, 19th December 2021?",
     
     "ans" : "You can still participate in 2 weekly themes but won’t be eligible for mentorship or duet video. The user with the maximum engagement in their videos will win a cash prize.","show": false},
     
     { "ques" : "Can I participate in the Last Round & win?",
     
-    "ans" : "Yes you can participate by upload the videos with the two themes given every week. You will be eligible to win cash prize if you have highest number of engagements that week. But not for mentorship or duet videos.","show": false},
+    "ans" : "Yes, you can participate by uploading the videos with the two themes given every week. You will be eligible to win cash prize if you have highest number of engagements that week. But not for mentorship or duet videos.","show": false},
     
     { "ques" : "How will I get my cash prize & in how much time?",
     
@@ -111,7 +111,7 @@
     
     "ans" : "Once the competition starts the winner announcement will take place every Sunday.","show": false},
     
-    { "ques" : "How will we know everyday that where are we on Leaderboard?",
+    { "ques" : "How will we know every day that where are we on leader board?",
     
     "ans" : "You will be sent notifications for the same or you can check the same on our webpage.","show": false},
     
@@ -125,5 +125,5 @@
             "ans" : "You can drop in your questions at hipigoat@hipi.co.in  and we will get back to you.","show": false},
 
             { "ques" : "What is not allowed?", 
-                "ans" : "We want to provide a safe, supportive, & inclusive place for singers & their creativity to flourish. We protect our singers from the kind of hateful content or behaviour than can spoil a positive experience on hipiGOAT. Unless specified, no Lip-sync videos, no duet videos, no group videos, no videos where other person is singing, no videos from any music album or Bollywood film or of any other singers will be allowed. Unethical submissions that are fraudulent or made by violating a rule to gain an unfair advantage will not be tolerated. Such entries will be disqualified immediately.","show": false}
+                "ans" : "We want to provide a safe, supportive, & inclusive place for singers & their creativity to flourish. We protect our singers from the kind of hateful content or behaviour than can spoil a positive experience on #hipiGOAT. Unless specified, no lip-sync videos, no duet videos, no group videos, no videos where other person is singing, no videos from any music album or Bollywood film or of any other singers will be allowed. Unethical submissions that are fraudulent or made by violating a rule to gain an unfair advantage will not be tolerated. Such entries will be disqualified immediately.","show": false}
        ]}

@@ -513,7 +513,7 @@ function Feed({ router }) {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-     {id === 'for-you' &&  <SeoMeta
+     <SeoMeta
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
@@ -544,7 +544,7 @@ function Feed({ router }) {
           //   site_name: 'HiPi'
           // }
         }}
-      />}
+      />
       {/* <VideoJsonLd
         name={item.music_title}
         description={item.content_description}
