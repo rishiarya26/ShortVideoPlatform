@@ -62,6 +62,7 @@ function GoatHipi() {
   </div>
   <div className="section_6 flex flex-col section_2">
   <img src={withBasePath('images/goat/mobile/9.jpg')}/>
+  <img src={withBasePath('images/goat/mobile/judge.jpg')}/>
   <img src={withBasePath('images/goat/mobile/10.jpg')}/>
   <img src={withBasePath('images/goat/mobile/11.jpg')}/>
   <img src={withBasePath('images/goat/mobile/12.jpg')}/>
