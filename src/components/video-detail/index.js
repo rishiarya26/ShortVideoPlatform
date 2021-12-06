@@ -89,7 +89,7 @@ return (
             <EmbedIcon />
          </div>
       </div>
-      <div className="container w-full h-full bg-white relative flex w-3/4">
+      <div className="container w-full h-full bg-white relative flex w-full">
          <div className="cmbd_iframe flex flex-col bg-white box-border h-full w-full pb-48">
             <div className="cmbd_tabs flex w-full justify-around px-4 py-2 items-center">
                <div className="cmbd_look_tab flex justify-center cursor-pointer">
@@ -104,7 +104,7 @@ return (
                   <span> 10</span>
                </div> */}
             </div>
-            <div className="cmbd_body p-4 py-2 flex flex-col overflow-scroll">
+            <div className="cmbd_body p-4 py-2 flex flex-col overflow-scroll w-3/4">
                <div className="cmbd_charm_card relative flex p-2 rounded-sm mb-2 shadow flex-col">
                   <div className="cmbd_tab_charm flex flex-col relative p-2 rounded-sm" id="Media_charm_2257127" data-title="Sarla Arora">
                      <div className="cmbd_tab_charm_title mb-1">
