@@ -73,7 +73,6 @@ const onStoreRedirect =(device)=>{
   <img src={withBasePath('images/goat/mobile/judge.jpg')}/>
   <img src={withBasePath('images/goat/mobile/10.jpg')}/>
   <img src={withBasePath('images/goat/mobile/11.jpg')}/>
-  <img src={withBasePath('images/goat/mobile/12.jpg')}/>
   </div>
   </>
 <div className="flex flex-col p-8 pt-0 px-4">
