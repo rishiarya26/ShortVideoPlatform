@@ -39,9 +39,9 @@ export default function Hipi(params) {
     <>
      <SeoMeta
         data={{
-          title: `${item?.firstName} ${item?.lastName} on Hipi - Indian Short Video App`,
+          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
-          description: `${item?.firstName} ${item?.lastName} (${item?.userHandle}) on Hipi. Checkout latest trending videos from ${item?.firstName} ${item?.lastName} that you can enjoy and share with your friends.`        
+          description: `${item?.firstName || ''} ${item?.lastName || ''} (${item?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} that you can enjoy and share with your friends.`        
         }}
      />
       {/* <SeoMeta

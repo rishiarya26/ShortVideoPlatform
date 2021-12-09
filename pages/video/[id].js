@@ -57,9 +57,9 @@ export default function Hipi(params) {
     <>
       <SeoMeta
         data={{
-          title: `${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName} videos on Hipi - Indian Short Video App`,
+          title: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} videos on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
-          description: `${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName} (@${item?.userName}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName} ${item?.videoOwnersDetail?.lastName}'s latest trending videos that you can enjoy and share with your friends.`        
+          description: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}'s latest trending videos that you can enjoy and share with your friends.`        
         }}
      />
       <VideoJsonLd
