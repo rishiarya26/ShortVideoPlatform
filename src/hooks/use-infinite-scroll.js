@@ -23,7 +23,8 @@ const useInfiniteScroll = (callback) => {
     // if ((window?.scrollY) !== (document?.documentElement?.offsetHeight-window?.screen?.availHeight) || isFetching) return;
 
     if(device && device === 'android'){
-      if((window?.screen?.availHeight - 93)+window?.scrollY <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
+      console.log((window?.screen?.availHeight - 63),'+',window?.scrollY,'=',(window?.screen?.availHeight - 93)+window?.scrollY,'<=',(document?.documentElement?.offsetHeight-1));
+      if((window?.screen?.availHeight - 63)+window?.scrollY <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
     }
     if(device && device === 'ios'){
       if ((window?.innerHeight + window?.scrollY) <= (document?.documentElement?.offsetHeight-1) || isFetching) return;

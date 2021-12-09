@@ -42,35 +42,41 @@ function Users({
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
-  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState(isFollow);
 
-
-  async function showPopUp(){
-    show('', detectDeviceModal, 'extraSmall');
-    setIsFetching(false);
-  }
-
-  // async function fetchMoreListItems() {
-  //  try{
-  //   const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
-  //   console.log(response)
-  //   if(response?.data?.length > 0){
-  //     let data = {...videoData};
-  //     data.items = data?.items?.concat(response?.data);
-  //     console.log("items",data)
-  //     setVideoData(data);
-  //     setOffset(offset+1);
-  //     setIsFetching(false);
-  //   }
-  //   setShowLoading(false)
-  //  }
-  //  catch(e){
-  //    console.log("e",e)
-  //  }
+  // async function showPopUp(){
+  //   show('', detectDeviceModal, 'extraSmall');
+  //   setIsFetching(false);
   // }
+
+  useEffect(()=>{setShowLoading(isFetching)},[isFetching])
+
+
+  async function fetchMoreListItems() {
+   try{
+    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
+    console.log(response)
+    if(response?.data?.length > 0){
+      let data = {...videoData};
+      data.items = data?.items?.concat(response?.data);
+      console.log("items",data)
+      setVideoData(data);
+      setOffset(offset+1);
+      setIsFetching(false);
+      setShowLoading(false)
+    }else{
+      console.log("inelse",response.data.length)
+      setShowLoading(false);
+     }
+     setShowLoading(false)
+   }
+   catch(e){
+     console.log("e",e)
+   }
+  }
 
   // useEffect(()=>{
   //   window.onunload = function () {
@@ -81,6 +87,11 @@ function Users({
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
   // },[])
+
+  useEffect(()=>{
+    setIsFetching(false);
+    setOffset(2);
+  },[selectedTab])
   
   useEffect(() => {
     const mixpanelEvents = commonEvents();
@@ -286,8 +297,8 @@ function Users({
         userId={id}
         type={selectedTab}
         page='profile'
-        isFetching={isFetching}
-        // fetchMoreListItems={fetchMoreListItems}
+        showLoading={showLoading}
+        fetchMoreListItems={fetchMoreListItems}
       />
      
 <Landscape/>

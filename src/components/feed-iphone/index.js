@@ -463,7 +463,7 @@ console.log('error',e)
                       // videoid={item.content_id}
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.thumbnail}
+                      thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}

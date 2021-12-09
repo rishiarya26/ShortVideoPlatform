@@ -25,6 +25,7 @@ import fallbackVideos from '../../../public/images/video.png';
 import { trimHash } from '../../utils/string';
 import Cart from '../commons/svgicons/cart';
 import 'swiper/swiper.min.css'
+import Refresh from '../commons/svgicons/refresh';
 
 // modules styles
 import 'swiper/components/navigation/navigation.min.css'
@@ -48,73 +49,52 @@ const LoadComp = () => (<Loader />);
 function Explore() {
   const [data, setData] = useState([]);
   const [crousalItems, setCrousalItems] = useState([]);
-  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
 
   const {show} = useDrawer();
+  console.log("isFetching", isFetching, showLoading)
 
-  async function showPopUp() {
-    // try{
-    //  const response = await getSearchData({ offset: `${offset}` });
-    //  if(response?.data?.length > 0){
-    //    let updateData = [...data];
-    //    updateData = updateData?.concat(response?.data);
-    //    let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
-    //    sessionData = sessionData?.concat(response?.data);
-    //    window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
-    //    setData(updateData);
-    //    setOffset(offset+1);
-    
-    //  }else{
-    //   setIsFetching(false);
-    // if(offset === 2){
-      show('', detectDeviceModal, 'extraSmall');
-      setIsFetching(false);
-    //   setOffset(offset+1);
-    // }
-  
-      
-    //  }
-    //  console.log(showLoading)
-    // //  setIsFetching(false);
-    //  setShowLoading(false)
-    // }
-    // catch(e){
-    //   setIsFetching(false);
+  useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
-    //   // setShowLoading(false);
-    //   console.log("error",e)
-    // }
-   }
-
-  // async function fetchMoreListItems() {
-  //   try{
-  //    const response = await getSearchData({ offset: `${offset}` });
-  //    if(response?.data?.length > 0){
-  //      let updateData = [...data];
-  //      updateData = updateData?.concat(response?.data);
-  //      let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
-  //      sessionData = sessionData?.concat(response?.data);
-  //      window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
-  //      setData(updateData);
-  //      setOffset(offset+1);
-  //      setIsFetching(false);
-  //    }else{
-  //     setIsFetching(false);
+  // async function showPopUp() {
   //     show('', detectDeviceModal, 'extraSmall');
-  //    }
-  //    console.log(showLoading)
-  //   //  setIsFetching(false);
-  //    setShowLoading(false)
-  //   }
-  //   catch(e){
   //     setIsFetching(false);
-
-  //     // setShowLoading(false);
-  //     console.log("error",e)
-  //   }
   //  }
+
+  async function fetchMoreListItems() {
+    try{
+      console.log(offset)
+     const response = await getSearchData({ offset: `${offset}` });
+     console.log(response.data.length)
+     if(response?.data?.length > 0){
+       let updateData = [...data];
+       updateData = updateData?.concat(response?.data);
+       let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
+       sessionData = sessionData?.concat(response?.data);
+       window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
+       setData(updateData);
+       setOffset(offset+1);
+       setIsFetching(false);
+       setShowLoading(false);
+     }else{
+      console.log("inelse",response.data.length)
+      setShowLoading(false);
+      // setIsFetching(false);
+      // show('', detectDeviceModal, 'extraSmall');
+     }
+    //  console.log(showLoading)
+    //  setIsFetching(false);
+     setShowLoading(false)
+    }
+    catch(e){
+      // setIsFetching(false);
+
+      // setShowLoading(false);
+      console.log("error",e)
+    }
+   }
 
   const router = useRouter();
 
@@ -286,9 +266,9 @@ function Explore() {
                           <>
                           <div key={id} onClick={()=>router?.push({pathname: '/profile/[pid]',query: { pid: d?.user?.id }})} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
-                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={d?.user?.userName}  width='w_120' fallback={fallbackUsers?.src}/>
+                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>
-                                <p className="text-xs pt-2 truncate max-w-20v  text-center">{d?.user?.userName}</p>
+                                <p className="text-xs pt-2 truncate max-w-20v  text-center">{`${d?.user?.firstName} ${d?.user?.lastName}`}</p>
                           </div>
                           </>
                         );
@@ -297,7 +277,12 @@ function Explore() {
                 </div>
               ));
         })}
-        {/* {isFetching && <h1 className='bold font-black'>Loading more items...</h1>} */}
+        {showLoading &&  
+        <div onClick={fetchMoreListItems} className="w-full flex justify-center py-2">
+          <Refresh/>
+        </div>
+        }
+           
       </div>
       <FooterMenu selectedTab="search"/>
       <Landscape/>

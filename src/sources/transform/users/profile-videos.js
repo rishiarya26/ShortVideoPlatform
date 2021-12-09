@@ -45,17 +45,21 @@ function transformSuccess(resp) {
         payloadObject.id = d?.id;
         payloadObject.genre = d?.genre;
         payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
-        payloadObject.userName = d?.videoOwners.userName;
+        payloadObject.userName = d?.videoOwners?.userName || null;
         payloadObject.likesCount = d?.lCount || (d?.likeCount && Number(d.likeCount)) || null;
         payloadObject.music_title = d?.sound?.name;
         payloadObject.hashTags = d?.hashtags;
         payloadObject.thumbnailUrl = d?.thumbnailUrl;
         payloadObject.viewCount = d?.viewCount;
         payloadObject.shoppable = d?.shoppable || false
-
+        payloadObject.firstFrame= d?.firstFrame || null;
         payloadData.push(payloadObject);
       });
 
+      if(data?.firstVideo){
+        // data.firstVideo.video_url = data?.firstVideo?.video_urls[networkConnection];
+        payloadData?.splice(0,0,data?.firstVideo);
+      }
       payload.data = payloadData;
     } else {
       payload.data = responseData;

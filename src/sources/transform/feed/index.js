@@ -68,6 +68,7 @@ function transformSuccess(resp) {
       payloadObject.saveLook = false;
       payloadObject.thumbnailUrls = d?.optionalThumbnail;
       payloadObject.creatorTag = d?.videoOwners?.tag || null;
+      payloadObject.firstFrame= d?.firstFrame || null;
       
       payloadData.push(payloadObject);
     });

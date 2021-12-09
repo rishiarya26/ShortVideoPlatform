@@ -21,6 +21,7 @@ import { viewEvents } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import { getSingleFeed } from '../../sources/feed/embed';
 
 SwiperCore.use([Mousewheel]);
 
@@ -40,14 +41,74 @@ function ProfileFeed({ router }) {
   const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [userDetails, setUserDetails] = useState({})
+  const [offset, setOffset] = useState(2);
+  const [loadMore, setLoadMore] = useState(true);
+  // const [firstVideo, setFirstVideo] = useState({})
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
+
+  const { id } = router?.query;
+  const { videoId = items?.[0]?.content_id } = router?.query;
+  const { type = 'all' } = router?.query;
 
   const loaded = () => {
     setLoading(false);
   };
 
+  const loadMoreItems = async() =>{
+    let videos = [...items]
+    try {
+    if(loadMore){   
+    const resp = await getProfileVideos({ id, type: type, offset: offset });
+    if(resp?.data?.length > 0){
+      console.log("innn",resp)
+      const index = resp.data.findIndex((data)=>(data?.id === videoId))
+      if(index !== -1){
+        resp.data.splice(index,1);
+      }
+      videos = videos?.concat(resp?.data);
+      console.log("concat",videos)
+      setItems(videos);
+      setOffset(offset+1);}
+    }else{    
+      setLoadMore(false);
+    }
+  }catch(e){
+    setLoadMore(false);
+  }
+  }
+
+  useEffect(()=>{
+   async function loadItems() 
+   { 
+    console.log(items.length-4, videoActiveIndex) 
+    const toLoadMoreIndex = items.length-4;
+     videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
+   }
+   loadItems();
+  },[videoActiveIndex])
+//   const appendSelectedVideo = async(id)=>{
+//     try{ 
+//      const response = await getSingleFeed({id : id});
+//      const video = response?.data;
+//      console.log("api called",response,id)
+//      return video;
+//     //  video && updateItems?.splice(0,0,video);
+//     //  setItems(updateItems);
+
+//    }catch(e){
+//      return null;
+//      console.log("error in append video", e);
+//    }
+//  }
+
+
   useEffect(() => {
+    // let updateItems = [...items]
+    // const video = videoId && appendSelectedVideo(videoId);
+    // updateItems && updateItems.splice(0,0,video);
+    // setItems(updateItems);
+
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
@@ -55,9 +116,6 @@ function ProfileFeed({ router }) {
     track('Screen View',mixpanelEvents );
   }, []);
 
-  const { id } = router?.query;
-  const { videoId = items?.[0]?.content_id } = router?.query;
-  const { type = 'all' } = router?.query;
 
   useEffect(()=>{
     if(initialPlayStarted === true){
@@ -84,14 +142,39 @@ function ProfileFeed({ router }) {
     id && getUserDetails(id)
   },[id])
 
-  const dataFetcher = () => getProfileVideos({ id, type:'all' });
-  const onDataFetched = data => {
-    let items = data?.data;
-    if(type === "liked"){
-      items = data?.data?.filter((item)=>(item?.shoppable === true));
-    }
-    data && setItems(items);
-    data && setActiveVideoId(videoId);
+
+  // useEffect(()=>{
+
+  //  appendSelectedVideo();
+  // },[])
+
+
+  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  const onDataFetched = async(data) => {
+    let videos = data?.data;
+  //  if(videoId){
+  //   try{
+  //       const video =  await appendSelectedVideo(videoId);
+  //       video && Object.keys(video).length === 0 && videos?.splice(0,0,video)
+  //       console.log("in", videos)
+
+  //       setItems(videos);
+  //   }catch(e){
+  //     console.log("in catch")
+
+  //     data && setItems(videos);
+  //     console.log("error in append video", e);
+  //   }
+  //  }else{
+    //  console.log("in else")
+     data && setItems(videos);
+     console.log("before",activeVideoId)
+    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+  //  }
+    // if(type === "liked"){
+    //   items = data?.data?.filter((item)=>(item?.shoppable === true));
+    // }
+   
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -230,8 +313,8 @@ function ProfileFeed({ router }) {
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
-              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              swiper?.slideTo(slideToId, 0);
+              // const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              // swiper?.slideTo(slideToId, 0);
               router?.replace(`/profile-feed/${id}`);
               setInitialPlayStarted(false)
             }}
@@ -288,7 +371,7 @@ function ProfileFeed({ router }) {
                       videoid={item?.content_id}
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.poster_image_url}
+                      thumbnail={item?.firstFrame}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
                       handleSaveLook={handleSaveLook}
@@ -299,6 +382,9 @@ function ProfileFeed({ router }) {
                       profileFeed
                       loading={loading}
                       muted={muted}
+                      firstFrame={item?.firstFrame}
+                      // preActiveVideoId={items?.[videoActiveIndex-1] && items[videoActiveIndex-1]?.content_id}
+                      // nextActiveVideoId={items?.[videoActiveIndex+1] && items[videoActiveIndex+1]?.content_id}
                     />
 
                   </SwiperSlide>

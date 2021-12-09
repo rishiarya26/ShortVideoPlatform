@@ -148,9 +148,13 @@ function Hipi({
   }
 
   const getCountry = async()=>{
-    try{ const resp = await detectCountry();
+    try{ 
+      const resp = await detectCountry();
       console.log(resp?.data?.country_name)
-     setCountry(resp?.data?.country_name || 'India');
+      setCountry(resp?.data?.country_name || 'India');
+      if(resp?.data?.country_name === 'India'){
+        setItem('cookie-agreed','yes');
+      }
     }
      catch(e){
 
@@ -165,7 +169,8 @@ function Hipi({
    try{ 
     console.log('mounted');
     inject(GOOGLE_ONE_TAP , null, loaded);
-    getCountry();
+    const cookieAgree = getItem('cookie-agreed');
+    cookieAgree !== 'yes' && getCountry();
     }
     catch(e){
     

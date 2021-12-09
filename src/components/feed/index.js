@@ -78,12 +78,15 @@ function Feed({ router }) {
   };
 
   useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Feed';
     track('Screen View',mixpanelEvents );
   }, []);
+
+  useEffect(()=>{
+    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+  },[items])
 
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -421,7 +424,7 @@ function Feed({ router }) {
                       // videoid={item.content_id}
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.thumbnail}
+                      thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
@@ -429,6 +432,8 @@ function Feed({ router }) {
                       saveLook={saveLook}
                       saved={item?.saveLook}
                       activeVideoId={activeVideoId}
+                      preActiveVideoId={items?.[videoActiveIndex]?.content_id}
+                      nextActiveVideoId = {items?.[videoActiveIndex]?.content_id}
                       comp="feed"
                       initialPlayButton={initialPlayButton}
                       muted={muted}

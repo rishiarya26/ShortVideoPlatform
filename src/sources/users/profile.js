@@ -14,6 +14,7 @@ import {
   transformError as transformErrorFollow
 } from '../transform/users/follow';
 import { localStorage } from '../../utils/storage';
+import { getSingleFeed } from '../feed/embed';
 
 async function fetchUserProfile(id) {
   let response = {};
@@ -113,9 +114,11 @@ async function fetchUserRecommendation({ lang }) {
 }
 
 async function fetchUserProfileVideos({
-  id, limit = '15', offset = '1', type='all'
+  id, limit = '15', offset = '1', type='all', videoId
 }) {
+  console.log("videoId",videoId)
   let response = {};
+  let video = {}
   // let tokens = getItem('tokens');
   // tokens = JSON.parse(tokens);
   // const { shortsAuthToken = '' } = tokens;
@@ -125,6 +128,23 @@ async function fetchUserProfileVideos({
     /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}`;
     response = await get(apiPath);
+    if(videoId && response?.data?.responseData?.length > 0){
+      const items = response.data.responseData
+      const index = items.findIndex((data)=>(data?.id === videoId))
+      if(index !== -1){
+        const video = items[index]
+        items.splice(index,1);
+        items.splice(0,0,video);
+      }
+      else{ 
+        const video = localStorage.get('selected-profile-video')
+          video && (response.data.firstVideo = video);
+      }
+      // const data = await getSingleFeed({id : videoId});
+      // video = data?.data;
+      // response.data.firstVideo = video;
+      // console.log("resppp", response, data)}
+    }
     //   , null, {
     //   Authorization: `Bearer ${shortsAuthToken}`,
     //   'access-token': accessToken

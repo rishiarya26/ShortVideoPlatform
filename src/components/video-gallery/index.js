@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
+import { localStorage } from '../../utils/storage';
 import ComponentStateHandler from '../commons/component-state-handler';
+import Refresh from '../commons/svgicons/refresh';
 import VideoCard from '../video-card';
 import Error from './error';
 import Loading from './loader';
@@ -12,7 +14,7 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', isFetching
+  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems
 }) {
 
   const { t } = useTranslation();
@@ -59,6 +61,12 @@ export default function VideoGallery({
   setRetry = retry;
   const validItemsLength = items?.length > 0;
 
+  const toProfileFeed = (userId, videoId, type)=>{
+    const index = items.findIndex((data)=>data.content_id === videoId);
+    index !== -1 && localStorage.set('selected-profile-video',items[index]);
+    router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
+  }
+
   return (
     <>
       {status && (
@@ -74,7 +82,7 @@ export default function VideoGallery({
                <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
                ? ()=> router?.push(`/search-feed/${item?.id}?type=normal`)  
                : page === 'profile' 
-                  ? ()=>router?.push(`/profile-feed/${userId}?videoId=${item?.content_id}&type=${type}`)
+                  ? ()=>toProfileFeed(userId,item?.content_id,type)
                   : ()=>router?.push(`/hashtag-feed/${hashTag}?videoId=${item?.content_id}&type=${type}`)}>
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
                 <VideoCard 
@@ -87,6 +95,11 @@ export default function VideoGallery({
                 />
              </span>
              ))}
+              {showLoading &&  
+        <div onClick={fetchMoreListItems} className="w-full flex justify-center py-2">
+          <Refresh/>
+        </div>
+        }
              {/* {isFetching && 'Loading more items...'} */}
             </div>
             )

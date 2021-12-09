@@ -53,6 +53,7 @@ function transformSuccess(resp) {
         payloadObject.video_urls = videoUrls;
         payloadObject.thumbnail = d?.thumbnailUrl || null;
         payloadObject.videoOwnersDetail = d?.videoOwners || null;
+        payloadObject.firstFrame = d?.firstFrame || null;
       });
       payload.data = payloadObject;
     } else {
