@@ -5,7 +5,7 @@ import Home from "../src/components/home";
 export default function Hipi() {
   return (
   <>
-    <ChooseComp/>
+    <ChooseComp mobile={<Explore/>} desktop={<Home/>}/>
   </>
   )
 }

@@ -1,19 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getItem } from "../../utils/cookie";
-import Explore from "../explore";
-import Home from "../home";
+// import Explore from "../explore";
+// import Home from "../home";
 
-export default function ChooseComp() {
- 
-   let device = 'mobile'
-   const type = getItem('device-type');
-   if(type){
-     device = type;
-   }
+export default function ChooseComp({desktop, mobile}) {
+ const [device, setDevice] = useState('mobile');
+
+   useEffect(()=>{
+    const type = getItem('device-type');
+    console.log(type)
+    if(type){
+      setDevice(type);
+    }
+   },[])
+  
    
   const selectedComp = {
-    'desktop' : <Home/>,
-    'mobile' : <Explore/>
+    'desktop' : desktop,
+    'mobile' : mobile
   }
   
   console.log(device, selectedComp[device]);
