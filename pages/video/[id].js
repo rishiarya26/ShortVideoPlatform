@@ -52,6 +52,7 @@ export default function Hipi(params) {
     router?.push('/');
     return null;
   }
+  console.log(item.firstName, item.lastName)
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function Hipi(params) {
           description: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}'s latest trending videos that you can enjoy and share with your friends.`        
         }}
      />
-      <VideoJsonLd
+      {/* <VideoJsonLd
         name={item.musicCoverTitle}
         description={item.content_description}
         contentUrl={item.video_url}
@@ -70,7 +71,7 @@ export default function Hipi(params) {
         thumbnailUrls={[item.poster_image_url]}
         watchCount={item.likesCount}
         regionsAllowed={languageCodes}
-      />
+      /> */}
       <SingleVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}

@@ -117,7 +117,7 @@ export default function SingleVideo(props){
       }
     }
 
-    const hashTags = props?.hashTags.map((data)=> data.name);
+    const hashTags = props?.hashTags?.map((data)=> data?.name);
 
     mixpanelEvents['Creator ID'] = props?.userId;
     mixpanelEvents['Creator Handle'] = `${props?.userName}`;
@@ -127,8 +127,8 @@ export default function SingleVideo(props){
     mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
     mixpanelEvents['Hashtag'] = hashTags || 'NA';
     mixpanelEvents['Audio Name'] = props?.musicTitle || 'NA';
-    mixpanelEvents['UGC Genre'] = props?.genre;
-    mixpanelEvents['UGC Description'] = props?.description;
+    mixpanelEvents['UGC Genre'] = props?.genre || 'NA';
+    mixpanelEvents['UGC Description'] = props?.description || 'NA';
     mixpanelEvents['Page Name'] = 'Video';
 
     toTrack?.[type]();

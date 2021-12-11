@@ -14,7 +14,8 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    staggingHipi: 'http://3.6.36.112:8000/api'
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me'
   },
   development: {
     test: 'https://api.github.com',
@@ -29,7 +30,8 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    staggingHipi: 'http://3.6.36.112:8000/api'
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me'
   },
   staging: {
     test: 'https://api.github.com',
@@ -43,7 +45,8 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    staggingHipi: 'http://3.6.36.112:8000/api'
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me'
   },
   production: {
     test: 'https://api.github.com',
@@ -57,7 +60,8 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    staggingHipi: 'http://3.6.36.112:8000/api'
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me'
   }
 };
 

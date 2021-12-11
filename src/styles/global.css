@@ -144,6 +144,12 @@ img{
 	    font-size: 14px;
 	    padding: 0 20px;
 	}
+
+  .goatbg {
+    background-image: linear-gradient(to right, #db2bbb ,#4f33f3);
+  }
+
+
 	@media only screen and (max-width: 1200px){
 		.tray-container {
 		    padding: 0 0 16px 16px;

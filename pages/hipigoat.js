@@ -3,7 +3,15 @@ import GoatHipi from "../src/components/goat-hipi";
 
 import ChooseComp from "../src/components/choose-comp";
 import { SeoMeta } from "../src/components/commons/head-meta/seo-meta";
+import { commonEvents } from "../src/analytics/mixpanel/events";
+import { track } from "../src/analytics";
+import { useEffect } from "react";
 export default function Hipi() {
+  useEffect(()=>{
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Page Name'] = 'HipiGoat';
+    track('Screen View',mixpanelEvents );
+  },[])
   return (
   <>
     <SeoMeta

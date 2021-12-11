@@ -1,14 +1,44 @@
 /*eslint-disable @next/next/no-img-element*/
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import faq from '../../../public/goat-FAQ.json'
+import { useEffect, useState } from 'react';
+
 import { withBasePath } from '../../config';
+import { getLeaderboardData } from '../../sources/leaderboard';
+import ComponentStateHandler from '../commons/component-state-handler';
+import Img from '../commons/image';
+import Tabs from '../commons/tabs/leadership';
+import fallbackUsers from '../../../public/images/users.png';
 
-function GoatMob() {
- const [items, setItems] = useState(faq?.faq);
+function GoatMobLb() {
+  const [data, setData] = useState(null);
+  const [selectedRound, setSelectedRound] = useState(0);
 
- const router = useRouter();
+  const router = useRouter();
+  const { type = 0 } = router?.query;
 
+  const getData = async(round)=>{
+   try{
+     console.log("round", round)
+    const response = await getLeaderboardData({round : round+1});
+    console.log(response.data)
+    setData(response?.data);
+   }catch(e){
+     setData([])
+   console.log('data error',e)
+   }
+  }
+
+  useEffect(()=>{
+    const convertedtype = typeof(type) === 'string' ? Number(type) : type
+    // console.log("type",type,"sR", selectedRound)
+    setSelectedRound(convertedtype);
+  },[])
+
+  useEffect(()=>{
+    setData(null);
+    getData(selectedRound);
+  },[selectedRound])
+  
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
   twitter : 'https://twitter.com/HiPiOfficialApp',
@@ -20,89 +50,65 @@ const stores = {
   ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
 };
 
-const onStoreRedirect =(device)=>{
-  device && (window.location.href = `${stores[device]}`);
+const items = {
+ display : ['Round 1','Round 2', 'Round 3'],
+ defaultValue : selectedRound
 }
 
- const handleClick = (id) =>{
-   let updateItem = [...items];
-   updateItem[id].show = !(updateItem[id]?.show);
-   setItems(updateItem);
- }
+const onTabChange = (round)=>{
+  setSelectedRound(round)
+}
+
   return (
-    <div className="w-full h-full relative">
-       <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
+    <div className="w-full h-full">
+      <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
-
-<div className="flex justify-center items-center flex-col section_1">
-  <img src={withBasePath('images/goat/mobile/unlu_mob.jpg')} />
-      {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
-  <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
-  <div className="">
-    <img src={withBasePath('images/goat/mobile/2.jpg')}/>
-  </div>
-</div>
-<div className="flex w-full  section_2">
-    <img className="h-full" src={withBasePath('images/goat/mobile/3.jpg')}/>
-</div>
-
-<div className="section_3 flex items-center flex-col section_2">
-   <img src={withBasePath('images/goat/mobile/4.jpg')}/>
-   
-<img src={withBasePath('images/goat/mobile/5.jpg')}/>
-
-<img src={withBasePath('images/goat/mobile/6.jpg')}/>
-   {/* <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
-</div>
-
-<div className="section_4 flex flex-col relative section_2">
-<img src={withBasePath('images/goat/mobile/7.jpg')}/>
-<div className="flex w-full absolute -bottom-8 mt-6 z-10 justify-center items-center flex-col">
-  <p className="text-xl font-bold"> Download the Hipi app now :</p>
-  <div className="flex w-full mt-2 justify-center">
-           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
-            </div>
+        <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedRound}/>
+      <div className="relative">
+      {/* <img className="w-ful h-screen" src={withBasePath('images/goat/lb/mob/lb_mobile-bg.jpg')} alt="hipi logo" /> */}
+      <div  className=" flex top-4 w-full items-center flex-col">
+        <div className="flex w-full justify-center">
+              <img className="w-10/12" src={withBasePath('images/goat/lb/mob/title.png')} alt="hipi logo" />  
+        </div>
+        <div className="w-full flex justify-center">
+              {/* <div className="p-2 px-4 text-white mx-2 text-sm bg-gray-800 bg-opacity-70 rounded-full">
+                        <p className="font-semibold">ROUND ONE</p>
+              </div>
+              <div className="p-2 px-4 text-white mx-2 text-sm bg-gray-800 bg-opacity-70 rounded-full">
+                        <p className="font-semibold">ROUND TWO</p>
+              </div>
+              <div className="p-2 px-4 text-white mx-2 text-sm bg-gray-800 bg-opacity-70 rounded-full">
+                        <p className="font-semibold">ROUND THREE</p>
+              </div> */}
+        </div>
+        <div className=" bg-gray-800 bg-opacity-70 rounded-3xl w-11/12 mt-6 p-4 px-6 flex flex-col ">
+       {data ? data?.length > 0 ? data?.map((item, id)=>(
+        <div key={id} className=" p-4 px-6 flex items-center">
+          <div className="px-4 mx-2 w-12 p-2 bg-gray-400 text-white flex justify-center items-center">
+            {item?.position}
           </div>
-</div>
-<>
-  <div className="section_5 flex flex-col relative section_2">
-  <img src={withBasePath('images/goat/mobile/8.jpg')}/>
-  <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in"> hipigoat@hipi.co.in </a> for any information or queries relating to the contest</p>
-  </div>
-  <div className="section_6 flex flex-col section_2">
-  <img src={withBasePath('images/goat/mobile/9.jpg')}/>
-  <img src={withBasePath('images/goat/mobile/judge.jpg')}/>
-  
-  <div className="relative">
-  <img src={withBasePath('images/goat/mobile/10.jpg')}/>
-  <div className="absolute -bottom-12 w-full flex justify-center">
-  <img onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
-  </div>
-  </div>
-  <img src={withBasePath('images/goat/mobile/11.jpg')}/>
-  </div>
-  </>
-<div className="flex flex-col p-8 pt-0 px-4">
-{items?.map((data, id)=>(
-  <div key={id} className="mt-8">
-  <div id={id} className="cursor-pointer transition duration-500 ease-in-out" onClick={()=>handleClick(id)}><span className="pr-2" >{data.show ? "-" : "+"}</span> {data.ques}</div>
-  {data.show && <div id={id} className="pt-2 pl-6 text-purple-400 transition duration-500 ease-in-out"> {data.ans}</div>}
-  </div>
-))}
-</div>
-      {/* <div className="socialIconsFooter w-full flex justify-center p-4 px-12">
-        <div className="relative">
-          <img alt="social icons" src="https://www.buildfortiktok.com/static/media/rotatedSocialIcons.5b8d3c6a.svg"/>
-             <a  href="https://www.linkedin.com/showcase/tiktokbusiness/?refer=build_for_tiktok_linkedin_icon" className="absolute w-12 h-12 bg-transparent border-0 left-0 top-0" ></a>
-            <a  href="https://twitter.com/TikTokBusiness?refer=build_for_tiktok_twitter_icon" className="absolute w-12 h-12 bg-transparent border-0 left-1/4 top-0"></a>
-            <a  href="https://www.instagram.com/tiktok.forbusiness/?refer=build_for_tiktok_instagram_icon" className="absolute w-12 h-12 bg-transparent border-0 left-2/4 top-0" ></a>
-            <a  href="https://www.facebook.com/TikTokForBusiness?refer=build_for_tiktok_facebook_icon" className="absolute w-12 h-12 bg-transparent border-0 left-3/4 top-0" ></a>
-       </div> 
-      </div> */}
-
-      <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
+          <div className="w-10 mx-2 h-10 bg-gray-200 text-white">
+            <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          </div>
+          <div className="mx-2">
+            {/* <p className="text-sm font-semibold text-white">{item?.username}</p> */}
+            <p className="text-sm font-semibold text-white">{`${item?.firstName || ''} ${item?.lastName || ''}`}</p>
+          </div>
+        </div>
+       ))
+      :
+      <>No Data found</>
+      :
+      <>Loading...</>
+      }
+      </div>
+      </div>  
+      </div>
+      <div>
+        <img src={withBasePath('images/goat/lb/mob/lb_desc.jpg')} />
+      </div>
+      {/* <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
         <div className="flex">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
@@ -113,8 +119,8 @@ const onStoreRedirect =(device)=>{
         <div>
             <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/34447a88" rel="noreferrer" >Install</a>
         </div>
-      </div>
-      <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
+      </div> */}
+      <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300 z-20">
         <div className="flex w-full flex-col text-sm">
           {/* <div className="flex w-1/2">
             <a href="/community" className="px-2 cursor-pointer">Community Guidelines</a>
@@ -155,12 +161,11 @@ const onStoreRedirect =(device)=>{
 
           </div>
         </div>
-        
-
       </div>
-    </div>
-  );
-}
 
-export default GoatMob;
+
+    </div>
+  )}
+
+export default GoatMobLb;
 

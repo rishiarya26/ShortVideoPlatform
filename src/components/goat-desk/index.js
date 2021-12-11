@@ -1,10 +1,12 @@
 /*eslint-disable @next/next/no-img-element*/
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import faq from '../../../public/goat-FAQ.json'
 import { withBasePath } from '../../config';
 
 function GoatDesk() {
  const [items, setItems] = useState(faq?.faq);
+ const router = useRouter()
 
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
@@ -33,7 +35,7 @@ const onStoreRedirect =(device)=>{
       </div>
 
 <div className="flex justify-center items-center flex-col section_1">
-  <img src={withBasePath('images/goat/desktop/1.jpg')} />
+  <img src={withBasePath('images/goat/desktop/unlu_desktop.jpg')} />
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
   <div className="">
@@ -68,7 +70,13 @@ const onStoreRedirect =(device)=>{
   <img src={withBasePath('images/goat/desktop/7.jpg')}/>
   <img src={withBasePath('images/goat/desktop/judge.jpg')}/>
   <img src={withBasePath('images/goat/desktop/8.jpg')}/>
+  <div className="relative">
   <img src={withBasePath('images/goat/desktop/9.jpg')}/>
+  <div className="absolute -bottom-10 w-full flex justify-center">
+  <img onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
+  </div>
+  </div>
+  
   <img src={withBasePath('images/goat/desktop/10.jpg')}/>
   </div>
   </>

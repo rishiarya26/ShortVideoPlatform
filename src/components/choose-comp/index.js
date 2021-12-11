@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { commonEvents } from "../../analytics/mixpanel/events";
 import { getItem } from "../../utils/cookie";
 // import Explore from "../explore";
 // import Home from "../home";

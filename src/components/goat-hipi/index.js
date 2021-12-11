@@ -1,10 +1,13 @@
 /*eslint-disable @next/next/no-img-element*/
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import faq from '../../../public/goat-FAQ.json'
 import { withBasePath } from '../../config';
 
 function GoatHipi() {
  const [items, setItems] = useState(faq?.faq);
+
+ const router = useRouter();
 
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
@@ -25,7 +28,7 @@ function GoatHipi() {
       </div>
 
 <div className="flex justify-center items-center flex-col section_1">
-  <img src={withBasePath('images/goat/mobile/1.jpg')} />
+  <img src={withBasePath('images/goat/mobile/unlu_mob.jpg')} />
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
   <div className="">
@@ -63,7 +66,12 @@ function GoatHipi() {
   <div className="section_6 flex flex-col section_2">
   <img src={withBasePath('images/goat/mobile/9.jpg')}/>
   <img src={withBasePath('images/goat/mobile/judge.jpg')}/>
+  <div className="relative">
   <img src={withBasePath('images/goat/mobile/10.jpg')}/>
+  <div className="absolute -bottom-12 w-full flex justify-center">
+  <img onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
+  </div>
+  </div>
   <img src={withBasePath('images/goat/mobile/11.jpg')}/>
   </div>
   </>
