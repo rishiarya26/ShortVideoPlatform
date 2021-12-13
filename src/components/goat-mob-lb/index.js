@@ -107,7 +107,7 @@ function GoatMobLb() {
       </div>
       <div ><h2 className=' py-5 w-full text-center my-2 font-bold text-lg'> Round 1 Winner</h2>
       <div className='pb-5'>
-        <img src={withBasePath('images/goat/lb/mob/lb_desc.jpg')} />
+        <img src={withBasePath('images/goat/lb/mob/lb_desc_latest.jpg')} />
       </div>
       <div className=' mx-3 p-2 justify-center'>
       <p>We thank you all for your overwhelming response to #HipiGOAT contest.

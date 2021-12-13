@@ -131,7 +131,7 @@ const onStoreRedirect =(device)=>{
      
       <div className='flex w-full justify-center'>
       <div className='w-1/2' >
-        <img src={withBasePath('images/goat/lb/desk/lb_desc.jpg')} />
+        <img src={withBasePath('images/goat/lb/desk/lb_desc_latest.jpg')} />
       </div>
      <div className='w-1/2 font-medium pl-10 py-20 pr-20 '> 
      <p>We thank you all for your overwhelming response to #HipiGOAT contest.
