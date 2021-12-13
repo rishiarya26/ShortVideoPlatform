@@ -69,21 +69,24 @@ const onStoreRedirect =(device)=>{
 }
 
   return (
-    <div className="w-full h-full">
+    <div className='w-full h-screen'>
       <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
-      <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedRound}/>
-      <div className="relative h-screen ">
-      <img className="w-ful h-screen" src={withBasePath('images/goat/lb/desk/LEADERBOARD_BG.jpg')} alt="hipi logo" />
-      <div  className="absolute flex top-4 w-full items-center flex-col">
-        <div className="flex w-full justify-center">
+   
+    <div className="w-full flex flex-col justify-center h-5/6">
+      
+      {/* <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedRound}/> */}
+      {/* <div className="relative h-screen ">
+      {/* <img className="w-ful h-screen" src={withBasePath('images/goat/lb/desk/LEADERBOARD_BG.jpg')} alt="hipi logo" /> */}
+      {/* <div  className="absolute flex top-4 w-full items-center flex-col">
+        {/* <div className="flex w-full justify-center">
               <img className="w-1/3" src={withBasePath('images/goat/lb/desk/title.png')} alt="hipi logo" />  
-        </div>
-        <div className="w-full flex justify-center">
+        </div> */}
+        {/* <div className="w-full flex justify-center">
         
-        </div>
-       {first ?  <div className=" bg-gray-800 bg-opacity-70 rounded-3xl mt-6 p-4 px-6 flex items-center">
+        </div>  */}
+       {/* {first ?  <div className=" bg-gray-800 bg-opacity-70 rounded-3xl mt-6 p-4 px-6 flex items-center">
           <div className="px-4 mx-2 p-2 bg-gray-400 text-white">
           {first?.position}
           </div>
@@ -92,13 +95,13 @@ const onStoreRedirect =(device)=>{
           </div>
           <div className="mx-2">
             {/* <p className="text-xl font-semibold text-white">{first?.username}</p> */}
-        <p className="text-sm font-semibold text-white">{`${first?.firstName || ''} ${first?.lastName || ''}`}</p>
+        {/* <p className="text-sm font-semibold text-white">{`${first?.firstName || ''} ${first?.lastName || ''}`}</p>
 
           </div>
-        </div> : ''}
+        </div> : ''} */} 
         
         
-        <div className=" bg-gray-800 bg-opacity-70 rounded-3xl my-4 p-4 px-6 flex items-center w-11/12 flex-wrap my-4">
+        {/* <div className=" bg-gray-800 bg-opacity-70 rounded-3xl my-4 p-4 px-6 flex items-center w-11/12 flex-wrap my-4">
         {data ? data?.length > 0 ? data?.map((item, id)=>(
          <div key={id} className="flex my-2 mx-2 w-1/4 items-center">
           <div className="px-4 mx-2 p-2 w-12 bg-gray-400 text-white flex justify-center items-center">
@@ -109,7 +112,7 @@ const onStoreRedirect =(device)=>{
           </div>
           <div className="mx-2">
             {/* <p className="text-xl font-semibold text-white">{item?.username}</p> */}
-        <p className="text-sm font-semibold text-white">{`${item?.firstName || ''} ${item?.lastName || ''}`} </p>
+        {/* <p className="text-sm font-semibold text-white">{`${item?.firstName || ''} ${item?.lastName || ''}`} </p>
 
           </div>
           </div>
@@ -119,16 +122,43 @@ const onStoreRedirect =(device)=>{
           :
           <>Loading...</>
           }
-        </div>
+        </div> */}
 
 
-      </div>  
-      </div>
-      <div>
+      {/* </div>  
+      </div> */}
+      <h2 className='w-full text-center my-2 font-bold text-xl my-10'> Round 1 Winner</h2>
+     
+      <div className='flex w-full justify-center'>
+      <div className='w-1/2' >
         <img src={withBasePath('images/goat/lb/desk/lb_desc.jpg')} />
       </div>
+     <div className='w-1/2 font-medium pl-10 py-20 pr-20 '> 
+     <p>We thank you all for your overwhelming response to #HipiGOAT contest.
+We are happy to announce the end of round 1 and the winner.</p>
+ 
+<p className='my-2 font-bold '>Congratulations to Tanishka.
+ </p>
+<p>On popular demand, we will now be announcing weekly winners hereon.
+So, what are you waiting for? Upload your singing videos now and participate.
+It’s still not late, you still have the chance to become the Greatest Of All Time!</p>
+</div>
 
-      <div className="w-full p-4 px-8 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
+      {/* <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
+        <div className="flex">
+            <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
+            <div className="flex flex-col justify-center ">
+              <p className="text-sm font-semibold">Download Hipi App</p>
+              <p className="text-xs ">Participate in G.O.A.T</p>
+            </div>
+        </div>
+        <div>
+            <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/34447a88" rel="noreferrer" >Install</a>
+        </div>
+      </div> */}
+      </div>
+{/* 
+      <div className="w-full p-4 px-8 flex bg-white absolute bottom-0 z-20 shadow-inner items-center justify-between">
         <div className="flex">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
@@ -140,9 +170,9 @@ const onStoreRedirect =(device)=>{
            <div onClick={()=>onStoreRedirect('android')}> <img className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
             <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
             </div>
-      </div>
-      <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
-        <div className="flex w-full text-sm">
+      </div> */}
+      {/* <div className="w-full absolute bottom-0 static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
+        <div className="flex w-full text-sm"> */}
           {/* <div className="flex w-1/2">
             <a href="/community" className="px-2 cursor-pointer">Community Guidelines</a>
             <p className="text-xs leading-5 text-gray-500">|</p>
@@ -150,7 +180,7 @@ const onStoreRedirect =(device)=>{
             <p className="text-xs leading-5 text-gray-500">|</p>
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
           </div> */}
-          <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
+          {/* <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
           <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
           <div className="flex justify-end w-1/2">
@@ -168,7 +198,7 @@ const onStoreRedirect =(device)=>{
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M16 1.5377C15.4111 1.79864 14.7792 1.97561 14.1153 2.05462C14.7932 1.64868 15.3121 1.00481 15.5581 0.239948C14.9222 0.61587 14.2203 0.888838 13.4724 1.03681C12.8736 0.397935 12.0217 0 11.0769 0C9.26422 0 7.7945 1.46973 7.7945 3.28139C7.7945 3.53833 7.82349 3.78929 7.87949 4.02926C5.15201 3.89227 2.73347 2.58552 1.11477 0.59987C0.831818 1.08379 0.670851 1.64766 0.670851 2.24957C0.670851 3.38837 1.25075 4.39318 2.13059 4.98105C1.59268 4.96307 1.08677 4.81509 0.64387 4.56913V4.61013C0.64387 6.19983 1.77566 7.52657 3.27637 7.82854C3.00142 7.90252 2.71148 7.94352 2.41153 7.94352C2.19959 7.94352 1.99462 7.92252 1.79365 7.88252C2.21156 9.18728 3.42335 10.1361 4.85909 10.1621C3.73629 11.042 2.32055 11.5649 0.782851 11.5649C0.517909 11.5649 0.256942 11.5489 0 11.5199C1.45273 12.4527 3.17742 12.9966 5.03107 12.9966C11.0689 12.9966 14.3693 7.99552 14.3693 3.65833L14.3583 3.23342C15.0032 2.77347 15.5611 2.19559 16 1.5377Z" fill="white" />
               </svg>
-            </a>
+            </a> */}
             {/* <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
                 <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="11">
@@ -180,12 +210,13 @@ const onStoreRedirect =(device)=>{
               </svg>
             </a> */}
 
-          </div>
+          {/* </div>
         </div>
         
 
-      </div>
+      </div> */}
 
+    </div>
     </div>
   );
 }
