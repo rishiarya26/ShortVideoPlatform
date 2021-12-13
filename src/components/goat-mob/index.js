@@ -38,7 +38,9 @@ const onStoreRedirect =(device)=>{
 <div className="flex justify-center items-center flex-col section_1 relative">
   <img src={withBasePath('images/goat/mobile/unlu_mob.jpg')} />
   <div className="absolute top-8 w-full flex justify-center">
-  <img onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
+  <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  Leaderboard
+  </div>
   </div>
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
@@ -81,7 +83,9 @@ const onStoreRedirect =(device)=>{
   <div className="relative">
   <img src={withBasePath('images/goat/mobile/10.jpg')}/>
   <div className="absolute -bottom-12 w-full flex justify-center">
-  <img onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
+  <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  Leaderboard
+  </div>
   </div>
   </div>
   <img src={withBasePath('images/goat/mobile/11.jpg')}/>
