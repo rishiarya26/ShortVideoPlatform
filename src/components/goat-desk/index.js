@@ -34,8 +34,11 @@ const onStoreRedirect =(device)=>{
         <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
 
-<div className="flex justify-center items-center flex-col section_1">
+<div className="flex justify-center items-center flex-col section_1 relative">
   <img src={withBasePath('images/goat/desktop/unlu_desktop.jpg')} />
+  <div className="absolute top-6 w-full flex justify-center">
+  <img onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer" src={withBasePath('images/goat/lb_cta.png')}/>
+  </div>
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
   <div className="">

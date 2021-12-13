@@ -68,7 +68,7 @@ const onTabChange = (round)=>{
       <div className="relative">
       {/* <img className="w-ful h-screen" src={withBasePath('images/goat/lb/mob/lb_mobile-bg.jpg')} alt="hipi logo" /> */}
       <div  className=" flex top-4 w-full items-center flex-col">
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-center mt-6">
               <img className="w-10/12" src={withBasePath('images/goat/lb/mob/title.png')} alt="hipi logo" />  
         </div>
         <div className="w-full flex justify-center">
@@ -82,10 +82,10 @@ const onTabChange = (round)=>{
                         <p className="font-semibold">ROUND THREE</p>
               </div> */}
         </div>
-        <div className=" bg-gray-800 bg-opacity-70 rounded-3xl w-11/12 mt-6 p-4 px-6 flex flex-col ">
+        <div className=" bg_lb_mob bg-opacity-70 rounded-3xl w-11/12 mt-6 p-4 px-6 flex flex-col ">
        {data ? data?.length > 0 ? data?.map((item, id)=>(
         <div key={id} className=" p-4 px-6 flex items-center">
-          <div className="px-4 mx-2 w-12 p-2 bg-gray-400 text-white flex justify-center items-center">
+          <div className="px-4 mx-2 w-12 p-2  bg_item text-white flex justify-center items-center">
             {item?.position}
           </div>
           <div className="w-10 mx-2 h-10 bg-gray-200 text-white">
