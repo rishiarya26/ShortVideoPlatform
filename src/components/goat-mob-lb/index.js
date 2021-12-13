@@ -108,6 +108,7 @@ const onTabChange = (round)=>{
       <div>
         <img src={withBasePath('images/goat/lb/mob/lb_desc.jpg')} />
       </div>
+      <div className='h-4 w-20' onClick={()=>router.push('/profile/themamtadagar')}></div>
       {/* <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
         <div className="flex">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
