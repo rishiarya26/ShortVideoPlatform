@@ -36,7 +36,7 @@ const onStoreRedirect =(device)=>{
       </div>
 
 {/* <div className="flex justify-center items-center flex-col section_1 relative">
-  <img src={withBasePath('images/goat/round-2/desk/land.jpg')} />
+  <img src={withBasePath('images/goat/round-2/desktop/land.jpg')} />
   <div className="absolute bottom-8 w-full flex justify-center">
   <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
@@ -45,27 +45,27 @@ const onStoreRedirect =(device)=>{
     
 </div> */}
 <div className="">
-{/* <img src={withBasePath('images/goat/round-2/desk/land1.jpg')}/> */}
-    <img src={withBasePath('images/goat/round-2/desk/1.jpg')}/>
+{/* <img src={withBasePath('images/goat/round-2/desktop/land1.jpg')}/> */}
+    <img src={withBasePath('images/goat/round-2/desktop/1.jpg')}/>
   </div>
 <div className="">
-    <img src={withBasePath('images/goat/round-2/desk/2.jpg')}/>
+    <img src={withBasePath('images/goat/round-2/desktop/2.jpg')}/>
   </div>
 <div className="flex w-full  section_2">
-    <img className="h-full" src={withBasePath('images/goat/round-2/desk/3.jpg')}/>
+    <img className="h-full" src={withBasePath('images/goat/round-2/desktop/3.jpg')}/>
 </div>
 
 <div className="section_3 flex items-center flex-col section_2">
-   <img src={withBasePath('images/goat/round-2/desk/4.jpg')}/>
+   <img src={withBasePath('images/goat/round-2/desktop/4.jpg')}/>
    
-<img src={withBasePath('images/goat/round-2/desk/5.jpg')}/>
+<img src={withBasePath('images/goat/round-2/desktop/5.jpg')}/>
 
-<img src={withBasePath('images/goat/round-2/desk/6.jpg')}/>
+<img src={withBasePath('images/goat/round-2/desktop/6.jpg')}/>
    {/* <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
 </div>
 
 <div className="section_4 flex flex-col relative section_2">
-<img src={withBasePath('images/goat/round-2/desk/7.jpg')}/>
+<img src={withBasePath('images/goat/round-2/desktop/7.jpg')}/>
 {/* <div className="flex w-full absolute -bottom-8 mt-6 z-10 justify-center items-center flex-col">
   <p className="text-xl font-bold"> Download the Hipi app now :</p>
   <div className="flex w-full mt-2 justify-center">
@@ -75,21 +75,18 @@ const onStoreRedirect =(device)=>{
           </div> */}
 </div>
 <>
-  <div className="section_5 flex flex-col relative section_2">
-  <img src={withBasePath('images/goat/round-2/desk/8.jpg')}/>
-  {/* <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in"> hipigoat@hipi.co.in </a> for any information or queries relating to the contest</p> */}
-  </div>
+  
   {/* <div className="section_6 flex flex-col section_2">
-  <img src={withBasePath('images/goat/round-2/desk/9.jpg')}/>  
+  <img src={withBasePath('images/goat/round-2/desktop/9.jpg')}/>  
   <div className="relative">
-  <img src={withBasePath('images/goat/round-2/desk/10.jpg')}/>
+  <img src={withBasePath('images/goat/round-2/desktop/10.jpg')}/>
   <div className="absolute -bottom-12 w-full flex justify-center">
   <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
   </div> 
   </div>
   </div>
-  <img src={withBasePath('images/goat/round-2/desk/11.jpg')}/>
+  <img src={withBasePath('images/goat/round-2/desktop/11.jpg')}/>
   </div> */}
   </>
 {/* <div className="flex flex-col p-8 pt-0 px-4">
