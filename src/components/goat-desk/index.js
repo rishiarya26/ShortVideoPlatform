@@ -38,7 +38,7 @@ const onStoreRedirect =(device)=>{
   <img src={withBasePath('images/goat/desktop/unlu_desktop.jpg')} />
   <div className="absolute top-6 w-full flex justify-center">
   <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
-  Leaderboard
+  Round 1 winner
   </div>
   </div>
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
