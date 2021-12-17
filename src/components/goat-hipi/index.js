@@ -35,7 +35,7 @@ function GoatHipi() {
   </div> */}
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
-  <div className="">
+  <div className="min-h-screen">
     <img alt="" src={withBasePath('images/goat/mobile/2_1.jpg')}/>
   </div>
 </div>
