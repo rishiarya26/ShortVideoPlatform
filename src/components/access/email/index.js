@@ -1,6 +1,8 @@
 /*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { track } from '../../../analytics/mixpanel';
+import { commonEvents } from '../../../analytics/mixpanel/events';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
@@ -15,6 +17,12 @@ export default function Email({
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
 
+  const mixpanel = (type) =>{
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Method'] = 'Email';
+    track(`${type} Result`,mixpanelEvents );
+  }
+
   const submit = {
     login: async e => {
       e.preventDefault();
@@ -27,6 +35,9 @@ export default function Email({
           router?.push({
             pathname: '/feed/for-you'
           });
+          /* Mixpanel */
+          mixpanel('Login');
+           /* Mixpanel */
           showSnackbar({ message: t('SUCCESS_LOGIN') });
           setPending(false);
         }
@@ -44,6 +55,9 @@ export default function Email({
       if (resp.status === 'success') {
       showSnackbar({message : 'User already registered. Please Sign In'})
       setPending(false);
+         /* Mixpanel */
+         mixpanel('Signup');
+         /* Mixpanel */
     }
     }catch(e){
       router?.push({

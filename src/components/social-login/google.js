@@ -7,8 +7,16 @@ import { GOOGLE_CLIENT_ID_PREROD } from "../../constants";
 import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
+import { commonEvents } from "../../analytics/mixpanel/events";
+import { track } from "../../analytics/mixpanel";
 
 export const GoogleButton =({loading}) =>{
+
+    const mixpanel = (type) =>{
+        const mixpanelEvents = commonEvents();
+        mixpanelEvents['Method'] = 'Google';
+        track(`${type} Result`,mixpanelEvents );
+      }
 
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
@@ -21,6 +29,7 @@ export const GoogleButton =({loading}) =>{
              if(response.status === 'success'){
                 showSnackbar({ message: 'Login Successful' })
                  close();
+                 mixpanel('Login')
              }
            console.log(response);
         }
@@ -78,6 +87,7 @@ export const GoogleButton =({loading}) =>{
           if(response.status === 'success'){
             showSnackbar({ message: 'Login Successful' })
              close();
+             mixpanel('Login')
          }
         }
         catch(error){

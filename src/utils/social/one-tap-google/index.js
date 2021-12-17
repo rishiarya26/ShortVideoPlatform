@@ -1,10 +1,21 @@
+import { track } from "../../../analytics/mixpanel";
+import { commonEvents } from "../../../analytics/mixpanel/events";
 import { GOOGLE_CLIENT_ID_PREROD } from "../../../constants";
 import { login } from "../../../sources/social/google/login-one-tap"
 import { register } from "../../../sources/social/google/register-one-tap";
 
+const mixpanel = (type) =>{
+  const mixpanelEvents = commonEvents();
+  mixpanelEvents['Method'] = 'Google';
+  track(`${type} Result`,mixpanelEvents );
+}
+
 const registerUser = async(token) =>{
   try{
-    await register(token);
+    const resp = await register(token);
+    if(resp.status === 'success'){
+      mixpanel('Login')
+    }
   }
   catch(error){
      console.log(error)
@@ -14,7 +25,10 @@ const registerUser = async(token) =>{
 const getToken = async(response)=>{
  try {
   const googleToken = response?.credential;
-  await login(googleToken);
+  const resp = await login(googleToken);
+  if(resp.status === 'success'){
+    mixpanel('Login')
+  }
  } catch (error) {
    if(error.code === 2){  
      await registerUser(response?.credential);

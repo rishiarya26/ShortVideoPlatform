@@ -1,4 +1,5 @@
-/*eslint-disable @next/next/no-img-element*/
+/*eslint-disable @next/next/no-img-element */
+/*eslint-disable react/jsx-no-duplicate-props */
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import faq from '../../../public/goat-FAQ.json'
@@ -32,56 +33,69 @@ const onStoreRedirect =(device)=>{
   return (
     <div className="w-full h-full relative">
        <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
-        <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        <img alt="" className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
 
 <div className="flex justify-center items-center flex-col section_1 relative">
-  <img src={withBasePath('images/goat/mobile/unlu_mob.jpg')} />
-  <div className="absolute top-8 w-full flex justify-center">
+  <img alt="" src={withBasePath('images/goat/mobile/1_1.jpg')} />
+  {/* <div className="absolute top-8 w-full flex justify-center">
   <div onClick={()=>router.push('/goat-leaderboard')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Round 1 winner
   </div>
-  </div>
+  </div> */}
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
   <div className="">
-    <img src={withBasePath('images/goat/mobile/2.jpg')}/>
+    <img alt="" src={withBasePath('images/goat/mobile/2_1.jpg')}/>
   </div>
 </div>
-<div className="flex w-full  section_2">
-    <img className="h-full" src={withBasePath('images/goat/mobile/3.jpg')}/>
+<div className="flex w-full flex-col section_2">
+    <img alt=""  src={withBasePath('images/goat/mobile/round1.png')}/>
+    <div className="flex w-full justify-center py-4 pb-8">
+    <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  Round 1 Winner
+  </div>
+    </div>
+    <img alt=""  src={withBasePath('images/goat/mobile/round2.png')}/>
+    <div className="flex w-full justify-center py-4 pb-8 flex-col items-center">
+        <div onClick={()=>router.push('/hipigoat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        Round 2 Details
+      </div>
+    </div>
+    <img alt=""  src={withBasePath('images/goat/mobile/round3.png')}/>
+
 </div>
 
 <div className="section_3 flex items-center flex-col section_2">
-   <img src={withBasePath('images/goat/mobile/4.jpg')}/>
+   <img alt="" src={withBasePath('images/goat/mobile/4.jpg')}/>
    
-<img src={withBasePath('images/goat/mobile/5.jpg')}/>
+<img alt="" src={withBasePath('images/goat/mobile/5.jpg')}/>
 
-<img src={withBasePath('images/goat/mobile/6.jpg')}/>
+<img alt="" src={withBasePath('images/goat/mobile/6.jpg')}/>
    {/* <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
 </div>
 
 <div className="section_4 flex flex-col relative section_2">
-<img src={withBasePath('images/goat/mobile/7.jpg')}/>
+<img alt="" src={withBasePath('images/goat/mobile/7.jpg')}/>
 <div className="flex w-full absolute -bottom-8 mt-6 z-10 justify-center items-center flex-col">
   <p className="text-xl font-bold"> Download the Hipi app now :</p>
   <div className="flex w-full mt-2 justify-center">
-           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+           <div onClick={()=>onStoreRedirect('android')}> <img alt="" className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')}><img alt="" src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
             </div>
           </div>
 </div>
 <>
   <div className="section_5 flex flex-col relative section_2">
-  <img src={withBasePath('images/goat/mobile/8.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/8.jpg')}/>
   <p className="absolute -bottom-8 w-full text-center px-4">Write us on <a className="text-blue-600" href = "mailto: hipigoat@hipi.co.in"> hipigoat@hipi.co.in </a> for any information or queries relating to the contest</p>
   </div>
   <div className="section_6 flex flex-col section_2">
-  <img src={withBasePath('images/goat/mobile/9.jpg')}/>
-  <img src={withBasePath('images/goat/mobile/judge.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/9.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/judge.jpg')}/>
   
   <div className="relative">
-  <img src={withBasePath('images/goat/mobile/10.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/10_1.jpg')}/>
   {/* <div className="absolute -bottom-12 w-full flex justify-center">
   <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
@@ -89,14 +103,14 @@ const onStoreRedirect =(device)=>{
   </div> */}
   </div>
   <div className="relative">
-  <img src={withBasePath('images/goat/mobile/round-2.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/round-2.jpg')}/>
   <div className="absolute bottom-4 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-round-2')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
-  View Themes
+  <div onClick={()=>router.push('/hipigoat-round-2')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  Round 2 Details
   </div>
   </div>
   </div>
-  <img src={withBasePath('images/goat/mobile/11.jpg')}/>
+  <img alt="" src={withBasePath('images/goat/mobile/11.jpg')}/>
   </div>
   </>
 <div className="flex flex-col p-8 pt-0 px-4">
@@ -109,7 +123,7 @@ const onStoreRedirect =(device)=>{
 </div>
       {/* <div className="socialIconsFooter w-full flex justify-center p-4 px-12">
         <div className="relative">
-          <img alt="social icons" src="https://www.buildfortiktok.com/static/media/rotatedSocialIcons.5b8d3c6a.svg"/>
+          <img alt="" alt="social icons" src="https://www.buildfortiktok.com/static/media/rotatedSocialIcons.5b8d3c6a.svg"/>
              <a  href="https://www.linkedin.com/showcase/tiktokbusiness/?refer=build_for_tiktok_linkedin_icon" className="absolute w-12 h-12 bg-transparent border-0 left-0 top-0" ></a>
             <a  href="https://twitter.com/TikTokBusiness?refer=build_for_tiktok_twitter_icon" className="absolute w-12 h-12 bg-transparent border-0 left-1/4 top-0"></a>
             <a  href="https://www.instagram.com/tiktok.forbusiness/?refer=build_for_tiktok_instagram_icon" className="absolute w-12 h-12 bg-transparent border-0 left-2/4 top-0" ></a>
@@ -119,7 +133,7 @@ const onStoreRedirect =(device)=>{
 
       <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
         <div className="flex">
-            <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
+            <img alt="" className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
               <p className="text-sm font-semibold">Download Hipi App</p>
               <p className="text-xs ">Participate in G.O.A.T</p>
