@@ -61,6 +61,9 @@ const onStoreRedirect =(device)=>{
         <div onClick={()=>router.push('/hipigoat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 2 Details
       </div>
+      <div onClick={()=>router.push('/round-2-winner')} className="w-44 mt-4 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        Round 2 Winner
+      </div>
     </div>
     <img alt=""  src={withBasePath('images/goat/mobile/round3.png')}/>
 
