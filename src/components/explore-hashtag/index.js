@@ -24,17 +24,17 @@ const LoadComp = () => (<Loading />);
 function HashTag({router}) {
   const [items,setItems] = useState([]);
   const [details, setDetails] = useState({})
-  const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
 
   const {item = ''} = router?.query;
   const {show} = useDrawer();
 
-  async function showPopUp(){
-    show('', detectDeviceModal, 'extraSmall');
-    setIsFetching(false);
-  }
+  // async function showPopUp(){
+  //   show('', detectDeviceModal, 'extraSmall');
+  //   setIsFetching(false);
+  // }
 
   useEffect(()=>{
       const mixpanelEvents = commonEvents();
@@ -46,25 +46,32 @@ function HashTag({router}) {
     }
   },[])
 
-  // async function fetchMoreListItems() {
-  //   try{
-  //    const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
-  //    console.log("resp1",response)
-  //    if(response?.data?.length > 0){
-  //      console.log("resp",response?.data)
-  //      let updateData = [...items];
-  //      updateData = updateData?.concat(response?.data);
-  //      console.log("items",updateData)
-  //      setItems(updateData);
-  //      setOffset(offset+1);
-  //      setIsFetching(false);
-  //    }
-  //    setShowLoading(false)
-  //   }
-  //   catch(e){
-  //     console.log("e",e)
-  //   }
-  //  }
+  useEffect(()=>{setShowLoading(isFetching)},[isFetching])
+
+
+  async function fetchMoreListItems() {
+    try{
+     const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
+     console.log("resp1",response)
+     if(response?.data?.length > 0){
+       console.log("resp",response?.data)
+       let updateData = [...items];
+       updateData = updateData?.concat(response?.data);
+       console.log("items",updateData)
+       setItems(updateData);
+       setOffset(offset+1);
+       setIsFetching(false);
+       setShowLoading(false)
+     }else{
+      console.log("inelse",response.data.length)
+      setShowLoading(false)
+     }
+     setShowLoading(false)
+    }
+    catch(e){
+      console.log("e",e)
+    }
+   }
 
   const onDataFetched = data => {
       setDetails(data?.details);
@@ -121,7 +128,8 @@ function HashTag({router}) {
         retry={retry && retry}
         hashTag={item}
         page='hashTag'
-        isFetching={isFetching}
+        showLoading={showLoading}
+        fetchMoreListItems={fetchMoreListItems}
       />
     </div>
     </ComponentStateHandler>

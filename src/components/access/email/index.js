@@ -1,7 +1,7 @@
 /*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { track } from '../../../analytics/mixpanel';
+import { track } from '../../../analytics';
 import { commonEvents } from '../../../analytics/mixpanel/events';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
@@ -55,9 +55,7 @@ export default function Email({
       if (resp.status === 'success') {
       showSnackbar({message : 'User already registered. Please Sign In'})
       setPending(false);
-         /* Mixpanel */
-         mixpanel('Signup');
-         /* Mixpanel */
+
     }
     }catch(e){
       router?.push({

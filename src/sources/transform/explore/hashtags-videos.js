@@ -54,10 +54,16 @@ function transformSuccess(resp) {
         payloadObject.hashTags = d?.hashtags;
         payloadObject.thumbnailUrl = d?.thumbnailUrl;
         payloadObject.shoppable = d?.shoppable || false
-        payloadObject.viewCount = d?.viewCount
+        payloadObject.viewCount = d?.viewCount;
+        payloadObject.firstFrame= d?.firstFrame || null;
+
 
         payloadData.push(payloadObject);
       });
+      if(data?.firstVideo){
+        // data.firstVideo.video_url = data?.firstVideo?.video_urls[networkConnection];
+        payloadData?.splice(0,0,data?.firstVideo);
+      }
 
       payload.data = payloadData;
       payload.details = data?.details;

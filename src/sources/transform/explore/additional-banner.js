@@ -29,8 +29,9 @@ function transformSuccess(resp) {
     let tData={};
     if(bannerMeta){
     tData.displayName = bannerMeta?.title;
-    tData.bannerUrl = bannerMeta?.url;
-    tData.thumbnail = bannerMeta?.image;
+    tData.contentType = 'useUrl'
+    tData.id = bannerMeta?.url;
+    tData.bannerUrl = bannerMeta?.image;
     tData.position = bannerMeta?.position || 0;
     }
     payload.data = tData;

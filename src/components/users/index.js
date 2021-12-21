@@ -20,7 +20,6 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
-import Landscape from '../landscape';
 import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
@@ -30,6 +29,14 @@ import { track } from '../../analytics';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const LandscapeView = dynamic(
+  () => import('../landscape'),
   {
     loading: () => <div />,
     ssr: false
@@ -301,7 +308,7 @@ function Users({
         fetchMoreListItems={fetchMoreListItems}
       />
      
-<Landscape/>
+<LandscapeView/>
     </div>
   );
 }

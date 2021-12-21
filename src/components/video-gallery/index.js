@@ -67,6 +67,12 @@ export default function VideoGallery({
     router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
   }
 
+  const toHashTagFeed =(hashTag, videoId, type)=>{
+    const index = items.findIndex((data)=>data?.content_id === videoId);
+    index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
+    router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
+  }
+
   return (
     <>
       {status && (
@@ -83,7 +89,7 @@ export default function VideoGallery({
                ? ()=> router?.push(`/search-feed/${item?.id}?type=normal`)  
                : page === 'profile' 
                   ? ()=>toProfileFeed(userId,item?.content_id,type)
-                  : ()=>router?.push(`/hashtag-feed/${hashTag}?videoId=${item?.content_id}&type=${type}`)}>
+                  : ()=>toHashTagFeed(hashTag,item?.content_id,type)}>
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
                 <VideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 

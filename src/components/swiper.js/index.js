@@ -60,6 +60,7 @@ const SwiperSlideComp = ({
                     activeVideoId={activeVideoId}
                     comp={comp}
                     profileFeed
+                    player={'multi-player-muted'}
                 />
  
               </SwiperSlide>

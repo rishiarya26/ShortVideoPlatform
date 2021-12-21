@@ -1,24 +1,24 @@
 /* eslint-disable */
 
-(function(s, t, a, n) {
-  s[t] || (s[t] = a, n = s[a] = function() {
-          n.q.push(arguments)
-      },
-      n.q = [], n.v = 2, n.l = 1 * new Date)
-})(window, "InstanaEumObject", "ineum");
+// (function(s, t, a, n) {
+//   s[t] || (s[t] = a, n = s[a] = function() {
+//           n.q.push(arguments)
+//       },
+//       n.q = [], n.v = 2, n.l = 1 * new Date)
+// })(window, "InstanaEumObject", "ineum");
 
-ineum('reportingUrl', 'https://eum-blue-saas.instana.io');
-if(window.location.hostname === 'hipi.co.in') {
-  ineum('key', 'KTWnCUDUQY65CEEOXClRJg');
-} else if(window.location.hostname === 'preprod.hipi.co.in') {
-  ineum('key', '3BMdbtCkT2ecrgTw4sZxww');
-} else if(window.location.hostname === 'mock.hipi.co.in') {
-  ineum('key', 'OX_MXEDcSy21zxRMIPodGw');
-}  else {
-  ineum('key', window.location.hostname);
-}
+// ineum('reportingUrl', 'https://eum-blue-saas.instana.io');
+// if(window.location.hostname === 'hipi.co.in') {
+//   ineum('key', 'KTWnCUDUQY65CEEOXClRJg');
+// } else if(window.location.hostname === 'preprod.hipi.co.in') {
+//   ineum('key', '3BMdbtCkT2ecrgTw4sZxww');
+// } else if(window.location.hostname === 'mock.hipi.co.in') {
+//   ineum('key', 'OX_MXEDcSy21zxRMIPodGw');
+// }  else {
+//   ineum('key', window.location.hostname);
+// }
 
-ineum('trackSessions');
+// ineum('trackSessions');
 
 // function instanaAgent (i, s, o, g, r, a, m) {
 //   i['InstanaEumObject'] = r;

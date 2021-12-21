@@ -59,7 +59,7 @@ const Users = ({item, type = 'normal', router}) =>{
            {heading[type]}
                  {items?.length > 0 ? items.map((item, id)=>(
                <span key={item?.id}>
-                  <div onClick={()=>router?.push(`/profile/${item?.id}`)} key={id} className="flex p-2 min-w-3/5 mr-2">
+                  <div onClick={()=>router?.push(`/profile/@${item?.userHandle}`)} key={id} className="flex p-2 min-w-3/5 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                           <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                           </div>

@@ -24,7 +24,6 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
-import Landscape from '../landscape'
 import Mute from '../commons/svgicons/mute';
 import {
   SeoMeta,
@@ -50,9 +49,18 @@ const detectDeviceModal = dynamic(
   }
 );
 
+
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
+
+const LandscapeView = dynamic(
+  () => import('../landscape'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
@@ -73,17 +81,22 @@ function FeedIphone({ router }) {
   const [loading, setLoading] = useState(true);
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const loaded = () => {
     setLoading(false);
   };
 
   useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Feed';
-    track('Screen View',mixpanelEvents );
-  }, []);
+    setTimeout(()=>{
+      if(initialLoadComplete === true){
+        const mixpanelEvents = commonEvents();
+        mixpanelEvents['Page Name'] = 'Feed';
+        track('Screen View',mixpanelEvents );
+        inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      }
+    },1000);
+  }, [initialLoadComplete]);
 
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -118,6 +131,7 @@ function FeedIphone({ router }) {
         setToShowItems(data?.data);
         setActiveVideoId(videoIdInitialItem);
         setToInsertElements(4);
+        setInitialLoadComplete(true);
         // setSeoItem(data?.data[0]);
     }
   }
@@ -480,6 +494,7 @@ console.log('error',e)
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
                       currentT={videoDurationDetails?.currentT}
+                      player={'multi-player-muted'}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -574,7 +589,7 @@ console.log('error',e)
           <div className="playkit-player" />
         </div>
       </div>
-      <Landscape/>
+      <LandscapeView/>
     </>
     </ComponentStateHandler>
 

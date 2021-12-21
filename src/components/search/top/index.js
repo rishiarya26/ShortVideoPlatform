@@ -60,7 +60,7 @@ const TopItems = ({item, redirectTab}) =>{
            
                   <div className="card_list flex min-w-full overflow-x-auto no_bar">
                   {data?.items?.users?.map((item, id)=>(
-                  <div onClick={()=>router?.push(`/profile/${item?.id}`)} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
+                  <div onClick={()=>router?.push(`/profile/@${item?.userHandle}`)} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>

@@ -35,7 +35,7 @@ export default function Hipi(params) {
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
-
+console.log(item)
   useEffect(() => {
     console.log(item)
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
@@ -88,7 +88,7 @@ export default function Hipi(params) {
         canShop={canShop}
         shopCards={shopCards}
         videoId={videoId}
-        poster={item.thumbnail}
+        poster={item?.firstFrame}
         seekedPercentage={seekedPercentage}
         description={item?.content_description}
         userId={item?.userId}

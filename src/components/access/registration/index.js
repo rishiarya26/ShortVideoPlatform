@@ -7,6 +7,8 @@ import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 import Toggle from '../../commons/svgicons/toggle';
 import CircularProgress from '../../commons/circular-loader-small';
+import { commonEvents } from '../../../analytics/mixpanel/events';
+import { track } from '../../../analytics';
 
 
 const Registration = ({ router }) => {
@@ -51,6 +53,13 @@ const Registration = ({ router }) => {
     data.birthday = currentYear - age;
     return data;
   };
+
+  const mixpanel = (type, method) =>{
+    console.log(type,method)
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Method'] = method;
+    track(`${type} Result`,mixpanelEvents );
+  }
 
   const getTypes = (e, data) => {
     try {
@@ -106,7 +115,12 @@ const Registration = ({ router }) => {
     try {
       const response = await registerUser(data);
       console.log("user registered",response)
+      console.log("suces rep",response)
       if (response.status === 'success') {
+        /* Mixpanel */
+        const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        mixpanel('Signup',method);
+        /* Mixpanel */
         router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });
       }

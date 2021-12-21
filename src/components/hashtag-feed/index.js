@@ -37,29 +37,65 @@ function HashTagFeed({ router }) {
   const [videoActiveIndex, setVideoActiveIndex] = useState(0);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
-  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
-  const [muted, setMuted] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
+  const [offset, setOffset] = useState(2);
+  const [loadMore, setLoadMore] = useState(true);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
+
+  const { item } = router?.query;
+  const { videoId = items?.[0]?.content_id } = router?.query;
+  // const { type = 'all' } = router?.query;
 
   const loaded = () => {
     setLoading(false);
   };
 
+  const loadMoreItems = async() =>{
+    let videos = [...items]
+    try {
+    if(loadMore){   
+    const resp = await getHashTagVideos({ keyword : item, offset: offset });
+    if(resp?.data?.length > 0){
+      console.log("innn",resp)
+      const index = resp.data.findIndex((data)=>(data?.id === videoId))
+      if(index !== -1){
+        resp.data.splice(index,1);
+      }
+      videos = videos?.concat(resp?.data);
+      console.log("concat",videos)
+      setItems(videos);
+      setOffset(offset+1);}
+    }else{    
+      setLoadMore(false);
+    }
+  }catch(e){
+    setLoadMore(false);
+  }
+  }
+
+  useEffect(()=>{
+   async function loadItems() 
+   { 
+    console.log(items.length-4, videoActiveIndex) 
+    const toLoadMoreIndex = items.length-4;
+     videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
+   }
+   loadItems();
+  },[videoActiveIndex])
+
+
   useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+   setTimeout(()=>{ inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Hashtag Feed';
-    track('Screen View',mixpanelEvents );
+    track('Screen View',mixpanelEvents );},500);
   }, []);
 
-
-  const { item } = router?.query;
-  const { videoId = items?.[0]?.content_id } = router?.query;
-  const { type = 'all' } = router?.query;
 
   useEffect(()=>{
     if(initialPlayStarted === true){
@@ -73,10 +109,11 @@ function HashTagFeed({ router }) {
    await viewEvents({id:id, event:event})
   }
 
-  const dataFetcher = () => getHashTagVideos({ keyword : item });
+  const dataFetcher = () => getHashTagVideos({ keyword : item, videoId: videoId && videoId });
   const onDataFetched = data => {
-    data && setItems(data?.data);
-    data && setActiveVideoId(videoId);
+    let videos = data?.data;
+    data && setItems(videos);
+    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -86,8 +123,8 @@ function HashTagFeed({ router }) {
   const updateSeekbar = (percentage, currentTime, duration) => {
     if(percentage > 0){
       setInitialPlayStarted(true);
-     }
-     const videoDurationDetail = {
+    }
+    const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
@@ -207,7 +244,7 @@ function HashTagFeed({ router }) {
           description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`        
         }}
      />
-        <div style={{ height: `${videoHeight}px` }}>
+        <div className="overflow-hidden" style={{ height: `${videoHeight}px` }}>
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
@@ -215,10 +252,10 @@ function HashTagFeed({ router }) {
             className="max-h-full"
             direction="vertical"
             onSwiper={swiper => {
-              setInitialPlayStarted(false);
-              const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              swiper?.slideTo(slideToId, 0);
+              // const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
+              // swiper?.slideTo(slideToId, 0);
               router.replace(`/hashtag-feed/${item}`);
+              setInitialPlayStarted(false);
             }}
             draggable="true"
             spaceBetween={0}
@@ -231,11 +268,10 @@ function HashTagFeed({ router }) {
               } = swiperCore;
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
-
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
-                 /*** video events ***/
-                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                /*** video events ***/
+                if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
                   viewEventsCall(activeVideoId,'skip')
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
@@ -246,7 +282,7 @@ function HashTagFeed({ router }) {
                 slides[activeIndex].firstChild.firstChild.currentTime = 0
               }
               const activeId = slides[activeIndex]?.id;
-              setVideoActiveIndex(activeIndex)
+              setVideoActiveIndex(activeIndex);
               setActiveVideoId(activeId);
             }}
           >
@@ -273,7 +309,7 @@ function HashTagFeed({ router }) {
                       videoid={item?.content_id}
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.poster_image_url}
+                      thumbnail={item?.firstFrame}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
                       handleSaveLook={handleSaveLook}
@@ -282,9 +318,11 @@ function HashTagFeed({ router }) {
                       activeVideoId={activeVideoId}
                       comp="profile"
                       profileFeed
-                      muted={muted}
                       loading={loading}
+                      muted={muted}
                       initialPlayStarted={initialPlayStarted}
+                      firstFrame={item?.firstFrame}
+                      player={'single-player-muted'}
                     />
 
                   </SwiperSlide>

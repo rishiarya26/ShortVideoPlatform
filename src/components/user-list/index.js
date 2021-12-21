@@ -52,7 +52,7 @@ function UserList({router}) {
      <div className="w-full flex flex-col p-4">
      {items?.widgetList?.map((data,id)=>(
         <div key={id} className="user_card flex justify-between py-2 "> 
-          <div onClick={()=>router?.push(`/profile/${data?.user?.id}`)} className="flex">
+          <div onClick={()=>router?.push(`/profile/@${data?.user?.userName}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
               <Img data={data?.user?.profilePicImgUrl}  alt='image' fallback={fallbackUsers?.src}/>
               </div>

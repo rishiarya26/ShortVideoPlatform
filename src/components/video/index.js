@@ -71,9 +71,19 @@ function Video(props) {
    // console.log(JSON.stringify(props))
    const handlePlay = entry => {
       if (clicked) {
-      if (entry.isIntersecting) {
-      rootRef?.current?.children[0]?.play();
+      if (entry?.isIntersecting) {
+      rootRef?.current?.children[0]?.play && rootRef?.current?.children[0]?.play();
       setPlaying(true);
+      // if (promise !== undefined) {
+      //    promise.then(function() {
+      //       console.log('success')
+      //      // Automatic playback started!
+      //    }).catch(function(error) {
+      //       console.log('error',error)
+      //      // Automatic playback failed.
+      //      // Show a UI element to let the user manually start playback.
+      //    });
+      // }
       } else {
       rootRef?.current?.children[0]?.pause();
       setPlaying(false);
@@ -88,12 +98,9 @@ function Video(props) {
    });
 
    useEffect(()=>{
-         console.log("id",props?.id, props?.activeVideoId);
+         // console.log("id",props?.id, props?.activeVideoId);
    },[props?.activeVideoId]) 
 
-   useEffect(()=>{
-         console.log("id",props?.id, props?.activeVideoId);
-   },[props?.activeVideoId]) 
    useEffect(()=>{
       if(props?.comp === 'feed'){
       if(props.initialPlayStarted && play === true){
@@ -111,6 +118,118 @@ function Video(props) {
    
    const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
+
+   const selectVideoPlayer = {
+    'multi-player-muted' : <video
+      playsInline
+      muted={props?.muted ? true : false}
+      autoPlay
+      preload="auto"
+      webkit-playsinline = "true"
+      // onLoadCapture ={resetCurrentTime}
+      onTimeUpdate={handleUpdateSeekbar}
+      loop
+      ref={ref}
+      onClick={handleVideoPress}
+      className="vdo_player"
+      // onEnded={(e)=> onReplay(e)}
+      // width={size.width}
+      // height={videoHeight}
+      // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
+      poster={firstFrame}
+      objectfit="cover"
+      key={props.url}
+      >
+      <source
+         src={props.url}
+         type="video/mp4"
+      /> 
+      </video>,
+       'multi-player-non-muted' : <video
+       playsInline
+      //  muted={props.muted ? true : false}
+      //  autoPlay
+       preload="auto"
+       webkit-playsinline = "true"
+       // onLoadCapture ={resetCurrentTime}
+       onTimeUpdate={handleUpdateSeekbar}
+       loop
+       ref={ref}
+       onClick={handleVideoPress}
+       className="vdo_player"
+       // onEnded={(e)=> onReplay(e)}
+       // width={size.width}
+       // height={videoHeight}
+       // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
+       poster={firstFrame}
+       objectfit="cover"
+       key={props.url}
+       >
+       <source
+          src={props.url}
+          type="video/mp4"
+       /> 
+       </video>,
+      'single-player' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
+      <video
+        playsInline
+      //   muted={props.muted ? true : false}
+        autoPlay
+        preload="auto"
+        importance="high"
+        // muted
+        // webkit-playsinline = "true"
+        // onLoadCapture ={resetCurrentTime}
+        onTimeUpdate={handleUpdateSeekbar}
+        loop
+        ref={ref}
+        onClick={handleVideoPress}
+        className="vdo_player"
+        // onEnded={(e)=> onReplay(e)}
+        // width={size.width}
+        // height={videoHeight}
+        // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
+        poster={firstFrame}
+        objectfit="cover"
+        key={props.url}
+        >
+         <source
+           src={`${props.url}`}
+           type="video/mp4"
+        />  
+        </video> :
+        <img className="h-screen" src={firstFrame}></img>,
+        'single-player-muted' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
+      <video
+        playsInline
+        muted={props.muted ? true : false}
+        autoPlay
+        preload="auto"
+        importance="high"
+        // muted
+        // webkit-playsinline = "true"
+        // onLoadCapture ={resetCurrentTime}
+        onTimeUpdate={handleUpdateSeekbar}
+        loop
+        ref={ref}
+        onClick={handleVideoPress}
+        className="vdo_player"
+        // onEnded={(e)=> onReplay(e)}
+        // width={size.width}
+        // height={videoHeight}
+        // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
+        poster={firstFrame}
+        objectfit="cover"
+        key={props.url}
+        >
+         <source
+           src={`${props.url}`}
+           type="video/mp4"
+        />  
+        </video> :
+        <img className="h-screen" src={firstFrame}></img>
+   }
+
    return (
    <div
    ref={rootRef}
@@ -118,64 +237,7 @@ function Video(props) {
    style={{ height: `${videoHeight}px` }}
    >
    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-    { props?.profileFeed === true ? (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
-    <video
-      playsInline
-      muted={props.muted ? true : false}
-      autoPlay
-      preload="auto"
-      // muted
-      // webkit-playsinline = "true"
-      // onLoadCapture ={resetCurrentTime}
-      onTimeUpdate={handleUpdateSeekbar}
-      loop
-      ref={ref}
-      onClick={handleVideoPress}
-      className="vdo_player"
-      // onEnded={(e)=> onReplay(e)}
-      // width={size.width}
-      // height={videoHeight}
-      // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
-      poster={firstFrame}
-      objectfit="cover"
-      key={props.url}
-      >
-      {/* <img src={firstFrame}></img>  */}
-      <source
-         src={`${props.url}`}
-         type="video/mp4"
-      /> 
-      </video> :
-      <img src={firstFrame}></img>
-      :
-      <video
-      playsInline
-      muted={props.muted ? true : false}
-      autoPlay
-      preload="auto"
-      // muted
-      // webkit-playsinline = "true"
-      // onLoadCapture ={resetCurrentTime}
-      onTimeUpdate={handleUpdateSeekbar}
-      loop
-      ref={ref}
-      onClick={handleVideoPress}
-      className="vdo_player"
-      // onEnded={(e)=> onReplay(e)}
-      // width={size.width}
-      // height={videoHeight}
-      // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
-      poster={firstFrame}
-      objectfit="cover"
-      key={props.url}
-      >
-      {/* <Img data={firstFrame} ></Img> */}
-      <source
-         src={props.url}
-         type="video/mp4"
-      /> 
-      </video>
-      }
+   {selectVideoPlayer[props?.player || 'multi-player-muted']}
       <div
       onClick={handleVideoPress}
       className="absolute top-1/2 justify-center w-screen"

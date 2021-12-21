@@ -22,18 +22,19 @@ function HeadMeta() {
 
       <link rel="preload" href="https://hipi.co.in/feed/for-you" as="document" />
 
-      <link rel="dns-prefetch" href="https://eum.instana.io" />
-      <link rel="dns-prefetch" href="https://eum-blue-saas.instana.io" />
-      <link rel="dns-prefetch" href="https://mock.hipi.co.in" />
+      {/* <link rel="dns-prefetch" href="https://eum.instana.io" /> */}
+      <link rel="dns-prefetch" href="http://fonts.gstatic.com" />
+      <link rel="dns-prefetch" href="http://cdn.mxpnl.com" />
       <link rel="dns-prefetch" href="https://assets2.charmboard.com" />
       <link rel="dns-prefetch" href="https://media.charmboard.com" />
       <link rel="dns-prefetch" href="https://www.hipi.co.in" />
       <link rel="dns-prefetch" href="https://devqa2.charmboard.com" />
+      <link rel="dns-prefetch" href="https://hipigwapi.zee5.com"/>
 
-      <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
+      {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
-      <script type="text/javascript" src="/embeds/hipi.js" />
+      <script type="text/javascript" src="/embeds/hipi.js" /> */}
       <meta name="theme-color" content="#00aae7" />
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />

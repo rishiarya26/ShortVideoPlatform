@@ -23,15 +23,14 @@ import { getAdditionalBanner } from './additional-banner';
 async function fetchSearchData({ limit = '10', offset = '1' }) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/discover?limit=${limit}&offset=${offset}`;
-    console.log("in")
+    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/discover?limit=${limit}&offset=${offset}`;
     response = await Promise.all([get(apiPath), getRecommendations()]);
     let [searchList, recommendationList] = response;
-    console.log("in",searchList, recommendationList)
+    console.log(searchList, recommendationList)
     searchList.data.recommendations = recommendationList?.data;
     /* additional Banner */
     const additionalBanner = await getAdditionalBanner();
-    console.log("banner",additionalBanner)
+    console.log("banner",additionalBanner);
 
     searchList.data.additionalBanner = additionalBanner && additionalBanner;
     /********************/

@@ -60,7 +60,7 @@ function VideoFooter({
           </div>
         )} */}
 
-        <h3 onClick={()=>router?.push(`/profile/${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
+        <h3 onClick={()=>router?.push(`/profile/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
         <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (

@@ -105,9 +105,10 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
+  const trimmedUserHandle = id && id.replace('@','');
   let data = {};
   try {
-    data = await getUserProfile(id);
+    data = await getUserProfile(trimmedUserHandle);
   } catch (e) {
     data = {
       status: e?.status || 400,

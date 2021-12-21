@@ -3,7 +3,7 @@
 /*eslint-disable react/display-name */
 // /*eslint-disable react/display-name */
 import { withBasePath } from '../../config';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
@@ -90,12 +90,22 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
-    router?.push(`/profile/${userName}`);
+    router?.push(`/profile/@${userName}`);
   };
 
   const onEmbedCopy = () => {
     showSnackbar({ message: 'Copied to Clipboard' });
   };
+
+  useEffect(()=>{
+  },[])
+
+    let optProfilePic = profilePic;
+    if(optProfilePic?.match('upload/w_300')){
+      optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
+    }else{
+      optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
+    }
 
   return (
     <div
@@ -106,8 +116,8 @@ function VideoSidebar({
           <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
           <Img
             title="Hipi"
-            data={profilePic}
-            fallbakck={fallbackUser?.src}
+            data={optProfilePic}
+            fallback={fallbackUser?.src}
           />
           </div>
           {/* <div

@@ -1,4 +1,4 @@
-import { track } from "../../../analytics/mixpanel";
+import { track } from "../../../analytics";
 import { commonEvents } from "../../../analytics/mixpanel/events";
 import { GOOGLE_CLIENT_ID_PREROD } from "../../../constants";
 import { login } from "../../../sources/social/google/login-one-tap"

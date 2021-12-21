@@ -21,7 +21,7 @@ export default function ChooseComp({desktop, mobile}) {
     'mobile' : mobile
   }
   
-  console.log(device, selectedComp[device]);
+  // console.log(device, selectedComp[device]);
   return (
     <>
     {selectedComp?.[device] && selectedComp[device]}

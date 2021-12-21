@@ -12,7 +12,6 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import Landscape from '../landscape'
 import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
@@ -56,6 +55,14 @@ const detectDeviceModal = dynamic(
   }
 );
 
+const LandscapeView = dynamic(
+  () => import('../landscape'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
@@ -72,21 +79,23 @@ function Feed({ router }) {
   const [loading, setLoading] = useState(true);
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const loaded = () => {
     setLoading(false);
   };
 
   useEffect(() => {
-    // const guestId = getItem('guest-token');
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Feed';
-    track('Screen View',mixpanelEvents );
-  }, []);
-
-  useEffect(()=>{
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-  },[items])
+        setTimeout(()=>{
+    if(initialLoadComplete === true){
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Feed';
+      track('Screen View',mixpanelEvents );
+      inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      // alert('useEffect called');
+    }
+  },1000);
+  }, [initialLoadComplete]);
 
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -109,6 +118,8 @@ function Feed({ router }) {
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
+        setInitialLoadComplete(true);
+        // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
     }else{
       setItems([]);
@@ -233,6 +244,8 @@ function Feed({ router }) {
       updateShowItems[deleteItemIndex] = null;
     }
 
+    console.log(updateShowItems)
+
   setToShowItems(updateShowItems);
  }
 
@@ -250,6 +263,8 @@ function Feed({ router }) {
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+
+     console.log(updateShowItems)
     setToShowItems(updateShowItems);
  }
 
@@ -435,6 +450,7 @@ function Feed({ router }) {
                       preActiveVideoId={items?.[videoActiveIndex]?.content_id}
                       nextActiveVideoId = {items?.[videoActiveIndex]?.content_id}
                       comp="feed"
+                      ProfileFeed
                       initialPlayButton={initialPlayButton}
                       muted={muted}
                       loading={loading}
@@ -442,6 +458,7 @@ function Feed({ router }) {
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
                       currentT={videoDurationDetails?.currentT}
+                      player={'single-player-muted'}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -568,7 +585,7 @@ function Feed({ router }) {
           <div className="playkit-player" />
         </div>
       </div>
-      <Landscape/>
+      <LandscapeView/>
     </>
     </ComponentStateHandler>
 

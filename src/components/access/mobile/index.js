@@ -8,7 +8,7 @@ import { userLogin } from '../../../sources/auth';
 import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import { commonEvents } from '../../../analytics/mixpanel/events';
-import { track } from '../../../analytics/mixpanel';
+import { track } from '../../../analytics';
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type
@@ -48,11 +48,12 @@ export default function Mobile({
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await userLogin(finalData);
         if (response.status === 'success') {
+          mixpanel('Login')
           router?.push({
             pathname: '/feed/for-you'
           });
           showSnackbar({ message: t('SUCCESS_LOGIN') });
-          mixpanel('Login')
+         
         }
       } catch (e) {
         showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
@@ -63,12 +64,13 @@ export default function Mobile({
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
+          mixpanel('Login')
           router?.push({
             pathname: '/verify-otp',
             query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
           });
           showSnackbar({ message: t('SUCCESS_OTP') });
-          mixpanel('Login')
+    
         }
       } catch (e) {
         if (e.errorCode === 404) {
@@ -88,7 +90,6 @@ export default function Mobile({
           const resp = await dispatchOtp();
           if(resp.data.code === 0){
             showSnackbar({ message: t('SUCCESS_OTP') });
-            mixpanel('Signup')
             router?.push({
               pathname: '/verify-otp',
               query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }

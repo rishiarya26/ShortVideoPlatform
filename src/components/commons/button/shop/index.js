@@ -31,8 +31,10 @@ export const Shop = ({
   /***************************/
 
   useEffect(() => {
-
+   setTimeout(()=>{
+    //  alert('shop intiated')
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+   },1000)
     // charmboard_plugin- multiple object(player)
   }, []);
 

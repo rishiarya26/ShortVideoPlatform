@@ -28,6 +28,7 @@ export function track(event, payload) {
     // flushQueue();
      window?.mixpanel?.track(event,payload);
   } else {
+    console.log('mixpanel not loaded')
     queue.push({
       event,
       ...payload

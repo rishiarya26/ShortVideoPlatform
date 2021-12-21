@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Hash from '../commons/svgicons/hash';
@@ -16,7 +17,6 @@ import Play from '../commons/svgicons/play-outlined';
 import Like from '../commons/svgicons/like-outlined';
 import { numberFormatter } from '../../utils/convert-to-K';
 import detectDeviceModal from "../open-in-app";
-import Landscape from '../landscape';
 import useDrawer from '../../hooks/use-drawer';
 import { toLower } from 'lodash';
 import dynamic from 'next/dynamic';
@@ -45,6 +45,14 @@ SwiperCore.use([Autoplay,Pagination,Navigation]);
 let toRetry;
 const ErrorComp = () => (<Error  retry={toRetry && toRetry}/>);
 const LoadComp = () => (<Loader />);
+
+const LandscapeView = dynamic(
+  () => import('../landscape'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 function Explore() {
   const [data, setData] = useState([]);
@@ -99,14 +107,14 @@ function Explore() {
   const router = useRouter();
 
   const onDataFetched = data => {
-    const crousalDataIndex = data?.data?.findIndex((item)=>(item?.widgetType === 'carousel_banner'))
-    console.log("crousalIndex",crousalDataIndex)
+    const crousalDataIndex = data?.data?.findIndex((item)=>(item?.widgetContentType === 'banner'))
     const crousalData = data?.data?.[crousalDataIndex]?.widgetList;
     window.sessionStorage.removeItem('search-feed');
     window.sessionStorage.setItem("searchList",JSON.stringify(data?.data));
-    const additionalBanner = data?.data?.additionalBanner;
+    // const additionalBanner = data?.data?.additionalBanner;
     // console.log(data,additionalBanner, crousalData)
-    crousalData[additionalBanner?.position] = additionalBanner;
+    // console.log("8787878",additionalBanner, crousalData)
+    // crousalData.shift(additionalBanner.data);
     // console.log(crousalData)
     setCrousalItems(crousalData)
     setData(data?.data);
@@ -139,15 +147,38 @@ function Explore() {
     router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
   }
 
-  useEffect(()=>{
+  const toUserDetail = (userHandle)=>{
+    router.push(`/profile/@${userHandle}`);
+  }
 
+  const toVideoDetail = (id)=>{
+    router.push(`/video/${id}`);
+  }
+
+  const redirectToUrl = (url) =>{
+    router.push(url);
+  }
+
+  const toRedirect = {
+    'User' : toUserDetail,
+    'Video' : toVideoDetail,
+    'Hashtag' : toHashtagDetails,
+    'useUrl' : redirectToUrl
+  }
+
+  useEffect(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Discover';
       track('Screen View',mixpanelEvents );
-    window.onunload = function () {
+      window.onunload = function () {
       window?.scrollTo(0, 1);
     }
   },[])
+
+  const onBannerClick =(contentType, id)=>{
+    toRedirect?.[contentType](id);
+    // (data?.redirectUrl && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
+  }
 
   return (
     <ComponentStateHandler
@@ -189,9 +220,13 @@ function Explore() {
                     <div 
                      key={id} 
                      id={id} 
-                     onClick={()=> (data?.bannerUrl && router.push(data.bannerUrl)) || toHashtagDetails(data?.displayName)} 
+                     onClick={()=> data?.contentType === 'User' ?
+                      onBannerClick(data?.contentType, data?.user?.userName) :
+                    data?.contentType === 'Hashtag' ? onBannerClick(data?.contentType, data?.displayName) :
+                    onBannerClick(data?.contentType, data?.id)
+                  } 
                      className="carousel_item bg-gray-300 min-w-full relative">
-                       <Img data={data?.thumbnail} title={data?.name || data?.displayName}/>
+                       <Img data={data?.bannerUrl} title={data?.name || data?.displayName}/>
                     </div>
                   </SwiperSlide>
                ))}
@@ -264,7 +299,7 @@ function Explore() {
                          if(id > 5) return null;
                         return (
                           <>
-                          <div key={id} onClick={()=>router?.push({pathname: '/profile/[pid]',query: { pid: d?.user?.id }})} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} onClick={()=>router?.push(`/profile/@${d?.user?.userName}`)} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>
@@ -285,7 +320,7 @@ function Explore() {
            
       </div>
       <FooterMenu selectedTab="search"/>
-      <Landscape/>
+      <LandscapeView/>
     </ComponentStateHandler>
   );
 }

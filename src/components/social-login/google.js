@@ -8,7 +8,7 @@ import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
 import { commonEvents } from "../../analytics/mixpanel/events";
-import { track } from "../../analytics/mixpanel";
+import { track } from "../../analytics";
 
 export const GoogleButton =({loading}) =>{
 

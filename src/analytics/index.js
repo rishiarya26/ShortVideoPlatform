@@ -3,7 +3,9 @@ import { init as initMixpanel, track as trackEvent } from './mixpanel';
 let initiated = false;
 
 export const init = () => {
-  initMixpanel();
+  // setTimeout(()=>{
+    initMixpanel();
+  // },500);
   window.addEventListener('unload', () => {
     // flushQueue();
   });

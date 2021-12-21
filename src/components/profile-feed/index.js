@@ -21,7 +21,7 @@ import { viewEvents } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import { getSingleFeed } from '../../sources/feed/embed';
+
 
 SwiperCore.use([Mousewheel]);
 
@@ -33,17 +33,16 @@ function ProfileFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
-  const [videoActiveIndex, setVideoActiveIndex] = useState(0)
+  const [videoActiveIndex, setVideoActiveIndex] = useState(0);
   const [saveLook, setsaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [loading, setLoading] = useState(true);
   const [muted, setMuted] = useState(true);
   const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
-  const [userDetails, setUserDetails] = useState({})
   const [offset, setOffset] = useState(2);
   const [loadMore, setLoadMore] = useState(true);
-  // const [firstVideo, setFirstVideo] = useState({})
+  const [userDetails, setUserDetails] = useState({})
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
@@ -87,33 +86,16 @@ function ProfileFeed({ router }) {
    }
    loadItems();
   },[videoActiveIndex])
-//   const appendSelectedVideo = async(id)=>{
-//     try{ 
-//      const response = await getSingleFeed({id : id});
-//      const video = response?.data;
-//      console.log("api called",response,id)
-//      return video;
-//     //  video && updateItems?.splice(0,0,video);
-//     //  setItems(updateItems);
-
-//    }catch(e){
-//      return null;
-//      console.log("error in append video", e);
-//    }
-//  }
 
 
   useEffect(() => {
-    // let updateItems = [...items]
-    // const video = videoId && appendSelectedVideo(videoId);
-    // updateItems && updateItems.splice(0,0,video);
-    // setItems(updateItems);
-
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-    // const guestId = getItem('guest-token');
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Profile Feed';
-    track('Screen View',mixpanelEvents );
+    setTimeout(()=>{
+      inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      // const guestId = getItem('guest-token');
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Profile Feed';
+      track('Screen View',mixpanelEvents );
+    },500)
   }, []);
 
 
@@ -129,6 +111,13 @@ function ProfileFeed({ router }) {
    await viewEvents({id:id, event:event})
   }
 
+  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  const onDataFetched = data => {
+    let videos = data?.data;
+    data && setItems(videos);
+    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+  };
+
   const getUserDetails = async(id)=>{
  try{   
    const data = await getUserProfile(id);
@@ -142,48 +131,13 @@ function ProfileFeed({ router }) {
     id && getUserDetails(id)
   },[id])
 
-
-  // useEffect(()=>{
-
-  //  appendSelectedVideo();
-  // },[])
-
-
-  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
-  const onDataFetched = async(data) => {
-    let videos = data?.data;
-  //  if(videoId){
-  //   try{
-  //       const video =  await appendSelectedVideo(videoId);
-  //       video && Object.keys(video).length === 0 && videos?.splice(0,0,video)
-  //       console.log("in", videos)
-
-  //       setItems(videos);
-  //   }catch(e){
-  //     console.log("in catch")
-
-  //     data && setItems(videos);
-  //     console.log("error in append video", e);
-  //   }
-  //  }else{
-    //  console.log("in else")
-     data && setItems(videos);
-     console.log("before",activeVideoId)
-    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
-  //  }
-    // if(type === "liked"){
-    //   items = data?.data?.filter((item)=>(item?.shoppable === true));
-    // }
-   
-  };
-
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
   const validItemsLength = items?.length > 0;
 
   const updateSeekbar = (percentage, currentTime, duration) => {
     if(percentage > 0){
-      setInitialPlayStarted(true)
+      setInitialPlayStarted(true);
     }
     const videoDurationDetail = {
       currentT : currentTime,
@@ -194,16 +148,16 @@ function ProfileFeed({ router }) {
     }
     setVideoDurationDetails(videoDurationDetail);
     setSeekedPercentage(percentage);
-      /********** Mixpanel ***********/
-      if(currentTime >= duration-0.2){
-        toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-        toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
-        /*** view events ***/
-        // viewEventsCall(activeVideoId, 'completed');
-        viewEventsCall(activeVideoId, 'user_video_start');
-        // if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
-      }
-      /******************************/
+    /********** Mixpanel ***********/
+    if(currentTime >= duration-0.2){
+      toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      /*** view events ***/
+      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'user_video_start');
+      // if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+    }
+    /******************************/
   };
 
   const handleBackClick = () => {
@@ -305,7 +259,7 @@ function ProfileFeed({ router }) {
           description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`        
         }}
      />
-        <div style={{ height: `${videoHeight}px` }}>
+        <div className="overflow-hidden" style={{ height: `${videoHeight}px` }}>
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
@@ -316,7 +270,7 @@ function ProfileFeed({ router }) {
               // const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
               // swiper?.slideTo(slideToId, 0);
               router?.replace(`/profile-feed/${id}`);
-              setInitialPlayStarted(false)
+              setInitialPlayStarted(false);
             }}
             draggable="true"
             spaceBetween={0}
@@ -329,7 +283,7 @@ function ProfileFeed({ router }) {
               } = swiperCore;
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
-
+              
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
@@ -383,15 +337,14 @@ function ProfileFeed({ router }) {
                       loading={loading}
                       muted={muted}
                       firstFrame={item?.firstFrame}
-                      // preActiveVideoId={items?.[videoActiveIndex-1] && items[videoActiveIndex-1]?.content_id}
-                      // nextActiveVideoId={items?.[videoActiveIndex+1] && items[videoActiveIndex+1]?.content_id}
+                      player={'single-player-muted'}
                     />
 
                   </SwiperSlide>
                 )
               )
             }
-               <div
+              <div
                 className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
@@ -417,6 +370,6 @@ function ProfileFeed({ router }) {
       </>
     </ComponentStateHandler>
   );
-}
+};
 
 export default withRouter(ProfileFeed);
