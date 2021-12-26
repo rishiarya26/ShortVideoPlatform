@@ -66,17 +66,22 @@ const onStoreRedirect =(device)=>{
       </div>
     </div>
     <img alt=""  src={withBasePath('images/goat/mobile/round3.png')}/>
-
+    {/* <div className="flex w-full justify-center py-4 pb-8 flex-col items-center">
+        <div onClick={()=>router.push('/hipigoat-round-3')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        Round 3 Details
+      </div>
+    </div> */}
 </div>
 
 <div className="section_3 flex items-center flex-col section_2">
    <img alt="" src={withBasePath('images/goat/mobile/4.jpg')}/>
-   
+
 <img alt="" src={withBasePath('images/goat/mobile/5.jpg')}/>
 
 <img alt="" src={withBasePath('images/goat/mobile/6.jpg')}/>
    {/* <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
 </div>
+
 
 <div className="section_4 flex flex-col relative section_2">
 <img alt="" src={withBasePath('images/goat/mobile/7.jpg')}/>

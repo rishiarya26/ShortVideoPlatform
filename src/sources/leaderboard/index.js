@@ -3,7 +3,7 @@ import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/leaderboard';
 
-async function leaderboardData({round = 1}) {
+async function leaderboardData({round}) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('leaderboard')}/leaderboard?round=${round}`;

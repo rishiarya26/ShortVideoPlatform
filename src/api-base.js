@@ -15,7 +15,8 @@ export const apiBaseEndPoints = {
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
-    leaderboard: 'https://leaderboard.charmd.me'
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   development: {
     test: 'https://api.github.com',
@@ -31,7 +32,8 @@ export const apiBaseEndPoints = {
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
-    leaderboard: 'https://leaderboard.charmd.me'
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   staging: {
     test: 'https://api.github.com',
@@ -46,7 +48,8 @@ export const apiBaseEndPoints = {
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
-    leaderboard: 'https://leaderboard.charmd.me'
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   production: {
     test: 'https://api.github.com',
@@ -61,7 +64,8 @@ export const apiBaseEndPoints = {
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
-    leaderboard: 'https://leaderboard.charmd.me'
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   }
 };
 

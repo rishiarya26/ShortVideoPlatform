@@ -46,7 +46,7 @@ const toShow = {
   profile : ()=>{
    try{ 
      const userId = localStorage.get('user-id');
-     router.push(`/profile/${userId}`)
+     router.push(`/@${userId}`)
   }catch(e){
      console.log('error occured while fetching user-id from cookies')
   }

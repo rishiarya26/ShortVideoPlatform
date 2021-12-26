@@ -87,7 +87,7 @@ export const shareProfile = (id, videoActiveIndex=null, toTrackMixpanel=null) =>
     const url = document?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;
-    const finalUrl = (id && domain && `https://${domain}/profile/${id}`) || document?.location?.href;
+    const finalUrl = (id && domain && `https://${domain}/${id}`) || document?.location?.href;
    
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;

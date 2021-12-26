@@ -148,7 +148,7 @@ function Explore() {
   }
 
   const toUserDetail = (userHandle)=>{
-    router.push(`/profile/@${userHandle}`);
+    router.push(`/@${userHandle}`);
   }
 
   const toVideoDetail = (id)=>{
@@ -299,7 +299,7 @@ function Explore() {
                          if(id > 5) return null;
                         return (
                           <>
-                          <div key={id} onClick={()=>router?.push(`/profile/@${d?.user?.userName}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} onClick={()=>router?.push(`/@${d?.user?.userName}`)} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>

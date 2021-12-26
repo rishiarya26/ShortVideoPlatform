@@ -98,7 +98,7 @@ async function search(userId,searchTerm,setItems) {
         <SearchFollowers searchTerm={searchTerm} onTermChange={onTermChange}/>
         {items?.map((data,id)=>(
         <div key={id} className="user_card flex justify-between py-2 px-4 "> 
-          <div onClick={()=>router?.push(`/profile/@${data?.userHandle}`)} className="flex">
+          <div onClick={()=>router?.push(`/@${data?.userHandle}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
               <Img data={data?.profilePic}  alt='image' fallback={fallbackUser?.src}/>
               </div>

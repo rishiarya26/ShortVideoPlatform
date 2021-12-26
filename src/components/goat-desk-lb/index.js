@@ -9,40 +9,40 @@ import Tabs from '../commons/tabs/leadership';
 import fallbackUsers from '../../../public/images/users.png';
 
 function GoatDeskLb() {
-  const [data, setData] = useState(null);
-  const [selectedRound, setSelectedRound] = useState(0);
-  const [first, setFirst] = useState(null)
+  // const [data, setData] = useState(null);
+  // const [selectedRound, setSelectedRound] = useState(0);
+  // const [first, setFirst] = useState(null)
 
   const router = useRouter();
-  const { type = 0 } = router?.query;
+  // const { type = 0 } = router?.query;
 
-  const getData = async(round)=>{
-   try{
-     console.log("round", round)
-    const response = await getLeaderboardData({round : round+1});
-    if(response?.data){
-      const itemArray = response.data.splice(0,1);
-      const [first] = itemArray;
-      setFirst(first);
-    }
-    console.log(response.data)
-    setData(response?.data);
-   }catch(e){
-     setData([])
-   console.log('data error',e)
-   }
-  }
+  // const getData = async(round)=>{
+  //  try{
+  //    console.log("round", round)
+  //   const response = await getLeaderboardData({round : round+1});
+  //   if(response?.data){
+  //     const itemArray = response.data.splice(0,1);
+  //     const [first] = itemArray;
+  //     setFirst(first);
+  //   }
+  //   console.log(response.data)
+  //   setData(response?.data);
+  //  }catch(e){
+  //    setData([])
+  //  console.log('data error',e)
+  //  }
+  // }
 
-  useEffect(()=>{
-    const convertedtype = typeof(type) === 'string' ? Number(type) : type
-    // console.log("type",type,"sR", selectedRound, 'gg',typeOfIndex)
-    setSelectedRound(convertedtype);
-  },[])
+  // useEffect(()=>{
+  //   const convertedtype = typeof(type) === 'string' ? Number(type) : type
+  //   // console.log("type",type,"sR", selectedRound, 'gg',typeOfIndex)
+  //   setSelectedRound(convertedtype);
+  // },[])
 
-  useEffect(()=>{
-    setData(null);
-    getData(selectedRound);
-  },[selectedRound])
+  // useEffect(()=>{
+  //   setData(null);
+  //   getData(selectedRound);
+  // },[selectedRound])
   
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
