@@ -65,7 +65,9 @@ const onStoreRedirect =(device)=>{
 </div>
 
 <div className="section_4 flex flex-col relative section_2">
-<img src={withBasePath('images/goat/round-2/desktop/7.jpg')}/>
+<div className='w-8/12 mar-lef mb-6'>
+<img src={withBasePath('images/goat/round-2/desktop/Round2DetailsDesktop.png')}/>
+</div>
 {/* <div className="flex w-full absolute -bottom-8 mt-6 z-10 justify-center items-center flex-col">
   <p className="text-xl font-bold"> Download the Hipi app now :</p>
   <div className="flex w-full mt-2 justify-center">

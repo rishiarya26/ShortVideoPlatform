@@ -82,7 +82,9 @@ const onStoreRedirect =(device)=>{
   <div className="section_6 flex flex-col section_2">
   <img src={withBasePath('images/goat/round-2/mobile/9.jpg')}/>  
   <div className="relative">
-  <img src={withBasePath('images/goat/round-2/mobile/10.jpg')}/>
+  <div className='w-8/12 mar-lef mb-6'>
+  <img src={withBasePath('images/goat/round-2/mobile/Round2DetailsMobile.png')}/>
+  </div>
   <div className="absolute -bottom-12 w-full flex justify-center">
   {/* <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
