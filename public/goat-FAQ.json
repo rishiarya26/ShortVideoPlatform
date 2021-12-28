@@ -18,10 +18,10 @@
     "ans" : "No, its free for all to participate. Just download Hipi, create account & upload videos", "show": false},
     
 { "ques" : "For how long is the contest?",
-    "ans" : "It is for 08 weeks starting 22nd November 2021 and ends on 16th January 2022", "show": false},
+    "ans" : "The contest starts on 29nd November 2021 and ends on 20th February 2022.", "show": false},
     
 {"ques" : "What do I win?",
-   "ans" : "This finale winner gets a chance to perform a duet with Shilpa on the SaReGaMaPa Finale live on Zee Tv on the 4th of Feb 2022. Weekly winner gets a chance to win cash prizes, duets with Rupali & mentoring session with Rupali Jagga or Shilpa Rao","show": false},
+   "ans" : "The finale winner gets a chance to perform a duet with Shilpa Rao on the SaReGaMaPa Finale live on Zee TV. Weekly winner gets a chance to win cash prizes, duets with Rupali & coaching session with Rupali Jagga or Shilpa Rao.","show": false},
     
 { "ques" : "Will my singing videos come on TV?",
     
@@ -95,9 +95,9 @@
     
     "ans" : "No, you don’t need to come. Mentoring will happen online","show": false},
     
-    { "ques" : "Can I participate after Round 2, 19th December 2021?",
+    { "ques" : "Can I participate after Round 2?",
     
-    "ans" : "You can still participate in 2 weekly themes but won’t be eligible for mentorship or duet video. The user with the maximum engagement in their videos will win a cash prize.","show": false},
+    "ans" : "You can still participate in weekly themes in round 3. The participant with the maximum engagement on their videos will win a cash prize, but won’t be eligible for coaching or duet videos with judges.","show": false},
     
     { "ques" : "Can I participate in the Last Round & win?",
     
