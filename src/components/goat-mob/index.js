@@ -57,7 +57,7 @@ const onStoreRedirect =(device)=>{
   </div>
     </div>
     <div className='w-10/12 mar-lef mb-2'>
-    <img alt=""  src={withBasePath('images/goat/mobile/Round2Mob.png')}/>
+    <img alt=""  src={withBasePath('images/goat/mobile/round2Mob.png')}/>
     </div>
     <div className="flex w-full justify-center py-4 pb-8 flex-col items-center">
         <div onClick={()=>router.push('/hipigoat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
