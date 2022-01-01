@@ -17,6 +17,7 @@ function transformError(error = {}) {
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp?.data;
+  
   try {
     if (!isSuccess(resp)) {
       return transformError(data);
@@ -25,6 +26,11 @@ function transformSuccess(resp) {
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
     console.log('week1',data?.week1)
+    if (data?.week3?.length > 0) {  
+      data.week3.forEach((item)=>{
+        item.profilepic = item?.profilepic?.replaceAll('upload','upload/w_90') || '';
+      })
+    }
     if (data?.week1?.length > 0) {  
       data.week1.forEach((item)=>{
         item.profilepic = item?.profilepic?.replaceAll('upload','upload/w_90') || '';
@@ -49,6 +55,7 @@ function transformSuccess(resp) {
         // }
       })
     }
+      // resp.data.data = data;
     // console.log("data22",data, data[0].profilepic)
       payload.data = resp?.data;
 

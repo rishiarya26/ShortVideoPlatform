@@ -21,9 +21,9 @@ function Round2WinnerD({round}) {
    try{
     const response = await getLeaderboardData({round : round});
     if(response?.data?.data){
-      const itemArray = response?.data?.data?.week2?.all?.splice(0,1);
-      const [first] = itemArray;
-      setFirst(first);
+      // const itemArray = response?.data?.data?.week2?.all?.splice(0,1);
+      // const [first] = itemArray;
+      // setFirst(first);
     }
     console.log(response.data)
     setData(response?.data?.data);
@@ -102,12 +102,48 @@ const stores = {
     <p className="font-extrabold text-lg ">Round 2 Winners</p>
 
 </div>
-<div className="w-full  relative flex justify-center py-2">
-    <p className="font-bold items-left">{`Week 2 (${dates?.week2})`}</p>
+<div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 3 (${dates?.week3})`}</p>
 </div>
-<div className="w-full flex justify-center mt-6">
+{data && data?.week3?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div>
+</div>
+</div>
+))}
+<div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 2 (${dates?.week2})`}</p>
+</div>
+{data && data?.week2?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div>
+</div>
+</div>
+))}
+{/* <div className="w-full  relative flex justify-center py-2">
+    <p className="font-bold items-left">{`Week 2 (${dates?.week2})`}</p>
+</div> */}
+{/* <div className="w-full flex justify-center mt-6">
 {/* winner */}
-<div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+{/* <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
           <Img data={first?.profilepic} fallback={fallbackUsers?.src}/>
@@ -118,7 +154,7 @@ const stores = {
       Winner
     </div>
 </div>
-</div>
+</div>  */}
 
 <div className="Wlist w-full flex mt-6 flex-wrap justify-between items-between">
 {/* normal count */}
