@@ -47,13 +47,13 @@ export default function Hipi(params) {
   const device = getItem('device-type')
 
   if(device === 'desktop'){
-    router.push('/');
+    router?.push('/');
     return null;
   }
 
   return (
     <>
-      <SeoMeta
+      {/* <SeoMeta
         data={{
           title: item.musicCoverTitle,
           image: item.poster_image_url,
@@ -84,7 +84,7 @@ export default function Hipi(params) {
             site_name: 'Hipi'
           }
         }}
-      />
+      /> */}
       <VideoJsonLd
         name={item.musicCoverTitle}
         description={item.content_description}

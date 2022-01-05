@@ -4,11 +4,13 @@ import Image from 'next/image';
 
 // TODO we need a proper default image url for blurDataURL
 const DynamicImg = ({
-  onClick,width, data="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp", title = 'hipi'
+  onClick,width, data, fallback="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp", title = 'hipi'
 }) => {
+  let finalSrc = data;
 
-    let finalSrc = data;
+  if(data){  
     finalSrc = width && data.replaceAll("w_297", width);
+  }
     // const myLoader = ({ src, width,height }) => {
     //     return `${src}?w=${width}?h=${height}`
     //   }
@@ -21,7 +23,7 @@ const DynamicImg = ({
         animate-appear bg-gray-500
         `}
         // loading={loading}
-        src={finalSrc}
+        src={finalSrc || fallback}
         alt={title}
         layout="fill"
         object-fit="cover"

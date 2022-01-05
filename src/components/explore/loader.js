@@ -15,10 +15,16 @@ function Loader() {
        <div className="h-screen  w-screen flex flex-col mt-20">
         <div className="search_box w-full z-10 fixed top-4">
         <div className="flex relative bg-white p-4 items-center">
-          <input className=" w-full bg-gray-100 px-4 py-2 pl-8" type="text" autoComplete="off" name="Search" placeholder="Search" value=""/>
-            <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm">
+          <input 
+          className=" w-full bg-gray-100 px-4 py-2 pl-8" 
+          type="text" 
+          autoComplete="off" 
+          name="Search" 
+          placeholder="Search" 
+          defaultValue=""/>
+            {/* <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#535353"><path d="M0 0h24v24H0z" fill="none"></path><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
-              </button>
+              </button> */}
             </div>
           <div />
         </div>
@@ -35,6 +41,16 @@ function Loader() {
                   </div>
                   <div className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
                     
+                          <div  className="my-1 px-2 flex flex-col justify-center items-center">
+                                <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
+                                </div>
+                                <p className="text-xs pt-2 truncate max-w-20v text-center w-16 h-2 mt-2 bg-gray-200"></p>
+                          </div>
+                          <div  className="my-1 px-2 flex flex-col justify-center items-center">
+                                <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
+                                </div>
+                                <p className="text-xs pt-2 truncate max-w-20v text-center w-16 h-2 mt-2 bg-gray-200"></p>
+                          </div>
                           <div  className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 min-w-1/6 overflow-hidden  min-h-1/6 rounded-full relative">
                                 </div>

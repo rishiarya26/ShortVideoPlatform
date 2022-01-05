@@ -31,8 +31,11 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
       }
       setData(data);
       if (onDataFetched) onDataFetched(data);
+      console.log("success", data)
+
       setFetchState('success');
     } catch (e) {
+      console.log("fail")
       setFetchState('fail');
     }
   };

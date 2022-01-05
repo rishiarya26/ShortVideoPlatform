@@ -68,9 +68,13 @@ export const getAllItems = () => {
  * @param  {[string]} key [key name]
  * @return {[bool]}     [description]
  */
-export const removeItem = key => {
+export const removeItem = (key, opt) => {
   if (!canUseDom) return false;
-  document.cookie = `${key}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=.hipi.com`;
+  let cookieStr = '';
+  (opt?.domain) ? cookieStr = `${key}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=${opt.domain}` 
+  : cookieStr = `${key}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT;`
+  console.log(cookieStr)
+  document.cookie = cookieStr;
   return true;
 };
 

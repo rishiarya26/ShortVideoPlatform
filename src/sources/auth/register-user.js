@@ -6,7 +6,7 @@ import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 import { hipiLogin } from './login';
 
 const register = async ({
-  type, value, firstName, lastName = '', password, birthday, gender
+  type, value, firstName, lastName, password, birthday, gender
 }) => {
   let response = {};
   // TO-DO take care of aid, guestoken & verison_number

@@ -1,0 +1,121 @@
+{"faq" : [
+    
+   {   "ques" : "Who can Participate?",
+       "ans" : "Indian citizen above 18 years. If you are under 18 then parental/guardian approval is needed.", "show": false},
+
+{ "ques" : "How to make account on Hipi App?",
+    "ans" : "Download Hipi app from Play Store or App Store. Signup by answering a few questions and you are good to go.", "show": false},
+    
+{ "ques" : "Do you need to be a trained singer to participate?",
+    
+"ans" : "No, not all. If you enjoy singing, you can participate", "show": false},
+    
+{ "ques" : "Do I need to pay to download Hipi?",
+    
+"ans" : " No, its free & easy to use", "show": false},
+
+{ "ques" : "Do I need to pay to participate in the contest?",    
+    "ans" : "No, its free for all to participate. Just download Hipi, create account & upload videos", "show": false},
+    
+{ "ques" : "For how long is the contest?",
+    "ans" : "The contest starts on 29nd November 2021 and ends on 20th February 2022.", "show": false},
+    
+{"ques" : "What do I win?",
+   "ans" : "The finale winner gets a chance to perform a duet with Shilpa Rao on the SaReGaMaPa Finale live on Zee TV. Weekly winner gets a chance to win cash prizes, duets with Rupali & coaching session with Rupali Jagga or Shilpa Rao.","show": false},
+    
+{ "ques" : "Will my singing videos come on TV?",
+    
+    "ans" : "No, not your singing videos of contest. But if you win the contest you will sing on the Grand Finale stage of Saregamapa on Zee Tv","show": false},
+    
+{ "ques" : "Will I be paid to upload my singing videos?",
+    
+    "ans" : "No, you will not be paid. But if you win each round you stand a chance to win cash prizes & much more.","show": false},
+    
+    { "ques" : "Can I submit videos in any language?",
+    
+    "ans":"Yes, you can.","show": false},
+    
+    { "ques" : "How many videos can I upload in 01 day?",
+    
+    "ans":"As many as you want.","show": false},
+    
+    { "ques" : "What is the duration of videos to be submitted?",
+    
+        "ans" : "Not more than 90secs","show": false},
+    
+    { "ques" : "Do I need to submit solo videos or Can I upload duet or group videos too?",
+    
+    "ans" : "You can upload solo, duet or group videos following the relevant theme & hashtag for the respective rounds.","show": false},
+    
+    { "ques" : "What is Leaderboard?",
+    
+    "ans" : "Leaderboard is a list of top performers in the contest.","show": false},
+    
+    { "ques" : "How is the winner or the top singer decided on leaderboard?",
+    
+    "ans" : "In Round 1 & 2, video with the highest engagement and likes will be on top of the leaderboard and Round 3, leaderboard is combination of engagement + judge’s points.","show": false},
+    
+    { "ques" : "What is engagement rate?",
+    
+    "ans" : "The addition of likes, views, follows, shares, downloads gives us the engagement rate of the user.","show": false},
+    
+    { "ques" : "How many videos do I need to upload to be eligible in the contest?",
+    
+    "ans" : "You need to upload minimum 01 video to be eligible for the contest using the relevant hashtags of that round.","show": false},
+    
+    { "ques" : "In Round 2, do we have to sing in all 10 themes?",
+    
+    "ans" : "No, to qualify for Round 3, you need to upload singing videos with minimum 04 themes from the given 10 themes. But Participating in ALL the themes gives you a higher chance of getting more engagements and going on top of the leader board.","show": false},
+    
+    { "ques" : "In Round 2, do we have to submit all 04 themes singing videos together?",
+    
+    "ans" : "No. You can decide when you want to upload your video theme wise. Do remember earlier the better as it increases the chances of engagement number & increase chance to be on top of leaderboard.","show": false},
+    
+    { "ques" : "Do we need to upload every day?",
+    
+    "ans" : "There is no compulsion as such. But the more videos, increases the chances of engagement number & increase the chance to be on top of leaderboard.","show": false},
+    
+    { "ques" : "Can I submit video on my own theme?",
+    
+    "ans" : "In Round 1, you can upload any videos of any theme but in Round 2, you need to select 04 themes out of 10 & in Round 3, you have to follow the given themes.","show": false},
+    
+    { "ques" : "Do I need to come in person for duet videos?",
+    
+    "ans":"No, you don’t need to come. We will be recording online.","show": false},
+    
+    { "ques" : "Do I need to come in person for mentorship from Rupali Jagga or Shilpa Rao?",
+    
+    "ans" : "No, you don’t need to come. Mentoring will happen online","show": false},
+    
+    { "ques" : "Can I participate after Round 2?",
+    
+    "ans" : "You can still participate in weekly themes in round 3. The participant with the maximum engagement on their videos will win a cash prize, but won’t be eligible for coaching or duet videos with judges.","show": false},
+    
+    { "ques" : "Can I participate in the Last Round & win?",
+    
+    "ans" : "Yes, you can participate by uploading the videos with the two themes given every week. You will be eligible to win cash prize if you have highest number of engagements that week. But not for mentorship or duet videos.","show": false},
+    
+    { "ques" : "How will I get my cash prize & in how much time?",
+    
+    "ans" : "Once the winner name is announced, our customer care team will get in touch with you and will take all your details & start the process. Once the process starts it may take about a month for the cash prize to reach you.","show": false},
+    
+    { "ques" : "When is the weekly winner announced?",
+    
+    "ans" : "Once the competition starts the winner announcement will take place every Sunday.","show": false},
+    
+    { "ques" : "How will we know every day that where are we on leader board?",
+    
+    "ans" : "You will be sent notifications for the same or you can check the same on our webpage.","show": false},
+    
+    { "ques" : "Can I submit more than 1 entry?", 
+       "ans" : "We always welcome overachievers. You can submit more than 1 entry in any round and of any theme.","show": false},
+
+       { "ques" : "Will this challenge be held in person?", 
+        "ans" : "This challenge will be held virtually for the foreseeable future.","show": false},
+
+        { "ques" : "Who I can reach out to if I have a question?", 
+            "ans" : "You can drop in your questions at hipigoat@hipi.co.in  and we will get back to you.","show": false},
+
+            { "ques" : "What is not allowed?", 
+                "ans" : "We want to provide a safe, supportive, & inclusive place for singers & their creativity to flourish. We protect our singers from the kind of hateful content or behaviour than can spoil a positive experience on #hipiGOAT. Unless specified, no lip-sync videos, no duet videos, no group videos, no videos where other person is singing, no videos from any music album or Bollywood film or of any other singers will be allowed. Unethical submissions that are fraudulent or made by violating a rule to gain an unfair advantage will not be tolerated. Such entries will be disqualified immediately.","show": false}
+       ]}

@@ -1,10 +1,14 @@
+/*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import useTranslation from '../../../hooks/use-translation';
 import { SubmitButton } from '../../commons/button/submit';
 import { CountryCode } from '../../commons/button/country-code';
 import useSnackbar from '../../../hooks/use-snackbar';
 import { userLogin } from '../../../sources/auth';
-import { verifyUser } from '../../../sources/auth/verify-user';
+import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
+import { sendOTP } from '../../../sources/auth/send-otp';
+import { commonEvents } from '../../../analytics/mixpanel/events';
+import { track } from '../../../analytics';
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type
@@ -19,6 +23,23 @@ export default function Mobile({
     signup: !!(data.mobile?.length === 0)
   };
 
+  const dispatchOtp = async() => {
+    let resp = {data:{code : 1}}
+      try{
+      const mobile = `${data?.countryCode}${data?.mobile}`;
+      const response = await sendOTP(mobile);
+      resp = response
+    }catch(e){
+    }
+    return resp;
+  }
+
+  const mixpanel = (type) =>{
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Method'] = 'Mobile';
+    track(`${type} Result`,mixpanelEvents );
+  }
+
   const submit = {
     loginPassword: async () => {
       try {
@@ -27,10 +48,12 @@ export default function Mobile({
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router.push({
+          mixpanel('Login')
+          router?.push({
             pathname: '/feed/for-you'
           });
           showSnackbar({ message: t('SUCCESS_LOGIN') });
+         
         }
       } catch (e) {
         showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
@@ -41,11 +64,13 @@ export default function Mobile({
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
-          router.push({
+          mixpanel('Login')
+          router?.push({
             pathname: '/verify-otp',
             query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
           });
           showSnackbar({ message: t('SUCCESS_OTP') });
+    
         }
       } catch (e) {
         if (e.errorCode === 404) {
@@ -56,17 +81,22 @@ export default function Mobile({
     signup: async () => {
       try {
         const mobile = `${data?.countryCode}${data?.mobile}`;
-        const response = await verifyUser(mobile);
+        const response = await verifyUserOnly({mobile: mobile, type:'mobile'});
         if (response.status === 'success') {
           showSnackbar({ message: t('REGISTERED') });
         }
       } catch (e) {
         if (e.errorCode === 404) {
-          showSnackbar({ message: t('SUCCESS_OTP') });
-          router.push({
-            pathname: '/verify-otp',
-            query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
-          });
+          const resp = await dispatchOtp();
+          if(resp.data.code === 0){
+            showSnackbar({ message: t('SUCCESS_OTP') });
+            router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
+            });
+          }else{
+            showSnackbar({ message: 'Something went wrong' });
+          }
         }
       }
     }
@@ -101,14 +131,20 @@ export default function Mobile({
       />
     </div>
     <div className="flex justify-between text-sm font-semibold mt-2 px-2">
-      <p>Forgot password?</p>
+      <p onClick={() => router.push('/forgot-password?type=mobile')}>Forgot password?</p>
       <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
     </div>
   </>,
     signup:
   <div className="flex justify-end text-sm font-semibold mt-2 px-2">
     <p className="text-gray-400 text-xs">
-      {t('POLICY')}
+       <p className="text-xs">
+          By continuing, you agree to Hipi's
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          and confirm that you have read Hipi's
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          .if you sign up with SMS, SMS fee may apply.
+        </p>
     </p>
   </div>
   };

@@ -4,6 +4,8 @@ import Music from '../commons/svgicons/music';
 import MusicBlack from '../commons/svgicons/music-black';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { trimHash } from '../../utils/string';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -30,12 +32,21 @@ function VideoFooter({
     single: `${canShop === 'success' ? 'bottom-40' : 'bottom-16 mb-2'} videoFooter fixed left-0  flex text-white ml-2`,
   };
   const { show } = useDrawer();
+  const router = useRouter()
 
   const music = {
     profile:    <Music />,
     feed:   <Music />,
     embed : <MusicBlack/>,
     single : <Music />,
+  }
+
+  const toHashTag =(hashtag)=>{
+    let finalValue = hashtag;
+    if(hashtag?.includes('#')){
+      finalValue = trimHash(hashtag)
+    }
+    router?.push(`/hashtag/${finalValue}`)
   }
   return (
     <div
@@ -49,11 +60,11 @@ function VideoFooter({
           </div>
         )} */}
 
-        <h3 onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
+        <h3 onClick={()=>router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
         <div className="font-bold text-xs mb-3 mt-2">
           {hashTags
             && hashTags.map((data, id) => (
-              <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} key={id}>{`#${data.name}${' '}`}</span>
+              <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))}
         </div>
         {/* {musicCoverTitle}</p> */}

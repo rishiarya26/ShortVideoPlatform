@@ -1,4 +1,4 @@
-import Router, { withRouter } from "next/router";
+import { withRouter } from "next/router";
 import Clock from "../commons/svgicons/clock";
 import Close from "../commons/svgicons/close-black"
 import SearchXs from "../commons/svgicons/search-xs";
@@ -9,6 +9,7 @@ import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
 import { Back } from "../commons/svgicons/back";
 import RightArrow from "../commons/svgicons/right-arrow";
+import SearchBlack from "../commons/svgicons/search-black";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
@@ -61,7 +62,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        Router.push(`/search/${searchTerm}`);
+        router?.push(`/search/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -77,8 +78,16 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        Router.push(`/search/${value}`);
+        router?.push(`/search/${value}`);
     }
+
+//     const onSearchHistoryDelete =(e) =>{
+// console.log(e.currentTarget.id)
+//       const index = searchHistory.findIndex((data)=> data === e?.currentTarget?.id);
+//       const finalData = searchHistory.splice(index,1);
+//       setSearchHistory(finalData);
+//       console.log(finalData)
+//     }
 
     useEffect(()=>{ 
         try{
@@ -103,7 +112,7 @@ const SearchItems = ({router,type})=>{
       
            <div  className="p-3 flex w-full flex justify-between">
            <p className="font-semibold">Recent Searches</p>
-           <p className="text-gray-400">Clear All</p>
+           {/* <p className="text-gray-400">Clear All</p> */}
            </div>
            {searchHistory?.map((result,id)=>(
            <div key={id} className="flex flex-col w-full p-3 bg-white">
@@ -112,7 +121,7 @@ const SearchItems = ({router,type})=>{
                    <Clock/>
                    <p className="pl-2">{result}</p>
                </div>
-           <Close />
+          {/* <div id={result} onClick={onSearchHistoryDelete}> <Close /></div> */}
            </div>
            </div>
         ))}
@@ -120,9 +129,9 @@ const SearchItems = ({router,type})=>{
 
        suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
-         <div key={id} className="flex flex-col w-full p-3 bg-white">
+         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionTitle)} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
-                 <div onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionTitle)} className="flex items-center ">
+                 <div  className="flex items-center ">
                      <SearchXs/>
                      <p className="pl-2">{suggestion?.suggestionTitle}</p>
                  </div>
@@ -141,7 +150,15 @@ const SearchItems = ({router,type})=>{
         back : {
             // if show suggestions is true then show back button on explore 
             explore : showSuggestions && <div onClick={()=>setShowSuggestions(false)}><Back/></div>,
-            results : <div onClick={()=>router.back()} className="flex items-center"><Back/></div>
+            results : <div onClick={()=>router?.back()} className="flex items-center"><Back/></div>
+        }
+    }
+
+    const onKeyboardEnter =(e) =>{
+        console.log("kp",e.keyCode, e.which, e)
+        //it triggers by pressing the enter key
+        if (e?.which === 13) {
+            handleSearch();
         }
     }
 
@@ -152,16 +169,20 @@ const SearchItems = ({router,type})=>{
             <input
               onChange={onTermChange}
               className=" w-full bg-gray-100 px-4 py-2 pl-8"
-              type="text"
+              type="search"
               autoComplete="off"
               name="Search"
-              value={searchTerm && searchTerm}
+              value={searchTerm}
               placeholder="Search" 
               onClick={()=>setShowSuggestions(true)}
+              onKeyPress={onKeyboardEnter}
             />
-            <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={handleSearch}>
-                <RightArrow/>
-            </button>
+            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
+            <Close />
+            </button>}
+           {type === 'explore' && !showSuggestions && <div className="absolute left-0 top-2 p-4">
+              <SearchBlack/>       
+            </div>}
             </div>
            {showSuggestions && info.list[type]}
         </div>

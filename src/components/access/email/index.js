@@ -1,8 +1,12 @@
+/*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { track } from '../../../analytics';
+import { commonEvents } from '../../../analytics/mixpanel/events';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
+import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
 
 export default function Email({
@@ -13,6 +17,12 @@ export default function Email({
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
 
+  const mixpanel = (type) =>{
+    const mixpanelEvents = commonEvents();
+    mixpanelEvents['Method'] = 'Email';
+    track(`${type} Result`,mixpanelEvents );
+  }
+
   const submit = {
     login: async e => {
       e.preventDefault();
@@ -22,9 +32,12 @@ export default function Email({
         finalData.type = 'email';
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router.push({
+          router?.push({
             pathname: '/feed/for-you'
           });
+          /* Mixpanel */
+          mixpanel('Login');
+           /* Mixpanel */
           showSnackbar({ message: t('SUCCESS_LOGIN') });
           setPending(false);
         }
@@ -36,12 +49,21 @@ export default function Email({
     signup: async e => {
       e.preventDefault();
       setPending(true);
-      router.push({
+      let resp;
+   try{  
+      resp = await verifyUserOnly({email: data?.email, type:'email'});
+      if (resp.status === 'success') {
+      showSnackbar({message : 'User already registered. Please Sign In'})
+      setPending(false);
+
+    }
+    }catch(e){
+      router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });
       setTimeout(() => { setPending(false); }, 2000);
-    }
+    }}
   };
 
   const submitText = {
@@ -61,9 +83,15 @@ export default function Email({
         type="password"
         name="phone"
         placeholder="Password"
+        autoComplete="off"
+        required
       />
     </div>
-    <div className="flex justify-start text-sm font-semibold mt-2 px-2">
+    <div onClick={()=>router.push(
+      {pathname: '/forgot-password',
+       query : {type : 'email'}
+    }
+    )} className="flex justify-start text-sm font-semibold mt-2 px-2">
       {/* TO-DO  forgot password */}
       <p>Forgot password?</p>
     </div>
@@ -71,7 +99,13 @@ export default function Email({
     signup:
   <div className="flex justify-end text-sm font-semibold mt-2 px-2">
     <p className="text-gray-400 text-xs">
-      {t('POLICY')}
+        <p className="text-xs">
+          By continuing, you agree to Hipi's
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          and confirm that you have read Hipi's
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          .if you sign up with SMS, SMS fee may apply.
+        </p>
     </p>
   </div>
   };
@@ -88,6 +122,8 @@ export default function Email({
             type="email"
             name="phone"
             placeholder="Email address"
+            autoComplete="off"
+            required
           />
         </div>
         { info[type] }
@@ -95,7 +131,7 @@ export default function Email({
           <button
             type="submit"
             disabled={pending}
-            className="bg-red-400 w-full px-4 py-2 text-white font-semibold relative"
+            className="bg-hipired w-full px-4 py-2 text-white font-semibold relative"
           >
             {' '}
             {submitText[type]}

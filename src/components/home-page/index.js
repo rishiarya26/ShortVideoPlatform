@@ -9,7 +9,7 @@ const device = getItem('device-type');
 const type = router?.query?.type;
 const id = type && (router?.query?.id || router?.query?.contentId);
 
-console.log("router",router);
+// console.log("router",router);
 
 // if(id?.length >0){
 //     console.log("id",id, id.length);
@@ -23,12 +23,12 @@ if(device === 'mobile'){
       router?.push({pathname : `/video/${id}`});
       return null;
     }
-    router.push('feed/for-you')
+    router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})
     return null;
 }
 
 return(
-    <Home/>
+   <>{device === 'desktop' && <Home/>}</>
 )
 }
 

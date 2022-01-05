@@ -14,13 +14,12 @@ const regitserUserOneTap = async ({
     };
 
     const apiPath = `${getApiBasePath('userApi')}/v4/user/registergoogle`;
-    const resp = await post(apiPath, payload, {
-    });
+    const resp = await post(apiPath, payload, {'conetent-type' : 'json'});
     resp.data.status = 200;
     resp.data.message = 'success';
-    const accessToken = resp?.data?.access_token;
-    const refreshToken = resp?.data?.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken });
+    const accessToken = resp?.data?.token;
+    // const refreshToken = resp?.data?.refresh_token;
+    response = await hipiLogin({ accessToken, refreshToken:'' });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

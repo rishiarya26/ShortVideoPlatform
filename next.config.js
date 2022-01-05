@@ -86,7 +86,24 @@ const nextConfig = {
     //   rotateStringArray: true
     // }));
     return config;
-  }
+  },
+    // async redirects() {
+    //   return [
+    //     {
+    //       source: '/(g|G)(o|O)(a|A)(t|T)/',
+    //       destination: '/goat',
+    //       permanent: true,
+    //     }
+    //   ]
+    // },
+    async rewrites() {
+      return [
+        {
+          source: '/(g|G)(o|O)(a|A)(t|T)',
+          destination: '/goat',
+        }
+      ]
+    }
 };
 
 // eslint-disable-next-line no-nested-ternary

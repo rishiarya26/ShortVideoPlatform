@@ -54,19 +54,21 @@ function transformSuccess(resp) {
       const videoUrl = videoUrls[networkConnection];
       payloadObject.video_url = videoUrl;
       payloadObject.content_description = d?.description;
-      payloadObject.userId = d?.videoOwnersId;
+      payloadObject.userId = d?.videoOwnersId || d?.videoOwners?.id;
       payloadObject.videoOwnersId = d?.videoOwnersId;
       payloadObject.getSocialId = d?.getSocialId;
       payloadObject.id = d?.id;
       payloadObject.genre = d?.genre || null;
       payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
       payloadObject.userName = d?.videoOwners?.userName;
-      payloadObject.likesCount = d?.lCount;
-      payloadObject.music_title = d?.sound?.name;
+      payloadObject.likesCount = d?.lCount || (d?.likeCount && Number(d.likeCount)) || null;
+      payloadObject.music_title = d?.sound?.name || null;
       payloadObject.hashtags = d?.hashtags;
       payloadObject.thumbnail = d?.thumbnailUrl;
       payloadObject.saveLook = false;
       payloadObject.thumbnailUrls = d?.optionalThumbnail;
+      payloadObject.creatorTag = d?.videoOwners?.tag || null;
+      payloadObject.firstFrame= d?.firstFrame || null;
       
       payloadData.push(payloadObject);
     });

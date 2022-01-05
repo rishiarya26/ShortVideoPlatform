@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
+import { localStorage } from '../../utils/storage';
 import ComponentStateHandler from '../commons/component-state-handler';
+import Refresh from '../commons/svgicons/refresh';
 import VideoCard from '../video-card';
 import Error from './error';
 import Loading from './loader';
@@ -12,8 +14,9 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', isFetching
+  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems
 }) {
+
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -47,16 +50,28 @@ export default function VideoGallery({
         {t('NO_VIDEOS_PUBLISHED')}
       </p>
     </>,
-    liked: <>
-      <p className="font-semibold">No Liked Videos</p>
+    shoppable: <>
+      <p className="font-semibold">No Shoppable Videos</p>
       <p className="text-center text-sm text-gray-500 my-2">
-        Videos Liked by this user will appear here
+        Shoppable videos of this user will appear here
       </p>
     </>
   };
 
   setRetry = retry;
   const validItemsLength = items?.length > 0;
+
+  const toProfileFeed = (userId, videoId, type)=>{
+    const index = items.findIndex((data)=>data.content_id === videoId);
+    index !== -1 && localStorage.set('selected-profile-video',items[index]);
+    router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
+  }
+
+  const toHashTagFeed =(hashTag, videoId, type)=>{
+    const index = items.findIndex((data)=>data?.content_id === videoId);
+    index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
+    router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
+  }
 
   return (
     <>
@@ -71,10 +86,10 @@ export default function VideoGallery({
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
             { items?.map((item, id) => (
                <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
-               ? ()=> router.push(`/search-feed/${item?.id}?type=normal`)  
+               ? ()=> router?.push(`/search-feed/${item?.id}?type=normal`)  
                : page === 'profile' 
-                  ? ()=>router.push(`/profile-feed/${userId}?videoId=${item?.content_id}&type=${type}`)
-                  : ()=>router.push(`/hashtag-feed/${hashTag}?videoId=${item?.content_id}&type=${type}`)}>
+                  ? ()=>toProfileFeed(userId,item?.content_id,type)
+                  : ()=>toHashTagFeed(hashTag,item?.content_id,type)}>
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
                 <VideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 
@@ -86,7 +101,12 @@ export default function VideoGallery({
                 />
              </span>
              ))}
-             {isFetching && 'Loading more items...'}
+              {showLoading &&  
+        <div onClick={fetchMoreListItems} className="w-full flex justify-center py-2">
+          <Refresh/>
+        </div>
+        }
+             {/* {isFetching && 'Loading more items...'} */}
             </div>
             )
             : (

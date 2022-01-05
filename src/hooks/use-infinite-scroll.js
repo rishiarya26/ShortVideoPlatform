@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { getItem } from '../utils/cookie';
 
 const useInfiniteScroll = (callback) => {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window?.addEventListener('scroll', handleScroll);
+    return () => window?.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -15,9 +16,19 @@ const useInfiniteScroll = (callback) => {
     });
   }, [isFetching]);
 
+  const device = getItem('device-info');
+
   function handleScroll() {
-    console.log(window.innerHeight,"+",document?.documentElement?.scrollTop,'=',window.innerHeight+document?.documentElement?.scrollTop,"==",document?.documentElement?.offsetHeight ,"||",isFetching)
-    if (window?.innerHeight + document?.documentElement?.scrollTop !== document?.documentElement?.offsetHeight || isFetching) return;
+    // console.log((window?.scrollY) ,"<=", (document?.documentElement?.offsetHeight-window?.screen?.availHeight))
+    // if ((window?.scrollY) !== (document?.documentElement?.offsetHeight-window?.screen?.availHeight) || isFetching) return;
+
+    if(device && device === 'android'){
+      console.log((window?.screen?.availHeight - 63),'+',window?.scrollY,'=',(window?.screen?.availHeight - 93)+window?.scrollY,'<=',(document?.documentElement?.offsetHeight-1));
+      if((window?.screen?.availHeight - 63)+window?.scrollY <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
+    }
+    if(device && device === 'ios'){
+      if ((window?.innerHeight + window?.scrollY) <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
+    }
     setIsFetching(true);
   }
 

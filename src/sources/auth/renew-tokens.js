@@ -3,15 +3,17 @@ import { getApiBasePath } from '../../config';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
+import { localStorage } from '../../utils/storage';
 import { transformSuccess, transformError } from '../transform/auth/renew-tokens';
 import { hipiLogin } from './login';
 
 async function refreshTokens() {
   let response = {};
-  const tokens = getItem('tokens');
+  const tokens = localStorage.get('tokens');
 
   try {
-    const refresh = JSON.parse(tokens)?.refreshToken;
+    // const refresh = JSON.parse(tokens)?.refreshToken;
+    const refresh = tokens?.refreshToken;
     const apiPath = `${getApiBasePath('userApi')}/v2/user/renew?refresh_token=${refresh}`;
 
     const resp = await post(apiPath);

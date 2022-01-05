@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 
 const FeedTabs = ({ items = [], router }) => {
-  const selected = router.query.id;
+  const selected = router?.query?.id;
 
   // console.log(items[0].path)
   return (

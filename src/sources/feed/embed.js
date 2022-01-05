@@ -11,14 +11,17 @@ async function fetchEmbedFeed({ id }) {
     if (isMockMode()) {
       apiPath = `${getApiBasePath('app')}/api/embed`;
       response = await get(apiPath);
+     
       response.data.requestedWith = { id };
 
       return Promise.resolve(response.data);
     }
     apiPath = `${getApiBasePath('hipi')}/v1/shorts/video/detail?id=${id}`;
+    
 
     response = await Promise.all([get(apiPath), canShop({ videoId: id })]);
     const [resp, shop] = response;
+    console.log("single video",resp,shop)
     resp.data.requestedWith = { id };
     resp.data.canShop = shop;
     return Promise.resolve(resp);

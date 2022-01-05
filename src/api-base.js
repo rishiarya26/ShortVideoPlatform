@@ -12,7 +12,11 @@ export const apiBaseEndPoints = {
     charmboard:
     'https://stagingmobile.charmboard.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   development: {
     test: 'https://api.github.com',
@@ -25,7 +29,11 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   staging: {
     test: 'https://api.github.com',
@@ -37,20 +45,27 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   },
   production: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
-    app: 'https://www.hipi.co.in/',
+    app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
     'https://stagingmobile.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
-    userApi: 'https://userapi.zee5.com'
-
+    userApi: 'https://userapi.zee5.com',
+    viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
+    staggingHipi: 'http://3.6.36.112:8000/api',
+    leaderboard: 'https://leaderboard.charmd.me',
+    staggingLeaderboard: 'http://35.154.183.190:3000'
   }
 };
 

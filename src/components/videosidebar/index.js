@@ -3,7 +3,7 @@
 /*eslint-disable react/display-name */
 // /*eslint-disable react/display-name */
 import { withBasePath } from '../../config';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
@@ -26,6 +26,9 @@ import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
 import { share } from '../../utils/app';
 import useDevice, { devices } from '../../hooks/use-device';
+import fallbackUser from "../../../public/images/users.png"
+import Img from '../commons/image';
+import { numberFormatter } from '../../utils/convert-to-K';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -53,7 +56,7 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   // socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName
 }) {
   const { show } = useDrawer();
 
@@ -71,8 +74,8 @@ function VideoSidebar({
     show('', login, 'medium');
   };
 
-  const like = () => show('', detectDeviceModal, 'extraSmall', {text: "like"});
-  const comment = () => show('', detectDeviceModal, 'extraSmall', {text: "comment"});
+  const like = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+  const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   
   const selectedLike = useAuth(showLoginOptions, like);
   const selectedComment = useAuth(showLoginOptions, comment);
@@ -87,35 +90,44 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
-    router.push({
-      pathname: '/users/[pid]',
-      query: { pid: videoOwnersId }
-    });
+    router?.push(`/@${userName}`);
   };
 
   const onEmbedCopy = () => {
     showSnackbar({ message: 'Copied to Clipboard' });
   };
 
+  useEffect(()=>{
+  },[])
+
+    let optProfilePic = profilePic;
+    if(optProfilePic?.match('upload/w_300')){
+      optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
+    }else{
+      optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
+    }
+
   return (
     <div
       className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
     >
-      <div onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className="relative py-2 px-3 text-center justify-end flex">
+      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
-          <img
-            alt="profile-pic"
-            className="usrimg w-10 h-10 rounded-full"
-            src={profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
+          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+          <Img
+            title="Hipi"
+            data={optProfilePic}
+            fallback={fallbackUser?.src}
           />
-          <div
-          onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "follow"})}
+          </div>
+          {/* <div
+          onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})}
             className={`${
               type === 'feed' ? 'block' : 'hidden'
-            } absolute bottom-0`}
-          >
+            } absolute -bottom-2 p-1`}
+          > 
             <Follow />
-          </div>
+          </div> */}
         </div>
       </div>
       <div
@@ -142,11 +154,11 @@ function VideoSidebar({
             <div
               id="like"
               role="presentation"
-              onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "like"})}
+              onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
             >
               <Like />
             </div>
-            <p className="text-sm text-center">{likes}</p>
+            <p className="text-sm text-center">{numberFormatter(likes)}</p>
           </div>
         {/* )} */}
 
@@ -159,14 +171,15 @@ function VideoSidebar({
         <div 
            id="comment"
            role="presentation"
-           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "comment"})}
+           onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
         >
           <Comment />
           {/* <p className="text-sm text-center">0</p> */}
         </div>
       </div>
       <div
-        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (()=>share(videoId))}
+        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
+          toTrackMixpanel ? ()=>share(videoId, videoActiveIndex, toTrackMixpanel) : ()=>share(videoId, videoActiveIndex))}
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}
@@ -208,7 +221,7 @@ function VideoSidebar({
             } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
-            <Shop text={!saved ? 'SAVE LOOK' : 'SAVED'} />
+            <Shop text={!saved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK '} />
           </div>
         )
       )}

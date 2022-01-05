@@ -13,6 +13,8 @@ import {
   transformSuccess as transformSuccessFollow,
   transformError as transformErrorFollow
 } from '../transform/users/follow';
+import { localStorage } from '../../utils/storage';
+import { getSingleFeed } from '../feed/embed';
 
 async function fetchUserProfile(id) {
   let response = {};
@@ -79,12 +81,20 @@ async function fetchUserFollower({ lang }) {
     return Promise.reject(err);
   }
 }
-async function fetchUserFollowing({ lang }) {
+async function fetchUserFollowing({ id, limit ='30', offset='1', type='Following', keyword='' }) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/following`;
-    response = await get(apiPath);
-    response.data.requestedWith = { lang };
+    let tokens = localStorage.get('tokens');
+    // tokens = JSON.parse(tokens);
+    const { shortsAuthToken = '' } = tokens;
+    const { accessToken = '' } = tokens;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/followers?id=${id}&type=${type}&keyword=${keyword}&limit=${limit}&offset=${offset}`;
+    response = await get(apiPath,null,{
+      'Authorization': `Bearer ${shortsAuthToken}`,
+      'access-token': accessToken
+    });
+    console.log("resp",response)
+    response.data.requestedWith = { id };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -104,18 +114,37 @@ async function fetchUserRecommendation({ lang }) {
 }
 
 async function fetchUserProfileVideos({
-  id, limit = '9', offset = '1', type='all'
+  id, limit = '15', offset = '1', type='all', videoId
 }) {
+  console.log("videoId",videoId)
   let response = {};
+  let video = {}
   // let tokens = getItem('tokens');
   // tokens = JSON.parse(tokens);
   // const { shortsAuthToken = '' } = tokens;
-  // const { accessToken = '' } = tokens;
+  // const { accessToken = '' } = tokens;                
 
   try {
     /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}`;
     response = await get(apiPath);
+    if(videoId && response?.data?.responseData?.length > 0){
+      const items = response.data.responseData
+      const index = items.findIndex((data)=>(data?.id === videoId))
+      if(index !== -1){
+        const video = items[index]
+        items.splice(index,1);
+        items.splice(0,0,video);
+      }
+      else{ 
+        const video = localStorage.get('selected-profile-video')
+          video && (response.data.firstVideo = video);
+      }
+      // const data = await getSingleFeed({id : videoId});
+      // video = data?.data;
+      // response.data.firstVideo = video;
+      // console.log("resppp", response, data)}
+    }
     //   , null, {
     //   Authorization: `Bearer ${shortsAuthToken}`,
     //   'access-token': accessToken
@@ -134,8 +163,8 @@ async function follow({
 {
   let response = {};
     try {
-    let tokens = getItem('tokens');
-    tokens = JSON.parse(tokens);
+    let tokens = localStorage.get('tokens');
+    // tokens = JSON.parse(tokens);
     const { shortsAuthToken = '' } = tokens;
     const { accessToken = '' } = tokens;
     const payload = {
@@ -143,12 +172,12 @@ async function follow({
       followerId: followerId,
       follow: follow
     }
-    const apiPath = `${getApiBasePath('hipi')}v1/shorts/user/follow`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/user/follow`;
     response = await post(apiPath,payload,{
       'Authorization': `Bearer ${shortsAuthToken}`,
       'access-token': accessToken
     });
-    response.data.requestedWith = { id, limit, offset };
+    response.data.requestedWith = { userId, followerId, follow };
     return Promise.resolve(response);
     } catch (err) {
     return Promise.reject(err);
@@ -159,7 +188,7 @@ async function follow({
 
 const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError);
 const [getUserFollower] = apiMiddleWare(fetchUserFollower, transformSuccess, transformError);
-const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError);
+const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError,{requiresAuth : true});
 const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError);
 const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
 const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);

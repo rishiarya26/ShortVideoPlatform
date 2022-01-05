@@ -12,7 +12,6 @@ import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import { Shop } from '../commons/button/shop';
-import Landscape from '../landscape'
 import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
@@ -36,6 +35,9 @@ import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import SwipeUp from '../commons/svgicons/swipe-up';
+import { viewEvents } from '../../sources/social';
 
 // import {sessionStorage} from "../../utils/storage"
  
@@ -53,6 +55,14 @@ const detectDeviceModal = dynamic(
   }
 );
 
+const LandscapeView = dynamic(
+  () => import('../landscape'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
@@ -64,42 +74,70 @@ function Feed({ router }) {
   const [saveLook, setSaveLook] = useState(true);
   const [shop, setShop] = useState({ isShoppable: 'pending' });
   const [initialPlayButton, setInitialPlayButton] = useState(true)
-  const [currentTime, setCurrentTime] = useState(null)
+  const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [muted, setMuted] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
+  const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const loaded = () => {
     setLoading(false);
   };
 
   useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-    const guestId = getItem('guest-token');
-    track('guest-id', { 'guestId' : guestId });
-    
-  }, []);
+        setTimeout(()=>{
+    if(initialLoadComplete === true){
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Feed';
+      track('Screen View',mixpanelEvents );
+      inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      // alert('useEffect called');
+    }
+  },1000);
+  }, [initialLoadComplete]);
 
   // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
+  const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
+  const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
+
   const { t } = useTranslation();
   const { id } = router?.query;
 
  const {show} = useDrawer();
 
   const onDataFetched = data => {
-    if(data){
-        
+    if(data?.data?.length > 0){
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         //set first three item in showItems
-        toUpdateShowData.push(data?.data?.[0]);
-        toUpdateShowData.push(data?.data?.[1]);
-        toUpdateShowData.push(data?.data?.[2]);
+        data?.data?.[0] && toUpdateShowData.push(data?.data?.[0]);
+        data?.data?.[1] && toUpdateShowData.push(data?.data?.[1]);
+        data?.data?.[2] && toUpdateShowData.push(data?.data?.[2]);
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
+        setInitialLoadComplete(true);
+        // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
+    }else{
+      setItems([]);
+      setToShowItems([]);
+      setActiveVideoId(null);
     }
+  }
+
+  useEffect(()=>{
+    if(initialPlayStarted === true){
+      toTrackMixpanel(videoActiveIndex,'play')
+      viewEventsCall(activeVideoId, 'user_video_start');
+    }
+  },[initialPlayStarted])
+
+  const viewEventsCall = async(id, event)=>{
+    console.log("event to send", id, event)
+   await viewEvents({id:id, event:event})
   }
 
   // selecting home feed api based on before/after login
@@ -129,6 +167,10 @@ function Feed({ router }) {
     setItems([])
     setVideoActiveIndex(0)
     setActiveVideoId(null)
+    // const mixpanelEvents = commonEvents();
+    // mixpanelEvents['Page Name'] = 'Feed';
+    // mixpanelEvents['Tab Name'] = id && (id === 'following') ? 'Following' : 'ForYou';
+    // track('Tab View', mixpanelEvents);
   },[id])
 
   if (id === 'for-you') {
@@ -140,11 +182,36 @@ function Feed({ router }) {
   }
 
   const validItemsLength = toShowItems?.length > 0;
+  // console.log(toShowItems, validItemsLength)
   // setRetry = retry && retry;
 
-  const updateSeekbar = percentage => {
+  const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
+    const videoDurationDetail = {
+      currentT : currentTime,
+      totalDuration : duration
+    }
+    if(currentTime > 6.8 && currentTime < 7.1){
+      viewEventsCall(activeVideoId,'view')
+    }
+    setVideoDurationDetails(videoDurationDetail);
+    if(percentage > 0){
+      setInitialPlayStarted(true);
+     }
+     /********** Mixpanel ***********/
+     if(currentTime >= duration-0.2){
+       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+       /*** view events ***/
+      //  viewEventsCall(activeVideoId, 'completed');
+       viewEventsCall(activeVideoId, 'user_video_start');
+       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+     }
+     /******************************/
+     if(currentTime >= duration-0.4){
+      if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+    }
   };
 
   const getCanShop = async () => {
@@ -177,6 +244,8 @@ function Feed({ router }) {
       updateShowItems[deleteItemIndex] = null;
     }
 
+    console.log(updateShowItems)
+
   setToShowItems(updateShowItems);
  }
 
@@ -194,10 +263,15 @@ function Feed({ router }) {
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+
+     console.log(updateShowItems)
     setToShowItems(updateShowItems);
  }
 
   useEffect(()=>{
+    if(preVideoActiveIndex?.videoActiveIndex){
+      // toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
+    }
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
       //swipe-down
       toShowItems.length > 0 && incrementShowItems();
@@ -214,6 +288,10 @@ function Feed({ router }) {
   }, [activeVideoId]);
 
   const toggleSaveLook = () => {
+    /********* Mixpanel ***********/
+    // saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
+    /*****************************/
+
     const data = [...toShowItems];
     const resp = data.findIndex(item => (item?.content_id === activeVideoId));
     data[resp].saveLook = true;
@@ -226,6 +304,57 @@ function Feed({ router }) {
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
+
+  /*******  Mixpanel *************/
+  const toTrackMixpanel = (activeIndex, type, value) => {
+    const item = items[activeIndex];
+    const mixpanelEvents = commonEvents();
+
+    const toTrack = {
+      'impression' : ()=> track('UGC Impression', mixpanelEvents),
+      'swipe' : ()=> {
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Swipe', mixpanelEvents)
+      },
+      'play' : () => track('UGC Play', mixpanelEvents),
+      'pause' : () => track('Pause', mixpanelEvents),
+      'resume' : () => track('Resume', mixpanelEvents),
+      'share' : () => track('UGC Share Click', mixpanelEvents),
+      'replay' : () => track('UGC Replayed', mixpanelEvents),
+      'watchTime' : () => {
+        mixpanelEvents['UGC Consumption Type'] = value?.watchTime
+        mixpanelEvents['UGC Duration'] = value?.duration
+        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        track('UGC Watch Time',mixpanelEvents)
+      },
+      'cta' : ()=>{
+        mixpanelEvents['Element'] = value?.name
+        mixpanelEvents['Button Type'] = value?.type
+        track('CTAs', mixpanelEvents)
+      },
+      'savelook' : ()=>{
+        track('Save Look', mixpanelEvents)
+      }
+    }
+
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
+
+    mixpanelEvents['Creator ID'] = item?.userId;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+    mixpanelEvents['UGC ID'] = item?.content_id;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
+    mixpanelEvents['Page Name'] = 'Feed';
+
+    toTrack?.[type]();
+  }
+  /*****************************/
 
   const swiper = <Swiper
               className="max-h-full"
@@ -242,33 +371,47 @@ function Feed({ router }) {
                   // delay: 5000,
                   disableOnInteraction: false
               }}
-              // onSwiper={swiper => {
-              //   const {
-              //     activeIndex, slides
-              //   } = swiper;
-              //   console.log(swiper)
-                // if(slides[activeIndex]?.firstChild?.firstChild?.muted === true){
-                //   slides[activeIndex].firstChild.firstChild.muted = false;
-                // }
-                // if(videoId){
-                //   const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-                //   console.log("slideId",slideToId)
-                //   swiper?.slideTo(slideToId, 0);
-                // }
-              // }}
+              onSwiper={swiper => {
+                const {
+                  activeIndex, slides
+                } = swiper;
+                setInitialPlayStarted(false);
+                // toTrackMixpanel(0, 'impression');
+              }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                setSeekedPercentage(0)
+                setInitialPlayStarted(false);
+
+                setShowSwipeUp({count : 1, value:false});
+                
+                /***************/
+                /*** Mixpanel ****/
+                // toTrackMixpanel(activeIndex, 'impression');
+                // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                
+                /*** video events ***/
+                if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                  viewEventsCall(activeVideoId,'skip')
+                }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
+                  viewEventsCall(activeVideoId,'no decision')
+                }
+                /***************/
+
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
-
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
                 // const dataItems = [...items];
                 // const seoItem = dataItems?.find(item => item?.content_id === activeId);
                 // seoItem && setSeoItem(seoItem);
                 activeIndex && setVideoActiveIndex(activeIndex);
+                if(activeIndex === 0){
+                  setVideoActiveIndex(0);
+                }
                 activeId && setActiveVideoId(activeId);
               }}
             >
@@ -296,7 +439,7 @@ function Feed({ router }) {
                       // videoid={item.content_id}
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.thumbnail}
+                      thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
@@ -304,11 +447,18 @@ function Feed({ router }) {
                       saveLook={saveLook}
                       saved={item?.saveLook}
                       activeVideoId={activeVideoId}
+                      preActiveVideoId={items?.[videoActiveIndex]?.content_id}
+                      nextActiveVideoId = {items?.[videoActiveIndex]?.content_id}
                       comp="feed"
-                      currentTime={currentTime}
+                      ProfileFeed
                       initialPlayButton={initialPlayButton}
                       muted={muted}
                       loading={loading}
+                      toTrackMixpanel={toTrackMixpanel}
+                      videoActiveIndex={videoActiveIndex}
+                      initialPlayStarted={initialPlayStarted}
+                      currentT={videoDurationDetails?.currentT}
+                      player={'single-player-muted'}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -318,12 +468,21 @@ function Feed({ router }) {
                   </div>
                 ))
               }
-                 <div
+              {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: (validItemsLength && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>
+              </div>}
+
+            {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
+          "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
+               <div className="p-1 relative">
+                <SwipeUp/>
+               <div className="w-4 h-16 bg-white bg-opacity-20 rounded-full absolute top-1 left-1"></div>
               </div>
+              <div className="flex py-2 px-4 bg-gray text-white font-semibold mt-12">Swipe up for next video</div>
+              </div>}
               {/* <div
                 onClick={()=>setInitialPlayButton(false)}
                 className="absolute top-1/2 justify-center w-screen"
@@ -334,7 +493,7 @@ function Feed({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
               >
                
                 <Mute/>
@@ -352,13 +511,17 @@ function Feed({ router }) {
             </Swiper>
             
 
-  const showLoginFollowing = <LoginFollowing/>;
+  const showLoginFollowing = <LoginFollowing toTrackMixpanel={toTrackMixpanel} videoActiveIndex={videoActiveIndex}/>;
   
-  // const toShowFollowing = useAuth(showLoginFollowing, swiper);
+  const toShowFollowing =  useAuth(showLoginFollowing, swiper);
+
+  // useEffect(() => {
+  //   toShowFollowing.current = typeof window !== "undefined" && window.localStorage;
+  // }, []);
 
   const info = {
     'for-you' : swiper,
-    'following' : showLoginFollowing
+    'following' : toShowFollowing
   }
 
   let hostname;
@@ -372,12 +535,12 @@ function Feed({ router }) {
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-     {id === 'for-you' &&  <SeoMeta
+     <SeoMeta
         data={{
-          title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
+          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
-          // canonical: hostname || '',
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
+          // canonical: 'https://hipi.co.in/feed/[id]',
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
           //   description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
@@ -403,7 +566,7 @@ function Feed({ router }) {
           //   site_name: 'HiPi'
           // }
         }}
-      />}
+      />
       {/* <VideoJsonLd
         name={item.music_title}
         description={item.content_description}
@@ -422,7 +585,7 @@ function Feed({ router }) {
           <div className="playkit-player" />
         </div>
       </div>
-      <Landscape/>
+      <LandscapeView/>
     </>
     </ComponentStateHandler>
 

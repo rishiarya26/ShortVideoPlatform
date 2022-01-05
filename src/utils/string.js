@@ -13,3 +13,8 @@ export const trimText = (str, charCount = 90) => (str.length > charCount ? `${st
 const isFirstChar = (str = '', char) => (str.substr(0, 1) === char);
 export const prependIfNot = (str, char) => (isFirstChar(str, char) ? str : `${char}${str}`);
 export const doesStringMatch = (patterns = [], str = '') => (patterns.some(pattern => str.match(pattern)));
+export const trimHash = (hashTag) =>{
+  let trimmedHashtag = ''
+  trimmedHashtag = hashTag?.replace(/^\#+|\#+$/g, '');
+  return trimmedHashtag;
+}

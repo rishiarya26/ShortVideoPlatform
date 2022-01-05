@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 
 const Tabs = ({ items = [], router }) => {
-  const selected = router.asPath;
+  const selected = router?.asPath;
 
   return (
     <div className="flex items-center w-full text-gray-400 justify-center font-semibold">

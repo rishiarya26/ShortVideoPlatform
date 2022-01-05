@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { track } from '../../../../analytics';
 import { inject } from '../../../../analytics/async-script-loader';
+import { commonEvents } from '../../../../analytics/mixpanel/events';
 import { CHARMBOARD_PLUGIN_URL } from '../../../../constants';
 import useTranslation from '../../../../hooks/use-translation';
 
@@ -11,20 +13,38 @@ export const Shop = ({
   const loaded = () => {
     setLoading(false);
   };
+
+
+  /******* Mixpanel *********/
+  const toTrackMixpanel = (type) =>{
+    const toTrack ={
+      'cta': () => {
+        mixpanelEvents['Element'] = 'Shop',
+        mixpanelEvents['Button Type'] = 'CTA',
+        track('CTAs', mixpanelEvents)
+      }
+    }
+
+    const mixpanelEvents = commonEvents();
+    toTrack?.[type]();
+  }
+  /***************************/
+
   useEffect(() => {
+   setTimeout(()=>{
+    //  alert('shop intiated')
     inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+   },1000)
     // charmboard_plugin- multiple object(player)
   }, []);
 
   useEffect(()=>{
-    console.log('loading',loading)
     if(loading === false){
-     console.log("plugin",cbplugin)
     }
   },[loading])
 
   const handleShop = ()=>{
-    console.log('clicked')
+    toTrackMixpanel('cta');
     cbplugin && cbplugin.cbTouch({ videoId })
   }
 

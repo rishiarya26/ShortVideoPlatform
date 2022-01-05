@@ -1,15 +1,18 @@
-import { init as initMixpanel, track as trackEvent, flushQueue } from './mixpanel';
+import { init as initMixpanel, track as trackEvent } from './mixpanel';
 
 let initiated = false;
 
 export const init = () => {
-  initMixpanel();
+  // setTimeout(()=>{
+    initMixpanel();
+  // },500);
   window.addEventListener('unload', () => {
-    flushQueue();
+    // flushQueue();
   });
   initiated = true;
 };
 export const track = (event, payload) => {
+  console.log(event,payload)
   if (!initiated) init();
   trackEvent(event, payload);
 };

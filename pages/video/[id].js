@@ -35,10 +35,10 @@ export default function Hipi(params) {
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
-
+console.log(item)
   useEffect(() => {
+    console.log(item)
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
-    console.log("vURL-----",videoUrl)
     setVideoUrl(videoUrl);
   }, []);
 
@@ -49,45 +49,21 @@ export default function Hipi(params) {
   const device = getItem('device-type')
 
   if(device === 'desktop'){
-    router.push('/');
+    router?.push('/');
     return null;
   }
+  console.log(item.firstName, item.lastName)
 
   return (
     <>
       <SeoMeta
         data={{
-          title: item.musicCoverTitle,
-          image: item.poster_image_url,
-          description: item.content_description,
-          canonical: params.uri,
-          openGraph: {
-            title: item.musicCoverTitle,
-            description: item.content_description,
-            url: params.uri,
-            images: [
-              {
-                url: item.poster_image_url,
-                width: 800,
-                height: 600,
-                alt: item.musicCoverTitle
-              },
-              { url: item.userProfilePicUrl }
-            ],
-            type: 'video.movie',
-            video: {
-              actors: [
-                {
-                  role: item.userName
-                }
-              ],
-              tag: item.genre
-            },
-            site_name: 'Hipi'
-          }
+          title: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} videos on Hipi - Indian Short Video App`,
+          // image: item?.thumbnail,
+          description: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}'s latest trending videos that you can enjoy and share with your friends.`        
         }}
-      />
-      <VideoJsonLd
+     />
+      {/* <VideoJsonLd
         name={item.musicCoverTitle}
         description={item.content_description}
         contentUrl={item.video_url}
@@ -95,7 +71,7 @@ export default function Hipi(params) {
         thumbnailUrls={[item.poster_image_url]}
         watchCount={item.likesCount}
         regionsAllowed={languageCodes}
-      />
+      /> */}
       <SingleVideo
         updateSeekbar={updateSeekbar}
         socialId={item.getSocialId}
@@ -112,8 +88,11 @@ export default function Hipi(params) {
         canShop={canShop}
         shopCards={shopCards}
         videoId={videoId}
-        poster={item.thumbnail}
+        poster={item?.firstFrame}
         seekedPercentage={seekedPercentage}
+        description={item?.content_description}
+        userId={item?.userId}
+        genre={item?.genre}
       />
       {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <Shop videoId={videoId} canShop={canShop} />
@@ -137,7 +116,6 @@ export async function getServerSideProps(ctx) {
     data = await getSingleFeed({
       id
     });
-    console.log('data------',data)
   } catch (e) {
     data = {
       status: e.status,

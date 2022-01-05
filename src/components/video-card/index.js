@@ -1,7 +1,9 @@
+import dynamic from 'next/dynamic';
 import { numberFormatter } from '../../utils/convert-to-K';
 import Img from '../commons/image';
 import Cart from '../commons/svgicons/cart';
 import Play from '../commons/svgicons/play-outlined';
+import fallbackVideo from '../../../public/images/video.png';
 
 export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable, id }) {
   const formattedViewCount =  numberFormatter(viewCount)
@@ -10,8 +12,8 @@ export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
      {shoppable && <div className="absolute top-2 right-2 z-10">
         <Cart/>
       </div>}
-      <Img data={thumbnailUrl} title={videoTitle} />
-      <div className="absolute bottom-2 left-2 z-10 text-white flex items-center">
+      <Img data={thumbnailUrl} title={videoTitle} fallback={fallbackVideo?.src}/>
+      <div className="absolute bottom-2 left-2 z-10 text-white text-xs flex items-center">
         <Play/> {formattedViewCount}
       </div>
     </div>

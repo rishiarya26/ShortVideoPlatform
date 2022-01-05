@@ -6,7 +6,7 @@ import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const login = async ({ accessToken, refreshToken }) => {
+const login = async ({ accessToken, refreshToken='' }) => {
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
@@ -17,7 +17,7 @@ const login = async ({ accessToken, refreshToken }) => {
     const url = window?.location?.href;
     let domain = (new URL(url));
     domain = domain?.hostname;
-    console.log(domain);
+    console.log("cookie set domain",domain);
     const urlencoded = new URLSearchParams();
     urlencoded.append('zee5Token', accessToken);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
@@ -29,10 +29,11 @@ const login = async ({ accessToken, refreshToken }) => {
       accessToken,
       refreshToken
     };
-    setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
+    // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
+    localStorage.set('tokens',tokens);
     const userId = response?.data?.userDetails?.id;
     localStorage.set('user-id', userId);
-    setItem('user-id', JSON.stringify(userId), { path: '/', domain });
+    // setItem('user-id', JSON.stringify(userId), { path: '/', domain });
     response.data.accessToken = accessToken;
     response.data.status = 200;
     response.data.message = 'success';

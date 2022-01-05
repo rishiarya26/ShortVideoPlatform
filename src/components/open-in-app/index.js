@@ -8,20 +8,80 @@ import useDrawer from '../../hooks/use-drawer';
 import { getItem } from '../../utils/cookie';
 import { useEffect } from 'react';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
+import { getOneLink } from '../../sources/social';
 
-export default function DownloadAppWidget({text, setMuted}) {
+export default function DownloadAppWidget({videoId}) {
   // const stores = {
   //   android: ANDROID_STORE,
   //   ios: IOS_STORE
   // };
 
+  useEffect(()=>{
+    toTrackMixpanel('launch');
+  },[])
+
   const {close} = useDrawer();
 
-  const onStoreRedirect =()=>{
-    window?.open(ONE_TAP_DOWNLOAD);
+  /******* Mixpanel *********/
+  const toTrackMixpanel = (type) =>{
+    const toTrack ={
+      'launch': () => {
+        mixpanelEvents['Popup Name'] = 'Download App'
+        track('Popup Launch', mixpanelEvents)
+      },
+      'downloadClick' : () => {
+        mixpanelEvents['Popup Name'] = 'Download App',
+        mixpanelEvents['Element'] = 'Download App',
+        mixpanelEvents['Button Type'] = 'Link',
+        track('Popup CTAs', mixpanelEvents)
+      }
+    }
+
+    const mixpanelEvents = commonEvents();
+    toTrack?.[type]();
   }
+  /***************************/
+
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
+  /***************************/
+
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
+
+// 
+  const onStoreRedirect = async ()=>{
+    toTrackMixpanel('downloadClick');
+    let link = ONE_TAP_DOWNLOAD;
+    const device = getItem('device-info');
+    console.log(device)
+  try{  
+   if(device === 'android' && videoId){ 
+      const resp = await getOneLink({videoId : videoId});
+      link = resp?.data;
+      console.log("one link resp",resp);
+    }
+   }
+    catch(e){
+    }
+    console.log("final onelink",link);
+    window?.open(link);
+ }
+  /***************************/
+
+  // const onStoreRedirect =()=>{
+  //   toTrackMixpanel('downloadClick');
+  //   window?.open(ONE_TAP_DOWNLOAD);
+  // }
 
 //   const onStoreRedirect =()=>{
+//      toTrackMixpanel('downloadClick');
 //   console.log('clicked')
 //   let deviceInfo = 'android';
 //  try{ 
@@ -51,17 +111,18 @@ export default function DownloadAppWidget({text, setMuted}) {
     <>
       <div className=" flex flex-col items-center w-full ">
         <div onClick={onStoreRedirect} className="flex py-3 items-center">
-          <div className="flex w-20v h-13v object-contain justify-center px-4">
+          <div className="flex w-18v h-11v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
-            <p className="font-semibold text-xl ">Hipi -  Open in the App</p>
+            <p className="font-semibold text-lg ">Hipi -  Open in the App</p>
             <p className="text-xs text-gray-500">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
+        <button onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-1 px-14 my-4 bg-hipired text-white rounded-sm">Open the Hipi app</button>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
-            <p onClick={()=>close()} className="text-base font-semibold text-hipired">Not now</p>
+            <p onClick={()=>close()} className="text-sm font-semibold text-black">Not now</p>
           </div>
         </div>
       </div>

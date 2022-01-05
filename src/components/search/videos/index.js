@@ -4,6 +4,7 @@ import ComponentStateHandler, { useFetcher } from "../../commons/component-state
 import VideoGallery from "../../video-gallery"
 import Loader from "./loader";
 import Error from "./error";
+import useTranslation from "../../../hooks/use-translation";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -12,10 +13,11 @@ const LoadComp = () => (<Loader />);
 const Videos = ({item}) =>{
     const [items, setItems] = useState();
 
+    const {t} = useTranslation();
+
     useEffect(()=>{window.sessionStorage.removeItem("searchList")},[]);
 
     const onDataFetched=(data)=>{
-      console.log("videos",data)
       setItems(data?.data);
       window.sessionStorage.setItem("searchList",JSON.stringify(data?.data))
       }
@@ -31,12 +33,15 @@ const Videos = ({item}) =>{
                 Loader={LoadComp}
                 ErrorComp={ErrorComp}
             >
-        <VideoGallery
+       {items?.length > 0 ? 
+       <VideoGallery
         items={items}
         status={fetchState}
         retry={retry && retry}
         page='search'
-      />
+      /> : 
+      <div className="flex w-full h-1/3 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
+      }
       </ComponentStateHandler>
         </>
     )

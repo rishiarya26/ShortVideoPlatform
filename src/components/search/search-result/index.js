@@ -21,7 +21,7 @@ function SearchResult({router}) {
   useEffect(()=>{
     const item = router?.query?.item;
     setSearchTerm(item)
-  },[router.asPath])
+  },[router?.asPath])
  
   const redirectTab = (selected) =>{
     setSelectedIndex(selected)
@@ -42,6 +42,8 @@ function SearchResult({router}) {
  const onTabChange = (compNo)=>{
    setSelectedIndex(compNo)
  }
+
+//  console.log("si",selectedIndex)
 
   return (
     <div>

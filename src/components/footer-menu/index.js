@@ -16,14 +16,18 @@ import SearchBlack from '../commons/svgicons/search-black';
 import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active';
+import detectDeviceModal from '../open-in-app'
+import { getItem } from '../../utils/cookie';
+import login from "../auth-options"
+import { localStorage } from '../../utils/storage';
 
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const login = dynamic(
+//   () => import('../auth-options'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
   const router = useRouter();
@@ -37,14 +41,27 @@ const info ={
  noShop: null
 }
 
+const toShow = {
+  login :  ()=>show('', login, 'medium'),
+  profile : ()=>{
+   try{ 
+     const userId = localStorage.get('user-id');
+     router.push(`/@${userId}`)
+  }catch(e){
+     console.log('error occured while fetching user-id from cookies')
+  }
+  }
+}
+const chooseProfile = useAuth(toShow.login, toShow.profile);
+
   return (
     <div>
       <div className="w-full bg-black fixed bottom-0 left-0 py-2 flex justify-around items-center h-16">
-      <div onClick={()=>router.push('/feed/for-you')} className="flex flex-col text-white text-xs items-center">
+      <div onClick={()=> router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
        
      </div> 
-     <div  onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "Explore"})} className="flex flex-col text-white text-xs items-center">
+     <div  onClick={()=>router.push('/explore')} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5">Explore</p></> } 
        
      </div>
@@ -58,7 +75,7 @@ const info ={
                 <Add />
                 <p className="text-gray-400 text-xs mt-1.5">Create</p>
              </div>    
-      <div  onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "view profile"})} className="flex flex-col  items-center justify-between">
+      <div  onClick={chooseProfile} className="flex flex-col  items-center justify-between">
       {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5">Profile</p></>} 
       
       </div>

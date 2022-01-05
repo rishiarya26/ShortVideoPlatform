@@ -13,7 +13,10 @@ import HeadMeta from '../src/components/commons/head-meta';
 import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
 import { GOOGLE_ONE_TAP } from '../src/constants';
-import { getItem } from '../src/utils/cookie';
+import { getItem, setItem } from '../src/utils/cookie';
+import { localStorage } from '../src/utils/storage';
+import { detectCountry } from '../src/sources/detect-country';
+import Cookies from '../src/components/cookies'
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -137,9 +140,57 @@ function Hipi({
   Component, pageProps, locales, locale
 }) {
 
+  const [loading, setLoading] = useState(true);
+  const [country, setCountry] = useState('India');
+  
+  const loaded = ()=>{
+    setLoading(false)
+  }
+
+  const getCountry = async()=>{
+    try{ 
+      const resp = await detectCountry();
+      console.log(resp?.data?.country_name)
+      setCountry(resp?.data?.country_name || 'India');
+      if(resp?.data?.country_name === 'India'){
+        setItem('cookie-agreed','yes');
+      }
+    }
+     catch(e){
+
+     }
+  }
+
+  // useEffect(()=>{
+  //   setItem('cookie-agreed','yes');
+  // },[country])
+
   useEffect(()=>{
+   try{ 
     console.log('mounted');
+    inject(GOOGLE_ONE_TAP , null, loaded);
+    const cookieAgree = getItem('cookie-agreed');
+    cookieAgree !== 'yes' && getCountry();
+    }
+    catch(e){
+    
+    }
     },[])
+
+    useEffect(()=>{
+   try{   
+    let tokens = localStorage.get('tokens');
+    // tokens = tokens && JSON.parse(tokens);
+  
+    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+     }else{
+      if(loading === false){
+        oneTapGoogle();
+    }
+      }}catch(e){
+
+      }
+    },[loading])
 
   return (
     <>
@@ -157,6 +208,7 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
+                      {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                       <Component {...pageProps} />
                     </Layout>
                   </RouteStateProvider>

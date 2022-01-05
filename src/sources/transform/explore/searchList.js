@@ -3,6 +3,7 @@ import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 
 function transformError(error = {}) {
+  console.log("error",error)
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = error;
   payload.status = 'fail';
@@ -22,7 +23,17 @@ function transformSuccess(resp) {
     }
     const { recommendations = []} = data;
     const { responseData = []} = data;
-    const updateData = recommendations?.concat(responseData);
+    
+
+    let updateData = recommendations?.concat(responseData);
+    const {additionalBanner = {}} = data;
+    additionalBanner && updateData.forEach((data)=>{
+      if(data?.widgetContentType === 'banner')
+      { 
+        data?.widgetList?.unshift(additionalBanner?.data)
+      }
+    })
+    updateData = updateData?.filter((data)=>(data.widgetList =  data?.widgetContentType === 'Video' && data?.widgetList?.length >=8 ? data?.widgetList?.splice(0,8) : data?.widgetList ))
     payload.data = updateData;
     payload.status = 'success';
     payload.message = getMessage(data, {});

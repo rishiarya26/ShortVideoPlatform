@@ -8,7 +8,6 @@ import StaticFooter from '../static-footer';
 
 function Error() {
   const router = useRouter();
-  console.log(router)
   return (
 	<div className="relative flex flex-col justify-center items-center h-screen w-screen bg-gray-300">
 	<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +24,7 @@ function Error() {
 </defs>
 </svg>
 <div className="text-lg font-bold p-4">
-OOPS Something went wrong!
+Oops Something went wrong!
 </div>
 <div  className="text-base font-semibold mt-6">
 Explore more on Hipi

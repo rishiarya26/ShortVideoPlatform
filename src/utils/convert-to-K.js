@@ -1,3 +1,6 @@
 export const numberFormatter = (num) => {
-    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+ let number =  typeof num === "number" ? num : typeof num === "string" ? Number(num) : null;
+ if (number === null) return null;
+ let formattedNumber = Math.abs(number) > 999 ? (Math.sign(number)*((Math.abs(number)/1000).toFixed(1)) + 'k') : Math.sign(number)*Math.abs(number)
+  return formattedNumber;
   }

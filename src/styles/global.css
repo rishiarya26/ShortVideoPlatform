@@ -4,6 +4,12 @@
 *{
     margin: 0;
     font-family: "Open Sans";   
+    font-weight: normal;
+}
+img{
+  height: 100%;
+  object-fit: cover;
+  width:100%;
 }
 img{
   object-fit: cover;
@@ -23,6 +29,10 @@ img{
 } */
 /* body{
 } */
+.video-card img, .trending_card img{
+  height: 100%;
+}
+
 .Video_sheet{
     /* scroll-snap-type: y mandatory; */
     height: 100vh;
@@ -54,6 +64,7 @@ img{
     box-sizing: border-box;
     object-fit: cover!important;
     height: 100%;
+    width: 100%;
   }
   input:focus-visible{
     outline: none;
@@ -137,31 +148,87 @@ img{
 	    font-size: 14px;
 	    padding: 0 20px;
 	}
+
+  .goatbg {
+    background-image: linear-gradient(to right, #db2bbb ,#4f33f3);
+  }
+
+
 	@media only screen and (max-width: 1200px){
 		.tray-container {
 		    padding: 0 0 16px 16px;
 		}
 	}
 
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+   -webkit-appearance:none;
+}
 
+.crousal-swiper {
+  width: 100%;
+  height: 100%;
+}
 
-  /* DESKTOP */
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: white;
+  opacity: 1;
+}
 
-  .video_blur{
-    position: absolute;
-    width: 10%;
-    height: 10%;
-    filter: blur(2px);
-    left: 50%;
-    top: 50%;
-    transform: scale(11);
-    opacity: 0.3;
+/* target all bullets */
+span.swiper-pagination-bullet {
+  background-color: rgb(139, 139, 139);
+  opacity: 1;
+}
+
+@media only screen and (max-height: 670px){
+  .drawer-height{
+    height: 40%;
+  }}
+@media only screen and (min-width: 768px) {
+  .cookie_layout{
+    align-items: unset;
   }
-  .video_blur img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .cookie_wrapper{
+    margin-top: 5%;
+    flex-direction: row;
+    width: 65%;
+    max-height: 70%;
+    align-items: unset;
   }
-  .cmbd_cat_tabs::-webkit-scrollbar , .cmbd_body::-webkit-scrollbar   {
-    display: none;
-    }
+  .cookie_wrapper p{
+    font-size:16px;
+  }
+  .cookie_button{
+    font-size:14px;
+  }
+  .cookie_wrapper a{
+    font-size:13px;
+  }
+  .h1_cookie{
+    font-size:28px!important;
+    text-align: left;
+  }
+  .button_cook{
+    justify-content: center;
+  }
+}
+
+
+/* goat lb */
+
+.bg_lb_mob{
+  background-color: #4b96f1;
+}
+.bg_item{
+  background-color: #03a9f4;
+}
+ /* .swiper-slide-active{
+   height: 100vh!important;
+ } */
+
+ .mar-lef{
+   margin-left: 11%;
+ }

@@ -28,6 +28,7 @@ function transformSuccess(resp) {
     payload.message = getMessage(data, msgMap);
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
+    console.log("rrrr",responseData)
     if (videos?.length) {
       const payloadObject = {};
       videos.forEach(d => {
@@ -36,12 +37,13 @@ function transformSuccess(resp) {
         payloadObject.content_description = d?.description || null;
         payloadObject.userId = d?.videoOwnersId || null;
         payloadObject.videoOwnersId = d?.videoOwnersId || null;
+
         payloadObject.getSocialId = d?.getSocialId || null;
         payloadObject.id = d?.id || null;
         payloadObject.genre = d?.genre || null || null;
         payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl || null;
         payloadObject.userName = d?.videoOwners?.userName || null;
-        payloadObject.likesCount = d?.lCount || null;
+        payloadObject.likesCount = d?.lCount || (d?.likeCount && Number(d.likeCount)) || null;
         payloadObject.music_title = d?.sound?.name || null;
         payloadObject.hashTags = d?.hashtags || null;
         const videoUrls = {};
@@ -50,6 +52,8 @@ function transformSuccess(resp) {
         videoUrls.low = d?.akamaiUrl || null;
         payloadObject.video_urls = videoUrls;
         payloadObject.thumbnail = d?.thumbnailUrl || null;
+        payloadObject.videoOwnersDetail = d?.videoOwners || null;
+        payloadObject.firstFrame = d?.firstFrame || null;
       });
       payload.data = payloadObject;
     } else {

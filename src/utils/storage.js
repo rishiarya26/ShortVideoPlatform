@@ -3,14 +3,16 @@
 export const localStorage = {
   set(key, val) {
     if (!key || !val) return false;
-    return window.localStorage.setItem(key, JSON.stringify(val));
+    const value = typeof window !== "undefined" ? window?.localStorage?.setItem(key, JSON.stringify(val)) : null;
+    return value
   },
   remove(key = '') {
-    return window.localStorage.removeItem(key);
+    const value = typeof window !== "undefined" ? window?.localStorage?.removeItem(key) : null;
+    return value;
   },
   get(key) {
     if (!key) return false;
-    let data = window.localStorage.getItem(key);
+    let data = typeof window !== "undefined" && window?.localStorage?.getItem(key);
     if (!data) {
       return null;
     }

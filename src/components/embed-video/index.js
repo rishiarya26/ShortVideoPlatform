@@ -111,6 +111,7 @@ function Embedvideo(props) {
       </div>
 
       <EmbedVideoSidebar
+        userName={props.userName}
         socialId={props.socialId}
         profilePic={props.profilePic}
         likes={props.likes}

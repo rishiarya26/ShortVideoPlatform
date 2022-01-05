@@ -72,7 +72,6 @@ export async function getServerSideProps(ctx) {
   const {
     req, params
   } = ctx;
-  const id = req?.cookies['user-id'];
   const uri = new URL(req.url, `http://${req.headers.host}`).href;
 //   const { id } = params;
   let data = {};

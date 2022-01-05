@@ -9,6 +9,8 @@ import Share from '../commons/svgicons/share';
 import useDrawer from '../../hooks/use-drawer';
 import { getOS } from '../../utils/device-details';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
+import { getOneLink } from '../../sources/social';
+import { getItem } from '../../utils/cookie';
 
 // const detectDeviceModal = dynamic(
 //   //() => import('../download-app-widget'),
@@ -23,10 +25,10 @@ import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 function EmbedVideoSidebar(props) {
   // const { show } = useDrawer();
 
-  const stores = {
-    android: ANDROID_STORE,
-    ios: IOS_STORE
-  };
+  // const stores = {
+  //   android: ANDROID_STORE,
+  //   ios: IOS_STORE
+  // };
 
   // const onStoreRedirect =()=>{
   //   console.log('clicked')
@@ -34,16 +36,33 @@ function EmbedVideoSidebar(props) {
   //  try{ 
   //    deviceInfo = getOS();
   //    deviceInfo && (window.open(`${stores[deviceInfo]}`));
-  //    console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
+  //   //  console.log('clicked','window',window.open,'e',getOS(),'f',`${stores[deviceInfo]}`)
   //  }
   //   catch(e){
   //     console.log('error in store redirect')
   //     return `${stores[deviceInfo]}`}
   //   }
 
-     const onStoreRedirect =()=>{
-       window?.open(ONE_TAP_DOWNLOAD);
-     }
+    //  const onStoreRedirect =()=>{
+    //    window?.open(ONE_TAP_DOWNLOAD);
+    //  }
+
+     const onStoreRedirect =async ()=>{
+       let link = ONE_TAP_DOWNLOAD;
+       const device = getItem('device-info');
+       console.log(device)
+     try{  
+      if(device === 'android' && props?.videoId){ 
+       const resp = await getOneLink({videoId : props?.videoId});
+       link = resp?.data;
+       console.log("one link resp",resp);
+      }
+      }
+       catch(e){
+       }
+       console.log("final link",link)
+       window?.open(link);
+    }
 
   const info = {
     single : 'bottom-28 fixed',
