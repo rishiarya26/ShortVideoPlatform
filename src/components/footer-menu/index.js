@@ -61,7 +61,7 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
        {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
        
      </div> 
-     <div  onClick={()=>router.push('/explore')} className="flex flex-col text-white text-xs items-center">
+     <div  onClick={()=>router?.push('/explore')} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5">Explore</p></> } 
        
      </div>

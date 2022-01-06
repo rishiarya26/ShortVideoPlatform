@@ -298,14 +298,14 @@ function Explore() {
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                          if(id > 5) return null;
                         return (
-                          <>
+                          // <>
                           <div key={id} onClick={()=>router?.push(`/@${d?.user?.userName}`)} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>
                                 <p className="text-xs pt-2 truncate max-w-20v  text-center">{`${d?.user?.firstName} ${d?.user?.lastName}`}</p>
                           </div>
-                          </>
+                          // </>
                         );
                       })}
                   </div>
