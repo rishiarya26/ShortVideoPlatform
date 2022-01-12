@@ -152,7 +152,7 @@ function Explore() {
   }
 
   const toVideoDetail = (id)=>{
-    router.push(`/video/${id}`);
+    router.push(`/single-video/${id}`);
   }
 
   const redirectToUrl = (url) =>{

@@ -6,7 +6,7 @@ import { transformSuccess, transformError } from '../transform/search/suggestion
 async function fetchSearchResult({ lang, keyword }) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/search/suggestion?keyword=${keyword}`;
+    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/search?keyword=${keyword}`;
     response = await get(apiPath);
     response.data.requestedWith = { lang };
     return Promise.resolve(response);

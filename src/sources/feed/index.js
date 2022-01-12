@@ -5,8 +5,11 @@ import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformSuccess, transformError } from '../transform/feed';
+import { getSingleFeed } from './embed';
+import { getSingleVideo } from './single';
 
-async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5 }) {
+let firstTimeCall = true;
+async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall }) {
 
   let response = {};
   try {
@@ -22,6 +25,17 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5 }) 
         'access-token': accessToken
       });
 
+      if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
+        // const items = response.data.responseData;
+        const data = await getSingleVideo({id : videoId});
+        console.log("l",data)
+        const video = data?.data;
+        console.log("l",data)
+        response.data.firstVideo = video;
+        console.log('first',video)
+        // console.log("resppp", response, data)
+      }
+
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
@@ -30,17 +44,41 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5 }) 
 }
 
 
-async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5 }) {
-
+async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , firstApiCall}) {
+   console.log('fT',firstTimeCall)
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
     // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     response = await get(apiPath);
+    console.log('v-id',videoId)
+    if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
+      // const items = response.data.responseData;
+      const data = await getSingleVideo({id : videoId});
+      console.log("l",data)
+      const video = data?.data;
+      console.log("l",data)
+      response.data.firstVideo = video;
+      console.log('first',video)
+      // console.log("resppp", response, data)
+    }
+      // const index = items.findIndex((data)=>(data?.id === videoId))
+      // if(index !== -1){
+      //   const video = items[index]
+      //   items.splice(index,1);
+      //   items.splice(0,0,video);
+      // }
+      // else{ 
+      //   const video = localStorage.get('selected-profile-video')
+      //     video && (response.data.firstVideo = video);
+      // }
+      console.log('resp-video',response)
+      firstTimeCall = false;
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
+    firstTimeCall = false;
     return Promise.reject(err);
   }
 }

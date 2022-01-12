@@ -80,6 +80,7 @@ function Feed({ router }) {
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [firstApiCall, setFirstApiCall] = useState(true);
 
   const loaded = () => {
     setLoading(false);
@@ -104,6 +105,7 @@ function Feed({ router }) {
 
   const { t } = useTranslation();
   const { id } = router?.query;
+  const { videoId } = router?.query;
 
  const {show} = useDrawer();
 
@@ -119,12 +121,14 @@ function Feed({ router }) {
         setToShowItems(toUpdateShowData);
         setActiveVideoId(videoIdInitialItem);
         setInitialLoadComplete(true);
+        setFirstApiCall(false);
         // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
     }else{
       setItems([]);
       setToShowItems([]);
       setActiveVideoId(null);
+      setFirstApiCall(false);
     }
   }
 
@@ -141,14 +145,15 @@ function Feed({ router }) {
   }
 
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id });
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id });
+  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall });
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId: videoId, firstApiCall: firstApiCall });
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
   const getFeedData = async() =>{
     let updateItems = [...items];
      try{
+       console.log('fn',fetchData)
        const data =  await fetchData({ type: id });
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
@@ -376,6 +381,7 @@ function Feed({ router }) {
                   activeIndex, slides
                 } = swiper;
                 setInitialPlayStarted(false);
+                router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {

@@ -56,6 +56,8 @@ function SearchFeed({ router }) {
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
 
+  console.log('router',router?.query)
+
   // const { videoId = items?.[0]?.content_id } = router?.query;
 
 
@@ -107,6 +109,7 @@ function SearchFeed({ router }) {
           normal : data,
           withHash : transformResponse(data)
       }
+      console.log('data',info[type])
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
   };
@@ -280,7 +283,7 @@ function SearchFeed({ router }) {
         >
     {   items?.map(
             (item,id) => {
-              if(id > 5) return null;
+              if(type === 'withHash' && id > 5) return null;
               return(
                 <SwiperSlide
                 key={item?.id}

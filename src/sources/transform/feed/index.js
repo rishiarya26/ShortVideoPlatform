@@ -72,7 +72,10 @@ function transformSuccess(resp) {
       
       payloadData.push(payloadObject);
     });
-
+    if(data?.firstVideo){
+      // data.firstVideo.video_url = data?.firstVideo?.video_urls[networkConnection];
+      payloadData?.splice(0,0,data?.firstVideo);
+    }
     /*for stagging api */
     // const { response = [] } = data;
     // const tResponse = [...response];
@@ -80,6 +83,7 @@ function transformSuccess(resp) {
     //   data.saveLook = false;
     // });
     // payload.data = tResponse;
+ 
     payload.data = payloadData;
     // payload.requestedWith = data.requestedWith;
     return payload;

@@ -82,6 +82,7 @@ function FeedIphone({ router }) {
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [firstApiCall, setFirstApiCall] = useState(true);
 
   const loaded = () => {
     setLoading(false);
@@ -108,6 +109,7 @@ function FeedIphone({ router }) {
 
   const { t } = useTranslation();
   const { id } = router?.query;
+  const { videoId } = router?.query;
 
   const {show} = useDrawer();
 
@@ -123,15 +125,19 @@ function FeedIphone({ router }) {
         
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
+        const videos = data?.data;
+        /* show pop up & call api for next items after specified index */
+        const insertItemsIndex = videoId ? 5 : 4
         //set first three item in showItems
         // toUpdateShowData.push(data?.data?.[0]);
         // toUpdateShowData.push(data?.data?.[1]);
         // toUpdateShowData.push(data?.data?.[2]);
-        setItems(data?.data);
-        setToShowItems(data?.data);
+        setItems(videos);
+        setToShowItems(videos);
         setActiveVideoId(videoIdInitialItem);
-        setToInsertElements(4);
+        setToInsertElements(insertItemsIndex);
         setInitialLoadComplete(true);
+        setFirstApiCall(false);
         // setSeoItem(data?.data[0]);
     }
   }
@@ -149,8 +155,8 @@ function FeedIphone({ router }) {
   }
 
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id });
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id });
+  const dataFetcher = () => getHomeFeed({ type: id, videoId:videoId, firstApiCall:firstApiCall });
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id, videoId: videoId, firstApiCall: firstApiCall });
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
@@ -416,6 +422,7 @@ console.log('error',e)
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
+                router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {

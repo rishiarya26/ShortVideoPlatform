@@ -9,7 +9,7 @@ export default function Hipi() {
   const device = getItem('device-type')
   // console.log('latest build')
 
-  if(device === 'desktop'){
+  if(device === 'desktop'){ 
     router?.push('/');
     return null;
   }
