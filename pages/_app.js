@@ -17,6 +17,7 @@ import { getItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import Cookies from '../src/components/cookies'
+import { init } from '../src/get-social';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -183,6 +184,8 @@ function Hipi({
     // tokens = tokens && JSON.parse(tokens);
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+      console.log('tokens there in _app.js')
+      init();
      }else{
       if(loading === false){
         oneTapGoogle();

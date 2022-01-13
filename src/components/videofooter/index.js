@@ -26,10 +26,10 @@ function VideoFooter({
 }) {
   // TO-DO common classes
   const type = {
-    profile: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter absolute left-0  flex text-white ml-2`,
-    feed: `${saveLook ? ' bottom-16 ' : ' bottom-40 '} videoFooter absolute left-0  flex text-white ml-2 mb-2`,
-    embed: `${canShop === 'success' ? 'bottom-28' : 'bottom-6'} videoFooter   flex`,
-    single: `${canShop === 'success' ? 'bottom-40' : 'bottom-16 mb-2'} videoFooter fixed left-0  flex text-white ml-2`,
+    profile: `${canShop === 'success' ? 'bottom-36' : 'bottom-14'} videoFooter absolute left-0  flex text-white ml-2`,
+    feed: `${saveLook ? ' bottom-32 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2`,
+    embed: `${canShop === 'success' ? 'bottom-44' : 'bottom-22'} videoFooter   flex`,
+    single: `${canShop === 'success' ? 'bottom-56' : 'bottom-32 mb-2'} videoFooter fixed left-0  flex text-white ml-2`,
   };
   const { show } = useDrawer();
   const router = useRouter()

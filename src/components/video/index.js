@@ -268,6 +268,7 @@ function Video(props) {
          userName={props.userName}
          videoOwnersId={props.videoOwnersId}
          socialId={props.socialId}
+         isLiked={props.isLiked}
          profilePic={props.profilePic}
          likes={props.likes}
          comment={props.comments}
@@ -281,6 +282,8 @@ function Video(props) {
          videoId={props.id}
          videoActiveIndex={props?.videoActiveIndex}
          toTrackMixpanel={props?.toTrackMixpanel}
+         activeVideoId={props?.activeVideoId}
+         comp={props?.comp}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed

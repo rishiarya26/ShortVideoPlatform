@@ -10,6 +10,7 @@ import { localStorage } from "../../utils/storage";
 import { Back } from "../commons/svgicons/back";
 import RightArrow from "../commons/svgicons/right-arrow";
 import SearchBlack from "../commons/svgicons/search-black";
+import { getSearchResults } from "../../sources/search/search";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */

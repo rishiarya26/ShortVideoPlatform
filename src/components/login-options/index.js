@@ -17,7 +17,7 @@ export default function Login({ toggle, loading }) {
     <div className="px-4 py-2 flex flex-col items-center">
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Login to Hipi</h1>
-        <p className="text-center text-sm">Manage your account, check notifications, comment on videos and more</p>
+        <p className="text-center text-sm">Like the video, manage your account and do much more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
         <div onClick={()=>router.push('/login/phone?option=password')}>

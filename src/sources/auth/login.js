@@ -1,12 +1,13 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+import { init } from '../../get-social';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
 import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const login = async ({ accessToken, refreshToken='' }) => {
+const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
@@ -27,12 +28,16 @@ const login = async ({ accessToken, refreshToken='' }) => {
     const tokens = {
       shortsAuthToken: response.data.shortsAuthToken,
       accessToken,
-      refreshToken
+      refreshToken,
+      getSocialToken
     };
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
     const userId = response?.data?.userDetails?.id;
     localStorage.set('user-id', userId);
+    setTimeout(()=>{
+      init();
+    },100)
     // setItem('user-id', JSON.stringify(userId), { path: '/', domain });
     response.data.accessToken = accessToken;
     response.data.status = 200;

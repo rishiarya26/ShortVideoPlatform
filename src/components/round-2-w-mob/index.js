@@ -112,6 +112,49 @@ function Round2WinnerM({round}) {
      
 
         <div className="Wlist">
+        {data?.week5?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 5 (${dates?.week5 || ''})`}</p>
+        </div>
+        }
+        {/* normal count */}
+      {data?.week6?.all?.[0] &&
+          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week6?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div className="flex items-center"  >
+            <div className="w-12 h-12 rounded-full overflow-hidden">
+              <Img data={data?.week6?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
+            </div>
+          <p className="text-black max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${data?.week6?.all?.[0]?.firstName} ${data?.week6?.all?.[0]?.lastName}`}</p>
+          </div>
+          <div className="text-green-600 bg-gray-100 p-2 font-semibold">
+              Winner
+            </div>
+          {/* <div className={data?.week2?.all?.[0]?.position === 1 ? "text-green-600 bg-gray-100 p-2 font-semibold" : "text-green-600 p-2 font-semibold"}>
+          {item?.position === 1 ? 'Winner' : data?.week2?.all?.[0]?.position}
+          </div> */}
+          </div>
+       }  
+        {data?.week5?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 5 (${dates?.week5 || ''})`}</p>
+        </div>
+        }
+        {/* normal count */}
+      {data?.week5?.all?.[0] &&
+          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week5?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div className="flex items-center"  >
+            <div className="w-12 h-12 rounded-full overflow-hidden">
+              <Img data={data?.week5?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
+            </div>
+          <p className="text-black max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${data?.week5?.all?.[0]?.firstName} ${data?.week5?.all?.[0]?.lastName}`}</p>
+          </div>
+          <div className="text-green-600 bg-gray-100 p-2 font-semibold">
+              Winner
+            </div>
+          {/* <div className={data?.week2?.all?.[0]?.position === 1 ? "text-green-600 bg-gray-100 p-2 font-semibold" : "text-green-600 p-2 font-semibold"}>
+          {item?.position === 1 ? 'Winner' : data?.week2?.all?.[0]?.position}
+          </div> */}
+          </div>
+       }  
+
         {data?.week4?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
             <p className="font-bold">{`Week 4 (${dates?.week4 || ''})`}</p>
         </div>

@@ -24,6 +24,8 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
+import { getOneLink } from '../../sources/social';
 import {
   SeoMeta,
   VideoJsonLd
@@ -38,7 +40,7 @@ import { getItem } from '../../utils/cookie';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { viewEvents } from '../../sources/social';
-
+import HamburgerMenu from '../hamburger-menu';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -361,6 +363,18 @@ function Feed({ router }) {
   }
   /*****************************/
 
+  // const getVideoReactions = async(item)=>{
+  //   let isLiked = false;
+  //   const details = await getActivityDetails(item?.getSocialId);
+  //   if(details?.myReactions?.length > 0){
+  //     const liked = details.myReactions.findIndex((data)=>data === 'like');
+  //     console.log('liked',liked)
+  //     liked !== -1 && (isLiked = true);
+  //   }
+  //   console.log('detal****',details);
+  //   return isLiked;
+  // }
+
   const swiper = <Swiper
               className="max-h-full"
               direction="vertical"
@@ -371,11 +385,11 @@ function Feed({ router }) {
               mousewheel
               // speed = '5000'
               scrollbar={{ draggable: true }}
-              autoplay= {{
-                  // delay: 2000,
-                  // delay: 5000,
-                  disableOnInteraction: false
-              }}
+              // autoplay= {{
+              //     // delay: 2000,
+              //     // delay: 5000,
+              //     disableOnInteraction: false
+              // }}
               onSwiper={swiper => {
                 const {
                   activeIndex, slides
@@ -392,7 +406,7 @@ function Feed({ router }) {
                 setInitialPlayStarted(false);
 
                 setShowSwipeUp({count : 1, value:false});
-                
+
                 /***************/
                 /*** Mixpanel ****/
                 // toTrackMixpanel(activeIndex, 'impression');
@@ -411,6 +425,31 @@ function Feed({ router }) {
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
+                   
+                /********* getReactions - getSocial *******/
+                // const item = items?.find(item => item?.content_id === activeId);
+                // console.log("item**",item)
+                // let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+                //   if (tokens?.shortsAuthToken && tokens?.accessToken 
+                //     // && tokens?.getSocialToken
+                //     ) {
+                //   const getLikeReaction = async()=>{  
+                //      let dataItems = [...toShowItems]; 
+                //      const isLiked =  await getVideoReactions(item);
+                //      console.log('isLiked', isLiked)
+                //      dataItems.forEach((item)=>{
+                //        if(item?.content_id === activeId){
+                //          item.isLiked !== isLiked && (item.isLiked = isLiked); 
+                //        } 
+                //      })
+                //      setToShowItems(dataItems);
+                //     }
+                //     getLikeReaction();
+                //     }
+                   
+                  
+               
+                /*******************************************/
                 // const dataItems = [...items];
                 // const seoItem = dataItems?.find(item => item?.content_id === activeId);
                 // seoItem && setSeoItem(seoItem);
@@ -465,6 +504,7 @@ function Feed({ router }) {
                       initialPlayStarted={initialPlayStarted}
                       currentT={videoDurationDetails?.currentT}
                       player={'single-player-muted'}
+                      isLiked={item?.isLiked}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -498,7 +538,7 @@ function Feed({ router }) {
               </div> */}
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-0 left-4  mt-4 items-center flex justify-center p-4"
+                className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
               >
                
@@ -534,6 +574,31 @@ function Feed({ router }) {
   if (typeof window !== 'undefined') {
     hostname = window?.location?.hostname;
  }
+
+ 
+const onStoreRedirect = async ()=>{
+  console.log(getItem('device-info'))
+  // toTrackMixpanel('downloadClick');
+  let link = ONE_TAP_DOWNLOAD;
+  const device = getItem('device-info');
+  console.log(device)
+try{  
+ if(device === 'android' && activeVideoId){ 
+   try{ const resp = await getOneLink({videoId : activeVideoId});
+    link = resp?.data;
+    console.log("one link resp",resp);
+  }
+    catch(e){
+      console.log('error android onelink',e)
+    }
+  }
+ }
+  catch(e){
+  }
+  console.log("final onelink",link);
+  window?.open(link);
+}
+
 
   return (
     <ComponentStateHandler
@@ -582,7 +647,22 @@ function Feed({ router }) {
         watchCount={item.likesCount}
       /> */}
     <>
-      <div className="feed_screen overflow-hidden" style={{ height: `${videoHeight}px` }}>
+      <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
+      {/* open cta */}
+      <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
+            <p className="text-sm">
+            Get the full experience on the app
+            </p>
+            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-md py-1 px-2 mr-1 bg-hipired text-white">
+               Open
+            </div>
+         </div>
+
+
+          {/* hamburger */}
+         <HamburgerMenu/>
+
+
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>

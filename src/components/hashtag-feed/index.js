@@ -22,7 +22,9 @@ import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-
+import { ONE_TAP_DOWNLOAD } from '../../constants';
+import { getOneLink } from '../../sources/social';
+import { getItem } from '../../utils/cookie';
 
 SwiperCore.use([Mousewheel]);
 
@@ -230,6 +232,29 @@ function HashTagFeed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
+  
+ const onStoreRedirect = async ()=>{
+  // toTrackMixpanel('downloadClick');
+  let link = ONE_TAP_DOWNLOAD;
+  const device = getItem('device-info');
+  console.log(device)
+try{  
+ if(device === 'android' && videoId){ 
+   try{ const resp = await getOneLink({videoId : activeVideoId});
+    link = resp?.data;
+    console.log("one link resp",resp);}
+    catch(e){
+      console.log('error android onelink',e)
+    }
+  }
+ }
+  catch(e){
+  }
+  console.log("final onelink",link);
+  window?.open(link);
+}
+
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -244,7 +269,17 @@ function HashTagFeed({ router }) {
           description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`        
         }}
      />
-        <div className="overflow-hidden" style={{ height: `${videoHeight}px` }}>
+        <div className="overflow-hidden relative " style={{ height: `${videoHeight}px` }}>
+
+        <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
+            <p className="text-sm">
+            Get the full experience on the app
+            </p>
+            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-md py-1 px-2 mr-1 bg-hipired text-white">
+               Open
+            </div>
+         </div>
+
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
