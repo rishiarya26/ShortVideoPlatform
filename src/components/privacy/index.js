@@ -1,14 +1,22 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/no-unescaped-entities */
+import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
+import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 
 function Community() {
+	const router = useRouter()
   return (
-    <div className="static_body">
+    <div className="static_body relative">
       <div className="tray-container">
 		<div className="tnc-text">
-	        <h1>Privacy Policy</h1>
+		<div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
+          <Back/>
+    </div>
+	<div className='mt-16'>
+	        <h1 className="">Privacy Policy</h1>
+			</div>
 	        <p>We, Zee Entertainment Enterprises Limited ("we", "us", "ZEEL") value the trust placed in use by You and therefore, we follow the highest standards of privacy guidelines to protect the information shared by You with us.</p>
 
 			<p>This Privacy Policy ("Privacy Policy") governs the use of Personal Information shared (as defined below) with or collected by ZEEL from the users or subscribers of 'ZEE5.'</p>

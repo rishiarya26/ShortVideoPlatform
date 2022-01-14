@@ -6,6 +6,20 @@
     font-family: "Open Sans";   
     font-weight: normal;
 }
+p{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+h1{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
 img{
   height: 100%;
   object-fit: cover;
@@ -230,5 +244,5 @@ span.swiper-pagination-bullet {
  }
 
  .h-52{
-   height: 52px;
+   height: 46px;
  }

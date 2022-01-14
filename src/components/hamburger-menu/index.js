@@ -25,16 +25,16 @@ const HamburgerMenu = ()=>{
     </div>
       <div className="flex flex-col p-4">
         <div className="flex flex-col">
-          <div onClick={()=>window?.open('/community-guidelines.html')} className="flex items-center py-3">
+          <div onClick={()=>router?.push('/community-guidelines.html')} className="flex items-center py-3">
             <List/>
             <p className="text-base px-3">Community Guidelines</p>
           </div>
-          <div onClick={()=>window?.open('/privacy-policy.html')} className="flex items-center py-3">
+          <div onClick={()=>router?.push('/privacy-policy.html')} className="flex items-center py-3">
             <PrivacyIco/>
             <p className="text-base px-3">Privacy Policy</p>
           </div>
         
-          <div onClick={()=>window?.open('/terms-conditions.html')} className="flex items-center py-3">
+          <div onClick={()=>router?.push('/terms-conditions.html')} className="flex items-center py-3">
             <Terms/>
             <p className="text-base px-3">Terms of Use</p>
           </div>
