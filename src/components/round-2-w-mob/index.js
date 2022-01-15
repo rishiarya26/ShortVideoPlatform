@@ -112,12 +112,12 @@ function Round2WinnerM({round}) {
      
 
         <div className="Wlist">
-        {data?.week5?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
-            <p className="font-bold">{`Week 5 (${dates?.week5 || ''})`}</p>
+        {data?.week6?.all?.length > 0 && data?.week6?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 6 (${dates?.week6 || ''})`}</p>
         </div>
         }
         {/* normal count */}
-      {data?.week6?.all?.[0] &&
+      {data?.week6?.all?.length > 0 && data?.week6?.all?.[0] &&
           <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week6?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">

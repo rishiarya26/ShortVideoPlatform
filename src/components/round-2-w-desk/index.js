@@ -103,9 +103,9 @@ const stores = {
 
 </div>
 <div className="w-full  relative flex justify-center py-2 mt-6">
-    <p className="font-bold">{`Week 6 (${dates?.week6})`}</p>
+    <p className="font-bold">{data?.week6?.all?.length > 0 && `Week 6 (${dates?.week6})`}</p>
 </div>
-{data && data?.week6?.all?.map((item,id)=>(
+{data && data?.week6?.all?.length > 0 && data?.week6?.all?.map((item,id)=>(
   <div key={id} className="w-full flex justify-center mt-6">
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
