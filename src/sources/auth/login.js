@@ -29,7 +29,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
       shortsAuthToken: response.data.shortsAuthToken,
       accessToken,
       refreshToken,
-      getSocialToken
+      getSocialToken: response.data.getSocialToken
     };
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
@@ -37,7 +37,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
     localStorage.set('user-id', userId);
     setTimeout(()=>{
       init();
-    },100)
+    },200)
     // setItem('user-id', JSON.stringify(userId), { path: '/', domain });
     response.data.accessToken = accessToken;
     response.data.status = 200;

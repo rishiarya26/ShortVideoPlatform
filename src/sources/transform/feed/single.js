@@ -46,7 +46,7 @@ function transformSuccess(resp) {
         payloadObject.userName = d?.videoOwners?.userName || null;
         payloadObject.likesCount = d?.lCount || (d?.likeCount && Number(d.likeCount)) || null;
         payloadObject.music_title = d?.sound?.name || null;
-        payloadObject.hashTags = d?.hashtags || null;
+        payloadObject.hashtags = d?.hashtags || null;
         const videoUrls = {};
         videoUrls.fast = d?.videoUrl?.AkamaiURL?.[2];
         videoUrls.medium = d?.videoUrl?.AkamaiURL?.[1];

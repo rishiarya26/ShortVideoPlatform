@@ -172,6 +172,14 @@ function Hipi({
     inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
     cookieAgree !== 'yes' && getCountry();
+    let tokens = localStorage.get('tokens') || null;
+    // tokens = tokens && JSON.parse(tokens);
+  
+    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+      console.log('tokens are there in _app.js')
+      // let getSocialInitialised = localStorage.get('get-social') || 'fail'
+       init();
+    }
     }
     catch(e){
     

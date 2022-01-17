@@ -7,13 +7,20 @@ export const init = async() => {
 //    initGetSocial();
 //    setTimeout(()=>{ 
     //    if(initiated){
-    
+    console.log('init', GetSocialSDK)
     GetSocialSDK.GetSocial.init({
         appId: 'YInJ8G70y098',
         appName: 'Hipi'
     }) 
     // console.log('r',r)
+    try{
+    let tokens = localStorage.get('tokens');
+    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken && tokens?.getSocialToken) {
         auth();
+    }
+    }catch(e){
+       console.log('no tokens present during getSocial Auth')
+    }    
         // setTimeout(()=>{
         //     getActivityDetails('661518306464375287');
         // },2000)
@@ -26,14 +33,16 @@ export const init = async() => {
 
 export const auth = (identityType='my_app')=>{
     try{
-    // const getSocialToken = localStorage?.get('get-social-token');
+    const tokens = localStorage?.get('tokens');
+    const getSocialToken = tokens?.getSocialToken;
     // console.log('user',userId)
     const params = {
         "identity_type": 'my_auth_method',
-        "token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOTk5ZjRkZS01YzEzLTRiOWYtODQ2Ny1kZmM0MTc1NDgxNjkiLCJpYXQiOjE1MTYyMzkwMjJ9.DZgTOnBmPFdQ7EpaGEQbFNusN2Oo8T-gurKGkW8elIM',
+        "token": getSocialToken,
     };
     GetSocialSDK.Auth.authenticate(params)
     .then((response) => {
+        console.log('response get-social',response);
         localStorage.set('get-social','success');
     })
     .catch((e)=>{

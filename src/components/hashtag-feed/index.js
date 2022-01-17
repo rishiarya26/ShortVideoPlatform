@@ -22,6 +22,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
@@ -45,6 +46,7 @@ function HashTagFeed({ router }) {
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
   const [offset, setOffset] = useState(2);
   const [loadMore, setLoadMore] = useState(true);
+  const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
@@ -142,8 +144,12 @@ function HashTagFeed({ router }) {
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
-      // if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+      if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
+    /******************************/
+    if(currentTime >= duration-0.4){
+     if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+   }
     /******************************/
   };
 
@@ -303,6 +309,8 @@ try{
               } = swiperCore;
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
+              setShowSwipeUp({count : 1, value:false});
+
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
@@ -370,6 +378,16 @@ try{
               >
              <CircularProgress/>
               </div>
+
+              {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
+          "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
+               <div className="p-1 relative">
+                <SwipeUp/>
+               <div className="w-4 h-16 bg-white bg-opacity-20 rounded-full absolute top-1 left-1"></div>
+              </div>
+              <div className="flex py-2 px-4 bg-gray text-white font-semibold mt-12">Swipe up for next video</div>
+              </div>}
+
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"

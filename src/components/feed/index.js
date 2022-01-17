@@ -40,6 +40,9 @@ import { getItem } from '../../utils/cookie';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { viewEvents } from '../../sources/social';
+import { getActivityDetails } from '../../get-social';
+import { localStorage } from '../../utils/storage';
+
 import HamburgerMenu from '../hamburger-menu';
 // import {sessionStorage} from "../../utils/storage"
  
