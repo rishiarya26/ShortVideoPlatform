@@ -542,7 +542,10 @@ console.log('error',e)
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && muted ? 'flex' : 'none' }}
               >
-               <Mute/>
+                <div className="stretch-y"><div className="stretch-z"></div></div>
+                <div className="z-9">
+                <Mute/>
+                </div>
               </div>}
               {validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />

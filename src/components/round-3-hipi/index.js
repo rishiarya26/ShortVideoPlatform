@@ -31,7 +31,7 @@ return (
    </div>
    {/* 
    <div className="flex justify-center items-center flex-col section_1 relative">
-      <img alt="" src={withBasePath('images/goat/round-3/mob/land.jpg')} />
+      <img alt="" src={withBasePath('images/goat/round-3/mob/land_1.jpg')} />
       <div className="absolute bottom-8 w-full flex justify-center">
          <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
             Leaderboard
@@ -40,9 +40,9 @@ return (
    </div>
    */}
    <div className="">
-   <img src={withBasePath('images/goat/round-3/mob/land_1.jpg')}/>
+   <img src={withBasePath('images/goat/round-3/mob/land_2.jpg')}/>
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/1.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/1_1.jpg')}/>
          <div className="absolute top-24 left-4 flex flex-col">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/1.png')}/>
             <Link href='video/761553ef-4572-4fe8-90ee-01cb05f35d99'>
@@ -53,7 +53,7 @@ return (
       </div>
 
       <div  className="relative">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/2.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/2_1.jpg')}/>
          <div className="absolute top-4 right-4 flex flex-col items-end">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/2.png')}/>
             <Link href='video/3481f3eb-e561-49c0-aa20-a22756499434'>
@@ -64,7 +64,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/3.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/3_1.jpg')}/>
          <div className="absolute top-24 left-4 flex flex-col">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/3.png')}/>
             <Link href='video/31736d7e-6702-407c-8410-8b5aa96b2034'>
@@ -75,7 +75,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/4.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/4_1.jpg')}/>
          <div className="absolute top-4 right-4 flex flex-col items-end">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/4.png')}/>
             <Link href='video/d34b2a94-3330-44b4-86ca-25db60e2e8b9'>
@@ -88,7 +88,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/5.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/5_1.jpg')}/>
          <div className="absolute top-24 left-4 flex flex-col">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/5.png')}/>
             <Link href='video/fd319094-b8e3-498b-a692-fd06059f18ff'>
@@ -97,7 +97,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/6.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/6_1.jpg')}/>
          <div className="absolute top-4 right-4 flex flex-col items-end">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/6.png')}/>
             <Link href='video/83c1303c-15e4-49c2-945d-3d0a5f819fec'>
@@ -106,7 +106,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/7.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/7_1.jpg')}/>
          <div className="absolute top-24 left-4 flex flex-col">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/7.png')}/>
             <Link href='video/4987aeb4-7342-46c0-af8c-6250bd6fd0d4'>
@@ -115,7 +115,7 @@ return (
       </div>
 
       <div  className="relative ">
-         <img alt="" src={withBasePath('images/goat/round-3/refer/8.jpg')}/>
+         <img alt="" src={withBasePath('images/goat/round-3/refer/8_1.jpg')}/>
          <div className="absolute top-4 right-4 flex flex-col items-end">
             <img alt="" className="w-full" src={withBasePath('images/goat/round-3/refer/8.png')}/>
             <Link href='video/9175e107-f857-4db9-84c7-902b4fdd897b'>
@@ -127,12 +127,12 @@ return (
    </div>
 
    <div className="section_6 flex flex-col section_2">
-  <img src={withBasePath('images/goat/round-3/mob/9.jpg')}/>  
-  <img src={withBasePath('images/goat/round-3/mob/10.jpg')}/>
-  <img src={withBasePath('images/goat/round-3/mob/11.jpg')}/>
-  <img src={withBasePath('images/goat/round-3/mob/12.jpg')}/>
-  <img src={withBasePath('images/goat/round-3/mob/13.jpg')}/>
-  <img src={withBasePath('images/goat/round-3/mob/14.jpg')}/>
+  <img src={withBasePath('images/goat/round-3/mob/9_1.jpg')}/>  
+  <img src={withBasePath('images/goat/round-3/mob/10_1.jpg')}/>
+  <img src={withBasePath('images/goat/round-3/mob/11_1.jpg')}/>
+  <img src={withBasePath('images/goat/round-3/mob/12_1.jpg')}/>
+  <img src={withBasePath('images/goat/round-3/mob/13_1.jpg')}/>
+  <img src={withBasePath('images/goat/round-3/mob/14_1.jpg')}/>
   </div>
 
 

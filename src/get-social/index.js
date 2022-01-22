@@ -7,7 +7,7 @@ export const init = async() => {
 //    initGetSocial();
 //    setTimeout(()=>{ 
     //    if(initiated){
-    console.log('init', GetSocialSDK)
+    
     GetSocialSDK.GetSocial.init({
         appId: 'YInJ8G70y098',
         appName: 'Hipi'
@@ -42,7 +42,6 @@ export const auth = (identityType='my_app')=>{
     };
     GetSocialSDK.Auth.authenticate(params)
     .then((response) => {
-        console.log('response get-social',response);
         localStorage.set('get-social','success');
     })
     .catch((e)=>{

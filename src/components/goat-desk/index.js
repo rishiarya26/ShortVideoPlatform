@@ -49,7 +49,7 @@ const onStoreRedirect =(device)=>{
   </div>
 </div>
 <div className="flex w-full  section_2 relative">
-    <img alt="" src={withBasePath('images/goat/desktop/3_1.jpg')}/>
+    <img alt="" src={withBasePath('images/goat/desktop/3_2.jpg')}/>
     <div className="absolute w-1/3 flex flex-col top-14 left-24 ">
     <img alt="" src={withBasePath('images/goat/desktop/round1.png')}/>
     <div className="flex w-full justify-center py-4 pb-8">
@@ -66,12 +66,20 @@ const onStoreRedirect =(device)=>{
         Round 2 Winner
       </div>
     </div>
-    <img alt="" src={withBasePath('images/goat/desktop/Round3Desktop.png')}/>
+    <img alt="" src={withBasePath('images/goat/desktop/round3desk.png')}/>
+    <div className="flex w-full justify-center py-4 pb-8  items-center">
+        <div onClick={()=>router.push('/goat-round-3')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        Round 3 Details
+      </div>
+      <div onClick={()=>router.push('/round-3-participants')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md ml-4 px-4 py-2 text-white flex justify-center font-semibold">
+        Round 3 Participants
+      </div>
+    </div>
     </div>
 </div>
 
-<div className="section_3 flex items-center flex-col section_2">
-   <img alt="" src={withBasePath('images/goat/desktop/4.jpg')}/>
+<div className="section_3 mt-96 flex items-center flex-col section_2">
+   <img alt="" src={withBasePath('images/goat/desktop/4_1.jpg')}/>
    {/* <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
 </div>
 
