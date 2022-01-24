@@ -16,6 +16,7 @@ import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import * as fbq from '../../analytics/fb-pixel'
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -39,6 +40,7 @@ function HashTag({router}) {
   useEffect(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Details';
+      fbq.event('Screen View')
       track('Screen View',mixpanelEvents );
 
     window.onunload = function () {

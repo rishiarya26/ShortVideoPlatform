@@ -120,6 +120,7 @@ const Registration = ({ router }) => {
         /* Mixpanel */
         const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
         mixpanel('Signup',method);
+        fbq.defEvent('CompleteRegistration');
         /* Mixpanel */
         router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });

@@ -30,6 +30,7 @@ export const GoogleButton =({loading}) =>{
                 showSnackbar({ message: 'Login Successful' })
                  close();
                  mixpanel('Login')
+                 fbq.defEvent('CompleteRegistration');
              }
            console.log(response);
         }
@@ -88,6 +89,7 @@ export const GoogleButton =({loading}) =>{
             showSnackbar({ message: 'Login Successful' })
              close();
              mixpanel('Login')
+             fbq.defEvent('CompleteRegistration');
          }
         }
         catch(error){

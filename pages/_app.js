@@ -18,6 +18,9 @@ import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import Cookies from '../src/components/cookies'
 import { init } from '../src/get-social';
+import { useRouter } from 'next/router';
+import * as fbq from '../src/analytics/fb-pixel'
+import Script from 'next/script'
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -143,6 +146,8 @@ function Hipi({
 
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
+
+  const router = useRouter();
   
   const loaded = ()=>{
     setLoading(false)
@@ -203,6 +208,20 @@ function Hipi({
       }
     },[loading])
 
+    useEffect(() => {
+      // This pageview only triggers the first time (it's important for Pixel to have real information)
+      fbq.pageview()
+  
+      const handleRouteChange = () => {
+        fbq.pageview()
+      }
+  
+      router.events.on('routeChangeComplete', handleRouteChange)
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange)
+      }
+    }, [router.events])
+
   return (
     <>
       <Head>
@@ -219,6 +238,22 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
+                    <Script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
                       {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                       <Component {...pageProps} />
                     </Layout>

@@ -9,6 +9,7 @@ import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import { commonEvents } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
+import * as fbq from '../../../analytics/fb-pixel'
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type
@@ -49,6 +50,7 @@ export default function Mobile({
         const response = await userLogin(finalData);
         if (response.status === 'success') {
           mixpanel('Login')
+          fbq.defEvent('CompleteRegistration');
           router?.push({
             pathname: '/feed/for-you'
           });
@@ -65,6 +67,7 @@ export default function Mobile({
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
           mixpanel('Login')
+          fbq.defEvent('CompleteRegistration');
           router?.push({
             pathname: '/verify-otp',
             query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }

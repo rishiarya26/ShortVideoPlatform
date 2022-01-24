@@ -28,7 +28,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
-
+import * as fbq from '../../analytics/fb-pixel'
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -106,6 +106,7 @@ function Users({
   useEffect(() => {
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Profile';
+    fbq.event('Screen View')
     track('Screen View',mixpanelEvents );
   }, []);
 

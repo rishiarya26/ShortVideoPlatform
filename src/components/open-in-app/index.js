@@ -11,6 +11,7 @@ import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
+import * as fbq from '../../analytics/fb-pixel'
 
 export default function DownloadAppWidget({videoId}) {
   // const stores = {
@@ -20,6 +21,7 @@ export default function DownloadAppWidget({videoId}) {
 
   useEffect(()=>{
     toTrackMixpanel('launch');
+    fbq.event('App Download Popup')
   },[])
 
   const {close} = useDrawer();
@@ -58,6 +60,7 @@ export default function DownloadAppWidget({videoId}) {
 // 
   const onStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
+    fbq.event('App Download CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)
