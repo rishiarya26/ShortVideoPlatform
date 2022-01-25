@@ -218,7 +218,7 @@ function Feed({ router }) {
        toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
        toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
 
-       fbq.event('UGC_Played_Complete')
+       fbq.event('UGC_Played_Complete ')
        ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
       //  viewEventsCall(activeVideoId, 'completed');
