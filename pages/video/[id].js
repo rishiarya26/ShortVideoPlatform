@@ -7,8 +7,11 @@ import { useEffect } from "react"
 
 export default function Hipi() {
   const router = useRouter();
+
   useEffect(()=>{
       if(router){
+        const queryStrings = router?.query;
+        console.log(queryStrings)
         const {id} = router?.query;
         id && router.push(`/feed/for-you?videoId=${id}`)
       }

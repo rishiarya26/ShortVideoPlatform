@@ -8,7 +8,7 @@ export const init = async() => {
 //    setTimeout(()=>{ 
     //    if(initiated){
     
-    GetSocialSDK.GetSocial.init({
+    GetSocialSDK?.GetSocial?.init({
         appId: 'YInJ8G70y098',
         appName: 'Hipi'
     }) 

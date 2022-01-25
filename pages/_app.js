@@ -201,7 +201,7 @@ function Hipi({
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens there in _app.js')
-      init();
+        init();
      }else{
       if(loading === false){
         oneTapGoogle();
