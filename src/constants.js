@@ -18,5 +18,5 @@ export const APP_NAME = 'HiPi';
 export const LANGUAGE = 'en';
 export const GOOGLE_CLIENT_ID_PREROD = '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com';
 export const GOOGLE_CLIENT_ID_LOCAL = '1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com';
-export const FACEBOOK_PIXEL_ID = '1644195829265508'
+export const FACEBOOK_PIXEL_ID = '83709677044788'
  

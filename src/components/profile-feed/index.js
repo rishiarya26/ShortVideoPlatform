@@ -161,7 +161,7 @@ function ProfileFeed({ router }) {
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
 
 
-      ToTrackFbEvents(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      fbq.event('UGC_Played_Complete')
       ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
@@ -316,7 +316,7 @@ function ProfileFeed({ router }) {
 
   
 const onStoreRedirect = async ()=>{
-  toTrackMixpanel('downloadClick');
+  toTrackMixpanel(videoActiveIndex,'downloadClick');
   fbq.event('App Open CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');

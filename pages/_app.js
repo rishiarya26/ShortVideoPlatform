@@ -185,6 +185,9 @@ function Hipi({
       // let getSocialInitialised = localStorage.get('get-social') || 'fail'
        init();
     }
+    // setTimeout(()=>{},[500])
+    // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
+
     }
     catch(e){
     
