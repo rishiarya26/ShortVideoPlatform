@@ -179,7 +179,14 @@ function Hipi({
     cookieAgree !== 'yes' && getCountry();
     let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
-  
+    const userAgent = window?.navigator.userAgent;
+    const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
+    localStorage.set('device-modal',deviceModel);
+
+    const networkInformation = window?.navigator?.connection;
+    const effectiveType = networkInformation?.effectiveType;
+    localStorage.set('network-strength',effectiveType);
+
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens are there in _app.js')
       // let getSocialInitialised = localStorage.get('get-social') || 'fail'
