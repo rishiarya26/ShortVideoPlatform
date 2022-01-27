@@ -1,4 +1,5 @@
 import Error from 'next/error';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import {
   SeoMeta
@@ -6,7 +7,9 @@ import {
 import FooterMenu from '../../src/components/footer-menu';
 import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
+import { getItem } from '../../src/utils/cookie';
 import { localStorage } from '../../src/utils/storage';
+import { updateUtmData } from '../../src/utils/web';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -17,7 +20,7 @@ export default function Hipi(params) {
     message,
     status,
   } = params;
-
+  const router = useRouter();
 
   useEffect(()=>{
   try{ 
@@ -26,6 +29,8 @@ export default function Hipi(params) {
     const userId = localStorage.get('user-id')
     tokens && userId && userId === item?.id && (userType = 'self');
     setType(userType);
+      const queryStrings = router?.query;
+      updateUtmData(queryStrings);
   }catch(e){
     console.log('something went wrong with id')
   }
@@ -35,6 +40,14 @@ export default function Hipi(params) {
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
+
+  const device = getItem('device-type')
+
+  if(device === 'desktop'){
+    router?.push('/');
+    return null;
+  }
+
   return (
     <>
      <SeoMeta

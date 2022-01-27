@@ -97,7 +97,7 @@ function Feed({ router }) {
     if(initialLoadComplete === true){
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Feed';
-      console.log('FB event ',fbq.event)
+      // console.log('FB event ',fbq.event)
       fbq.event('Screen View')
       track('Screen View',mixpanelEvents );
       inject(CHARMBOARD_PLUGIN_URL, null, loaded);
@@ -149,7 +149,7 @@ function Feed({ router }) {
   },[initialPlayStarted])
 
   const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
+    // console.log("event to send", id, event)
    await viewEvents({id:id, event:event})
   }
 
@@ -162,7 +162,7 @@ function Feed({ router }) {
   const getFeedData = async() =>{
     let updateItems = [...items];
      try{
-       console.log('fn',fetchData)
+      //  console.log('fn',fetchData)
        const data =  await fetchData({ type: id });
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
@@ -261,7 +261,7 @@ function Feed({ router }) {
       updateShowItems[deleteItemIndex] = null;
     }
 
-    console.log(updateShowItems)
+    // console.log(updateShowItems)
 
   setToShowItems(updateShowItems);
  }
@@ -281,7 +281,7 @@ function Feed({ router }) {
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
 
-     console.log(updateShowItems)
+    //  console.log(updateShowItems)
     setToShowItems(updateShowItems);
  }
 
@@ -385,7 +385,7 @@ const ToTrackFbEvents = (activeIndex, type, value) => {
   const fbEvents = {}
 
   
-console.log('FB events',fbq)
+// console.log('FB events',fbq)
   const toTrack = {
     'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
     'swipe' : ()=> {
@@ -652,12 +652,12 @@ console.log('FB events',fbq)
  
 const onStoreRedirect = async ()=>{
   fbq.event('App Open CTA')
-  console.log(getItem('device-info'))
+  // console.log(getItem('device-info'))
   
   toTrackMixpanel(videoActiveIndex,'downloadClick');
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
-  console.log(device)
+  // console.log(device)
 try{  
  if(device === 'android' && activeVideoId){ 
    try{ const resp = await getOneLink({videoId : activeVideoId});

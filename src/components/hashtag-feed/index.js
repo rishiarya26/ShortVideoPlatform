@@ -426,6 +426,7 @@ try{
                       saved={item?.saveLook}
                       activeVideoId={activeVideoId}
                       comp="profile"
+                      pageName="hashtag"
                       profileFeed
                       loading={loading}
                       muted={muted}

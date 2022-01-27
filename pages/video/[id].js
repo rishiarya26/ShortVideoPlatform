@@ -14,7 +14,7 @@ export default function Hipi() {
       if(router){
         const queryStrings = router?.query;
         updateUtmData(queryStrings);
-        console.log(queryStrings)
+        // console.log(queryStrings)
         const {id} = router?.query;
         id && router?.push(`/feed/for-you?videoId=${id}`);
       }

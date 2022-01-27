@@ -31,6 +31,8 @@ import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
 import { localStorage } from '../../utils/storage';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -57,7 +59,7 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName
 }) {
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
   const [reactionCount, setReactionCount] = useState({likes : likes});
@@ -80,7 +82,13 @@ function VideoSidebar({
   const like = () => {
      postReaction('like',socialId);
      setIsLiked({like : true});
-     getVideoReactions(socialId, 'now', 'add')
+     getVideoReactions(socialId, 'now', 'add');
+     const mixpanelEvents = commonEvents();
+     mixpanelEvents['UGC Id'] = activeVideoId;
+    //  mixpanelEvents['Creator Id'] = videoOwnersId;
+     const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+     mixpanelEvents['Page Name'] = compName;
+     track('UGC Liked',mixpanelEvents)
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
@@ -124,7 +132,6 @@ function VideoSidebar({
       const liked = details.myReactions.findIndex((data)=>data === 'like');
       isLiked = (liked !== -1) ? {like: true, reactionTime: 'past'} : {like: false, reactionTime: 'past'}
     }
-    console.log('ISL',isLiked)
     return isLiked;
   }
 //   useEffect(()=>{
@@ -148,7 +155,6 @@ function VideoSidebar({
                 {
                   const getLikeReaction = async()=>{  
                      const isLiked =  await getVideoReactions(socialId, 'past');
-                     console.log(isLiked)
                      setIsLiked({like : isLiked, reactionTime: 'past'});
                     }
                     getLikeReaction();
@@ -170,7 +176,6 @@ function VideoSidebar({
     };
 
 useEffect(()=>{
-console.log('RC',reactionCount)
 },[reactionCount])
 
   return (
@@ -209,6 +214,12 @@ console.log('RC',reactionCount)
                 deleteReaction('like', socialId );
                 setIsLiked({like : false, reactionTime: 'now'});
                 getVideoReactions(socialId, 'now', 'delete')
+                const mixpanelEvents = commonEvents();
+                mixpanelEvents['UGC Id'] = activeVideoId;
+                // mixpanelEvents['Creator Id'] = videoOwnersId;
+                const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+                mixpanelEvents['Page Name'] = compName;
+                track('UGC Unliked',mixpanelEvents)
               }}
             >
               <Liked />

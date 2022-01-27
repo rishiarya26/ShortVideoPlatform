@@ -104,10 +104,12 @@ function Users({
   },[selectedTab])
   
   useEffect(() => {
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Profile';
-    fbq.event('Screen View')
-    track('Screen View',mixpanelEvents );
+    setTimeout(()=>{
+      const mixpanelEvents = commonEvents();
+      mixpanelEvents['Page Name'] = 'Profile';
+      fbq.event('Screen View')
+      track('Screen View',mixpanelEvents );
+    },500);
   }, []);
 
   const { show } = useDrawer();

@@ -284,6 +284,7 @@ function Video(props) {
          toTrackMixpanel={props?.toTrackMixpanel}
          activeVideoId={props?.activeVideoId}
          comp={props?.comp}
+         pageName={props?.pageName}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed

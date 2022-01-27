@@ -156,7 +156,7 @@ function Hipi({
   const getCountry = async()=>{
     try{ 
       const resp = await detectCountry();
-      console.log(resp?.data?.country_name)
+      // console.log(resp?.data?.country_name)
       setCountry(resp?.data?.country_name || 'India');
       if(resp?.data?.country_name === 'India'){
         setItem('cookie-agreed','yes');
@@ -190,9 +190,12 @@ function Hipi({
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens are there in _app.js')
       // let getSocialInitialised = localStorage.get('get-social') || 'fail'
-       init();
+      setTimeout(()=>{
+        init();
+      },[1000])
+   
     }
-    // setTimeout(()=>{},[500])
+ 
     // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
 
     }
@@ -208,7 +211,9 @@ function Hipi({
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens there in _app.js')
+      setTimeout(()=>{
         init();
+      },[1000])
      }else{
       if(loading === false){
         oneTapGoogle();

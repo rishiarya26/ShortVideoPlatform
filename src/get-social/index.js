@@ -4,6 +4,7 @@ import { localStorage } from "../utils/storage";
 let initiated = false;
 
 export const init = async() => {
+    console.log("*********** CALLED **********")
 //    initGetSocial();
 //    setTimeout(()=>{ 
     //    if(initiated){
@@ -59,6 +60,7 @@ export const getActivityDetails = async(id)=> {
       response = await GetSocialSDK.Communities.getActivity(id)
     //   console.log('response-activity',response);
     }catch(e){
+        // init()
       console.log('error-get-activity',e)
     }
     return response;
@@ -70,6 +72,7 @@ export const postReaction = async(reaction,id) =>{
     response = await GetSocialSDK.Communities.addReaction(reaction,id);
     }
    catch(e){
+    init()
        console.log('error-post-like',e);
     }
 }
@@ -80,6 +83,7 @@ export const deleteReaction = (reaction,id) =>{
         response = GetSocialSDK.Communities.removeReaction(reaction,id);
     }
     catch(e){
+        init()
        console.log('error-delete-like',e);
     }
 }

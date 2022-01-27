@@ -88,7 +88,7 @@ const Registration = ({ router }) => {
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
       setData(dataToUpdate);
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +115,7 @@ const Registration = ({ router }) => {
     try {
       const response = await registerUser(data);
       console.log("user registered",response)
-      console.log("suces rep",response)
+      // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
         const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';

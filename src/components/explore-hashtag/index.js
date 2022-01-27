@@ -14,9 +14,9 @@ import { withBasePath } from '../../config';
 import useDrawer from '../../hooks/use-drawer';
 import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
+import { commonEvents } from '../../analytics/mixpanel/events';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -27,7 +27,7 @@ function HashTag({router}) {
   const [details, setDetails] = useState({})
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  const [offset, setOffset] = useState(2);
 
   const {item = ''} = router?.query;
   const {show} = useDrawer();
@@ -38,11 +38,12 @@ function HashTag({router}) {
   // }
 
   useEffect(()=>{
+    setTimeout(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Details';
       fbq.event('Screen View')
       track('Screen View',mixpanelEvents );
-
+    },[500])
     window.onunload = function () {
       window?.scrollTo(0, 1);
     }
