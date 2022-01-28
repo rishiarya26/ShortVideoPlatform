@@ -391,6 +391,12 @@ console.log('error',e)
       },
       'savelook' : ()=>{
         track('Save Look', mixpanelEvents)
+      },
+      'downloadClick' : () => {
+        mixpanelEvents['Popup Name'] = 'Download App',
+        mixpanelEvents['Element'] = 'Download App',
+        mixpanelEvents['Button Type'] = 'Link',
+        track('Popup CTAs', mixpanelEvents)
       }
     }
     // const hashTags = item?.hashtags?.map((data)=> data.name);
@@ -441,12 +447,6 @@ console.log('error',e)
       },
       'savelook' : ()=>{
         fbq.event('Save Look', fbEvents)
-      },
-      'downloadClick' : () => {
-        mixpanelEvents['Popup Name'] = 'Download App',
-        mixpanelEvents['Element'] = 'Download App',
-        mixpanelEvents['Button Type'] = 'Link',
-        track('Popup CTAs', mixpanelEvents)
       }
     }
   
@@ -639,8 +639,9 @@ console.log('error',e)
 
 
  const onStoreRedirect = async ()=>{
+
+  fbq.event('App Open CTA');
   toTrackMixpanel(videoActiveIndex,'downloadClick');
-  fbq.event('App Open CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
