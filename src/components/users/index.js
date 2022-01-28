@@ -26,6 +26,9 @@ import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
+import { getOneLink } from '../../sources/social';
+
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -239,6 +242,32 @@ function Users({
     }
   };
 
+
+  
+    
+const onStoreRedirect = async ()=>{
+  // toTrackMixpanel('downloadClick');
+  let link = ONE_TAP_DOWNLOAD;
+  const device = getItem('device-info');
+  console.log(device)
+try{  
+ if(device === 'android' && videoId){ 
+   try{ const resp = await getOneLink({videoId : videoId});
+    link = resp?.data;
+    console.log("one link resp",resp);}
+    catch(e){
+      console.log('error android onelink',e)
+    }
+  }
+ }
+  catch(e){
+  }
+  console.log("final onelink",link);
+  window?.open(link);
+}
+
+
+
   // console.log(videoData?.items?.filter((data)=>(data?.shoppable === true)))
 
   // const toShowData = {
@@ -250,7 +279,7 @@ function Users({
   const toShowFollowers = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=followers`))
 
   return (
-    <div>
+    <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
           { info.header.leftButton[type] }
@@ -309,6 +338,14 @@ function Users({
       />
      
 <LandscapeView/>
+      {/* {type === 'others' && <div className="bottom-0 app_cta p-3 sticky h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center z-10">
+            <p className="text-sm">
+            Get the full experience on the app
+            </p>
+            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-md py-1 px-2 mr-1 bg-hipired text-white">
+               Open
+            </div>
+         </div>} */}
     </div>
   );
 }

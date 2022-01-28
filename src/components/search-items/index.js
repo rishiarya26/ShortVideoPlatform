@@ -10,13 +10,16 @@ import { localStorage } from "../../utils/storage";
 import { Back } from "../commons/svgicons/back";
 import RightArrow from "../commons/svgicons/right-arrow";
 import SearchBlack from "../commons/svgicons/search-black";
+import { getSearchResults } from "../../sources/search/search";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
         try{
           const response = await getSuggestions(searchTerm); 
+          console.log('search',response)
           if(response.status === 'success'){
-              setSuggestions(response?.data)
+              console.log('search',response)
+              setSuggestions(response?.data?.users)
           }
           }
         catch(e){
@@ -129,11 +132,11 @@ const SearchItems = ({router,type})=>{
 
        suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
-         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionTitle)} className="flex flex-col w-full p-3 bg-white">
+         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.firstName)} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
                  <div  className="flex items-center ">
                      <SearchXs/>
-                     <p className="pl-2">{suggestion?.suggestionTitle}</p>
+                     <p className="pl-2">{suggestion?.firstName}</p>
                  </div>
          <SearchArrow />
              </div>

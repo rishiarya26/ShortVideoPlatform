@@ -1,14 +1,20 @@
 /*eslint-disable @next/next/no-img-element */
+import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
+import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 
 function Community() {
+const router = useRouter();
+console.log('router', router)
   return (
-    <div className="static_body">
+    <div className="static_body relative">
       <div className="tray-container">
-                <div className="tnc-text">
-
-	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn" data-align="center">
+                <div className="tnc-text ">
+     <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
+          <Back/>
+    </div>
+	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-16" data-align="center">
 		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1"><strong data-renderer-mark="true"><u data-renderer-mark="true">HiPi Community Guidelines</u></strong><button className="sc-fBuWsC bDAhfN"></button></h1>
 	</div>
 	<p data-renderer-start-pos="28"><strong data-renderer-mark="true">A.&nbsp;&nbsp;&nbsp;&nbsp;Adult Nudity and Sexual Content&nbsp;</strong></p>

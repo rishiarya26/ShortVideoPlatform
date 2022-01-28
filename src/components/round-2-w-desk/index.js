@@ -92,7 +92,7 @@ const stores = {
 //       </div>
 //    </div>
 // </div>
-<div className='bg-gray-100 h-screen'>
+<div className='bg-gray-100'>
 <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
 <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
 </div>
@@ -102,6 +102,62 @@ const stores = {
     <p className="font-extrabold text-lg ">Round 2 Winners</p>
 
 </div>
+<div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{data?.week6?.all?.length > 0 && `Week 6 (${dates?.week6})`}</p>
+</div>
+{data && data?.week6?.all?.length > 0 && data?.week6?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div>
+</div>
+</div>
+))}
+
+<div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 5 (${dates?.week5})`}</p>
+</div>
+{data && data?.week5?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div>
+</div>
+</div>
+))}
+<div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 4 (${dates?.week4})`}</p>
+</div>
+{data && data?.week4?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div>
+</div>
+</div>
+))}
+
 <div className="w-full  relative flex justify-center py-2 mt-6">
     <p className="font-bold">{`Week 3 (${dates?.week3})`}</p>
 </div>

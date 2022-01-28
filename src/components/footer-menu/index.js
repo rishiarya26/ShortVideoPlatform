@@ -17,7 +17,6 @@ import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
-import { getItem } from '../../utils/cookie';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 
@@ -52,17 +51,18 @@ const toShow = {
   }
   }
 }
+
 const chooseProfile = useAuth(toShow.login, toShow.profile);
 
   return (
     <div>
-      <div className="w-full bg-black fixed bottom-0 left-0 py-2 flex justify-around items-center h-16">
+      <div className="w-full bg-black fixed bottom-0 left-0 py-2 flex justify-around items-center h-16 relative">
       <div onClick={()=> router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})} className="flex flex-col text-white text-xs items-center">
-       {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5">Home</p></> } 
+       {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xs mt-1.5 select-none">Home</p></>  : <><Home/><p className="text-gray-400 text-xs mt-1.5 select-none">Home</p></> } 
        
      </div> 
-     <div  onClick={()=>router.push('/explore')} className="flex flex-col text-white text-xs items-center">
-       {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5">Explore</p></> } 
+     <div  onClick={()=>router?.push('/explore')} className="flex flex-col text-white text-xs items-center">
+       {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xs mt-1.5 select-none">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xs mt-1.5 select-none">Explore</p></> } 
        
      </div>
         <div>
@@ -73,10 +73,10 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
-                <p className="text-gray-400 text-xs mt-1.5">Create</p>
+                <p className="text-gray-400 text-xs mt-1.5 select-none">Create</p>
              </div>    
       <div  onClick={chooseProfile} className="flex flex-col  items-center justify-between">
-      {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5">Profile</p></>} 
+      {selectedTab === 'profile' ?<> <ProfileActive/> <p className="text-white text-xs mt-1.5 select-none">Profile</p></> :<> <Profile/><p className="text-gray-400 text-xs mt-1.5 select-none">Profile</p></>} 
       
       </div>
       </div>

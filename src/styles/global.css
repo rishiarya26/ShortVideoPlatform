@@ -6,6 +6,20 @@
     font-family: "Open Sans";   
     font-weight: normal;
 }
+p{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+h1{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
 img{
   height: 100%;
   object-fit: cover;
@@ -232,3 +246,59 @@ span.swiper-pagination-bullet {
  .mar-lef{
    margin-left: 11%;
  }
+
+ .h-52{
+   height: 46px;
+ }
+
+ .stretch-y {
+  position: absolute;
+  display: block;
+  animation-iteration-count: infinite;
+  outline: 0;
+  box-shadow: none;
+  height: 38px;
+  width: 38px;
+}
+ .stretch-z {
+  box-sizing: border-box;
+  animation-duration: 5s;
+  animation-iteration-count: inherit;
+  animation-name: whirlpool;
+  background-color:  #f74343b9;
+  border-radius: 50%;
+  height: 100%;
+  opacity: 1;
+  width: 100%;
+}
+.strech-anim {
+  animation-delay: .8s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-name: B0Z;
+  opacity: 0;
+}
+.z-9{
+  z-index: 9;
+}
+
+ @keyframes whirlpool {
+  
+ 0%, 80% {
+  opacity: 0;
+  transform: scale(.8);
+}
+20%, 60% {
+  opacity: 1;
+  transform: scale(1);
+}
+40% {
+  opacity: 1;
+  transform: scale(.8);
+}
+100% {
+  opacity: 0;
+}
+
+}

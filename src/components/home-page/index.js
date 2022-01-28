@@ -20,7 +20,8 @@ const id = type && (router?.query?.id || router?.query?.contentId);
 if(device === 'mobile'){
     if(id?.length >0){
         console.log("id",id, id.length);
-      router?.push({pathname : `/video/${id}`});
+      // router?.push({pathname : `/video/${id}`});
+      router?.push({pathname : `/feed/for-you?videoId=${id}`});
       return null;
     }
     router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})

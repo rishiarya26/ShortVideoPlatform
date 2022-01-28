@@ -10,6 +10,7 @@ const injectScripUrl = (scriptUrl = '', cb) => {
     console.warn('you need to pass the script url!!!');
     return false;
   }
+  console.log('sURL',scriptUrl);
   const elem = createElement();
   elem.async = true;
   elem.src = scriptUrl;

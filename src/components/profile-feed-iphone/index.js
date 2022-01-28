@@ -14,17 +14,19 @@ import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+import { CHARMBOARD_PLUGIN_URL, ONE_TAP_DOWNLOAD } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
-import { viewEvents } from '../../sources/social';
+import { getOneLink, viewEvents } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getSingleFeed } from '../../sources/feed/embed';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
+import SwipeUp from '../commons/svgicons/swipe-up';
+import { getItem } from '../../utils/cookie';
 
 SwiperCore.use([Mousewheel]);
 
@@ -56,6 +58,7 @@ function ProfileFeedIphone({ router }) {
   const [toInsertElements, setToInsertElements] = useState(4);
   const [toShowItems, setToShowItems] = useState([]);
   const [deletedTill, setDeletedTill] = useState();
+  const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -165,6 +168,27 @@ function ProfileFeedIphone({ router }) {
 
   }, []);
 
+  const onStoreRedirect = async ()=>{
+    // toTrackMixpanel('downloadClick');
+    let link = ONE_TAP_DOWNLOAD;
+    const device = getItem('device-info');
+    console.log(device)
+  try{  
+   if(device === 'android' && videoId){ 
+     try{ const resp = await getOneLink({videoId : activeVideoId});
+      link = resp?.data;
+      console.log("one link resp",resp);}
+      catch(e){
+        console.log('error android onelink',e)
+      }
+    }
+   }
+    catch(e){
+    }
+    console.log("final onelink",link);
+    window?.open(link);
+  }
+
 
   useEffect(()=>{
     if(initialPlayStarted === true){
@@ -226,8 +250,12 @@ function ProfileFeedIphone({ router }) {
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
-      // if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+      if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
+    /******************************/
+    if(currentTime >= duration-0.4){
+     if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+   }
     /******************************/
   };
 
@@ -330,10 +358,20 @@ function ProfileFeedIphone({ router }) {
           description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`        
         }}
      />
+
+       <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
+            <p className="text-sm">
+            Get the full experience on the app
+            </p>
+            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-md py-1 px-2 mr-1 bg-hipired text-white">
+               Open
+            </div>
+         </div>
         <div className="overflow-hidden" style={{ height: `${videoHeight}px` }}>
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
+          
           <Swiper
             className="max-h-full"
             direction="vertical"
@@ -354,6 +392,7 @@ function ProfileFeedIphone({ router }) {
               } = swiperCore;
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
+              setShowSwipeUp({count : 1, value:false});
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
@@ -420,13 +459,23 @@ function ProfileFeedIphone({ router }) {
               >
              <CircularProgress/>
               </div>
+              {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
+              "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
+               <div className="p-1 relative">
+                <SwipeUp/>
+               <div className="w-4 h-16 bg-white bg-opacity-20 rounded-full absolute top-1 left-1"></div>
+              </div>
+              <div className="flex py-2 px-4 bg-gray text-white font-semibold mt-12">Swipe up for next video</div>
+              </div>}
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
               >
-               
+               <div className="stretch-y"><div className="stretch-z"></div></div>
+               <div className='z-9'>
                 <Mute/>
+                </div>
               </div>}
           </Swiper>
           {validItemsLength ? seekedPercentage

@@ -146,6 +146,7 @@ const viewCountUpdate = async ({ id, event = 'user_video_start'}) => {
 const getDynamicOneLink = async({videoId}) => {
   let response = {};
   try {
+  console.log('videoId',videoId)
     const payload = {
       deep_link_value: `https://www.hipi.co.in/video/${videoId}`,
       utm_source: 'pwa_mobile_install_cta',

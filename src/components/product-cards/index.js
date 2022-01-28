@@ -21,7 +21,7 @@ function ProductCards({
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
   const type = {
-    profile: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
+    profile: 'bottom-12 flex w-6/12 h-24 justify-between items-center p-2 absolute',
     embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
     single: 'bottom-16 flex w-6/12 h-24 justify-between items-center p-2 fixed',
 

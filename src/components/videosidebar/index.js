@@ -29,6 +29,8 @@ import useDevice, { devices } from '../../hooks/use-device';
 import fallbackUser from "../../../public/images/users.png"
 import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
+import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
+import { localStorage } from '../../utils/storage';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -36,13 +38,13 @@ import { numberFormatter } from '../../utils/convert-to-K';
 //   ssr: false
 // });
 
-// const login = dynamic(
-//   () => import('../auth-options'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -52,12 +54,13 @@ const detectDeviceModal = dynamic(
   }
 );
 
-
 function VideoSidebar({
-  // socialId,
+  socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp
 }) {
+  const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
+  const [reactionCount, setReactionCount] = useState({likes : likes});
   const { show } = useDrawer();
 
   const info = { desktop: 'desktop', mobile: 'mobile' };
@@ -74,7 +77,12 @@ function VideoSidebar({
     show('', login, 'medium');
   };
 
-  const like = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+  const like = () => {
+     postReaction('like',socialId);
+     setIsLiked({like : true});
+     getVideoReactions(socialId, 'now', 'add')
+  } 
+  // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   
   const selectedLike = useAuth(showLoginOptions, like);
@@ -97,8 +105,55 @@ function VideoSidebar({
     showSnackbar({ message: 'Copied to Clipboard' });
   };
 
+  const getVideoReactions = async(socialId,time,action)=>{
+    let isLiked;
+    const details = await getActivityDetails(socialId);
+    // console.log('like count',details.reactionsCount.like)
+    if(time === 'now') {
+      if(action === 'add'){
+        setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
+      }else if(action === 'delete'){
+        setReactionCount({likes: details?.reactionsCount?.like-1 || likes-1})
+      }
+    }else{
+      setReactionCount({likes: details?.reactionsCount?.like || likes})
+    }
+  //  console.log('mrReact',details.myReactions)
+    if(details?.myReactions?.length > 0){
+      // console.log('my reac',details?.myReactions)
+      const liked = details.myReactions.findIndex((data)=>data === 'like');
+      isLiked = (liked !== -1) ? {like: true, reactionTime: 'past'} : {like: false, reactionTime: 'past'}
+    }
+    console.log('ISL',isLiked)
+    return isLiked;
+  }
+//   useEffect(()=>{
+//     // setIsLiked({like : false, reactionTime: 'past'});
+//        let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+//          if (tokens?.shortsAuthToken && tokens?.accessToken 
+//            // && tokens?.getSocialToken
+//            ) {
+//          const getLikeReaction = async()=>{  
+//             const isLiked =  await getVideoReactions(socialId, 'past');
+         
+//             setIsLiked({like : isLiked, reactionTime: 'past'});
+//            }
+//            getLikeReaction();
+//            }
+// },[])
   useEffect(()=>{
-  },[])
+             setIsLiked({like : false, reactionTime: 'past'});
+                let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+                  if (tokens?.shortsAuthToken && tokens?.accessToken )
+                {
+                  const getLikeReaction = async()=>{  
+                     const isLiked =  await getVideoReactions(socialId, 'past');
+                     console.log(isLiked)
+                     setIsLiked({like : isLiked, reactionTime: 'past'});
+                    }
+                    getLikeReaction();
+                }
+  },[activeVideoId])
 
     let optProfilePic = profilePic;
     if(optProfilePic?.match('upload/w_300')){
@@ -107,9 +162,20 @@ function VideoSidebar({
       optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
     }
 
+    const options = {
+      profile: `${saveLook ? 'bottom-20 ' : 'bottom-48 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ? 'bottom-28 ' : 'bottom-56 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+      embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+      single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+    };
+
+useEffect(()=>{
+console.log('RC',reactionCount)
+},[reactionCount])
+
   return (
     <div
-      className={`${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`}
+    className={options[comp]}
     >
       <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
@@ -135,32 +201,33 @@ function VideoSidebar({
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center justify-end`}
       >
-        {/* {liked ? (
+        {isLiked?.like ? (
           <div>
             <div
               role="presentation"
               onClick={() => {
-                // deleteLike({ socialId });
-                setLiked(false);
+                deleteReaction('like', socialId );
+                setIsLiked({like : false, reactionTime: 'now'});
+                getVideoReactions(socialId, 'now', 'delete')
               }}
             >
               <Liked />
             </div>
 
-            <p className="text-sm text-center">{likes + 1}</p>
+            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
           </div>
-        ) : ( */}
+        ) : (
           <div>
             <div
               id="like"
               role="presentation"
-              onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
+              onClick={() => selectedLike()}
             >
               <Like />
             </div>
-            <p className="text-sm text-center">{numberFormatter(likes)}</p>
+            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
           </div>
-        {/* )} */}
+       )} 
 
       </div>
       <div

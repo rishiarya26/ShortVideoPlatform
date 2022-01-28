@@ -49,14 +49,14 @@ const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
 
     return(
       <div className="h-screen bg-black  w-screen flex flex-col items-center justify-center">
-        <div className="w-32 h-32 flex items-center justify-center bg-white rounded-full">
+        <div className="w-24 h-24 flex items-center justify-center bg-white rounded-full">
           <Door/>
         </div>
-        <div className="text-lg text-white font-bold mt-8">
+        {/* <div className="text-lg text-white font-bold mt-8">
         Login app to see Following Users
-        </div>
-        <div className="text-white mt-3 text-wrap wrap w-full p-2 text-center">
-        Kindly Login the app to see following users
+        </div> */}
+        <div className="text-md text-white font-semibold mt-3 text-wrap wrap w-full p-2 text-center">
+        Log in to see videos from creators you follow
         </div>
         <button onClick={showLoginOptions} className='bg-hipired rounded px-12 py-2 flex justify-center items-center text-white mt-8'>
               Login

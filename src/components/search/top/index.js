@@ -120,7 +120,7 @@ const TopItems = ({item, redirectTab}) =>{
                 </div>
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                    {data?.items?.videos?.map((item, id)=>(
-                    <div onClick={()=>router?.push(`/video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                    <div onClick={()=>router?.push(`/single-video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

@@ -19,6 +19,26 @@ function Round2WinnerM({round}) {
     //  console.log("round", round)
     const response = await getLeaderboardData({round : round});
     console.log('leaderboard data',response?.data?.data, response?.data?.dates)
+    // response.data.data.week4 = {
+    //   "all": [
+    //     {
+    //       "id": 11,
+    //       "round": 2,
+    //       "week": 3,
+    //       "position": 1,
+    //       "rank": "",
+    //       "winner": "Yes",
+    //       "judge": "No",
+    //       "creatorId": "69d08ba3-c48e-416e-9002-2f3f8c688764",
+    //       "username": "Nidhi_sarolkar",
+    //       "firstName": "Nidhi",
+    //       "lastName": "sarolkar",
+    //       "profilepic": "https://akamaividz2.zee5.com/image/upload/v1641027294/hipi/assets/user/69d08ba3-c48e-416e-9002-2f3f8c688764/69d08ba3-c48e-416e-9002-2f3f8c688764.webp",
+    //       "createdTimeStamp": "2022-01-03T05:18:12.000Z"
+    //     }
+    //   ],
+    //   "judges": []
+    // }
     setData(response?.data?.data);
     setDates(response?.data?.dates);
    }catch(e){
@@ -92,6 +112,70 @@ function Round2WinnerM({round}) {
      
 
         <div className="Wlist">
+        {data?.week6?.all?.length > 0 && data?.week6?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 6 (${dates?.week6 || ''})`}</p>
+        </div>
+        }
+        {/* normal count */}
+      {data?.week6?.all?.length > 0 && data?.week6?.all?.[0] &&
+          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week6?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div className="flex items-center"  >
+            <div className="w-12 h-12 rounded-full overflow-hidden">
+              <Img data={data?.week6?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
+            </div>
+          <p className="text-black max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${data?.week6?.all?.[0]?.firstName} ${data?.week6?.all?.[0]?.lastName}`}</p>
+          </div>
+          <div className="text-green-600 bg-gray-100 p-2 font-semibold">
+              Winner
+            </div>
+          {/* <div className={data?.week2?.all?.[0]?.position === 1 ? "text-green-600 bg-gray-100 p-2 font-semibold" : "text-green-600 p-2 font-semibold"}>
+          {item?.position === 1 ? 'Winner' : data?.week2?.all?.[0]?.position}
+          </div> */}
+          </div>
+       }  
+        {data?.week5?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 5 (${dates?.week5 || ''})`}</p>
+        </div>
+        }
+        {/* normal count */}
+      {data?.week5?.all?.[0] &&
+          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week5?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div className="flex items-center"  >
+            <div className="w-12 h-12 rounded-full overflow-hidden">
+              <Img data={data?.week5?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
+            </div>
+          <p className="text-black max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${data?.week5?.all?.[0]?.firstName} ${data?.week5?.all?.[0]?.lastName}`}</p>
+          </div>
+          <div className="text-green-600 bg-gray-100 p-2 font-semibold">
+              Winner
+            </div>
+          {/* <div className={data?.week2?.all?.[0]?.position === 1 ? "text-green-600 bg-gray-100 p-2 font-semibold" : "text-green-600 p-2 font-semibold"}>
+          {item?.position === 1 ? 'Winner' : data?.week2?.all?.[0]?.position}
+          </div> */}
+          </div>
+       }  
+
+        {data?.week4?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
+            <p className="font-bold">{`Week 4 (${dates?.week4 || ''})`}</p>
+        </div>
+        }
+        {/* normal count */}
+      {data?.week4?.all?.[0] &&
+          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week4?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div className="flex items-center"  >
+            <div className="w-12 h-12 rounded-full overflow-hidden">
+              <Img data={data?.week4?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
+            </div>
+          <p className="text-black max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${data?.week4?.all?.[0]?.firstName} ${data?.week4?.all?.[0]?.lastName}`}</p>
+          </div>
+          <div className="text-green-600 bg-gray-100 p-2 font-semibold">
+              Winner
+            </div>
+          {/* <div className={data?.week2?.all?.[0]?.position === 1 ? "text-green-600 bg-gray-100 p-2 font-semibold" : "text-green-600 p-2 font-semibold"}>
+          {item?.position === 1 ? 'Winner' : data?.week2?.all?.[0]?.position}
+          </div> */}
+          </div>
+       }  
         {data?.week3?.all?.[0] && <div className="w-full border-b-2 border-gray-300 relative flex py-2 px-4">
             <p className="font-bold">{`Week 3 (${dates?.week3 || ''})`}</p>
         </div>
