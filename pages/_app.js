@@ -21,6 +21,7 @@ import { init } from '../src/get-social';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
+import { initFirebase } from '../src/analytics/firebase';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -192,6 +193,7 @@ function Hipi({
       // let getSocialInitialised = localStorage.get('get-social') || 'fail'
       setTimeout(()=>{
         init();
+        initFirebase();
       },[1000])
    
     }
@@ -213,6 +215,7 @@ function Hipi({
       console.log('tokens there in _app.js')
       setTimeout(()=>{
         init();
+        initFirebase();
       },[1000])
      }else{
       if(loading === false){

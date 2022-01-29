@@ -55,9 +55,9 @@ return (
          <div className="w-full flex justify-center mt-6 flex-wrap">
          {data && data?.week6?.all?.length > 0 && data?.week6?.all?.map((item,id)=>(
          
-         <div key={id} className="w-96 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+         <div key={id} className="w-2/5 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-3 px-3 items-center">
                <div className="flex items-center"  >
-               <div className="w-12 h-12 rounded-full overflow-hidden bg-gray">
+               <div className="w-10 h-10 rounded-full overflow-hidden bg-gray">
                   <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
                </div>
             <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
@@ -71,9 +71,27 @@ return (
          }
          </div>
          ))}
-         {data && data?.week6?.judges?.length > 0 && data?.week6?.judges?.map((item,id)=>(
+       {data && data?.week1?.all?.length > 0 &&  <div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 1 Winner (${dates?.week1})`}</p>
+</div>}
+{data && data?.week1?.all?.length > 0 && data?.week1?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    {/* <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div> */}
+</div>
+</div>
+))}
+         {/* {data && data?.week6?.judges?.length > 0 && data?.week6?.judges?.map((item,id)=>(
          
-         <div key={id} className="w-96 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+         <div key={id} className="w-2/5 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
                <div className="flex items-center"  >
                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray">
                   <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
@@ -85,7 +103,7 @@ return (
        {`Judge's Pick`}
        </div>}
          </div>
-         ))}
+         ))} */}
          
          </div>
        

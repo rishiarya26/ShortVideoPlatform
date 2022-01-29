@@ -216,7 +216,7 @@ function Explore() {
             > 
               {crousalItems?.length > 0  && crousalItems.map((data,id)=>
                  (
-                  <SwiperSlide
+                  data?.id !== '1892afcb-b35e-4385-9a59-278168c9d46f' && <SwiperSlide
                     key={id}
                   >
                     <div 
