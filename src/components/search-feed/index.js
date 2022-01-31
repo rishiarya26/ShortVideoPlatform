@@ -72,7 +72,7 @@ function SearchFeed({ router }) {
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
     fbq.event('Screen View')
-    trackEvent('Screen View','Search Feed')
+    trackEvent('Screen View',{'Page Name' :'Search Feed'})
     track('Screen View',mixpanelEvents );
   }, []);
 

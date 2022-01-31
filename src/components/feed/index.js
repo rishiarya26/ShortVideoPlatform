@@ -100,7 +100,7 @@ function Feed({ router }) {
       // console.log('FB event ',fbq.event)
       fbq.event('Screen View')
       track('Screen View',mixpanelEvents );
-      trackEvent('Screen View','Feed');
+      trackEvent('Screen View',{'Page Name' :'Feed'});
       inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       // alert('useEffect called');
     }

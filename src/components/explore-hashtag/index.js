@@ -43,7 +43,7 @@ function HashTag({router}) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Details';
       fbq.event('Screen View')
-      trackEvent('Screen View','Hashtag')
+      trackEvent('Screen View',{'Page Name' :'Hashtag'})
       track('Screen View',mixpanelEvents );
     },[500])
     window.onunload = function () {

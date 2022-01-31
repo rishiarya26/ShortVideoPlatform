@@ -173,7 +173,7 @@ function Explore() {
       mixpanelEvents['Page Name'] = 'Discover';
       fbq.event('Screen View');
       track('Screen View',mixpanelEvents );
-      trackEvent('Screen View','Explore')
+      trackEvent('Screen View',{'Page Name' : 'Explore'})
       window.onunload = function () {
       window?.scrollTo(0, 1);
     }

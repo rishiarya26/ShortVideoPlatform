@@ -167,7 +167,7 @@ function HashTagFeedIphone({ router }) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Feed';
       fbq.event('Screen View')
-      trackEvent('Screen View','Hashtag Feed')
+      trackEvent('Screen View',{'Page Name' :'Hashtag Feed'})
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

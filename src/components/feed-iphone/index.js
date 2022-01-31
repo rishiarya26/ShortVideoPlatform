@@ -101,7 +101,7 @@ function FeedIphone({ router }) {
         const mixpanelEvents = commonEvents();
         mixpanelEvents['Page Name'] = 'Feed';
         track('Screen View',mixpanelEvents );
-        trackEvent('Screen View','Feed')
+        trackEvent('Screen View',{'Page Name' :'Feed'})
         inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       }
     },1000);

@@ -22,8 +22,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);  
+// console.log("InitialAnalytics",analytics)
 initiated=true;
-// logEvent(analytics, 'Test event');
 }
 
 export const trackEvent = (event, properties={}) =>{

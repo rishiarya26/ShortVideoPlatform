@@ -166,7 +166,7 @@ function ProfileFeedIphone({ router }) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile Feed';
       fbq.event('Screen View')
-      trackEvent('Screen View','Profile Feed')
+      trackEvent('Screen View',{'Page Name' :'Profile Feed'})
       track('Screen View',mixpanelEvents );
     },500)
 
