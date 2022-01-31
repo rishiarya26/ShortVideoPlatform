@@ -17,6 +17,7 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
 import { commonEvents } from '../../analytics/mixpanel/events';
+import { trackEvent } from '../../analytics/firebase';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -42,6 +43,7 @@ function HashTag({router}) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Details';
       fbq.event('Screen View')
+      trackEvent('Screen View','Hashtag')
       track('Screen View',mixpanelEvents );
     },[500])
     window.onunload = function () {

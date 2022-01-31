@@ -30,6 +30,7 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 SwiperCore.use([Mousewheel]);
 
@@ -166,6 +167,7 @@ function HashTagFeedIphone({ router }) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Feed';
       fbq.event('Screen View')
+      trackEvent('Screen View','Hashtag Feed')
       track('Screen View',mixpanelEvents );
     },500);
   }, []);
@@ -175,6 +177,7 @@ function HashTagFeedIphone({ router }) {
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
       ToTrackFbEvents(videoActiveIndex,'play')
+      toTrackFirebase(videoActiveIndex,'play')
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -217,6 +220,8 @@ function HashTagFeedIphone({ router }) {
     if(currentTime >= duration-0.2){
       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
 
       fbq.event('UGC_Played_Complete')
       ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
@@ -315,7 +320,7 @@ function HashTagFeedIphone({ router }) {
     // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
     // mixpanelEvents['UGC Genre'] = item?.genre;
     // mixpanelEvents['UGC Description'] = item?.content_description;
-    mixpanelEvents['Page Name'] = 'Feed';
+    mixpanelEvents['Page Name'] = 'Hashtag Feed';
 
     toTrack?.[type]();
   }
@@ -371,6 +376,54 @@ function HashTagFeedIphone({ router }) {
     toTrack?.[type]();
   }
 
+  const toTrackFirebase = (activeIndex, type, value) => {
+    const item = items[activeIndex];
+    const events = {}
+  
+    const toTrack = {
+      'play' : () => trackEvent('UGC Play', events),
+      'share' : () => trackEvent('UGC Share Click', events),
+      'replay' : () => trackEvent('UGC Replayed', events),
+      'watchTime' : () => {
+        events['UGC Consumption Type'] = value?.watchTime
+        events['UGC Duration'] = value?.duration
+        events['UGC Watch Duration'] = value?.durationWatchTime
+        trackEvent('UGC Watch Time',events)
+      },
+      'cta' : ()=>{
+        events['Element'] = value?.name
+        events['Button Type'] = value?.type
+        trackEvent('CTAs', events)
+      },
+      'savelook' : ()=>{
+        trackEvent('Save Look', events)
+      },
+      'downloadClick' : () => {
+        events['Popup Name'] = 'Download App',
+        events['Element'] = 'Download App',
+        events['Button Type'] = 'Link',
+        trackEvent('Popup CTAs', events)
+      }
+    }
+  
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
+  
+    events['Creator ID'] = item?.userId;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+    events['UGC ID'] = item?.content_id;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
+    events['Page Name'] = 'Hashtag Feed';
+  
+    toTrack?.[type]();
+  }
+  
+
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -378,6 +431,7 @@ function HashTagFeedIphone({ router }) {
  const onStoreRedirect = async ()=>{
   toTrackMixpanel(videoActiveIndex,'downloadClick');
   fbq.event('App Open CTA')
+  trackEvent('App Open CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
@@ -449,6 +503,7 @@ try{
               setShowSwipeUp({count : 1, value:false});
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
               ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

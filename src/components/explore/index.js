@@ -38,6 +38,7 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
@@ -172,6 +173,7 @@ function Explore() {
       mixpanelEvents['Page Name'] = 'Discover';
       fbq.event('Screen View');
       track('Screen View',mixpanelEvents );
+      trackEvent('Screen View','Explore')
       window.onunload = function () {
       window?.scrollTo(0, 1);
     }

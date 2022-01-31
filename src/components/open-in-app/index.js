@@ -12,6 +12,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 export default function DownloadAppWidget({videoId}) {
   // const stores = {
@@ -22,6 +23,7 @@ export default function DownloadAppWidget({videoId}) {
   useEffect(()=>{
     toTrackMixpanel('launch');
     fbq.event('App Download Popup')
+    trackEvent('App Download Popup');
   },[])
 
   const {close} = useDrawer();
@@ -60,7 +62,8 @@ export default function DownloadAppWidget({videoId}) {
 // 
   const onStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
-    fbq.event('App Download CTA')
+    fbq.event('App Download CTA');
+    trackEvent('App Download CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)

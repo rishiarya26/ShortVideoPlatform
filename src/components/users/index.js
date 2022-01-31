@@ -29,6 +29,7 @@ import { track } from '../../analytics';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -108,6 +109,7 @@ function Users({
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile';
       fbq.event('Screen View')
+      trackEvent('Screen View','Profile')
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

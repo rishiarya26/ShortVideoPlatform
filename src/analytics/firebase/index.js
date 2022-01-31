@@ -4,6 +4,9 @@ import { getAnalytics, logEvent } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+let initiated = false;
+
+let app = null;
 export const initFirebase=()=>
 {// Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -18,13 +21,28 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-logEvent(analytics, 'Test event');
+app = initializeApp(firebaseConfig);
+initiated=true;
+// logEvent(analytics, 'Test event');
 }
 
-export const toTrackFirebase = ({event, properties={}}) =>{
-    const analytics = getAnalytics();
-    logEvent(analytics, event, properties);
+export const trackEvent = (event, properties={}) =>{
+    console.log("EVENT **********",event)
+   try{ 
+    if (!initiated) initFirebase();
+    console.log(initiated,'app',app);
+    if(app){
+        const analytics = getAnalytics(app);   
+        logEvent(analytics, event, properties);
+        console.log('** FIREBASE **',event,properties);
+    }else{
+        console.log('no app')
+        initFirebase();
+        setTimeout(()=>{trackEvent(event,properties);},200); 
+    }
+}catch(e){
+    console.log("error in firebase event",e);
+    initFirebase();
+}
 }
 

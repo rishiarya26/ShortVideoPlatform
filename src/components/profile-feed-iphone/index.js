@@ -28,6 +28,7 @@ import dynamic from 'next/dynamic';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 SwiperCore.use([Mousewheel]);
 
@@ -165,6 +166,7 @@ function ProfileFeedIphone({ router }) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile Feed';
       fbq.event('Screen View')
+      trackEvent('Screen View','Profile Feed')
       track('Screen View',mixpanelEvents );
     },500)
 
@@ -173,6 +175,7 @@ function ProfileFeedIphone({ router }) {
   const onStoreRedirect = async ()=>{
     toTrackMixpanel(videoActiveIndex,'downloadClick');
     fbq.event('App Open CTA')
+    trackEvent('App Open CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)
@@ -197,6 +200,8 @@ function ProfileFeedIphone({ router }) {
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
       ToTrackFbEvents(videoActiveIndex,'play')
+      toTrackFirebase(videoActiveIndex,'play')
+
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -251,6 +256,9 @@ function ProfileFeedIphone({ router }) {
     if(currentTime >= duration-0.2){
       toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+
+      toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       fbq.event('UGC_Played_Complete')
       ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
@@ -349,7 +357,7 @@ function ProfileFeedIphone({ router }) {
     // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
     // mixpanelEvents['UGC Genre'] = item?.genre;
     // mixpanelEvents['UGC Description'] = item?.content_description;
-    mixpanelEvents['Page Name'] = 'Feed';
+    mixpanelEvents['Page Name'] = 'Profile Feed';
 
     toTrack?.[type]();
   }
@@ -405,6 +413,54 @@ function ProfileFeedIphone({ router }) {
     toTrack?.[type]();
   }
 
+  const toTrackFirebase = (activeIndex, type, value) => {
+    const item = items[activeIndex];
+    const events = {}
+  
+    const toTrack = {
+      'play' : () => trackEvent('UGC Play', events),
+      'share' : () => trackEvent('UGC Share Click', events),
+      'replay' : () => trackEvent('UGC Replayed', events),
+      'watchTime' : () => {
+        events['UGC Consumption Type'] = value?.watchTime
+        events['UGC Duration'] = value?.duration
+        events['UGC Watch Duration'] = value?.durationWatchTime
+        trackEvent('UGC Watch Time',events)
+      },
+      'cta' : ()=>{
+        events['Element'] = value?.name
+        events['Button Type'] = value?.type
+        trackEvent('CTAs', events)
+      },
+      'savelook' : ()=>{
+        trackEvent('Save Look', events)
+      },
+      'downloadClick' : () => {
+        events['Popup Name'] = 'Download App',
+        events['Element'] = 'Download App',
+        events['Button Type'] = 'Link',
+        trackEvent('Popup CTAs', events)
+      }
+    }
+  
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
+  
+    events['Creator ID'] = item?.userId;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+    events['UGC ID'] = item?.content_id;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
+    events['Page Name'] = 'Profile Feed';
+  
+    toTrack?.[type]();
+  }
+  
+
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -423,7 +479,9 @@ function ProfileFeedIphone({ router }) {
         }}
      />
 
-       <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
+       
+        <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
+        <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
             <p className="text-sm">
             Get the full experience on the app
             </p>
@@ -431,7 +489,6 @@ function ProfileFeedIphone({ router }) {
                Open
             </div>
          </div>
-        <div className="overflow-hidden" style={{ height: `${videoHeight}px` }}>
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
@@ -459,6 +516,7 @@ function ProfileFeedIphone({ router }) {
               setShowSwipeUp({count : 1, value:false});
               toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
               ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
