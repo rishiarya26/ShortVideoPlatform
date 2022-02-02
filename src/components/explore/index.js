@@ -64,7 +64,6 @@ function Explore() {
   const [offset, setOffset] = useState(2)
 
   const {show} = useDrawer();
-  console.log("isFetching", isFetching, showLoading)
 
   useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
@@ -75,9 +74,7 @@ function Explore() {
 
   async function fetchMoreListItems() {
     try{
-      console.log(offset)
      const response = await getSearchData({ offset: `${offset}` });
-     console.log(response.data.length)
      if(response?.data?.length > 0){
        let updateData = [...data];
        updateData = updateData?.concat(response?.data);

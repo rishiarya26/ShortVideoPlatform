@@ -19,6 +19,7 @@ function transformSuccess(resp) {
       data.data?.[0]?.topCharms?.length > 0
     ) {
       payload.data = data.data[0].topCharms?.[0]?.contentImageUrlArray;
+      payload.type = data.data[0]?.topCharms?.[0]?.charm_type;
       payload.isShoppable = true;
     }
     return payload;

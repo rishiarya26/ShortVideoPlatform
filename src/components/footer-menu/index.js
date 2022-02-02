@@ -19,6 +19,7 @@ import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
+import { useEffect } from 'react';
 
 // const login = dynamic(
 //   () => import('../auth-options'),
@@ -28,7 +29,7 @@ import { localStorage } from '../../utils/storage';
 //   }
 // );
 
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab} ){
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop} ){
   const router = useRouter();
   const { show } = useDrawer();
 
@@ -36,6 +37,7 @@ const info ={
   shop:  <Shop
   videoId={videoId}
   canShop={canShop}
+  shopType={shopType && shopType}
 />,
  noShop: null
 }

@@ -28,14 +28,11 @@ initiated=true;
 }
 
 export const trackEvent = (event, properties={}) =>{
-    console.log("EVENT **********",event)
    try{ 
     if (!initiated) initFirebase();
-    console.log(initiated,'app',app);
     if(app){
         const analytics = getAnalytics(app);   
         logEvent(analytics, event, properties);
-        console.log('** FIREBASE **',event,properties);
     }else{
         console.log('no app')
         initFirebase();

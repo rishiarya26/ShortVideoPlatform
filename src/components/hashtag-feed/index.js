@@ -176,6 +176,7 @@ function HashTagFeed({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
+      shopContent.type = response?.type;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -435,6 +436,8 @@ try{
 
               ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
+              ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
                   viewEventsCall(activeVideoId,'skip')
@@ -477,6 +480,7 @@ try{
                       thumbnail={item?.firstFrame}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
+                      shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
                       saveLook={saveLook}
                       saved={item?.saveLook}
@@ -489,6 +493,7 @@ try{
                       initialPlayStarted={initialPlayStarted}
                       firstFrame={item?.firstFrame}
                       player={'single-player-muted'}
+                      description={item?.content_description}
                     />
 
                   </SwiperSlide>

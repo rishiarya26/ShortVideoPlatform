@@ -268,6 +268,7 @@ function FeedIphone({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
+      shopContent.type = response?.type;
     } catch (e) {
       isShoppable = false;
     }
@@ -611,6 +612,7 @@ console.log('error',e)
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
+                      shopType={shop?.type}
                       handleSaveLook={toggleSaveLook}
                       saveLook={saveLook}
                       saved={item?.saveLook}
@@ -625,6 +627,7 @@ console.log('error',e)
                       initialPlayStarted={initialPlayStarted}
                       currentT={videoDurationDetails?.currentT}
                       player={'multi-player-muted'}
+                      description={item?.content_description}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -674,6 +677,7 @@ console.log('error',e)
               canShop={shop.isShoppable}
               type="shop"
               selectedTab="home"
+              shopType = {shop?.type}
               />
             </Swiper>
 

@@ -57,18 +57,14 @@ function HashTag({router}) {
   async function fetchMoreListItems() {
     try{
      const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
-     console.log("resp1",response)
      if(response?.data?.length > 0){
-       console.log("resp",response?.data)
        let updateData = [...items];
        updateData = updateData?.concat(response?.data);
-       console.log("items",updateData)
        setItems(updateData);
        setOffset(offset+1);
        setIsFetching(false);
        setShowLoading(false)
      }else{
-      console.log("inelse",response.data.length)
       setShowLoading(false)
      }
      setShowLoading(false)

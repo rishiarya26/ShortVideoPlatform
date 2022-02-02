@@ -6,7 +6,6 @@ import StaticFooter from '../static-footer';
 
 function Community() {
 const router = useRouter();
-console.log('router', router)
   return (
     <div className="static_body relative">
       <div className="tray-container">

@@ -226,6 +226,7 @@ export default function SingleVideo(props){
         hashTags={props.hashTags}
         canShop={props.canShop}
         comp="single"
+        description={props?.description}
       />
        <EmbedVideoSidebar
         videoId={props?.videoId}

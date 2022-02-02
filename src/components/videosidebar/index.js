@@ -59,7 +59,7 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName,  shopType
 }) {
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
   const [reactionCount, setReactionCount] = useState({likes : likes});
@@ -264,15 +264,13 @@ useEffect(()=>{
       >
       <ShareComp />
       </div>
-      <div className={`${
+      
+        <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-28`}
-      >
-        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
+      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-sm text-center">Embed</p>
         </div>
-      </div>
       {/* <div
         role="presentation"
         className={`${
@@ -299,7 +297,7 @@ useEffect(()=>{
             } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
             onClick={handleSaveLook}
           >
-            <Shop text={!saved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK '} />
+            <Shop text={shopType === 'recipe' ? (!saved ? 'LIST THE INGREDIENTS' : 'LIST THE INGREDIENTS ') : (!saved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK ')}  saved={saved}/>
           </div>
         )
       )}

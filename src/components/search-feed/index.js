@@ -169,6 +169,7 @@ function SearchFeed({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
+      shopContent.type = response?.type;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -245,58 +246,6 @@ function SearchFeed({ router }) {
 
     toTrack?.[type]();
   }
-
-  const ToTrackFbEvents = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const fbEvents = {}
-  
-    
-  console.log('FB events',fbq)
-    const toTrack = {
-      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-      'swipe' : ()=> {
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Swipe', fbEvents)
-      },
-      'play' : () => fbq.event('UGC Play', fbEvents),
-      'pause' : () => fbq.event('Pause', fbEvents),
-      'resume' : () => fbq.event('Resume', fbEvents),
-      'share' : () => fbq.event('UGC Share Click', fbEvents),
-      'replay' : () => fbq.event('UGC Replayed', fbEvents),
-      'watchTime' : () => {
-        fbEvents['UGC Consumption Type'] = value?.watchTime
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Watch Time',fbEvents)
-      },
-      'cta' : ()=>{
-        fbEvents['Element'] = value?.name
-        fbEvents['Button Type'] = value?.type
-        fbq.event('CTAs', fbEvents)
-      },
-      'savelook' : ()=>{
-        fbq.event('Save Look', fbEvents)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    fbEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    fbEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    fbEvents['Page Name'] = 'Search Feed';
-  
-    toTrack?.[type]();
-  }
-
   const toTrackFirebase = (activeIndex, type, value) => {
     const item = items[activeIndex];
     const events = {}
@@ -368,6 +317,132 @@ try{
   console.log("final onelink",link);
   window?.open(link);
 }
+
+
+  const ToTrackFbEvents = (activeIndex, type, value) => {
+    const item = items[activeIndex];
+    const fbEvents = {}
+  
+    
+  console.log('FB events',fbq)
+    const toTrack = {
+      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
+      'swipe' : ()=> {
+        fbEvents['UGC Duration'] = value?.duration
+        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
+        fbq.event('UGC Swipe', fbEvents)
+      },
+      'play' : () => fbq.event('UGC Play', fbEvents),
+      'pause' : () => fbq.event('Pause', fbEvents),
+      'resume' : () => fbq.event('Resume', fbEvents),
+      'share' : () => fbq.event('UGC Share Click', fbEvents),
+      'replay' : () => fbq.event('UGC Replayed', fbEvents),
+      'watchTime' : () => {
+        fbEvents['UGC Consumption Type'] = value?.watchTime
+        fbEvents['UGC Duration'] = value?.duration
+        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
+        fbq.event('UGC Watch Time',fbEvents)
+      },
+      'cta' : ()=>{
+        fbEvents['Element'] = value?.name
+        fbEvents['Button Type'] = value?.type
+        fbq.event('CTAs', fbEvents)
+      },
+      'savelook' : ()=>{
+        fbq.event('Save Look', fbEvents)
+      }
+    }
+  
+    // const hashTags = item?.hashtags?.map((data)=> data.name);
+  
+    fbEvents['Creator ID'] = item?.userId;
+    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+    fbEvents['UGC ID'] = item?.content_id;
+    // mixpanelEvents['Short Post Date'] = 'NA';
+    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+    // mixpanelEvents['UGC Genre'] = item?.genre;
+    // mixpanelEvents['UGC Description'] = item?.content_description;
+    fbEvents['Page Name'] = 'Search Feed';
+  
+    toTrack?.[type]();
+  }
+
+
+  // const ToTrackFbEvents = (activeIndex, type, value) => {
+  //   const item = items[activeIndex];
+  //   const fbEvents = {}
+  
+    
+  // console.log('FB events',fbq)
+  //   const toTrack = {
+  //     'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
+  //     'swipe' : ()=> {
+  //       fbEvents['UGC Duration'] = value?.duration
+  //       fbEvents['UGC Watch Duration'] = value?.durationWatchTime
+  //       fbq.event('UGC Swipe', fbEvents)
+  //     },
+  //     'play' : () => fbq.event('UGC Play', fbEvents),
+  //     'pause' : () => fbq.event('Pause', fbEvents),
+  //     'resume' : () => fbq.event('Resume', fbEvents),
+  //     'share' : () => fbq.event('UGC Share Click', fbEvents),
+  //     'replay' : () => fbq.event('UGC Replayed', fbEvents),
+  //     'watchTime' : () => {
+  //       fbEvents['UGC Consumption Type'] = value?.watchTime
+  //       fbEvents['UGC Duration'] = value?.duration
+  //       fbEvents['UGC Watch Duration'] = value?.durationWatchTime
+  //       fbq.event('UGC Watch Time',fbEvents)
+  //     },
+  //     'cta' : ()=>{
+  //       fbEvents['Element'] = value?.name
+  //       fbEvents['Button Type'] = value?.type
+  //       fbq.event('CTAs', fbEvents)
+  //     },
+  //     'savelook' : ()=>{
+  //       fbq.event('Save Look', fbEvents)
+  //     }
+  //   }
+  
+  //   // const hashTags = item?.hashtags?.map((data)=> data.name);
+  
+  //   fbEvents['Creator ID'] = item?.userId;
+  //   // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+  //   // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
+  //   fbEvents['UGC ID'] = item?.content_id;
+  //   // mixpanelEvents['Short Post Date'] = 'NA';
+  //   // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
+  //   // mixpanelEvents['Hashtag'] = hashTags || 'NA';
+  //   // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
+  //   // mixpanelEvents['UGC Genre'] = item?.genre;
+  //   // mixpanelEvents['UGC Description'] = item?.content_description;
+  //   fbEvents['Page Name'] = 'Feed';
+  
+  //   toTrack?.[type]();
+  // }
+
+  
+// const onStoreRedirect = async ()=>{
+//   // toTrackMixpanel('downloadClick');
+//   let link = ONE_TAP_DOWNLOAD;
+//   const device = getItem('device-info');
+//   console.log(device)
+// try{  
+//  if(device === 'android' && videoId){ 
+//    try{ const resp = await getOneLink({videoId : videoId});
+//     link = resp?.data;
+//     console.log("one link resp",resp);}
+//     catch(e){
+//       console.log('error android onelink',e)
+//     }
+//   }
+//  }
+//   catch(e){
+//   }
+//   console.log("final onelink",link);
+//   window?.open(link);
+// }
 
 
   const size = useWindowSize();
@@ -465,6 +540,7 @@ try{
              thumbnail={item?.thumbnailUrl}
              canShop={shop?.isShoppable}
              shopCards={shop?.data}
+             shopType={shop?.type}
              handleSaveLook={handleSaveLook}
              saveLook={saveLook}
              saved={item?.saveLook}
@@ -474,6 +550,7 @@ try{
              loading={loading}
              muted={muted}
              player={'multi-player-muted'}
+             description={item?.description}
           />
           </SwiperSlide>
           )})}

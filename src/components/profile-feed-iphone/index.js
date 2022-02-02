@@ -285,6 +285,7 @@ function ProfileFeedIphone({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
+      shopContent.type= response?.type;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -560,6 +561,7 @@ function ProfileFeedIphone({ router }) {
                       thumbnail={item?.firstFrame}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
+                      shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
                       saveLook={saveLook}
                       saved={item?.saveLook}
@@ -570,6 +572,7 @@ function ProfileFeedIphone({ router }) {
                       muted={muted}
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
+                      description={item?.content_description}
                     />
 
                   </SwiperSlide>

@@ -55,7 +55,6 @@ const Registration = ({ router }) => {
   };
 
   const mixpanel = (type, method) =>{
-    console.log(type,method)
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Method'] = method;
     track(`${type} Result`,mixpanelEvents );

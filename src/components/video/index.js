@@ -47,6 +47,7 @@ function Video(props) {
    //   }
    // },[props?.videoActiveIndex])
 
+
    const handleVideoPress = () => {
       if (playing) {
       rootRef.current.children[0].pause();
@@ -262,6 +263,7 @@ function Video(props) {
          canShop={props.canShop}
          saveLook={props.saveLook}
          comp={props?.comp}
+         description={props?.description}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
@@ -285,6 +287,7 @@ function Video(props) {
          activeVideoId={props?.activeVideoId}
          comp={props?.comp}
          pageName={props?.pageName}
+         shopType={props?.shopType}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed

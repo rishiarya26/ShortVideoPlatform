@@ -6,7 +6,7 @@ import { CHARMBOARD_PLUGIN_URL } from '../../../../constants';
 import useTranslation from '../../../../hooks/use-translation';
 
 export const Shop = ({
-  videoId, canShop
+  videoId, canShop, shopType
 }) => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
@@ -56,14 +56,14 @@ export const Shop = ({
           // eslint-disable-next-line no-undef
           onClick={handleShop}
         >
-          {t('SHOP')}
+           {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
         </button>
       )
         : (
           <button
             className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           >
-            {t('SHOP')}
+            {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
           </button>
         )}
     </>

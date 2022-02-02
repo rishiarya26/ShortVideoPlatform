@@ -248,6 +248,7 @@ function HashTagFeedIphone({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
+      shopContent.type = response?.type;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -547,6 +548,7 @@ try{
                       thumbnail={item?.firstFrame}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
+                      shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
                       saveLook={saveLook}
                       saved={item?.saveLook}
@@ -559,6 +561,7 @@ try{
                       initialPlayStarted={initialPlayStarted}
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
+                      description={item?.content_description}
                     />
 
                   </SwiperSlide>

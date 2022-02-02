@@ -243,6 +243,7 @@ function Feed({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
+      shopContent.type = response?.type;
     } catch (e) {
       isShoppable = false;
     }
@@ -611,6 +612,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
                       shopCards={shop?.data}
+                      shopType={shop?.type}
                       handleSaveLook={toggleSaveLook}
                       saveLook={saveLook}
                       saved={item?.saveLook}
@@ -628,6 +630,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       currentT={videoDurationDetails?.currentT}
                       player={'single-player-muted'}
                       isLiked={item?.isLiked}
+                      description={item?.content_description}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -678,6 +681,8 @@ const toTrackFirebase = (activeIndex, type, value) => {
               canShop={shop.isShoppable}
               type="shop"
               selectedTab="home"
+              shopType={shop?.type && shop.type}
+              shop={shop}
               />
             </Swiper>
             
