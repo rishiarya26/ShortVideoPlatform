@@ -96,6 +96,21 @@ img{
   display: none;
 }
 
+
+.thin_bar::-webkit-scrollbar {
+  width: 3px;
+}
+ 
+.thin_bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.171);
+}
+ 
+.thin_bar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  /* outline: 1px solid slategrey; */
+}
+
+
 .header_landing{
     height: 112px;
 }

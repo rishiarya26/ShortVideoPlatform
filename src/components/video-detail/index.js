@@ -10,27 +10,10 @@ function VideoDetail() {
 return (
 <div className="flex w-screen h-screen">
    <div className="flex w-8/12 h-screen bg-black justify-center relative overflow-hidden">
-      <div className="video_blur w-8/12">
+      {/* <div className="video_blur w-8/12">
          <img src="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1632757116/hipi/videos/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_00.webp"/>
-      </div>
-      <video
-      playsInline
-      autoPlay
-      // muted
-      // webkit-playsinline = "true"
-      // onLoadCapture ={resetCurrentTime}
-      loop
-      className="vdo_player"
-      // width={size.width}
-      // height={videoHeight}
-      //poster={props.thumbnail}
-      objectfit="cover"
-      >
-      <source
-         src="https://z5shorts.akamaized.net/2021/9/4/82752ae3-33b9-4503-8a35-cbe6d6440df1/82752ae3-33b9-4503-8a35-cbe6d6440df1_1536.mp4?hdnea=st=1634640919~exp=1634655319~acl=/*~hmac=f7868428a1de01ad986cd9603f77ef0c8f03a33706775cf11687f52a91baa298"
-         type="video/mp4"
-         />
-      </video>
+      </div> */}
+       <video playsinline="" autoPlay="" preload="auto" importance="high" loop="" className="" src="https://z5shorts.akamaized.net/2022/0/21/807dc125-ef6c-49ac-b92e-8d12b4f0e3b8/807dc125-ef6c-49ac-b92e-8d12b4f0e3b8_1536.mp4?hdnea=st=1643353521~exp=1643367921~acl=/*~hmac=d664de68e5020f873bc6875de493f8173c800751822d4472926f736d25645b29" type="video/mp4"  poster="https://akamaividz2.zee5.com/image/upload/w_300/v1642760371/hipi/videos_ff/807dc125-ef6c-49ac-b92e-8d12b4f0e3b8/807dc125-ef6c-49ac-b92e-8d12b4f0e3b8.webp" objectfit="cover"></video>
       <div className="absolute right-4 bottom-6 cursor-pointer">
          <Mute/>
       </div>
@@ -104,7 +87,7 @@ return (
                   <span> 10</span>
                </div> */}
             </div>
-            <div className="cmbd_body p-4 py-2 flex flex-col overflow-scroll w-3/4">
+            <div className="cmbd_body thin_bar p-4 py-2 flex flex-col overflow-scroll w-3/4">
                <div className="cmbd_charm_card relative flex p-2 rounded-sm mb-2 shadow flex-col">
                   <div className="cmbd_tab_charm flex flex-col relative p-2 rounded-sm" id="Media_charm_2257127" data-title="Sarla Arora">
                      <div className="cmbd_tab_charm_title mb-1">
@@ -134,7 +117,7 @@ return (
                      </div>
                   </div>
                   <div className="cmbd_collapse_body flex flex-col w-full ">
-                     <div className="cmbd_cat_tabs flex w-full py-4 overflow-x-scroll">
+                     <div className="cmbd_cat_tabs no_bar flex w-full py-4 overflow-x-scroll">
                         <div className="cmbd_card_cat bg-black text-white rounded text-semibold flex justify-center px-4 py-1 mr-2 cursor-pointer">
                            All
                         </div>
