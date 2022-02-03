@@ -16,6 +16,7 @@ return (
       <div className="w-20">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
+
       <div>
          <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
             <div>
@@ -24,6 +25,7 @@ return (
             <div className="ml-4">
                <CloseSolid/>
             </div>
+
             <div className=" ml-4 w-px h-8 bg-gray-300">
 
             </div>
@@ -55,7 +57,7 @@ return (
             </div>
             <div className="video_section flex flex-col  w-3/4 ml-4">
                <div className="header flex flex-col relative">
-                     <p> <span className="font-semibold text-lg">NAME </span> name</p>
+                     <p> <span className="font-semibold text-lg">NAME </span> Username</p>
                      <p className="font-semibold text-md my-2 mb-4"> <MusicBlack/> no my bestie is a bad b - Luke Franchina</p>
                      <div className="absolute rounded-md  px-6 right-4 top-0 border-2 p-2 border-hipired text-hipired">
                            Follow
