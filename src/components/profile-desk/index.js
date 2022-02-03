@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element */
 
 import CloseSolid from "../commons/svgicons/close-solid";
 import SearchBlack from "../commons/svgicons/search-black";

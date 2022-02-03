@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element */
+
 import EmbedIcon from "../commons/svgicons/embedicon-black";
 import Share from "../commons/svgicons/share-black";
 import Comment from "../commons/svgicons/comment-black";
