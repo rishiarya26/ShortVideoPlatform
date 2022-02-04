@@ -300,12 +300,6 @@ function HashTagFeedIphone({ router }) {
       },
       'savelook' : ()=>{
         track('Save Look', mixpanelEvents)
-      },
-      'downloadClick' : () => {
-        mixpanelEvents['Popup Name'] = 'Download App',
-        mixpanelEvents['Element'] = 'Download App',
-        mixpanelEvents['Button Type'] = 'Link',
-        track('Popup CTAs', mixpanelEvents)
       }
     }
 
@@ -398,12 +392,6 @@ function HashTagFeedIphone({ router }) {
       },
       'savelook' : ()=>{
         trackEvent('Save Look', events)
-      },
-      'downloadClick' : () => {
-        events['Popup Name'] = 'Download App',
-        events['Element'] = 'Download App',
-        events['Button Type'] = 'Link',
-        trackEvent('Popup CTAs', events)
       }
     }
   
@@ -430,15 +418,15 @@ function HashTagFeedIphone({ router }) {
 
   
  const onStoreRedirect = async ()=>{
-  toTrackMixpanel(videoActiveIndex,'downloadClick');
+  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
   fbq.event('App Open CTA')
   trackEvent('App Open CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
 try{  
- if(device === 'android' && videoId){ 
-   try{ const resp = await getOneLink({videoId : videoId});
+ if(activeVideoId){ 
+   try{ const resp = await getOneLink({videoId : activeVideoId});
     link = resp?.data;
     console.log("one link resp",resp);}
     catch(e){

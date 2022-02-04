@@ -221,12 +221,6 @@ function SearchFeed({ router }) {
       },
       'savelook' : ()=>{
         track('Save Look', mixpanelEvents)
-      },
-      'downloadClick' : () => {
-        events['Popup Name'] = 'Download App',
-        events['Element'] = 'Download App',
-        events['Button Type'] = 'Link',
-        trackEvent('Popup CTAs', events)
       }
     }
 
@@ -267,12 +261,6 @@ function SearchFeed({ router }) {
       },
       'savelook' : ()=>{
         trackEvent('Save Look', events)
-      },
-      'downloadClick' : () => {
-        events['Popup Name'] = 'Download App',
-        events['Element'] = 'Download App',
-        events['Button Type'] = 'Link',
-        trackEvent('Popup CTAs', events)
       }
     }
   
@@ -298,13 +286,13 @@ function SearchFeed({ router }) {
 const onStoreRedirect = async ()=>{
   trackEvent('App Open CTA')
   fbq.event('App Open CTA')
-  toTrackMixpanel('downloadClick');
+  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
 try{  
- if(device === 'android' && videoId){ 
-   try{ const resp = await getOneLink({videoId : videoId});
+ if(activeVideoId){ 
+   try{ const resp = await getOneLink({videoId : activeVideoId});
     link = resp?.data;
     console.log("one link resp",resp);}
     catch(e){
@@ -355,17 +343,17 @@ try{
   
     // const hashTags = item?.hashtags?.map((data)=> data.name);
   
-    fbEvents['Creator ID'] = item?.userId;
+    // fbEvents['Creator ID'] = item?.userId;
     // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
     // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    fbEvents['UGC ID'] = item?.content_id;
+    // fbEvents['UGC ID'] = item?.content_id;
     // mixpanelEvents['Short Post Date'] = 'NA';
     // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
     // mixpanelEvents['Hashtag'] = hashTags || 'NA';
     // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
     // mixpanelEvents['UGC Genre'] = item?.genre;
     // mixpanelEvents['UGC Description'] = item?.content_description;
-    fbEvents['Page Name'] = 'Search Feed';
+    // fbEvents['Page Name'] = 'Search Feed';
   
     toTrack?.[type]();
   }

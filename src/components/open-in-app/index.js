@@ -68,11 +68,16 @@ export default function DownloadAppWidget({videoId}) {
     const device = getItem('device-info');
     console.log(device)
   try{  
-   if(device === 'android' && videoId){ 
+    if(videoId){ 
       const resp = await getOneLink({videoId : videoId});
       link = resp?.data;
       console.log("one link resp",resp);
     }
+  //  if(device === 'android' && videoId){ 
+  //     const resp = await getOneLink({videoId : videoId});
+  //     link = resp?.data;
+  //     console.log("one link resp",resp);
+  //   }
    }
     catch(e){
     }

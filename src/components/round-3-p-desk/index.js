@@ -71,6 +71,61 @@ return (
          }
          </div>
          ))}
+                {data && data?.week4?.all?.length > 0 &&  <div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 4 Winner (${dates?.week4})`}</p>
+</div>}
+{data && data?.week4?.all?.length > 0 && data?.week4?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    {/* <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div> */}
+</div>
+</div>
+))}
+       {data && data?.week3?.all?.length > 0 &&  <div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 3 Winner (${dates?.week3})`}</p>
+</div>}
+{data && data?.week3?.all?.length > 0 && data?.week3?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    {/* <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div> */}
+</div>
+</div>
+))}
+
+                {data && data?.week2?.all?.length > 0 &&  <div className="w-full  relative flex justify-center py-2 mt-6">
+    <p className="font-bold">{`Week 2 Winner (${dates?.week2})`}</p>
+</div>}
+{data && data?.week2?.all?.length > 0 && data?.week2?.all?.map((item,id)=>(
+  <div key={id} className="w-full flex justify-center mt-6">
+  <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
+      <div className="flex items-center"  >
+        <div className="w-12 h-12 rounded-full overflow-hidden">
+          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+        </div>
+    <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
+    </div>
+    {/* <div className="text-green-600 bg-gray-100  p-2 font-semibold">
+      Winner
+    </div> */}
+</div>
+</div>
+))}
        {data && data?.week1?.all?.length > 0 &&  <div className="w-full  relative flex justify-center py-2 mt-6">
     <p className="font-bold">{`Week 1 Winner (${dates?.week1})`}</p>
 </div>}

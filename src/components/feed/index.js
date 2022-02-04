@@ -359,12 +359,12 @@ function Feed({ router }) {
       'savelook' : ()=>{
         track('Save Look', mixpanelEvents)
       },
-      'downloadClick' : () => {
-        mixpanelEvents['Popup Name'] = 'Download App',
-        mixpanelEvents['Element'] = 'Download App',
-        mixpanelEvents['Button Type'] = 'Link',
-        track('Popup CTAs', mixpanelEvents)
-      }
+      // 'downloadClick' : () => {
+      //   mixpanelEvents['Popup Name'] = 'Download App',
+      //   mixpanelEvents['Element'] = 'Download App',
+      //   mixpanelEvents['Button Type'] = 'Link',
+      //   track('Popup CTAs', mixpanelEvents)
+      // }
     }
 
     // const hashTags = item?.hashtags?.map((data)=> data.name);
@@ -458,13 +458,13 @@ const toTrackFirebase = (activeIndex, type, value) => {
     },
     'savelook' : ()=>{
       trackEvent('Save Look', events)
-    },
-    'downloadClick' : () => {
-      events['Popup Name'] = 'Download App',
-      events['Element'] = 'Download App',
-      events['Button Type'] = 'Link',
-      trackEvent('Popup CTAs', events)
     }
+    // 'downloadClick' : () => {
+    //   events['Popup Name'] = 'Download App',
+    //   events['Element'] = 'Download App',
+    //   events['Button Type'] = 'Link',
+    //   trackEvent('Popup CTAs', events)
+    // }
   }
 
   // const hashTags = item?.hashtags?.map((data)=> data.name);
@@ -709,13 +709,13 @@ const toTrackFirebase = (activeIndex, type, value) => {
 const onStoreRedirect = async ()=>{
   fbq.event('App Open CTA')
   // console.log(getItem('device-info'))
-  toTrackMixpanel(videoActiveIndex,'downloadClick');
+  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
   trackEvent('App Open CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   // console.log(device)
 try{  
- if(device === 'android' && activeVideoId){ 
+ if(activeVideoId){ 
    try{ const resp = await getOneLink({videoId : activeVideoId});
     link = resp?.data;
     console.log("one link resp",resp);
