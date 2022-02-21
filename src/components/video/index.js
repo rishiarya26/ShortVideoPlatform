@@ -298,6 +298,7 @@ function Video(props) {
          handleSaveLook={props?.handleSaveLook}
          videoId={props?.activeVideoId}
          loading={props?.loading}
+         shopType={props?.shopType}
          />
       )
       ) : (

@@ -9,14 +9,13 @@ import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png'
 
 function ProductWidget({
-  shopCards, handleSaveLook, videoId, loading
+  shopCards, handleSaveLook, videoId, loading, shopType
 }) {
 
 
   // useEffect(() => {
   //   inject(CHARMBOARD_PLUGIN_URL, null, loaded);
   // }, []);
-
   const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
 
@@ -26,7 +25,7 @@ function ProductWidget({
     >
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">
-          {t('PRODUCT_CAN_BUY')}
+          {shopType === 'recipe' ? 'Ingredients from this recipe' : t('PRODUCT_CAN_BUY')}
           {/* {' '}
           |
           {' '}

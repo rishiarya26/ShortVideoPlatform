@@ -26,14 +26,16 @@ function transformSuccess(resp) {
     
 
     let updateData = recommendations?.concat(responseData);
-    const {additionalBanner = {}} = data;
-    additionalBanner && updateData.forEach((data)=>{
-      if(data?.widgetContentType === 'banner')
-      { 
-        data?.widgetList?.unshift(additionalBanner?.data)
-      }
-    })
+    // const {additionalBanner = {}} = data;
+    // additionalBanner && updateData?.forEach((data)=>{
+    //   if(data?.widgetContentType === 'banner')
+    //   { if(Object.keys(additionalBanner?.data).length !== 0){
+    //     data?.widgetList?.unshift(additionalBanner?.data)
+    //   }
+    //   }
+    // })
     updateData = updateData?.filter((data)=>(data.widgetList =  data?.widgetContentType === 'Video' && data?.widgetList?.length >=8 ? data?.widgetList?.splice(0,8) : data?.widgetList ))
+    console.log('u***',updateData);
     payload.data = updateData;
     payload.status = 'success';
     payload.message = getMessage(data, {});
