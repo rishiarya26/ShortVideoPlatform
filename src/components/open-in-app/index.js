@@ -13,6 +13,7 @@ import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import Close from '../commons/svgicons/close-black';
 
 export default function DownloadAppWidget({videoId}) {
   // const stores = {
@@ -23,7 +24,7 @@ export default function DownloadAppWidget({videoId}) {
   useEffect(()=>{
     toTrackMixpanel('launch');
     fbq.event('App Download Popup')
-    trackEvent('App Download Popup');
+    trackEvent('App_Download_Popup');
   },[])
 
   const {close} = useDrawer();
@@ -63,7 +64,7 @@ export default function DownloadAppWidget({videoId}) {
   const onStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
     fbq.event('App Download CTA');
-    trackEvent('App Download CTA')
+    trackEvent('App_Download_CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)
@@ -121,6 +122,9 @@ export default function DownloadAppWidget({videoId}) {
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
+      <div onClick={close} className='flex w-full justify-end p-2'>
+      <Close/>
+   </div>
         <div onClick={onStoreRedirect} className="flex py-3 items-center">
           <div className="flex w-18v h-11v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>

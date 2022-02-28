@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { SubmitButton } from '../button/submit';
 import useDrawer from '../../../hooks/use-drawer';
 import useTranslation from '../../../hooks/use-translation';
+import Close from '../svgicons/close-black';
 
 function search(enteredValue, setFilteredData, data) {
   /* eslint-disable no-param-reassign */
@@ -28,8 +29,11 @@ export default function ListWithSearch({ data, onValueChange, type }) {
 
   return (
     <div className="flex flex-col w-full">
+      <div onClick={close} className='flex justify-end p-2'>
+      <Close/>
+   </div>
       <div className="flex w-full border-b-2 border-gray-300 relative justify-center p-4">
-        <div className="font-bold">{info[type].title}</div>
+        <div className="font-bold">{info[type]?.title}</div>
       </div>
       <div className="flex px-2 py-4">
         <div className="flex w-9/12">
@@ -38,7 +42,7 @@ export default function ListWithSearch({ data, onValueChange, type }) {
             onChange={e => optimisedSearch(e.target.value, setFilteredData, data)}
             className=" w-full bg-gray-100 px-4 py-2 mx-2"
             type="text"
-            placeholder={info[type].placeholder}
+            placeholder={info[type]?.placeholder}
           />
         </div>
         <div className="flex w-3/12">

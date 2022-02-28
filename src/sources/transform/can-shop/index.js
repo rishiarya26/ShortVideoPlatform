@@ -18,9 +18,15 @@ function transformSuccess(resp) {
     if (
       data.data?.[0]?.topCharms?.length > 0
     ) {
-      payload.data = data.data[0].topCharms?.[0]?.contentImageUrlArray;
-      payload.type = data.data[0]?.topCharms?.[0]?.charm_type;
+      payload.data = data?.data[0]?.topCharms?.[0]?.contentImageUrlArray;
+      payload.type = data?.data[0]?.topCharms?.[0]?.charm_type;
+      payload.thumbnail = data?.data[0]?.topCharms?.[0]?.imageUrl;
+      payload.smallThumbnails = data?.data[0]?.topCharms?.[0]?.content_image_url;
+      payload.title = data?.data[0]?.topCharms?.[0]?.title;
+      payload.subtitle = data?.data[0]?.topCharms?.[0]?.subtitle;
       payload.isShoppable = true;
+      data?.data?.[0]?.topCharms.forEach((item,id)=>{id ===  0 ? item.expand = true : item.expand = false;})
+      payload.charmData = data?.data?.[0]?.topCharms;
     }
     return payload;
   } catch (err) {

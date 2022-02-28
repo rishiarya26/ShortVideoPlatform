@@ -288,6 +288,8 @@ function Video(props) {
          comp={props?.comp}
          pageName={props?.pageName}
          shopType={props?.shopType}
+         charmData = {props?.charmData}
+         onCloseChamboard={props?.onCloseChamboard}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed
@@ -299,12 +301,12 @@ function Video(props) {
          videoId={props?.activeVideoId}
          loading={props?.loading}
          shopType={props?.shopType}
+         setClose={props?.setClose}
          />
       )
       ) : (
       <ProductCards
          shopCards={props?.shopCards}
-         handleSaveLook={props?.handleSaveLook}
          videoId={props?.activeVideoId}
          profileFeed={props.profileFeed}
          comp="profile"

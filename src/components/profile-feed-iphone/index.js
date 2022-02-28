@@ -166,7 +166,7 @@ function ProfileFeedIphone({ router }) {
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile Feed';
       fbq.event('Screen View')
-      trackEvent('Screen View',{'Page Name' :'Profile Feed'})
+      trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
       track('Screen View',mixpanelEvents );
     },500)
 
@@ -175,7 +175,7 @@ function ProfileFeedIphone({ router }) {
   const onStoreRedirect = async ()=>{
     toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
     fbq.event('App Open CTA')
-    trackEvent('App Open CTA')
+    trackEvent('App_Open_CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)
@@ -413,14 +413,14 @@ function ProfileFeedIphone({ router }) {
     const events = {}
   
     const toTrack = {
-      'play' : () => trackEvent('UGC Play', events),
-      'share' : () => trackEvent('UGC Share Click', events),
-      'replay' : () => trackEvent('UGC Replayed', events),
+      'play' : () => trackEvent('UGC_Play', events),
+      'share' : () => trackEvent('UGC_Share_Click', events),
+      'replay' : () => trackEvent('UGC_Replayed', events),
       'watchTime' : () => {
         events['UGC Consumption Type'] = value?.watchTime
         events['UGC Duration'] = value?.duration
         events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC Watch Time',events)
+        trackEvent('UGC_Watch Time',events)
       },
       'cta' : ()=>{
         events['Element'] = value?.name
@@ -428,7 +428,7 @@ function ProfileFeedIphone({ router }) {
         trackEvent('CTAs', events)
       },
       'savelook' : ()=>{
-        trackEvent('Save Look', events)
+        trackEvent('Save_Look', events)
       }
     }
   
@@ -573,7 +573,7 @@ function ProfileFeedIphone({ router }) {
               >
              <CircularProgress/>
               </div>
-              {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
+              {toShowItems.length > 1 &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
               "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
                 <SwipeUp/>

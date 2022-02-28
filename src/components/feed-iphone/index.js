@@ -90,10 +90,15 @@ function FeedIphone({ router }) {
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
+  const [onCloseChamboard, setOnCloseChamboard] = useState('')
 
   const loaded = () => {
     setLoading(false);
   };
+
+  const setClose = (value)=>{
+    setOnCloseChamboard(value)
+}
 
   useEffect(() => {
     setTimeout(()=>{
@@ -101,7 +106,7 @@ function FeedIphone({ router }) {
         const mixpanelEvents = commonEvents();
         mixpanelEvents['Page Name'] = 'Feed';
         track('Screen View',mixpanelEvents );
-        trackEvent('Screen View',{'Page Name' :'Feed'})
+        trackEvent('Screen_View',{'Page Name' :'Feed'})
         inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       }
     },1000);
@@ -269,6 +274,7 @@ function FeedIphone({ router }) {
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
       shopContent.type = response?.type;
+      shopContent.charmData = response?.charmData;
     } catch (e) {
       isShoppable = false;
     }
@@ -353,17 +359,17 @@ console.log('error',e)
     setSaveLook(true);
   }, [activeVideoId]);
 
-  const toggleSaveLook = () => {
-    /********* Mixpanel ***********/
-    saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
-    ToTrackFbEvents(videoActiveIndex,'savelook')
-    /*****************************/
+  const toggleSaveLook = (value) => {
+    // /********* Mixpanel ***********/
+    // saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
+    // ToTrackFbEvents(videoActiveIndex,'savelook')
+    // /*****************************/
 
-    const data = [...toShowItems];
-    const resp = data.findIndex(item => (item?.content_id === activeVideoId));
-    data[resp].saveLook = true;
-    setToShowItems(data);
-    setSaveLook(!saveLook);
+    // const data = [...toShowItems];
+    // const resp = data.findIndex(item => (item?.content_id === activeVideoId));
+    // data[resp].saveLook = true;
+    // setToShowItems(data);
+    setSaveLook(value);
   };
 
   const tabs = [
@@ -472,14 +478,14 @@ console.log('error',e)
     const events = {}
   
     const toTrack = {
-      'play' : () => trackEvent('UGC Play', events),
-      'share' : () => trackEvent('UGC Share Click', events),
-      'replay' : () => trackEvent('UGC Replayed', events),
+      'play' : () => trackEvent('UGC_Play', events),
+      'share' : () => trackEvent('UGC_Share Click', events),
+      'replay' : () => trackEvent('UGC_Replayed', events),
       'watchTime' : () => {
         events['UGC Consumption Type'] = value?.watchTime
         events['UGC Duration'] = value?.duration
         events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC Watch Time',events)
+        trackEvent('UGC_Watch_Time',events)
       },
       'cta' : ()=>{
         events['Element'] = value?.name
@@ -487,7 +493,7 @@ console.log('error',e)
         trackEvent('CTAs', events)
       },
       'savelook' : ()=>{
-        trackEvent('Save Look', events)
+        trackEvent('Save_Look', events)
       }
     }
   
@@ -599,6 +605,7 @@ console.log('error',e)
                       thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
+                      charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={toggleSaveLook}
@@ -616,6 +623,8 @@ console.log('error',e)
                       currentT={videoDurationDetails?.currentT}
                       player={'multi-player-muted'}
                       description={item?.content_description}
+                      onCloseChamboard={onCloseChamboard}
+                      setClose={setClose}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -666,6 +675,8 @@ console.log('error',e)
               type="shop"
               selectedTab="home"
               shopType = {shop?.type}
+              setClose={setClose}
+              onCloseChamboard={onCloseChamboard}
               />
             </Swiper>
 
@@ -688,7 +699,7 @@ console.log('error',e)
 
   fbq.event('App Open CTA');
   toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
-  trackEvent('App Open CTA')
+  trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)

@@ -87,10 +87,20 @@ function Feed({ router }) {
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
+  const [onCloseChamboard, setOnCloseChamboard] = useState('')
+  const [isSaved, setIsSaved] = useState(false);
+
+  // const toggleIsSaved =()=>{
+  //   setIsSaved(!isSaved);
+  // }
 
   const loaded = () => {
     setLoading(false);
   };
+
+  const setClose = (value)=>{
+      setOnCloseChamboard(value)
+  }
 
   useEffect(() => {
         setTimeout(()=>{
@@ -100,7 +110,7 @@ function Feed({ router }) {
       // console.log('FB event ',fbq.event)
       fbq.event('Screen View')
       track('Screen View',mixpanelEvents );
-      trackEvent('Screen View',{'Page Name' :'Feed'});
+      trackEvent('Screen_View',{'Page Name' :'Feed'});
       inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       // alert('useEffect called');
     }
@@ -244,6 +254,7 @@ function Feed({ router }) {
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
       shopContent.type = response?.type;
+      shopContent.charmData = response?.charmData;
     } catch (e) {
       isShoppable = false;
     }
@@ -310,16 +321,16 @@ function Feed({ router }) {
     setSaveLook(true);
   }, [activeVideoId]);
 
-  const toggleSaveLook = () => {
+  const toggleSaveLook = (value) => {
     /********* Mixpanel ***********/
     // saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
     /*****************************/
-
-    const data = [...toShowItems];
-    const resp = data.findIndex(item => (item?.content_id === activeVideoId));
-    data[resp].saveLook = true;
-    setToShowItems(data);
-    setSaveLook(!saveLook);
+    
+    // const data = [...toShowItems];
+    // const resp = data.findIndex(item => (item?.content_id === activeVideoId));
+    // data[resp].saveLook = true;
+    // setToShowItems(data);
+    setSaveLook(value);
   };
 
   const tabs = [
@@ -442,14 +453,14 @@ const toTrackFirebase = (activeIndex, type, value) => {
   const events = {}
 
   const toTrack = {
-    'play' : () => trackEvent('UGC Play', events),
-    'share' : () => trackEvent('UGC Share Click', events),
-    'replay' : () => trackEvent('UGC Replayed', events),
+    'play' : () => trackEvent('UGC_Play', events),
+    'share' : () => trackEvent('UGC_Share Click', events),
+    'replay' : () => trackEvent('UGC_Replayed', events),
     'watchTime' : () => {
       events['UGC Consumption Type'] = value?.watchTime
       events['UGC Duration'] = value?.duration
       events['UGC Watch Duration'] = value?.durationWatchTime
-      trackEvent('UGC Watch Time',events)
+      trackEvent('UGC_Watch_Time',events)
     },
     'cta' : ()=>{
       events['Element'] = value?.name
@@ -457,7 +468,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
       trackEvent('CTAs', events)
     },
     'savelook' : ()=>{
-      trackEvent('Save Look', events)
+      trackEvent('Save_Look', events)
     }
     // 'downloadClick' : () => {
     //   events['Popup Name'] = 'Download App',
@@ -611,6 +622,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
                       canShop={shop?.isShoppable}
+                      charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={toggleSaveLook}
@@ -631,6 +643,9 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       player={'single-player-muted'}
                       isLiked={item?.isLiked}
                       description={item?.content_description}
+                      onCloseChamboard={onCloseChamboard}
+                      setClose={setClose}
+                      // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -683,6 +698,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
+              setClose={setClose}
               />
             </Swiper>
             
@@ -710,7 +726,7 @@ const onStoreRedirect = async ()=>{
   fbq.event('App Open CTA')
   // console.log(getItem('device-info'))
   toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
-  trackEvent('App Open CTA')
+  trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   // console.log(device)

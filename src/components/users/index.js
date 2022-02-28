@@ -109,7 +109,7 @@ function Users({
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile';
       fbq.event('Screen View')
-      trackEvent('Screen View',{'Page Name' :'Profile'})
+      trackEvent('Screen_View',{'Page Name' :'Profile'})
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

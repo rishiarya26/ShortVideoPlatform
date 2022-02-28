@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
@@ -7,9 +8,10 @@ import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
 import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png'
+import useDrawer from '../../hooks/use-drawer';
 
 function ProductWidget({
-  shopCards, handleSaveLook, videoId, loading, shopType
+  shopCards, handleSaveLook, videoId, loading, shopType, setClose
 }) {
 
 
@@ -18,6 +20,16 @@ function ProductWidget({
   // }, []);
   const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
+
+  const charmboardDrawer = dynamic (
+    () => import('../charmboard'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
+
+  const {show } = useDrawer();
 
   return (
     <div
@@ -39,7 +51,10 @@ function ProductWidget({
               key={id}
               className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
-              onClick={() => cbplugin && cbplugin.cbTouch({ videoId })}
+              onClick={() => {
+                show('',charmboardDrawer , 'big', { videoId : videoId, setClose : setClose})
+                setClose('open');             
+              }}
             >
               <Img data={data} height={120} width={120} fallback={fallbackShop?.src}/>
             </div>
@@ -52,7 +67,7 @@ function ProductWidget({
       <div className="flex p-4">
         <div
           className="flex rounded-full h-10 w-10 bg-red-600 justify-center items-center text-white"
-          onClick={handleSaveLook}
+          onClick={()=>handleSaveLook(true)}
         >
           <Close />
         </div>

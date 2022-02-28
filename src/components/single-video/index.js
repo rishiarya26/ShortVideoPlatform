@@ -250,7 +250,7 @@ export default function SingleVideo(props){
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
-              type="shop"
+              type=""
               selectedTab=""
             />
     </div>

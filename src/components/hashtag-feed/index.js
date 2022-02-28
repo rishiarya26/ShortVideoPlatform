@@ -100,7 +100,7 @@ function HashTagFeed({ router }) {
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Hashtag Feed';
     fbq.event('Screen View')
-    trackEvent('Screen View',{'Page Name' :'Hashtag Feed'})
+    trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
     track('Screen View',mixpanelEvents );},500);
   }, []);
 
@@ -304,14 +304,14 @@ function HashTagFeed({ router }) {
     const events = {}
   
     const toTrack = {
-      'play' : () => trackEvent('UGC Play', events),
-      'share' : () => trackEvent('UGC Share Click', events),
-      'replay' : () => trackEvent('UGC Replayed', events),
+      'play' : () => trackEvent('UGC_Play', events),
+      'share' : () => trackEvent('UGC_Share_Click', events),
+      'replay' : () => trackEvent('UGC_Replayed', events),
       'watchTime' : () => {
         events['UGC Consumption Type'] = value?.watchTime
         events['UGC Duration'] = value?.duration
         events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC Watch Time',events)
+        trackEvent('UGC_Watch_Time',events)
       },
       'cta' : ()=>{
         events['Element'] = value?.name
@@ -319,7 +319,7 @@ function HashTagFeed({ router }) {
         trackEvent('CTAs', events)
       },
       'savelook' : ()=>{
-        trackEvent('Save Look', events)
+        trackEvent('Save_Look', events)
       }
     }
   
@@ -348,7 +348,7 @@ function HashTagFeed({ router }) {
  const onStoreRedirect = async ()=>{
   toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
   fbq.event('App Open CTA')
-  trackEvent('App Open CTA')
+  trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)

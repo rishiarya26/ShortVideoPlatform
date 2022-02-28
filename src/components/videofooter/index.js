@@ -30,10 +30,10 @@ function VideoFooter({
   const [loaded, setLoaded] = useState(false);
   // TO-DO common classes
   const type = {
-    profile: `${canShop === 'success' ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0  flex text-white ml-2`,
-    feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2`,
-    embed: `${canShop === 'success' ? 'bottom-44' : 'bottom-22'} videoFooter   flex`,
-    single: `${canShop === 'success' ? 'bottom-56' : 'bottom-28 mb-2'} videoFooter fixed left-0  flex text-white ml-2`,
+    profile: `${canShop === 'success' ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
+    feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+    embed: `${canShop === 'success' ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
+    single: `${canShop === 'success' ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
   };
   const { show } = useDrawer();
   const router = useRouter()
@@ -70,7 +70,7 @@ function VideoFooter({
     <div
       className={type[comp]}
     >
-      <div className="videoFooter__text w-2/3  break-words">
+      <div className="videoFooter__text w-full break-words">
         {/*
         {canShop === 'success' && (
           <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 text-sm ">
@@ -80,7 +80,7 @@ function VideoFooter({
 
         <h3 onClick={()=>router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm ">@{userName}</h3>
         <div className=" text-xs  mb-3 mt-2">
-          {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
+          {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
              item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded)}>{item}{' '}
              </span>
@@ -89,7 +89,7 @@ function VideoFooter({
           <span className='ml-2' onClick={()=>{
            setLoaded(false)
           }}>LESS</span> :
-          <span className='ml-2' onClick={()=>{
+          <span className='' onClick={()=>{
            setLoaded(true)
           }}>..MORE</span>)}
           {/* {hashTags
@@ -98,12 +98,12 @@ function VideoFooter({
             ))} */}
         </div>
         {/* {musicCoverTitle}</p> */}
-        <div className="w-8/12 my-1 text-sm">
+       {musicTitle && <div className="w-8/12 my-1 text-sm">
           {music[comp]}
           <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>
-        </div>
+        </div>}
       </div>
     </div>
   );

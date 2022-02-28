@@ -29,7 +29,8 @@ import { useEffect } from 'react';
 //   }
 // );
 
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop} ){
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
+ setClose} ){
   const router = useRouter();
   const { show } = useDrawer();
 
@@ -38,6 +39,7 @@ const info ={
   videoId={videoId}
   canShop={canShop}
   shopType={shopType && shopType}
+  setClose={setClose}
 />,
  noShop: null
 }
