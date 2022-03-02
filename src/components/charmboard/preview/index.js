@@ -206,10 +206,16 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
        if(!url){
          return ''
        }else{
-        const origin = url.split('.')[1];
-        console.log('origin **',origin)
-        if(origin){
-          return origin 
+        const origin = url.split('//')[1];
+        let finalOrigin = ''
+        if(origin?.includes('www')){
+          finalOrigin = origin.split('.')[1]
+        }else{
+          finalOrigin = origin.split('.')[0]
+        }
+        console.log('origin **',finalOrigin)
+        if(finalOrigin){
+          return finalOrigin 
         }
        }
     }
@@ -219,7 +225,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
   {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2 overflow-y-auto` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
-            <div className="flex">
+            <div className="flex pb-2">
                <div className='img w-15v h-15v rounded-md overflow-hidden'>
                    <Img data={topCharms?.imageUrl} />
                </div>
@@ -247,9 +253,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky w-full -top-4 pt-4 bg-white z-20 text-sm'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky w-full -top-4 pt-2 bg-gray-100 z-20 text-sm text-gray-200 border-gray-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
          {expand && 
-         <div ref={outfitRef}>
+         <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
         {(items?.outfit?.length > 0 || items?.accessories?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">STYLE INSPIRATION FROM THIS LOOK</div>} 
             {items && items?.outfit?.map((item,id) =>(
@@ -266,7 +272,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          </div>
          }
          {expand &&
-         <div ref={accRef}>
+         <div className="w-full" ref={accRef}>
          <div ref={acc} id={'acc'} >
            {items && items?.accessories?.map((item, id) =>(
            <CharmCard 
@@ -370,7 +376,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              thumbnail = {item?.product_img_url}
              title = {item?.title}
              shopName = {item?.title}
-             shopLink = {item?.product_url ? getOrigin(item.product_url): ''}
+             shopLink = {item?.product_url}
              category = {item?.category}
              subTitle = {item?.sub_title}
              heading = {item?.heading}

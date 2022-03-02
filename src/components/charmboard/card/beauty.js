@@ -16,7 +16,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                 <span className={category === 'beauty' ? "numb-beauty mr-2 ":
              "numb-hair mr-2"
              }>{index}</span>   
-                    <p className="text-md text-white pl-1 leading-5"> {heading}</p>
+                    <p className="text-md text-white pl-1 leading-5 line-clamp-2"> {heading}</p>
                 </div>
             </div>
            
@@ -46,11 +46,11 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                             </div>}
   {(thumbnail && thumbnailProduct) && <div className="flex justify-between ites-center w-full">
                         <div className="flex items-center">
-                        <p className="text-sm font-semibold capitalize">{shopName}</p>
+                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
                         </div>
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex px-4 py-2 ">
-                            <div className="flex rounded-md py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
+                            <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                     </div>}
                 </div>

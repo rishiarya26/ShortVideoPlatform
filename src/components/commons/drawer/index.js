@@ -15,7 +15,7 @@ const Drawer = ({
       height: 'h-4/5'
     },
     big: {
-      height: 'h-5/6'
+      height: 'h-95'
     }
   };
 
