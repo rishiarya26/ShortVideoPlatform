@@ -253,7 +253,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky w-full -top-4 pt-2 bg-gray-100 z-20 text-sm text-gray-200 border-gray-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky w-full -top-4 pt-2 bg-grey-100 z-20 text-sm text-gray-200 border-grey-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
          {expand && 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
