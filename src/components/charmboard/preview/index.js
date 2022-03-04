@@ -253,7 +253,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky w-full -top-4 pt-2 bg-grey-100 z-20 text-sm text-gray-200 border-grey-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
          {expand && 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
@@ -302,7 +302,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
                   <div className="text-md  uppercase font-bold text-white mb-2">
                      {items?.beauty?.[0]?.heading}
                   </div>
-                  <div className="text-sm font-semibold text-white ">
+                  <div className="text-sm font-medium text-white ">
                      GET THE LOOK IN EASY STEPS
                   </div>
                </div>
@@ -341,7 +341,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
                <div className="text-md uppercase font-semibold text-white mb-1">
                   {items?.hair?.[0]?.heading}
                </div>
-               <div className="text-sm font-semibold text-white ">
+               <div className="text-sm font-medium text-white ">
                   GET THE HAIRDO IN EASY STEPS
                </div>
             </div>
