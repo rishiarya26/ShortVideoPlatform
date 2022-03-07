@@ -15,7 +15,7 @@ const Drawer = ({
       height: 'h-4/5'
     },
     big: {
-      height: 'h-5/6'
+      height: 'h-95'
     }
   };
 
@@ -28,7 +28,7 @@ const Drawer = ({
       motion-reduce:transition-none motion-reduce:transform-none
     `}
     >
-      <div className="drawer-header w-full flex-row justify-between p-4">
+      {/* <div className="drawer-header w-full flex-row justify-between p-4">
         <div className="drawer-title text-sm font-medium text-center">
           {title}
           {' '}
@@ -42,7 +42,7 @@ const Drawer = ({
             <Close />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="w-full h-full px-4 flex overflow-y-auto">
         {children}
       </div>

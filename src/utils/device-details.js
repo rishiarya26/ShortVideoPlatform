@@ -1,6 +1,8 @@
+import { localStorage } from "./storage";
+
 export function getOS() {
   const userAgent = window?.navigator.userAgent || window?.navigator.vendor || window?.opera;
-
+  
   if (/android/i.test(userAgent)) {
     return 'android';
   }
@@ -15,6 +17,7 @@ export function getOS() {
 export function getNetworkConnection() {
   const networkInformation = window?.navigator?.connection;
   const effectiveType = networkInformation?.effectiveType;
+  localStorage.set('network-strength',effectiveType)
   let networkStrength = 'low';
   if (effectiveType === '4g') {
     networkStrength = 'fast';
@@ -22,4 +25,8 @@ export function getNetworkConnection() {
     networkStrength = 'medium';
   }
   return networkStrength;
+}
+
+export function getDeviceModel() {
+  const userAgent = window?.navigator?.userAgent ;
 }

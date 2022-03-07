@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name*/
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
@@ -6,10 +7,20 @@ import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import Img from '../commons/image';
 import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
+import useDrawer from '../../hooks/use-drawer';
 
 function ProductCards({
   shopCards, videoId, comp, loading
 }) {
+  const charmboardDrawer = dynamic (
+    () => import('../charmboard'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
+
+  const {show } = useDrawer();
   // const [loading, setLoading] = useState(true);
   // const loaded = () => {
   //   setLoading(false);
@@ -37,7 +48,7 @@ function ProductCards({
               key={id}
               className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
-              onClick={() => cbplugin && cbplugin?.cbTouch({ videoId })}
+              onClick={() =>   show('',charmboardDrawer , 'big', { videoId : videoId})}
             >
               <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
             </div>

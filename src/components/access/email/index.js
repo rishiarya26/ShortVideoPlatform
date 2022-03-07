@@ -8,6 +8,7 @@ import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
+import * as fbq from '../../../analytics/fb-pixel'
 
 export default function Email({
   data, processEmailData, type
@@ -37,6 +38,7 @@ export default function Email({
           });
           /* Mixpanel */
           mixpanel('Login');
+          fbq.defEvent('CompleteRegistration');
            /* Mixpanel */
           showSnackbar({ message: t('SUCCESS_LOGIN') });
           setPending(false);

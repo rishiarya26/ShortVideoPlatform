@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
-  console.log('SI',selectedIndex)
     const onTabClick = (selected)=>{
         onTabChange(selected);
         // console.log(selected)

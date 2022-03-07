@@ -37,6 +37,8 @@ import SwiperCore, {
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import * as fbq from '../../analytics/fb-pixel'
+import { trackEvent } from '../../analytics/firebase';
 
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
@@ -62,7 +64,6 @@ function Explore() {
   const [offset, setOffset] = useState(2)
 
   const {show} = useDrawer();
-  console.log("isFetching", isFetching, showLoading)
 
   useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
@@ -73,9 +74,7 @@ function Explore() {
 
   async function fetchMoreListItems() {
     try{
-      console.log(offset)
      const response = await getSearchData({ offset: `${offset}` });
-     console.log(response.data.length)
      if(response?.data?.length > 0){
        let updateData = [...data];
        updateData = updateData?.concat(response?.data);
@@ -169,7 +168,9 @@ function Explore() {
   useEffect(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Discover';
+      fbq.event('Screen View');
       track('Screen View',mixpanelEvents );
+      trackEvent('Screen_View',{'Page Name' : 'Explore'})
       window.onunload = function () {
       window?.scrollTo(0, 1);
     }
@@ -214,7 +215,7 @@ function Explore() {
             > 
               {crousalItems?.length > 0  && crousalItems.map((data,id)=>
                  (
-                  <SwiperSlide
+                  data?.id !== '1892afcb-b35e-4385-9a59-278168c9d46f' && <SwiperSlide
                     key={id}
                   >
                     <div 

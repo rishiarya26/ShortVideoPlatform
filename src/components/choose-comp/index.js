@@ -9,7 +9,6 @@ export default function ChooseComp({desktop, mobile}) {
 
    useEffect(()=>{
     const type = getItem('device-type');
-    console.log(type)
     if(type){
       setDevice(type);
     }

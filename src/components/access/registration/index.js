@@ -55,7 +55,6 @@ const Registration = ({ router }) => {
   };
 
   const mixpanel = (type, method) =>{
-    console.log(type,method)
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Method'] = method;
     track(`${type} Result`,mixpanelEvents );
@@ -88,7 +87,7 @@ const Registration = ({ router }) => {
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
       setData(dataToUpdate);
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -115,11 +114,12 @@ const Registration = ({ router }) => {
     try {
       const response = await registerUser(data);
       console.log("user registered",response)
-      console.log("suces rep",response)
+      // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
         const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
         mixpanel('Signup',method);
+        fbq.defEvent('CompleteRegistration');
         /* Mixpanel */
         router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });

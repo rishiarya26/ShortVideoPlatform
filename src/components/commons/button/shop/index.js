@@ -1,19 +1,30 @@
+/*eslint-disable react/display-name */
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { track } from '../../../../analytics';
 import { inject } from '../../../../analytics/async-script-loader';
 import { commonEvents } from '../../../../analytics/mixpanel/events';
 import { CHARMBOARD_PLUGIN_URL } from '../../../../constants';
+import useDrawer from '../../../../hooks/use-drawer';
 import useTranslation from '../../../../hooks/use-translation';
 
 export const Shop = ({
-  videoId, canShop
+  videoId, canShop, shopType, setClose
 }) => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const {show} = useDrawer();
   const loaded = () => {
     setLoading(false);
   };
 
+  const charmboardDrawer = dynamic(
+    () => import('../../../charmboard'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
 
   /******* Mixpanel *********/
   const toTrackMixpanel = (type) =>{
@@ -45,25 +56,27 @@ export const Shop = ({
 
   const handleShop = ()=>{
     toTrackMixpanel('cta');
-    cbplugin && cbplugin.cbTouch({ videoId })
+    show('',charmboardDrawer , 'big', { videoId : videoId, setClose: setClose});
+    setClose && setClose('open');
+    // cbplugin && cbplugin.cbTouch({ videoId })
   }
 
   return (
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (
         <button
-          className="rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
+          className="rounded text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           // eslint-disable-next-line no-undef
           onClick={handleShop}
         >
-          {t('SHOP')}
+           {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
         </button>
       )
         : (
           <button
-            className="animate-pulse rounded-lg text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
+            className="animate-pulse rounded text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           >
-            {t('SHOP')}
+            {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
           </button>
         )}
     </>

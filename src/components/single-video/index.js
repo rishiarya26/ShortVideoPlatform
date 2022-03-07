@@ -226,6 +226,7 @@ export default function SingleVideo(props){
         hashTags={props.hashTags}
         canShop={props.canShop}
         comp="single"
+        description={props?.description}
       />
        <EmbedVideoSidebar
         videoId={props?.videoId}
@@ -249,7 +250,7 @@ export default function SingleVideo(props){
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
-              type="shop"
+              type=""
               selectedTab=""
             />
     </div>

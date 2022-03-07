@@ -29,10 +29,11 @@ async function fetchSearchData({ limit = '10', offset = '1' }) {
     console.log(searchList, recommendationList)
     searchList.data.recommendations = recommendationList?.data;
     /* additional Banner */
-    const additionalBanner = await getAdditionalBanner();
-    console.log("banner",additionalBanner);
-
-    searchList.data.additionalBanner = additionalBanner && additionalBanner;
+    // const additionalBanner = await getAdditionalBanner();
+    // console.log("banner",additionalBanner);
+    // if(additionalBanner?.data){
+    //   searchList.data.additionalBanner =  additionalBanner;
+    // }
     /********************/
     searchList.data.requestedWith = { limit, offset};
     return Promise.resolve(searchList);

@@ -14,8 +14,10 @@ import { withBasePath } from '../../config';
 import useDrawer from '../../hooks/use-drawer';
 import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
+import * as fbq from '../../analytics/fb-pixel'
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { trackEvent } from '../../analytics/firebase';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -26,7 +28,7 @@ function HashTag({router}) {
   const [details, setDetails] = useState({})
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  const [offset, setOffset] = useState(2);
 
   const {item = ''} = router?.query;
   const {show} = useDrawer();
@@ -37,10 +39,13 @@ function HashTag({router}) {
   // }
 
   useEffect(()=>{
+    setTimeout(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag Details';
+      fbq.event('Screen View')
+      trackEvent('Screen_View',{'Page Name' :'Hashtag'})
       track('Screen View',mixpanelEvents );
-
+    },[500])
     window.onunload = function () {
       window?.scrollTo(0, 1);
     }
@@ -52,18 +57,14 @@ function HashTag({router}) {
   async function fetchMoreListItems() {
     try{
      const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
-     console.log("resp1",response)
      if(response?.data?.length > 0){
-       console.log("resp",response?.data)
        let updateData = [...items];
        updateData = updateData?.concat(response?.data);
-       console.log("items",updateData)
        setItems(updateData);
        setOffset(offset+1);
        setIsFetching(false);
        setShowLoading(false)
      }else{
-      console.log("inelse",response.data.length)
       setShowLoading(false)
      }
      setShowLoading(false)
@@ -104,14 +105,14 @@ function HashTag({router}) {
           <div className="w-28v flex h-28v bg-gray-300 relative rounded-full" >
             <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
           </div>
-          <div className="flex flex-col px-4 ">
+          <div className="flex flex-col justify-between px-4 ">
             <div className="flex flex-col">
-              <p className="font-medium text-lg">{details?.hashtagName}</p>
+              <p className="text-sm font-semibold">{details?.hashtagName}</p>
               {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
             <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
               <Save />
-              <p className="pl-2 text-sm font-medium">Add to favorites</p>
+              <p className="pl-2 text-xs font-medium">Add to favorites</p>
             </div>
           </div>
         </div>

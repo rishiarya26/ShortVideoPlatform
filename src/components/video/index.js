@@ -47,6 +47,7 @@ function Video(props) {
    //   }
    // },[props?.videoActiveIndex])
 
+
    const handleVideoPress = () => {
       if (playing) {
       rootRef.current.children[0].pause();
@@ -262,6 +263,7 @@ function Video(props) {
          canShop={props.canShop}
          saveLook={props.saveLook}
          comp={props?.comp}
+         description={props?.description}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
@@ -284,6 +286,10 @@ function Video(props) {
          toTrackMixpanel={props?.toTrackMixpanel}
          activeVideoId={props?.activeVideoId}
          comp={props?.comp}
+         pageName={props?.pageName}
+         shopType={props?.shopType}
+         charmData = {props?.charmData}
+         onCloseChamboard={props?.onCloseChamboard}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed
@@ -294,12 +300,13 @@ function Video(props) {
          handleSaveLook={props?.handleSaveLook}
          videoId={props?.activeVideoId}
          loading={props?.loading}
+         shopType={props?.shopType}
+         setClose={props?.setClose}
          />
       )
       ) : (
       <ProductCards
          shopCards={props?.shopCards}
-         handleSaveLook={props?.handleSaveLook}
          videoId={props?.activeVideoId}
          profileFeed={props.profileFeed}
          comp="profile"

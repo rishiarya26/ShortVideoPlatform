@@ -16,7 +16,7 @@ export const CountryCode = ({ onValueChange, text }) => {
   return (
     <>
       <button
-        onClick={() => show('', detectDeviceModal, 'big', { data: countryCodes, onValueChange, type: 'countryCode' })}
+        onClick={() => show('', detectDeviceModal, 'big', { data: countryCodes && countryCodes, onValueChange, type: 'countryCode' })}
         className="bg-white px-2 py-2 text-gray-600 border-b-2 border-grey-300 flex items-center"
       >
         {' '}

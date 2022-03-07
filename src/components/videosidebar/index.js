@@ -31,6 +31,9 @@ import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
 import { localStorage } from '../../utils/storage';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics';
+import { getItem } from '../../utils/cookie';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -57,10 +60,12 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp
+  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName,  shopType,
+  charmData,onCloseChamboard
 }) {
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
   const [reactionCount, setReactionCount] = useState({likes : likes});
+  const [isSaved, setIsSaved] = useState(false);
   const { show } = useDrawer();
 
   const info = { desktop: 'desktop', mobile: 'mobile' };
@@ -80,7 +85,13 @@ function VideoSidebar({
   const like = () => {
      postReaction('like',socialId);
      setIsLiked({like : true});
-     getVideoReactions(socialId, 'now', 'add')
+     getVideoReactions(socialId, 'now', 'add');
+     const mixpanelEvents = commonEvents();
+     mixpanelEvents['UGC Id'] = activeVideoId;
+    //  mixpanelEvents['Creator Id'] = videoOwnersId;
+     const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+     mixpanelEvents['Page Name'] = compName;
+     track('UGC Liked',mixpanelEvents)
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
@@ -124,7 +135,6 @@ function VideoSidebar({
       const liked = details.myReactions.findIndex((data)=>data === 'like');
       isLiked = (liked !== -1) ? {like: true, reactionTime: 'past'} : {like: false, reactionTime: 'past'}
     }
-    console.log('ISL',isLiked)
     return isLiked;
   }
 //   useEffect(()=>{
@@ -141,14 +151,29 @@ function VideoSidebar({
 //            getLikeReaction();
 //            }
 // },[])
+
+useEffect(()=>{
+  if(onCloseChamboard === 'close'){
+    checkSaveLook();
+  }
+},[onCloseChamboard]);
+
+const checkSaveLook =()=>{
+  const userId = localStorage?.get('user-id') || getItem('guest-token');
+  // setIsSaved(false);
+  const savedItems = localStorage?.get(`saved-items${userId}`) || []
+  const saved = savedItems?.videoIds?.includes(activeVideoId) || false;
+  setIsSaved(saved);
+}
   useEffect(()=>{
+            
+             checkSaveLook();
              setIsLiked({like : false, reactionTime: 'past'});
                 let tokens = typeof window !== "undefined" && localStorage.get('tokens');
                   if (tokens?.shortsAuthToken && tokens?.accessToken )
                 {
                   const getLikeReaction = async()=>{  
                      const isLiked =  await getVideoReactions(socialId, 'past');
-                     console.log(isLiked)
                      setIsLiked({like : isLiked, reactionTime: 'past'});
                     }
                     getLikeReaction();
@@ -170,8 +195,63 @@ function VideoSidebar({
     };
 
 useEffect(()=>{
-console.log('RC',reactionCount)
 },[reactionCount])
+
+  /* check saved state & delete or add the item object from charm api & video Id 
+  in saved-item in local storage object. */
+const handleSaveMoments = () =>{
+  console.log('clicked ***',isSaved)
+  const userId = localStorage?.get('user-id') || getItem('guest-token');
+  if(isSaved){
+  //   setIsSaved(false);
+  //   // remove video id & object item from local storage
+  //   const savedData = localStorage?.get(`saved-items${userId}`) || {videoIds : [], savedItems:[]}
+  //   const videoIds = savedData?.videoIds;
+  //   let savedItems = savedData?.savedItems; 
+  //  if(videoIds?.length > 0 || savedItems?.length > 0 ){ 
+  //    const index = videoIds?.indexOf(activeVideoId);
+  //    if (index > -1) {
+  //         videoIds?.splice(index, 1); // 2nd parameter means remove one item only
+  //       }
+  //       const charmItems = charmData?.map((item)=>item.charm_id);        
+  //       let filteredSavedItems = [...savedItems];
+  //       charmItems?.map((data)=>{
+  //           filteredSavedItems  = filteredSavedItems?.filter(( item ) =>{
+  //             return item.charm_id !== data;
+  //           });
+  //       })
+
+  //       const savedMoments = {}
+  //       savedMoments.videoIds = videoIds;
+  //       savedMoments.savedItems = filteredSavedItems;
+    
+  //       localStorage.set(`saved-items${userId}`,savedMoments);
+  //     }
+    }
+    else{
+      setIsSaved(true);
+      // add video id & object item to local storage
+      const savedData = localStorage?.get(`saved-items${userId}`) || {videoIds : [], savedItems:[]}
+      const videoIds = savedData?.videoIds;
+      let savedItems = savedData?.savedItems;  
+      
+      console.log('toPush', savedData, charmData, savedItems)
+      videoIds.push(activeVideoId);
+      charmData?.forEach((item)=>{
+        item.originalVideoId = activeVideoId;
+      });
+      charmData?.forEach((item)=>{
+        savedItems?.unshift(item)
+      })
+      // savedItems = savedItems?.concat(charmData);
+      const savedMoments = {}
+      savedMoments.videoIds = videoIds;
+      savedMoments.savedItems = savedItems;
+
+      localStorage.set(`saved-items${userId}`,savedMoments);
+    }
+    handleSaveLook(false);
+}
 
   return (
     <div
@@ -209,6 +289,12 @@ console.log('RC',reactionCount)
                 deleteReaction('like', socialId );
                 setIsLiked({like : false, reactionTime: 'now'});
                 getVideoReactions(socialId, 'now', 'delete')
+                const mixpanelEvents = commonEvents();
+                mixpanelEvents['UGC Id'] = activeVideoId;
+                // mixpanelEvents['Creator Id'] = videoOwnersId;
+                const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+                mixpanelEvents['Page Name'] = compName;
+                track('UGC Unliked',mixpanelEvents)
               }}
             >
               <Liked />
@@ -253,15 +339,13 @@ console.log('RC',reactionCount)
       >
       <ShareComp />
       </div>
-      <div className={`${
+      
+        <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-28`}
-      >
-        <div onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
+      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-sm text-center">Embed</p>
         </div>
-      </div>
       {/* <div
         role="presentation"
         className={`${
@@ -280,15 +364,14 @@ console.log('RC',reactionCount)
       </div> */}
 
       {canShop === 'success' && (!profileFeed
-        && saveLook
-        && (
+        &&(
           <div
             className={`${
-              type === 'feed' ? 'block' : 'hidden'
+              type === 'feed' && saveLook ? 'block' : 'hidden'
             } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
-            onClick={handleSaveLook}
+            onClick={handleSaveMoments}
           >
-            <Shop text={!saved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK '} />
+            <Shop text={shopType === 'recipe' ? (!isSaved ? 'LIST THE INGREDIENTS' : 'LIST THE INGREDIENTS ') : (!isSaved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK ')}  saved={isSaved}/>
           </div>
         )
       )}

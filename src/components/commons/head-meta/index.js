@@ -31,7 +31,7 @@ function HeadMeta() {
       <link rel="dns-prefetch" href="https://devqa2.charmboard.com" />
       <link rel="dns-prefetch" href="https://hipigwapi.zee5.com"/>
 
-      <script src="https://websdk.getsocial.im/getsocial.min.js"></script>
+      <script async src="https://websdk.getsocial.im/getsocial.min.js"></script>
       {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
@@ -42,6 +42,8 @@ function HeadMeta() {
 
 {/* google verification for SEO */}
       <meta name="google-site-verification" content="jd5aD11YRw26TgwlMe1HgaGSagejqeN2Hj27Av8nQnU" />
+      
+      <meta name="facebook-domain-verification" content="8cchm0hfnopz5r253ri0stnmuwoej1" />
 
       {/* <meta name="google-signin-client_id" content="1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com" /> */}
 

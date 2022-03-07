@@ -6,10 +6,14 @@ import { SeoMeta } from "../src/components/commons/head-meta/seo-meta";
 import { commonEvents } from "../src/analytics/mixpanel/events";
 import { track } from "../src/analytics";
 import { useEffect } from "react";
+import * as fbq from '../src/analytics/fb-pixel'
+
+
 export default function Hipi() {
   useEffect(()=>{
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Goat';
+    fbq.event('Screen View')
     track('Screen View',mixpanelEvents );
   },[])
   return (

@@ -8,6 +8,7 @@ import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 import {GoogleButton} from '../social-login/google'
 import { useRouter } from 'next/router';
+import Close from '../commons/svgicons/close-black';
 
 export default function Login({ toggle, loading }) {
   const { close } = useDrawer();
@@ -15,6 +16,9 @@ export default function Login({ toggle, loading }) {
 
   return (
     <div className="px-4 py-2 flex flex-col items-center">
+       <div onClick={close} className='flex w-full justify-end p-2'>
+      <Close/>
+   </div>
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Login to Hipi</h1>
         <p className="text-center text-sm">Like the video, manage your account and do much more</p>

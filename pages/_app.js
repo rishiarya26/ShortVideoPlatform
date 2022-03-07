@@ -18,6 +18,10 @@ import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import Cookies from '../src/components/cookies'
 import { init } from '../src/get-social';
+import { useRouter } from 'next/router';
+import * as fbq from '../src/analytics/fb-pixel'
+import Script from 'next/script'
+import { initFirebase } from '../src/analytics/firebase';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -143,6 +147,8 @@ function Hipi({
 
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
+
+  const router = useRouter();
   
   const loaded = ()=>{
     setLoading(false)
@@ -151,7 +157,7 @@ function Hipi({
   const getCountry = async()=>{
     try{ 
       const resp = await detectCountry();
-      console.log(resp?.data?.country_name)
+      // console.log(resp?.data?.country_name)
       setCountry(resp?.data?.country_name || 'India');
       if(resp?.data?.country_name === 'India'){
         setItem('cookie-agreed','yes');
@@ -174,12 +180,26 @@ function Hipi({
     cookieAgree !== 'yes' && getCountry();
     let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
-  
+    const userAgent = window?.navigator.userAgent;
+    const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
+    localStorage.set('device-modal',deviceModel);
+
+    const networkInformation = window?.navigator?.connection;
+    const effectiveType = networkInformation?.effectiveType;
+    localStorage.set('network-strength',effectiveType);
+
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens are there in _app.js')
       // let getSocialInitialised = localStorage.get('get-social') || 'fail'
-       init();
+      setTimeout(()=>{
+        init();
+        initFirebase();
+      },[1000])
+   
     }
+ 
+    // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
+
     }
     catch(e){
     
@@ -193,7 +213,10 @@ function Hipi({
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens there in _app.js')
-      init();
+      setTimeout(()=>{
+        init();
+        initFirebase();
+      },[1000])
      }else{
       if(loading === false){
         oneTapGoogle();
@@ -202,6 +225,20 @@ function Hipi({
 
       }
     },[loading])
+
+    useEffect(() => {
+      // This pageview only triggers the first time (it's important for Pixel to have real information)
+      fbq.pageview()
+  
+      const handleRouteChange = () => {
+        fbq.pageview()
+      }
+  
+      router.events.on('routeChangeComplete', handleRouteChange)
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange)
+      }
+    }, [router.events])
 
   return (
     <>
@@ -219,6 +256,22 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
+                    <Script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
                       {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                       <Component {...pageProps} />
                     </Layout>

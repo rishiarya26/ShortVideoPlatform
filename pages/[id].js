@@ -26,7 +26,7 @@ export default function Hipi(params) {
     const userId = localStorage.get('user-id')
     tokens && userId && userId === item?.id && (userType = 'self');
     setType(userType);
-    console.log(item)
+    // console.log(item)
   }catch(e){
     console.log('something went wrong with id')
   }
@@ -109,7 +109,7 @@ export async function getServerSideProps(ctx) {
   let data = {};
   try {
     data = await getUserProfile(trimmedUserHandle);
-    console.log(data)
+    // console.log(data)
   } catch (e) {
     data = {
       status: e?.status || 400,

@@ -35,9 +35,9 @@ export default function Hipi(params) {
   const updateSeekbar = percentage => {
     setSeekedPercentage(percentage);
   };
-console.log(item)
+// console.log(item)
   useEffect(() => {
-    console.log(item)
+    // console.log(item)
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
   }, []);
@@ -52,7 +52,7 @@ console.log(item)
     router?.push('/');
     return null;
   }
-  console.log(item.firstName, item.lastName)
+  // console.log(item.firstName, item.lastName)
 
   return (
     <>

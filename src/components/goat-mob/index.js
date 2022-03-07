@@ -77,6 +77,9 @@ const onStoreRedirect =(device)=>{
       <div onClick={()=>router.push('/round-3-participants')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Participants
       </div>
+      <div onClick={()=>router.push('/cash-price-winner')} className=" cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
+      Round 3 Weekly Cash Prize Winners
+      </div>
     </div>
 </div>
 

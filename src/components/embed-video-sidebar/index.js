@@ -50,7 +50,6 @@ function EmbedVideoSidebar(props) {
      const onStoreRedirect =async ()=>{
        let link = ONE_TAP_DOWNLOAD;
        const device = getItem('device-info');
-       console.log(device)
      try{  
       if(device === 'android' && props?.videoId){ 
        const resp = await getOneLink({videoId : props?.videoId});
