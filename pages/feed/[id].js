@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ChooseOnType from '../../src/components/choose-on-type';
+import DeskFeed from '../../src/components/desk-feed';
 import Feed from '../../src/components/feed';
 import FeedIphone from '../../src/components/feed-iphone';
 import { getItem } from '../../src/utils/cookie';
@@ -13,17 +14,14 @@ export default function Hipi() {
 
   useEffect(()=>{
     const queryStrings = router?.query;
+    console.log(router)
     updateUtmData(queryStrings);
   },[])
 
-  if(device === 'desktop'){ 
-    router?.push('/');
-    return null;
-  }
-
   return (
     <>
-     <ChooseOnType android={<Feed/>} ios={<FeedIphone/>}/>
+    {device === 'desktop' ?  <DeskFeed/> : 
+    <ChooseOnType android={<Feed/>} ios={<FeedIphone/>}/>}
     </>
   );
 }

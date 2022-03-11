@@ -120,7 +120,7 @@ function VideoSidebar({
     let isLiked;
     const details = await getActivityDetails(socialId);
     // console.log('like count',details.reactionsCount.like)
-    if(time === 'now') {
+    if(time === 'now') { 
       if(action === 'add'){
         setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
       }else if(action === 'delete'){

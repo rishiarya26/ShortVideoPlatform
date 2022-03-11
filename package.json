@@ -41,6 +41,7 @@
     "react-google-login": "^5.2.2",
     "react-intersection-observer": "^8.33.1",
     "react-scripts": "^4.0.0",
+    "react-window": "^1.8.6",
     "serve": "^11.3.0",
     "styled-jsx-css-loader": "^0.3.0",
     "swiper": "^6.4.15",

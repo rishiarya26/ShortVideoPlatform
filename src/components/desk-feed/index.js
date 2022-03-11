@@ -1,43 +1,188 @@
 /*eslint-disable @next/next/no-img-element*/
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import DeskVideo from '../desk-video';
 import Error from './error';
 import Loading from './loader';
-import { withBasePath } from '../../config';
 import { getHomeFeed } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
+import CloseSolid from "../commons/svgicons/close-solid";
+import Search from "../commons/svgicons/search";
+import { withBasePath } from '../../config';
+import useAuth from '../../hooks/use-auth';
+import {FixedSizeList} from "react-window"
+import { withRouter } from 'next/router';
+import Card from '../desktop/card'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Mousewheel } from 'swiper';
+import Video from '../desk-video';
+import Mute from "../commons/svgicons/mute";
+import MusicBlack from "../commons/svgicons/music-black";
+import Comment from "../commons/svgicons/comment-black"
+import Like from "../commons/svgicons/like-black";
+import Share from "../commons/svgicons/share-black";
+
+SwiperCore?.use([Mousewheel]);
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loading />);
 
-export default function DeskFeed() {
+ function DeskFeed({ router }) {
   const [items, setItems] = useState([]);
-  const dataFetcher = () => getHomeFeed();
+  const [loadingMoreItems, setLoadingMoreItems] = useState(false)
+
+  const { id = 'for-you' } = router?.query;
+
   const onDataFetched = data => {
-    setItems(data.data);
-  };
-  const [fetchState] = useFetcher(dataFetcher, onDataFetched);
+    if(data?.data?.length > 0){
+      console.log(data.data)
+        setItems(data?.data);
+    }else{
+      setItems([]);
+    }
+  }
+
+  // selecting home feed api based on before/after login
+  const dataFetcher = () => getHomeFeed({ type: id});
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id});
+
+  const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
+
+  const getFeedData = async() =>{
+    setLoadingMoreItems(true)
+    let updateItems = [...items];
+     try{
+       console.log('GET MORE ITEMS *****')
+       const data =  await fetchData({ type: id });
+       updateItems = updateItems.concat(data?.data);
+      //  setOffset(offset+1)
+       setItems(updateItems);
+       setLoadingMoreItems(false);
+      }
+     catch(err){
+      setLoadingMoreItems(false);
+     }
+  } 
+
+  let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
+
+
+  // const Item = useCallback(({data : items, index, style})=>{
+  //   console.log('index',index, items, items?.[index])
+  //   const {userName, likesCount, music_title,userProfilePicUrl, video_url,firstFrame} = items?.[index] || {}
+
+  //   return(
+  //   <div style={style}>
+  //      <Video
+  //      userName={userName}
+  //      likesCount={likesCount} 
+  //      music_title={music_title}
+  //      userProfilePicUrl={userProfilePicUrl}
+  //      url={video_url}
+  //      firstFrame={firstFrame}
+  //      />
+  //     </div>
+  //   )
+  // },[])
+
+  const observer = useRef();
+
+const lastItemInView = useCallback((node)=>{
+  console.log("Imtersc")
+  if(loadingMoreItems) return;
+  observer.current = new IntersectionObserver(enteries =>{
+       if(enteries[0]?.isIntersecting){
+         console.log("NTERSECTION")
+        getFeedData();
+       }
+  });
+  if(node) observer?.current?.observe(node);
+},[loadingMoreItems])
 
   return (
-    <div>
-      <div id="header" className=" w-full h-24 shadow px-48 flex items-center fixed top-0 z-10 bg-white">
-        <div className="flex items-center">
-          <img className="w-20" src={withBasePath('icons/android-icon-192x192-dunplab-manifest-17016.png')} alt="zee logo" />
-          <h1 className="font-bold text-xl">HIPI</h1>
-        </div>
-      </div>
-      <div className="flex pt-24 relative">
-        <div id="navbar" className="w-1/4 px-20 flex flex-col fixed top-28 justify-end items-end">
-          <p className={`text-lg font-semibold px-6 py-2 
-          rounded-full border border-purple-800
-           text-purple-800 bg-purple-800 bg-opacity-20`}
+  <>
+  <ComponentStateHandler
+            state={fetchState}
+            Loader={LoadComp}
+            ErrorComp={ErrorComp}
           >
-            Trending
-          </p>
-          <p className="text-lg font-semibold px-6 py-2 rounded-full">Following</p>
-        </div>
-        <div className="w-96 left-1/4 top-24 absolute">
-          <ComponentStateHandler
+<div className="flex flex-col w-screen h-screen items-center">
+   <div className="w-full h-20 flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center px-6 justify-between">
+      <div className="w-20">
+      <img  src={withBasePath('icons/Logo_hipi.png')} />
+      </div>
+
+      <div>
+         <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
+            <div>
+            <input className="w-56 bg-gray-100" type="search" value="" placeholder="Search accounts and videos " />
+            </div>
+            <div className="ml-4">
+               <CloseSolid/>
+            </div>
+
+            <div className=" ml-4 w-px h-8 bg-gray-300">
+
+            </div>
+            <div className="pl-4">
+               <Search/>
+            </div>
+         </div>
+      </div>
+      <div>
+      <img alt="profile-pic" className="usrimg w-8 h-8 rounded-full  mr-4" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />
+      </div>
+   </div>
+
+
+   <div className="flex h-screen  bg-white justify-center relative overflow-hidden  w-3/4">
+      <div className="w-4/12 flex flex-col p-4">
+         <div className="flex flex-col pb-6 border-b-2 border-gray-200">
+               <p className="font-semibold text-lg py-2 pl-4">For You </p>
+               <p className="font-semibold text-lg py-2 pl-4">Following </p>
+               <p className="font-semibold text-lg py-2 pl-4">Explore </p>
+         </div>
+      </div>
+      <div className="w-8/12 p-8 flex flex-col overflow-scroll no_bar">
+        {/* {items && items?.length > 0 && <FixedSizeList
+        height={700}
+        width={500}
+        position= 'relative'
+        itemSize={600}
+        itemCount={items.length}
+        itemData={items}
+        >
+           {Item}
+        </FixedSizeList>} */}
+        {items && items?.length > 0  && items.map((item,id)=>
+       ( id !== items?.length-1 ? 
+          <Video
+          userName={item.userName}
+          likesCount={item.likesCount} 
+          music_title={item.music_title}
+          userProfilePicUrl={item.userProfilePicUrl}
+          url={item.video_url}
+          firstFrame={item.firstFrame}
+          />
+        
+      :
+         <span ref={lastItemInView}>
+          <Video
+          userName={item.userName}
+          likesCount={item.likesCount} 
+          music_title={item.music_title}
+          userProfilePicUrl={item.userProfilePicUrl}
+          url={item.video_url}
+          firstFrame={item.firstFrame}
+      />
+
+      </span>
+            ))}
+
+      {loadingMoreItems && <div className='m-5'>Loading....</div>}         
+      </div>
+   </div>
+</div>
+          {/* <ComponentStateHandler
             state={fetchState}
             Loader={LoadComp}
             ErrorComp={ErrorComp}
@@ -61,16 +206,12 @@ export default function DeskFeed() {
               )
             }
 
-          </ComponentStateHandler>
-        </div>
-        <div id="Download" className="w-1/4 px-12 flex flex-col fixed top-28 right-40">
-          <p className=" p-4 text-xl font-semibold">Download Hipi on your phone from the below links</p>
-          <div className="flex">
-            <img className="w-32 m-4" src={withBasePath('images/google-play.svg')} alt="android link" />
-            <img className="w-32 m-4" src={withBasePath('images/app-store.svg')} alt="android link" />
-          </div>
-        </div>
-      </div>
-    </div>
+          </ComponentStateHandler> */}
+              </ComponentStateHandler>
+
+          </>
+          
   );
 }
+
+export default withRouter(DeskFeed);
