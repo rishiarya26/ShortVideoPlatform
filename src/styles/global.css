@@ -122,6 +122,7 @@ img{
     height: 100%;
     width: 100%;
     object-position: 0 0;
+    max-width: 300px;
   }
   input:focus-visible{
     outline: none;
@@ -363,3 +364,5 @@ span.swiper-pagination-bullet {
 .desk-feed{
   height: 75vh;
 }
+
+

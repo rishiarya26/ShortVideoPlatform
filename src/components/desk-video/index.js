@@ -93,8 +93,8 @@ return (
    </div>
    <div className="video_section flex flex-col  w-full ml-4">
       <div className="header flex flex-col relative">
-         <p> <span className="font-semibold text-lg">{userName} </span>{`${firstName} ${lastName}`}</p>
-         <p className="font-semibold text-md my-2 mb-4">
+         <p className='font-medium text-sm text-gray-600'> <span className="font-semibold text-lg text-black cursor-pointer">{userName} </span>{`${firstName} ${lastName}`}</p>
+         <p className="font-semibold text-sm my-2 mb-4 ">
             <MusicBlack/>
             {music_title}
          </p>
@@ -114,7 +114,7 @@ return (
          // onTimeUpdate={handleUpdateSeekbar}
          loop
          onClick={handleVideoPress}
-         className="vdo_player_desk"
+         className="vdo_player_desk bg-gray-200"
          // poster={firstFrame}
          objectfit="contain"
          key={url}

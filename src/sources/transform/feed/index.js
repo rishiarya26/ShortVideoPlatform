@@ -70,8 +70,8 @@ function transformSuccess(resp) {
       payloadObject.creatorTag = d?.videoOwners?.tag || null;
       payloadObject.firstFrame= d?.firstFrame || null;
       payloadObject.isLiked= false;
-      payloadObject.firstName=d?.videoOwners?.firstName || null;
-      payloadObject.lastName=d?.videoOwners?.lastName || null;
+      payloadObject.firstName=d?.videoOwners?.firstName || '';
+      payloadObject.lastName=d?.videoOwners?.lastName || '';
       
       payloadData.push(payloadObject);
     });
