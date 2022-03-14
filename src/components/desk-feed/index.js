@@ -37,6 +37,7 @@ const LoadComp = () => (<Loading />);
     if(data?.data?.length > 0){
       console.log(data.data)
         setItems(data?.data);
+        // console.log('')
     }else{
       setItems([]);
     }

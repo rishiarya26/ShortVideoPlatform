@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Video from "../../desk-video";
 import Mute from "../../commons/svgicons/mute";
 import MusicBlack from "../../commons/svgicons/music-black";
