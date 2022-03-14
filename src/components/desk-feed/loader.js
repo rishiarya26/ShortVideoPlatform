@@ -7,7 +7,7 @@ function Loader() {
     <div className="video_card relative flex w-full h-screen scroll-snap-start bg-hipidblue items-center justify-center">
       <VideoSidebar />
       <VideoFooter />
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </div>
   );
 }
