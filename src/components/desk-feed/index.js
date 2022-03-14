@@ -106,7 +106,8 @@ const lastItemInView = useCallback((node)=>{
             ErrorComp={ErrorComp}
           >
 <div className="flex flex-col w-screen h-screen items-center">
-   <div className="w-full h-20 flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center px-6 justify-between">
+   <div className="w-full flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center justify-center">
+   <div className="w-3/4  h-20 flex bg-white items-center px-6 justify-between">
       <div className="w-20">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
@@ -131,6 +132,7 @@ const lastItemInView = useCallback((node)=>{
       <div>
       <img alt="profile-pic" className="usrimg w-8 h-8 rounded-full  mr-4" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />
       </div>
+      </div> 
    </div>
 
 
@@ -142,7 +144,7 @@ const lastItemInView = useCallback((node)=>{
                <p className="font-semibold text-lg py-2 pl-4">Explore </p>
          </div>
       </div>
-      <div className="w-8/12 p-8 flex flex-col overflow-scroll no_bar">
+      <div className="w-8/12 flex flex-col overflow-scroll no_bar">
         {/* {items && items?.length > 0 && <FixedSizeList
         height={700}
         width={500}
