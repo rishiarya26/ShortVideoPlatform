@@ -23,7 +23,7 @@ import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
 function Video({url, player='multi-player-muted',firstFrame,
-userProfilePicUrl, userName, music_title, likesCount}) {
+userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -33,12 +33,12 @@ const size = useWindowSize();
 const videoHeight = `${size.height}`;
 const handleVideoPress = () => {
 if (playing) {
-rootRef.current.children[0].pause();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 setPlay(true);
 setClicked(false);
 } else {
-rootRef.current.children[0].play();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 setClicked(true);
 setPlay(false);
@@ -50,11 +50,11 @@ const handlePlay = entry => {
 if (clicked) {
 if (entry?.isIntersecting) {
 // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.play &&
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.play();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 } else {
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.pause();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 }
 }
@@ -62,7 +62,7 @@ setPlaying(false);
 const [ref] = useIntersect({
 callback: handlePlay,
 rootMargin: '50px',
-threshold: [0.30, 0.75]
+threshold: [0.65, 0.65]
 });
 //  useEffect(()=>{
 //     if(props?.comp === 'feed'){
@@ -84,15 +84,16 @@ const selectVideoPlayer = {
 }
 return (
 <>
-<div ref={rootRef} className="feed_card flex border-b-2 border-gray-300 p-8 justify-between">
-   <div ref={ref} className="avatar">
+<div ref={rootRef} className="feed_card  border-b-2 border-gray-300 p-8 ">
+<div ref={ref} className='flex justify-between'>
+   <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
          <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
       </div>
    </div>
    <div className="video_section flex flex-col  w-full ml-4">
       <div className="header flex flex-col relative">
-         <p> <span className="font-semibold text-lg">NAME </span> {userName}</p>
+         <p> <span className="font-semibold text-lg">{userName} </span>{`${firstName} ${lastName}`}</p>
          <p className="font-semibold text-md my-2 mb-4">
             <MusicBlack/>
             {music_title}
@@ -106,7 +107,7 @@ return (
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
          <video
          playsInline
-         muted={true}
+         muted={muted}
          autoPlay
          preload="auto"
          webkit-playsinline = "true"
@@ -136,10 +137,10 @@ return (
          >
          <Pause />
       </div>
-      */}
+      */} 
       </div>
-      <div className="absolute bottom-4 right-4">
-         <Mute/>
+      <div onClick={()=>unMute()} className="absolute bottom-4 right-4">
+        {muted ? <Mute/> : ''}
       </div>
 </div>
 <div className="sidebar flex flex-col items-center ml-4">
@@ -157,6 +158,7 @@ return (
       </div>
 </div>
 
+</div>
 </div>
 </div>
 </>

@@ -28,7 +28,8 @@ const LoadComp = () => (<Loading />);
 
  function DeskFeed({ router }) {
   const [items, setItems] = useState([]);
-  const [loadingMoreItems, setLoadingMoreItems] = useState(false)
+  const [loadingMoreItems, setLoadingMoreItems] = useState(false);
+  const [muted, setMuted] = useState(true)
 
   const { id = 'for-you' } = router?.query;
 
@@ -98,6 +99,10 @@ const lastItemInView = useCallback((node)=>{
   if(node) observer?.current?.observe(node);
 },[loadingMoreItems])
 
+const unMute = ()=>{
+  setMuted(false);
+}
+
   return (
   <>
   <ComponentStateHandler
@@ -164,6 +169,10 @@ const lastItemInView = useCallback((node)=>{
           userProfilePicUrl={item.userProfilePicUrl}
           url={item.video_url}
           firstFrame={item.firstFrame}
+          muted={muted}
+          unMute={unMute}
+          firstName={item.firstName}
+          lastName={item.lastName}
           />
         
       :
@@ -175,6 +184,10 @@ const lastItemInView = useCallback((node)=>{
           userProfilePicUrl={item.userProfilePicUrl}
           url={item.video_url}
           firstFrame={item.firstFrame}
+          muted={muted}
+          unMute={unMute}
+          firstName={item.firstName}
+          lastName={item.lastName}
       />
 
       </span>
