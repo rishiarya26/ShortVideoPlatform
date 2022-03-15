@@ -1,4 +1,5 @@
 import Error from 'next/error';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import {
   SeoMeta
@@ -7,6 +8,7 @@ import FooterMenu from '../src/components/footer-menu';
 import Users from '../src/components/users';
 import { getUserProfile } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
+import { updateUtmData } from '../src/utils/web';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -18,19 +20,22 @@ export default function Hipi(params) {
     status,
   } = params;
 
+  const router = useRouter();
 
   useEffect(()=>{
-  try{ 
-    let userType = 'others'
-    const tokens = localStorage.get('tokens');
-    const userId = localStorage.get('user-id')
-    tokens && userId && userId === item?.id && (userType = 'self');
-    setType(userType);
-    // console.log(item)
-  }catch(e){
-    console.log('something went wrong with id')
-  }
-  },[])
+    try{ 
+      let userType = 'others'
+      const tokens = localStorage.get('tokens');
+      const userId = localStorage.get('user-id')
+      tokens && userId && userId === item?.id && (userType = 'self');
+      setType(userType);
+        const queryStrings = router?.query;
+        updateUtmData(queryStrings);
+    }catch(e){
+      console.log('something went wrong with id')
+    }
+  
+    },[])
 
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
