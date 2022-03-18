@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from 'react';
 import DeskVideo from '../desk-video';
 import Error from './error';
 import Loading from './loader';
-import { getHomeFeed } from '../../sources/feed';
+import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import CloseSolid from "../commons/svgicons/close-solid";
 import Search from "../commons/svgicons/search";
@@ -20,6 +20,8 @@ import MusicBlack from "../commons/svgicons/music-black";
 import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
+import dynamic from 'next/dynamic';
+import useDrawer from '../../hooks/use-drawer';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -32,6 +34,20 @@ const LoadComp = () => (<Loading />);
   const [muted, setMuted] = useState(true)
 
   const { id = 'for-you' } = router?.query;
+
+  const {show} = useDrawer();
+
+  const login = dynamic(
+    () => import('../auth-options'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
+
+  // const showLoginOptions = () => {
+  //   show('', login, 'medium');
+  // };
 
   const onDataFetched = data => {
     if(data?.data?.length > 0){
@@ -149,6 +165,14 @@ const unMute = ()=>{
                <p className="font-semibold text-lg py-2 pl-4">Following </p>
                <p className="font-semibold text-lg py-2 pl-4">Explore </p>
          </div>
+         <div className="flex flex-col pb-6 border-b-2 border-gray-200">
+               <p className="font-semibold text-lg py-2 pl-4">Log in to follow creators, like videos, and view comments.</p>
+               <button 
+                 onClick={() =>show('', login, 'medium')} 
+                 className="font-semibold text-lg py-2 pl-4">
+                   Log in
+               </button>
+         </div>
       </div>
       <div className="w-8/12 flex flex-col overflow-scroll no_bar">
         {/* {items && items?.length > 0 && <FixedSizeList
@@ -198,31 +222,6 @@ const unMute = ()=>{
       </div>
    </div>
 </div>
-          {/* <ComponentStateHandler
-            state={fetchState}
-            Loader={LoadComp}
-            ErrorComp={ErrorComp}
-          >
-            {
-              items.map(
-                item => (
-                  <DeskVideo
-                    key={item.content_id}
-                    url={item.video_url}
-                    id={item.content_id}
-                    comments={item.commentsCount}
-                    likes={item.likesCount}
-                    music={item.musicCoverTitle}
-                    musicTitle={item.music_title}
-                    profilePic={item.userProfilePicUrl}
-                    userName={item.userName}
-                    musicCoverTitle={item.musicCoverTitle}
-                  />
-                )
-              )
-            }
-
-          </ComponentStateHandler> */}
               </ComponentStateHandler>
 
           </>

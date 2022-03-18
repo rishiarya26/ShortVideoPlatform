@@ -75,7 +75,6 @@ function Video(props) {
       if (entry?.isIntersecting) {
       rootRef?.current?.children[0]?.play && rootRef?.current?.children[0]?.play();
       setPlaying(true);
-      console.log("IS INTER",entry)
       // if (promise !== undefined) {
       //    promise.then(function() {
       //       console.log('success')

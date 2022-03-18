@@ -9,10 +9,35 @@ import useDrawer from '../../hooks/use-drawer';
 import { useRouter } from 'next/router';
 import { GoogleButton } from '../social-login/google';
 import Close from '../commons/svgicons/close-black';
+import { getItem } from '../../utils/cookie';
 
-export default function Signup({ toggle }) {
+export default function Signup({ toggle, setAuth }) {
   const router= useRouter();
   const { close } = useDrawer();
+  const device = getItem('device-type')
+
+
+  const chooseComp = {
+    mobile :   
+      <div onClick={()=>router.push('/signup/phone')}>
+      <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        <div className="justify-self-start"><Mobile /></div>
+        <div className="flex justify-center w-full font-semibold">
+          <p>Use phone or Email</p>
+        </div>
+      </div>
+    </div>,
+    desktop : 
+      <div onClick={()=>setAuth('signup')}>
+      <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        <div className="justify-self-start"><Mobile /></div>
+        <div className="flex justify-center w-full font-semibold">
+          <p>Use phone or Email</p>
+        </div>
+      </div>
+    </div>
+  }
+
   return (
     <div className="px-4 py-2 flex flex-col items-center">
        <div onClick={close} className='flex w-full justify-end p-2'>
@@ -23,14 +48,7 @@ export default function Signup({ toggle }) {
         <p className="text-center text-sm">Create a profile, follow other accounts, make your own videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
-        <div onClick={()=>router.push('/signup/phone')}>
-          <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-            <div className="justify-self-start"><Mobile /></div>
-            <div className="flex justify-center w-full font-semibold">
-              <p>Use phone or Email</p>
-            </div>
-          </div>
-        </div>
+        {chooseComp[device]}
         <GoogleButton/>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>

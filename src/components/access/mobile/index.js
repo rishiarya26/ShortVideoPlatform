@@ -10,13 +10,23 @@ import { sendOTP } from '../../../sources/auth/send-otp';
 import { commonEvents } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
 import * as fbq from '../../../analytics/fb-pixel'
+import useDrawer from '../../../hooks/use-drawer';
+import { getItem } from '../../../utils/cookie';
+import VerifyOTP from '../verify-otp';
+import { DeskSendOtp } from '../../commons/button/desk-send-otp';
+import { useState, useEffect } from 'react';
 
 export default function Mobile({
-  toggle, processPhoneData, data, onCountryCodeChange, type
+  toggle, processPhoneData, data, onCountryCodeChange, type, toggleShowForgotPassComp,
+  toggleRegistration
 }) {
+  const [seconds, setSeconds] = useState(0);
+
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
+  const {close} = useDrawer();
+  const device = getItem('device-type')
 
   const disable = {
     loginPassword: (!!(data.mobile?.length === 0) || !!(data.password?.length === 0)),
@@ -54,8 +64,10 @@ export default function Mobile({
           router?.push({
             pathname: '/feed/for-you'
           });
+          if(device === 'desktop'){
+            close();
+          }
           showSnackbar({ message: t('SUCCESS_LOGIN') });
-         
         }
       } catch (e) {
         showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
@@ -66,14 +78,16 @@ export default function Mobile({
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
+          setSeconds(59);
           mixpanel('Login')
           fbq.defEvent('CompleteRegistration');
-          router?.push({
-            pathname: '/verify-otp',
-            query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
-          });
+           if(device === 'mobile'){ 
+             router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
+            });}
+          
           showSnackbar({ message: t('SUCCESS_OTP') });
-    
         }
       } catch (e) {
         if (e.errorCode === 404) {
@@ -93,10 +107,15 @@ export default function Mobile({
           const resp = await dispatchOtp();
           if(resp.data.code === 0){
             showSnackbar({ message: t('SUCCESS_OTP') });
-            router?.push({
+            if(device==='mobile') {
+              router?.push({
               pathname: '/verify-otp',
               query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
             });
+          }
+          // }else if(device === 'desktop'){
+          //    toggleRegistration(true);
+          // }
           }else{
             showSnackbar({ message: 'Something went wrong' });
           }
@@ -111,15 +130,70 @@ export default function Mobile({
     signup: t('SEND_OTP')
   };
 
+  const updateTimer = ()=>{
+    if(seconds > 0){
+        setSeconds(seconds-1);
+    }
+  }
+  useEffect(()=>{
+    if(seconds > 0){
+    setTimeout(updateTimer,1000);
+    }
+  })
+
+  const handleForgotPassword = ()=>{
+    if(device === 'mobile'){
+      router.push('/forgot-password?type=mobile')
+    }else if(device === 'desktop'){
+      toggleShowForgotPassComp({show : true, type : 'mobile'});
+    }
+  }
+
   const info = {
     loginOtp:
-  <button
+    <>
+      {device === 'desktop' && 
+      <>
+        <button
+        onClick={() => toggle('password')}
+        onKeyDown={() => toggle('password')}
+        className="flex justify-end text-sm font-semibold mt-2 px-2"
+      >
+        <p className="text-blue-400">Login with Password</p>
+      </button>
+      <div className='flex flex-row'>
+      <div className='flex flex-col'> 
+      <VerifyOTP 
+      typeRef={type === 'signup' ? 'signup' : 'login'} 
+      fullMobileNo={`${data.countryCode}${data.mobile}`}/>
+      </div>
+
+        <div className="mt-10">
+        <div className="text-gray-500">
+         {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
+          <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} />
+         }
+          </div>
+        </div>
+   
+      </div>
+      </>}
+
+    
+    {device === 'mobile' && 
+    <>
+    <button
     onClick={() => toggle('password')}
     onKeyDown={() => toggle('password')}
     className="flex justify-end text-sm font-semibold mt-2 px-2"
   >
     <p className="text-blue-400">Login with Password</p>
-  </button>,
+  </button>
+    <div className="mt-10">
+          <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
+        </div>
+        </>}
+  </>,
     loginPassword:
   <>
     <div className="mt-4">
@@ -134,22 +208,35 @@ export default function Mobile({
       />
     </div>
     <div className="flex justify-between text-sm font-semibold mt-2 px-2">
-      <p onClick={() => router.push('/forgot-password?type=mobile')}>Forgot password?</p>
+      <p onClick={handleForgotPassword}>Forgot password?</p>
       <p onClick={() => toggle('otp')} className="text-blue-400">Login with OTP</p>
     </div>
+    <div className="mt-10">
+          <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
+        </div>
   </>,
     signup:
-  <div className="flex justify-end text-sm font-semibold mt-2 px-2">
-    <p className="text-gray-400 text-xs">
-       <p className="text-xs">
-          By continuing, you agree to Hipi's
-          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
-          and confirm that you have read Hipi's
-          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
-          .if you sign up with SMS, SMS fee may apply.
+    <>
+      <div className="flex justify-end text-sm font-semibold mt-2 px-2">
+        <p className="text-gray-400 text-xs">
+          <p className="text-xs">
+              By continuing, you agree to Hipi's
+              <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+              and confirm that you have read Hipi's
+              <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+              .if you sign up with SMS, SMS fee may apply.
+            </p>
         </p>
-    </p>
-  </div>
+      </div>
+          <div className="mt-10">
+          <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
+        </div>
+        <VerifyOTP 
+          typeRef={type === 'signup' ? 'signup' : 'login'} 
+          fullMobileNo={`${data.countryCode}${data.mobile}`}
+          toggleRegistration={toggleRegistration}
+        />
+    </>
   };
 
   return (
@@ -170,9 +257,6 @@ export default function Mobile({
         />
       </div>
       {info[type]}
-      <div className="mt-10">
-        <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
-      </div>
     </div>
   );
 }

@@ -9,9 +9,11 @@ import Toggle from '../../commons/svgicons/toggle';
 import CircularProgress from '../../commons/circular-loader-small';
 import { commonEvents } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
+import useDrawer from '../../../hooks/use-drawer';
+import { getItem } from '../../../utils/cookie';
 
 
-const Registration = ({ router }) => {
+const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
   const [data, setData] = useState({
     type: '',
     value: '',
@@ -26,15 +28,25 @@ const Registration = ({ router }) => {
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
+ const {close} = useDrawer();
+ const device = getItem('device-type');
+
   const info = router?.query;
   const disable = (!!(data.firstName?.length === 0) || !!(data.lastName?.length === 0) || !!(data.name.length === 0)
    || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
 
   useEffect(() => {
     const dataToUpdate = { ...data };
+    if(device === 'mobile'){
     const type = Object.keys(info)?.[0];
     dataToUpdate.type = type;
     dataToUpdate.value = info[type];
+    }else if (device === 'desktop'){
+      console.log("beofre",dataType, dataValue)
+     dataToUpdate.type = dataType;
+     dataToUpdate.value = dataValue;
+    }
+    console.log(dataToUpdate)
     setData(dataToUpdate);
   }, []);
   /* eslint-disable no-param-reassign */
@@ -113,15 +125,22 @@ const Registration = ({ router }) => {
   const sendData = async () => {
     try {
       const response = await registerUser(data);
-      console.log("user registered",response)
+      console.log("user registered",response.status)
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
-        const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
-        mixpanel('Signup',method);
-        fbq.defEvent('CompleteRegistration');
+        // const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        // mixpanel('Signup',method);   
+        // fbq.defEvent('CompleteRegistration');
         /* Mixpanel */
-        router?.push('/feed/for-you');
+        console.log("***CLOSE***")
+        if(device === 'mobile'){
+          router?.push('/feed/for-you');
+        }else if (device === 'desktop'){
+          console.log("Close ittttttt")
+          close();
+
+        }
         showSnackbar({ message: t('SIGNUP_SUCCESS') });
       }
     } catch (e) {
@@ -140,7 +159,7 @@ const Registration = ({ router }) => {
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={router?.back} />
+      <BackButton back={()=>toggleRegistration({show : false})} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>

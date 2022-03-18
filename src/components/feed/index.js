@@ -498,7 +498,6 @@ const toTrackFirebase = (activeIndex, type, value) => {
               calculateheight="true"
               // slidesPerView={}
               mousewheel
-              freeMode="true"
               // speed = '5000'
               scrollbar={{ draggable: true }}
               // autoplay= {{

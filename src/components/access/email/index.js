@@ -9,14 +9,16 @@ import { userLogin } from '../../../sources/auth';
 import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
 import * as fbq from '../../../analytics/fb-pixel'
+import { getItem } from '../../../utils/cookie';
 
 export default function Email({
-  data, processEmailData, type
+  data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration
 }) {
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
+  const device = getItem('device-type')
 
   const mixpanel = (type) =>{
     const mixpanelEvents = commonEvents();
@@ -60,10 +62,13 @@ export default function Email({
 
     }
     }catch(e){
-      router?.push({
+     if(device === 'mobile'){ router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });
+    }else if(device === 'desktop'){
+      toggleRegistration({show: true, toRegType : 'email', toRegValue:data?.email});
+    }
       setTimeout(() => { setPending(false); }, 2000);
     }}
   };
@@ -89,7 +94,10 @@ export default function Email({
         required
       />
     </div>
-    <div onClick={()=>router.push(
+    <div onClick={
+      device === 'desktop' ? ()=>toggleShowForgotPassComp({show : true, type : 'email'})
+      :
+      ()=>router.push(
       {pathname: '/forgot-password',
        query : {type : 'email'}
     }
