@@ -20,14 +20,14 @@ const closeDropdown = ()=>{
     setShowList(false);
 }
 
-useEffect(()=>{
-    const closeDrop = e =>{
-     setShowList(false);
-    }
+// useEffect(()=>{
+//     const closeDrop = e =>{
+//      setShowList(false);
+//     }
 
-    document.body.addEventListener('click',closeDrop);
-    return ()=> document.body.removeEventListener('click',closeDrop);
-},[])
+//     document.body.addEventListener('click',closeDrop);
+//     return ()=> document.body.removeEventListener('click',closeDrop);
+// },[])
 
   const ListComp =(
       <div className='list-search'>
