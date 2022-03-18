@@ -4,6 +4,7 @@ import { SubmitButton } from '../button/submit';
 import useDrawer from '../../../hooks/use-drawer';
 import useTranslation from '../../../hooks/use-translation';
 import Close from '../svgicons/close-black';
+import { getItem } from '../../../utils/cookie';
 
 function search(enteredValue, setFilteredData, data) {
   /* eslint-disable no-param-reassign */
@@ -20,21 +21,25 @@ function search(enteredValue, setFilteredData, data) {
 
 const optimisedSearch = debounce(search, 400);
 
-export default function ListWithSearch({ data, onValueChange, type }) {
+export default function ListWithSearch({ data, onValueChange, type, closeDropdown }) {
   const [filteredData, setFilteredData] = useState(data);
   const { close } = useDrawer();
   const { t } = useTranslation();
+  const device = getItem('device-type');
 
   const info = { countryCode: { title: t('SELECT_COUNTRY'), placeholder: t('SEARCH_COUNTRY') } };
 
   return (
     <div className="flex flex-col w-full">
+      {device === 'mobile' && 
+      <>
       <div onClick={close} className='flex justify-end p-2'>
-      <Close/>
-   </div>
+        <Close/>
+      </div>
       <div className="flex w-full border-b-2 border-gray-300 relative justify-center p-4">
         <div className="font-bold">{info[type]?.title}</div>
       </div>
+      </>}
       <div className="flex px-2 py-4">
         <div className="flex w-9/12">
           <input
@@ -56,7 +61,7 @@ export default function ListWithSearch({ data, onValueChange, type }) {
           className="flex flex-col p-2"
           onClick={e => {
             onValueChange(filteredData[e.currentTarget.id]);
-            close();
+            device === 'desktop' ? closeDropdown && closeDropdown() : device === 'mobile' && close();
           }}
         >
           <div className="flex px-2 justify-between font-medium">

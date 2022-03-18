@@ -129,17 +129,19 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
-        // const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
-        // mixpanel('Signup',method);   
-        // fbq.defEvent('CompleteRegistration');
+        let method;
+        if(device === 'mobile'){
+          method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        }else if(device === 'desktop'){
+          method = data && data?.type;
+        }
+        method && mixpanel('Signup',method);   
+        fbq.defEvent('CompleteRegistration');
         /* Mixpanel */
-        console.log("***CLOSE***")
         if(device === 'mobile'){
           router?.push('/feed/for-you');
         }else if (device === 'desktop'){
-          console.log("Close ittttttt")
           close();
-
         }
         showSnackbar({ message: t('SIGNUP_SUCCESS') });
       }

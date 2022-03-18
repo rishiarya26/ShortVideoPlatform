@@ -168,7 +168,7 @@ const unMute = ()=>{
          <div className="flex flex-col pb-6 border-b-2 border-gray-200">
                <p className="font-semibold text-lg py-2 pl-4">Log in to follow creators, like videos, and view comments.</p>
                <button 
-                 onClick={() =>show('', login, 'medium')} 
+                 onClick={() =>show('', login, 'big')} 
                  className="font-semibold text-lg py-2 pl-4">
                    Log in
                </button>

@@ -365,4 +365,35 @@ span.swiper-pagination-bullet {
   height: 75vh;
 }
 
+.dropdown-search{
+  position: absolute;
+  left: 0;
+  top: 45px;
+  height: 35px;
+  width: 326px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(22,24,35,.12);
+  z-index: 1000;
+  background: #fff;
+  margin-top: 4px;
+}
 
+.list-search{
+  width: 329px;
+  padding-top: 35px;
+  margin-top: 7px;
+  display: block;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.06);
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 3%), 0 2px 4px 0 rgb(0 0 0 / 3%);
+    max-height: 286px;
+    overflow: scroll;
+    margin-top: 4px;
+    -webkit-overflow-scrolling: touch;
+    z-index: 11;
+}

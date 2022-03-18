@@ -15,6 +15,8 @@ import { getItem } from '../../../utils/cookie';
 import VerifyOTP from '../verify-otp';
 import { DeskSendOtp } from '../../commons/button/desk-send-otp';
 import { useState, useEffect } from 'react';
+import { DeskCountryCode } from '../../commons/button/desk-country-code';
+
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type, toggleShowForgotPassComp,
@@ -239,13 +241,23 @@ export default function Mobile({
     </>
   };
 
+  const countryCodeComp = {
+    'desktop' :
+    <DeskCountryCode
+    onValueChange={onCountryCodeChange}
+    text={data.countryCode}
+  />,
+    'mobile' :
+    <CountryCode
+    onValueChange={onCountryCodeChange}
+    text={data.countryCode}
+  />
+  }
+
   return (
     <div className="flex flex-col px-4 pt-10">
       <div className="mt-4 relative flex">
-        <CountryCode
-          onValueChange={onCountryCodeChange}
-          text={data.countryCode}
-        />
+      {countryCodeComp?.[device]}
         <input
           id="mobile"
           value={data.mobile}
