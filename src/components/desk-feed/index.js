@@ -1,5 +1,5 @@
 /*eslint-disable @next/next/no-img-element*/
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import DeskVideo from '../desk-video';
 import Error from './error';
 import Loading from './loader';
@@ -22,6 +22,7 @@ import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
 import dynamic from 'next/dynamic';
 import useDrawer from '../../hooks/use-drawer';
+import { localStorage } from '../../utils/storage';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -51,8 +52,9 @@ const LoadComp = () => (<Loading />);
 
   const onDataFetched = data => {
     if(data?.data?.length > 0){
-      console.log(data.data)
+      console.log(data.data);
         setItems(data?.data);
+        localStorage.set('desk-feed',data?.data);
         // console.log('')
     }else{
       setItems([]);
@@ -65,6 +67,18 @@ const LoadComp = () => (<Loading />);
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
+    useEffect(()=>{
+      console.log("parsedffff",JSON.parse(sessionStorage.getItem("is_reloaded")))
+      if(JSON.parse(sessionStorage.getItem("is_reloaded"))){
+        console.log('reloaded present');
+      }
+      sessionStorage.setItem(JSON.stringify("is_reloaded"),id || 0)
+      let initalData=[];
+      const localData = localStorage.get('desk-feed');
+      initalData = localData || getFeedData();
+      return initalData;
+  },[])
+
   const getFeedData = async() =>{
     setLoadingMoreItems(true)
     let updateItems = [...items];
@@ -74,6 +88,7 @@ const LoadComp = () => (<Loading />);
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
        setItems(updateItems);
+       localStorage.set('desk-feed',updateItems);
        setLoadingMoreItems(false);
       }
      catch(err){
@@ -82,7 +97,6 @@ const LoadComp = () => (<Loading />);
   } 
 
   let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
-
 
   // const Item = useCallback(({data : items, index, style})=>{
   //   console.log('index',index, items, items?.[index])
