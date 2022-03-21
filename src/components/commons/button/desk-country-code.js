@@ -1,13 +1,13 @@
 /*eslint-disable  react/display-name*/
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { countryCodes } from '../../../../public/countryCode.json';
-import useDrawer from '../../../hooks/use-drawer';
 import ListWithSearch from '../list-with-search';
 
 export const DeskCountryCode = ({ onValueChange, text }) => {
-  const { show } = useDrawer();
   const [showList, setShowList] = useState(false);
+  const btnRef = useRef();
+  const btnContent = useRef();
+  const searchInput = useRef();
 //   const detectDeviceModal = dynamic(
 //     () => import('../list-with-search'),
 //     {
@@ -20,39 +20,41 @@ const closeDropdown = ()=>{
     setShowList(false);
 }
 
-// useEffect(()=>{
-//     const closeDrop = e =>{
-//      setShowList(false);
-//     }
-
-//     document.body.addEventListener('click',closeDrop);
-//     return ()=> document.body.removeEventListener('click',closeDrop);
-// },[])
-
-  const ListComp =(
-      <div className='list-search'>
-      <ListWithSearch
-        data= {countryCodes && countryCodes}
-        onValueChange={onValueChange}
-        type ='countryCode' 
-        closeDropdown={closeDropdown}
-      />
-      </div>
-  )
+useEffect(()=>{
+    const closeDrop = e =>{
+        // console.log("777",e.path[0], btnContent.current, btnRef.current, searchInput.current)
+     if(e.path[0] !== btnRef?.current && e.path[0] !== btnContent?.current &&
+         e.path[0] !== searchInput?.current){
+        closeDropdown();
+     }   
+    }
+    document.body.addEventListener('click',closeDrop);
+    return ()=> document.body.removeEventListener('click',closeDrop);
+},[])
 
   return (
     <>
       <button
+        ref={btnRef}
         onClick={()=>setShowList(!showList)}
         className="bg-white px-2 py-2 text-gray-600 border-b-2 border-grey-300 flex items-center"
       >
         {' '}
         +
         {text}
-        <p className="text-xs pl-1">{' ▼'}</p>
+        <p onClick={()=>setShowList(!showList)} className="text-xs pl-1">{' ▼'}</p>
       </button>
-      {showList && ListComp}
+      {showList && 
+            <div ref={btnContent} className='list-search'>
+            <ListWithSearch
+              data= {countryCodes && countryCodes}
+              onValueChange={onValueChange}
+              type ='countryCode' 
+              closeDropdown={closeDropdown}
+              searchInputRef={searchInput}
+            />
+            </div>
+      }
     </>
   );
 };
-// () => show('', detectDeviceModal, 'big', { data: countryCodes && countryCodes, onValueChange, type: 'countryCode' })
