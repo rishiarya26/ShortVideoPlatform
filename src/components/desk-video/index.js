@@ -23,8 +23,11 @@ import MusicBlack from "../commons/svgicons/music-black";
 import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
+import { trimHash } from '../../utils/string';
+
 function Video({url, player='multi-player-muted',firstFrame,
-userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,}) {
+userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
+description}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -35,13 +38,13 @@ const size = useWindowSize();
 const videoHeight = `${size.height}`;
 const handleVideoPress = () => {
 if (playing) {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 setPlay(true);
 setPause(false);
 setClicked(false);
 } else {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 setClicked(true);
 setPlay(false);
@@ -52,11 +55,11 @@ const handlePlay = entry => {
 if (clicked) {
 if (entry?.isIntersecting) {
 // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play &&
+rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 } else {
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 }
 }
@@ -84,6 +87,24 @@ threshold: [0.65, 0.65]
 const selectVideoPlayer = {
 // <img className="h-screen" src={firstFrame}></img>
 }
+
+const toHashTag =(hashtag)=>{
+   let finalValue = hashtag;
+   if(hashtag?.includes('#')){
+     hashtag = trimSpace(hashtag)
+     finalValue = trimHash(hashtag)
+   }
+   // router?.push(`/hashtag/${finalValue}`)
+ }
+
+ const toUser =(username)=>{
+   // let finalValue = username;
+   // if(hashtag?.includes('#')){
+   //   finalValue = trimHash(hashtag)
+   // }
+   // router?.push(`/${username}`)
+ }
+
 return (
 <>
 <div ref={rootRef} className="feed_card  border-b-2 border-gray-300 p-8 ">
@@ -104,6 +125,13 @@ return (
             Follow
          </div>
       </div>
+      <div className=" text-xs  mb-3 mt-2">
+      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
+            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
+             </span>
+          ))}
+      </div>    
       <div className="Video flex items-end">
       <div className="desk-feed rounded-md overflow-hidden relative" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
