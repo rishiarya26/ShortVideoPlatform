@@ -6,6 +6,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
+import Pause from '../commons/svgicons/pause';
 // import ProductWidget from '../product-widget';
 // import ProductCards from '../product-cards';
 // import CircularProgress from '../commons/circular-loader'
@@ -23,10 +24,11 @@ import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
 function Video({url, player='multi-player-muted',firstFrame,
-userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName}) {
+userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
+const [pause, setPause] = useState(true);
 const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);
 const size = useWindowSize();
@@ -36,14 +38,14 @@ if (playing) {
   rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 setPlay(true);
+setPause(false);
 setClicked(false);
 } else {
   rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 setClicked(true);
 setPlay(false);
-setTimeout(() => {
-}, 2000);
+setPause(true);
 }
 };
 const handlePlay = entry => {
@@ -113,9 +115,9 @@ return (
          webkit-playsinline = "true"
          // onTimeUpdate={handleUpdateSeekbar}
          loop
-         onClick={handleVideoPress}
+         // onClick={handleVideoPress}
          className="vdo_player_desk bg-gray-200"
-         // poster={firstFrame}
+         poster={firstFrame}
          objectfit="contain"
          key={url}
          >
@@ -126,18 +128,21 @@ return (
          </video>
          <div
          onClick={handleVideoPress}
-         className="absolute top-1/2 justify-center w-screen"
+         className="absolute bottom-1  justify-start w-screen"
          style={{ display: play ? 'flex' : 'none' }}
          >
          <Play />
-         {/* <div
+         </div>
+         <div
          onClick={handleVideoPress}
-         className="absolute top-1/2 left-1/2 rounded-full bg-black bg-opacity-75"
-         style={{ display: pause ? 'block' : 'none' }}
+         className="absolute bottom-1  justify-start w-screen"
+         style={{ display: (pause ? 'flex' : 'none') }}
          >
-         <Pause />
+        <Pause/>
       </div>
-      */} 
+   
+      <div onClick={()=>unMute()} className="absolute bottom-4 right-4">
+        {muted ? <Mute/> : ''}
       </div>
       <div onClick={()=>unMute()} className="absolute bottom-4 right-4">
         {muted ? <Mute/> : ''}

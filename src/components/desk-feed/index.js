@@ -207,7 +207,7 @@ const unMute = ()=>{
           music_title={item.music_title}
           userProfilePicUrl={item.userProfilePicUrl}
           url={item.video_url}
-          firstFrame={item.firstFrame}
+          firstFrame={item?.firstFrame}
           muted={muted}
           unMute={unMute}
           firstName={item.firstName}
@@ -222,13 +222,12 @@ const unMute = ()=>{
           music_title={item.music_title}
           userProfilePicUrl={item.userProfilePicUrl}
           url={item.video_url}
-          firstFrame={item.firstFrame}
-          muted={muted}
+          firstFrame={item?.firstFrame}
+          muted={muted} 
           unMute={unMute}
           firstName={item.firstName}
           lastName={item.lastName}
       />
-
       </span>
             ))}
 

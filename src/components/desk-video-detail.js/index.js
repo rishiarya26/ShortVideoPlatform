@@ -11,7 +11,6 @@ import DownArrow from "../commons/svgicons/down-arrow";
 import { withRouter } from "next/router";
 
 function VideoDetail({router}) {
-    
 return (
 <div className="flex w-screen h-screen">
    <div className="flex w-8/12 h-screen bg-black justify-center relative overflow-hidden">
