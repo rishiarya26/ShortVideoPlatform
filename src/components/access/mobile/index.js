@@ -163,14 +163,16 @@ export default function Mobile({
       >
         <p className="text-blue-400">Login with Password</p>
       </button>
-      <div className='flex flex-row'>
-      <div className='flex flex-col'> 
+      
+      <div className='flex relative mt-4'>
+      
+      <div className='flex w-full items-center flex-col'> 
       <VerifyOTP 
       typeRef={type === 'signup' ? 'signup' : 'login'} 
       fullMobileNo={`${data.countryCode}${data.mobile}`}/>
       </div>
 
-        <div className="mt-10">
+      <div className="absolute top-0 right-0 mt-4 w-3/12 flex justify-center">
         <div className="text-gray-500">
          {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
           <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} />

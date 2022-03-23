@@ -84,7 +84,7 @@ const selectVideoPlayer = {
 }
 return (
 <>
-<div ref={rootRef} className="feed_card  border-b-2 border-gray-300 p-8 ">
+<div ref={rootRef} className="feed_card  border-b border-gray-300 p-8 ">
 <div ref={ref} className='flex justify-between'>
    <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
@@ -98,7 +98,7 @@ return (
             <MusicBlack/>
             {music_title}
          </p>
-         <div className="absolute rounded-md text-sm  px-3 right-4 top-0 border-2 p-1 border-hipired text-hipired">
+         <div className="absolute rounded-md text-sm font-semibold  px-6 right-4 top-0 border p-1 border-hipired text-hipired">
             Follow
          </div>
       </div>

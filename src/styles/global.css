@@ -153,7 +153,9 @@ img{
   background-color: darkgrey;
   /* outline: 1px solid slategrey; */
 }
-
+.login_pop{
+  min-width: 472px;
+}
 
 .header_landing{
     height: 112px;
@@ -169,7 +171,9 @@ img{
   border-radius: 22px;
   position: absolute;
 }
-
+.head-shadow{
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+}
 
 @media (orientation: portrait) {
   .landscape_screen {
@@ -362,7 +366,7 @@ span.swiper-pagination-bullet {
 
 
 .desk-feed{
-  height: 75vh;
+  height: 70vh;
 }
 
 .dropdown-search{
@@ -390,8 +394,11 @@ span.swiper-pagination-bullet {
     border-radius: 4px;
     box-shadow: 0 0 6px 0 rgb(0 0 0 / 3%), 0 2px 4px 0 rgb(0 0 0 / 3%);
     max-height: 296px;
-    overflow: scroll;
+    /* overflow: scroll; */
     margin-top: 4px;
     -webkit-overflow-scrolling: touch;
     z-index: 11;
+}
+.list-input{
+  width: 324px;
 }

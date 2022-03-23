@@ -21,7 +21,7 @@ function search(enteredValue, setFilteredData, data) {
 
 const optimisedSearch = debounce(search, 400);
 
-export default function ListWithSearch({ data, onValueChange, type, closeDropdown }) {
+export default function ListWithSearch({ data, onValueChange, type, closeDropdown , searchInputRef}) {
   const [filteredData, setFilteredData] = useState(data);
   const { close } = useDrawer();
   const { t } = useTranslation();
@@ -40,9 +40,10 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
         <div className="font-bold">{info[type]?.title}</div>
       </div>
       </>}
-      <div className="flex px-2 py-4 fixed bg-white">
-        <div className="flex w-8/12 ">
+      <div className="flex px-2 py-4 fixed bg-white list-input">
+        <div className="flex w-full">
           <input
+            ref={searchInputRef}
             id="Search"
             onChange={e => optimisedSearch(e.target.value, setFilteredData, data)}
             className=" w-full bg-gray-100 px-4 py-2 mx-2"
@@ -50,11 +51,12 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
             placeholder={info[type]?.placeholder}
           />
         </div>
-        <div className="flex w-4/12">
+       {device === 'mobile' &&
+        <div className="flex w-4npm /12">
           <SubmitButton text="Search" />
-        </div>
+        </div>}
       </div>
-      <div className="pt-16 px-2 thin_bar overscroll-x-hidden">
+      <div className="pt-16 px-2 ">
       {filteredData?.map((data, id) => (
         <div
           key={id}

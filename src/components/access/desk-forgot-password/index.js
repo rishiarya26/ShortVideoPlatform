@@ -140,22 +140,22 @@ import ResetPassword from "../reset-password";
   <div>
     <div className="flex justify-center h-16 items-center relative">
     <span className="absolute top-4 left-2" onClick={()=>toggleShowForgotPassComp({show : false})}> <Back/></span>  
-    <div className="font-semibold" >Reset</div>
+    <div className="font-semibold" >Forget password</div>
     </div>
     <div className="mt-4 flex flex-col px-6">
-        <p className="font-bold w-full">Forget password</p>
+        <p className="font-bold w-full">Reset password</p>
         <p className="text-gray-400 text-xs mt-2">We'll SMS you a code to reset your password</p>
       </div>
     <div className="flex flex-col px-6 pt-6">
      <form onSubmit={submit[type]}> <div className="mt-4 relative flex">
        {inputType[type]}
       </div>
-      <div className="mt-10 w-50">
-        <button type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
-      </div>
+      
       </form>
       { type === 'mobile' && 
-      <>
+      <div>
+        <div className="flex mt-4">
+        
       <input
         id="otp"
         value={otp}
@@ -166,9 +166,13 @@ import ResetPassword from "../reset-password";
         autoComplete="off"
         placeholder="Enter code"
         required
-      />     
+      /> 
+      <div className="w-50 pl-2">
+      <button type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
+    </div>
+      </div>    
       <ResetPassword otpCode={otp} phoneNo ={`${phoneData?.countryCode}${phoneData?.mobile}`}/>
-      </>
+      </div>
       }
     </div>
   </div>
