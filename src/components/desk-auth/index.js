@@ -26,7 +26,6 @@ const Auth = ({ router, authType, backToOptions }) => {
   }
 
   const toggleRegistration = (value)=>{
-      console.log("reg",value)
       setShowRegistraton(value)
   }
 

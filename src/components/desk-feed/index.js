@@ -1,4 +1,5 @@
 /*eslint-disable @next/next/no-img-element*/
+/*eslint-disable react/display-name */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import DeskVideo from '../desk-video';
 import Error from './error';
@@ -50,16 +51,26 @@ const LoadComp = () => (<Loading />);
   //   show('', login, 'medium');
   // };
 
-  const onDataFetched = data => {
-    if(data?.data?.length > 0){
-      console.log(data.data);
-        setItems(data?.data);
-        localStorage.set('desk-feed',data?.data);
-        // console.log('')
-    }else{
-      setItems([]);
-    }
-  }
+  const onDataFetched = (data) => {
+    // console.log("isreloaded value", JSON.parse(sessionStorage.getItem("is_reloaded")))
+    // if (JSON.parse(sessionStorage.getItem("is_reloaded"))) {
+    //     console.log('reloaded present');
+    // }
+    // sessionStorage.setItem(JSON.stringify("is_reloaded"), id || 0)
+    // let initalData = [];
+        if (data?.data?.length > 0) {
+            console.log("fresh data",data.data);
+            setItems(data?.data);
+            // initalData = data?.data;
+            // localStorage.set('desk-feed', data?.data);
+        } else {
+            // initalData = [];
+        }
+}
+
+// useEffect(()=>{
+//   console.log(items);
+// },[items])
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id});
@@ -67,34 +78,41 @@ const LoadComp = () => (<Loading />);
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
-    useEffect(()=>{
-      console.log("parsedffff",JSON.parse(sessionStorage.getItem("is_reloaded")))
-      if(JSON.parse(sessionStorage.getItem("is_reloaded"))){
-        console.log('reloaded present');
-      }
-      sessionStorage.setItem(JSON.stringify("is_reloaded"),id || 0)
-      let initalData=[];
-      const localData = localStorage.get('desk-feed');
-      initalData = localData || getFeedData();
-      return initalData;
-  },[])
+  //   useEffect(()=>{
+  //     console.log("parsedffff",JSON.parse(sessionStorage.getItem("is_reloaded")))
+  //     if(JSON.parse(sessionStorage.getItem("is_reloaded"))){
+  //       console.log('reloaded present');
+  //     }
+  //     sessionStorage.setItem(JSON.stringify("is_reloaded"),id || 0)
+  //     let initalData=[];
+  //     const localData = localStorage.get('desk-feed');
+  //     initalData = localData || getFeedData();
+  //     return initalData;
+  // },[])
 
-  const getFeedData = async() =>{
-    setLoadingMoreItems(true)
+  const getFeedData =() =>{
+    // checking length of items as it was running twice
+    // if(items.length > 0){
+      // setLoadingMoreItems(true);
     let updateItems = [...items];
+    console.log('present items',items);
      try{
-       console.log('GET MORE ITEMS *****')
-       const data =  await fetchData({ type: id });
+       const data = fetchData({ type: id });
+       console.log('GOT MORE ITEMS *****', data?.data)
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
+       console.log('appended',updateItems);
        setItems(updateItems);
-       localStorage.set('desk-feed',updateItems);
+      //  localStorage.set('desk-feed',updateItems);
        setLoadingMoreItems(false);
       }
      catch(err){
       setLoadingMoreItems(false);
      }
+    // }
   } 
+
+  useEffect(()=>{console.log("id changed",id)},[id])
 
   let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
 
@@ -119,28 +137,23 @@ const LoadComp = () => (<Loading />);
   const observer = useRef();
 
 const lastItemInView = useCallback((node)=>{
-  console.log("Imtersc")
   if(loadingMoreItems) return;
   observer.current = new IntersectionObserver(enteries =>{
        if(enteries[0]?.isIntersecting){
-         console.log("NTERSECTION")
+        setLoadingMoreItems(true); 
         getFeedData();
        }
   });
   if(node) observer?.current?.observe(node);
 },[loadingMoreItems])
 
-const unMute = ()=>{
+const unMute = (value)=>{
   setMuted(false);
 }
 
   return (
   <>
-  <ComponentStateHandler
-            state={fetchState}
-            Loader={LoadComp}
-            ErrorComp={ErrorComp}
-          >
+
 <div className="flex flex-col w-screen h-screen items-center">
    <div className="w-full flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center justify-center">
    <div className="w-3/4  h-20 flex bg-white items-center px-6 justify-between">
@@ -151,7 +164,7 @@ const unMute = ()=>{
       <div>
          <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
             <div>
-            <input className="w-56 bg-gray-100" type="search" value="" placeholder="Search accounts and videos " />
+            {/* <input className="w-56 bg-gray-100" type="search" value="" placeholder="Search accounts and videos " /> */}
             </div>
             <div className="ml-4">
                <CloseSolid/>
@@ -188,6 +201,11 @@ const unMute = ()=>{
                </button>
          </div>
       </div>
+        <ComponentStateHandler
+            state={fetchState}
+            Loader={LoadComp}
+            ErrorComp={ErrorComp}
+          >
       <div className="w-8/12 flex flex-col overflow-scroll no_bar">
         {/* {items && items?.length > 0 && <FixedSizeList
         height={700}
@@ -202,6 +220,7 @@ const unMute = ()=>{
         {items && items?.length > 0  && items.map((item,id)=>
        ( id !== items?.length-1 ? 
           <Video
+          key={id}
           userName={item.userName}
           likesCount={item.likesCount} 
           music_title={item.music_title}
@@ -212,10 +231,11 @@ const unMute = ()=>{
           unMute={unMute}
           firstName={item.firstName}
           lastName={item.lastName}
+          description={item.content_description}
           />
         
       :
-         <span ref={lastItemInView}>
+         <span key={id} ref={lastItemInView}>
           <Video
           userName={item.userName}
           likesCount={item.likesCount} 
@@ -227,15 +247,16 @@ const unMute = ()=>{
           unMute={unMute}
           firstName={item.firstName}
           lastName={item.lastName}
+          description={item.content_description}
       />
       </span>
             ))}
 
       {loadingMoreItems && <div className='m-5'>Loading....</div>}         
       </div>
+      </ComponentStateHandler>
    </div>
 </div>
-              </ComponentStateHandler>
 
           </>
           
