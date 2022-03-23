@@ -21,6 +21,7 @@ export default function Hipi() {
   return (
     <>
     {device === 'desktop' ?  <DeskFeed/> : 
+    device === 'mobile' &&
     <ChooseOnType android={<Feed/>} ios={<FeedIphone/>}/>}
     </>
   );
