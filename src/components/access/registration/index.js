@@ -188,7 +188,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
           value={data.gender}
           id="gender"
           onClick={toggleGender}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
+          className=" w-full border-b-2 border-grey-300 px-4 py-2 cursor-pointer"
           type="text"
           placeholder="Gender"
           required

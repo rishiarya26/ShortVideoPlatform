@@ -124,7 +124,7 @@ import { Back } from "../../commons/svgicons/back"
     return(
   <div>
     <div className="flex justify-center h-16 items-center relative">
-    <span className="absolute top-4 left-2" onClick={()=>router?.back()}> <Back/></span>  
+    <span className="absolute top-4 left-2 cursor-pointer" onClick={()=>router?.back()}> <Back/></span>  
     <div className="font-semibold" >Reset</div>
     </div>
     <div className="mt-4 flex flex-col px-6">
