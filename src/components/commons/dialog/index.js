@@ -45,7 +45,7 @@ const Dialog = ({
             data-testid="dialog-close"
             role="presentation"
             onClick={() => (close())}
-            className="w-6 h-6 absolute right-3 top-3"
+            className="w-6 h-6 absolute right-3 top-3 cursor-pointer"
           >
             <Close />
           </div>

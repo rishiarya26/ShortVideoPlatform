@@ -19,15 +19,15 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
                id={id}
                onClick={()=>onTabClick(id)}
                className={ id === selectedIndex 
-              ? ' text-black font-semibold border-b-2 border-green-600 w-1/2 flex justify-center align-center py-2 text-sm'
-              : ' py-2 w-1/2 flex justify-center align-center text-sm'}
+              ? ' text-black font-semibold border-b-2 border-green-600 w-1/2 flex cursor-pointer justify-center align-center py-2 text-sm'
+              : ' py-2 w-1/2 flex justify-center align-center text-sm cursor-pointer'}
           >
             <span className={
                 id === selectedIndex ? 'text-teal-500 ' : ''}>{data}
             </span>
             {/* Number span */}
             <span className={
-                id === selectedIndex ? 'bg-green-600 text-white p-px text-xs px-2 rounded-full ml-2 flex justify-center items-center' : 'bg-gray-600 text-white p-px text-xs px-2 rounded-full ml-2 flex justify-center items-center'}>{items?.number?.[id]}
+                id === selectedIndex ? 'bg-green-600 text-white p-px text-xs px-2 rounded-full ml-2 flex justify-center cursor-pointer items-center' : 'bg-gray-600 cursor-pointer text-white p-px text-xs px-2 rounded-full ml-2 flex justify-center items-center'}>{items?.number?.[id]}
             </span>
           </div>
       )) }

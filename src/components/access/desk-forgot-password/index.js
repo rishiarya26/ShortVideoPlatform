@@ -167,7 +167,7 @@ import ResetPassword from "../reset-password";
         placeholder="Enter code"
         required
       /> 
-      <div className="w-50 pl-2">
+      <div className="w-50">
       <button type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
     </div>
       </div>    

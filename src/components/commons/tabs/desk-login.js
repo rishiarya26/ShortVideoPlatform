@@ -19,8 +19,8 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
                id={id}
                onClick={()=>onTabClick(id)}
                className={ id === selectedIndex 
-              ? 'border-b-2 w-1/2 flex justify-center text-black align-center py-2 text-sm'
-              : ' py-2 w-1/2 flex justify-center align-center text-sm'}
+              ? 'border-b-2 w-1/2 flex justify-center text-black cursor-pointer align-center py-2 text-sm'
+              : ' py-2 w-1/2 flex justify-center align-center cursor-pointer text-sm'}
           >
             <span className={
                 id === selectedIndex ? 'text-teal-500 ' : ''}>{data}</span>
