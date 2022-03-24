@@ -34,6 +34,7 @@ const LoadComp = () => (<Loading />);
   const [items, setItems] = useState([]);
   const [loadingMoreItems, setLoadingMoreItems] = useState(false);
   const [muted, setMuted] = useState(true)
+  const [fetchState, setFetchState] = useState('pending');
 
   const { id = 'for-you' } = router?.query;
 
@@ -51,22 +52,25 @@ const LoadComp = () => (<Loading />);
   //   show('', login, 'medium');
   // };
 
-  const onDataFetched = (data) => {
-    // console.log("isreloaded value", JSON.parse(sessionStorage.getItem("is_reloaded")))
-    // if (JSON.parse(sessionStorage.getItem("is_reloaded"))) {
-    //     console.log('reloaded present');
-    // }
-    // sessionStorage.setItem(JSON.stringify("is_reloaded"), id || 0)
-    // let initalData = [];
-        if (data?.data?.length > 0) {
-            console.log("fresh data",data.data);
-            setItems(data?.data);
-            // initalData = data?.data;
-            // localStorage.set('desk-feed', data?.data);
-        } else {
-            // initalData = [];
-        }
-}
+//   const onDataFetched = (data) => {
+//     setLoadingMoreItems(true);
+//     // console.log("isreloaded value", JSON.parse(sessionStorage.getItem("is_reloaded")))
+//     // if (JSON.parse(sessionStorage.getItem("is_reloaded"))) {
+//     //     console.log('reloaded present');
+//     // }
+//     // sessionStorage.setItem(JSON.stringify("is_reloaded"), id || 0)
+//     // let initalData = [];
+//         if (data?.data?.length > 0) {
+//             console.log("fresh data",data.data);
+//             setItems(data?.data);
+//             setLoadingMoreItems(false);
+//             // initalData = data?.data;
+//             // localStorage.set('desk-feed', data?.data);
+//         } else {
+//           setLoadingMoreItems(false);
+//             // initalData = [];
+//         }
+// }
 
 // useEffect(()=>{
 //   console.log(items);
@@ -78,32 +82,47 @@ const LoadComp = () => (<Loading />);
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
-  //   useEffect(()=>{
-  //     console.log("parsedffff",JSON.parse(sessionStorage.getItem("is_reloaded")))
-  //     if(JSON.parse(sessionStorage.getItem("is_reloaded"))){
-  //       console.log('reloaded present');
-  //     }
-  //     sessionStorage.setItem(JSON.stringify("is_reloaded"),id || 0)
-  //     let initalData=[];
-  //     const localData = localStorage.get('desk-feed');
-  //     initalData = localData || getFeedData();
-  //     return initalData;
-  // },[])
+  useEffect(()=>{console.log("items changed to - ",items)},[items])
 
-  const getFeedData =() =>{
-    // checking length of items as it was running twice
-    // if(items.length > 0){
-      // setLoadingMoreItems(true);
+  useEffect(()=>{
+    getInitialData();
+  },[])
+
+  const getInitialData = async() =>{
+    setLoadingMoreItems(true);
     let updateItems = [...items];
-    console.log('present items',items);
+    console.log('present items',updateItems);
      try{
-       const data = fetchData({ type: id });
+       const data = await fetchData({ type: id });
        console.log('GOT MORE ITEMS *****', data?.data)
-       updateItems = updateItems.concat(data?.data);
-      //  setOffset(offset+1)
-       console.log('appended',updateItems);
-       setItems(updateItems);
-      //  localStorage.set('desk-feed',updateItems);
+       if(data?.data?.length > 0){
+        updateItems = updateItems.concat(data?.data);
+        //  setOffset(offset+1)
+         console.log('appended',updateItems);
+         setItems(updateItems);
+         setFetchState('success')
+       }
+       setLoadingMoreItems(false);
+      }
+     catch(err){
+      setFetchState('fail')
+      setLoadingMoreItems(false);
+     }
+    // }
+  } 
+  const getFeedData = async() =>{
+    setLoadingMoreItems(true);
+    let updateItems = [...items];
+    console.log('present items',updateItems);
+     try{
+       const data = await fetchData({ type: id });
+       console.log('GOT MORE ITEMS *****', data?.data)
+       if(data?.data?.length > 0){
+        updateItems = updateItems.concat(data?.data);
+        //  setOffset(offset+1)
+         console.log('appended',updateItems);
+         setItems(updateItems);
+       }
        setLoadingMoreItems(false);
       }
      catch(err){
@@ -112,10 +131,16 @@ const LoadComp = () => (<Loading />);
     // }
   } 
 
-  useEffect(()=>{console.log("id changed",id)},[id])
+  useEffect(()=>{console.log("id changed",id)},[id]);
 
-  let [fetchState, retry, data] = useFetcher(fetchData, onDataFetched, id);
+  // let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched, id);
 
+  // useEffect(()=>{
+  //   if(fetchState === 'success'){
+  //     const feedData = data && data?.data;
+  //     setItems(feedData);
+  //   }
+  // },[fetchState])
   // const Item = useCallback(({data : items, index, style})=>{
   //   console.log('index',index, items, items?.[index])
   //   const {userName, likesCount, music_title,userProfilePicUrl, video_url,firstFrame} = items?.[index] || {}
@@ -140,7 +165,6 @@ const lastItemInView = useCallback((node)=>{
   if(loadingMoreItems) return;
   observer.current = new IntersectionObserver(enteries =>{
        if(enteries[0]?.isIntersecting){
-        setLoadingMoreItems(true); 
         getFeedData();
        }
   });
@@ -201,11 +225,12 @@ const unMute = (value)=>{
                </button>
          </div>
       </div>
-        <ComponentStateHandler
+        {/* <ComponentStateHandler
             state={fetchState}
             Loader={LoadComp}
             ErrorComp={ErrorComp}
-          >
+          > */}
+      { fetchState === 'success' ? 
       <div className="w-8/12 flex flex-col overflow-scroll no_bar">
         {/* {items && items?.length > 0 && <FixedSizeList
         height={700}
@@ -221,43 +246,47 @@ const unMute = (value)=>{
        ( id !== items?.length-1 ? 
           <Video
           key={id}
-          userName={item.userName}
-          likesCount={item.likesCount} 
-          music_title={item.music_title}
-          userProfilePicUrl={item.userProfilePicUrl}
-          url={item.video_url}
+          userName={item?.userName}
+          likesCount={item?.likesCount} 
+          music_title={item?.music_title}
+          userProfilePicUrl={item?.userProfilePicUrl}
+          url={item?.video_url}
           firstFrame={item?.firstFrame}
           muted={muted}
           unMute={unMute}
-          firstName={item.firstName}
-          lastName={item.lastName}
-          description={item.content_description}
+          firstName={item?.firstName}
+          lastName={item?.lastName}
+          description={item?.content_description}
           />
         
       :
          <span key={id} ref={lastItemInView}>
           <Video
-          userName={item.userName}
-          likesCount={item.likesCount} 
-          music_title={item.music_title}
-          userProfilePicUrl={item.userProfilePicUrl}
-          url={item.video_url}
+          userName={item?.userName}
+          likesCount={item?.likesCount} 
+          music_title={item?.music_title}
+          userProfilePicUrl={item?.userProfilePicUrl}
+          url={item?.video_url}
           firstFrame={item?.firstFrame}
           muted={muted} 
           unMute={unMute}
-          firstName={item.firstName}
-          lastName={item.lastName}
-          description={item.content_description}
+          firstName={item?.firstName}
+          lastName={item?.lastName}
+          description={item?.content_description}
       />
       </span>
             ))}
 
       {loadingMoreItems && <div className='m-5'>Loading....</div>}         
-      </div>
-      </ComponentStateHandler>
+      </div> 
+      :
+      fetchState === 'pending' ? 
+      <LoadComp/> : 
+      fetchState === 'fail' && <ErrorComp/> 
+      }
+      {/* </ComponentStateHandler> */}
    </div>
 </div>
-
           </>
           
   );
