@@ -180,7 +180,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
      <p className="font-bold w-full">Enter 4-digit code</p>
      <p className="text-gray-400 text-xs">{`Your code was messaged to +${mobile}`}</p>
    </div> */}
-   <div className="mt-4">
+   <div className="mt-4 w-full self-start">
      <input
        className=" w-full border-b-2 border-grey-300 px-4 py-2"
        type="password"

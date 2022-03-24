@@ -45,7 +45,7 @@ useEffect(()=>{
         <p onClick={()=>setShowList(!showList)} className="text-xs pl-1">{' ▼'}</p>
       </button>
       {showList && 
-            <div ref={btnContent} className='list-search'>
+            <div ref={btnContent} className='list-search thin_bar overflow-x-hidden'>
             <ListWithSearch
               data= {countryCodes && countryCodes}
               onValueChange={onValueChange}

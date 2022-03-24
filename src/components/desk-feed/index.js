@@ -179,7 +179,7 @@ const unMute = (value)=>{
   <>
 
 <div className="flex flex-col w-screen h-screen items-center">
-   <div className="w-full flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center justify-center">
+   <div className="w-full flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4  h-20 flex bg-white items-center px-6 justify-between">
       <div className="w-20">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
@@ -209,18 +209,18 @@ const unMute = (value)=>{
    </div>
 
 
-   <div className="flex h-screen  bg-white justify-center relative overflow-hidden  w-3/4">
+   <div className="flex h-screen mt-2 bg-white justify-center relative overflow-hidden  w-3/4">
       <div className="w-4/12 flex flex-col p-4">
-         <div className="flex flex-col pb-6 border-b-2 border-gray-200">
+         <div className="flex flex-col pb-6 border-b border-gray-200">
                <p className="font-semibold text-lg py-2 pl-4">For You </p>
                <p className="font-semibold text-lg py-2 pl-4">Following </p>
-               <p className="font-semibold text-lg py-2 pl-4">Explore </p>
+               {/* <p className="font-semibold text-lg py-2 pl-4">Explore </p> */}
          </div>
-         <div className="flex flex-col pb-6 border-b-2 border-gray-200">
-               <p className="font-semibold text-lg py-2 pl-4">Log in to follow creators, like videos, and view comments.</p>
+         <div className="flex flex-col pb-6 border-b border-gray-200">
+               <p className="font-semibold text-sm text-gray-600 p-2">Log in to follow creators, like videos, and view comments.</p>
                <button 
                  onClick={() =>show('', login, 'big')} 
-                 className="font-semibold text-lg py-2 pl-4">
+                 className="font-semibold border text-lg p-2 mt-4">
                    Log in
                </button>
          </div>

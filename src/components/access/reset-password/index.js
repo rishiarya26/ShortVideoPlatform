@@ -73,14 +73,7 @@ const chooseComp = {
      <p className="font-bold w-full">Reset Password</p>
      <p className="text-gray-400 text-xs">Use 8-20 characters from atleast 2 categories: letters, numbers, special characters</p>
    </div>
-   </>,
-   desktop : ''
-}
-
-  return (
-    <div className="flex flex-col">
-      {chooseComp[device]}
-      <div className="mt-4 px-6">
+   <div className="mt-4 px-6">
         <input 
           className=" w-full border-b-2 border-grey-300 px-4 py-2" 
           onChange={onPasswordEnter}
@@ -92,6 +85,25 @@ const chooseComp = {
       <div className="mt-10 px-6">
         <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired w-full px-4 py-2 text-white font-semibold">Submit</button>
       </div>
+   </>,
+   desktop : <>
+   <div className="mt-4">
+        <input 
+          className=" w-full border-b-2 border-grey-300 px-4 py-2" 
+          onChange={onPasswordEnter}
+          type="password" 
+          name="password" 
+          placeholder="Password" 
+        />
+      </div>
+      <div className="mt-10 flex justify-center">
+        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired  px-4 py-2 text-white font-semibold">Submit</button>
+      </div></>}
+
+  return (
+    <div className="flex flex-col">
+      {chooseComp[device]}
+      
     </div>
   );
 }

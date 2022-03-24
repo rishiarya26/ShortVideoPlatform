@@ -40,8 +40,8 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
         <div className="font-bold">{info[type]?.title}</div>
       </div>
       </>}
-      <div className="flex px-2 py-4">
-        <div className="flex w-9/12">
+      <div className="flex px-2 py-4 fixed bg-white list-input">
+        <div className="flex w-full">
           <input
             ref={searchInputRef}
             id="Search"
@@ -52,15 +52,16 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
           />
         </div>
        {device === 'mobile' &&
-        <div className="flex w-3/12">
+        <div className="flex w-4/12">
           <SubmitButton text="Search" />
         </div>}
       </div>
+      <div className="pt-16 px-2 ">
       {filteredData?.map((data, id) => (
         <div
           key={id}
           id={id}
-          className="flex flex-col p-2"
+          className="flex flex-col p-2 cursor-pointer text-sm"
           onClick={e => {
             onValueChange(filteredData[e.currentTarget.id]);
             device === 'desktop' ? closeDropdown && closeDropdown() : device === 'mobile' && close();
@@ -74,6 +75,7 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 }

@@ -15,14 +15,17 @@ const Dialog = ({
       height: 'h-4/5'
     },
     big: {
-      height: 'h-95'
+      height: 'h-95',
+      width:'w-1/3',
+      class:'login_pop'
     }
   };
   return(
   <div
     data-testid="dialog-container"
     className={`
-      w-3/4
+    ${height[type].width}
+    ${height[type].class}
       ${children && visible ? 'block' : 'hidden'} 
       z-10 fixed rounded-lg p-4 bg-white 
       overflow-y-auto
