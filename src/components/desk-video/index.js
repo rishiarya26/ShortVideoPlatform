@@ -5,8 +5,8 @@ import React, { useState, useRef, useEffect } from 'react';
 // import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
-import Play from '../commons/svgicons/play';
-import Pause from '../commons/svgicons/pause';
+import Play from '../commons/svgicons/play-desk';
+import Pause from '../commons/svgicons/pause-desk';
 // import ProductWidget from '../product-widget';
 // import ProductCards from '../product-cards';
 // import CircularProgress from '../commons/circular-loader'
@@ -38,13 +38,13 @@ const size = useWindowSize();
 const videoHeight = `${size.height}`;
 const handleVideoPress = () => {
 if (playing) {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.pause();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 setPlay(true);
 setPause(false);
 setClicked(false);
 } else {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play();
+  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 setClicked(true);
 setPlay(false);
@@ -55,11 +55,11 @@ const handlePlay = entry => {
 if (clicked) {
 if (entry?.isIntersecting) {
 // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
-rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play &&
-rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.play();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
 setPlaying(true);
 } else {
-rootRef?.current?.children[0]?.children?.[1]?.children?.[2]?.children?.[0]?.children?.[0]?.pause();
+rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
 }
 }
@@ -116,22 +116,23 @@ return (
    </div>
    <div className="video_section flex flex-col  w-full ml-4">
       <div className="header flex flex-col relative">
-         <p className='font-medium text-sm text-gray-600'> <span className="font-semibold text-lg text-black cursor-pointer">{userName} </span>{`${firstName} ${lastName}`}</p>
-         <p className="font-semibold text-sm my-2 mb-4 ">
-            <MusicBlack/>
-            {music_title}
-         </p>
-         <div className="absolute rounded-md text-sm font-semibold  px-6 right-4 top-0 border p-1 border-hipired text-hipired">
-            Follow
-         </div>
-      </div>
-      <div className=" text-xs  mb-3 mt-2">
+         <p className='font-medium text-sm text-gray-600'> <span className="font-bold text-xl text-black cursor-pointer">{userName} </span>{`${firstName} ${lastName}`}</p>
+         <div className=" text-sm w-9/12 mb-3 mt-2">
       {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
              item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
              </span>
           ))}
-      </div>    
+      </div>
+         <p className="font-semibold text-sm mb-4 ">
+            <MusicBlack/>
+            {music_title}
+         </p>
+         <div className="absolute rounded-md text-md font-semibold  px-6 p-0.5 right-4 top-0 border border-hipired text-hipired">
+            Follow
+         </div>
+      </div>
+         
       <div className="Video flex items-end">
       <div className="desk-feed rounded-md overflow-hidden relative" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -156,37 +157,44 @@ return (
          </video>
          <div
          onClick={handleVideoPress}
-         className="absolute bottom-1  justify-start w-screen"
+         className="cursor-pointer absolute bottom-4 left-4 opacity-0 justify-start"
          style={{ display: play ? 'flex' : 'none' }}
          >
          <Play />
          </div>
          <div
          onClick={handleVideoPress}
-         className="absolute bottom-1  justify-start w-screen"
+         className=" cursor-pointer absolute bottom-4 left-4 opacity-0 justify-start "
          style={{ display: (pause ? 'flex' : 'none') }}
          >
         <Pause/>
       </div>
    
-      <div onClick={()=>unMute()} className="absolute bottom-4 right-4">
+      <div onClick={()=>unMute()} className="cursor-pointer absolute bottom-4 opacity-0 right-4">
         {muted ? <Mute/> : ''}
       </div>
-      <div onClick={()=>unMute()} className="absolute bottom-4 right-4">
+      <div onClick={()=>unMute()} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
         {muted ? <Mute/> : ''}
       </div>
 </div>
 <div className="sidebar flex flex-col items-center ml-4">
          <div className="flex flex-col items-center my-4">
             <Like />
+            <span className=' text-xs font-semibold mt-2'>
             {likesCount}
+            </span>
          </div>
          <div className="flex flex-col items-center my-4">
             <Comment />
+            <span className=' text-xs font-semibold mt-2'>
+               30
+            </span>
          </div>
          <div className="flex flex-col items-center my-4">
             <Share />
-            455
+            <span className=' text-xs font-semibold mt-2'>
+               455
+            </span>
          </div>
       </div>
 </div>

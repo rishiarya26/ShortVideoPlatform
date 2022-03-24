@@ -180,7 +180,7 @@ const unMute = (value)=>{
 
 <div className="flex flex-col w-screen h-screen items-center">
    <div className="w-full flex bg-white head-shadow items-center justify-center">
-   <div className="w-3/4  h-20 flex bg-white items-center px-6 justify-between">
+   <div className="w-3/4  h-16 flex bg-white items-center px-6 justify-between">
       <div className="w-20">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
@@ -203,7 +203,7 @@ const unMute = (value)=>{
          </div>
       </div>
       <div>
-      <img alt="profile-pic" className="usrimg w-8 h-8 rounded-full  mr-4" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />
+      <img alt="profile-pic" className="usrimg w-12 h-12 rounded-full" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />
       </div>
       </div> 
    </div>
