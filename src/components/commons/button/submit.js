@@ -10,6 +10,7 @@ export const SubmitButton = ({ fetchData, text, disable = false }) => {
       await fetchData();
       setPending(false);
     } catch (e) {
+      console.log("error")
       setPending(false);
     }
   };
