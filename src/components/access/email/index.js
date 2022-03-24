@@ -101,7 +101,7 @@ export default function Email({
       {pathname: '/forgot-password',
        query : {type : 'email'}
     }
-    )} className="flex justify-start text-sm font-semibold mt-2 px-2">
+    )} className="flex justify-start text-sm font-semibold mt-2 px-2 cursor-pointer">
       {/* TO-DO  forgot password */}
       <p>Forgot password?</p>
     </div>
@@ -111,9 +111,9 @@ export default function Email({
     <p className="text-gray-400 text-xs">
         <p className="text-xs">
           By continuing, you agree to Hipi's
-          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
           and confirm that you have read Hipi's
-          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
           .if you sign up with SMS, SMS fee may apply.
         </p>
     </p>

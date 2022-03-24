@@ -37,12 +37,12 @@ useEffect(()=>{
       <button
         ref={btnRef}
         onClick={()=>setShowList(!showList)}
-        className="bg-white px-2 py-2 text-gray-600 border-b-2 border-grey-300 flex items-center"
+        className="cursor-pointer bg-white px-2 py-2 text-gray-600 border-b-2 border-grey-300 flex items-center"
       >
         {' '}
         +
         {text}
-        <p onClick={()=>setShowList(!showList)} className="text-xs pl-1">{' ▼'}</p>
+        <p onClick={()=>setShowList(!showList)} className="text-xs pl-1 cursor-pointer">{' ▼'}</p>
       </button>
       {showList && 
             <div ref={btnContent} className='list-search thin_bar overflow-x-hidden'>

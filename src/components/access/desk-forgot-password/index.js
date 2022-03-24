@@ -139,7 +139,7 @@ import ResetPassword from "../reset-password";
     return(
   <div>
     <div className="flex justify-center h-16 items-center relative">
-    <span className="absolute top-4 left-2" onClick={()=>toggleShowForgotPassComp({show : false})}> <Back/></span>  
+    <span className="absolute top-4 left-2 cursor-pointer" onClick={()=>toggleShowForgotPassComp({show : false})}> <Back/></span>  
     <div className="font-semibold" >Forget password</div>
     </div>
     <div className="mt-4 flex flex-col px-6">

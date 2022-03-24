@@ -219,7 +219,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
      <SubmitButton fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
    </div>
    <div className="text-gray-500">
-   {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold" onClick={resendOtp[ref]}>send again</span></>}
+   {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold cursor-pointer" onClick={resendOtp[ref]}>send again</span></>}
    </div>
  </div>
   }

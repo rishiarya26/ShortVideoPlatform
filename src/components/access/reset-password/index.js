@@ -66,7 +66,7 @@ const chooseComp = {
  mobile : 
  <>
  <div className="flex justify-center h-16 items-center relative">
- <span className="absolute top-4 left-2" onClick={()=>router?.back()}> <Back/></span>  
+ <span className="absolute top-4 left-2 cursor-pointer cursor-pointer" onClick={()=>router?.back()}> <Back/></span>  
  <div className="font-semibold" >Reset</div>
  </div>
    <div className="mt-4 flex flex-col px-6">
@@ -83,7 +83,7 @@ const chooseComp = {
         />
       </div>
       <div className="mt-10 px-6">
-        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired w-full px-4 py-2 text-white font-semibold">Submit</button>
+        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired w-full px-4 py-2 text-white font-semibold cursor-pointer">Submit</button>
       </div>
    </>,
    desktop : <>
@@ -97,7 +97,7 @@ const chooseComp = {
         />
       </div>
       <div className="mt-10 flex justify-center">
-        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired  px-4 py-2 text-white font-semibold">Submit</button>
+        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired  px-4 py-2 text-white font-semibold cursor-pointer">Submit</button>
       </div></>}
 
   return (
