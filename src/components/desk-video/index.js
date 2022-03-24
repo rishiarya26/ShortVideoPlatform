@@ -121,7 +121,7 @@ return (
             <MusicBlack/>
             {music_title}
          </p>
-         <div className="absolute rounded-md text-sm font-semibold  px-6 right-4 top-0 border p-1 border-hipired text-hipired">
+         <div className="cursor-pointer absolute rounded-md text-sm font-semibold  px-6 right-4 top-0 border p-1 border-hipired text-hipired">
             Follow
          </div>
       </div>
