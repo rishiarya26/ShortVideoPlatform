@@ -220,8 +220,37 @@ export default function Mobile({
         </div>
   </>,
     signup:
-    <>
+     <>
+       {device === 'desktop' ?
+       <>
       <div className="flex justify-end text-sm font-semibold mt-2 px-2">
+        <p className="text-gray-400 text-xs">
+          <p className="text-xs">
+              By continuing, you agree to Hipi's
+              <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+              and confirm that you have read Hipi's
+              <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+              .if you sign up with SMS, SMS fee may apply.
+            </p>
+        </p>
+      </div>
+      <div className="absolute top-0 right-0 mt-4 w-3/12 flex justify-center">
+        <div className="text-gray-500">
+         {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
+          <DeskSendOtp disable={disable['signup']} fetchData={submit['signup']} text={submitText['signup']} />
+         }
+          </div>
+        </div>
+        
+        <VerifyOTP 
+          typeRef={type === 'signup' ? 'signup' : 'login'} 
+          fullMobileNo={`${data.countryCode}${data.mobile}`}
+          toggleRegistration={toggleRegistration}
+        />
+         </>
+        : device === 'mobile' &&
+        <>
+        <div className="flex justify-end text-sm font-semibold mt-2 px-2">
         <p className="text-gray-400 text-xs">
           <p className="text-xs">
               By continuing, you agree to Hipi's
@@ -235,11 +264,8 @@ export default function Mobile({
           <div className="mt-10">
           <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
         </div>
-        <VerifyOTP 
-          typeRef={type === 'signup' ? 'signup' : 'login'} 
-          fullMobileNo={`${data.countryCode}${data.mobile}`}
-          toggleRegistration={toggleRegistration}
-        />
+      </>
+         }
     </>
   };
 
