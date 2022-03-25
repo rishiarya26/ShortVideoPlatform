@@ -229,6 +229,7 @@ export default function SingleVideo(props){
         description={props?.description}
       />
        <EmbedVideoSidebar
+       userName={props?.userName}
         videoId={props?.videoId}
         socialId={props.socialId}
         profilePic={props.profilePic}
