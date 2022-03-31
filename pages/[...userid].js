@@ -1,4 +1,4 @@
-import VideoDetail from "../src/components/desk-video-detail.js/index.js";
+import VideoDetail from "../src/components/desk-video-detail/index.js";
 
 export default function Username() {
   console.log("yes")

@@ -24,10 +24,11 @@ import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
 import { trimHash } from '../../utils/string';
+import VideoInfo from '../desk-video-info';
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description}) {
+description, updateActiveIndex, index}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -88,22 +89,6 @@ const selectVideoPlayer = {
 // <img className="h-screen" src={firstFrame}></img>
 }
 
-const toHashTag =(hashtag)=>{
-   let finalValue = hashtag;
-   if(hashtag?.includes('#')){
-     hashtag = trimSpace(hashtag)
-     finalValue = trimHash(hashtag)
-   }
-   // router?.push(`/hashtag/${finalValue}`)
- }
-
- const toUser =(username)=>{
-   // let finalValue = username;
-   // if(hashtag?.includes('#')){
-   //   finalValue = trimHash(hashtag)
-   // }
-   // router?.push(`/${username}`)
- }
 
 return (
 <>
@@ -115,24 +100,13 @@ return (
       </div>
    </div>
    <div className="video_section flex flex-col  w-full ml-4">
-      <div className="header flex flex-col relative">
-         <p className='font-medium text-sm text-gray-600'> <span className="font-bold text-xl text-black cursor-pointer">{userName} </span>{`${firstName} ${lastName}`}</p>
-         <div className=" text-sm w-9/12 mb-3 mt-2">
-      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
-             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
-             </span>
-          ))}
-      </div>
-         <p className="font-semibold text-sm mb-4 ">
-            <MusicBlack/>
-            {music_title}
-         </p>
-         <div className="absolute rounded-md text-md font-semibold  px-6 p-0.5 right-4 top-0 border border-hipired text-hipired">
-            Follow
-         </div>
-      </div>
-         
+     <VideoInfo
+      userName={userName}
+      firstName={firstName}
+      lastName={lastName}
+      description={description}
+      music_title={music_title}
+     />
       <div className="Video flex items-end">
       <div className="desk-feed rounded-md overflow-hidden relative" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -144,6 +118,7 @@ return (
          webkit-playsinline = "true"
          // onTimeUpdate={handleUpdateSeekbar}
          loop
+         onClick={()=>updateActiveIndex(index)}
          // onClick={handleVideoPress}
          className="vdo_player_desk bg-gray-200"
          poster={firstFrame}
