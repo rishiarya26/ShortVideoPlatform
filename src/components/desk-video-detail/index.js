@@ -13,7 +13,7 @@ import VideoInfo from "../desk-video-info";
 import EmbedSeekbar from "../emded-seekbar";
 import { withBasePath } from "../../config";
 import Video from "./video";
-import Charmboard from "../charmboard";
+import Charmboard from "../desk-charmboard";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
