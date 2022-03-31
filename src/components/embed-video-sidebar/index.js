@@ -11,6 +11,7 @@ import { getOS } from '../../utils/device-details';
 import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
+import { useRouter } from 'next/router';
 
 // const detectDeviceModal = dynamic(
 //   //() => import('../download-app-widget'),
@@ -23,6 +24,7 @@ import { getItem } from '../../utils/cookie';
 
 
 function EmbedVideoSidebar(props) {
+const router = useRouter();
   // const { show } = useDrawer();
 
   // const stores = {
@@ -71,7 +73,9 @@ function EmbedVideoSidebar(props) {
   return (
     <div className={`right-0 text-white ${info[props.type]}`}>
       <div
-        onClick={onStoreRedirect}
+        onClick={() => {
+          router?.push(`/@${props?.userName}`);
+        }}
         className="relative py-2 px-3 text-center flex justify-center"
       >
         <img

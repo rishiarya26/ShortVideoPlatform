@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element */
 import { withBasePath } from "../../config";
 import CloseSolid from "../commons/svgicons/close-solid";
 import Search from "../commons/svgicons/search";

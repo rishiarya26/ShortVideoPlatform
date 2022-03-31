@@ -131,11 +131,16 @@ const handleDownClick=()=>{
  }
 }
 
+const hideVideoDetail = ()=>{
+  setShowVideoDetail(false)
+}
+
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
   return (
     <>
     <div className="flex flex-col w-screen h-screen items-center">
+       {showVideoDetail && 
        <div className='z-50'>
          <VideoDetail
          userName={videoDetailData?.userName} 
@@ -148,8 +153,12 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
          lastName={videoDetailData?.lastName} 
          description={videoDetailData?.content_description} 
          updateActiveIndex={updateActiveIndex} 
+         videoId={videoDetailData?.content_id}
+         handleUpClick={handleUpClick} 
+         handleDownClick={handleDownClick}
+         hideVideoDetail={hideVideoDetail}
          />
-       </div>
+       </div>}
         <Header />
         <div className="flex h-screen mt-2 bg-white justify-center relative  w-3/4">
             <DeskMenu handleUpClick={handleUpClick} handleDownClick={handleDownClick} />
