@@ -185,7 +185,9 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                          firstName={item?.firstName} 
                          lastName={item?.lastName} 
                          description={item?.content_description} 
-                         updateActiveIndex={updateActiveIndex} />
+                         updateActiveIndex={updateActiveIndex} 
+                         showVideoDetail={showVideoDetail}
+                         />
                     </span>
                     )}
                 </InfiniteScroll>
