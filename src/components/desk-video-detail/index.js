@@ -108,7 +108,7 @@ return (
          </div>
          </div>
       </div>
-      <div className="flex px-6 py-2 justify-between border-b-2 border-gray-100">
+      <div className="flex px-6 py-2 justify-between ">
          <div className="flex">
             <div className="pr-4">
                <Like />
@@ -124,9 +124,10 @@ return (
             <EmbedIcon />
          </div>
       </div>
-      <div className='flex'>
-            <input readOnly value={`https://www.hipi.co.in/@${userName}/video/${videoId}`}></input>
-            <button onClick={()=>CopyToClipBoard(`https://www.hipi.co.in/@${userName}/video/${videoId}`)}>Copy Link</button>
+      <div className='flex px-6 py-6 justify-between border-b-2 border-gray-100'>
+            <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm">{`https://www.hipi.co.in/@${userName}/video/${videoId}`}</p>
+            <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2" onClick={()=>CopyToClipBoard(`https://www.hipi.co.in/@${userName}/video/${videoId}`)}>Copy Link</button>
+            </div>
          </div>
       <Charmboard type='video-detail' videoId={videoId}/>
 </div>
