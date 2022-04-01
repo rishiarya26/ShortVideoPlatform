@@ -72,6 +72,7 @@ function transformSuccess(resp) {
       payloadObject.isLiked= false;
       payloadObject.firstName=d?.videoOwners?.firstName || '';
       payloadObject.lastName=d?.videoOwners?.lastName || '';
+      payloadObject.shareCount=d?.sCount || '';
       
       payloadData.push(payloadObject);
     });

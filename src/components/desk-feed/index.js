@@ -132,7 +132,8 @@ const handleDownClick=()=>{
 }
 
 const hideVideoDetail = ()=>{
-  setShowVideoDetail(false)
+  setShowVideoDetail(false);
+  window.history.replaceState('Feed Page','Feed',`/feed${id}`);
 }
 
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
@@ -143,20 +144,21 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
        {showVideoDetail && 
        <div className='z-50 fixed top-0 left-0 w-screen h-screen'>
          <VideoDetail
-          userName={videoDetailData?.userName} 
-          likesCount={videoDetailData?.likesCount} 
-          music_title={videoDetailData?.music_title} 
-          userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
-          url={videoDetailData?.video_url} 
-          firstFrame={videoDetailData?.firstFrame} 
-          firstName={videoDetailData?.firstName}
-          lastName={videoDetailData?.lastName} 
-          description={videoDetailData?.content_description} 
-          updateActiveIndex={updateActiveIndex} 
-          videoId={videoDetailData?.content_id}
-          handleUpClick={handleUpClick} 
-          handleDownClick={handleDownClick}
-          hideVideoDetail={hideVideoDetail}
+         userName={videoDetailData?.userName} 
+         likesCount={videoDetailData?.likesCount} 
+         music_title={videoDetailData?.music_title} 
+         userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
+         url={videoDetailData?.video_url} 
+         firstFrame={videoDetailData?.firstFrame} 
+         firstName={videoDetailData?.firstName}
+         lastName={videoDetailData?.lastName} 
+         description={videoDetailData?.content_description} 
+         updateActiveIndex={updateActiveIndex} 
+         videoId={videoDetailData?.content_id}
+         handleUpClick={handleUpClick} 
+         handleDownClick={handleDownClick}
+         hideVideoDetail={hideVideoDetail}
+         shareCount={videoDetailData?.shareCount}
          />
        </div>}
         <Header />
@@ -187,6 +189,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                          description={item?.content_description} 
                          updateActiveIndex={updateActiveIndex} 
                          showVideoDetail={showVideoDetail}
+                         shareCount={item?.shareCount || null}
                          />
                     </span>
                     )}
