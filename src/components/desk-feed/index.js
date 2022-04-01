@@ -139,28 +139,28 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
   return (
     <>
-    <div className="flex flex-col w-screen thin_bar overflow-x-hidden h-screen items-center">
+    <div className="flex flex-col w-screen thin_bar h-screen items-center">
        {showVideoDetail && 
        <div className='z-50 fixed top-0 left-0 w-screen h-screen'>
          <VideoDetail
-         userName={videoDetailData?.userName} 
-         likesCount={videoDetailData?.likesCount} 
-         music_title={videoDetailData?.music_title} 
-         userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
-         url={videoDetailData?.video_url} 
-         firstFrame={videoDetailData?.firstFrame} 
-         firstName={videoDetailData?.firstName}
-         lastName={videoDetailData?.lastName} 
-         description={videoDetailData?.content_description} 
-         updateActiveIndex={updateActiveIndex} 
-         videoId={videoDetailData?.content_id}
-         handleUpClick={handleUpClick} 
-         handleDownClick={handleDownClick}
-         hideVideoDetail={hideVideoDetail}
+          userName={videoDetailData?.userName} 
+          likesCount={videoDetailData?.likesCount} 
+          music_title={videoDetailData?.music_title} 
+          userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
+          url={videoDetailData?.video_url} 
+          firstFrame={videoDetailData?.firstFrame} 
+          firstName={videoDetailData?.firstName}
+          lastName={videoDetailData?.lastName} 
+          description={videoDetailData?.content_description} 
+          updateActiveIndex={updateActiveIndex} 
+          videoId={videoDetailData?.content_id}
+          handleUpClick={handleUpClick} 
+          handleDownClick={handleDownClick}
+          hideVideoDetail={hideVideoDetail}
          />
        </div>}
         <Header />
-        <div className="flex h-screen mt-2 bg-white justify-center relative  w-3/4">
+        <div className="flex h-screen mt-2 bg-white justify-center relative w-3/4">
             <DeskMenu handleUpClick={handleUpClick} handleDownClick={handleDownClick} />
             { fetchState === 'success' ?
             <div className="w-8/12 flex flex-col no_bar">
