@@ -139,7 +139,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
   return (
     <>
-    <div className="flex flex-col w-screen h-screen items-center">
+    <div className="flex flex-col w-screen thin_bar overflow-x-hidden h-screen items-center">
        {showVideoDetail && 
        <div className='z-50 fixed top-0 left-0 w-screen h-screen'>
          <VideoDetail

@@ -222,17 +222,17 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
 
     return(
     <>
-  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2 overflow-y-auto` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
+  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2 ` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
-            <div className="flex pb-2">
-               <div className='img w-15v h-15v rounded-md overflow-hidden'>
+            <div className="flex pb-2 w-full">
+               <div className='img w-16 h-16 rounded-md overflow-hidden'>
                    <Img data={topCharms?.imageUrl} />
                </div>
-              <div className=' products w-70v flex flex-col ml-2'>
+              <div className=' products w-full flex flex-col ml-2'>
                   <div className=' charm_title whitespace-nowrap capitalize  font-semibold text-xs mb-1'>{`${topCharms?.subtitle} | ${topCharms?.title}`}</div>
-                  <div className="flex w-70v justify-between items-center">
-                  <div className='h-10v'>
+                  <div className="flex  justify-between items-center">
+                  <div className='h-10'>
                   {!expand && 
                      <Img data={topCharms?.content_image_url}/>
                    }

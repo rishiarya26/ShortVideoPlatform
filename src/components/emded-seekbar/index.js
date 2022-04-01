@@ -6,7 +6,8 @@ import React from 'react';
 function EmbedSeekbar({type, seekedPercentage }) {
   const bottom ={
     embed:'bottom-0',
-    single: 'bottom-16 fixed'
+    single: 'bottom-16 fixed',
+    desk:'bottom-1 absolute'
   }
   
   return (

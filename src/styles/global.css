@@ -178,7 +178,9 @@ img{
   opacity: 100%!important;
   transition: opacity 0.3s ease 0s;
 }
-
+.desk-share:hover .share-ls{
+  display: flex;
+}
 @media (orientation: portrait) {
   .landscape_screen {
     display: none;

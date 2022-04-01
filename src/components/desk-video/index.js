@@ -108,7 +108,7 @@ return (
       music_title={music_title}
      />
       <div className="Video flex items-end">
-      <div className="desk-feed rounded-md overflow-hidden relative" >
+      <div className="desk-feed rounded-md overflow-hidden relative cursor-pointer" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         {showVideoDetail ?
         <img src={firstFrame} alt='poster image'/>
@@ -168,11 +168,15 @@ return (
                30
             </span>
          </div>
-         <div className="flex flex-col items-center my-4">
+         <div className="flex flex-col items-center my-4 relative desk-share">
             <Share />
             <span className=' text-xs font-semibold mt-2'>
                455
             </span>
+            <div className='absolute w-36 share-ls hidden cursor-pointer flex-col p-4 bottom-16 left-4 bg-white border'>
+               <div className='text-gray-600 p-2'>Embed</div>
+               <div className='text-gray-600 p-2'>Copy Link</div>
+            </div>
          </div>
       </div>
 </div>

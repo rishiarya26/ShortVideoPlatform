@@ -85,7 +85,7 @@ const Video = ({url, firstFrame})=>{
               >
              <CircularProgress/>
               </div>}
-        <EmbedSeekbar type='single' seekedPercentage={seekedPercentage} />
+        <EmbedSeekbar type='desk' seekedPercentage={seekedPercentage} />
 
         {
         !play && 

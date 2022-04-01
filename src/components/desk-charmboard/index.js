@@ -143,12 +143,12 @@ const onClose =()=>{
 }
 
 return (
-<div className='flex flex-col w-full'>
+<div className='flex flex-col w-25v thin_bar overflow-scroll'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>
       <Close/>
    </div> */}
    <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
-   <div className='flex w-full flex-col pb-6 overflow-y-auto'>
+   <div className='flex w-full flex-col pb-6'>
    {compToShow?.[selectedIndex]}
    </div>
 
