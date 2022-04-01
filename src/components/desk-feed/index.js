@@ -132,7 +132,8 @@ const handleDownClick=()=>{
 }
 
 const hideVideoDetail = ()=>{
-  setShowVideoDetail(false)
+  setShowVideoDetail(false);
+  router.replace(`/feed/${id}`)
 }
 
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
@@ -157,6 +158,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
          handleUpClick={handleUpClick} 
          handleDownClick={handleDownClick}
          hideVideoDetail={hideVideoDetail}
+         shareCount={videoDetailData?.shareCount}
          />
        </div>}
         <Header />
@@ -187,6 +189,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                          description={item?.content_description} 
                          updateActiveIndex={updateActiveIndex} 
                          showVideoDetail={showVideoDetail}
+                         shareCount={item?.shareCount || null}
                          />
                     </span>
                     )}

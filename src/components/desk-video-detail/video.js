@@ -8,16 +8,16 @@ import EmbedSeekbar from "../emded-seekbar";
 const Video = ({url, firstFrame})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
     // const [clicked, setClicked] = useState(false);
-    const [play, setPlay] = useState(false);
+    const [play, setPlay] = useState(true);
 
     const rootRef = useRef(null);
     const size = useWindowSize();
 
     useEffect(()=>{
         setSeekedPercentage(0);
-        setPlay(false);
+        setPlay(true);
     },[url])
 
     const handleUpdateSeekbar = e => {
@@ -44,14 +44,14 @@ const Video = ({url, firstFrame})=>{
       };
 
       const handleVideoPress = () => {
+          console.log("playing :",playing)
         if (playing) {
-          rootRef.current.children[0].pause();
+          rootRef?.current?.children?.[0]?.pause &&  rootRef?.current?.children?.[0]?.pause();
           setPlaying(false);
           // setClicked(false);
           setPlay(false);
         } else {
-          rootRef.current.children[0].play();
-          setPlaying(true);
+            rootRef?.current?.children?.[0]?.play &&  rootRef?.current?.children?.[0]?.play();          setPlaying(true);
           // setClicked(true);
           setPlay(true);
         }
@@ -64,7 +64,7 @@ const Video = ({url, firstFrame})=>{
     >
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
-          // autoPlay
+          autoPlay
           playsInline
           key={url}
           onTimeUpdate={handleUpdateSeekbar}

@@ -12,7 +12,6 @@ import Pause from '../commons/svgicons/pause-desk';
 // import CircularProgress from '../commons/circular-loader'
 // import { PreviousMap } from 'postcss';
 // import { inject } from '../../analytics/async-script-loader';
-// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import usePreviousValue from '../../hooks/use-previous';
 // import SwipeUp from '../commons/svgicons/swipe-up';
 // import DynamicImg from '../commons/image-dynamic';
@@ -25,10 +24,11 @@ import Like from "../commons/svgicons/like-black";
 import Share from "../commons/svgicons/share-black";
 import { trimHash } from '../../utils/string';
 import VideoInfo from '../desk-video-info';
+import VideoSidebar from '../desk-video-sidebar';
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description, updateActiveIndex, index, showVideoDetail}) {
+description, updateActiveIndex, index, showVideoDetail, shareCount}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -85,9 +85,6 @@ threshold: [0.65, 0.65]
 //  };
 //  const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
 //  const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
-const selectVideoPlayer = {
-// <img className="h-screen" src={firstFrame}></img>
-}
 
 
 return (
@@ -155,26 +152,10 @@ return (
         {muted ? <Mute/> : ''}
       </div>
 </div>
-<div className="sidebar flex flex-col items-center ml-4">
-         <div className="flex flex-col items-center my-4">
-            <Like />
-            <span className=' text-xs font-semibold mt-2'>
-            {likesCount}
-            </span>
-         </div>
-         <div className="flex flex-col items-center my-4">
-            <Comment />
-            <span className=' text-xs font-semibold mt-2'>
-               30
-            </span>
-         </div>
-         <div className="flex flex-col items-center my-4">
-            <Share />
-            <span className=' text-xs font-semibold mt-2'>
-               455
-            </span>
-         </div>
-      </div>
+   <VideoSidebar
+      likesCount={likesCount}
+      sharecount={shareCount}
+   />
 </div>
 
 </div>

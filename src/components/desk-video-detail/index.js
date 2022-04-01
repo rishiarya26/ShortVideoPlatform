@@ -14,11 +14,22 @@ import EmbedSeekbar from "../emded-seekbar";
 import { withBasePath } from "../../config";
 import Video from "./video";
 import Charmboard from "../desk-charmboard";
+import { useEffect } from "react";
+import { CopyToClipBoard } from "../../utils/web";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail}) {
+hideVideoDetail, shareCount}) {
+
+// useEffect(()=>{
+//    router.replace(`/@${userName}/video/${videoId}`);
+// },[])   
+
+useEffect(()=>{
+ window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`,
+ )
+},[videoId])
 
 return (
 <div className="flex w-screen h-screen">
@@ -26,10 +37,10 @@ return (
       {/* <div className="video_blur w-8/12">
          <img src="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1632757116/hipi/videos/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_00.webp"/>
       </div> */}
-      <Video url={url} firstFrame={firstFrame}/>
-      <div className="absolute right-4 bottom-6 cursor-pointer">
+      <Video url={url} firstFrame={firstFrame} shareCount={shareCount}/>
+      {/* <div className="absolute right-4 bottom-6 cursor-pointer">
          <Mute/>
-      </div>
+      </div> */}
       <div onClick={handleDownClick} className="absolute right-4 top-1/2 -mt-16  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
          <UpArrow/>
       </div>
@@ -74,10 +85,14 @@ return (
                <Share />
             </div>
          </div>
-         <div>
+         <div className='cursor-pointer'>
             <EmbedIcon />
          </div>
       </div>
+      <div className='flex'>
+            <input readOnly value={`https://www.hipi.co.in/@${userName}/video/${videoId}`}></input>
+            <button onClick={()=>CopyToClipBoard(`https://www.hipi.co.in/@${userName}/video/${videoId}`)}>Copy Link</button>
+         </div>
       <Charmboard type='video-detail' videoId={videoId}/>
 </div>
 </div>
