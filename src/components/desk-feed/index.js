@@ -56,6 +56,9 @@ const LoadComp = () => (<Loading />);
   useEffect(()=>{console.log("items changed to - ",items)},[items])
 
   useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 0);
+    }
     getInitialData();
   },[])
 
@@ -202,6 +205,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
             <ErrorComp />
             }
         </div>
+        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-0 right-0 w-10 h-10 bg-red white'>UP</button>
     </div>
 </>
           

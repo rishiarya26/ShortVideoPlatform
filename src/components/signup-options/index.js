@@ -40,9 +40,9 @@ export default function Signup({ toggle, setAuth }) {
 
   return (
     <div className="px-4 py-2 flex flex-col items-center">
-       <div onClick={close} className='flex w-full justify-end p-2'>
+       {device === 'mobile' && <div onClick={close} className='flex w-full justify-end p-2'>
       <Close/>
-   </div>
+   </div>}
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Sign Up to Hipi</h1>
         <p className="text-center text-sm">Create a profile, follow other accounts, make your own videos and more</p>

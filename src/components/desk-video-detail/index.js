@@ -16,15 +16,29 @@ import Video from "./video";
 import Charmboard from "../desk-charmboard";
 import { useEffect } from "react";
 import { CopyToClipBoard } from "../../utils/web";
+import { trimHash, trimSpace } from "../../utils/string";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
 hideVideoDetail, shareCount}) {
 
-// useEffect(()=>{
-//    router.replace(`/@${userName}/video/${videoId}`);
-// },[])   
+   const toHashTag =(hashtag)=>{
+      let finalValue = hashtag;
+      if(hashtag?.includes('#')){
+        hashtag = trimSpace(hashtag)
+        finalValue = trimHash(hashtag)
+      }
+      // router?.push(`/hashtag/${finalValue}`)
+    }
+   
+    const toUser =(username)=>{
+      // let finalValue = username;
+      // if(hashtag?.includes('#')){
+      //   finalValue = trimHash(hashtag)
+      // }
+      // router?.push(`/${username}`)
+    }
 
 useEffect(()=>{
  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`,
@@ -54,7 +68,7 @@ return (
    <div className="flex w-4/12 h-screen overflow-hidden bg-white flex-col">
       <div className="head-sec flex ">
          <div className="videoFooter__text w-full p-6 pb-2">
-            <div className="flex justify-between items-center pb-2">
+            {/* <div className="flex justify-between items-center pb-2">
             <div className="avatar">
                   <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
                      <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
@@ -63,14 +77,35 @@ return (
                <div className="flex justify-end">
                   <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 h-10 bg-hipired text-white">Follow</button>
                </div>
+            </div> */}
+            <div className="videoFooter__text w-full p-6 pb-2">
+            <div className="flex justify-between items-center pb-2">
+               <div className="flex items-center">
+                  <img alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} />
+                  <h3 className=" mb-1 mt-1.5 font-semibold text-sm ">{userName}</h3>
+               </div>
+               <div className="flex justify-end">
+                  <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 h-10 bg-hipired text-white">Follow</button>
+               </div>
             </div>
-            <VideoInfo
-               userName={userName}
-               firstName={firstName}
-               lastName={lastName}
-               description={description}
-               music_title={music_title}
-            />
+            <div className=" text-sm w-9/12 mb-2 mt-1">
+            {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
+            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+               item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
+               </span>
+            ))}
+           </div>
+            <div className="w-8/12 my-1 text-sm">
+               <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
+                  <path className="st0" fill="#000" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z"></path>
+               </svg>
+               <span className=" my-1 text-sm w-4/12">
+                  <p className="m-0 m-auto whitespace-nowrap overflow-hidden">
+                     <span className="pl-100 inline-block animate-marquee">{music_title}</span>
+                  </p>
+               </span>
+            </div>
+         </div>
          </div>
       </div>
       <div className="flex px-6 py-2 justify-between border-b-2 border-gray-100">

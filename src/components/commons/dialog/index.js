@@ -27,7 +27,7 @@ const Dialog = ({
     ${height[type].width}
     ${height[type].class}
       ${children && visible ? 'block' : 'hidden'} 
-      z-10 fixed rounded-lg p-4 bg-white 
+      z-30 fixed rounded-lg p-4 bg-white 
       overflow-y-auto
       transition-all duration-300
       top-2/4 left-2/4

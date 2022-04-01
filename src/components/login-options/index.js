@@ -39,9 +39,9 @@ export default function Login({ toggle, loading, setAuth }) {
 
   return (
     <div className="px-4 py-2 flex flex-col items-center">
-       <div onClick={close} className='flex w-full justify-end p-2'>
+      {device === 'mobile' && <div onClick={close} className='flex w-full justify-end p-2'>
       <Close/>
-   </div>
+   </div>}
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Login to Hipi</h1>
         <p className="text-center text-sm">Like the video, manage your account and do much more</p>

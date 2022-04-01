@@ -127,7 +127,7 @@ const handleUpdateSeekbar = e => {
 
 return (
 <>
-<div ref={rootRef} className="feed_card pt border-b border-gray-300">
+<div ref={rootRef} className="feed_card border-b border-gray-300">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
