@@ -140,9 +140,9 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
   return (
     <>
-    <div className="flex flex-col w-screen thin_bar h-screen items-center">
+    <div className="flex flex-col w-full thin_bar pt-28 items-center">
        {showVideoDetail && 
-       <div className='z-50 fixed top-0 left-0 w-screen h-screen'>
+       <div className='z-50 fixed top-0 left-0 w-full'>
          <VideoDetail
          userName={videoDetailData?.userName} 
          likesCount={videoDetailData?.likesCount} 
@@ -162,10 +162,10 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
          />
        </div>}
         <Header />
-        <div className="flex h-screen mt-2 bg-white justify-center relative w-3/4">
+        <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
             <DeskMenu handleUpClick={handleUpClick} handleDownClick={handleDownClick} />
             { fetchState === 'success' ?
-            <div className="w-8/12 flex flex-col no_bar">
+            <div className="W-feed-vid flex flex-col no_bar">
                 <InfiniteScroll 
                  dataLength={items?.length} 
                  next={getFeedData} 

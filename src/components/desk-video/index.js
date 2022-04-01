@@ -127,7 +127,7 @@ const handleUpdateSeekbar = e => {
 
 return (
 <>
-<div ref={rootRef} className="feed_card  border-b border-gray-300 p-8 ">
+<div ref={rootRef} className="feed_card pt border-b border-gray-300">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
@@ -191,12 +191,12 @@ return (
       <div onClick={()=>unMute()} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
         {muted ? <Mute/> : ''}
       </div>
-      {<div
+      {/* {<div
                 className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: ( active && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>
-              </div>}
+              </div>} */}
 </div>
    <VideoSidebar
       likesCount={likesCount}

@@ -9,6 +9,7 @@ import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
 
 function Charmboard({videoId, setClose }) {
+   console.log('id',videoId)
 const [charms, setCharms] = useState(null)   
 const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])

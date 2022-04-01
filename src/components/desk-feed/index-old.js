@@ -26,6 +26,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { localStorage } from '../../utils/storage';
 import Refresh from '../commons/svgicons/refresh';
 import InfiniteScroll from "react-infinite-scroll-component";
+import Home from '../commons/svgicons/home';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -263,8 +264,8 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
    <div className="flex h-screen mt-2 bg-white justify-center relative  w-3/4">
       <div className="w-4/12 flex flex-col p-4 top-10 left-0">
          <div className="flex flex-col pb-6 border-b border-gray-200">
-               <p className="font-semibold text-lg py-2 pl-4">For You </p>
-               <p className="font-semibold text-lg py-2 pl-4">Following </p>
+               <div className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
+               <div><p className="font-semibold text-lg py-2 pl-4">Following </p></div>
                {/* <button onClick={handleUpClick} className="font-semibold text-lg py-2 pl-4" >up </button>
                <button onClick={handleDownClick} className="font-semibold text-lg py-2 pl-4">down </button> */}
          </div>
