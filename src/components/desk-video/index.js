@@ -28,7 +28,7 @@ import VideoInfo from '../desk-video-info';
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description, updateActiveIndex, index}) {
+description, updateActiveIndex, index, showVideoDetail}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -93,7 +93,7 @@ const selectVideoPlayer = {
 return (
 <>
 <div ref={rootRef} className="feed_card  border-b border-gray-300 p-8 ">
-<div ref={ref} className='flex justify-between'>
+<div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
          <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
@@ -110,7 +110,10 @@ return (
       <div className="Video flex items-end">
       <div className="desk-feed rounded-md overflow-hidden relative" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-         <video
+        {showVideoDetail ?
+        <img src={firstFrame} alt='poster image'/>
+        :
+        <video
          playsInline
          muted={muted}
          autoPlay
@@ -129,7 +132,7 @@ return (
             src={url}
             type="video/mp4"
             />
-         </video>
+         </video>}
          <div
          onClick={handleVideoPress}
          className="cursor-pointer absolute bottom-4 left-4 opacity-0 justify-start"
