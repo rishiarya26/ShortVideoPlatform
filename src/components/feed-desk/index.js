@@ -13,7 +13,7 @@ function FeedDesk() {
 return (
 <div className="flex flex-col w-screen h-screen items-center">
    <div className="w-full h-20 flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center px-6 justify-between">
-      <div className="w-20">
+      <div className="w-16">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 

@@ -6,7 +6,7 @@ import Search from "../commons/svgicons/search";
 const Header = ()=>(
     <div className="w-full flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4  h-16 flex bg-white items-center px-6 justify-between">
-      <div className="w-20">
+      <div className="w-16">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 

@@ -80,7 +80,7 @@ const Video = ({url, firstFrame})=>{
           <source src={url} type="video/mp4" />
         </video>
         {<div
-                className="absolute top-1/2 justify-center w-screen flex"
+                className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>

@@ -141,7 +141,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
     <>
     <div className="flex flex-col w-screen h-screen items-center">
        {showVideoDetail && 
-       <div className='z-50'>
+       <div className='z-50 fixed top-0 left-0 w-screen h-screen'>
          <VideoDetail
          userName={videoDetailData?.userName} 
          likesCount={videoDetailData?.likesCount} 
