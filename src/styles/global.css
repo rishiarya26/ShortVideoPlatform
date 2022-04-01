@@ -10,6 +10,10 @@
 button:focus{
   outline: 0px;
 }
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
 p{
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
@@ -407,4 +411,18 @@ span.swiper-pagination-bullet {
 }
 .list-input{
   width: 324px;
+}
+
+.w-feed-menu{
+  width: 356px;
+}
+.w-feed{
+  width: 100vw;
+  max-width: 1150px;
+}
+.W-feed-vid{
+  margin-right: 16px;
+    margin-left: 16px;
+    width: 692px;
+    max-width: 692px;
 }
