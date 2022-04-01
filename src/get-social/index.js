@@ -46,7 +46,7 @@ export const auth = (identityType='my_app')=>{
         localStorage.set('get-social','success');
     })
     .catch((e)=>{
-       console.log('error',e);
+       console.log('errorrrr',e);
     });
   }
   catch(e){

@@ -18,7 +18,7 @@ const {showSnackbar} = useSnackbar();
     }
     catch(e){
         showSnackbar({ message: 'Something went wrong' });
-        console.log('error',e);
+        console.log('errorww',e);
     }
   };
 

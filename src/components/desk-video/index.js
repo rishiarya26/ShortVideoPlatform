@@ -25,6 +25,7 @@ import Share from "../commons/svgicons/share-black";
 import { trimHash } from '../../utils/string';
 import VideoInfo from '../desk-video-info';
 import VideoSidebar from '../desk-video-sidebar';
+import CircularProgress from '../commons/circular-loader'
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -33,6 +34,9 @@ const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
 const [pause, setPause] = useState(true);
+const [active, setActive] = useState(false);
+const [seekedPercentage, setSeekedPercentage] = useState(0)
+
 const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);
 const size = useWindowSize();
@@ -55,6 +59,7 @@ setPause(true);
 const handlePlay = entry => {
 if (clicked) {
 if (entry?.isIntersecting) {
+setActive(true);
 // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
 rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
 rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
@@ -62,6 +67,7 @@ setPlaying(true);
 } else {
 rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
 setPlaying(false);
+setActive(false);
 }
 }
 };
@@ -79,6 +85,30 @@ useEffect(()=>{
       setPlay(false);
    }
 },[showVideoDetail])
+
+
+const handleUpdateSeekbar = e => {
+   const percentage = (e.target.currentTime / e.target.duration) * 100;
+   setSeekedPercentage(percentage);
+   // const duration = e?.target?.duration;
+   // const currentTime = e?.target?.currentTime;
+   // settDuration(duration);
+   // setWatchedTime(currentTime);
+
+   // if(percentage > 0){
+   //   setInitialPlayStarted(true);
+   //  }
+
+    /********** Mixpanel ***********/
+   //  if(currentTime >= duration-0.2){
+   //   toTrackMixpanel('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+   //   toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration})
+   //    /*** view events ***/
+   //    viewEventsCall(props?.id, 'completed');
+   //    viewEventsCall(props?.id, 'user_video_start');
+   // }
+   /******************************/
+ };
 //  useEffect(()=>{
 //     if(props?.comp === 'feed'){
 //     if(props.initialPlayStarted && play === true){
@@ -94,7 +124,6 @@ useEffect(()=>{
 //  };
 //  const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
 //  const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
-
 
 return (
 <>
@@ -120,12 +149,13 @@ return (
         <img src={firstFrame} alt='poster image'/>
         :
         <video
+         id={index}
          playsInline
          muted={muted}
          autoPlay
          preload="auto"
          webkit-playsinline = "true"
-         // onTimeUpdate={handleUpdateSeekbar}
+         onTimeUpdate={handleUpdateSeekbar}
          loop
          onClick={()=>updateActiveIndex(index)}
          // onClick={handleVideoPress}
@@ -133,11 +163,12 @@ return (
          poster={firstFrame}
          objectfit="contain"
          key={url}
+         src={active ? url : ''}
          >
-         <source
+         {/* <source
             src={url}
             type="video/mp4"
-            />
+            /> */}
          </video>}
          <div
          onClick={handleVideoPress}
@@ -160,6 +191,12 @@ return (
       <div onClick={()=>unMute()} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
         {muted ? <Mute/> : ''}
       </div>
+      {<div
+                className="absolute top-1/2 justify-center w-full flex"
+                style={{ display: ( active && seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+              >
+             <CircularProgress/>
+              </div>}
 </div>
    <VideoSidebar
       likesCount={likesCount}

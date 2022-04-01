@@ -125,7 +125,7 @@ function ProfileFeedIphone({ router }) {
      setToShowItems(updateShowItems);
    }
      catch(e){
-   console.log('error',e)
+   console.log('errorree',e)
      }
    }
    

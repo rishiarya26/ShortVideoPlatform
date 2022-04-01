@@ -116,6 +116,7 @@ export async function getServerSideProps(ctx) {
     data = await getUserProfile(trimmedUserHandle);
     // console.log(data)
   } catch (e) {
+    console.log("joker ***",e)
     data = {
       status: e?.status || 400,
       errorCode: e?.errorCode || 400,

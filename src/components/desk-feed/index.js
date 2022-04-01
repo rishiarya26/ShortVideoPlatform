@@ -133,7 +133,7 @@ const handleDownClick=()=>{
 
 const hideVideoDetail = ()=>{
   setShowVideoDetail(false);
-  window.history.replaceState('Feed Page','Feed',`/feed${id}`);
+  window.history.replaceState('Feed Page','Feed',`/feed/${id}`);
 }
 
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
