@@ -143,7 +143,7 @@ const onClose =()=>{
 }
 
 return (
-<div className='flex flex-col w-25v thin_bar overflow-scroll'>
+<div className='flex flex-col w-feed-menu thin_bar overflow-scroll'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>
       <Close/>
    </div> */}

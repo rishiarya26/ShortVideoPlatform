@@ -92,7 +92,7 @@ const selectVideoPlayer = {
 
 return (
 <>
-<div ref={rootRef} className="feed_card  border-b border-gray-300">
+<div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
