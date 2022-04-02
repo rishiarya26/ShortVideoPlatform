@@ -17,6 +17,7 @@ import Charmboard from "../desk-charmboard";
 import { useEffect } from "react";
 import { CopyToClipBoard } from "../../utils/web";
 import { trimHash, trimSpace } from "../../utils/string";
+import { numberFormatter } from "../../utils/convert-to-K";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -112,12 +113,18 @@ return (
          <div className="flex">
             <div className="pr-4">
                <Like />
+               <span className=' text-xs font-semibold mt-2'>
+            {numberFormatter(likesCount)}
+            </span>
             </div>
             <div className="pr-4">
                <Comment />
             </div>
             <div className="pr-4">
                <Share />
+               <span className=' text-xs font-semibold mt-2'>
+            {numberFormatter(shareCount)}
+            </span>
             </div>
          </div>
          <div className='cursor-pointer'>

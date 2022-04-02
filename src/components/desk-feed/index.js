@@ -193,6 +193,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                          updateActiveIndex={updateActiveIndex} 
                          showVideoDetail={showVideoDetail}
                          shareCount={item?.shareCount || null}
+                         videoId={videoDetailData?.content_id}
                          />
                     </span>
                     )}
