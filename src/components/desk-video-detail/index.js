@@ -67,7 +67,7 @@ return (
    </div>
    <div className="flex w-4/12 h-screen overflow-hidden bg-white flex-col">
       <div className="head-sec flex ">
-         <div className="videoFooter__text w-full p-6 pb-2">
+         <div className="videoFooter__text w-full py-2">
             {/* <div className="flex justify-between items-center pb-2">
             <div className="avatar">
                   <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
@@ -82,10 +82,13 @@ return (
             <div className="flex justify-between items-center pb-2">
                <div className="flex items-center">
                   <img alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} />
-                  <h3 className=" mb-1 mt-1.5 font-semibold text-sm ">{userName}</h3>
+                  <div className="flex flex-col">
+                  <h3 className="font-semibold text-md ">{userName}</h3>
+                  <p className="text-gray-400 text-sm">{firstName} {lastName}</p>
+                  </div>
                </div>
                <div className="flex justify-end">
-                  <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 h-10 bg-hipired text-white">Follow</button>
+                  <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button>
                </div>
             </div>
             <div className=" text-sm w-9/12 mb-2 mt-1">
