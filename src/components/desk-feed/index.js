@@ -30,6 +30,7 @@ import Header from '../desk-header';
 import SideBar from '../desk-menu';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
+import Top from '../commons/svgicons/top'
 
 SwiperCore?.use([Mousewheel]);
 
@@ -210,7 +211,9 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
             <ErrorComp />
             }
         </div>
-        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-0 right-0 w-10 h-10 bg-red white'>UP</button>
+        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 w-10 h-10 flex justify-center items-center rounded-full bg-hipired white'>
+            <Top/>
+        </button>
     </div>
 </>
           

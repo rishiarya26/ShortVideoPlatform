@@ -31,7 +31,7 @@ const VideoInfo = ({userName, firstName, lastName, description,music_title, page
          <span className="font-bold text-base text-black cursor-pointer">{userName} </span>
           {fullName[pageType]}
         </p>
-        <div className=" text-sm w-9/12 mb-2 mt-1">
+        <div className=" text-sm w-full mb-2 mt-1">
      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}

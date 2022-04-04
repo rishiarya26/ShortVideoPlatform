@@ -7,7 +7,7 @@ function EmbedSeekbar({type, seekedPercentage }) {
   const bottom ={
     embed:'bottom-0',
     single: 'bottom-16 fixed',
-    desk:'bottom-1 absolute'
+    desk:'bottom-0 absolute'
   }
   
   return (

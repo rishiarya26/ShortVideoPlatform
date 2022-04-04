@@ -103,7 +103,7 @@ return (
                   <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button>
                </div>
             </div>
-            <div className=" text-sm w-9/12 mb-2 mt-1">
+            <div className=" text-sm w-full mb-2 mt-1">
             {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
                item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
