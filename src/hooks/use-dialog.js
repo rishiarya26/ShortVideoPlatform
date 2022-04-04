@@ -12,17 +12,18 @@ const DialogContext = createContext({
 });
 
 export const DialogProvider = ({ children }) => {
-  const [state, setState] = useState({ visible: false, message: '' });
+  const [state, setState] = useState({ visible: false, message: '', type:'big' });
   const { show: showOverLay, hide: hideOverLay } = useOverLay();
   const ComponentProps = useRef({});
 
-  const show = (title, content, props) => {
+  const show = (title, content, type='big', props) => {
     ComponentProps.current = props;
     showOverLay();
     DialogContent = content;
     setState({
       title,
-      visible: true
+      visible: true,
+      type: type
     });
   };
 
@@ -31,14 +32,14 @@ export const DialogProvider = ({ children }) => {
     DialogContent = null;
     setState({
       title: '',
-      visible: false
+      visible: false,
     });
   };
 
   return (
     <DialogContext.Provider value={{ show, close }}>
       {children}
-      <Dialog visible={state.visible} close={close} title={state.title}>
+      <Dialog visible={state.visible} close={close} title={state.title} type={state.type}>
         {DialogContent && <DialogContent {...ComponentProps.current} />}
       </Dialog>
     </DialogContext.Provider>

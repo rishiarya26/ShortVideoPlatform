@@ -35,7 +35,7 @@ const {show : showDialog} = useDialog();
         <Terms/>
         <p className="text-base px-3">Terms of Use</p>
       </div>
-      <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
+      <div onClick={()=>showDialog('Logout', LogoutPopup,'medium')} className="flex items-center py-3">
         <Logout/>
         <p className="text-base px-3">Logout</p>
       </div>

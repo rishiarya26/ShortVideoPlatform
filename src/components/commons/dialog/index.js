@@ -6,13 +6,18 @@ const Dialog = ({
 }) => {
   const height = {
     extraSmall:{
-      height: 'h-1/3 drawer-height'
+      height: 'h-1/3 drawer-height',
+      width:'w-1/3',
+      class:'login_pop'
     },
     small: {
-      height: 'h-2/5'
+      height: 'h-2/5',
+      width:'w-1/3',
+      class:'login_pop'
     },
     medium: {
-      height: 'h-4/5'
+      height: 'h-3/5',
+      width:'w-1/3'
     },
     big: {
       height: 'h-95',
@@ -24,8 +29,8 @@ const Dialog = ({
   <div
     data-testid="dialog-container"
     className={`
-    ${height[type].width}
-    ${height[type].class}
+    ${height?.[type]?.width}
+    ${height?.[type]?.class}
       ${children && visible ? 'block' : 'hidden'} 
       z-30 fixed rounded-lg p-4 bg-white 
       overflow-y-auto
