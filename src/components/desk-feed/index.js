@@ -44,12 +44,14 @@ const LoadComp = () => (<Loading />);
   const [hasMore, setHasMore] = useState(true);
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [videoDetailData, setVideoDetailData] = useState({})
+  const [firstApiCall, setFirstApiCall] = useState(true);
 
   const { id = 'for-you' } = router?.query;
+  const { videoId } = router?.query;
 
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id});
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id});
+  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall});
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId:videoId, firstApiCall:firstApiCall});
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
@@ -71,11 +73,13 @@ const LoadComp = () => (<Loading />);
         updateItems = updateItems.concat(data?.data);
          console.log('appended Inital',updateItems);
          setItems(updateItems);
-         setFetchState('success')
+         setFetchState('success');
+         setFirstApiCall(false);
        }
       }
      catch(err){
-      setFetchState('fail')
+      setFetchState('fail');
+      setFirstApiCall(false);
      }
   } 
 
@@ -145,7 +149,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
     <>
     <div className="flex flex-col w-full thin_bar pt-28 items-center">
        {showVideoDetail && 
-       <div className='z-50 fixed top-0 left-0 w-full'>
+       <div className='z-20 fixed top-0 left-0 w-full'>
          <VideoDetail
          userName={videoDetailData?.userName} 
          likesCount={videoDetailData?.likesCount} 
@@ -193,6 +197,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                          updateActiveIndex={updateActiveIndex} 
                          showVideoDetail={showVideoDetail}
                          shareCount={item?.shareCount || null}
+                         videoId={videoDetailData?.content_id}
                          />
                     </span>
                     )}

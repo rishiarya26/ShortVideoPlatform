@@ -17,11 +17,19 @@ import Charmboard from "../desk-charmboard";
 import { useEffect } from "react";
 import { CopyToClipBoard } from "../../utils/web";
 import { trimHash, trimSpace } from "../../utils/string";
+import { numberFormatter } from "../../utils/convert-to-K";
+import useDrawer from "../../hooks/use-drawer";
+import CopyEmbedCode from "../copy-embed-code.js";
+import useSnackbar from "../../hooks/use-snackbar";
+import useDialog from "../../hooks/use-dialog";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
 hideVideoDetail, shareCount}) {
+
+   const {show:showDialog} = useDialog();
+   const {showSnackbar} = useSnackbar();
 
    const toHashTag =(hashtag)=>{
       let finalValue = hashtag;
@@ -44,6 +52,10 @@ useEffect(()=>{
  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`,
  )
 },[videoId])
+
+const onEmbedCopy =()=>{
+   showSnackbar({ message: 'Copied to Clipboard' });
+}
 
 return (
 <div className="flex w-screen h-screen">
@@ -115,15 +127,21 @@ return (
          <div className="flex">
             <div className="pr-4">
                <Like />
+               <span className=' text-xs font-semibold mt-2'>
+            {numberFormatter(likesCount)}
+            </span>
             </div>
             <div className="pr-4">
                <Comment />
             </div>
             <div className="pr-4">
                <Share />
+               <span className=' text-xs font-semibold mt-2'>
+            {numberFormatter(shareCount)}
+            </span>
             </div>
          </div>
-         <div className='cursor-pointer'>
+         <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='cursor-pointer'>
             <EmbedIcon />
          </div>
       </div>

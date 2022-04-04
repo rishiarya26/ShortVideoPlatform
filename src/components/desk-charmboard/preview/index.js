@@ -49,7 +49,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const executeScroll = (selected, index) =>{
    selected?.current?.scrollIntoView();
    setTimeout(()=>{
-      console.log("clicked **",index)
       setSelectedIndex(index);
    },[100]) 
 }   
@@ -202,7 +201,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
     }
 
     const getOrigin =(url)=>{
-      console.log("URL",url)
        if(!url){
          return ''
        }else{
@@ -213,7 +211,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
         }else{
           finalOrigin = origin.split('.')[0]
         }
-        console.log('origin **',finalOrigin)
         if(finalOrigin){
           return finalOrigin 
         }

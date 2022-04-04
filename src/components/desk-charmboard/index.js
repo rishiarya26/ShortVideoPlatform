@@ -32,6 +32,30 @@ const getTopCharms = async() =>{
    }
 }
 
+const getTopCharmsOnIdChange = async() =>{
+      try{
+         if(videoId){
+            const resp = await canShop({videoId});
+            setCharms(resp);
+            resp.charmData[0].id = 0;
+            console.log("filtered data",resp.charmData[0])
+            setFilteredItem(resp.charmData[0])
+         }
+      }catch(e){
+         console.log(e)
+      }
+}
+
+useEffect(()=>{console.log("charmes changed++",charms, filteredItem)},[charms])
+useEffect(()=>{
+   console.log('id changed++++',videoId )
+   setCharms(null);
+   setFilteredItem([])
+   getTopCharmsOnIdChange ();
+   // fetchData?.[selectedIndex]()
+}
+   ,[videoId])
+
 useEffect(()=>{getSavedMoments()},[])
 
 const getSavedMoments = () =>{
@@ -144,7 +168,9 @@ const onClose =()=>{
 }
 
 return (
-<div className='flex flex-col w-feed-menu thin_bar overflow-scroll ml-6 overflow-x-hidden'>
+<>{
+  charms && 
+   <div className='flex flex-col w-feed-menu thin_bar overflow-scroll ml-6 overflow-x-hidden'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>
       <Close/>
    </div> */}
@@ -153,7 +179,8 @@ return (
    {compToShow?.[selectedIndex]}
    </div>
 
-</div>
+</div>}
+</>
 );
 }
 export default Charmboard;

@@ -29,7 +29,7 @@ import CircularProgress from '../commons/circular-loader'
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description, updateActiveIndex, index, showVideoDetail, shareCount}) {
+description, updateActiveIndex, index, showVideoDetail, shareCount, videoId}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -201,6 +201,8 @@ return (
    <VideoSidebar
       likesCount={likesCount}
       sharecount={shareCount}
+      userName={userName}
+      videoId={videoId}
    />
 </div>
 
