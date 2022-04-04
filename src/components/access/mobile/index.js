@@ -172,7 +172,7 @@ export default function Mobile({
       fullMobileNo={`${data.countryCode}${data.mobile}`}/>
       </div>
 
-      <div className="absolute top-0 right-0 mt-4 w-3/12 flex justify-center">
+      <div className="absolute top-0 right-0 mt-4  flex justify-center">
         <div className="text-gray-500">
          {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
           <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} />
@@ -235,7 +235,7 @@ export default function Mobile({
         </p>
       </div>
       <div className='relative'>
-      <div className="absolute top-0 right-0 mt-4 w-3/12 flex justify-center">
+      <div className="absolute top-0 right-0 mt-4 flex justify-center">
         <div className="text-gray-500">
          {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
           <DeskSendOtp disable={disable['signup']} fetchData={submit['signup']} text={submitText['signup']} />
