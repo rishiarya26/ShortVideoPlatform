@@ -8,8 +8,9 @@ import Signup from '../signup-options';
 import DeskLogin from '../desk-login'
 import DeskSignup from '../desk-signup'
 import { localStorage } from '../../utils/storage';
+import useSnackbar from '../../hooks/use-snackbar';
 
-export default function AuthOptions() {
+export default function AuthOptions({showMessage}) {
   const [showLoginOptons, setShowLoginOptons] = useState(true);
   const [loading, setLoading] = useState(true);
   const [authMethod, setAuthMethod] = useState(null);
@@ -37,8 +38,8 @@ export default function AuthOptions() {
   return (
     <>
       {authMethod ? authMethod === 'login' ? 
-      <DeskLogin backToOptions={toLoginOptions}/>
-      : authMethod === 'signup' && <DeskSignup backToOptions={toLoginOptions}/>
+      <DeskLogin showMessage={showMessage} backToOptions={toLoginOptions}/>
+      : authMethod === 'signup' && <DeskSignup showMessage={showMessage} backToOptions={toLoginOptions}/>
       :
       showLoginOptons ? 
         // <Suspense fallback={<div>Loading...</div>}> 

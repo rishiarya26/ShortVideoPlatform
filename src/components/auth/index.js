@@ -5,6 +5,7 @@ import { BackButton } from '../commons/button/back';
 import Email from '../access/email';
 import useTranslation from '../../hooks/use-translation';
 import Mobile from '../access/mobile';
+import useSnackbar from '../../hooks/use-snackbar';
 
 const Auth = ({ router, authType }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
@@ -13,6 +14,7 @@ const Auth = ({ router, authType }) => {
 
   const { t } = useTranslation();
   const { type } = router?.query;
+  const {showSnackbar} = useSnackbar();
 
   const heading = {
     login: 'LOGIN',
@@ -98,6 +100,7 @@ const Auth = ({ router, authType }) => {
            data={phoneData}
            onCountryCodeChange={onCountryCodeChange}
            type={info?.[authType]?.phone}
+           showMessage={showSnackbar}
          />
        )}
         {type === 'email'
@@ -106,6 +109,7 @@ const Auth = ({ router, authType }) => {
            data={emailData}
            processEmailData={processEmailData}
            type={info?.[authType]?.email}
+           showMessage={showSnackbar}
          />
        )}
       </div>

@@ -8,8 +8,9 @@ import Mobile from '../access/mobile';
 import useDrawer from '../../hooks/use-drawer';
 import DeskForgotPassword from '../access/desk-forgot-password';
 import Registration from '../access/registration';
+// import useSnackbar from '../../hooks/use-snackbar';
 
-const Auth = ({ router, authType, backToOptions }) => {
+const Auth = ({ router, authType, backToOptions, showMessage }) => {
   const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
   const [emailData, setEmailData] = useState({ email: '' });
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
@@ -19,6 +20,7 @@ const Auth = ({ router, authType, backToOptions }) => {
   
   const {close} = useDrawer();
   const { t } = useTranslation();
+  // const {showSnackbar} = useSnackbar();
 //   const { type } = router?.query;
 
   const toggleShowForgotPassComp = (value)=>{
@@ -47,6 +49,8 @@ const Auth = ({ router, authType, backToOptions }) => {
   const onTabChange = (value)=>{
       setSelectedTabIndex(value)
   }
+
+
 
 //   const urlReplace = {
 //     login: `/login/phone?option=${router?.query?.option}`,
@@ -119,6 +123,7 @@ const Auth = ({ router, authType, backToOptions }) => {
            type={info?.[authType]?.phone}
            toggleShowForgotPassComp={toggleShowForgotPassComp}
            toggleRegistration={toggleRegistration}
+           showMessage={showMessage}
          />
        )}
         {selectedTabIndex === 1
@@ -129,6 +134,7 @@ const Auth = ({ router, authType, backToOptions }) => {
            type={info?.[authType]?.email}
            toggleShowForgotPassComp={toggleShowForgotPassComp}
            toggleRegistration={toggleRegistration}
+           showMessage={showMessage}
          />
        )}
       </div>
@@ -138,10 +144,10 @@ const Auth = ({ router, authType, backToOptions }) => {
   return (
       <>
    {showForgotPassComp.show ? 
-     <DeskForgotPassword toggleShowForgotPassComp={toggleShowForgotPassComp} authOption={showForgotPassComp?.type}/> 
+     <DeskForgotPassword toggleShowForgotPassComp={toggleShowForgotPassComp} authOption={showForgotPassComp?.type} showMessage={showMessage}/> 
    :
    showRegistration.show ? 
-     <Registration toggleRegistration={toggleRegistration} dataType={showRegistration?.toRegType} dataValue={showRegistration?.toRegValue}/>
+     <Registration toggleRegistration={toggleRegistration} dataType={showRegistration?.toRegType} dataValue={showRegistration?.toRegValue} showMessage={showMessage}/>
    :
    LoginSignup}
    </>

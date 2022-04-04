@@ -1,6 +1,6 @@
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import useSnackbar from '../../../hooks/use-snackbar';
+// import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { registerUser } from '../../../sources/auth/register-user';
 import { BackButton } from '../../commons/button/back';
@@ -11,9 +11,9 @@ import { commonEvents } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
 import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
+import useSnackbar from '../../../hooks/use-snackbar';
 
-
-const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
+const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
   const [data, setData] = useState({
     type: '',
     value: '',
@@ -27,9 +27,14 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
   });
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
-  const { showSnackbar } = useSnackbar();
+  // const { showMessage } = useSnackbar();
  const {close} = useDrawer();
+ const {showSnackbar} = useSnackbar();
  const device = getItem('device-type');
+
+ if(device === 'mobile'){
+   showMessage = showSnackbar;
+ }
 
   const info = router?.query;
   const disable = (!!(data.firstName?.length === 0) || !!(data.lastName?.length === 0) || !!(data.name.length === 0)
@@ -55,7 +60,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
     data.firstName = firstName;
     data.lastName = lastName || '';
   //   if(data.lastName?.length < 1){
-  //     showSnackbar({message : 'Please Enter Last name'})
+  //     showMessage({message : 'Please Enter Last name'})
   //  }
     return data;
   };
@@ -82,7 +87,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
       }
       if (id === 'age') {
         if(value < 18){
-           showSnackbar({message : 'Age should be above 18 years'})
+           showMessage({message : 'Age should be above 18 years'})
         }else{
           data = retrieveYearFromAge(value, data);
         }
@@ -116,9 +121,9 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
       setPending(false);
     }}else{
       if(data.lastName?.length  < 1){ 
-      showSnackbar({message : "Last name cant be left empty"})
+      showMessage({message : "Last name cant be left empty"})
     }else if(data.password?.length <6){
-      showSnackbar({message : "Password length should be minimum of 6 characters"})
+      showMessage({message : "Password length should be minimum of 6 characters"})
     }
   }};
 
@@ -129,26 +134,26 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
-        let method;
-        if(device === 'mobile'){
-          method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
-        }else if(device === 'desktop'){
-          method = data && data?.type;
-        }
-        method && mixpanel('Signup',method);   
-        fbq.defEvent('CompleteRegistration');
+        // let method;
+        // if(device === 'mobile'){
+        //   method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        // }else if(device === 'desktop'){
+        //   method = data && data?.type;
+        // }
+        // method && mixpanel('Signup',method);   
+        // fbq.defEvent('CompleteRegistration');
         /* Mixpanel */
         if(device === 'mobile'){
           router?.push('/feed/for-you');
         }else if (device === 'desktop'){
           close();
         }
-        showSnackbar({ message: t('SIGNUP_SUCCESS') });
+        showMessage({ message: t('SIGNUP_SUCCESS') });
       }
     } catch (e) {
       if (e.status === 'fail') {
         console.log("user not registered",e)
-        showSnackbar({ message: e.message });
+        showMessage({ message: e.message });
       }
     }
   };
@@ -212,8 +217,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue }) => {
         />
       </div>
       <div className="mt-4">
-        <input
-         
+        <input  
           id="age"
           value={data.age}
           onChange={processPhoneData}

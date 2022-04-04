@@ -7,11 +7,16 @@ import {createNewPassword} from "../../../sources/auth/reset-password"
 import { getItem } from "../../../utils/cookie";
 import { Back } from "../../commons/svgicons/back";
 
-function ResetPassword({router, otpCode, phoneNo}) {
+function ResetPassword({router, otpCode, phoneNo, showMessage}) {
   const [password, setPassword] = useState('');
 
   const device = getItem('device-type')
   const {close} = useDrawer();
+  const {showSnackbar} = useSnackbar();
+
+  if(device === 'mobile'){
+    showMessage = showSnackbar;
+  }
 
   const otp = {
     'desktop' : otpCode,
@@ -26,7 +31,7 @@ function ResetPassword({router, otpCode, phoneNo}) {
   const code =  otp[device];
   const mobile = phone[device];
 
-  const { showSnackbar } = useSnackbar();
+  // const { showSnackbar } = useSnackbar();
 
   const login = async() =>{
   let resp;
@@ -45,7 +50,7 @@ const submit = async() => {
    if(response?.data?.code === 1){
     const resp = await login();
     if(resp.status ==='success'){
-      showSnackbar({ message: "Password Changed Successfully"});
+      showMessage({ message: "Password Changed Successfully"});
       if(device === 'mobile'){
       router?.push('/feed/for-you')
       }else if (device === 'desktop'){
@@ -54,6 +59,7 @@ const submit = async() => {
     }
    }   
   }catch(error){
+    showMessage({ message: "Something went wrong. Please try again."});
   }
 }
 
@@ -83,7 +89,7 @@ const chooseComp = {
         />
       </div>
       <div className="mt-10 px-6">
-        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired w-full px-4 py-2 text-white font-semibold cursor-pointer">Submit</button>
+        <button disable={code?.length===0 || password?.length===0} onClick={submit} className="bg-hipired w-full px-4 py-2 text-white font-semibold cursor-pointer">Submit</button>
       </div>
    </>,
    desktop : <>
@@ -97,7 +103,8 @@ const chooseComp = {
         />
       </div>
       <div className="mt-10 flex justify-center">
-        <button disable={otp?.length===0 || password?.length===0} onClick={submit} className="bg-hipired  px-4 py-2 text-white font-semibold cursor-pointer">Submit</button>
+        <button disabled={code?.length===0 || password?.length===0} onClick={submit} 
+        className={(code?.length >0 && password?.length>0) ? 'bg-hipired px-4 py-2 text-white font-semibold cursor-pointer' : 'bg-gray-400 px-4 py-2 text-white font-semibold cursor-pointer'}>Submit</button>
       </div></>}
 
   return (

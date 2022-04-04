@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import useTranslation from '../../../hooks/use-translation';
 import { SubmitButton } from '../../commons/button/submit';
 import { CountryCode } from '../../commons/button/country-code';
-import useSnackbar from '../../../hooks/use-snackbar';
+// import useSnackbar from '../../../hooks/use-snackbar';
 import { userLogin } from '../../../sources/auth';
 import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
 import { sendOTP } from '../../../sources/auth/send-otp';
@@ -20,12 +20,12 @@ import { DeskCountryCode } from '../../commons/button/desk-country-code';
 
 export default function Mobile({
   toggle, processPhoneData, data, onCountryCodeChange, type, toggleShowForgotPassComp,
-  toggleRegistration
+  toggleRegistration, showMessage
 }) {
   const [seconds, setSeconds] = useState(0);
 
   const { t } = useTranslation();
-  const { showSnackbar } = useSnackbar();
+  // const { showMessage } = useSnackbar();
   const router = useRouter();
   const {close} = useDrawer();
   const device = getItem('device-type')
@@ -69,10 +69,10 @@ export default function Mobile({
           if(device === 'desktop'){
             close();
           }
-          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message: t('SUCCESS_LOGIN') });
         }
       } catch (e) {
-        showSnackbar({ message: t('FAIL_MOBILE_LOGIN') });
+        showMessage({ message: t('FAIL_MOBILE_LOGIN') });
       }
     },
     loginOtp: async () => {
@@ -89,11 +89,11 @@ export default function Mobile({
               query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
             });}
           
-          showSnackbar({ message: t('SUCCESS_OTP') });
+          showMessage({ message: t('SUCCESS_OTP') });
         }
       } catch (e) {
         if (e.errorCode === 404) {
-          showSnackbar({ message: t('NOT_REGISTERED') });
+          showMessage({ message: t('NOT_REGISTERED') });
         }
       }
     },
@@ -102,13 +102,13 @@ export default function Mobile({
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUserOnly({mobile: mobile, type:'mobile'});
         if (response.status === 'success') {
-          showSnackbar({ message: t('REGISTERED') });
+          showMessage({ message: t('REGISTERED') });
         }
       } catch (e) {
         if (e.errorCode === 404) {
           const resp = await dispatchOtp();
           if(resp.data.code === 0){
-            showSnackbar({ message: t('SUCCESS_OTP') });
+            showMessage({ message: t('SUCCESS_OTP') });
             if(device==='mobile') {
               router?.push({
               pathname: '/verify-otp',
@@ -119,7 +119,7 @@ export default function Mobile({
           //    toggleRegistration(true);
           // }
           }else{
-            showSnackbar({ message: 'Something went wrong' });
+            showMessage({ message: 'Something went wrong' });
           }
         }
       }
@@ -169,13 +169,15 @@ export default function Mobile({
       <div className='flex w-full items-center flex-col'> 
       <VerifyOTP 
       typeRef={type === 'signup' ? 'signup' : 'login'} 
-      fullMobileNo={`${data.countryCode}${data.mobile}`}/>
+      fullMobileNo={`${data.countryCode}${data.mobile}`}
+      showMessage={showMessage}
+      />
       </div>
 
       <div className="absolute top-0 right-0 mt-4 w-3/12 flex justify-center">
         <div className="text-gray-500">
          {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
-          <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} />
+          <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} showMessage={showMessage}/>
          }
           </div>
         </div>

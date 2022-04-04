@@ -426,3 +426,7 @@ span.swiper-pagination-bullet {
     width: 692px;
     max-width: 692px;
 }
+
+.overlay-z-index{
+  z-index: 15;
+}

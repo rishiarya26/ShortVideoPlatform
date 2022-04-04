@@ -10,11 +10,16 @@ import {GoogleButton} from '../social-login/google'
 import { useRouter } from 'next/router';
 import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
+// import useSnackbar from '../../hooks/use-snackbar';
+import { useEffect } from 'react';
 
 export default function Login({ toggle, loading, setAuth }) {
   const { close } = useDrawer();
   const router = useRouter();
   const device = getItem('device-type')
+
+  // const {showSnackbar} = useSnackbar();
+  // useEffect(()=>{showSnackbar({message : 'working 3'})},[])
 
   const chooseComp = {
     mobile :   

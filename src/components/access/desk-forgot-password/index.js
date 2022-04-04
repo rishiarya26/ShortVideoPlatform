@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities*/
 import { useRouter, withRouter } from "next/router";
 import { useState } from "react";
-import useSnackbar from "../../../hooks/use-snackbar";
+import useDrawer from "../../../hooks/use-drawer";
+// import useSnackbar from "../../../hooks/use-snackbar";
 import useTranslation from "../../../hooks/use-translation";
 import { resetPasswordEmail } from "../../../sources/auth/forgot-pass-email";
 import { resetPasswordMobile } from "../../../sources/auth/forgot-pass-mobile";
@@ -12,16 +13,16 @@ import { SubmitButton } from "../../commons/button/submit";
 import { Back } from "../../commons/svgicons/back"
 import ResetPassword from "../reset-password";
 
- const ForgotPassword = ({router, toggleShowForgotPassComp, authOption}) =>{
+ const ForgotPassword = ({router, toggleShowForgotPassComp, authOption, showMessage}) =>{
     const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
     const [emailData, setEmailData] = useState({ email :'' })
     const [otp, setOtp] = useState('');
 
-    const { showSnackbar } = useSnackbar();
+    // const { showMessage } = useSnackbar();
     const type =  authOption;
     const {t} = useTranslation();
     const device = getItem('device-type');
-    
+    const {close} = useDrawer();
 
     const disable = {
         mobile: ((phoneData.mobile?.length <= 0) ? 'true' : 'false'),
@@ -60,19 +61,22 @@ import ResetPassword from "../reset-password";
             try{ 
                     const mobile = `${phoneData?.countryCode}${phoneData?.mobile}`;
                     const resp = await verifyUserOnly({mobile: mobile, type:'mobile'});
+                    console.log("resp",resp)
                     if (resp.status === 'success') {
                         const response = await resetPasswordMobile(`${phoneData?.countryCode}${phoneData?.mobile}`);
-                        if (response.data.code === 1) {        
-                           if(device=== 'mobile'){  
-                            router?.push({
-                            pathname: '/verify-otp',
-                            query: { ref: 'forgot-password', mobile: `${phoneData?.countryCode}-${phoneData?.mobile}`}
-                          });
-                       }
+                        if (response.data.code === 1) {    
+                          showMessage({ message: 'Otp send successfully' }); 
+                       
+                      //      if(device=== 'mobile'){  
+                      //       router?.push({
+                      //       pathname: '/verify-otp',
+                      //       query: { ref: 'forgot-password', mobile: `${phoneData?.countryCode}-${phoneData?.mobile}`}
+                      //     });
+                      //  }
                      }
                     }
                 }catch(e){
-                    showSnackbar({ message: t('NOT_REGISTERED') });
+                    showMessage({ message: t('NOT_REGISTERED') });
                     console.log("e",e);
              }
            },
@@ -82,26 +86,29 @@ import ResetPassword from "../reset-password";
             try{ 
                 const email = emailData.email;
                 const resp = await verifyUserOnly({email:email, type:"email"});
+                console.log("resp",resp)
                 if (resp.status === 'success') {
                 const response = await resetPasswordEmail(emailData.email);
                 if (response.data.code === 1) {        
-                showSnackbar({ message: "Reset Password link sent to your mail. Please reset it & sign in" });
-               if(device=== 'mobile'){ 
-                   router?.push({
-                   pathname: '/login/email',
-                });
-               }else if(device==='desktop'){
+                showMessage({ message: "Reset Password link sent to your mail. Please reset it & sign in" });
+              //  if(device=== 'mobile'){ 
+              //      router?.push({
+              //      pathname: '/login/email',
+              //   });
+               if(device==='desktop'){
                    toggleShowForgotPassComp({show : false})
                }
             }}}catch(e){
-                showSnackbar({ message: 'This Email is not registered with us. Please Sign up' });                 
+                showMessage({ message: 'This Email is not registered with us. Please Sign up' });                 
                 console.log("e",e);
              }
            },
       }
 
       const inputType = {
-            email :  <input
+            email : 
+            <div className='flex flex-col w-full'>
+            <input
             id="email"
             value={emailData.email}
             onChange={processEmailData}
@@ -111,7 +118,12 @@ import ResetPassword from "../reset-password";
             placeholder="Email"
             autoComplete="off"
             required
-        />,
+        />
+        <div className="w-50 justify-center px-2 py-4">
+      <button onClick={submit?.[type]} type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
+    </div>
+    </div>
+        ,
             mobile :
             <>
                 <CountryCode
@@ -147,7 +159,7 @@ import ResetPassword from "../reset-password";
         <p className="text-gray-400 text-xs mt-2">We'll SMS you a code to reset your password</p>
       </div>
     <div className="flex flex-col px-6 pt-6">
-     <form onSubmit={submit[type]}> <div className="mt-4 relative flex">
+     <form > <div className="mt-4 relative flex">
        {inputType[type]}
       </div>
       
@@ -168,10 +180,10 @@ import ResetPassword from "../reset-password";
         required
       /> 
       <div className="w-50">
-      <button type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
+      <button onClick={submit?.[type]} type='submit' className="bg-hipired w-full px-4 py-2 text-white font-semibold" >Reset</button>
     </div>
       </div>    
-      <ResetPassword otpCode={otp} phoneNo ={`${phoneData?.countryCode}${phoneData?.mobile}`}/>
+      <ResetPassword otpCode={otp} phoneNo ={`${phoneData?.countryCode}${phoneData?.mobile}`} showMessage={showMessage}/>
       </div>
       }
     </div>

@@ -12,10 +12,15 @@ import { getItem } from '../../../utils/cookie';
 import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 
-const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
+const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMessage }) => {
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(59);
   const device = getItem('device-type')
+  const {showSnackbar} = useSnackbar();
+
+  if(device === 'mobile'){
+    showMessage = showSnackbar;
+  }
 
   const ref =  device === 'desktop' ? typeRef : (device === 'mobile' && router?.query?.ref);
   const {mobile} = router?.query;
@@ -40,7 +45,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
   };
  
   const { t } = useTranslation();
-  const { showSnackbar } = useSnackbar();
+  // const { showSnackbar } = useSnackbar();
   const {close} = useDrawer();
 
   const types = {
@@ -71,15 +76,16 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
       try {
         const response = await verifyOTP(payload);
         if (response.data.status === 200) {
-          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message: t('SUCCESS_LOGIN') });
           if(device === 'desktop'){
              close();
           }else if(device === 'mobile'){
             router?.push(types[ref]);
+            close();
           }
         }
       } catch (error) {
-        showSnackbar({ message: t('INCORRECT_OTP') });
+        showMessage({ message: t('INCORRECT_OTP') });
       }
     },
     signup: async () => {
@@ -95,10 +101,10 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
          }else if(device === 'mobile'){
            router?.push(types[ref]);
          }
-          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message: t('SUCCESS_LOGIN') });
         }
       } catch (error) {
-        showSnackbar({ message: t('INCORRECT_OTP') });
+        showMessage({ message: t('INCORRECT_OTP') });
       }
     },
     'forgot-password': async () => {
@@ -106,10 +112,10 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
       //   const response = await resetPasswordMobile(mobile);
       //   if (response.data.status === 200) {
           router?.push(types[ref]);
-          // showSnackbar({ message: t('SUCCESS_LOGIN') });
+          // showMessage({ message: t('SUCCESS_LOGIN') });
       //   }
       // } catch (error) {
-      //   showSnackbar({ message: t('INCORRECT_OTP') });
+      //   showMessage({ message: t('INCORRECT_OTP') });
       // }
     },
       
@@ -120,31 +126,31 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
       try{
         const response = await resetPasswordMobile(phoneNo);
         if (response.data.code === 1) { 
-          showSnackbar({message : 'Otp sent Successfully'});
+          showMessage({message : 'Otp sent Successfully'});
           setSeconds(59);
         }
     }catch(e){
-        showSnackbar({message : 'Error sending otp'})
+        showMessage({message : 'Error sending otp'})
     }}
     ,
     login : async()=>{
      try{ 
       const response = await sendOTP(phoneNo);
         if (response.data.code === 0) {
-        showSnackbar({message : 'Otp sent Successfully'});
+        showMessage({message : 'Otp sent Successfully'});
         setSeconds(59);
       }}catch(e){
-        showSnackbar({message : 'Error sending otp'})
+        showMessage({message : 'Error sending otp'})
      }
     },
     signup: async()=>{
       try{ 
         const response = await sendOTP(phoneNo);
         if (response.data.code === 0) {
-         showSnackbar({message : 'Otp sent Successfully'});
+         showMessage({message : 'Otp sent Successfully'});
          setSeconds(59);
        }}catch(e){
-         showSnackbar({message : 'Error sending otp'})
+         showMessage({message : 'Error sending otp'})
       }
      }
   }
@@ -166,10 +172,10 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration }) => {
   //     const response = await verifyOTP(payload);
   //     if (response.data.status === 200) {
   //       router?.push(types[ref]);
-  //       showSnackbar({ message: t('SUCCESS_LOGIN') });
+  //       showMessage({ message: t('SUCCESS_LOGIN') });
   //     }
   //   } catch (error) {
-  //     showSnackbar({ message: t('INCORRECT_OTP') });
+  //     showMessage({ message: t('INCORRECT_OTP') });
   //   }
   // };
 

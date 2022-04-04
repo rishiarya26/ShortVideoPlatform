@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { track } from '../../../analytics';
 import { commonEvents } from '../../../analytics/mixpanel/events';
-import useSnackbar from '../../../hooks/use-snackbar';
+// import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { verifyUserOnly } from '../../../sources/auth/verify-user';
@@ -12,11 +12,11 @@ import * as fbq from '../../../analytics/fb-pixel'
 import { getItem } from '../../../utils/cookie';
 
 export default function Email({
-  data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration
+  data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration, showMessage
 }) {
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
-  const { showSnackbar } = useSnackbar();
+  // const { showMessage } = useSnackbar();
   const router = useRouter();
   const device = getItem('device-type')
 
@@ -42,11 +42,11 @@ export default function Email({
           mixpanel('Login');
           fbq.defEvent('CompleteRegistration');
            /* Mixpanel */
-          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);
         }
       } catch (e) {
-        showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
+        showMessage({ message: t('FAIL_EMAIL_LOGIN') });
         setPending(false);
       }
     },
@@ -57,7 +57,7 @@ export default function Email({
    try{  
       resp = await verifyUserOnly({email: data?.email, type:'email'});
       if (resp.status === 'success') {
-      showSnackbar({message : 'User already registered. Please Sign In'})
+      showMessage({message : 'User already registered. Please Sign In'})
       setPending(false);
 
     }
