@@ -22,6 +22,7 @@ import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
+import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
 // import { doesStringMatch } from '../src/utils/string';
@@ -168,6 +169,21 @@ function Hipi({
      }
   }
 
+  const getGeoLocationInfo =async()=>{
+    try{ 
+      const resp = await detectGeoLocationByZee();
+      localStorage.set('geo-info',resp?.data)
+      // console.log(resp?.data?.country_name)
+      // setCountry(resp?.data?.country_name || 'India');
+      // if(resp?.data?.country_name === 'India'){
+      //   setItem('cookie-agreed','yes');
+      // }
+    }
+     catch(e){
+
+     }
+  }
+
   // useEffect(()=>{
   //   setItem('cookie-agreed','yes');
   // },[country])
@@ -178,6 +194,7 @@ function Hipi({
     inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
     cookieAgree !== 'yes' && getCountry();
+    getGeoLocationInfo();
     let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
     const userAgent = window?.navigator.userAgent;
