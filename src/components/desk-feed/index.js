@@ -31,6 +31,7 @@ import SideBar from '../desk-menu';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import Top from '../commons/svgicons/top'
+import LoginFollowing from '../desk-login-following';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -46,8 +47,10 @@ const LoadComp = () => (<Loading />);
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [videoDetailData, setVideoDetailData] = useState({})
   const [firstApiCall, setFirstApiCall] = useState(true);
+  // const [id, setId] = useState('for-you');
 
   const { id = 'for-you' } = router?.query;
+  console.log(id)
   const { videoId } = router?.query;
 
   // selecting home feed api based on before/after login
@@ -62,11 +65,18 @@ const LoadComp = () => (<Loading />);
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
+    // setId(router?.query?.id);
     getInitialData();
   },[])
 
+  useEffect(()=>{
+    setItems([]);
+    setFetchState('pending');
+    getInitialData();
+  },[id])
+
   const getInitialData = async() =>{
-    let updateItems = [...items];
+    let updateItems = [];
      try{
        const data = await fetchData({ type: id });
        console.log('GOT Inital ITEMS *****', data?.data)
@@ -76,6 +86,9 @@ const LoadComp = () => (<Loading />);
          setItems(updateItems);
          setFetchState('success');
          setFirstApiCall(false);
+       }else{
+         setFetchState('success');
+         setItems([]);
        }
       }
      catch(err){
@@ -100,7 +113,7 @@ const LoadComp = () => (<Loading />);
      }
   } 
 
-  useEffect(()=>{console.log("id changed",id)},[id]);
+  // useEffect(()=>{console.log("id changed",id)},[id]);
 
 const refs = items?.length > 0 && items.reduce((acc, value, index) => {
   acc[index] = createRef();
@@ -146,6 +159,52 @@ const hideVideoDetail = ()=>{
 
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
+// const toggleFeed = (value)=>{
+//   setId(id);
+// }
+
+const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
+{items && items?.length > 0 ? <InfiniteScroll 
+ dataLength={items?.length} 
+ next={getFeedData} 
+ hasMore={hasMore} 
+ loader={<h3> Loading...</h3>}
+ endMessage={<h4>Error</h4>}
+>
+     {items.map((item,id)=>
+    <span key={id} ref={refs[id]}>
+        <Video 
+         index={id} 
+         userName={item?.userName} 
+         likesCount={item?.likesCount} 
+         music_title={item?.music_title} 
+         userProfilePicUrl={item?.userProfilePicUrl} 
+         url={item?.video_url} 
+         firstFrame={item?.firstFrame} 
+         muted={muted} unMute={unMute} 
+         firstName={item?.firstName} 
+         lastName={item?.lastName} 
+         description={item?.content_description} 
+         updateActiveIndex={updateActiveIndex} 
+         showVideoDetail={showVideoDetail}
+         shareCount={item?.shareCount || null}
+         videoId={videoDetailData?.content_id}
+         />
+    </span>
+     )}
+</InfiniteScroll>
+: <div className=' w-full justify-center items-center'>No Videos Found</div>}
+</div>
+
+const showLoginFollowing = <LoginFollowing/>;
+  
+const toShowFollowing =  useAuth(showLoginFollowing, FeedComp);
+
+const info ={
+  'for-you' : FeedComp,
+  'following' : toShowFollowing
+}
+
   return (
     <>
     <div className="flex flex-col w-full thin_bar pt-28 items-center">
@@ -171,39 +230,9 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
        </div>}
         <Header />
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
-            <DeskMenu handleUpClick={handleUpClick} handleDownClick={handleDownClick} />
+            <DeskMenu/>
             { fetchState === 'success' ?
-            <div className="W-feed-vid flex flex-col no_bar">
-                <InfiniteScroll 
-                 dataLength={items?.length} 
-                 next={getFeedData} 
-                 hasMore={hasMore} 
-                 loader={<h3> Loading...</h3>}
-                 endMessage={<h4>Error</h4>}
-                >
-                    {items && items?.length > 0 && items.map((item,id)=>
-                    <span key={id} ref={refs[id]}>
-                        <Video 
-                         index={id} 
-                         userName={item?.userName} 
-                         likesCount={item?.likesCount} 
-                         music_title={item?.music_title} 
-                         userProfilePicUrl={item?.userProfilePicUrl} 
-                         url={item?.video_url} 
-                         firstFrame={item?.firstFrame} 
-                         muted={muted} unMute={unMute} 
-                         firstName={item?.firstName} 
-                         lastName={item?.lastName} 
-                         description={item?.content_description} 
-                         updateActiveIndex={updateActiveIndex} 
-                         showVideoDetail={showVideoDetail}
-                         shareCount={item?.shareCount || null}
-                         videoId={videoDetailData?.content_id}
-                         />
-                    </span>
-                    )}
-                </InfiniteScroll>
-            </div>
+             info?.[id]
             :
             fetchState === 'pending' ?
             <LoadComp /> :

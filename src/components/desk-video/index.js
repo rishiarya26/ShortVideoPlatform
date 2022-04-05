@@ -35,7 +35,7 @@ const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
 const [pause, setPause] = useState(true);
 const [active, setActive] = useState(false);
-const [seekedPercentage, setSeekedPercentage] = useState(0)
+const [seekedPercentage, setSeekedPercentage] = useState(0);
 
 const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);

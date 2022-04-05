@@ -25,7 +25,6 @@ function useFetcher(dataFetcher, onDataFetched, dep) {
   const dataFetch = async () => {
     try {
       const data = await dataFetcher();
-      console.log('+++=++',data)
       if (data.status === 'fail') {
         console.log(data)
         setFetchState('fail');
