@@ -14,7 +14,7 @@ function Sahipakdehain() {
           <h2 className='text-base font-bold' >What is the contest?</h2>
           
           <p className='text-gray-500 text-sm mt-2'>We bring to you, the most iconic dialogues of one of the most favourite shows on Indian TV, Bhabiji Ghar Par Hai, which is Sahi Pakde Hain. </p>
-          <p className='text-gray-500 text-sm mt-2'> If you are a creator who dares to act in a fun way or loves to lipsync the dialogues & jokes and secretly wish that you could be that TV character, then this is for you.</p>
+          <p className='text-gray-500 text-sm mt-2'> If you are a creator who dares to act in a fun way or loves to lip-sync the dialogues & jokes and secretly wish that you could be that TV character, then this is for you.</p>
           <p className='text-gray-500 text-sm mt-2'>A contest to ignite your passion of acting by becoming the Bhabiji with your fun take on it. A contest which offers you a platform where you allow your unique personality to show through these videos. </p>
           <p className='text-gray-500 text-sm mt-2'>So wear your acting shoes and join us on this fun roller coaster ride by making fun videos from our pool of Sahi Pakde Hain dialogues. </p>
        </div>
@@ -44,7 +44,7 @@ function Sahipakdehain() {
           <h2 className='text-base font-bold' >Rules and Regulations:</h2>
           
           <p className='text-gray-500 text-sm mt-2'>1. The videos or entries are only valid if the videos are uploaded with hashtag #SahiPakdeHain.</p>
-          <p className='text-gray-500 text-sm mt-2'>2. The video uploaded should be either a lipsync video or a duet video </p>
+          <p className='text-gray-500 text-sm mt-2'>2. The video uploaded should be either a lip-sync video or a duet video </p>
           <p className='text-gray-500 text-sm mt-2'>3. The video duration should not exceed more than 90secs.</p>
           <p className='text-gray-500 text-sm mt-2'>4. To participate one needs to be 18+ years of age.  </p>
           <p className='text-gray-500 text-sm mt-2'>5. Videos are allowed in hindi language only. </p>
