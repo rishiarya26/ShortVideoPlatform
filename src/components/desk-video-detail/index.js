@@ -107,7 +107,7 @@ return (
                   <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button>
                </div>
             </div>
-            <div className=" text-sm w-full mb-2 mt-1">
+            <div className=" text-sm w-8/12 mb-2 mt-1">
             {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
                item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
@@ -129,21 +129,21 @@ return (
       </div>
       <div className="flex px-6 py-2 justify-between ">
          <div className="flex">
-            <div className="pr-4">
+            <div className="pr-4 flex items-center">
                <Like />
-               <span className=' text-xs font-semibold mt-2'>
+               <span className=' text-xs font-semibold px-2'>
             {numberFormatter(likesCount)}
             </span>
             </div>
-            <div className="pr-4">
+            <div className="pr-4 flex items-center">
                <Comment />
             </div>
-            {/* <div className="pr-4">
+            {/* <div className="pr-4 flex items-center">
                <Share />
-               <span className=' text-xs font-semibold mt-2'>
+               <span className=' text-xs font-semibold px-2'>
             {numberFormatter(shareCount)}
             </span>
-            </div> */}
+            </div>  */}
          </div>
          <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='cursor-pointer'>
             <EmbedIcon />

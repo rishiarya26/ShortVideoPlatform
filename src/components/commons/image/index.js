@@ -13,7 +13,7 @@ const Img = ({
       <img
         className={`
         position-relative overflow-hidden
-        animate-appear bg-gray-500
+        animate-appear bg-gray-500 
         `}
         // loading={loading}
         src={data || fallback}

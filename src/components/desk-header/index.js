@@ -93,11 +93,11 @@ const Header = ()=>{
       </div>
       <div>
            {isLoggedIn === 'true'?
-           <div className='w-10'><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/></div>
+           <div className='w-10 rounded-full overflow-hidden'><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/></div>
            :
            <button 
            onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-           className="font-semibold border text-lg p-2 mt-4">
+           className="rounded text-sm font-semibold  px-6 p-2 bg-hipired text-white">
              Log in
          </button>
          }
