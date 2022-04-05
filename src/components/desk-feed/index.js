@@ -226,6 +226,7 @@ const info ={
          handleDownClick={handleDownClick}
          hideVideoDetail={hideVideoDetail}
          shareCount={videoDetailData?.shareCount}
+         activeIndex={activeIndex}
          />
        </div>}
         <Header />

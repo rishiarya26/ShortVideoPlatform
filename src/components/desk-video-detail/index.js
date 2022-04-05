@@ -26,7 +26,7 @@ import useDialog from "../../hooks/use-dialog";
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount}) {
+hideVideoDetail, shareCount, activeIndex}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -71,9 +71,9 @@ return (
       {/* <div className="absolute right-4 bottom-6 cursor-pointer">
          <Mute/>
       </div> */}
-      <div onClick={handleDownClick} className="absolute right-4 top-1/2 -mt-16  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
+     {activeIndex > 0 && <div onClick={handleDownClick} className="absolute right-4 top-1/2 -mt-16  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
          <UpArrow/>
-      </div>
+      </div>}
       <div onClick={handleUpClick} className="absolute right-4 top-1/2  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
          <DownArrow/>
       </div>
