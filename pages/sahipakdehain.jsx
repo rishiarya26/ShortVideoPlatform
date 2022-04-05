@@ -11,17 +11,17 @@ import * as fbq from '../src/analytics/fb-pixel'
 export default function Hipi() {
   useEffect(()=>{
     const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Goat';
-    fbq.event('Screen View')
+    mixpanelEvents['Page Name'] = 'sahipakdehain';
+    // fbq.event('Screen View')
     track('Screen View',mixpanelEvents );
   },[])
   return (
   <>
   <SeoMeta
         data={{
-          title: 'Hipi GOAT contest - Singing Talent hunt.',
+          title: 'Hipi #SahiPakdeHain contest',
           // image: item?.thumbnail,
-          description: 'Participate in Hipi GOAT contest on Hipi and win weekly cash awards. Top performers will get coaching sessions from Shilpa Rao and Rupali Jagga. And opportunity to perform at Finale episode of Zee Saregamapa.',
+          description: 'Participate in #SahiPakdeHain contest and win rewards. A contest to ignite your passion of acting by becoming the Bhabiji with your fun take on it. A contest which offers you a platform where you allow your unique personality to show through these videos.',
           // canonical: 'https://hipi.co.in/feed/[id]',
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
