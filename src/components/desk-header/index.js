@@ -1,4 +1,5 @@
 /*eslint-disable @next/next/no-img-element */
+/*eslint-disable react/display-name */
 import { data } from "autoprefixer";
 import dynamic from "next/dynamic";
 import { withBasePath } from "../../config";

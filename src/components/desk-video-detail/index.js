@@ -57,6 +57,10 @@ const onEmbedCopy =()=>{
    showSnackbar({ message: 'Copied to Clipboard' });
 }
 
+const gotUrl = window?.location?.href;
+let domain = (new URL(gotUrl));
+domain = domain?.origin;
+
 return (
 <div className="flex w-screen h-screen">
    <div className="flex w-8/12 h-screen bg-black justify-center relative overflow-hidden">
@@ -134,21 +138,26 @@ return (
             <div className="pr-4">
                <Comment />
             </div>
-            <div className="pr-4">
+            {/* <div className="pr-4">
                <Share />
                <span className=' text-xs font-semibold mt-2'>
             {numberFormatter(shareCount)}
             </span>
-            </div>
+            </div> */}
          </div>
          <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='cursor-pointer'>
             <EmbedIcon />
          </div>
       </div>
       <div className='flex px-6 py-6 justify-between border-b-2 border-gray-100'>
-            <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm">{`https://www.hipi.co.in/@${userName}/video/${videoId}`}</p>
-            <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2" onClick={()=>CopyToClipBoard(`https://www.hipi.co.in/@${userName}/video/${videoId}`)}>Copy Link</button>
-            </div>
+           {domain && <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm">{`${domain}/@${userName}/video/${videoId}`}</p>
+            <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2" onClick={
+             ()=>{
+                CopyToClipBoard(`${domain}/@${userName}/video/${videoId}`);
+                showSnackbar({message : 'Copied to clipboard'});
+                 }
+            }>Copy Link</button>
+            </div>}
          </div>
       <Charmboard type='video-detail' videoId={videoId}/>
 </div>

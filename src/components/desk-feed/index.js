@@ -188,7 +188,7 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
          updateActiveIndex={updateActiveIndex} 
          showVideoDetail={showVideoDetail}
          shareCount={item?.shareCount || null}
-         videoId={videoDetailData?.content_id}
+         videoId={item?.content_id}
          />
     </span>
      )}
