@@ -41,7 +41,7 @@ const DeskMenu = ({handleUpClick, handleDownClick}) =>{
 
     return(
         <div className="w-feed-menu flex flex-col p-4 relative">
-          <div className="flex flex-col fixed overscroll-y-auto top-28 bottom-0 w-feed-menu">
+          <div className="flex flex-col fixed overscroll-y-auto pt-6 w-feed-menu">
         <div className="flex flex-col pb-10 border-b border-gray-200">
           <Tabs items={tabs}/>
         {/* <div onClick={router.push('/feed/for-you')} className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
