@@ -56,7 +56,6 @@ const Header = ()=>{
           const userId = localStorage?.get('user-id');
          const getUserInfo = async()=>{
             const data = await getUserProfile(userId);
-            console.log("***calleeeeeee(((", data)
             setUserInfo(data?.data);
          }
          getUserInfo();
