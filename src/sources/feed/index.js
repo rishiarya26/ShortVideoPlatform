@@ -9,6 +9,7 @@ import { getSingleFeed } from './embed';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
+let geoData = localStorage && localStorage?.get('geo-info');
 async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall }) {
 
   let response = {};
@@ -20,10 +21,21 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
     //  tokens = JSON.parse(tokens);
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
-      response = await get(apiPath,null,{
+      if(geoData){
+        response = await get(apiPath,null,{
         Authorization: `Bearer ${shortsAuthToken}`,
-        'access-token': accessToken
-      });
+        'access-token': accessToken,
+        'X-GEO-IPADDR' : geoData?.ip,
+        'X-GEO-COUNTRY-CODE':geoData?.country,
+        'X-GEO-REGION-CODE':geoData?.state_code,
+        'X-GEO-CITY':geoData?.city,
+        'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
+        'X-GEO-PINCODE':geoData?.pin
+      })}else{
+        response = await get(apiPath,null,{
+          Authorization: `Bearer ${shortsAuthToken}`,
+          'access-token': accessToken,
+      })}
 
       if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
         // const items = response.data.responseData;
@@ -51,7 +63,18 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
     const condition = type === 'for-you' ? 'forYou' : 'following';
     // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
-    response = await get(apiPath);
+    if(geoData){
+      response = await get(apiPath,null,{
+      'X-GEO-IPADDR' : geoData?.ip,
+      'X-GEO-COUNTRY-CODE':geoData?.country,
+      'X-GEO-REGION-CODE':geoData?.state_code,
+      'X-GEO-CITY':geoData?.city,
+      'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
+      'X-GEO-PINCODE':geoData?.pin
+    })}else{
+      response = await get(apiPath);
+    }
+    
     console.log('v-id',videoId)
     if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
       // const items = response.data.responseData;

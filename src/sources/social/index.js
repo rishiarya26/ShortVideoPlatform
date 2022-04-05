@@ -128,11 +128,18 @@ const viewCountUpdate = async ({ id, event = 'user_video_start'}) => {
   }
   console.log("api called", payload)
    const userId = localStorage.get('user-id') || null;
+   const geoData = localStorage.get('geo-info') || null;
    const guestToken =  getItem('guest-token') || null;
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'X-GEO-IPADDR' : geoData?.ip,
+      'X-GEO-COUNTRY-CODE':geoData?.country,
+      'X-GEO-REGION-CODE':geoData?.state_code,
+      'X-GEO-CITY':geoData?.city,
+      'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
+      'X-GEO-PINCODE':geoData?.pin
     });
     response.data.status = 'success';
     response.data.message = '';
