@@ -36,9 +36,7 @@ function Sahipakdehain() {
           
           <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 1: </span>Download Hipi App from Play Store or App Store</p>
           <p className='text-gray-500 text-sm mt-2'><span className='text-black font-bold'>Step 2: </span> Login or Signup on Hipi </p>
-          <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 3: </span> Click on the banner for #SahiPakdeHain on Discover screen, select your favorite dialogue, create & post your video (max 90secs). Don’t forget to the hashtag #SahiPakdeHain in the captions for the video.
-OR
-Click on the banner for #SahiPakdeHain on Discover screen, select your favorite video, create your duet video & post it (max 90secs). Don’t forget to the hashtag #SahiPakdeHain in the captions for the video.
+          <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 3: </span> Click on the banner for #SahiPakdeHain on Discover screen, select your favorite dialogue, create & post your video (max 90secs). Don’t forget to the hashtag #SahiPakdeHain in the captions for the video. OR Click on the banner for #SahiPakdeHain on Discover screen, select your favorite video, create your duet video & post it (max 90secs). Don’t forget to include the hashtag #SahiPakdeHain in the captions for the video.
 </p>
        </div>
 
@@ -48,7 +46,6 @@ Click on the banner for #SahiPakdeHain on Discover screen, select your favorite 
           <p className='text-gray-500 text-sm mt-2'>1. The videos or entries are only valid if the videos are uploaded with hashtag #SahiPakdeHain.</p>
           <p className='text-gray-500 text-sm mt-2'>2. The video uploaded should be either a lipsync video or a duet video </p>
           <p className='text-gray-500 text-sm mt-2'>3. The video duration should not exceed more than 90secs.</p>
-          <p className='text-gray-500 text-sm mt-2'>3. The video duration should not exceed more than 90secs. </p>
           <p className='text-gray-500 text-sm mt-2'>4. To participate one needs to be 18+ years of age.  </p>
           <p className='text-gray-500 text-sm mt-2'>5. Videos are allowed in hindi language only. </p>
           <p className='text-gray-500 text-sm mt-2'>6. The video should be recorded in vertical format (16:9) </p>
