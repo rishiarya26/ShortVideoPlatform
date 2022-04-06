@@ -10,26 +10,30 @@ import Following from "../commons/svgicons/following";
 import Home from '../commons/svgicons/home';
 import Tabs from '../commons/tabs/desk-feed-tab'
 
+const login = dynamic(
+  () => import('../auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 const DeskMenu = ({handleUpClick, handleDownClick}) =>{
     const {show} = useDrawer();
     const {showSnackbar} = useSnackbar();
     const {t} = useTranslation();
     const router = useRouter();
 
-    const login = dynamic(
-        () => import('../auth-options'),
-        {
-          loading: () => <div />,
-          ssr: false
-        }
-      );
-
       const showMessage = ({message})=>{
         showSnackbar({message: message});
       }
 
       const tabs = [
-        { display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}`, icon: <Home/> },{ display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}`, icon:<Following/> }];
+        { display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}`,
+         icon: {active: <Following/>,inActive: <Home/>} },
+        { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}`,
+         icon:{active: <Home/>, inActive: <Following/>} }
+       ];
 
         const loginComp = <button 
         onClick={() =>show('', login, 'big',{showMessage:showMessage})} 

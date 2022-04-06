@@ -29,7 +29,7 @@ import CircularProgress from '../commons/circular-loader'
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description, updateActiveIndex, index, showVideoDetail, shareCount, videoId}) {
+description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -203,6 +203,7 @@ return (
       sharecount={shareCount}
       userName={userName}
       videoId={videoId}
+      socialId={socialId}
    />
 </div>
 

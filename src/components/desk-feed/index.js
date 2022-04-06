@@ -198,6 +198,7 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
          showVideoDetail={showVideoDetail}
          shareCount={item?.shareCount || null}
          videoId={item?.content_id}
+         socialId={item?.getSocialId}
          />
     </span>
      )}
@@ -250,7 +251,7 @@ const info ={
             <ErrorComp />
             }
         </div>
-        <div className='w-10 border-black' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>
+        <div className='w-10 border-black black-600 fixed right-0 bottom-10' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>
         <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 w-10 h-10 flex justify-center items-center rounded-full bg-hipired white'>
             <Top/>
         </button>
