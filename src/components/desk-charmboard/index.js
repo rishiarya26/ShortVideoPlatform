@@ -175,7 +175,7 @@ return (
       <Close/>
    </div> */}
    <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
-   <div className='flex w-full flex-col pb-6'>
+   <div className='flex w-full flex-col pb-6 overflow-y-auto'>
    {compToShow?.[selectedIndex]}
    </div>
 
