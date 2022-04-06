@@ -292,7 +292,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
         <div className='flex flex-col w-full my-4' >
         <div className="text-xs  text-gray-500 py-2">HOW TO GUIDE TO GET THIS MAKEUP</div>
             <div className='flex bg_beauty beauty-header pt-2 relative w-full'>
-               <div className="flex w-25v h-25v">
+               <div className="flex w-24 h-24">
                <Img data={topCharms?.imageUrl} />
                </div>
                <div className="flex flex-col pl-4 justify-center">
@@ -331,7 +331,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          {items && items?.hair?.length > 0 && <div  className='flex flex-col w-full my-4' >
          <div  className="text-xs text-gray-500 py-2">HOW TO GUIDE TO GET THIS HAIRDO</div>
          <div className='flex bg_hair hair-header relative w-full pt-2'>
-            <div className="flex w-25v h-25v">
+            <div className="flex w-24 h-24">
             <Img data={topCharms?.imageUrl} />
             </div>
             <div className="flex flex-col pl-4 justify-center">

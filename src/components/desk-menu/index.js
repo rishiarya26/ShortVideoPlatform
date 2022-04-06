@@ -8,7 +8,9 @@ import useSnackbar from "../../hooks/use-snackbar";
 import useTranslation from "../../hooks/use-translation";
 import Following from "../commons/svgicons/following";
 import Home from '../commons/svgicons/home';
-import Tabs from '../commons/tabs/desk-feed-tab'
+import Tabs from '../commons/tabs/desk-feed-tab';
+import HomeRed from "../commons/svgicons/home-red";
+import FollowingRed from "../commons/svgicons/following-red";
 
 const login = dynamic(
   () => import('../auth-options'),
@@ -23,16 +25,16 @@ const DeskMenu = ({handleUpClick, handleDownClick}) =>{
     const {showSnackbar} = useSnackbar();
     const {t} = useTranslation();
     const router = useRouter();
-
+  
       const showMessage = ({message})=>{
         showSnackbar({message: message});
       }
 
       const tabs = [
         { display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}`,
-         icon: {active: <Following/>,inActive: <Home/>} },
+         icon: {active: <HomeRed/>,inActive: <Home/>} },
         { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}`,
-         icon:{active: <Home/>, inActive: <Following/>} }
+         icon:{active: <FollowingRed/> , inActive: <Following/>} }
        ];
 
         const loginComp = <button 

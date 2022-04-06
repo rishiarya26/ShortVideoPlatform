@@ -251,8 +251,8 @@ const info ={
             <ErrorComp />
             }
         </div>
-        <div className='w-10 border-black black-600 fixed right-0 bottom-10' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>
-        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 w-10 h-10 flex justify-center items-center rounded-full bg-hipired white'>
+        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>
+        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 p-2 flex justify-center items-center rounded-full bg-hipired white'>
             <Top/>
         </button>
     </div>

@@ -14,6 +14,9 @@ html *::-webkit-scrollbar {
   border-radius: 0;
   width: 8px;
 }
+[onClick] {
+  cursor:pointer;
+}
 p{
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
@@ -429,4 +432,131 @@ span.swiper-pagination-bullet {
 
 .overlay-z-index{
   z-index: 15;
+}
+
+
+/* iframe */
+.charm_title{
+  max-width: 100%;
+  overflow: hidden;
+}
+.w-fit{
+  width: fit-content;
+}
+.bg_hair{
+  background-color: rgb(172, 211, 205);
+}
+.text_hair{
+color: rgb(172, 211, 205);
+}
+.teal{
+  color: #3bb3b4;
+}
+.teal_border{
+  border-bottom: 2px solid #3bb3b4;
+}
+.bg_beauty{
+    background-color: rgb(251, 198, 184);
+}
+.text_beauty{
+  color: rgb(251, 198, 184);
+  }
+  .numb-beauty,.numb-hair{
+    border-radius: 50%;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+  }
+  .numb-hair{
+    background: #d7f8f4;
+    color: #73aba5;
+  }
+  .numb-beauty{
+    background: #fff4f2;
+    color: #d5b2ac;
+  }
+  .product img{
+    max-height: 100%;
+    object-fit: contain;
+    background-color: #fff;
+  }
+.beauty-header:before {
+  content: '';
+  position: absolute;
+  background-repeat: repeat;
+  bottom: -13px;
+  background: linear-gradient(
+135deg
+,#ebc8c2 50%,transparent 50%),linear-gradient(
+225deg
+,#ebc8c2 50%,transparent 50%),linear-gradient(
+45deg
+,#fdfdfd 50%,transparent 50%),linear-gradient(
+-45deg
+,#ebc8c2 50%,transparent 50%);
+  background-image: linear-gradient(
+135deg
+,#ebc8c2 50%,transparent 50%),linear-gradient(
+225deg
+,#ebc8c2 50%,transparent 50%),linear-gradient(
+45deg
+,#fdfdfd 50%,transparent 50%),linear-gradient(
+-45deg
+,#ebc8c2 50%,transparent 50%);
+  background-size: 10px 15px;
+  background-repeat-x: initial,initial,initial,initial;
+  background-repeat-y: initial,initial,initial,initial;
+  background-attachment: initial,initial,initial,initial;
+  background-origin: initial,initial,initial,initial;
+  background-clip: initial,initial,initial,initial;
+  background-color: initial;
+  background-position: top left,top left,bottom left,bottom left;
+  background-position-x: left,left,left,left;
+  background-position-y: top,top,bottom,bottom;
+  height: 14px;
+  width: 100%;
+  margin-top: -5px;
+  left: 0;
+}
+.hair-header:before {
+  content: '';
+    position: absolute;
+    background-repeat: repeat;
+    bottom: -13px;
+    left: 0;
+  background: linear-gradient(
+135deg
+,#acd3cd 50%,transparent 50%),linear-gradient(
+225deg
+,#acd3cd 50%,transparent 50%),linear-gradient(
+45deg
+,#fdfdfd 50%,transparent 50%),linear-gradient(
+-45deg
+,#acd3cd 50%,transparent 50%);
+  background-image: linear-gradient(
+135deg
+,#acd3cd 50%,transparent 50%),linear-gradient(
+225deg
+,#acd3cd 50%,transparent 50%),linear-gradient(
+45deg
+,#fdfdfd 50%,transparent 50%),linear-gradient(
+-45deg
+,#acd3cd 50%,transparent 50%);
+  background-size: 10px 15px;
+  background-repeat-x: initial,initial,initial,initial;
+  background-repeat-y: initial,initial,initial,initial;
+  background-attachment: initial,initial,initial,initial;
+  background-origin: initial,initial,initial,initial;
+  background-clip: initial,initial,initial,initial;
+  background-color: initial;
+  background-position: top left,top left,bottom left,bottom left;
+  background-position-x: left,left,left,left;
+  background-position-y: top,top,bottom,bottom;
+  height: 14px;
+  width: 100%;
+  margin-top: -5px;
 }

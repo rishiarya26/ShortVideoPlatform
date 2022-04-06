@@ -69,7 +69,7 @@ const Header = ()=>{
  
    return(
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
-   <div className="w-3/4  h-16 flex bg-white items-center px-6 justify-between">
+   <div className="w-3/4 w-feed h-16 flex bg-white items-center px-6 justify-between">
       <div className="w-16">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
@@ -93,7 +93,13 @@ const Header = ()=>{
       </div>
       <div>
            {isLoggedIn === 'true'?
-           <div className='w-10 rounded-full overflow-hidden'><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/></div>
+           <div className="relative">
+           <div className='w-10 rounded-full overflow-hidden'><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/>
+           <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-4 bg-white border">
+           <div className="text-gray-600 ">Sign Out</div>
+           </div>
+           </div>
+           </div>
            :
            <button 
            onClick={() =>show('', login, 'big',{showMessage:showMessage})} 

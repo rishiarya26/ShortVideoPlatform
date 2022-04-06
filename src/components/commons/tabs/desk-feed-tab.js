@@ -10,8 +10,8 @@ const Tabs = ({ items = [], router }) => {
       { items.map((data, id) => (
         <div key={id}  className="w-full">
           <Link href={`/feed/${data.path}`}>
-          <div className={data.path === selected ? 'font-bold flex items-center' : 'flex items-center'}>
-             {data.path === selected ? data.icon?.active : data.icon?.inActive} 
+          <div className={data.path === selected ? 'font-bold text-red-600 cursor-pointer flex items-center' : 'cursor-pointer flex items-center'}>
+           <div className='w-6'>  {data.path === selected ? data.icon?.active : data.icon?.inActive} </div>
           <p className="font-semibold text-lg py-2 pl-4">{data.display} </p>
           </div>
             {/* <span className={data.path === selected ? 'font-bold ' : ''}>{data.display}</span> */}

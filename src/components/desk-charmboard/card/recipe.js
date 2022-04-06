@@ -33,7 +33,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                         <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
                         </div>
                         <div onClick={()=>
-                        window?.open(shopLink)} className="flex px-4 py-2 ">
+                        window?.open(shopLink)} className="flex pl-4 py-2 ">
                         <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                     </div>

@@ -42,7 +42,7 @@ const VideoInfo = ({userName, firstName, lastName, description,music_title, page
            <MusicBlack/>
            {music_title}
         </p>
-        <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-4 top-0 border border-hipired text-hipired">
+        <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-1 top-0 border border-hipired text-hipired">
            Follow
         </div>
      </div>
