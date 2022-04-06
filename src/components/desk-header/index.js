@@ -99,8 +99,8 @@ const Header = ()=>{
            <div className="relative">
            <div className='w-10 rounded-full overflow-hidden' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/>
            {showlogoutMenu && 
-            <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-4 bg-white border">
-          <div onClick={()=>show('Logout', LogoutPopup,'medium')} className="flex items-center py-3">
+            <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-2 bg-white border">
+          <div onClick={()=>show('Logout', LogoutPopup,'medium')} className="flex items-center">
             <Logout/>
             <p className="text-base px-3">Logout</p>
             </div>

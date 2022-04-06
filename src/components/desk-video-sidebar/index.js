@@ -159,7 +159,7 @@ const getVideoReactions = async(socialId,time,action)=>{
              <span className=' text-xs font-semibold mt-2'>
              {numberFormatter(shareCount)}
              </span>
-            <div className='absolute w-36 share-ls hidden cursor-pointer flex-col p-4 bottom-8 left-4 bg-white border'>
+            <div className='absolute w-36 share-ls hidden cursor-pointer flex-col px-4 py-2 bottom-8 left-4 bg-white border'>
                <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='text-gray-600 p-2'>Embed</div>
                <div onClick={()=>{
                   console.log('v****',videoId)
