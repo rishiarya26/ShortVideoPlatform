@@ -17,12 +17,8 @@ const device = getItem('device-type')
       localStorage.remove('tokens');
       localStorage.remove('user-id');
      
-      // if(device === 'desktop'){
-      //   closePopUp();
-      // }else if(device === 'mobile'){
-        close();
-        router?.push('/feed/for-you');
-      // }
+        closePopUp();
+
     }
     catch(e){
         showSnackbar({ message: 'Something went wrong' });
@@ -36,7 +32,7 @@ const device = getItem('device-type')
         <p className="  my-4 text-center px-4"> Are you sure you want to logout ?</p>
         <div className="flex justify-between px-6 w-1/2 py-4">
             <div onClick={logout} className="flex font-medium">Yes</div>
-            <div onClick={()=>close()}>No</div>
+            <div onClick={()=>{closePopUp()}}>No</div>
         </div>
         
       </div>

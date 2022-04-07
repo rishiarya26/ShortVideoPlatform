@@ -35,7 +35,7 @@ import LoginFollowing from '../desk-login-following';
 
 SwiperCore?.use([Mousewheel]);
 
-const ErrorComp = () => (<Error />);
+const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
 
 const DeskDownloadApp = dynamic(
@@ -55,6 +55,7 @@ const DeskDownloadApp = dynamic(
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [videoDetailData, setVideoDetailData] = useState({})
   const [firstApiCall, setFirstApiCall] = useState(true);
+  const [retry, setRetry] = useState(false);
   // const [id, setId] = useState('for-you');
 
   const { id = 'for-you' } = router?.query;
@@ -166,7 +167,19 @@ const hideVideoDetail = ()=>{
   window.history.replaceState('Feed Page','Feed',`/feed/${id}`);
 }
 
+const doRetry = (value) =>{
+  setRetry(value);
+}
+
 useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
+
+useEffect(()=>{
+  if(retry){
+    setFetchState('pending');
+    getInitialData();
+    setRetry(false);
+  }
+},[retry])
 
 // const toggleFeed = (value)=>{
 //   setId(id);
@@ -248,7 +261,7 @@ const info ={
             fetchState === 'pending' ?
             <LoadComp /> :
             fetchState === 'fail' &&
-            <ErrorComp />
+            <ErrorComp retry={doRetry}/>
             }
         </div>
         <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>

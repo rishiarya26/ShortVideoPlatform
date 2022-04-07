@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import Img from "../commons/image";
 import fallbackUser from '../../../public/images/users.png' 
 import Logout from "../commons/svgicons/logout";
-import LogoutPopup from "../logout-popup";
+import LogoutPopup from "../desk-logout-popup";
 
 const Header = ()=>{
    const [userInfo, setUserInfo] = useState({});
@@ -100,7 +100,7 @@ const Header = ()=>{
            <div className='w-10 rounded-full overflow-hidden' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/>
            {showlogoutMenu && 
             <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-4 bg-white border">
-          <div onClick={()=>show('Logout', LogoutPopup,'medium')} className="flex items-center py-3">
+          <div onClick={()=>show('Logout', LogoutPopup, 'small')} className="flex items-center py-3">
             <Logout/>
             <p className="text-base px-3">Logout</p>
             </div>

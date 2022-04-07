@@ -1,6 +1,6 @@
 import FooterMenu from '../footer-menu';
 
-function Error() {
+function Error({retry}) {
   return (
     <div className=" W-feed-vid relative flex w-full flex-col items-center justify-center py-12">
         <div>
@@ -8,7 +8,7 @@ function Error() {
         </div>
         <p className='text-xl font-bold text-gray-600 mt-4'>Something went wrong</p>
         <p className='text-md  text-gray-400 mt-2'>Sorry about that! Please try again later</p>
-        <div className="rounded text-md font-semibold mt-12 px-6 p-2 border border-gray-400 text-gray-600 cursor-pointer">Refresh</div>
+        <div onClick={()=>retry(true)} className="rounded text-md font-semibold mt-12 px-6 p-2 border border-gray-400 text-gray-600 cursor-pointer">Refresh</div>
     </div>
   );
 }
