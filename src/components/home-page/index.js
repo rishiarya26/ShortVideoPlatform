@@ -1,5 +1,6 @@
 import {  withRouter } from "next/router";
 import { getItem } from "../../utils/cookie";
+import DeskFeed from "../desk-feed";
 import Home from "../home"
 
 const HomePage =({router})=>{
@@ -17,7 +18,7 @@ const id = type && (router?.query?.id || router?.query?.contentId);
 //   return null;
 // }
 
-if(device === 'mobile'){
+if(device){
     if(id?.length >0){
         console.log("id",id, id.length);
       // router?.push({pathname : `/video/${id}`});
@@ -29,7 +30,7 @@ if(device === 'mobile'){
 }
 
 return(
-   <>{device === 'desktop' && <Home/>}</>
+   <></>
 )
 }
 
