@@ -22,8 +22,8 @@ function Sahipakdehain() {
        <div className='section pt-4 px-6'>
           <h2 className='text-base font-bold' >Who can participate?</h2>
           
-          <p className='text-gray-500 text-sm mt-2'> If you love to act, if you love to create fun videos on social media, so this is for you.</p>
-          <p className='text-gray-500 text-sm mt-2'>Show us what you Got? </p>
+          <p className='text-gray-500 text-sm mt-2'> If you love to act, if you love to create fun videos on social media, this is for you.</p>
+          <p className='text-gray-500 text-sm mt-2'>Show us what you Got. </p>
           
        </div>
        <div className='section pt-4 px-6'>
@@ -34,10 +34,8 @@ function Sahipakdehain() {
        <div className='section pt-4 px-6'>
           <h2 className='text-base font-bold' >How to participate?</h2>
           
-          <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 1: </span>Download Hipi App from Play Store or App Store</p>
-          <p className='text-gray-500 text-sm mt-2'><span className='text-black font-bold'>Step 2: </span> Login or Signup on Hipi </p>
-          <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 3: </span> Click on the banner for #SahiPakdeHain on Discover screen, select your favorite dialogue, create & post your video (max 90secs). Don’t forget to the hashtag #SahiPakdeHain in the captions for the video. OR Click on the banner for #SahiPakdeHain on Discover screen, select your favorite video, create your duet video & post it (max 90secs). Don’t forget to include the hashtag #SahiPakdeHain in the captions for the video.
-</p>
+          <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 1: </span>Login or Signup on Hipi app</p>
+          <p className='text-gray-500 text-sm mt-2'><span className='text-black font-bold'>Step 2: </span>Click on the banner for #SahiPakdeHain on Discover screen, select your favorite dialogue, create & post your video (max 90secs). You can also create a duet video by selecting your favorite video from #SahiPakdeHain hashtag screen. Don’t forget to include the hashtag #SahiPakdeHain in the captions for the video.</p>
        </div>
 
        <div className='section pt-4 px-6'>
