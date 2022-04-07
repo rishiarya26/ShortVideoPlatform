@@ -170,7 +170,7 @@ const onClose =()=>{
 return (
 <>{
   charms && 
-   <div className='flex flex-col w-feed-menu thin_bar overflow-scroll ml-6 overflow-x-hidden'>
+   <div className='flex flex-col w-feed-menu overflow-hidden thin_bar ml-6'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>
       <Close/>
    </div> */}

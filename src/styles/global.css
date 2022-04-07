@@ -277,6 +277,11 @@ span.swiper-pagination-bullet {
   .drawer-height{
     height: 40%;
   }}
+  @media only screen and (max-width: 768px) {
+  .overlay-z-index {
+    z-index: 9!important;
+}
+  }
 @media only screen and (min-width: 768px) {
   .cookie_layout{
     align-items: unset;
