@@ -219,7 +219,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
 
     return(
     <>
-  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2 ` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
+  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center overflow-y-auto justify-between my-3 py-2 ` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
             <div className="flex pb-2 w-full">
@@ -286,8 +286,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          }
       {expand &&  
        <div ref={beautyRef}>
-       <div ref={beautyRef}>  
-       <div ref={beauty}>
+       
         {items && items?.beauty?.length > 0 && 
         <div className='flex flex-col w-full my-4' >
         <div className="text-xs  text-gray-500 py-2">HOW TO GUIDE TO GET THIS MAKEUP</div>
@@ -320,8 +319,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              index={id}
          />
           ))}
-         </div>
-         </div>
          </div>
            }
 
