@@ -219,11 +219,11 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
 
     return(
     <>
-  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center overflow-y-auto justify-between my-3 py-2 ` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
+  {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center overflow-y-auto justify-between mt-3 py-2 ` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
             <div className="flex pb-2 w-full">
-               <div className='img w-16 h-16 rounded-md overflow-hidden'>
+               <div className='img w-16 h-16 min-w-16 rounded-md overflow-hidden'>
                    <Img data={topCharms?.imageUrl} />
                </div>
               <div className=' products w-full flex flex-col ml-2'>
