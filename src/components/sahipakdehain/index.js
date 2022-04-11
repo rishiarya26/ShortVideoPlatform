@@ -8,7 +8,7 @@ function Sahipakdehain() {
   return (
     <div className="w-full h-full relative pb-6">
        <div className='w-full '>
-       <img alt="" src={withBasePath('images/sph/SPH_Banner.jpg')} />
+       <img alt="" src={withBasePath('images/sph/sahipakdehain.png')} />
        </div>
        <div className='section pt-6 px-6'>
           <h2 className='text-base font-bold' >What is the contest?</h2>

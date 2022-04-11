@@ -9,6 +9,7 @@ import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
 import { commonEvents } from "../../analytics/mixpanel/events";
 import { track } from "../../analytics";
+import * as fbq from '../../analytics/fb-pixel'
 
 export const GoogleButton =({loading}) =>{
 
@@ -29,8 +30,12 @@ export const GoogleButton =({loading}) =>{
              if(response.status === 'success'){
                 showSnackbar({ message: 'Login Successful' })
                  close();
-                 mixpanel('Login')
+                 try{
+                  mixpanel('Login')
                  fbq.defEvent('CompleteRegistration');
+                }catch(e){
+                    console.log('error in fb or mixpanel event')
+                  }
              }
            console.log(response);
         }
@@ -88,8 +93,12 @@ export const GoogleButton =({loading}) =>{
           if(response.status === 'success'){
             showSnackbar({ message: 'Login Successful' })
              close();
+             try{
              mixpanel('Login')
              fbq.defEvent('CompleteRegistration');
+            }catch(e){
+                console.log('error in fb or mixpanel event')
+              }
          }
         }
         catch(error){

@@ -9,7 +9,7 @@ import Toggle from '../../commons/svgicons/toggle';
 import CircularProgress from '../../commons/circular-loader-small';
 import { commonEvents } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
-
+import * as fbq from '../../../analytics/fb-pixel'
 
 const Registration = ({ router }) => {
   const [data, setData] = useState({
@@ -117,9 +117,17 @@ const Registration = ({ router }) => {
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
-        const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
-        mixpanel('Signup',method);
+        try{
+          const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        try{
+          mixpanel('Signup',method);
         fbq.defEvent('CompleteRegistration');
+      }catch(e){
+        console.log('error in fb or mixpanel event')
+      }
+       }catch(e){
+         console.log('error in fb events or mixpanel')
+       }
         /* Mixpanel */
         router?.push('/feed/for-you');
         showSnackbar({ message: t('SIGNUP_SUCCESS') });

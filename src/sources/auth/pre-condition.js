@@ -2,6 +2,7 @@
 import { renewTokens } from './renew-tokens';
 
 const reAuthenticate = async (dataFetcher, params) => {
+  console.log('called from reauth')
   let response = {};
   let resp = {};
   try {
@@ -19,6 +20,7 @@ const reAuthenticate = async (dataFetcher, params) => {
 const preCondition = async (dataFetcher, params) => {
   let resp = {};
   try {
+    console.log('called from precondition ');
     resp = await dataFetcher(params);
   } catch (error) {
     if (error?.statusCode === 401) {

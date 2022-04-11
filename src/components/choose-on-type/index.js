@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getItem } from "../../utils/cookie"
 
 export default function ChooseOnType({android, ios}) {
-  const [device, setDevice] = useState('android');
+  const [device, setDevice] = useState('');
  
     useEffect(()=>{
      const type = getItem('device-info');
@@ -21,7 +21,7 @@ export default function ChooseOnType({android, ios}) {
    // console.log(device, selectedComp[device]);
    return (
      <>
-     {selectedComp?.[device] && selectedComp[device]}
+     {device && selectedComp?.[device] && selectedComp[device]}
      </>
    );
  }
