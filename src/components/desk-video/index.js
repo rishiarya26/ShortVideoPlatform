@@ -215,9 +215,12 @@ return (
              <CircularProgress/>
               </div>} */}
 
-<div className='slidecontainer'>
-  <input type="range" min="1" max="100" value="50"/>
-  </div>
+{/* <div className='slidecontainer cursor-pointer absolute bottom-12 opacity-0 right-4'>
+   <div className='relative w-full'>
+   <input type="range" min="1" max="100"/>
+   </div>
+  
+  </div> */}
 </div>
    <VideoSidebar
       likesCount={likesCount}
@@ -225,6 +228,7 @@ return (
       userName={userName}
       videoId={videoId}
       socialId={socialId}
+      showVideoDetail={showVideoDetail}
    />
 </div>
 

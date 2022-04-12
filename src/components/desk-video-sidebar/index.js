@@ -23,7 +23,7 @@ const login = dynamic(
    }
  );
  
-const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialId})=>{
+const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialId,showVideoDetail})=>{
    const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
    const [reactionCount, setReactionCount] = useState({likes : likes});
  
@@ -95,7 +95,27 @@ const getVideoReactions = async(socialId,time,action)=>{
           }
           getLikeReaction();
       }
+      // else{
+      //    setReactionCount({likes : likes});
+      // }
 },[videoId])
+
+useEffect(()=>{
+  if(showVideoDetail === false){ 
+      setIsLiked({like : false, reactionTime: 'past'});
+      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+        if (tokens?.shortsAuthToken && tokens?.accessToken )
+      {
+        const getLikeReaction = async()=>{  
+           const isLiked =  await getVideoReactions(socialId, 'past');
+           setIsLiked({like : isLiked, reactionTime: 'past'});
+          }
+          getLikeReaction();
+      }}
+      // else{
+      //    setReactionCount({likes : likes});
+      // }
+},[showVideoDetail])
 
 /*************** LIKE  ********************/
 

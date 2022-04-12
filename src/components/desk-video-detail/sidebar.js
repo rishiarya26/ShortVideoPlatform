@@ -4,158 +4,171 @@ import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
 import { numberFormatter } from "../../utils/convert-to-K";
 import { CopyToClipBoard } from "../../utils/web";
-import Comment from "../commons/svgicons/comment-black"
+import Comment from "../commons/svgicons/comment-black";
 import Like from "../commons/svgicons/like-black";
 import Liked from "../commons/svgicons/liked";
 import Share from "../commons/svgicons/share-black";
 import CopyEmbedCode from "../copy-embed-code.js/index.js";
-import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
+import {
+  deleteReaction,
+  getActivityDetails,
+  postReaction,
+} from "../../get-social";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { localStorage } from "../../utils/storage";
 
-const login = dynamic(
-   () => import('../auth-options'),
-   {
-     loading: () => <div />,
-     ssr: false
-   }
- );
- 
-const Sidebar = ({likesCount: likes, shareCount, userName, videoId, socialId})=>{
-   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
-   const [reactionCount, setReactionCount] = useState({likes : likes});
- 
-    const {showSnackbar} = useSnackbar();
-    const {show: showDialog} = useDrawer();
-    const onEmbedCopy =()=>{
-        showSnackbar({ message: 'Copied to Clipboard' });
-     }
+const login = dynamic(() => import("../auth-options"), {
+  loading: () => <div />,
+  ssr: false,
+});
 
-     const showMessage=({message})=>{
-      showSnackbar({message: message});
-     }
+const Sidebar = ({
+  likesCount: likes,
+  shareCount,
+  userName,
+  videoId,
+  socialId,
+}) => {
+  const [isLiked, setIsLiked] = useState({ like: false, reactionTime: "past" });
+  const [reactionCount, setReactionCount] = useState({ likes: likes });
 
-     const url = window?.location?.href;
-     let domain = (new URL(url));
-     domain = domain?.origin;
-   //   console.log("d**",domain)
+  const { showSnackbar } = useSnackbar();
+  const { show: showDialog } = useDrawer();
+  const onEmbedCopy = () => {
+    showSnackbar({ message: "Copied to Clipboard" });
+  };
 
-/*************** LIKE  ********************/
-const showLoginOptions = () => {
-showDialog('', login, 'big',{showMessage:showMessage})
-};
+  const showMessage = ({ message }) => {
+    showSnackbar({ message: message });
+  };
 
- const like = () => {
-   postReaction('like',socialId);
-   setIsLiked({like : true});
-   getVideoReactions(socialId, 'now', 'add');
-//    const mixpanelEvents = commonEvents();
-//    mixpanelEvents['UGC Id'] = activeVideoId;
-//   //  mixpanelEvents['Creator Id'] = videoOwnersId;
-//    const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-//    mixpanelEvents['Page Name'] = compName;
-//    track('UGC Liked',mixpanelEvents)
-} 
+  const url = window?.location?.href;
+  let domain = new URL(url);
+  domain = domain?.origin;
+  //   console.log("d**",domain)
 
+  /*************** LIKE  ********************/
+  const showLoginOptions = () => {
+    showDialog("", login, "big", { showMessage: showMessage });
+  };
 
-const selectedLike = useAuth(showLoginOptions, like);
+  const like = () => {
+    postReaction("like", socialId);
+    setIsLiked({ like: true });
+    getVideoReactions(socialId, "now", "add");
+    //    const mixpanelEvents = commonEvents();
+    //    mixpanelEvents['UGC Id'] = activeVideoId;
+    //   //  mixpanelEvents['Creator Id'] = videoOwnersId;
+    //    const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+    //    mixpanelEvents['Page Name'] = compName;
+    //    track('UGC Liked',mixpanelEvents)
+  };
 
-const getVideoReactions = async(socialId,time,action)=>{
-   let isLiked;
-   const details = await getActivityDetails(socialId);
-   // console.log('like count',details.reactionsCount.like)
-   if(time === 'now') { 
-     if(action === 'add'){
-       setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
-     }else if(action === 'delete'){
-       setReactionCount({likes: details?.reactionsCount?.like-1 || likes-1})
-     }
-   }else{
-     setReactionCount({likes: details?.reactionsCount?.like || likes})
-   }
- //  console.log('mrReact',details.myReactions)
-   if(details?.myReactions?.length > 0){
-     // console.log('my reac',details?.myReactions)
-     const liked = details.myReactions.findIndex((data)=>data === 'like');
-     isLiked = (liked !== -1) ? {like: true, reactionTime: 'past'} : {like: false, reactionTime: 'past'}
-   }
-   return isLiked;
- }
+  const selectedLike = useAuth(showLoginOptions, like);
 
- useEffect(()=>{
-   setReactionCount({likes : null})
-   setIsLiked({like : false, reactionTime: 'past'});
-      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-        if (tokens?.shortsAuthToken && tokens?.accessToken )
-      {
-        const getLikeReaction = async()=>{  
-           const isLiked =  await getVideoReactions(socialId, 'past');
-           setIsLiked({like : isLiked, reactionTime: 'past'});
-          }
-          getLikeReaction();
+  const getVideoReactions = async (socialId, time, action) => {
+    let isLiked;
+    const details = await getActivityDetails(socialId);
+    // console.log('like count',details.reactionsCount.like)
+    if (time === "now") {
+      if (action === "add") {
+        setReactionCount({
+          likes: details?.reactionsCount?.like + 1 || likes + 1,
+        });
+      } else if (action === "delete") {
+        setReactionCount({
+          likes: details?.reactionsCount?.like - 1 || likes - 1,
+        });
       }
-},[videoId])
+    } else {
+      setReactionCount({ likes: details?.reactionsCount?.like || likes });
+    }
+    //  console.log('mrReact',details.myReactions)
+    if (details?.myReactions?.length > 0) {
+      // console.log('my reac',details?.myReactions)
+      const liked = details.myReactions.findIndex((data) => data === "like");
+      isLiked =
+        liked !== -1
+          ? { like: true, reactionTime: "past" }
+          : { like: false, reactionTime: "past" };
+    }
+    return isLiked;
+  };
 
-/*************** LIKE  ********************/
+  useEffect(() => {
 
-    return(
-        <div className="sidebar flex items-center ml-4">
+  setIsLiked({like : false, reactionTime: 'past'});
+     let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+       if (tokens?.shortsAuthToken && tokens?.accessToken )
+     {  
+        setReactionCount({likes : null});
+       const getLikeReaction = async()=>{  
+          const isLiked =  await getVideoReactions(socialId, 'past');
+          setIsLiked({like : isLiked, reactionTime: 'past'});
+         }
+         getLikeReaction();
+     }else{
+         setReactionCount({likes : likes});
+     }
+  }, [videoId]);
 
-<div
-        className={`feed relative py-2  px-3 text-center justify-end`}
-      >
+  /*************** LIKE  ********************/
+
+  return (
+    <div className="sidebar flex items-center">
+      <div className={`feed relative mr-4 flex text-center items-center`}>
         {isLiked?.like ? (
           <div>
             <div
               role="presentation"
               onClick={() => {
-                deleteReaction('like', socialId );
-                setIsLiked({like : false, reactionTime: 'now'});
-                getVideoReactions(socialId, 'now', 'delete')
-               //  const mixpanelEvents = commonEvents();
-               //  mixpanelEvents['UGC Id'] = activeVideoId;
-               //  // mixpanelEvents['Creator Id'] = videoOwnersId;
-               //  const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-               //  mixpanelEvents['Page Name'] = compName;
-               //  track('UGC Unliked',mixpanelEvents)
+                deleteReaction("like", socialId);
+                setIsLiked({ like: false, reactionTime: "now" });
+                getVideoReactions(socialId, "now", "delete");
+                //  const mixpanelEvents = commonEvents();
+                //  mixpanelEvents['UGC Id'] = activeVideoId;
+                //  // mixpanelEvents['Creator Id'] = videoOwnersId;
+                //  const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+                //  mixpanelEvents['Page Name'] = compName;
+                //  track('UGC Unliked',mixpanelEvents)
               }}
             >
               <Liked />
             </div>
 
-            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
+            <p className="t text-xs font-semibold ml-2">
+              {isLiked?.reactionTime === "past"
+                ? numberFormatter(reactionCount.likes)
+                : numberFormatter(reactionCount.likes)}
+            </p>
           </div>
         ) : (
           <div>
-            <div
-              id="like"
-              role="presentation"
-              onClick={() => selectedLike()}
-            >
+            <div id="like" role="presentation" onClick={() => selectedLike()}>
               <Like />
             </div>
-            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
+            <p className=" text-xs font-semibold ml-2">
+              {isLiked?.reactionTime === "past"
+                ? numberFormatter(reactionCount.likes)
+                : numberFormatter(reactionCount.likes)}
+            </p>
           </div>
-       )} 
-
+        )}
       </div>
 
-
-         {/* <div className="flex flex-col items-center my-4">
+      {/* <div className="flex flex-col items-center my-4">
             <Like />
             <span className=' text-xs font-semibold mt-2'>
             {numberFormatter(likesCount)}
             </span>
          </div> */}
-         <div className="flex flex-col items-center my-4">
-            <Comment />
-            <span className=' text-xs font-semibold mt-2'>
-               30
-            </span>
-         </div>
-         {/* <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">
+      <div className="flex items-center">
+        <Comment />
+        <span className=" text-xs font-semibold ml-2">30</span>
+      </div>
+      {/* <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">
              <Share />
              <span className=' text-xs font-semibold mt-2'>
              {numberFormatter(shareCount)}
@@ -169,8 +182,8 @@ const getVideoReactions = async(socialId,time,action)=>{
             }} className='text-gray-600 p-2'>Copy Link</div>
             </div>
           </div> */}
-      </div>
-    )
-}
+    </div>
+  );
+};
 
 export default Sidebar;
