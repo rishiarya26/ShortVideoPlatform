@@ -36,6 +36,7 @@ const [play, setPlay] = useState(false);
 const [pause, setPause] = useState(true);
 const [active, setActive] = useState(false);
 const [seekedPercentage, setSeekedPercentage] = useState(0);
+const [videoDuration, setVDuration] = useState();
 
 const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);
@@ -90,6 +91,7 @@ useEffect(()=>{
 const handleUpdateSeekbar = e => {
    const percentage = (e.target.currentTime / e.target.duration) * 100;
    setSeekedPercentage(percentage);
+   setVDuration(e.target.duration);
    // const duration = e?.target?.duration;
    // const currentTime = e?.target?.currentTime;
    // settDuration(duration);
@@ -124,7 +126,22 @@ const handleUpdateSeekbar = e => {
 //  };
 //  const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
 //  const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
+const handleSeekbar=()=> {
+   // Calculate the new time
+   let time = video.duration * (seekBar.value / 100);
+ 
+   // Update the video time
+   video.currentTime = time;
+ }
 
+//  seekBar.addEventListener("mousedown", function() {
+//    video.pause();
+//  });
+ 
+//  // Play the video when the slider handle is dropped
+//  seekBar.addEventListener("mouseup", function() {
+//    video.play();
+//  });
 return (
 <>
 <div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
@@ -197,6 +214,10 @@ return (
               >
              <CircularProgress/>
               </div>} */}
+
+<div className='slidecontainer'>
+  <input type="range" min="1" max="100" value="50"/>
+  </div>
 </div>
    <VideoSidebar
       likesCount={likesCount}

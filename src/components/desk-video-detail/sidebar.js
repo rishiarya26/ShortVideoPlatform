@@ -8,7 +8,7 @@ import Comment from "../commons/svgicons/comment-black"
 import Like from "../commons/svgicons/like-black";
 import Liked from "../commons/svgicons/liked";
 import Share from "../commons/svgicons/share-black";
-import CopyEmbedCode from "../copy-embed-code.js";
+import CopyEmbedCode from "../copy-embed-code.js/index.js";
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const login = dynamic(
    }
  );
  
-const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialId})=>{
+const Sidebar = ({likesCount: likes, shareCount, userName, videoId, socialId})=>{
    const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
    const [reactionCount, setReactionCount] = useState({likes : likes});
  
@@ -85,6 +85,7 @@ const getVideoReactions = async(socialId,time,action)=>{
  }
 
  useEffect(()=>{
+   setReactionCount({likes : null})
    setIsLiked({like : false, reactionTime: 'past'});
       let tokens = typeof window !== "undefined" && localStorage.get('tokens');
         if (tokens?.shortsAuthToken && tokens?.accessToken )
@@ -100,7 +101,7 @@ const getVideoReactions = async(socialId,time,action)=>{
 /*************** LIKE  ********************/
 
     return(
-        <div className="sidebar flex flex-col items-center ml-4">
+        <div className="sidebar flex items-center ml-4">
 
 <div
         className={`feed relative py-2  px-3 text-center justify-end`}
@@ -135,7 +136,7 @@ const getVideoReactions = async(socialId,time,action)=>{
             >
               <Like />
             </div>
-            <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
           </div>
        )} 
 
@@ -154,7 +155,7 @@ const getVideoReactions = async(socialId,time,action)=>{
                30
             </span>
          </div>
-         <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">
+         {/* <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">
              <Share />
              <span className=' text-xs font-semibold mt-2'>
              {numberFormatter(shareCount)}
@@ -167,9 +168,9 @@ const getVideoReactions = async(socialId,time,action)=>{
                   showSnackbar({ message: 'Copied to Clipboard' });}
             }} className='text-gray-600 p-2'>Copy Link</div>
             </div>
-          </div>
+          </div> */}
       </div>
     )
 }
 
-export default VideoSidebar;
+export default Sidebar;

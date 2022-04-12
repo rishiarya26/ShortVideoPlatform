@@ -22,11 +22,12 @@ import useDrawer from "../../hooks/use-drawer";
 import CopyEmbedCode from "../copy-embed-code.js";
 import useSnackbar from "../../hooks/use-snackbar";
 import useDialog from "../../hooks/use-dialog";
+import Sidebar from "./sidebar"
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex}) {
+hideVideoDetail, shareCount, activeIndex, socialId}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -127,8 +128,16 @@ return (
          </div>
          </div>
       </div>
+    
       <div className="flex px-6 py-2 justify-between ">
-         <div className="flex">
+      <Sidebar
+      likesCount={likesCount}
+      sharecount={shareCount}
+      userName={userName}
+      videoId={videoId}
+      socialId={socialId}
+   />
+         {/* <div className="flex">
             <div className="pr-4 flex items-center">
                <Like />
                <span className=' text-xs font-semibold px-2'>
@@ -144,7 +153,7 @@ return (
             {numberFormatter(shareCount)}
             </span>
             </div>  */}
-         </div>
+         {/* </div> */}
          <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='cursor-pointer'>
             <EmbedIcon />
          </div>

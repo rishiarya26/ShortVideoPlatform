@@ -270,7 +270,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
                <button onClick={handleDownClick} className="font-semibold text-lg py-2 pl-4">down </button> */}
          </div>
          <div className="flex flex-col pb-6 pt- 4border-b border-gray-200">
-               <p className="font-semibold text-sm text-gray-600 p-2">Log in to follow creators, like videos, and view comments.</p>
+               <p className="font-semibold text-sm text-gray-600 p-2 font-sans">Log in to follow creators, like videos, and view comments.</p>
                <button 
                  onClick={() =>show('', login, 'big')} 
                  className="font-semibold border text-lg p-2 mt-4">

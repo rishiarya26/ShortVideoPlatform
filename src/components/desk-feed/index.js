@@ -230,7 +230,7 @@ const info ={
 
   return (
     <>
-    <div className="flex flex-col w-full thin_bar pt-28 items-center">
+    <div className="flex flex-col w-full thin_bar pt-28 items-center font-sans">
        {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>
          <VideoDetail
@@ -250,6 +250,7 @@ const info ={
          hideVideoDetail={hideVideoDetail}
          shareCount={videoDetailData?.shareCount}
          activeIndex={activeIndex}
+         socialId={videoDetailData?.getSocialId}
          />
        </div>}
         <Header />

@@ -111,7 +111,7 @@ const Header = ()=>{
            :
            <button 
            onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-           className="rounded text-sm font-semibold  px-6 p-2 bg-hipired text-white">
+           className="rounded text-sm font-semibold  px-8 p-2 bg-hipired text-white">
              Log in
          </button>
          }

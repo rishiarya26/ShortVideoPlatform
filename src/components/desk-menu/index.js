@@ -54,7 +54,7 @@ const DeskMenu = ({handleUpClick, handleDownClick}) =>{
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
         <div className="flex flex-col pb-6 pt- 4border-b border-gray-200">
-              <p className="font-semibold text-sm text-gray-600 p-2">Log in to follow creators, like videos, and view comments.</p>
+              <p className="text-base font-normal text-gray-400 p-2 font-sans">Log in to follow creators, like videos, and view comments.</p>
               {isLoggedIn}
         </div>
         </div>
