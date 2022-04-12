@@ -45,7 +45,7 @@ export default function Hipi(params) {
     <>
     <SeoMeta
         data={{
-          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
+          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
           // image: item?.thumbnail,
           description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
           additionalMetaTags:[{
