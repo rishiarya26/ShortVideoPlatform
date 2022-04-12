@@ -2,7 +2,8 @@ import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import {
-  SeoMeta
+  SeoMeta,
+  VideoJsonLd
 } from '../src/components/commons/head-meta/seo-meta';
 import FooterMenu from '../src/components/footer-menu';
 import Users from '../src/components/users';
@@ -42,13 +43,25 @@ export default function Hipi(params) {
   }
   return (
     <>
-     <SeoMeta
+    <SeoMeta
         data={{
-          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - Indian Short Video App`,
+          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
           // image: item?.thumbnail,
-          description: `${item?.firstName || ''} ${item?.lastName || ''} (${item?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} that you can enjoy and share with your friends.`        
+          description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
+          additionalMetaTags:[{
+            name: 'keywords',
+            content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
+          }
+        ],
+
         }}
      />
+      {/* <VideoJsonLd
+       hasPart={[
+      { keywords:`${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`        
+      }
+       ]}
+      /> */}
       {/* <SeoMeta
         data={{
           title: item.userHandle,
