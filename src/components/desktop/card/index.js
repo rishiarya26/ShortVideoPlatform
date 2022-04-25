@@ -10,7 +10,7 @@ const Card = ({userProfilePicUrl, userName, music_title, likesCount, video_url,f
     return (
         <div className="feed_card flex border-b-2 border-gray-300 pb-8">
         <div className="avatar">
-        <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
+        <div className="flex items-center w-16 h-16 overflow-hidden rounded-full cursor-pointer">
               <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
            </div>
         </div>

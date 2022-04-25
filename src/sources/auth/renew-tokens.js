@@ -16,13 +16,14 @@ async function refreshTokens() {
     const refresh = tokens?.refreshToken;
     const apiPath = `${getApiBasePath('userApi')}/v2/user/renew?refresh_token=${refresh}`;
 
-    const resp = await post(apiPath);
+    const resp = await post(apiPath,null,{'content-type':'noHeaders'});
     const accessToken = resp?.data?.access_token;
     const refreshToken = resp?.data?.refresh_token;
     response = await hipiLogin({ accessToken, refreshToken });
     response.data.requestedWith = { refreshToken };
     return Promise.resolve(response);
   } catch (err) {
+    console.log("error",err);
     return Promise.reject(err);
   }
 }

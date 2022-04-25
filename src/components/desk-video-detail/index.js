@@ -23,11 +23,13 @@ import CopyEmbedCode from "../copy-embed-code.js";
 import useSnackbar from "../../hooks/use-snackbar";
 import useDialog from "../../hooks/use-dialog";
 import Sidebar from "./sidebar"
+import fallbackUser from "../../../public/images/users.png"
+import Img from "../commons/image";
 
 function VideoDetail({url,firstFrame,
-userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
+userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId}) {
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -84,7 +86,7 @@ return (
    </div>
    <div className="flex w-4/12 h-screen overflow-hidden bg-white flex-col">
       <div className="head-sec flex ">
-         <div className="videoFooter__text w-full py-2">
+         <div className="videoFooter__text w-full">
             {/* <div className="flex justify-between items-center pb-2">
             <div className="avatar">
                   <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
@@ -95,22 +97,25 @@ return (
                   <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 h-10 bg-hipired text-white">Follow</button>
                </div>
             </div> */}
-            <div className="videoFooter__text w-full p-6 pb-2">
-            <div className="flex justify-between items-center pb-2">
+            <div className="videoFooter__text w-full px-6 pt-4 pb-2">
+            <div className="flex justify-between items-center">
                <div className="flex items-center">
-                  <img alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} />
+                  {/* <img   alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} /> */}
+                  <div onClick={()=>router?.push(`/@${userName}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
+                   <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
+                  </div>
                   <div className="flex flex-col">
-                  <h3 className="font-semibold text-md ">{userName}</h3>
+                  <h3 onClick={()=>router?.push(`/@${userName}`)} className="font-bold text-md text-gray-700">{userName}</h3>
                   <p className="text-gray-400 text-sm">{firstName} {lastName}</p>
                   </div>
                </div>
                <div className="flex justify-end">
-                  <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button>
+                  {/* <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button> */}
                </div>
             </div>
-            <div className=" text-sm w-8/12 mb-2 mt-1">
+            <div className=" text-sm w-8/12 mb-2 mt-1 text-gray-700">
             {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold text-gray-700':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
                item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
                </span>
             ))}
@@ -129,10 +134,11 @@ return (
          </div>
       </div>
     
-      <div className="flex px-6 py-2 justify-between ">
+      <div className="flex px-6 pb-2 justify-between ">
       <Sidebar
       likesCount={likesCount}
       sharecount={shareCount}
+      commentCount={commentCount}
       userName={userName}
       videoId={videoId}
       socialId={socialId}
@@ -158,9 +164,9 @@ return (
             <EmbedIcon />
          </div>
       </div>
-      <div className='flex px-6 py-6 justify-between border-b-2 border-gray-100'>
-           {domain && <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm">{`${domain}/@${userName}/video/${videoId}`}</p>
-            <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2" onClick={
+      <div className='flex px-6 py-2 justify-between border-b-2 border-gray-100'>
+           {domain && <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm text-gray-500 font-light">{`${domain}/@${userName}/video/${videoId}`}</p>
+            <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2 text-gray-700" onClick={
              ()=>{
                 CopyToClipBoard(`${domain}/@${userName}/video/${videoId}`);
                 showSnackbar({message : 'Copied to clipboard'});

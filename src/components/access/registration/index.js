@@ -12,8 +12,10 @@ import { track } from '../../../analytics';
 import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
 import useSnackbar from '../../../hooks/use-snackbar';
+import * as fbq from '../../../analytics/fb-pixel'
 
 const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
+
   const [data, setData] = useState({
     type: '',
     value: '',
@@ -134,14 +136,17 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
-        // let method;
-        // if(device === 'mobile'){
-        //   method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
-        // }else if(device === 'desktop'){
-        //   method = data && data?.type;
-        // }
-        // method && mixpanel('Signup',method);   
-        // fbq.defEvent('CompleteRegistration');
+        try{
+          const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
+        try{
+          mixpanel('Signup',method);
+        fbq.defEvent('CompleteRegistration');
+      }catch(e){
+        console.log('error in fb or mixpanel event')
+      }
+       }catch(e){
+         console.log('error in fb events or mixpanel')
+       }
         /* Mixpanel */
         if(device === 'mobile'){
           router?.push('/feed/for-you');

@@ -30,6 +30,7 @@ const Sidebar = ({
   userName,
   videoId,
   socialId,
+  commentCount
 }) => {
   const [isLiked, setIsLiked] = useState({ like: false, reactionTime: "past" });
   const [reactionCount, setReactionCount] = useState({ likes: likes });
@@ -120,7 +121,7 @@ const Sidebar = ({
     <div className="sidebar flex items-center">
       <div className={`feed relative mr-4 flex text-center items-center`}>
         {isLiked?.like ? (
-          <div>
+          <div className="flex items-center">
             <div
               role="presentation"
               onClick={() => {
@@ -138,18 +139,18 @@ const Sidebar = ({
               <Liked />
             </div>
 
-            <p className="t text-xs font-semibold ml-2">
+            <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
                 ? numberFormatter(reactionCount.likes)
                 : numberFormatter(reactionCount.likes)}
             </p>
           </div>
         ) : (
-          <div>
-            <div id="like" role="presentation" onClick={() => selectedLike()}>
+          <div className="flex items-center">
+            <div id="like"  className="cursor-pointer" role="presentation" onClick={() => selectedLike()}>
               <Like />
             </div>
-            <p className=" text-xs font-semibold ml-2">
+            <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
                 ? numberFormatter(reactionCount.likes)
                 : numberFormatter(reactionCount.likes)}
@@ -166,7 +167,7 @@ const Sidebar = ({
          </div> */}
       <div className="flex items-center">
         <Comment />
-        <span className=" text-xs font-semibold ml-2">30</span>
+        <span className=" text-xs font-semibold ml-2">{numberFormatter(commentCount)}</span>
       </div>
       {/* <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">
              <Share />

@@ -28,6 +28,8 @@ function transformSuccess(resp) {
       data?.data?.[0]?.topCharms.forEach((item,id)=>{id ===  0 ? item.expand = true : item.expand = false;})
       payload.charmData = data?.data?.[0]?.topCharms;
     }
+
+    console.log("can-shop",payload);
     return payload;
   } catch (err) {
     data.appError = err.message;

@@ -8,7 +8,7 @@ function Loader() {
     <div className="feed_card  border-b-2 border-gray-300 p-8 ">
     <div className="flex justify-between">
         <div className="avatar">
-            <div className="flex items-center w-16 h-16 overflow-hidden rounded-full bg-gray-200"></div>
+            <div className="flex items-center w-16 h-16 overflow-hidden rounded-full cursor-pointer bg-gray-200"></div>
         </div>
         <div className="video_section flex flex-col  w-full ml-4">
             <div className="header flex flex-col relative">

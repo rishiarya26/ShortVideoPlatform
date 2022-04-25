@@ -18,6 +18,7 @@ const Video = ({url, firstFrame})=>{
     useEffect(()=>{
         setSeekedPercentage(0);
         setPlay(true);
+        setInitialPlayStarted(false)
     },[url])
 
     const handleUpdateSeekbar = e => {
@@ -79,12 +80,13 @@ const Video = ({url, firstFrame})=>{
         >
           <source src={url} type="video/mp4" />
         </video>
-        {<div
+        {seekedPercentage === 0 && <div
                 className="absolute top-1/2 justify-center w-full flex"
-                style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: 'flex text-white' }}
               >
              <CircularProgress/>
-              </div>}
+              </div>
+              }
         <EmbedSeekbar type='desk' seekedPercentage={seekedPercentage} />
 
         {

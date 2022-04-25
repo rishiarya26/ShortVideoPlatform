@@ -174,7 +174,6 @@ function Feed({ router }) {
   const getFeedData = async() =>{
     let updateItems = [...items];
      try{
-      //  console.log('fn',fetchData)
        const data =  await fetchData({ type: id });
        updateItems = updateItems.concat(data?.data);
       //  setOffset(offset+1)
@@ -316,6 +315,7 @@ function Feed({ router }) {
   },[videoActiveIndex])
 
   useEffect(() => {
+
     setShop({ isShoppable: 'pending' });
     getCanShop();
     setSaveLook(true);

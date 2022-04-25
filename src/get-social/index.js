@@ -87,3 +87,15 @@ export const deleteReaction = (reaction,id) =>{
        console.log('error-delete-like',e);
     }
 }
+
+// export const isFollowing = (user1, user2) =>{
+//     const userIds = GetSocialSDK.UserIdList.create([user1, user2]);
+//     const followQuery = GetSocialSDK.FollowQuery.users(userIds);
+//     GetSocialSDK.Communities.isFollowing(UserId.currentUser(), followQuery)
+//     .then((result) => {
+//         var user2Followed = result['user2'];
+//         console.log('Current user is following user "user2": ' + user2Followed);
+//     }, (error) => {
+//         console.log('Failed to check followers of users, error: ' + error.message);
+//     });
+// }

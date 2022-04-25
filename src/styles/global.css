@@ -7,6 +7,12 @@
     /* font-weight: normal; */
     letter-spacing: .3px;
 }
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 button:focus{
   outline: 0px;
 }
@@ -281,6 +287,9 @@ span.swiper-pagination-bullet {
   .overlay-z-index {
     z-index: 9!important;
 }
+.width-mob{
+  width: 90%!important;
+}
   }
 @media only screen and (min-width: 768px) {
   *{
@@ -288,6 +297,12 @@ span.swiper-pagination-bullet {
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";   
     /* font-weight: normal; */
     letter-spacing: unset;
+}
+.video-card{
+  width: 100%;
+  height: unset;
+  background-color: #ccc;
+  box-sizing: border-box;
 }
   .cookie_layout{
     align-items: unset;
@@ -429,6 +444,9 @@ span.swiper-pagination-bullet {
 
 .w-feed-menu{
   width: 356px;
+}
+.w-prof-menu{
+  width: 240px;
 }
 .w-feed{
   width: 100vw;

@@ -29,7 +29,7 @@ const device = getItem('device-type')
   return (
     <>
       <div className="flex justify-center items-center flex-col z-1">
-        <p className="  my-4 text-center px-4"> Are you sure you want to logout ?</p>
+        <p className="  my-4 text-center px-4 pt-10"> Are you sure you want to logout ?</p>
         <div className="flex justify-between px-6 w-1/2 py-4">
             <div onClick={logout} className="flex font-medium">Yes</div>
             <div onClick={()=>{closePopUp()}}>No</div>

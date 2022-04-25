@@ -223,13 +223,13 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
             <div className="flex pb-2 w-full">
-               <div className='img w-16 h-16 min-w-16 rounded-md overflow-hidden'>
+               <div className='img w-14 h-14 min-w-14 rounded-md overflow-hidden'>
                    <Img data={topCharms?.imageUrl} />
                </div>
               <div className=' products w-full flex flex-col ml-2'>
                   <div className=' charm_title whitespace-nowrap capitalize  font-semibold text-xs mb-1'>{`${topCharms?.subtitle} | ${topCharms?.title}`}</div>
                   <div className="flex  justify-between items-center">
-                  <div className='h-10'>
+                  <div className='h-8'>
                   {!expand && 
                      <Img data={topCharms?.content_image_url}/>
                    }

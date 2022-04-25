@@ -73,7 +73,10 @@ export function apiMiddleWare(
       if (backoff) {
         resp = await backoff(_promise, params);
       } else {
-        resp = await _promise(params);
+        if(!requiresAuth){
+          console.log('api middle ware in direct call', _promise)
+          resp = await _promise(params);
+        }
       }
       if (isObjectEmpty(resp)) {
         resp = null;

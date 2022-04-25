@@ -23,7 +23,8 @@ const login = dynamic(
    }
  );
  
-const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialId,showVideoDetail})=>{
+const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialId,
+  showVideoDetail, commentCount})=>{
    const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
    const [reactionCount, setReactionCount] = useState({likes : likes});
  
@@ -144,13 +145,13 @@ useEffect(()=>{
               <Liked />
             </div>
 
-            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
           </div>
         ) : (
           <div>
             <div
               id="like"
-              role="presentation"
+              role="presentation" className="cursor-pointer"
               onClick={() => selectedLike()}
             >
               <Like />
@@ -171,7 +172,7 @@ useEffect(()=>{
          <div className="flex flex-col items-center my-4">
             <Comment />
             <span className=' text-xs font-semibold mt-2'>
-               30
+            {numberFormatter(commentCount)}
             </span>
          </div>
          <div className="flex cursor-pointer flex-col items-center my-4 relative desk-share">

@@ -56,7 +56,11 @@ function Users({
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
-  const [isFollowing,setIsFollowing] = useState(isFollow);
+  const [isFollowing,setIsFollowing] = useState();
+
+  useEffect(()=>{
+    setIsFollowing(isFollow);
+  },[isFollow])
 
   // async function showPopUp(){
   //   show('', detectDeviceModal, 'extraSmall');
@@ -159,7 +163,7 @@ function Users({
   } 
   }
 
-  const userId = localStorage.get('user-id');
+  const userId = localStorage?.get('user-id');
   const followFunc = !isFollowing;
 
   const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))

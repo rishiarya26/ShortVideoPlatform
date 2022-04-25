@@ -1,8 +1,10 @@
+import { useRouter } from "next/router";
 import { trimHash } from "../../utils/string"
 import MusicBlack from "../commons/svgicons/music-black";
 
 const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed'})=>{
 
+   const router = useRouter();
    const fullName = {
        feed :   `${firstName} ${lastName}`,
        detail : <div>{`${firstName} ${lastName}`}</div>
@@ -28,23 +30,23 @@ const VideoInfo = ({userName, firstName, lastName, description,music_title, page
     return(
         <div className="header flex flex-col relative">
         <p className='text-base text-gray-500'> 
-         <span className="font-bold text-base text-black cursor-pointer">{userName} </span>
+         <span onClick={()=>router?.push(`/@${userName}`)} className="font-semibold text-base text-gray-700 cursor-pointer">{userName} </span>
           {fullName[pageType]}
         </p>
-        <div className=" text-base w-8/12 mb-1">
+        <div className=" text-base font-light text-gray-600 w-8/12 mb-1">
      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-           <span key={id} className={item?.includes('#') ? 'text-base font-semibold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+           <span key={id} className={item?.includes('#') ? 'text-base font-normal text-gray-900':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
             </span>
          ))}
      </div>
-        <p className="font-semibold text-base mb-4 ">
+        <p className="font-medium text-base mb-4 text-gray-700">
            <MusicBlack/>
            {music_title}
         </p>
-        <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-1 top-0 border border-hipired text-hipired">
+        {/* <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-1 top-0 border border-hipired cursor-pointer  text-hipired">
            Follow
-        </div>
+        </div> */}
      </div>
     )
 }

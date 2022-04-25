@@ -15,10 +15,12 @@ import Img from "../commons/image";
 import fallbackUser from '../../../public/images/users.png' 
 import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
+import { useRouter } from "next/router";
 
 const Header = ()=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
+   
    const login = dynamic(
       () => import('../auth-options'),
       {
@@ -31,7 +33,7 @@ const Header = ()=>{
    }
    const {show} = useDrawer();
     const {showSnackbar} = useSnackbar();
-
+   const router = useRouter();
 
 //     const UserInfo = async()=> {
 //        const isLogIn = useAuth('false','true');
@@ -52,10 +54,17 @@ const Header = ()=>{
 //        )
 //     }    
 
-    const isLoggedIn = useAuth('false','true' );
+
+    const tokens = localStorage?.get('tokens') || null;
+    let isLoggedIn = useAuth('false','true');
 
     useEffect(()=>{
-     
+      if(tokens){
+         isLoggedIn = 'true';
+      }
+    },[tokens]);
+
+    useEffect(()=>{
        if(isLoggedIn === 'true'){
           const userId = localStorage?.get('user-id');
          const getUserInfo = async()=>{
@@ -66,14 +75,12 @@ const Header = ()=>{
        }
     },[isLoggedIn])
 
-
     console.log('isLoggedIn',isLoggedIn)
-
  
    return(
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4 w-feed h-16 flex bg-white items-center px-6 justify-between">
-      <div className="w-16">
+      <div onClick={()=>router.push('/feed/for-you')} className="w-14">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 
@@ -89,9 +96,9 @@ const Header = ()=>{
             <div className=" ml-4 w-px h-8 bg-gray-300">
 
             </div>
-            <div className="pl-4">
+            {/* <div className="pl-4">
                <Search/>
-            </div>
+            </div> */}
          </div>
       </div>
       <div>

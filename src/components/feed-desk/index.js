@@ -17,7 +17,7 @@ return (
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 
-      <div>
+      {/* <div>
          <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
             <div>
             <input className="w-56 bg-gray-100" type="search" value="" placeholder="Search accounts and videos " />
@@ -33,7 +33,7 @@ return (
                <Search/>
             </div>
          </div>
-      </div>
+      </div> */}
       <div>
       <img alt="profile-pic" className="usrimg w-8 h-8 rounded-full  mr-4" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />
       </div>
@@ -51,7 +51,7 @@ return (
       <div className="w-8/12 p-8 flex flex-col overflow-scroll no_bar">
          <div className="feed_card flex border-b-2 border-gray-300 pb-8">
             <div className="avatar">
-            <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
+            <div className="flex items-center w-16 h-16 overflow-hidden rounded-full cursor-pointer">
                   <img alt="profile-pic" className="usrimg" src="https://akamaividz2.zee5.com/image/upload/w_300,c_scale,f_auto,q_auto/v1608725033/hipi/assets/user/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc/23a27eda-dcb2-4dfd-ade2-7ed7b32aa2bc.webp" />    
                </div>
             </div>

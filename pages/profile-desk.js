@@ -1,9 +1,9 @@
-import ProfileDesk from "../src/components/profile-desk/index";
+import DeskUser from "../src/components/desk-profile";
 
 export default function VideoD() {
   return (
     <div>
-      <ProfileDesk/>
+      <DeskUser/>
     </div>
       
   );

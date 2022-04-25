@@ -39,8 +39,12 @@ export default function Email({
             pathname: '/feed/for-you'
           });
           /* Mixpanel */
-          mixpanel('Login');
+          try{
+            mixpanel('Login');
           fbq.defEvent('CompleteRegistration');
+        }catch(e){
+          console.log('error in fb or mixpanel event')
+        }
            /* Mixpanel */
           showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);

@@ -9,12 +9,13 @@ import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
 
 function Charmboard({videoId, setClose }) {
-   console.log('id',videoId)
+   // console.log('id',videoId)
 const [charms, setCharms] = useState(null)   
 const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])
 const [filteredItem, setFilteredItem] = useState(null);
 const [filteredSavedItem, setFilteredSavedItem] = useState(null);
+const [charmsPresent, setCharmsPresent] = useState(false);
 
 const {close} = useDrawer();
 const getTopCharms = async() =>{
@@ -22,6 +23,7 @@ const getTopCharms = async() =>{
       try{
          if(videoId){
             const resp = await canShop({videoId});
+            setCharmsPresent(resp?.isShoppable);
             setCharms(resp);
             resp.charmData[0].id = 0;
             setFilteredItem(resp.charmData[0])
@@ -37,6 +39,7 @@ const getTopCharmsOnIdChange = async() =>{
          if(videoId){
             const resp = await canShop({videoId});
             setCharms(resp);
+            setCharmsPresent(resp?.isShoppable);
             resp.charmData[0].id = 0;
             console.log("filtered data",resp.charmData[0])
             setFilteredItem(resp.charmData[0])
@@ -50,13 +53,14 @@ useEffect(()=>{console.log("charmes changed++",charms, filteredItem)},[charms])
 useEffect(()=>{
    console.log('id changed++++',videoId )
    setCharms(null);
+   setCharmsPresent(false);
    setFilteredItem([])
    getTopCharmsOnIdChange ();
    // fetchData?.[selectedIndex]()
 }
    ,[videoId])
 
-useEffect(()=>{getSavedMoments()},[])
+useEffect(()=>{getSavedMoments()},[]);
 
 const getSavedMoments = () =>{
     const userId = localStorage.get('user-id') || getItem('guest-token');
@@ -169,6 +173,7 @@ const onClose =()=>{
 
 return (
 <>{
+  charmsPresent &&
   charms && 
    <div className='flex flex-col w-feed-menu overflow-hidden thin_bar ml-6'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>

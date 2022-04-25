@@ -26,10 +26,13 @@ import { trimHash } from '../../utils/string';
 import VideoInfo from '../desk-video-info';
 import VideoSidebar from '../desk-video-sidebar';
 import CircularProgress from '../commons/circular-loader'
+import { useRouter } from 'next/router';
+import Img from '../commons/image';
+import fallbackUser from '../../../public/images/users.png' 
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
-description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId}) {
+description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -42,6 +45,8 @@ const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);
 const size = useWindowSize();
 const videoHeight = `${size.height}`;
+const router = useRouter();
+
 const handleVideoPress = () => {
 if (playing) {
   rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
@@ -147,8 +152,9 @@ return (
 <div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
-      <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
-         <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
+      <div onClick={()=>router?.push(`/@${userName}`)} className="flex items-center w-16 h-16 overflow-hidden cursor-pointer rounded-full">
+         <Img data={userProfilePicUrl} alt='profile-pic' fallback={fallbackUser?.src}/>
+         {/* <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />     */}
       </div>
    </div>
    <div className="video_section flex flex-col  w-full ml-4">
@@ -224,7 +230,8 @@ return (
 </div>
    <VideoSidebar
       likesCount={likesCount}
-      sharecount={shareCount}
+      shareCount={shareCount}
+      commentCount={commentCount}
       userName={userName}
       videoId={videoId}
       socialId={socialId}

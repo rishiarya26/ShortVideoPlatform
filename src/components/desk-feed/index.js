@@ -130,11 +130,25 @@ const refs = items?.length > 0 && items.reduce((acc, value, index) => {
   return acc;
 }, {});
 
-const handleClick = id =>
+const handleAutoScroll = id =>
   refs[id].current.scrollIntoView({
     behavior: 'smooth',
     block: 'start',
   });
+
+const handleUpClick=()=>{
+ if(activeIndex+1 < items.length-1){
+  updateActiveIndex(activeIndex+1);
+  handleAutoScroll(activeIndex+1)
+ } 
+}
+
+const handleDownClick=()=>{
+  if(activeIndex-1 >= 0){
+  updateActiveIndex(activeIndex-1);
+  handleAutoScroll(activeIndex-1)
+ }
+}  
 
 const unMute = (value)=>{
   setMuted(false);
@@ -146,20 +160,6 @@ const updateActiveIndex = (value)=>{
   setActiveIndex(value);
   setVideoDetailData(items?.[value]);
   console.log('item',items[value])
-}
-
-const handleUpClick=()=>{
- if(activeIndex+1 < items.length-1){
-  updateActiveIndex(activeIndex+1);
-  handleClick(activeIndex+1)
- } 
-}
-
-const handleDownClick=()=>{
-  if(activeIndex-1 >= 0){
-  updateActiveIndex(activeIndex-1);
-  handleClick(activeIndex-1)
- }
 }
 
 const hideVideoDetail = ()=>{
@@ -210,6 +210,7 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
          updateActiveIndex={updateActiveIndex} 
          showVideoDetail={showVideoDetail}
          shareCount={item?.shareCount || null}
+         commentCount={item?.commentCount || null}
          videoId={item?.content_id}
          socialId={item?.getSocialId}
          />
@@ -251,11 +252,14 @@ const info ={
          shareCount={videoDetailData?.shareCount}
          activeIndex={activeIndex}
          socialId={videoDetailData?.getSocialId}
+         commentCount={videoDetailData?.commentCount}
          />
        </div>}
         <Header />
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
-            <DeskMenu/>
+          <div className='w-feed-menu'>
+          <DeskMenu width={'w-feed-menu'}/>
+          </div>
             { fetchState === 'success' ?
              info?.[id]
             :
@@ -265,7 +269,7 @@ const info ={
             <ErrorComp retry={doRetry}/>
             }
         </div>
-        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Show App</div>
+        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Get App</div>
         <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 p-2 flex justify-center items-center rounded-full bg-hipired white'>
             <Top/>
         </button>

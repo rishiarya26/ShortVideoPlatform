@@ -73,6 +73,7 @@ function transformSuccess(resp) {
       payloadObject.firstName=d?.videoOwners?.firstName || '';
       payloadObject.lastName=d?.videoOwners?.lastName || '';
       payloadObject.shareCount=d?.sCount || '';
+      payloadObject.commentCount=d?.cCount || '';
       
       payloadData.push(payloadObject);
     });

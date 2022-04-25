@@ -11,6 +11,7 @@ import Home from '../commons/svgicons/home';
 import Tabs from '../commons/tabs/desk-feed-tab';
 import HomeRed from "../commons/svgicons/home-red";
 import FollowingRed from "../commons/svgicons/following-red";
+import { localStorage } from "../../utils/storage";
 
 const login = dynamic(
   () => import('../auth-options'),
@@ -20,7 +21,7 @@ const login = dynamic(
   }
 );
 
-const DeskMenu = ({handleUpClick, handleDownClick}) =>{
+const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
     const {show} = useDrawer();
     const {showSnackbar} = useSnackbar();
     const {t} = useTranslation();
@@ -39,16 +40,26 @@ const DeskMenu = ({handleUpClick, handleDownClick}) =>{
 
         const loginComp = <button 
         onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-        className="font-semibold border text-lg p-2 mt-4">
+        className="font-semibold border text-lg p-2 mt-4 text-gray-700">
           Log in
         </button>
 
-       const isLoggedIn = useAuth(loginComp,'');
+const tokens = localStorage?.get('tokens') || null;
+
+let isLoggedIn = useAuth(loginComp,'');
+
+useEffect(()=>{
+  if(tokens){
+     isLoggedIn = ''
+  }
+},[tokens]);
+
+     
 
     return(
-        <div className="w-feed-menu flex flex-col p-4 relative">
-          <div className="flex flex-col fixed overscroll-y-auto pt-6 w-feed-menu">
-        <div className="flex flex-col pb-10 border-b border-gray-200">
+        <div className={`${width} flex fixed flex-col p-4 pt-0 relative`}>
+         
+        <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>
         {/* <div onClick={router.push('/feed/for-you')} className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
@@ -57,7 +68,7 @@ const DeskMenu = ({handleUpClick, handleDownClick}) =>{
               <p className="text-base font-normal text-gray-400 p-2 font-sans">Log in to follow creators, like videos, and view comments.</p>
               {isLoggedIn}
         </div>
-        </div>
+        
      </div>
     )
 }

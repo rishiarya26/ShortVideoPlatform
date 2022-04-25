@@ -33,7 +33,7 @@ const Dialog = ({
     ${height?.[type]?.class}
       ${children && visible ? 'block' : 'hidden'} 
       z-30 fixed rounded-lg p-4 bg-white 
-      overflow-y-auto
+      overflow-y-auto width-mob
       transition-all duration-300
       top-2/4 left-2/4
       transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4

@@ -6,7 +6,7 @@ import ShareOutline from "../commons/svgicons/share-outline";
 import { withBasePath } from '../../config';
 import Play from '../commons/svgicons/play-outlined';
 
-function ProfileDesk() {
+function DeskProfile() {
 return (
 <div className="flex flex-col w-screen h-screen">
    <div className="w-full h-20 flex bg-white drop-shadow-lg border-b-2 border-gray-200 items-center px-6 justify-between">
@@ -217,4 +217,4 @@ return (
 </div>
 );
 }
-export default ProfileDesk;
+export default DeskProfile;

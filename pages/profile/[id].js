@@ -44,16 +44,18 @@ export default function Hipi(params) {
   const device = getItem('device-type')
 
   if(device === 'desktop'){
-    return 
+    router?.push('/');
+    return null;
   }
 
   return (
     <>
      <SeoMeta
         data={{
-          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - Indian Short Video App`,
+          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
           // image: item?.thumbnail,
-          description: `${item?.firstName || ''} ${item?.lastName || ''} (${item?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} that you can enjoy and share with your friends.`        
+          description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
+          keywords : `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`        
         }}
      />
       {/* <SeoMeta
