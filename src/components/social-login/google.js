@@ -51,13 +51,16 @@ export const GoogleButton =({loading}) =>{
         }
 
     const initialzeGoogle =()=>{
+      try{  
         window?.gapi?.load('auth2',()=>{
             window.gapi.auth2.init({
                 // TO-DO client id should come from env
                 client_id:GOOGLE_CLIENT_ID_PREROD
-                
             })
         })
+      }catch(e){
+        console.log("ERROR IN AUTH2 GOOGLE")
+      }
     }    
     // const loginGoogle = async()=>{
     //         window?.gapi?.load('signin2',()=>{
@@ -75,8 +78,12 @@ export const GoogleButton =({loading}) =>{
       
     useEffect(()=>{
             if(loading === false){
-                initialzeGoogle();
-                console.log("l",loading)  
+               try{
+                  initialzeGoogle();
+                console.log("l",loading); 
+              }catch(e){
+                console.log('ERROR IN AUTH2 GOOGLE');
+              } 
             }
           },[loading])
 

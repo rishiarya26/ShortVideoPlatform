@@ -372,6 +372,8 @@ function DeskUsers({
          shareCount={videoDetailData?.shareCount}
          activeIndex={vDetailActiveIndex}
          socialId={videoDetailData?.getSocialId}
+         commentCount={videoDetailData?.commentCount}
+         type='profile'
          />
        </div>}
     <Header/>
@@ -382,9 +384,9 @@ function DeskUsers({
     
     <div className="w-10/12 pl-8">
       <div className="profile-details flex flex-col w-1/2 relative text-gray-700"> 
-         <div className="absolute right-4 top-4">
+         {/* <div className="absolute right-4 top-4">
             <ShareOutline/>
-         </div>
+         </div> */}
             <div className="flex items-center pb-2">
                <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
                <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>

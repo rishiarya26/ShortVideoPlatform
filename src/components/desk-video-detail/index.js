@@ -29,7 +29,7 @@ import Img from "../commons/image";
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId, commentCount}) {
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed'}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -58,6 +58,10 @@ useEffect(()=>{
 
 const onEmbedCopy =()=>{
    showSnackbar({ message: 'Copied to Clipboard' });
+}
+
+const pushToProfile = ()=>{
+   window.location.href = `/@${userName}`
 }
 
 const gotUrl = window?.location?.href;
@@ -101,12 +105,11 @@ return (
             <div className="flex justify-between items-center">
                <div className="flex items-center">
                   {/* <img   alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} /> */}
-                  <div onClick={()=>router?.push(`/@${userName}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
+                  <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
                    <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
                   </div>
                   <div className="flex flex-col">
-                  <h3 onClick={()=>router?.push(`/@${userName}`)} className="font-bold text-md text-gray-700">{userName}</h3>
-                  <p className="text-gray-400 text-sm">{firstName} {lastName}</p>
+                  <h3 onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold text-md text-gray-700 cursor-pointer">{userName}</h3>
                   </div>
                </div>
                <div className="flex justify-end">

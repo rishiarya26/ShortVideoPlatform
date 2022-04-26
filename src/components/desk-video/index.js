@@ -29,9 +29,11 @@ import CircularProgress from '../commons/circular-loader'
 import { useRouter } from 'next/router';
 import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
+import EmbedSeekbar from '../emded-seekbar';
+import UnMute from '../commons/svgicons/unmute';
 
 function Video({url, player='multi-player-muted',firstFrame,
-userProfilePicUrl, userName, music_title, likesCount, muted, unMute,firstName, lastName,
+userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
@@ -39,7 +41,7 @@ const [play, setPlay] = useState(false);
 const [pause, setPause] = useState(true);
 const [active, setActive] = useState(false);
 const [seekedPercentage, setSeekedPercentage] = useState(0);
-const [videoDuration, setVDuration] = useState();
+// const [videoDuration, setVDuration] = useState();
 
 const prePlayState = usePreviousValue({play});
 const rootRef = useRef(null);
@@ -96,7 +98,7 @@ useEffect(()=>{
 const handleUpdateSeekbar = e => {
    const percentage = (e.target.currentTime / e.target.duration) * 100;
    setSeekedPercentage(percentage);
-   setVDuration(e.target.duration);
+   // setVDuration(e.target.duration);
    // const duration = e?.target?.duration;
    // const currentTime = e?.target?.currentTime;
    // settDuration(duration);
@@ -208,12 +210,14 @@ return (
         <Pause/>
       </div>
    
-      <div onClick={()=>unMute()} className="cursor-pointer absolute bottom-4 opacity-0 right-4">
-        {muted ? <Mute/> : ''}
-      </div>
-      <div onClick={()=>unMute()} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
-        {muted ? <Mute/> : ''}
-      </div>
+      {muted ? <div onClick={()=>toggleMute(false)} className="cursor-pointer absolute bottom-4 opacity-0 right-4">
+       <Mute/>
+      </div> : 
+      <div onClick={()=>toggleMute(true)} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
+        <UnMute/>
+      </div>}
+
+      <EmbedSeekbar type='desk' seekedPercentage={seekedPercentage} />
       {/* {<div
                 className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: ( active && seekedPercentage > 0) ? 'none' : 'flex text-white' }}

@@ -108,9 +108,13 @@ const Auth = ({ router, authType, backToOptions, showMessage }) => {
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">{t(heading[authType])}</div>
         </div>
-      </div>    
+      </div>   
       <div className="fixed mt-10 z-10 w-full">
-        <Tabs items={tabs[authType]} onTabChange={onTabChange} selectedIndex={selectedTabIndex}/>
+        <Tabs
+         items={tabs[authType]}
+         onTabChange={onTabChange}
+         selectedIndex={selectedTabIndex}
+        />
       </div>
       <div className="mt-20">
         {selectedTabIndex === 0

@@ -38,11 +38,17 @@ const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
          icon:{active: <FollowingRed/> , inActive: <Following/>} }
        ];
 
-        const loginComp = <button 
-        onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-        className="font-semibold border text-lg p-2 mt-4 text-gray-700">
+        const loginComp = 
+        <>
+        <p className="text-base font-small text-gray-400 p-2 font-sans">
+           Log in to follow creators, like videos, and view comments.
+        </p>
+        <button 
+          onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
+          className="font-semibold border text-lg p-2 mt-4 text-gray-700">
           Log in
         </button>
+        </>
 
 const tokens = localStorage?.get('tokens') || null;
 
@@ -54,8 +60,6 @@ useEffect(()=>{
   }
 },[tokens]);
 
-     
-
     return(
         <div className={`${width} flex fixed flex-col p-4 pt-0 relative`}>
          
@@ -65,7 +69,6 @@ useEffect(()=>{
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
         <div className="flex flex-col pb-6 pt- 4border-b border-gray-200">
-              <p className="text-base font-normal text-gray-400 p-2 font-sans">Log in to follow creators, like videos, and view comments.</p>
               {isLoggedIn}
         </div>
         

@@ -73,7 +73,7 @@ const Video = ({url, firstFrame})=>{
           loop
           poster={firstFrame}
           onClick={handleVideoPress}
-          className="vdo_player"
+          className="vdo_player_desk"
           width={size.width}
           height={size.height}
           objectfit="cover"

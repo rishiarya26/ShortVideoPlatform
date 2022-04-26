@@ -56,6 +56,7 @@ const DeskDownloadApp = dynamic(
   const [videoDetailData, setVideoDetailData] = useState({})
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [retry, setRetry] = useState(false);
+  const [reload, setReload] = useState(false);
   // const [id, setId] = useState('for-you');
 
   const { id = 'for-you' } = router?.query;
@@ -76,7 +77,7 @@ const DeskDownloadApp = dynamic(
       window?.scrollTo(0, 0);
     }
     // setId(router?.query?.id);
-    getInitialData();
+    // getInitialData();
   },[])
 
   useEffect(()=>{
@@ -84,6 +85,20 @@ const DeskDownloadApp = dynamic(
     setFetchState('pending');
     getInitialData();
   },[id])
+
+  const doReload = ()=>{
+    setReload(true);
+  }
+
+  useEffect(()=>{
+    if(reload){
+      console.log("FROM RELOAD")
+      setItems([]);
+      setFetchState('pending');
+      getInitialData();
+      setReload(false);
+    }
+  },[reload])
 
   const getInitialData = async() =>{
     let updateItems = [];
@@ -150,8 +165,8 @@ const handleDownClick=()=>{
  }
 }  
 
-const unMute = (value)=>{
-  setMuted(false);
+const toggleMute = (value)=>{
+  setMuted(value);
 }
 
 const updateActiveIndex = (value)=>{
@@ -175,6 +190,7 @@ useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
 
 useEffect(()=>{
   if(retry){
+    console.log("from retry")
     setFetchState('pending');
     getInitialData();
     setRetry(false);
@@ -203,7 +219,8 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
          userProfilePicUrl={item?.userProfilePicUrl} 
          url={item?.video_url} 
          firstFrame={item?.firstFrame} 
-         muted={muted} unMute={unMute} 
+         muted={muted} 
+         toggleMute={toggleMute} 
          firstName={item?.firstName} 
          lastName={item?.lastName} 
          description={item?.content_description} 
@@ -217,7 +234,7 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
     </span>
      )}
 </InfiniteScroll>
-: <div className=' w-full justify-center items-center'>No Videos Found</div>}
+: <div className=' w-full flex justify-center p-28 items-center'>No Videos Found</div>}
 </div>
 
 const showLoginFollowing = <LoginFollowing/>;
@@ -255,7 +272,7 @@ const info ={
          commentCount={videoDetailData?.commentCount}
          />
        </div>}
-        <Header />
+        <Header doReload={doReload}/>
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
           <div className='w-feed-menu'>
           <DeskMenu width={'w-feed-menu'}/>

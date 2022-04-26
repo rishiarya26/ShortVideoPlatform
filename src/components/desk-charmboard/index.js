@@ -82,9 +82,15 @@ useEffect(()=>{
 
 useEffect(()=>{ fetchData?.[selectedIndex]()},[]);
 
+//TO ENABLE SAVED MOMENTS
+// const tabItems = {
+//    display : [`IN THIS VIDEO`, `SAVED MOMENTS`],
+//    number : [` ${charms?.charmData?.length || 0}`, ` ${savedItems?.length || 0}`]
+// }
+
 const tabItems = {
-   display : [`IN THIS VIDEO`, `SAVED MOMENTS`],
-   number : [` ${charms?.charmData?.length || 0}`, ` ${savedItems?.length || 0}`]
+   display : [`IN THIS VIDEO`],
+   number : [` ${charms?.charmData?.length || 0}`]
 }
 
 const fetchData = {

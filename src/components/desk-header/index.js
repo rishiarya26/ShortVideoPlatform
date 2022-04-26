@@ -17,7 +17,7 @@ import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
 
-const Header = ()=>{
+const Header = ({doReload})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
    
@@ -80,11 +80,11 @@ const Header = ()=>{
    return(
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4 w-feed h-16 flex bg-white items-center px-6 justify-between">
-      <div onClick={()=>router.push('/feed/for-you')} className="w-14">
+      <div onClick={doReload ? ()=>doReload() : ()=>router?.push('/feed/for-you')} className="w-14 cursor-pointer">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 
-      <div>
+      {/* <div>
          <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
             <div>
             <input className="w-56 bg-gray-100 text-sm" type="search" value="" placeholder="Search accounts and videos " /> 
@@ -96,11 +96,11 @@ const Header = ()=>{
             <div className=" ml-4 w-px h-8 bg-gray-300">
 
             </div>
-            {/* <div className="pl-4">
+            <div className="pl-4">
                <Search/>
-            </div> */}
+            </div> 
          </div>
-      </div>
+      </div> */}
       <div>
            {isLoggedIn === 'true'?
            <div className="relative">

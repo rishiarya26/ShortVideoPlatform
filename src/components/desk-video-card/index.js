@@ -13,7 +13,7 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
   const [showLoader, setShowLoader] = useState(false);
 
   return (
-    <div key={id} className="video-card relative z-0 cursor-pointer">
+    <div key={id} className="video-card h-full w-full relative z-0 cursor-pointer">
      {shoppable && <div className="absolute top-2 right-2 z-10">
         <Cart/>
       </div>}

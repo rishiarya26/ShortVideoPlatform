@@ -1,12 +1,15 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { trimHash } from "../../utils/string"
 import MusicBlack from "../commons/svgicons/music-black";
+import DeskHoverInfo from "../desk-hover-info";
 
 const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed'})=>{
+const [show, setShow] = useState(false);
 
    const router = useRouter();
    const fullName = {
-       feed :   `${firstName} ${lastName}`,
+       feed : `${firstName} ${lastName}`,
        detail : <div>{`${firstName} ${lastName}`}</div>
    }
 
@@ -29,8 +32,11 @@ const VideoInfo = ({userName, firstName, lastName, description,music_title, page
 
     return(
         <div className="header flex flex-col relative">
-        <p className='text-base text-gray-500'> 
-         <span onClick={()=>router?.push(`/@${userName}`)} className="font-semibold text-base text-gray-700 cursor-pointer">{userName} </span>
+        <p onMouseEnter={()=>setShow(true)} className='text-base text-gray-500'> 
+         <span 
+         onClick={()=>router?.push(`/@${userName}`)} 
+         className="hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">{`${userName} ` } 
+         </span>
           {fullName[pageType]}
         </p>
         <div className=" text-base font-light text-gray-600 w-8/12 mb-1">
@@ -44,6 +50,10 @@ const VideoInfo = ({userName, firstName, lastName, description,music_title, page
            <MusicBlack/>
            {music_title}
         </p>
+      {/* {show && <div className='absolute top-0 left-0'>
+         <DeskHoverInfo id={userName}/>
+      </div>} */}
+
         {/* <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-1 top-0 border border-hipired cursor-pointer  text-hipired">
            Follow
         </div> */}

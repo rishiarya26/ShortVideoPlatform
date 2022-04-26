@@ -95,7 +95,7 @@ export default function DeskVideoGallery({
             ? (
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
             { items?.map((item, id) => (
-               <span className="w-1/5 p-1" key={id} 
+               <span className="w-1/5 min-h-25 max-h-25 flex items-center bg-gray-200 p-1" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
                onClick={()=>updateActiveIndex(id)}
                   >
