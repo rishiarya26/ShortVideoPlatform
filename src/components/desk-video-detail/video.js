@@ -61,7 +61,7 @@ const Video = ({url, firstFrame})=>{
     return(
     <div
       ref={rootRef}
-      className="video_card relative scroll-snap-start bg-black h-screen overflow-hidden"
+      className="video_card relative h-screen overflow-hidden"
     >
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
@@ -73,7 +73,7 @@ const Video = ({url, firstFrame})=>{
           loop
           poster={firstFrame}
           onClick={handleVideoPress}
-          className="vdo_player_desk"
+          className="vdo_player_desk_detail"
           width={size.width}
           height={size.height}
           objectfit="cover"

@@ -45,7 +45,7 @@ const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
         </p>
         <button 
           onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-          className="font-semibold border text-lg p-2 mt-4 text-gray-700">
+          className="font-semibold border border-hipired text-hipired text-lg p-2 mt-4 ">
           Log in
         </button>
         </>

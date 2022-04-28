@@ -35,7 +35,7 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
          // onClick={handleVideoPress}
          className="vdo_player_desk"
          poster={thumbnailUrl}
-         objectfit="contain"
+         objectfit="cover"
          key={videoUrl}
          src={videoUrl}
          >

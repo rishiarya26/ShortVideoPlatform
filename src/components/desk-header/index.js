@@ -104,7 +104,10 @@ const Header = ({doReload})=>{
       <div>
            {isLoggedIn === 'true'?
            <div className="relative">
-           <div className='w-10 rounded-full overflow-hidden' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}><Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/>
+           <div className='w-10 rounded-full overflow-hidden' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
+             {userInfo?.profilePic ? <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
+             <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>{userInfo?.firstName?.split(' ')?.map(name =>name[0])?.join('').toUpperCase()}</div>
+             }
            {showlogoutMenu && 
             <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
           <div onClick={()=>show('Logout', LogoutPopup, 'small')} className="flex items-center ">

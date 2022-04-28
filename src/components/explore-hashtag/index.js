@@ -27,7 +27,7 @@ function HashTag({router}) {
   const [items,setItems] = useState([]);
   const [details, setDetails] = useState({})
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  const [showLoading, setShowLoading] = useState(isFetching)
+  const [showLoading, setShowLoading] = useState(isFetching);
   const [offset, setOffset] = useState(2);
 
   const {item = ''} = router?.query;

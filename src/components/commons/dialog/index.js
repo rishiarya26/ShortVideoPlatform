@@ -23,6 +23,10 @@ const Dialog = ({
       height: 'h-95',
       width:'w-1/3',
       class:'login_pop'
+    },
+    broad: {
+      height: 'h-3/5',
+      width:'w-2/4'
     }
   };
   return(

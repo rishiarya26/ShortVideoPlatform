@@ -1,7 +1,7 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
 import { withRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState , useCallback } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
@@ -15,6 +15,7 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
+import useInfiniteScrollWithCond from '../../hooks/use-infinite-scroll-with-cond';
 import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
@@ -39,6 +40,7 @@ import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import useSnackbar from '../../hooks/use-snackbar';
+import usePreviousValue from '../../hooks/use-previous';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -62,14 +64,26 @@ function DeskUsers({
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  // const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [showLoading, setShowLoading] = useState(false);
+  const [offset, setOffset] = useState(2);
   const [isFollowing,setIsFollowing] = useState();
   /****** for video detail - start ******/
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState();
+
+  const preOffset = usePreviousValue({offset});
+
+
+// because scroll is happning and api is calling with offset 2 initally as fetchMoreitems is called
+// useEffect(()=>{
+//   if(videoData?.items?.length > 0 && videoData?.status === 'success'){
+    
+//   }
+// },[videoData])
 
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
@@ -113,28 +127,70 @@ function DeskUsers({
   //   setIsFetching(false);
   // }
 
-  useEffect(()=>{setShowLoading(isFetching)},[isFetching])
+  // useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
+  const observer = useRef();
+
+  const lastItemInView = useCallback((node)=>{
+    if(showLoading) return;
+    if(observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(enteries =>{
+         if(enteries[0]?.isIntersecting){
+            hasMore && fetchMoreListItems();
+         }
+    });
+    if(node) observer?.current?.observe(node);
+  },[showLoading, hasMore]);
+  
+  
+  // const fetchMoreListItems = async()=>{
+  //   setLoading(true);
+  //   try{ 
+  //     const response =  await getSearchResults(query, nextToken);
+  //     const newItems = response?.data?.data;
+  //     if(response?.data?.data?.length > 0){ 
+  //       setHasMore(true);
+  //       let updateItems = [...items];
+  //       updateItems = updateItems?.concat(newItems)
+  //       setItems(updateItems);
+  //       setNextToken(response?.data?.meta?.next_token)
+  //     }else{
+  //       setHasMore(false);
+  //     }
+  //     setLoading(false);
+  //   }catch(e){
+  //     setHasMore(false);
+  //     setLoading(false);
+  //     console.log('error in search api',e);
+  //   }
+  // }
 
   async function fetchMoreListItems() {
+    setShowLoading(true);
    try{
+     console.log("F********",videoData);
+    if(videoData?.status === 'success'){
     const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
-    console.log("fetchedMore",response)
+    console.log("fetchedMore",response, "present Video Data", {...videoData});
     if(response?.data?.length > 0){
       let data = {...videoData};
       data.items = data?.items?.concat(response?.data);
-      console.log("items",data)
+      console.log("items",data);
       setVideoData(data);
       setOffset(offset+1);
-      setIsFetching(false);
+      // setIsFetching(false);
+      setHasMore(true);
       setShowLoading(false);
     }else{
       console.log("inelse",response.data.length);
       setShowLoading(false);
+      setHasMore(false);
      }
      setShowLoading(false);
+    }
    }
    catch(e){
+    setShowLoading(false);
      console.log("e",e)
    }
   }
@@ -150,7 +206,7 @@ function DeskUsers({
   // },[])
 
   useEffect(()=>{
-    setIsFetching(false);
+    // setIsFetching(false);
     setOffset(2);
   },[selectedTab])
   
@@ -158,9 +214,9 @@ function DeskUsers({
     setTimeout(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile';
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile'})
-      track('Screen View',mixpanelEvents );
+      fbq.event('Screen View');
+      trackEvent('Screen_View',{'Page Name' :'Profile'});
+      track('Screen View',mixpanelEvents);
     },500);
   }, []);
 
@@ -176,17 +232,44 @@ function DeskUsers({
     // setSelectedTab(selected);
     // setVideoData([]);
   };
+  // const dataFetcherAgain = async() => {
+  // const resp =  await getProfileVideos({ id, type: selectedTab });
+  // const videos = {}
+  // if(resp?.data){
+  //   videos.items = resp?.data;
+  //   setVideoData(videos);
+  // }
+  // }
+
+  // useEffect(()=>{
+  //   dataFetcherAgain();
+  // },[])
 
   const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   // eslint-disable-next-line no-unused-vars
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 0);
+    }
+    // setId(router?.query?.id);
+    // getInitialData();
+  },[])
+
+
   useEffect(() => {
+    try{console.log("FETCH STATE ****",fetchState, offset);
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
+    console.log("setting inital videos",data?.data);
+    data?.data?.length > 0 && setHasMore(true);
     setVideoData(videos);
+  }catch(e){
+    setHasMore(false);
+  }
   }, [fetchState]);
 
   const handleBackClick = () => {
@@ -377,7 +460,7 @@ function DeskUsers({
          />
        </div>}
     <Header/>
-    <div className="flex w-screen h-screen bg-white relative pt-24">
+    <div className="flex w-screen h-screen bg-white relative pt-24 no_bar">
     <div className='w-2/12 w-prof-menu'>
     <DeskMenu width={'w-prof-menu'}/>
     </div>
@@ -389,7 +472,8 @@ function DeskUsers({
          </div> */}
             <div className="flex items-center pb-2">
                <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
-               <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
+               <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               
+               </div>
                <div className="flex flex-col h-32 justify-between">
                   <div>
                   <h3 className=" mb-1 mt-1.5 font-bold text-2xl ">{userHandle}</h3>
@@ -465,6 +549,7 @@ function DeskUsers({
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}
         updateActiveIndex={updateActiveIndex}
+        lastItemInView={lastItemInView}
       />
      
 {/* <LandscapeView/> */}

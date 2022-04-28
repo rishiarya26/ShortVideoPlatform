@@ -18,7 +18,7 @@ button:focus{
 }
 html *::-webkit-scrollbar {
   border-radius: 0;
-  width: 8px;
+  width: 0px;
 }
 [onClick] {
   cursor:pointer;
@@ -137,6 +137,14 @@ img{
     object-position: 0 0;
     max-width: 300px;
   }
+  .vdo_player_desk_detail{
+    box-sizing: border-box;
+    object-fit: cover!important; 
+    height: 100%;
+    width: 100%;
+    object-position: 0 0;
+    max-width: 400px;
+  }
   input:focus-visible{
     outline: none;
   }
@@ -151,8 +159,12 @@ img{
 
 .no_bar::-webkit-scrollbar {
   display: none;
+  width: 0px;
 }
-
+.usricon{
+  background-color: #fbbc05;
+    color: white;
+}
 
 .thin_bar::-webkit-scrollbar {
   width: 3px;
@@ -193,6 +205,13 @@ img{
 }
 .desk-share:hover .share-ls{
   display: flex;
+}
+.usrhvr:hover .usrdeck{
+  display: flex;
+}
+.usrdeck{
+  /* display: none; */
+  transition-delay: 2s;
 }
 @media (orientation: portrait) {
   .landscape_screen {

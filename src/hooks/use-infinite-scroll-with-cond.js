@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getItem } from '../utils/cookie';
 
-const useInfiniteScroll = (callback) => {
+const useInfiniteScrollWithCond = (callback, valid ) => {
   const [isFetching, setIsFetching] = useState(false);
+  const [validCond, setValidCond] = useState(valid);
 
   useEffect(() => {
     window?.addEventListener('scroll', handleScroll);
@@ -11,10 +12,17 @@ const useInfiniteScroll = (callback) => {
 
   useEffect(() => {
     if (!isFetching) return;
-     callback && callback(() => {
+    console.log("valid",valid)
+    callback && callback(() => {
       console.log('called back');
     });
   }, [isFetching]);
+
+  // useEffect(()=>{
+  //   if(valid){
+  //     setValidCond(true);
+  //   }
+  // },[valid])
 
   const device = getItem('device-info');
   const deviceType = getItem('device-type');
@@ -23,7 +31,7 @@ const useInfiniteScroll = (callback) => {
     // console.log((window?.scrollY) ,"<=", (document?.documentElement?.offsetHeight-window?.screen?.availHeight))
     // if ((window?.scrollY) !== (document?.documentElement?.offsetHeight-window?.screen?.availHeight) || isFetching) return;
 if(deviceType === 'desktop'){
-  console.log(window?.innerHeight ,"+", window?.scrollY ,"<=",(document?.documentElement?.offsetHeight-1))
+  console.log((window?.innerHeight + window?.scrollY) <= (document?.documentElement?.offsetHeight-1));
   if ((window?.innerHeight + window?.scrollY) <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
 }else if(deviceType === 'mobile'){
   if(device && device === 'android'){
@@ -34,10 +42,10 @@ if(deviceType === 'desktop'){
     if ((window?.innerHeight + window?.scrollY) <= (document?.documentElement?.offsetHeight-1) || isFetching) return;
   }
 }
-    setIsFetching(true);
+   setIsFetching(true);
   }
 
   return [isFetching, setIsFetching];
 };
 
-export default useInfiniteScroll;
+export default useInfiniteScrollWithCond;

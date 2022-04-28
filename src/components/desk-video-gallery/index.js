@@ -15,7 +15,7 @@ const LoadComp = () => (<Loading />);
 
 export default function DeskVideoGallery({
   items, status, retry, userId='', type = 'all', page ='profile', hashTag='',
-   showLoading, fetchMoreListItems, updateActiveIndex
+   showLoading, fetchMoreListItems, updateActiveIndex,lastItemInView
 }) {
   const [activeHoverIndex, setActiveHoverIndex ] = useState(null);
   const [delayHandler, setDelayHandler] = useState(null)
@@ -30,11 +30,11 @@ export default function DeskVideoGallery({
   const { t } = useTranslation();
   const router = useRouter();
 
-  useEffect(()=>{
-    window.onunload = function () {
-      window?.scrollTo(0, 0);
-    }
-  },[])
+  // useEffect(()=>{
+  //   window.onunload = function () {
+  //     window?.scrollTo(0, 0);
+  //   }
+  // },[])
 
   // useEffect(() => {
   //   window?.addEventListener('scroll', handleScroll);
@@ -95,7 +95,24 @@ export default function DeskVideoGallery({
             ? (
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
             { items?.map((item, id) => (
-               <span className="w-1/5 min-h-25 max-h-25 flex items-center bg-gray-200 p-1" key={id} 
+              (id === items?.length-1) ? 
+              <span ref={lastItemInView} className="w-1/5 min-h-28 max-h-28 flex items-center p-1" key={id} 
+               onMouseOver={()=>handleMouseEnter(id)}
+               onClick={()=>updateActiveIndex(id)}
+                  >
+               {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
+                <DeskVideoCard 
+                  thumbnailUrl={item?.thumbnailUrl} 
+                  videoTitle ={item?.videoTitle} 
+                  viewCount={item?.viewCount} 
+                  likesCount={item?.likescount}
+                  shoppable = {item?.shoppable}
+                  id={id} 
+                  videoUrl = {item?.video_url}
+                  activeHoverIndex={activeHoverIndex}
+                />
+             </span> :
+               <span className="w-1/5 min-h-28 max-h-28 flex items-center p-1" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
                onClick={()=>updateActiveIndex(id)}
                   >

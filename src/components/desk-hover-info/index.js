@@ -1,6 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
-import { withRouter } from 'next/router';
+import { useRouter, withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos, getUserProfile, getUserProfileWLogin, toFollow } from '../../sources/users/profile';
@@ -59,10 +59,10 @@ const LandscapeView = dynamic(
 function DeskHoverInfo({id}) {
   const [item, setItem] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
-//   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
 //   const [showLoading, setShowLoading] = useState(isFetching)
   const [isFollowing,setIsFollowing] = useState();
 
+  const router = useRouter();
 //   useEffect(()=>{
 //     setIsFollowing(isFollow);
 //   },[isFollow])
@@ -105,36 +105,27 @@ function DeskHoverInfo({id}) {
 
   const toShowFollow = useAuth( ()=>show('',login, 'big',{showMessage:showMessage}), ()=>followUser(id, userId, followFunc))
 
-  return (  
-    <div className="flex flex-col z-50">
-    <div className="flex bg-white relative pt-24">
-    <div className="w-10/12 pl-8">
-      <div className="profile-details flex flex-col w-1/2 relative text-gray-700"> 
-         <div className="absolute right-4 top-4">
-            <ShareOutline/>
-         </div>
-            <div className="flex items-center pb-2">
-               <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
-               <Img data={item?.profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
-               <div className="flex flex-col h-32 justify-between">
-                  <div>
-                  <h3 className=" mb-1 mt-1.5 font-bold text-2xl ">{item?.userHandle}</h3>
-                  <p className="font-medium p-2 text-sm">{item?.firstName} {item?.lastName}</p>
-                  </div>
-                  <button 
-        onClick={toShowFollow}
-        // onClick={handleFollow} 
-        className={isFollowing ? "font-semibold text-sm border border-black rounded-sm py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white"}>
-          {isFollowing ? 'Following' : t('FOLLOW')}
-        </button>
-               </div>
-            </div>
-            <div className="list flex  mt-8">
-                  <div className="flex text-gray-700 items-end">
-                     <p className="font-semibold text-lg">{numberFormatter(item?.following)}</p>
-                     <p className="pl-2">Following</p>
-                  </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+  return ( 
+    <div className="flex flex-col bg-white p-6 rounded-md shadow-lg"> 
+    <div className="flex justify-between">
+      <div className='flex flex-col'> 
+          <div onClick={()=>router.push(`/@${item?.userHandle}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full">
+                  <Img data={item?.profilePic} title="Hipi" fallback={fallbackUser?.src} />
+          </div>
+          <h3 onClick={()=>router.push(`/@${item?.userHandle}`)} className="border-black font-semibold text-base text-gray-700 cursor-pointer mt-2 ">{item?.userHandle}</h3>
+          <p className="text-base text-gray-500">{item?.firstName} {item?.lastName}</p>
+      </div>
+        <div>
+        <button 
+          onClick={toShowFollow}
+          // onClick={handleFollow} 
+          className={isFollowing ? "font-semibold text-sm border border-black rounded-md py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-md py-1 px-9 mr-1 bg-white text-hipired"}>
+            {isFollowing ? 'Following' : t('FOLLOW')}
+          </button>
+        </div>
+      </div>
+      <div className="list flex mt-2">
+                  <div className="flex text-gray-700 items-end ">
                      <p className="font-semibold text-lg">{numberFormatter(item?.followers)}</p>
                      <p className="pl-2">Followers</p>
                   </div>
@@ -143,14 +134,16 @@ function DeskHoverInfo({id}) {
                      <p className="pl-2">Likes</p>
                   </div>
             </div>
-            <div className="Bio">
-               <p className="py-4 pr-12 text-gray-00 text-md  h-full flex items-center">
+            <div className="Bio border-t py-3 mt-3">
+               <p className=" pr-12 text-gray-00 text-md  h-full flex items-center">
                                  {item?.bio}
                </p>
             </div>
-            </div>
-    </div>
-    </div>
+
+
+
+
+   
     </div>
   );
 }

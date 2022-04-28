@@ -50,6 +50,7 @@ module.exports = {
       minWidth: {
         '0': '0',
         '6':'1.5rem',
+        '10':'2.5rem',
         '16':'4rem',
         '32':'8rem',
         '1/6':'16.6vw',
@@ -75,6 +76,7 @@ module.exports = {
     {
       '90':'90%',
       '25':'25vw',
+      '28':'28vw',
       '60':'15rem'
      },
        minHeight: {
@@ -83,6 +85,7 @@ module.exports = {
         '38':'38vw',
         '1/6':'16.6vw',
         '25':'25vw',
+        '28':'28vw',
         '49':'49vw',
        },
       spacing:{

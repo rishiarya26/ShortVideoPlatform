@@ -32,7 +32,10 @@ const [show, setShow] = useState(false);
 
     return(
         <div className="header flex flex-col relative">
-        <p onMouseEnter={()=>setShow(true)} className='text-base text-gray-500'> 
+        <p className='usrhvr relative text-base text-gray-500'> 
+        <div className='usrdeck absolute z-50 top-4 left-2'>
+         <DeskHoverInfo id={userName}/>
+      </div> 
          <span 
          onClick={()=>router?.push(`/@${userName}`)} 
          className="hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">{`${userName} ` } 
@@ -50,9 +53,7 @@ const [show, setShow] = useState(false);
            <MusicBlack/>
            {music_title}
         </p>
-      {/* {show && <div className='absolute top-0 left-0'>
-         <DeskHoverInfo id={userName}/>
-      </div>} */}
+    
 
         {/* <div className="absolute rounded text-md font-semibold  px-6 p-0.5 right-1 top-0 border border-hipired cursor-pointer  text-hipired">
            Follow

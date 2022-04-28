@@ -286,7 +286,7 @@ const info ={
             <ErrorComp retry={doRetry}/>
             }
         </div>
-        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'medium')}>Get App</div>
+        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'broad')}>Get App</div>
         <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 p-2 flex justify-center items-center rounded-full bg-hipired white'>
             <Top/>
         </button>
