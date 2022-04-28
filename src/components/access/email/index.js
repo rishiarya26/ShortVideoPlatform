@@ -10,6 +10,7 @@ import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
 import * as fbq from '../../../analytics/fb-pixel'
 import { getItem } from '../../../utils/cookie';
+import useDrawer from '../../../hooks/use-drawer';
 
 export default function Email({
   data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration, showMessage
@@ -18,7 +19,8 @@ export default function Email({
   const { t } = useTranslation();
   // const { showMessage } = useSnackbar();
   const router = useRouter();
-  const device = getItem('device-type')
+  const device = getItem('device-type');
+  const {close} = useDrawer();
 
   const mixpanel = (type) =>{
     const mixpanelEvents = commonEvents();
@@ -38,6 +40,9 @@ export default function Email({
           router?.push({
             pathname: '/feed/for-you'
           });
+          if(device === 'desktop'){
+            close();
+          }
           /* Mixpanel */
           try{
             mixpanel('Login');
@@ -48,6 +53,7 @@ export default function Email({
            /* Mixpanel */
           showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);
+
         }
       } catch (e) {
         showMessage({ message: t('FAIL_EMAIL_LOGIN') });

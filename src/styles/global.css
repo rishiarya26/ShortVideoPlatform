@@ -210,8 +210,11 @@ img{
   display: flex;
 }
 .usrdeck{
-  /* display: none; */
+  display: none;
   transition-delay: 2s;
+}
+.w-320{
+  width:320px;
 }
 @media (orientation: portrait) {
   .landscape_screen {

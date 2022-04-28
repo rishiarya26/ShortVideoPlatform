@@ -345,7 +345,7 @@ function DeskUsers({
         <button 
         onClick={toShowFollow}
         // onClick={handleFollow} 
-        className={isFollowing ? "font-semibold text-sm border border-black rounded-sm py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white"}>
+        className={isFollowing ? "font-semibold text-sm border border-black rounded py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded py-1 px-9 mr-1 bg-hipired text-white"}>
           {isFollowing ? 'Following' : t('FOLLOW')}
         </button>
       </>,

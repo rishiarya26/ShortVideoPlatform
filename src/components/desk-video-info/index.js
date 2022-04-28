@@ -32,24 +32,25 @@ const [show, setShow] = useState(false);
 
     return(
         <div className="header flex flex-col relative">
-        <p className='usrhvr relative text-base text-gray-500'> 
-        <div className='usrdeck absolute z-50 top-4 left-2'>
-         <DeskHoverInfo id={userName}/>
-      </div> 
+        <p className='text-sm text-gray-500'> 
          <span 
          onClick={()=>router?.push(`/@${userName}`)} 
-         className="hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">{`${userName} ` } 
+         className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">{`${userName} ` }
+         <div className='usrdeck absolute z-50 top-4 -left-16'>
+         <DeskHoverInfo id={userName}/>
+         </div>  
          </span>
+         
           {fullName[pageType]}
         </p>
-        <div className=" text-base font-light text-gray-600 w-8/12 mb-1">
+        <div className=" text-sm font-light text-gray-600 w-8/12 mb-1">
      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-           <span key={id} className={item?.includes('#') ? 'text-base font-normal text-gray-900':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
+           <span key={id} className={item?.includes('#') ? 'text-sm font-normal text-gray-900':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
             </span>
          ))}
      </div>
-        <p className="font-medium text-base mb-4 text-gray-700">
+        <p className="font-medium text-sm mb-4 text-gray-700">
            <MusicBlack/>
            {music_title}
         </p>

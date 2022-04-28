@@ -40,12 +40,12 @@ const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
 
         const loginComp = 
         <>
-        <p className="text-base font-small text-gray-400 p-2 font-sans">
+        <p className="text-sm font-small text-gray-400 p-2 mt-2 font-sans">
            Log in to follow creators, like videos, and view comments.
         </p>
         <button 
           onClick={() =>show('', login, 'big',{showMessage:showMessage})} 
-          className="font-semibold border border-hipired text-hipired text-lg p-2 mt-4 ">
+          className="font-semibold border border-hipired rounded text-hipired text-base p-2 mt-4 ">
           Log in
         </button>
         </>

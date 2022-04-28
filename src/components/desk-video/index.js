@@ -157,7 +157,7 @@ return (
 <div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
-      <div onClick={()=>pushToProfile()} className="flex items-center w-16 h-16 overflow-hidden cursor-pointer rounded-full">
+      <div onClick={()=>pushToProfile()} className="flex items-center w-14 h-14 overflow-hidden cursor-pointer rounded-full">
          <Img data={userProfilePicUrl} alt='profile-pic' fallback={fallbackUser?.src}/>
          {/* <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />     */}
       </div>
@@ -171,7 +171,7 @@ return (
       music_title={music_title}
      />
       <div className="Video flex items-end">
-      <div className="desk-feed rounded-md overflow-hidden relative cursor-pointer" >
+      <div className="desk-feed rounded-lg overflow-hidden relative cursor-pointer" >
          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         {showVideoDetail ?
         <img src={firstFrame} alt='poster image'/>

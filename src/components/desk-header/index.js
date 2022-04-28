@@ -33,27 +33,7 @@ const Header = ({doReload})=>{
    }
    const {show} = useDrawer();
     const {showSnackbar} = useSnackbar();
-   const router = useRouter();
-
-//     const UserInfo = async()=> {
-//        const isLogIn = useAuth('false','true');
-//      if(isLogIn === 'true'){  
-//         const userId = localStorage.get('user-id')
-//        let data = {}
-//        try{
-//          data = await getUserProfile(userId);
-//          console.log("user-data***",data)
-//        }catch(e){
-//           console.log('errorrrrt',e);
-//        }
-//       }
-//        return (
-//           <>
-// {isLogIn === 'true' && <img src={data?.profilePic}/>
-// }        </>
-//        )
-//     }    
-
+    const router = useRouter();
 
     const tokens = localStorage?.get('tokens') || null;
     let isLoggedIn = useAuth('false','true');
@@ -104,17 +84,19 @@ const Header = ({doReload})=>{
       <div>
            {isLoggedIn === 'true'?
            <div className="relative">
-           <div className='w-10 rounded-full overflow-hidden' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
-             {userInfo?.profilePic ? <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
-             <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>{userInfo?.firstName?.split(' ')?.map(name =>name[0])?.join('').toUpperCase()}</div>
+           <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
+             { userInfo?.profilePic ? 
+             <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
+             Object.keys(userInfo)?.length > 0 && <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>
+                {userInfo?.firstName?.split(' ')?.map(name =>name[0])?.join('').toUpperCase()}
+             </div>
              }
            {showlogoutMenu && 
             <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
-          <div onClick={()=>show('Logout', LogoutPopup, 'small')} className="flex items-center ">
+            <div onClick={()=>show('Logout', LogoutPopup, 'small')} className="flex items-center ">
             <Logout/>
             <p className="text-base px-3">Logout</p>
             </div>
-           {/* <div className="text-gray-600 ">Sign Out</div> */}
            </div>}
            </div>
            </div>

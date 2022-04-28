@@ -248,7 +248,7 @@ const info ={
 
   return (
     <>
-    <div className="flex flex-col w-full thin_bar pt-28 items-center font-sans">
+    <div className="flex flex-col w-full thin_bar pt-24 items-center font-sans">
        {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>
          <VideoDetail
@@ -286,8 +286,8 @@ const info ={
             <ErrorComp retry={doRetry}/>
             }
         </div>
-        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-0 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'broad')}>Get App</div>
-        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-0 p-2 flex justify-center items-center rounded-full bg-hipired white'>
+        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-4 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'broad')}>Get App</div>
+        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-4 p-2 flex justify-center items-center rounded-full bg-hipired white'>
             <Top/>
         </button>
     </div>
