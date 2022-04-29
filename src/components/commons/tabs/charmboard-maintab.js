@@ -12,14 +12,14 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
         // console.log(items[selected])
     }
   return (
-    <div className="z-10 flex items-center w-full text-gray-400 justify-center font-semibold bg-white">
+    <div className="z-10 flex items-center w-full text-gray-400  font-semibold bg-white">
       { items?.display.map((data, id) => (
           <div
                key={id}
                id={id}
                onClick={()=>onTabClick(id)}
                className={ id === selectedIndex 
-              ? ' text-gray-700 font-semibold border-b-2 border-green-600 w-1/2 flex cursor-pointer justify-center align-center py-2 text-sm'
+              ? ' text-gray-700 font-semibold border-b-2 border-green-600 w-1/2 flex cursor-pointer justify-center align-center py-2 text-xs'
               : ' py-2 w-1/2 flex justify-center align-center text-sm cursor-pointer'}
           >
             <span className={

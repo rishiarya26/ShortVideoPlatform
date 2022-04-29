@@ -87,7 +87,7 @@ function DeskHoverInfo({id}) {
 
   useEffect(()=>{
       dataFetcher();
-  },[])
+  },[id])
 
   const followUser = async(followerId,userId, follow) =>{
     const response = await toFollow({ userId:followerId,followerId:userId,follow:follow});
@@ -104,7 +104,7 @@ function DeskHoverInfo({id}) {
     showSnackbar({message: message})
  }
 
-  const toShowFollow = useAuth( ()=>show('',login, 'big',{showMessage:showMessage}), ()=>followUser(id, userId, followFunc))
+  const toShowFollow = useAuth( ()=>show('',login, 'big',{showMessage:showMessage}), ()=>followUser(item?.id, userId, followFunc))
 
   return ( 
     <div className="flex flex-col pt-10 rounded-md w-520 "> 
@@ -115,8 +115,10 @@ function DeskHoverInfo({id}) {
           <div onClick={()=>router.push(`/@${item?.userHandle}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full">
               <Img data={item?.profilePic} title="Hipi" fallback={fallbackUser?.src} />
           </div>
-          <h3 onClick={()=>router.push(`/@${item?.userHandle}`)} className="border-black font-semibold text-base text-gray-700 cursor-pointer mt-2 ">{item?.userHandle}</h3>
-          <p className="text-base font-normal text-gray-500">{item?.firstName} {item?.lastName}</p>
+          <h3 onClick={()=>router.push(`/@${item?.userHandle}`)} className="border-black font-semibold text-base text-gray-700 cursor-pointer mt-2 ">
+            {item?.userHandle}
+          </h3>
+          <p className="text-sm font-normal text-gray-500">{item?.firstName} {item?.lastName}</p>
       </div>
         <div>
         <button 
@@ -128,20 +130,20 @@ function DeskHoverInfo({id}) {
         </div>
       </div>
       <div className="list flex mt-2">
-                  <div className="flex text-gray-700 items-end ">
+                  <div className="flex text-gray-700 items-center ">
                      <p className="font-bold text-lg">{numberFormatter(item?.followers)}</p>
-                     <p className="pl-2">Followers</p>
+                     <p className="pl-2 font-normal">Followers</p>
                   </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+                  <div className="flex text-gray-700 items-center ml-4">
                      <p className="font-bold text-lg">{numberFormatter(item?.totalLikes)}</p>
-                     <p className="pl-2">Likes</p>
+                     <p className="pl-2 font-normal text-sm">Likes</p>
                   </div>
             </div>
-            <div className="Bio border-t pt-3 mt-3">
+            {item?.bio && <div className="Bio border-t pt-3 mt-3">
                <p className=" pr-12 h-full flex items-center  text-sm font-light text-gray-600">
                                  {item?.bio}
                </p>
-            </div>
+            </div>}
    </div>
     </div>
   );

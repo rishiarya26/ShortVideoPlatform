@@ -25,6 +25,7 @@ import useDialog from "../../hooks/use-dialog";
 import Sidebar from "./sidebar"
 import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
+import DeskHoverInfo from "../desk-hover-info";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -34,6 +35,7 @@ hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed'}
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
 
+   console.log("FIRST",firstName, lastName)
    const toHashTag =(hashtag)=>{
       let finalValue = hashtag;
       if(hashtag?.includes('#')){
@@ -109,9 +111,19 @@ return (
                    <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
                   </div>
                   <div className="flex flex-col">
-                  <h3 onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold text-md text-gray-700 cursor-pointer">{userName}</h3>
+                  <span 
+                     onClick={()=>router?.push(`/@${userName}`)} 
+                     className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
+                      <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold text-md text-gray-700 cursor-pointer">
+                       {userName}
+                      </div>
+                     <div className='usrdeck absolute z-50 top-4 -left-16'>
+                     <DeskHoverInfo id={userName}/>
+                     </div>  
+                  </span>
+                  <div className='text-sm text-gray-600'>{`${firstName ? firstName : ''} ${lastName ? lastName : ''}`}</div>
                   </div>
-               </div>
+               </div>   
                <div className="flex justify-end">
                   {/* <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button> */}
                </div>

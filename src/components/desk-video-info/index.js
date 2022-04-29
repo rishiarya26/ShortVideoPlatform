@@ -34,8 +34,8 @@ const [show, setShow] = useState(false);
         <div className="header flex flex-col relative">
         <p className='text-sm text-gray-500'> 
          <span 
-         onClick={()=>router?.push(`/@${userName}`)} 
-         className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">{`${userName} ` }
+         className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
+           <span  onClick={()=>router?.push(`/@${userName}`)}> {`${userName} `}</span>
          <div className='usrdeck absolute z-50 top-4 -left-16'>
          <DeskHoverInfo id={userName}/>
          </div>  

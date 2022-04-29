@@ -104,8 +104,8 @@ img{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
- .h-95{
-   height: 95%;
+ .h-80{
+   height: 80%;
  }
   .profile-bg{
     align-items: center;
@@ -214,14 +214,16 @@ img{
   transition-delay: 2s;
 }
 .w-320{
-  width:320px;
+  min-width:320px;
+}
+.bg-deskseekbar{
+  background-color: rgba(255, 255, 255, 0.2);
 }
 @media (orientation: portrait) {
   .landscape_screen {
     display: none;
   }
 }
-
 
 
 /* static pages */

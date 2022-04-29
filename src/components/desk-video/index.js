@@ -200,27 +200,28 @@ return (
          </video>}
          <div
          onClick={handleVideoPress}
-         className="cursor-pointer absolute bottom-4 left-4 opacity-0 justify-start"
+         className="cursor-pointer absolute bottom-8 left-4 opacity-0 justify-start"
          style={{ display: play ? 'flex' : 'none' }}
          >
          <Play />
          </div>
          <div
          onClick={handleVideoPress}
-         className=" cursor-pointer absolute bottom-4 left-4 opacity-0 justify-start "
+         className=" cursor-pointer absolute bottom-8 left-4 opacity-0 justify-start "
          style={{ display: (pause ? 'flex' : 'none') }}
          >
         <Pause/>
       </div>
    
-      {muted ? <div onClick={()=>toggleMute(false)} className="cursor-pointer absolute bottom-4 opacity-0 right-4">
+      {muted ? <div onClick={()=>toggleMute(false)} className="cursor-pointer absolute bottom-8 opacity-0 right-4">
        <Mute/>
       </div> : 
-      <div onClick={()=>toggleMute(true)} className=" cursor-pointer absolute bottom-4 opacity-0 right-4">
+      <div onClick={()=>toggleMute(true)} className=" cursor-pointer absolute bottom-8 opacity-0 right-4">
         <UnMute/>
       </div>}
-
+      <div className='opacity-0'>
       <EmbedSeekbar type='desk' seekedPercentage={seekedPercentage} />
+      </div>
       {/* {<div
                 className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: ( active && seekedPercentage > 0) ? 'none' : 'flex text-white' }}

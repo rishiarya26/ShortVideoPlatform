@@ -53,6 +53,10 @@ function transformSuccess(resp) {
         payloadObject.viewCount = d?.viewCount;
         payloadObject.shoppable = d?.shoppable || false
         payloadObject.firstFrame= d?.firstFrame || null;
+        payloadObject.firstName = d?.videoOwners?.firstName || null;
+        payloadObject.lastName = d?.videoOwners?.lastName || null;
+
+
         payloadData.push(payloadObject);
       });
 

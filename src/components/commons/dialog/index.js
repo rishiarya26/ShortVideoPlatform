@@ -20,7 +20,7 @@ const Dialog = ({
       width:'w-1/3'
     },
     big: {
-      height: 'h-95',
+      height: 'h-80',
       width:'w-1/3',
       class:'login_pop'
     },
