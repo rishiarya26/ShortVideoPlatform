@@ -24,7 +24,7 @@ export default function Login({ toggle, loading, setAuth }) {
   const chooseComp = {
     mobile :   
        <div onClick={()=>router.push('/login/phone?option=password')}>
-        <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+        <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center w-full font-semibold">
             <p>Use phone or Email</p>
@@ -33,7 +33,7 @@ export default function Login({ toggle, loading, setAuth }) {
       </div>,
     desktop : 
       <div onClick={()=>setAuth('login')}>
-      <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+      <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center w-full font-semibold">
           <p>Use phone or Email</p>

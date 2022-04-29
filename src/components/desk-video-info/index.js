@@ -35,13 +35,12 @@ const [show, setShow] = useState(false);
         <p className='text-sm text-gray-500'> 
          <span 
          className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-           <span  onClick={()=>router?.push(`/@${userName}`)}> {`${userName} `}</span>
-         <div className='usrdeck absolute z-50 top-4 -left-16'>
+           <span  onClick={()=>router?.push(`/@${userName}`)}> {`${userName}`}</span>
+         <div className='usrdeck absolute z-10 top-4 -left-16'>
          <DeskHoverInfo id={userName}/>
          </div>  
          </span>
-         
-          {fullName[pageType]}
+          {` ${fullName[pageType]}`}
         </p>
         <div className=" text-sm font-light text-gray-600 w-8/12 mb-1">
      {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(

@@ -60,7 +60,7 @@ const DeskDownloadApp = dynamic(
   const [reload, setReload] = useState(false);
   // const [id, setId] = useState('for-you');
 
-  const { id = 'for-you' } = router?.query;
+  let { id = 'for-you' } = router?.query;
   console.log(id)
   const { videoId } = router?.query;
   const {show} = useDrawer();
@@ -93,7 +93,7 @@ const DeskDownloadApp = dynamic(
 
   useEffect(()=>{
     if(reload){
-      console.log("FROM RELOAD")
+      console.log("FROM RELOAD");
       setItems([]);
       setFetchState('pending');
       getInitialData();
@@ -279,7 +279,7 @@ const info ={
          commentCount={videoDetailData?.commentCount}
          />
        </div>}
-        <Header doReload={doReload}/>
+        <Header doReload={doReload} typeParam={id}/>
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
           <div className='w-feed-menu'>
           <DeskMenu width={'w-feed-menu'}/>

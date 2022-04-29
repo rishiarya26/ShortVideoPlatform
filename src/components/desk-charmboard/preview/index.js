@@ -194,7 +194,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
 
     const deleteButton = {
        'normal' : '',
-       'saved' : <div onClick={deleteSavedItems} className='flex flex-col items-center ml-2'>
+       'saved' : <div onClick={deleteSavedItems} className='cursor-pointer flex flex-col items-center ml-2'>
                    <Delete/>
                    {/* <p className='text-xs'>Delete</p> */}
                  </div>
@@ -234,7 +234,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
                      <Img data={topCharms?.content_image_url}/>
                    }
                    </div>
-                   <div className='cta flex px-2'>
+                   <div className='cta flex px-2 cursor-pointer'>
                <div onClick={()=>{
                  onExpandToggle(id);
                 setExpand(!expand);
@@ -250,7 +250,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2 cursor-pointer'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
          {expand && 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
@@ -328,7 +328,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          {items && items?.hair?.length > 0 && <div  className='flex flex-col w-full my-4' >
          <div  className="text-xs text-gray-500 py-2">HOW TO GUIDE TO GET THIS HAIRDO</div>
          <div className='flex bg_hair hair-header relative w-full pt-2'>
-            <div className="flex w-24 h-24">
+            <div className="flex w-24 h-24 cursor-pointer">
             <Img data={topCharms?.imageUrl} />
             </div>
             <div className="flex flex-col pl-4 justify-center">

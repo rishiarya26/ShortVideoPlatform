@@ -153,7 +153,7 @@ export const GoogleButton =({loading}) =>{
         <GoogleLogin
         clientId={GOOGLE_CLIENT_ID_PREROD}
         render={renderProps => (
-            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
          <div className="justify-self-start"><Google/></div>
          <div className="flex justify-center w-full font-semibold">
            <p>Continue with Google</p>
@@ -165,7 +165,7 @@ export const GoogleButton =({loading}) =>{
         />
 
         </>
-    //  <div  id ='buttonDiv' className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+    //  <div  id ='buttonDiv' className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
     //     <div className="justify-self-start"><Google/></div>
     //     <div className="flex justify-center w-full font-semibold">
     //       <p>Continue with google</p>

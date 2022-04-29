@@ -60,8 +60,21 @@ showDialog('', login, 'big',{showMessage:showMessage})
 //    track('UGC Liked',mixpanelEvents)
 } 
 
+const disLike = () => {
+  deleteReaction('like', socialId );
+  setIsLiked({like : false, reactionTime: 'now'});
+  getVideoReactions(socialId, 'now', 'delete')
+//    const mixpanelEvents = commonEvents();
+//    mixpanelEvents['UGC Id'] = activeVideoId;
+//   //  mixpanelEvents['Creator Id'] = videoOwnersId;
+//    const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
+//    mixpanelEvents['Page Name'] = compName;
+//    track('UGC Liked',mixpanelEvents)
+} 
+
 
 const selectedLike = useAuth(showLoginOptions, like);
+const selectDisLike = useAuth(showLoginOptions, disLike);
 
 const getVideoReactions = async(socialId,time,action)=>{
    let isLiked;
@@ -130,17 +143,7 @@ useEffect(()=>{
           <div>
             <div
               role="presentation"
-              onClick={() => {
-                deleteReaction('like', socialId );
-                setIsLiked({like : false, reactionTime: 'now'});
-                getVideoReactions(socialId, 'now', 'delete')
-               //  const mixpanelEvents = commonEvents();
-               //  mixpanelEvents['UGC Id'] = activeVideoId;
-               //  // mixpanelEvents['Creator Id'] = videoOwnersId;
-               //  const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-               //  mixpanelEvents['Page Name'] = compName;
-               //  track('UGC Unliked',mixpanelEvents)
-              }}
+              onClick={() => selectDisLike()}
             >
               <Liked />
             </div>
@@ -158,7 +161,8 @@ useEffect(()=>{
             </div>
             <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
           </div>
-       )} 
+       )
+      } 
 
       </div>
 

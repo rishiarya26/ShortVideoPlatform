@@ -114,7 +114,7 @@ export default function DeskVideoGallery({
                 <div className='truncate pt-1 pb-3 text-sm w-8/12 mb-2 mt-1 text-gray-700'>{ item?.description && item?.description?.replaceAll('\n',' ')?.split(' ')?.splice(0,item?.description?.replaceAll('\n',' ')?.split(' ')?.length > 3 ? 3 : item?.description?.replaceAll('\n',' ')?.split(' ')?.length-1)}</div>
                 </div>
              </span> :
-               <span className="w-1/5 flex items-center p-1" key={id} 
+               <span className="w-1/5 flex flex-col items-center p-1" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
                onClick={()=>updateActiveIndex(id)}
                   >
@@ -129,8 +129,8 @@ export default function DeskVideoGallery({
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
                 />
-                <div className='truncate text-sm w-8/12 mb-2 mt-1 text-gray-700'>{ item?.content_description && item?.content_description?.replaceAll('\n',' ')?.split(' ')?.splice(0,item?.content_description?.replaceAll('\n',' ')?.split(' ')?.length > 3 ? 3 : item?.content_description?.replaceAll('\n',' ')?.split(' ')?.length-1)}</div>
                 </div>
+                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
              </span>
              ))}
               {showLoading &&  

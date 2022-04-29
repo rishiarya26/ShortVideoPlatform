@@ -15,11 +15,11 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
             </div>
            
            <div className="flex relative w-full">
-               <div className="flex w-1/2 h-64">
+               <div className="flex w-1/2 h-64 cursor-pointer">
                     <Img data={thumbnailProduct}/>
                </div>
                 <div onClick={()=>
-                        window?.open(shopLink)} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
+                        window?.open(shopLink)} className=" cursor-pointer py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                     <Img data={thumbnail}/> 
                 </div>
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
@@ -30,10 +30,10 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                     <div className="flex justify-between ites-center w-full">
                         <div className="flex items-center">
                        
-                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
+                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v ">{shopName}</p>
                         </div>
                         <div onClick={()=>
-                        window?.open(shopLink)} className="flex pl-4 py-2 ">
+                        window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">
                         <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                     </div>

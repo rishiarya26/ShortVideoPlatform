@@ -17,7 +17,7 @@ import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
 
-const Header = ({doReload})=>{
+const Header = ({doReload, type='normal', typeParam})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
    
@@ -55,12 +55,17 @@ const Header = ({doReload})=>{
        }
     },[isLoggedIn])
 
-    console.log('isLoggedIn',isLoggedIn)
+    console.log('isLoggedIn',isLoggedIn);
+
+const redirectToFeed = ()=>{
+   // window.location.href = '/feed/for-you'
+   router.push('/feed/for-you');
+}
  
    return(
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4 w-feed h-16 flex bg-white items-center px-6 justify-between">
-      <div onClick={doReload ? ()=>doReload() : ()=>router?.push('/feed/for-you')} className="w-14 cursor-pointer">
+      <div onClick={typeParam === 'for-you' ? (doReload && (()=>doReload())) : redirectToFeed} className="w-14 cursor-pointer">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
 
@@ -84,7 +89,7 @@ const Header = ({doReload})=>{
       <div>
            {isLoggedIn === 'true'?
            <div className="relative">
-           <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
+           <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
              { userInfo?.profilePic ? 
              <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
              Object.keys(userInfo)?.length > 0 && <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>

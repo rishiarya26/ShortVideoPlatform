@@ -24,7 +24,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                <div className="flex w-1/2">
                {thumbnail && <Img data={thumbnail}  fallback={fallbackImg?.src}/> }
                </div>
-                {thumbnailProduct ? <div onClick={()=> window?.open(shopLink)} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
+                {thumbnailProduct ? <div onClick={()=> window?.open(shopLink)} className=" cursor-pointer py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
 
                 <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
                 </div> : 
@@ -40,7 +40,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                   
                     }
                    {thumbnail && thumbnailProduct &&  <div className="flex flex-col items-start text-xs text-gray-600 p-2 bg-gray-100 w-fit  mt-1">
-                   <button className=" text-black" onClick={()=>setShow(!show)}>{!show ? '▼ Show step' : '▲ Hide step'}
+                   <button className=" text-black cursor-pointer" onClick={()=>setShow(!show)}>{!show ? '▼ Show step' : '▲ Hide step'}
                     </button>
                             {show && <p className="pt-1">{title && title}</p>}
                             </div>}
@@ -49,7 +49,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                         <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
                         </div>
                         <div onClick={()=>
-                        window?.open(shopLink)} className="flex pl-4 py-2 ">
+                        window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">
                             <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                     </div>}

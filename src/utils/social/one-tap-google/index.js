@@ -28,13 +28,12 @@ const getToken = async(response)=>{
   const googleToken = response?.credential;
   const resp = await login(googleToken);
   if(resp.status === 'success'){
-   try{
-    mixpanel('Login')
+   try{ 
+    mixpanel('Login');
     fbq.defEvent('CompleteRegistration');
    }catch(e){
    console.log('error in fb or mixpanel event');
    }
-
   }
  } catch (error) {
    if(error.code === 2){  
