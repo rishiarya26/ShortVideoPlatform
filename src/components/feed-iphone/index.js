@@ -317,7 +317,7 @@ function FeedIphone({ router }) {
   setToShowItems(updateShowItems);
 }
   catch(e){
-console.log('error',e)
+console.log('errorrr',e)
   }
 }
 

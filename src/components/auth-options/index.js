@@ -5,13 +5,16 @@ import { GOOGLE_PLATFORM } from '../../constants';
 import { login } from '../../sources/social/google/login';
 import Login from '../login-options';
 import Signup from '../signup-options';
+import DeskLogin from '../desk-login'
+import DeskSignup from '../desk-signup'
+import { localStorage } from '../../utils/storage';
+import useSnackbar from '../../hooks/use-snackbar';
 
-export default function AuthOptions() {
+export default function AuthOptions({showMessage}) {
   const [showLoginOptons, setShowLoginOptons] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [authMethod, setAuthMethod] = useState(null);
     
-  // const Login = lazy(() => import('../login-options'));
-
   const loaded = ()=>{
       console.log("lib google ended")
       setLoading(false)
@@ -19,19 +22,30 @@ export default function AuthOptions() {
 
   useEffect(()=>{
     console.log('lib google started')
+    console.log("loading",loading)
     inject(GOOGLE_PLATFORM , null, loaded); 
  },[])
 
   const toggle = selected => {
     setShowLoginOptons(!(selected === 'signup'));
   };
+
+  const toLoginOptions = (value)=>{
+    console.log(value, authMethod)
+    setAuthMethod(value);
+  }
+
   return (
     <>
-      {showLoginOptons ? 
+      {authMethod ? authMethod === 'login' ? 
+      <DeskLogin showMessage={showMessage} backToOptions={toLoginOptions}/>
+      : authMethod === 'signup' && <DeskSignup showMessage={showMessage} backToOptions={toLoginOptions}/>
+      :
+      showLoginOptons ? 
         // <Suspense fallback={<div>Loading...</div>}> 
-        <Login toggle={toggle} loading={loading}/>
+        <Login toggle={toggle} loading={loading} setAuth={toLoginOptions}/>
         // {/* </Suspense> */}
-        : <Signup toggle={toggle} loading={loading}/>}
+        : <Signup toggle={toggle} loading={loading} setAuth={toLoginOptions}/>}
     </>
   );
 }

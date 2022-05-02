@@ -36,7 +36,7 @@ function Hipipassthemic() {
           <h2 className='text-base font-bold' >How to participate?</h2>
           
           <p className='text-gray-500 text-sm mt-2'> <span className='text-black font-bold'>Step 1: </span>Login or Signup on Hipi app</p>
-          <p className='text-gray-500 text-sm mt-2'><span className='text-black font-bold'>Step 2: </span>Click on Banner #HipiPassTheMic, sing a song, make a video and tag a friend or family you want to nominate to take up your challenge. Or take up the challenge and sing a song with the last alphabet given to you by your friend or family member, create & upload your video (max 90secs), Include your caption with the hashtag #HipiPassTheMic and #DilPunjabi</p>
+          <p className='text-gray-500 text-sm mt-2'><span className='text-black font-bold'>Step 2: </span>Click on Banner #HipiPassTheMic, sing a song, post a video and invite your friends or family members take up your challenge by sharing your video with them. Or take up the challenge and sing a song with the last alphabet given to you by your friend or family member, create & post your video (max 90secs), Include your caption with the hashtag #HipiPassTheMic and #DilPunjabi</p>
        </div>
 
        <div className='section pt-4 px-6'>

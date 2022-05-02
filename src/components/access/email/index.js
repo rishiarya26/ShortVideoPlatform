@@ -3,20 +3,24 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { track } from '../../../analytics';
 import { commonEvents } from '../../../analytics/mixpanel/events';
-import useSnackbar from '../../../hooks/use-snackbar';
+// import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
 import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import CircularProgress from '../../commons/circular-loader-small';
 import * as fbq from '../../../analytics/fb-pixel'
+import { getItem } from '../../../utils/cookie';
+import useDrawer from '../../../hooks/use-drawer';
 
 export default function Email({
-  data, processEmailData, type
+  data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration, showMessage
 }) {
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
-  const { showSnackbar } = useSnackbar();
+  // const { showMessage } = useSnackbar();
   const router = useRouter();
+  const device = getItem('device-type');
+  const {close} = useDrawer();
 
   const mixpanel = (type) =>{
     const mixpanelEvents = commonEvents();
@@ -33,9 +37,12 @@ export default function Email({
         finalData.type = 'email';
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router?.push({
+         device === 'mobile' && router?.push({
             pathname: '/feed/for-you'
           });
+          if(device === 'desktop'){
+            close();
+          }
           /* Mixpanel */
           try{
             mixpanel('Login');
@@ -44,11 +51,12 @@ export default function Email({
           console.log('error in fb or mixpanel event')
         }
            /* Mixpanel */
-          showSnackbar({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);
+
         }
       } catch (e) {
-        showSnackbar({ message: t('FAIL_EMAIL_LOGIN') });
+        showMessage({ message: t('FAIL_EMAIL_LOGIN') });
         setPending(false);
       }
     },
@@ -59,15 +67,18 @@ export default function Email({
    try{  
       resp = await verifyUserOnly({email: data?.email, type:'email'});
       if (resp.status === 'success') {
-      showSnackbar({message : 'User already registered. Please Sign In'})
+      showMessage({message : 'User already registered. Please Sign In'})
       setPending(false);
 
     }
     }catch(e){
-      router?.push({
+     if(device === 'mobile'){ router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });
+    }else if(device === 'desktop'){
+      toggleRegistration({show: true, toRegType : 'email', toRegValue:data?.email});
+    }
       setTimeout(() => { setPending(false); }, 2000);
     }}
   };
@@ -93,11 +104,14 @@ export default function Email({
         required
       />
     </div>
-    <div onClick={()=>router.push(
+    <div onClick={
+      device === 'desktop' ? ()=>toggleShowForgotPassComp({show : true, type : 'email'})
+      :
+      ()=>router.push(
       {pathname: '/forgot-password',
        query : {type : 'email'}
     }
-    )} className="flex justify-start text-sm font-semibold mt-2 px-2">
+    )} className="flex justify-start text-sm font-semibold mt-2 px-2 cursor-pointer">
       {/* TO-DO  forgot password */}
       <p>Forgot password?</p>
     </div>
@@ -107,9 +121,9 @@ export default function Email({
     <p className="text-gray-400 text-xs">
         <p className="text-xs">
           By continuing, you agree to Hipi's
-          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
           and confirm that you have read Hipi's
-          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
           .if you sign up with SMS, SMS fee may apply.
         </p>
     </p>

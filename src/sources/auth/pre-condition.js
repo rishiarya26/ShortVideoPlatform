@@ -20,7 +20,7 @@ const reAuthenticate = async (dataFetcher, params) => {
 const preCondition = async (dataFetcher, params) => {
   let resp = {};
   try {
-    console.log('called from precondition ');
+    console.log('called from precondition ', dataFetcher);
     resp = await dataFetcher(params);
   } catch (error) {
     if (error?.statusCode === 401) {

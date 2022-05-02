@@ -11,8 +11,8 @@ const Tabs = ({ items = [], router }) => {
         <Link key={id} href={`${data.path}`}>
           <div
             className={data.path === selected
-              ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2'
-              : ' py-2 w-1/2 flex justify-center align-center'}
+              ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2 cursor-pointer'
+              : ' py-2 w-1/2 flex justify-center align-center cursor-pointer'}
           >
 
             <span className={data.path === selected ? 'text-black ' : ''}>{data.display}</span>

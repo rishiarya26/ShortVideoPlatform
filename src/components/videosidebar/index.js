@@ -120,7 +120,7 @@ function VideoSidebar({
     let isLiked;
     const details = await getActivityDetails(socialId);
     // console.log('like count',details.reactionsCount.like)
-    if(time === 'now') {
+    if(time === 'now') { 
       if(action === 'add'){
         setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
       }else if(action === 'delete'){
@@ -342,7 +342,7 @@ const handleSaveMoments = () =>{
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode, { videoId, onEmbedCopy })}>
+      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-sm text-center">Embed</p>
         </div>

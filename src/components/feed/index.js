@@ -325,11 +325,6 @@ function Feed({ router }) {
     /********* Mixpanel ***********/
     // saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
     /*****************************/
-    
-    // const data = [...toShowItems];
-    // const resp = data.findIndex(item => (item?.content_id === activeVideoId));
-    // data[resp].saveLook = true;
-    // setToShowItems(data);
     setSaveLook(value);
   };
 
@@ -495,26 +490,13 @@ const toTrackFirebase = (activeIndex, type, value) => {
   toTrack?.[type]();
 }
 
-
-  // const getVideoReactions = async(item)=>{
-  //   let isLiked = false;
-  //   const details = await getActivityDetails(item?.getSocialId);
-  //   if(details?.myReactions?.length > 0){
-  //     const liked = details.myReactions.findIndex((data)=>data === 'like');
-  //     console.log('liked',liked)
-  //     liked !== -1 && (isLiked = true);
-  //   }
-  //   console.log('detal****',details);
-  //   return isLiked;
-  // }
-
   const swiper = <Swiper
               className="max-h-full"
               direction="vertical"
               draggable="true"
-              spaceBetween={0}
+              spaceBetween={5}
               calculateheight="true"
-              slidesPerView={1}
+              // slidesPerView={}
               mousewheel
               // speed = '5000'
               scrollbar={{ draggable: true }}
@@ -706,10 +688,6 @@ const toTrackFirebase = (activeIndex, type, value) => {
   const showLoginFollowing = <LoginFollowing toTrackMixpanel={toTrackMixpanel} videoActiveIndex={videoActiveIndex}/>;
   
   const toShowFollowing =  useAuth(showLoginFollowing, swiper);
-
-  // useEffect(() => {
-  //   toShowFollowing.current = typeof window !== "undefined" && window.localStorage;
-  // }, []);
 
   const info = {
     'for-you' : swiper,

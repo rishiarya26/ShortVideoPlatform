@@ -20,31 +20,56 @@ async function fetchUserProfile(id) {
   let response = {};
   let apiPath = '';
   try {
-    if (isMockMode()) {
-      apiPath = `${getApiBasePath('app')}/api/user`;
-      response = await get(apiPath);
-      return Promise.resolve(response);
-    }
+    console.log("PROFILE CALLED",id)
+
+    // if (isMockMode()) {
+    //   apiPath = `${getApiBasePath('app')}/api/user`;
+    //   response = await get(apiPath);
+    //   return Promise.resolve(response);
+    // }
     apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+    console.log('sasdsa*****',apiPath)
 
     response = await get(apiPath);
     return Promise.resolve(response);
   } catch (err) {
+    console.log("ssdssd",err)
     return Promise.reject(err);
   }
 }
 
-async function fetchSimilarProfile({ lang }) {
+async function fetchUserProfileAfterLogin(id) {
   let response = {};
+  let apiPath = '';
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/similar`;
-    response = await get(apiPath);
-    response.data.requestedWith = { lang };
+    console.log("PROFILE LOGIN CALLED", id)
+    let tokens = localStorage.get('tokens');
+    // tokens = JSON.parse(tokens);
+    const { shortsAuthToken = '' } = tokens;
+    const { accessToken = '' } = tokens;
+    apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile?id=${id}`;
+    response = await get(apiPath,null,{
+      'Authorization': `Bearer ${shortsAuthToken}`,
+      'access-token': accessToken
+    });
     return Promise.resolve(response);
   } catch (err) {
+    console.log("ssdssd",err)
     return Promise.reject(err);
   }
 }
+
+// async function fetchSimilarProfile({ lang }) {
+//   let response = {};
+//   try {
+//     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/similar`;
+//     response = await get(apiPath);
+//     response.data.requestedWith = { lang };
+//     return Promise.resolve(response);
+//   } catch (err) {
+//     return Promise.reject(err);
+//   }
+// }
 
 async function fetchPopularUser({ lang }) {
   let response = {};
@@ -58,17 +83,29 @@ async function fetchPopularUser({ lang }) {
   }
 }
 
-async function fetchSoundDetails({ lang }) {
-  let response = {};
-  try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/sound/detail`;
-    response = await get(apiPath);
-    response.data.requestedWith = { lang };
-    return Promise.resolve(response);
-  } catch (err) {
-    return Promise.reject(err);
-  }
-}
+// async function fetchPopularUser({ lang }) {
+//   let response = {};
+//   try {
+//     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/popular`;
+//     response = await get(apiPath);
+//     response.data.requestedWith = { lang };
+//     return Promise.resolve(response);
+//   } catch (err) {
+//     return Promise.reject(err);
+//   }
+// }
+
+// async function fetchSoundDetails({ lang }) {
+//   let response = {};
+//   try {
+//     const apiPath = `${getApiBasePath('hipi')}/v1/sound/detail`;
+//     response = await get(apiPath);
+//     response.data.requestedWith = { lang };
+//     return Promise.resolve(response);
+//   } catch (err) {
+//     return Promise.reject(err);
+//   }
+// }
 
 async function fetchUserFollower({ lang }) {
   let response = {};
@@ -187,23 +224,25 @@ async function follow({
 // TODO add TTL for api cache
 
 const [getUserProfile] = apiMiddleWare(fetchUserProfile, transformSuccess, transformError);
+const [getUserProfileWLogin] = apiMiddleWare(fetchUserProfileAfterLogin, transformSuccess, transformError, {requiresAuth : true});
 const [getUserFollower] = apiMiddleWare(fetchUserFollower, transformSuccess, transformError);
 const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, transformError,{requiresAuth : true});
 const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError);
-const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
-const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
-const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
+// const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
+// const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
+// const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
 const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
 const [toFollow] = apiMiddleWare(follow, transformSuccessFollow, transformErrorFollow, {requiresAuth : true})
 
 export {
   getUserProfile,
+  getUserProfileWLogin,
   getUserFollower,
   getUserFollowing,
   getUserRecommendation,
-  getSoundDetails,
-  getSimilarProfile,
-  getPopularUser,
+  // getSoundDetails,
+  // getSimilarProfile,
+  // getPopularUser,
   getProfileVideos,
   toFollow
 };

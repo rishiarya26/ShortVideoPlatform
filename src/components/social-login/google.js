@@ -10,6 +10,8 @@ import {GoogleLogin} from "react-google-login"
 import { commonEvents } from "../../analytics/mixpanel/events";
 import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
+import { getAllItems, getItem, removeItem } from "../../utils/cookie";
+import Cookies from "../cookies";
 
 export const GoogleButton =({loading}) =>{
 
@@ -23,7 +25,26 @@ export const GoogleButton =({loading}) =>{
     const { showSnackbar } = useSnackbar();
 
     const onTokenFetched = async(data)=>{
-        console.log("got token... about to call api",data, data?.tokenId)
+        console.log("got token... about to call api",data, data?.tokenId);
+        // const allCookies = Cookies.getAll();
+        const arrSplit = document?.cookie?.split(";");
+  
+        for(let i = 0; i < arrSplit?.length; i++)
+        {
+            const cookie = arrSplit?.[i]?.trim();
+            const cookieName = cookie?.split("=")[0];
+        
+            // If the prefix of the cookie's name matches the one specified, remove it
+            if(cookieName?.indexOf("_gs_auth_") === 0) {
+               console.log("COOKIE",cookieName)
+                // Remove the cookie
+                cookieName && 
+                removeItem(cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT");
+                // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+
+        // console.log("RESPPP", resppp);
         //  const googleToken = data?.Zb?.access_token;
          try{  
              const response = await login(data?.tokenId);
@@ -51,13 +72,16 @@ export const GoogleButton =({loading}) =>{
         }
 
     const initialzeGoogle =()=>{
+      try{  
         window?.gapi?.load('auth2',()=>{
             window.gapi.auth2.init({
                 // TO-DO client id should come from env
                 client_id:GOOGLE_CLIENT_ID_PREROD
-                
             })
         })
+      }catch(e){
+        console.log("ERROR IN AUTH2 GOOGLE")
+      }
     }    
     // const loginGoogle = async()=>{
     //         window?.gapi?.load('signin2',()=>{
@@ -75,8 +99,12 @@ export const GoogleButton =({loading}) =>{
       
     useEffect(()=>{
             if(loading === false){
-                initialzeGoogle();
-                console.log("l",loading)  
+               try{
+                  initialzeGoogle();
+                console.log("l",loading); 
+              }catch(e){
+                console.log('ERROR IN AUTH2 GOOGLE');
+              } 
             }
           },[loading])
 
@@ -146,7 +174,7 @@ export const GoogleButton =({loading}) =>{
         <GoogleLogin
         clientId={GOOGLE_CLIENT_ID_PREROD}
         render={renderProps => (
-            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
          <div className="justify-self-start"><Google/></div>
          <div className="flex justify-center w-full font-semibold">
            <p>Continue with Google</p>
@@ -158,7 +186,7 @@ export const GoogleButton =({loading}) =>{
         />
 
         </>
-    //  <div  id ='buttonDiv' className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
+    //  <div  id ='buttonDiv' className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
     //     <div className="justify-self-start"><Google/></div>
     //     <div className="flex justify-center w-full font-semibold">
     //       <p>Continue with google</p>

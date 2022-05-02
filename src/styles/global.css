@@ -7,8 +7,21 @@
     /* font-weight: normal; */
     letter-spacing: .3px;
 }
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 button:focus{
   outline: 0px;
+}
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 0px;
+}
+[onClick] {
+  cursor:pointer;
 }
 p{
   user-select: none; /* supported by Chrome and Opera */
@@ -40,6 +53,10 @@ h1{
 }
 img{
   height: 100%;
+  object-fit: cover;
+  width:100%;
+}
+img{
   object-fit: cover;
   width:100%;
 }
@@ -87,9 +104,13 @@ img{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
- .h-95{
-   height: 95%;
+ .h-80{
+   height: 80%;
  }
+
+ .h-95{
+  height: 95%;
+}
   .profile-bg{
     align-items: center;
     background-image: url("https://sf16-scmcdn-va.ibytedtos.com/goofy/tiktok/web/node/_next/static/images/album-628a1f27c2ed684e4454d53f4c042f7a.svg");
@@ -112,6 +133,22 @@ img{
     height: 100%;
     width: 100%;
   }
+  .vdo_player_desk{
+    box-sizing: border-box;
+    object-fit: cover!important; 
+    height: 100%;
+    width: 100%;
+    object-position: 0 0;
+    max-width: 300px;
+  }
+  .vdo_player_desk_detail{
+    box-sizing: border-box;
+    object-fit: cover!important; 
+    height: 100%;
+    width: 100%;
+    object-position: 0 0;
+    max-width: 400px;
+  }
   input:focus-visible{
     outline: none;
   }
@@ -126,6 +163,27 @@ img{
 
 .no_bar::-webkit-scrollbar {
   display: none;
+  width: 0px;
+}
+.usricon{
+  background-color: #fbbc05;
+    color: white;
+}
+
+.thin_bar::-webkit-scrollbar {
+  width: 3px;
+}
+ 
+.thin_bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(160, 101, 101, 0.171);
+}
+ 
+.thin_bar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  /* outline: 1px solid slategrey; */
+}
+.login_pop{
+  min-width: 472px;
 }
 
 .header_landing{
@@ -142,14 +200,34 @@ img{
   border-radius: 22px;
   position: absolute;
 }
-
-
+.head-shadow{
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+}
+.desk-feed:hover .opacity-0{
+  opacity: 100%!important;
+  transition: opacity 0.3s ease 0s;
+}
+.desk-share:hover .share-ls{
+  display: flex;
+}
+.usrhvr:hover .usrdeck{
+  display: flex;
+}
+.usrdeck{
+  display: none;
+  transition-delay: 2s;
+}
+.w-320{
+  min-width:320px;
+}
+.bg-deskseekbar{
+  background-color: rgba(255, 255, 255, 0.2);
+}
 @media (orientation: portrait) {
   .landscape_screen {
     display: none;
   }
 }
-
 
 
 /* static pages */
@@ -233,7 +311,27 @@ span.swiper-pagination-bullet {
   .drawer-height{
     height: 40%;
   }}
+  @media only screen and (max-width: 768px) {
+  .overlay-z-index {
+    z-index: 9!important;
+}
+.width-mob{
+  width: 90%!important;
+}
+  }
 @media only screen and (min-width: 768px) {
+  *{
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";   
+    /* font-weight: normal; */
+    letter-spacing: unset;
+}
+.video-card{
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  box-sizing: border-box;
+}
   .cookie_layout{
     align-items: unset;
   }
@@ -330,6 +428,67 @@ span.swiper-pagination-bullet {
   opacity: 0;
 }
 
+}
+
+
+
+.desk-feed{
+  height: 70vh;
+}
+
+.dropdown-search{
+  position: absolute;
+  left: 0;
+  top: 45px;
+  height: 35px;
+  width: 326px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(22,24,35,.12);
+  z-index: 1000;
+  background: #fff;
+  margin-top: 4px;
+}
+
+.list-search{
+  width: 329px;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.06);
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 3%), 0 2px 4px 0 rgb(0 0 0 / 3%);
+    max-height: 296px;
+    /* overflow: scroll; */
+    margin-top: 4px;
+    -webkit-overflow-scrolling: touch;
+    z-index: 11;
+}
+.list-input{
+  width: 324px;
+}
+
+.w-feed-menu{
+  width: 356px;
+}
+.w-prof-menu{
+  width: 240px;
+}
+.w-feed{
+  width: 100vw;
+  max-width: 1150px;
+}
+.W-feed-vid{
+  margin-right: 16px;
+    margin-left: 16px;
+    width: 692px;
+    max-width: 692px;
+}
+
+.overlay-z-index{
+  z-index: 25;
 }
 
 
@@ -457,4 +616,43 @@ color: rgb(172, 211, 205);
   height: 14px;
   width: 100%;
   margin-top: -5px;
+}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }

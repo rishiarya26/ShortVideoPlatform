@@ -70,6 +70,11 @@ function transformSuccess(resp) {
       payloadObject.creatorTag = d?.videoOwners?.tag || null;
       payloadObject.firstFrame= d?.firstFrame || null;
       payloadObject.isLiked= false;
+      payloadObject.firstName=d?.videoOwners?.firstName || '';
+      payloadObject.lastName=d?.videoOwners?.lastName || '';
+      payloadObject.shareCount=d?.sCount || '';
+      payloadObject.commentCount=d?.cCount || '';
+      payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
       
       payloadData.push(payloadObject);
     });

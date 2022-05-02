@@ -65,7 +65,7 @@ export const Shop = ({
     <>
       {!loading && canShop !== 'pending' ? canShop === 'success' && (
         <button
-          className="rounded text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
+          className="rounded cursor-pointer text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           // eslint-disable-next-line no-undef
           onClick={handleShop}
         >

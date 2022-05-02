@@ -126,7 +126,7 @@ function HashTagFeedIphone({ router }) {
      setToShowItems(updateShowItems);
    }
      catch(e){
-   console.log('error',e)
+   console.log('erroree',e)
      }
    }
    

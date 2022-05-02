@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element */
+
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';

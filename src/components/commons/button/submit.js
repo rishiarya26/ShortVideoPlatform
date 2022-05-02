@@ -10,6 +10,7 @@ export const SubmitButton = ({ fetchData, text, disable = false }) => {
       await fetchData();
       setPending(false);
     } catch (e) {
+      console.log("error")
       setPending(false);
     }
   };
@@ -20,7 +21,7 @@ export const SubmitButton = ({ fetchData, text, disable = false }) => {
         disabled={disable || pending}
         onClick={submit}
         onKeyDown={submit}
-        className={disable ? 'bg-gray-100 w-full px-4 py-2 text-gray-600 font-semibold relative' : 'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+        className={disable ? 'bg-gray-100 w-full px-4 py-2 text-gray-600 text-sm cursor-pointer font-semibold relative' : 'bg-hipired w-full text-sm cursor-pointer px-4 py-2 text-white font-semibold relative cursor-pointer'}
       >
         {' '}
         {text}

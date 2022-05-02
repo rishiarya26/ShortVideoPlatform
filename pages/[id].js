@@ -5,11 +5,14 @@ import {
   SeoMeta,
   VideoJsonLd
 } from '../src/components/commons/head-meta/seo-meta';
+import DeskUsers from '../src/components/desk-profile';
 import FooterMenu from '../src/components/footer-menu';
 import Users from '../src/components/users';
-import { getUserProfile } from '../src/sources/users/profile';
+import { getItem } from '../src/utils/cookie';
+import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
 import { updateUtmData } from '../src/utils/web';
+
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -20,8 +23,10 @@ export default function Hipi(params) {
     message,
     status,
   } = params;
+  const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
 
   const router = useRouter();
+  const device = getItem('device-type');
 
   useEffect(()=>{
     try{ 
@@ -30,6 +35,22 @@ export default function Hipi(params) {
       const userId = localStorage.get('user-id')
       tokens && userId && userId === item?.id && (userType = 'self');
       setType(userType);
+
+    /**** to get isfollowing if logged in ****/
+      if(tokens){
+        const getProfileAfterLogin = async()=>{
+          console.log("profile login called",item?.userHandle);
+       try{   
+         const resp = await getUserProfileWLogin(item?.userHandle);
+         setIsFollowing(resp?.data?.isFollowing);
+          console.log("TTTTTT",resp?.data);
+        }catch(e){
+             console.log("Error rrr",e);
+        }
+      }
+        getProfileAfterLogin();
+      }
+   /*************/
         const queryStrings = router?.query;
         updateUtmData(queryStrings);
     }catch(e){
@@ -37,6 +58,40 @@ export default function Hipi(params) {
     }
   
     },[])
+
+   const comp = {
+     desktop :   <DeskUsers
+     followers={item?.followers}
+     following={item?.following}
+     totalLikes={item?.totalLikes}
+     userHandle={item?.userHandle}
+     profilePic={item?.profilePic}
+     firstName={item?.firstName}
+     lastName={item?.lastName}
+     id={item?.id}
+     bio={item?.bio}
+     type={type}
+     isFollow={isFollowing}
+     userVerified={item?.tag}
+   /> ,
+     mobile:   <Users
+     followers={item?.followers}
+     following={item?.following}
+     totalLikes={item?.totalLikes}
+     userHandle={item?.userHandle}
+     profilePic={item?.profilePic}
+     firstName={item?.firstName}
+     lastName={item?.lastName}
+     id={item?.id}
+     bio={item?.bio}
+     type={type}
+     isFollow={isFollowing}
+   /> 
+   }
+
+    // if(device === 'desktop'){
+    //   return null;
+    // }
 
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
@@ -94,20 +149,8 @@ export default function Hipi(params) {
           }
         }}
       /> */}
-  <Users
-        followers={item?.followers}
-        following={item?.following}
-        totalLikes={item?.totalLikes}
-        userHandle={item?.userHandle}
-        profilePic={item?.profilePic}
-        firstName={item?.firstName}
-        lastName={item?.lastName}
-        id={item?.id}
-        bio={item?.bio}
-        type={type}
-        isFollow={item?.isFollowing}
-      /> 
-     {type === 'self' &&
+      {comp?.[device]}
+     {device === 'mobile' && type === 'self' &&
        <FooterMenu 
          selectedTab="profile"
        />
@@ -126,9 +169,11 @@ export async function getServerSideProps(ctx) {
   const trimmedUserHandle = id && id.replace('@','');
   let data = {};
   try {
+    console.log("profile called",trimmedUserHandle);
     data = await getUserProfile(trimmedUserHandle);
     // console.log(data)
   } catch (e) {
+    console.log("joker ***",e)
     data = {
       status: e?.status || 400,
       errorCode: e?.errorCode || 400,

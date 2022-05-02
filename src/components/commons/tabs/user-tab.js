@@ -14,8 +14,8 @@ const UserTab = ({
           key={id}
           onClick={() => onTabChange(data?.type)}
           className={data?.type === selected
-            ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2'
-            : ' py-2 w-1/2 flex justify-center align-center'}
+            ? 'text-black border-b-2 border-black w-1/2 flex justify-center align-center py-2 cursor-pointer'
+            : ' py-2 w-1/2 flex justify-center align-center cursor-pointer'}
         >
           <span className={data?.type === selected ? 'text-black ' : ''}>{data?.icon}</span>
 

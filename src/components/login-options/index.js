@@ -9,29 +9,50 @@ import useDrawer from '../../hooks/use-drawer';
 import {GoogleButton} from '../social-login/google'
 import { useRouter } from 'next/router';
 import Close from '../commons/svgicons/close-black';
+import { getItem } from '../../utils/cookie';
+// import useSnackbar from '../../hooks/use-snackbar';
+import { useEffect } from 'react';
 
-export default function Login({ toggle, loading }) {
+export default function Login({ toggle, loading, setAuth }) {
   const { close } = useDrawer();
   const router = useRouter();
+  const device = getItem('device-type')
+
+  // const {showSnackbar} = useSnackbar();
+  // useEffect(()=>{showSnackbar({message : 'working 3'})},[])
+
+  const chooseComp = {
+    mobile :   
+       <div onClick={()=>router.push('/login/phone?option=password')}>
+        <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
+          <div className="justify-self-start"><Mobile /></div>
+          <div className="flex justify-center w-full font-semibold">
+            <p>Use phone or Email</p>
+          </div>
+        </div>
+      </div>,
+    desktop : 
+      <div onClick={()=>setAuth('login')}>
+      <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
+        <div className="justify-self-start"><Mobile /></div>
+        <div className="flex justify-center w-full font-semibold">
+          <p>Use phone or Email</p>
+        </div>
+      </div>
+    </div>
+  }
 
   return (
     <div className="px-4 py-2 flex flex-col items-center">
-       <div onClick={close} className='flex w-full justify-end p-2'>
+      {device === 'mobile' && <div onClick={close} className='flex w-full justify-end p-2'>
       <Close/>
-   </div>
+   </div>}
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Login to Hipi</h1>
         <p className="text-center text-sm">Like the video, manage your account and do much more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
-        <div onClick={()=>router.push('/login/phone?option=password')}>
-          <div onClick={() => close()} className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-            <div className="justify-self-start"><Mobile /></div>
-            <div className="flex justify-center w-full font-semibold">
-              <p>Use phone or Email</p>
-            </div>
-          </div>
-        </div>
+       {chooseComp[device]}
         <GoogleButton loading={loading}/>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
