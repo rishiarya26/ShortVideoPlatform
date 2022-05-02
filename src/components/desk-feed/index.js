@@ -33,6 +33,7 @@ import VideoDetail from '../desk-video-detail';
 import Top from '../commons/svgicons/top'
 import LoginFollowing from '../desk-login-following';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { removeItem } from '../../utils/cookie';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -126,7 +127,7 @@ const DeskDownloadApp = dynamic(
 
   const getFeedData = async() =>{
     let updateItems = [...items];
-    console.log('present items',updateItems);
+    console.log('present item',updateItems);
      try{
        const data = await fetchData({ type: id });
        console.log('GOT MORE ITEMS *****', data?.data)
@@ -279,6 +280,7 @@ const info ={
          activeIndex={activeIndex}
          socialId={videoDetailData?.getSocialId}
          commentCount={videoDetailData?.commentCount}
+         userVerified = {videoDetailData?.verified}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>

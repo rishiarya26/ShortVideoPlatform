@@ -26,11 +26,12 @@ import Sidebar from "./sidebar"
 import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import DeskHoverInfo from "../desk-hover-info";
+import VerifiedLg from "../commons/svgicons/verified-lg";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed'}) {
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -111,16 +112,19 @@ return (
                    <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
                   </div>
                   <div className="flex flex-col">
+                  <div className='flex items-center'>
                   <span 
                      onClick={()=>router?.push(`/@${userName}`)} 
                      className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold text-md text-gray-700 cursor-pointer">
-                       {userName}
+                      <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
+                       {userName} 
                       </div>
                      <div className='usrdeck absolute z-50 top-4 -left-16'>
                      <DeskHoverInfo id={userName}/>
                      </div>  
                   </span>
+                  <div className="ml-2">{userVerified === 'verified' ? <VerifiedLg/> : ''} </div>
+                  </div>
                   <div className='text-sm text-gray-600'>{`${firstName ? firstName : ''} ${lastName ? lastName : ''}`}</div>
                   </div>
                </div>   

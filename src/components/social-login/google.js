@@ -10,6 +10,8 @@ import {GoogleLogin} from "react-google-login"
 import { commonEvents } from "../../analytics/mixpanel/events";
 import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
+import { getAllItems, getItem, removeItem } from "../../utils/cookie";
+import Cookies from "../cookies";
 
 export const GoogleButton =({loading}) =>{
 
@@ -23,7 +25,26 @@ export const GoogleButton =({loading}) =>{
     const { showSnackbar } = useSnackbar();
 
     const onTokenFetched = async(data)=>{
-        console.log("got token... about to call api",data, data?.tokenId)
+        console.log("got token... about to call api",data, data?.tokenId);
+        // const allCookies = Cookies.getAll();
+        const arrSplit = document?.cookie?.split(";");
+  
+        for(const i = 0; i < arrSplit?.length; i++)
+        {
+            const cookie = arrSplit?.[i]?.trim();
+            const cookieName = cookie?.split("=")[0];
+        
+            // If the prefix of the cookie's name matches the one specified, remove it
+            if(cookieName?.indexOf("_gs_auth_") === 0) {
+               console.log("COOKIE",cookieName)
+                // Remove the cookie
+                cookieName && 
+                removeItem(cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT");
+                // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+
+        // console.log("RESPPP", resppp);
         //  const googleToken = data?.Zb?.access_token;
          try{  
              const response = await login(data?.tokenId);

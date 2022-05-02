@@ -59,6 +59,8 @@ function transformSuccess(resp) {
         payloadObject.firstFrame = d?.firstFrame || null;
         payloadObject.firstName= d?.videoOwners?.firstName || null;
         payloadObject.lastName = d?.videoOwners?.lastName || null;
+        payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
+
       });
       payload.data = payloadObject;
     } else {

@@ -42,6 +42,7 @@ import Mute from '../commons/svgicons/mute';
 import Play from '../commons/svgicons/play-outlined';
 import CartLg from '../commons/svgicons/cart-lg';
 import CartLgLight from '../commons/svgicons/cart-lg-light';
+import VerifiedLg from '../commons/svgicons/verified-lg';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -61,7 +62,7 @@ const LandscapeView = dynamic(
 
 function DeskUsers({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',
-  isFollow=false
+  isFollow=false, userVerified
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
@@ -380,6 +381,7 @@ function DeskUsers({
          shareCount={videoDetailData?.shareCount}
          activeIndex={vDetailActiveIndex}
          socialId={videoDetailData?.getSocialId}
+         userVerified={userVerified === 'Verified' ? 'verified' : ''}
          />
        </div>}
     <Header/>
@@ -398,8 +400,9 @@ function DeskUsers({
                <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
                <div className="flex flex-col h-32 justify-between">
                   <div>
-                  <h3 className=" mb-1 mt-1.5 font-bold text-2xl ">{userHandle}</h3>
+                  <h3 className=" mb-1 mt-1.5 flex items-center font-bold text-2xl ">{userHandle} <div className="ml-2">{userVerified === 'Verified' ?<VerifiedLg/> : ''} </div></h3>
                   <p className="font-medium text-gray-600 py-1 p-2 text-lg">{firstName} {lastName}</p>
+                  
                   </div>
                   {/* <button className="font-semibold text-md border border-hipired rounded-md py-1 px-24 mr-1 h-10 bg-hipired text-white"> */}
           {info.function[type]}

@@ -28,6 +28,7 @@ const getToken = async(response)=>{
   const googleToken = response?.credential;
   const resp = await login(googleToken);
   if(resp.status === 'success'){
+    console.log("GOOGLE",resp)
    try{ 
     mixpanel('Login');
     fbq.defEvent('CompleteRegistration');
