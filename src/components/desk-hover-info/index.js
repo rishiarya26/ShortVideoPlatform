@@ -118,12 +118,13 @@ function DeskHoverInfo({id}) {
     <div className="flex flex-col bg-white p-6 rounded-md w-320 shadow-lg border border-gray-100"> 
     <div className="flex justify-between">
       <div className='flex flex-col'> 
-          <div onClick={()=>router.push(`/@${item?.userHandle}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full">
+          <div onClick={()=>router.push(`/${item?.userHandle}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full">
               <Img data={item?.profilePic} title="Hipi" fallback={fallbackUser?.src} />
           </div>
-          <h3  onClick={()=>router.push(`/@${item?.userHandle}`)} 
+          <h3  onClick={()=>router.push(`/${item?.userHandle}`)} 
           className="border-black font-semibold text-base text-gray-700 cursor-pointer mt-2 flex items-center">
-            {item?.userHandle} <span className='ml-1'>{item?.tag === 'Verified' ? <Verified/> : ''}</span>
+            {item?.userHandle} 
+           <span className='ml-1'>{item?.tag === 'Verified' ? <Verified/> : ''}</span>
           </h3>
           <p className="text-sm font-normal text-gray-500">{item?.firstName} {item?.lastName}</p>
       </div>
