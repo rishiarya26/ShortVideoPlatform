@@ -37,7 +37,7 @@ export default function Email({
         finalData.type = 'email';
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-          router?.push({
+         device === 'mobile' && router?.push({
             pathname: '/feed/for-you'
           });
           if(device === 'desktop'){

@@ -107,6 +107,10 @@ img{
  .h-80{
    height: 80%;
  }
+
+ .h-95{
+  height: 95%;
+}
   .profile-bg{
     align-items: center;
     background-image: url("https://sf16-scmcdn-va.ibytedtos.com/goofy/tiktok/web/node/_next/static/images/album-628a1f27c2ed684e4454d53f4c042f7a.svg");

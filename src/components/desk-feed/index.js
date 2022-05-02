@@ -94,6 +94,7 @@ const DeskDownloadApp = dynamic(
   useEffect(()=>{
     if(reload){
       console.log("FROM RELOAD");
+      window?.scrollTo(0,0);
       setItems([]);
       setFetchState('pending');
       getInitialData();

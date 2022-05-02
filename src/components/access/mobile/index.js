@@ -67,7 +67,7 @@ export default function Mobile({
         }catch(e){
           console.log('error in fb or mixpanel event')
         }
-          router?.push({
+        device === 'mobile' && router?.push({
             pathname: '/feed/for-you'
           });
           if(device === 'desktop'){
