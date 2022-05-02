@@ -232,6 +232,7 @@ const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
          commentCount={item?.commentCount || null}
          videoId={item?.content_id}
          socialId={item?.getSocialId}
+         userVerified = {item?.verified}
          />
     </span>
      )}

@@ -4,7 +4,7 @@ import { trimHash } from "../../utils/string"
 import MusicBlack from "../commons/svgicons/music-black";
 import DeskHoverInfo from "../desk-hover-info";
 
-const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed'})=>{
+const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed',userVerified})=>{
 const [show, setShow] = useState(false);
 
    const router = useRouter();
@@ -35,7 +35,9 @@ const [show, setShow] = useState(false);
         <p className='text-sm text-gray-500'> 
          <span 
          className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-           <span  onClick={()=>router?.push(`/@${userName}`)}> {`${userName}`}</span>
+           <span  onClick={()=>router?.push(`/@${userName}`)}> {`${userName}`} 
+           {userVerified === 'verified' ? '^v^':''}
+           </span>
          <div className='usrdeck absolute z-10 top-4 -left-16'>
          <DeskHoverInfo id={userName}/>
          </div>  

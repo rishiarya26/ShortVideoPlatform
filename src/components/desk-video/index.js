@@ -34,7 +34,8 @@ import UnMute from '../commons/svgicons/unmute';
 
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
-description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount}) {
+description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
+userVerified}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -169,6 +170,7 @@ return (
       lastName={lastName}
       description={description}
       music_title={music_title}
+      userVerified={userVerified}
      />
       <div className="Video flex items-end">
       <div className="desk-feed rounded-lg overflow-hidden relative cursor-pointer" >
