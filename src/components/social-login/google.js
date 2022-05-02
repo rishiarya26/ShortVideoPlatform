@@ -29,7 +29,7 @@ export const GoogleButton =({loading}) =>{
         // const allCookies = Cookies.getAll();
         const arrSplit = document?.cookie?.split(";");
   
-        for(const i = 0; i < arrSplit?.length; i++)
+        for(let i = 0; i < arrSplit?.length; i++)
         {
             const cookie = arrSplit?.[i]?.trim();
             const cookieName = cookie?.split("=")[0];

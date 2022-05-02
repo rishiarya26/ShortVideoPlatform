@@ -75,6 +75,7 @@ const DeskDownloadApp = dynamic(
   useEffect(()=>{console.log("items changed to - ",items)},[items])
 
   useEffect(()=>{
+
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
