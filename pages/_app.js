@@ -206,7 +206,7 @@ function Hipi({
              console.log("COOKIE",cookieName)
               // Remove the cookie
               cookieName && 
-              removeItem(cookieName,{'domain':domain});
+              removeItem(cookieName);
               // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
           }
       }
