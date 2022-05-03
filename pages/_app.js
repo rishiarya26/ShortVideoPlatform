@@ -191,6 +191,9 @@ function Hipi({
   useEffect(()=>{
    try{ 
     try{
+      const gotUrl = window?.location?.href;
+      let domain = (new URL(gotUrl));
+      domain = domain?.hostname;
       const arrSplit = document?.cookie?.split(";");
   
       for(let i = 0; i < arrSplit?.length; i++)
@@ -203,7 +206,7 @@ function Hipi({
              console.log("COOKIE",cookieName)
               // Remove the cookie
               cookieName && 
-              removeItem(cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT");
+              removeItem(cookieName,{'domain':domain});
               // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
           }
       }
