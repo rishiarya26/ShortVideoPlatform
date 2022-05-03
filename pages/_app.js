@@ -13,7 +13,7 @@ import HeadMeta from '../src/components/commons/head-meta';
 import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
 import { GOOGLE_ONE_TAP } from '../src/constants';
-import { getItem, setItem } from '../src/utils/cookie';
+import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import Cookies from '../src/components/cookies'
@@ -190,6 +190,27 @@ function Hipi({
 
   useEffect(()=>{
    try{ 
+    try{
+      const arrSplit = document?.cookie?.split(";");
+  
+      for(let i = 0; i < arrSplit?.length; i++)
+      {
+          const cookie = arrSplit?.[i]?.trim();
+          const cookieName = cookie?.split("=")[0];
+      
+          // If the prefix of the cookie's name matches the one specified, remove it
+          if(cookieName?.indexOf("_gs_auth_") === 0) {
+             console.log("COOKIE",cookieName)
+              // Remove the cookie
+              cookieName && 
+              removeItem(cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT");
+              // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          }
+      }
+
+    }catch(e){
+      console.log("** error in deleting gs cookies **");
+    }
     console.log('mounted');
     inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
