@@ -12,7 +12,7 @@ const Drawer = ({
       height: 'h-2/5'
     },
     medium: {
-      height: 'h-4/5'
+      height: 'h-3/5'
     },
     big: {
       height: 'h-95'
@@ -23,8 +23,8 @@ const Drawer = ({
     <div
       data-testid="drawer-container"
       className={`${visible ? design[type]?.height : 'h-0'} 
-      baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl bg-white
-      transition-all duration-300
+      baseContainer z-10 fixed bottom-0 w-full overflow-hidden rounded-t-2xl tab-width bg-white
+      transition-all duration-300 justify-center
       motion-reduce:transition-none motion-reduce:transform-none
     `}
     >
@@ -43,7 +43,7 @@ const Drawer = ({
           </div>
         </div>
       </div> */}
-      <div className="w-full h-full px-4 flex overflow-y-auto">
+      <div className="w-full h-full px-4 flex justify-center overflow-y-auto">
         {children}
       </div>
     </div>

@@ -113,8 +113,7 @@ return (
                   </div>
                   <div className="flex flex-col">
                   <div className='flex items-center'>
-                  <span 
-                     onClick={()=>router?.push(`/@${userName}`)} 
+                  <span  
                      className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
                       <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
                        {userName} 
