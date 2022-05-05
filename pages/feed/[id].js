@@ -14,7 +14,6 @@ export default function Hipi() {
 
   useEffect(()=>{
     const queryStrings = router?.query;
-    console.log(router)
     updateUtmData(queryStrings);
   },[])
 

@@ -112,8 +112,8 @@ export default function DeskVideoGallery({
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
                 />
-                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
                 </div>
+                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
              </span> :
                <span className="w-1/5 flex flex-col items-center p-1 tab-card" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}

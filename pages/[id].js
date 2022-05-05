@@ -25,7 +25,6 @@ export default function Hipi(params) {
     message,
   } = params;
 
-  console.log("PPP",status)
   const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
 
   const router = useRouter();
@@ -66,11 +65,9 @@ export default function Hipi(params) {
     /**** to get isfollowing if logged in ****/
       if(status === 'success' && tokens){
         const getProfileAfterLogin = async()=>{
-          console.log("profile login called",trimmedUserHandle, router);
        try{   
          const resp = await getUserProfileWLogin(trimmedUserHandle);
          setIsFollowing(resp?.data?.isFollowing);
-          console.log("TTTTTT",resp?.data);
         }catch(e){
              console.log("Error rrr",e);
         }
@@ -119,7 +116,6 @@ export default function Hipi(params) {
     // if(device === 'desktop'){
     //   return null;
     // }
-    console.log("PPPFinal",status)
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -196,11 +192,9 @@ export async function getServerSideProps(ctx) {
   const trimmedUserHandle = id && id.replace('@','');
   let data = {};
   try {
-    console.log("profile called",trimmedUserHandle);
     data = await getUserProfile(trimmedUserHandle);
     // console.log(data)
   } catch (e) {
-    console.log("joker ***",e)
     data = {
       status: e?.status || 400,
       errorCode: e?.errorCode || 400,

@@ -10,7 +10,6 @@ class Hipi extends Document {
     const userAgent = ctx?.req?.headers?.['user-agent'];
   if(userAgent){  
     const device = getDeviceType(userAgent);
-    console.log("user-agent",userAgent);
     const mac = getMacInfo(userAgent);
     const deviceOs = getDeviceInfo(userAgent);
     const maxAge = (365 * 24 * 60 * 60);

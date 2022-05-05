@@ -315,6 +315,9 @@ span.swiper-pagination-bullet {
   .overlay-z-index {
     z-index: 9!important;
 }
+.w-70vr{
+  width: 70vw;
+}
 .width-mob{
   width: 90%!important;
 }
@@ -671,6 +674,15 @@ color: rgb(172, 211, 205);
 }
 .width-mob{
   width: 60%!important;
+}
+.w-70vr{
+  width: 35vw;
+}
+.feed-tab-w{
+  width: 75%;
+}
+.tab-vcard-w{
+  width: 29%;
 }
 }
 @media (max-width:1024px){
