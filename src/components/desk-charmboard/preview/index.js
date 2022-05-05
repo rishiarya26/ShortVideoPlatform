@@ -223,7 +223,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          {/* Head charm */}
          <div className="flex w-full items-center justify-between">
             <div className="flex pb-2 w-full">
-               <div className='img w-14 h-14 min-w-14 rounded-md overflow-hidden'>
+               <div className='img w-14 h-14 min-w-14 rounded-md overflow-hidden tab-charm'>
                    <Img data={topCharms?.imageUrl} />
                </div>
               <div className=' products w-full flex flex-col ml-2'>

@@ -658,8 +658,6 @@ color: rgb(172, 211, 205);
 }
 
 
-
-
 @media (min-width:768px) and (max-width:1024px){
   .vdo_player{
       object-fit: contain!important;
@@ -674,7 +672,34 @@ color: rgb(172, 211, 205);
 .width-mob{
   width: 60%!important;
 }
-.feed_screen{
-  
 }
+@media (max-width:1024px){
+  .sm-menu{
+    display: none;
+  }
+  .menu-sm{
+    min-width: 72px;
+    width: 72px;
+    border-right: 1px solid rgba(22, 24, 35, 0.12);
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 6%);
+  }
+  .menu-sm-w{
+    width: 72px;
+  }
+  .tab-plugin{
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+  }
+  .tab-charm{
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  .tab-card{
+    width: 32%;
+  }
+  .tab-card-h{
+    min-height: 43vw;
+  }
 }

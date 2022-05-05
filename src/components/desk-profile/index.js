@@ -386,8 +386,8 @@ function DeskUsers({
        </div>}
     <Header/>
     <div className="flex w-screen h-screen bg-white relative pt-24">
-    <div className='w-2/12 w-prof-menu'>
-    <DeskMenu width={'w-prof-menu'}/>
+    <div className='w-2/12 w-prof-menu menu-sm'>
+    <DeskMenu width={'w-prof-menu menu-sm-w'}/>
     </div>
     
     <div className="w-10/12 pl-8">
@@ -396,7 +396,7 @@ function DeskUsers({
             <ShareOutline/>
          </div> */}
             <div className="flex items-center pb-2">
-               <div className="flex items-center usrimg w-32 h-32 rounded-full overflow-hidden mr-4">
+               <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
                <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
                <div className="flex flex-col h-32 justify-between">
                   <div>
@@ -424,7 +424,7 @@ function DeskUsers({
                   </div>
             </div>
             <div className="Bio">
-               <p className="py-4 pr-12 text-gray-00 text-md text-center h-full flex items-center">
+               <p className="py-4 pr-12 text-gray-00 text-md h-full flex items-center">
                                  {bio}
                </p>
             </div>
