@@ -6,6 +6,7 @@ import useOverLay from './use-overlay';
 import useMedia, { breakpoints } from './use-media';
 import Drawer from '../components/commons/drawer';
 import Dialog from '../components/commons/dialog';
+import { getItem } from '../utils/cookie';
 
 let DrawerContent = null;
 
@@ -17,7 +18,8 @@ const DrawerContext = createContext({
 export const DrawerProvider = ({ children }) => {
   const { show: showOverLay, hide: hideOverLay } = useOverLay();
   const ComponentProps = useRef({});
-  const Comp = useMedia(breakpoints, [Dialog, Drawer, Drawer], Drawer);
+  const isMac = getItem('device-mac') === "yes" ? Dialog : Drawer;
+  const Comp = useMedia(breakpoints, [Dialog, isMac, isMac], Drawer);
 
   const [state, setState] = useState({
     visible: false,

@@ -96,12 +96,13 @@ export default function DeskVideoGallery({
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
             { items?.map((item, id) => (
               (id === items?.length-1) ? 
-              <span ref={lastItemInView} className="w-1/5 flex flex-col items-center p-1" key={id} 
+              <span ref={lastItemInView} className="w-1/5 flex flex-col items-center p-1 tab-card" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
                onClick={()=>updateActiveIndex(id)}
                   >
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
-               <div className='flex flex-col w-full min-h-28 max-h-28 '> <DeskVideoCard 
+               <div className='flex flex-col w-full min-h-28 tab-card-h max-h-28 '> 
+               <DeskVideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 
                   videoTitle ={item?.videoTitle} 
                   viewCount={item?.viewCount} 
@@ -111,7 +112,7 @@ export default function DeskVideoGallery({
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
                 />
-                <div className='truncate pt-1 pb-3 text-sm w-8/12 mb-2 mt-1 text-gray-700'>{ item?.description && item?.description?.replaceAll('\n',' ')?.split(' ')?.splice(0,item?.description?.replaceAll('\n',' ')?.split(' ')?.length > 3 ? 3 : item?.description?.replaceAll('\n',' ')?.split(' ')?.length-1)}</div>
+                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
                 </div>
              </span> :
                <span className="w-1/5 flex flex-col items-center p-1 tab-card" key={id} 
@@ -119,7 +120,8 @@ export default function DeskVideoGallery({
                onClick={()=>updateActiveIndex(id)}
                   >
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
-               <div className='flex flex-col w-full min-h-28 tab-card-h max-h-28'> <DeskVideoCard 
+               <div className='flex flex-col w-full min-h-28 tab-card-h max-h-28'> 
+               <DeskVideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 
                   videoTitle ={item?.videoTitle} 
                   viewCount={item?.viewCount} 
