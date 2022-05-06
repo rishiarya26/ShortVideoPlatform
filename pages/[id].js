@@ -63,10 +63,12 @@ export default function Hipi(params) {
       setType(userType);
 
     /**** to get isfollowing if logged in ****/
-      if(status === 'success' && tokens){
+      if(tokens){
+        console.log("inside")
         const getProfileAfterLogin = async()=>{
        try{   
          const resp = await getUserProfileWLogin(trimmedUserHandle);
+         console.log('inside',resp)
          setIsFollowing(resp?.data?.isFollowing);
         }catch(e){
              console.log("Error rrr",e);
