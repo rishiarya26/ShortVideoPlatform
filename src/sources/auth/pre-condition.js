@@ -1,5 +1,8 @@
 /* eslint-disable import/no-cycle */
+import useSnackbar from '../../hooks/use-snackbar';
+import { localStorage } from '../../utils/storage';
 import { renewTokens } from './renew-tokens';
+
 
 const reAuthenticate = async (dataFetcher, params) => {
   console.log('called from reauth')
@@ -11,6 +14,8 @@ const reAuthenticate = async (dataFetcher, params) => {
       resp = await dataFetcher(params);
     }
   } catch (error) {
+    localStorage.remove('tokens');
+    // resp = await dataFetcher(params);
     console.log('error in reAuth');
     return error;
   }

@@ -55,7 +55,8 @@ hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',
     }
 
 useEffect(()=>{
- window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`,
+//  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`
+ window.history.replaceState('video detail page','detail',`/video/${videoId}`
  )
 },[videoId])
 
@@ -183,10 +184,10 @@ return (
          </div>
       </div>
       <div className='flex px-6 py-2 justify-between border-b-2 border-gray-100'>
-           {domain && <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm text-gray-500 font-light">{`${domain}/@${userName}/video/${videoId}`}</p>
+           {domain && <div  className="flex bg-gray-100 border rounded items-center w-full"><p className="w-9/12 px-2 truncate text-sm text-gray-500 font-light">{`${domain}/video/${videoId}`}</p>
             <button className="w-3/12 cursor-pointer font-semibold bg-white text-sm border p-2 text-gray-700" onClick={
              ()=>{
-                CopyToClipBoard(`${domain}/@${userName}/video/${videoId}`);
+                CopyToClipBoard(`${domain}/video/${videoId}`);
                 showSnackbar({message : 'Copied to clipboard'});
                  }
             }>Copy Link</button>

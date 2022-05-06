@@ -59,12 +59,15 @@ const DeskDownloadApp = dynamic(
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [retry, setRetry] = useState(false);
   const [reload, setReload] = useState(false);
+  // const [tokens, setTokens] = useState();
+  const tokens = localStorage.get('tokens') || null;
   // const [id, setId] = useState('for-you');
 
   let { id = 'for-you' } = router?.query;
   console.log(id)
   const { videoId } = router?.query;
   const {show} = useDrawer();
+
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall});
@@ -92,6 +95,12 @@ const DeskDownloadApp = dynamic(
   const doReload = ()=>{
     setReload(true);
   }
+
+  useEffect(()=>{
+  if(!tokens){
+    doReload();
+  }
+  },[tokens])
 
   useEffect(()=>{
     if(reload){
