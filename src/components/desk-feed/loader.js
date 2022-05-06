@@ -4,7 +4,7 @@ import FooterMenu from '../footer-menu';
 
 function Loader() {
   return (
-    <div className="w-8/12 flex flex-col overflow-scroll no_bar">
+    <div className="w-8/12 flex flex-col pt-24 overflow-scroll feed-tab-w no_bar">
     <div className="feed_card  border-b-2 border-gray-300 p-8 ">
     <div className="flex justify-between">
         <div className="avatar">

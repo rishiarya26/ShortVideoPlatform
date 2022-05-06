@@ -181,7 +181,7 @@ return (
 <>{
   charmsPresent &&
   charms && 
-   <div className='flex flex-col w-feed-menu overflow-hidden thin_bar ml-6'>
+   <div className='flex flex-col w-feed-menu tab-plugin overflow-hidden thin_bar ml-6'>
    {/* <div onClick={onClose} className='flex justify-end p-2'>
       <Close/>
    </div> */}

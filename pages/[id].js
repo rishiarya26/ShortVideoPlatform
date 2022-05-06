@@ -12,24 +12,50 @@ import { getItem } from '../src/utils/cookie';
 import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
 import { updateUtmData } from '../src/utils/web';
+import isEmptyObject from '../src/utils/is-object-empty';
 
 
 // TODO enable mock mode here
 export default function Hipi(params) {
   const [type,setType] = useState('others');
-  const {
-    data: item = {},
+  const [item, setItem] = useState(params?.data || {});
+  const [status,setStatus] = useState(params?.status === 'fail' ? 'pending' : 'success');
+  let {
     errorCode,
     message,
-    status,
   } = params;
+
   const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
 
   const router = useRouter();
   const device = getItem('device-type');
+  const trimmedUserHandle = router?.query?.id?.replace('@','');
+
+  const profileApiRetry = async()=>{
+   try{
+      const resp = await getUserProfile(trimmedUserHandle);
+    
+    //if api fails at server side for special characters - retry call
+    if(resp?.status === 'success'){
+      setItem(resp?.data);
+      setStatus('success');
+      
+    }else{
+      setStatus('fail')
+    }
+    }catch(e){
+      setStatus('fail')
+    }
+  }
 
   useEffect(()=>{
     try{ 
+
+      //if api fails at server side for special characters - retry call
+      if(status === 'pending' && isEmptyObject(item)){
+        profileApiRetry();
+     }
+
       let userType = 'others'
       const tokens = localStorage.get('tokens');
       const userId = localStorage.get('user-id')
@@ -38,12 +64,12 @@ export default function Hipi(params) {
 
     /**** to get isfollowing if logged in ****/
       if(tokens){
+        console.log("inside")
         const getProfileAfterLogin = async()=>{
-          console.log("profile login called",item?.userHandle);
        try{   
-         const resp = await getUserProfileWLogin(item?.userHandle);
+         const resp = await getUserProfileWLogin(trimmedUserHandle);
+         console.log('inside',resp)
          setIsFollowing(resp?.data?.isFollowing);
-          console.log("TTTTTT",resp?.data);
         }catch(e){
              console.log("Error rrr",e);
         }
@@ -92,7 +118,6 @@ export default function Hipi(params) {
     // if(device === 'desktop'){
     //   return null;
     // }
-
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
@@ -149,7 +174,7 @@ export default function Hipi(params) {
           }
         }}
       /> */}
-      {comp?.[device]}
+      {status === 'success' && comp?.[device]}
      {device === 'mobile' && type === 'self' &&
        <FooterMenu 
          selectedTab="profile"
@@ -169,11 +194,9 @@ export async function getServerSideProps(ctx) {
   const trimmedUserHandle = id && id.replace('@','');
   let data = {};
   try {
-    console.log("profile called",trimmedUserHandle);
     data = await getUserProfile(trimmedUserHandle);
     // console.log(data)
   } catch (e) {
-    console.log("joker ***",e)
     data = {
       status: e?.status || 400,
       errorCode: e?.errorCode || 400,

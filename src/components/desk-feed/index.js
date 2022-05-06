@@ -59,12 +59,15 @@ const DeskDownloadApp = dynamic(
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [retry, setRetry] = useState(false);
   const [reload, setReload] = useState(false);
+  // const [tokens, setTokens] = useState();
+  const tokens = localStorage.get('tokens') || null;
   // const [id, setId] = useState('for-you');
 
   let { id = 'for-you' } = router?.query;
   console.log(id)
   const { videoId } = router?.query;
   const {show} = useDrawer();
+
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall});
@@ -92,6 +95,12 @@ const DeskDownloadApp = dynamic(
   const doReload = ()=>{
     setReload(true);
   }
+
+  useEffect(()=>{
+  if(!tokens){
+    doReload();
+  }
+  },[tokens])
 
   useEffect(()=>{
     if(reload){
@@ -205,7 +214,7 @@ useEffect(()=>{
 //   setId(id);
 // }
 
-const FeedComp =  <div className="W-feed-vid flex flex-col no_bar">
+const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
 {items && items?.length > 0 ? <InfiniteScroll 
  dataLength={items?.length} 
  next={getFeedData} 
@@ -259,7 +268,7 @@ const info ={
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
         }}
       />
-    <div className="flex flex-col w-full thin_bar pt-24 items-center font-sans">
+    <div className="flex flex-col w-full thin_bar items-center font-sans">
        {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>
          <VideoDetail
@@ -286,8 +295,8 @@ const info ={
        </div>}
         <Header doReload={doReload} typeParam={id}/>
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
-          <div className='w-feed-menu'>
-          <DeskMenu width={'w-feed-menu'}/>
+          <div className='w-feed-menu menu-sm pt-24'>
+          <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
             { fetchState === 'success' ?
              info?.[id]

@@ -54,7 +54,7 @@ const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
       };
 
     return(
-      <div className=" W-feed-vid flex flex-col items-center pt-36 justify-center">
+      <div className=" W-feed-vid pt-24 flex flex-col items-center pt-36 justify-center">
         <div className="w-24 h-24 flex items-center justify-center bg-gray-100 rounded-full">
           <Door/>
         </div>

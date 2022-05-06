@@ -315,6 +315,9 @@ span.swiper-pagination-bullet {
   .overlay-z-index {
     z-index: 9!important;
 }
+.w-70vr{
+  width: 70vw;
+}
 .width-mob{
   width: 90%!important;
 }
@@ -655,4 +658,60 @@ color: rgb(172, 211, 205);
   height: 25px; /* Slider handle height */
   background: #04AA6D; /* Green background */
   cursor: pointer; /* Cursor on hover */
+}
+
+
+@media (min-width:768px) and (max-width:1024px){
+  .vdo_player{
+      object-fit: contain!important;
+  }
+  .tab-width{
+    width: 60%;
+    left: 20%;
+  }
+  .overlay-z-index {
+    z-index: 9!important;
+}
+.width-mob{
+  width: 60%!important;
+}
+.w-70vr{
+  width: 35vw;
+}
+.feed-tab-w{
+  width: 75%;
+}
+.tab-vcard-w{
+  width: 29%;
+}
+}
+@media (max-width:1024px){
+  .sm-menu{
+    display: none;
+  }
+  .menu-sm{
+    min-width: 72px;
+    width: 72px;
+    border-right: 1px solid rgba(22, 24, 35, 0.12);
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 6%);
+  }
+  .menu-sm-w{
+    width: 72px;
+  }
+  .tab-plugin{
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+  }
+  .tab-charm{
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  .tab-card{
+    width: 32%;
+  }
+  .tab-card-h{
+    min-height: 43vw;
+  }
 }

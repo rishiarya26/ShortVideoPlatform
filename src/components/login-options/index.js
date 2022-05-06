@@ -43,7 +43,7 @@ export default function Login({ toggle, loading, setAuth }) {
   }
 
   return (
-    <div className="px-4 py-2 flex flex-col items-center">
+    <div className="px-4 py-2 flex flex-col w-full items-center">
       {device === 'mobile' && <div onClick={close} className='flex w-full justify-end p-2'>
       <Close/>
    </div>}
