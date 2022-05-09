@@ -38,6 +38,7 @@ import { getItem } from '../../utils/cookie';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { viewEvents } from '../../sources/social';
+import { viewEventsCall } from '../../analytics/view-events';
 
 // import {sessionStorage} from "../../utils/storage"
  
@@ -130,11 +131,6 @@ function Feed({ router }) {
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
-
-  const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id });
@@ -397,6 +393,10 @@ function Feed({ router }) {
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+
                 /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

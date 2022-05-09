@@ -5,7 +5,7 @@ import Feed from '../../src/components/feed';
 import FeedIphone from '../../src/components/feed-iphone';
 import OneVideo from '../../src/components/one-video';
 import { getItem } from '../../src/utils/cookie';
-import { updateUtmData } from '../../src/utils/web';
+import { updateCampaignId, updateUtmData } from '../../src/utils/web';
 
 export default function Hipi() {
     const router = useRouter();
@@ -15,6 +15,7 @@ export default function Hipi() {
   useEffect(()=>{
     const queryStrings = router?.query;
     updateUtmData(queryStrings);
+    updateCampaignId(queryStrings);
   },[])
 
   if(device === 'desktop'){ 

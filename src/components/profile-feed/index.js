@@ -19,7 +19,6 @@ import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
-import { viewEvents } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
@@ -29,6 +28,7 @@ import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import { viewEventsCall } from '../../analytics/view-events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -117,11 +117,6 @@ function ProfileFeed({ router }) {
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
-
-  const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }
 
   const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
   const onDataFetched = data => {
@@ -496,6 +491,10 @@ try{
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+
                 /***************/
 
               if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

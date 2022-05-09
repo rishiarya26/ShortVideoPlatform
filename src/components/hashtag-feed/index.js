@@ -17,7 +17,6 @@ import { inject } from '../../analytics/async-script-loader';
 import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
-import { viewEvents } from '../../sources/social';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
@@ -28,6 +27,7 @@ import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import { viewEventsCall } from '../../analytics/view-events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -113,11 +113,6 @@ function HashTagFeed({ router }) {
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
-
-  const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }
 
   const dataFetcher = () => getHashTagVideos({ keyword : item, videoId: videoId && videoId });
   const onDataFetched = data => {
@@ -432,6 +427,10 @@ try{
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+
                 /***************/
 
               if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

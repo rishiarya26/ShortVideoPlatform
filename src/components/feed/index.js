@@ -39,12 +39,12 @@ import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
-import { viewEvents } from '../../sources/social';
 import { getActivityDetails } from '../../get-social';
 import { localStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
+import { viewEventsCall } from '../../analytics/view-events';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -125,6 +125,8 @@ function Feed({ router }) {
   const { t } = useTranslation();
   const { id } = router?.query;
   const { videoId } = router?.query;
+  let { campaign_id = null} = router?.query;
+  campaign_id = campaign_id ? campaign_id : localStorage.get('campaign_id');
 
  const {show} = useDrawer();
 
@@ -160,14 +162,9 @@ function Feed({ router }) {
     }
   },[initialPlayStarted])
 
-  const viewEventsCall = async(id, event)=>{
-    // console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }
-
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall });
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId: videoId, firstApiCall: firstApiCall });
+  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall, campaign_id: campaign_id });
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId: videoId, firstApiCall: firstApiCall, campaign_id:campaign_id });
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
@@ -510,7 +507,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                   activeIndex, slides
                 } = swiper;
                 setInitialPlayStarted(false);
-                router?.replace(`/feed/${id}`);
+                // router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {
@@ -536,6 +533,11 @@ const toTrackFirebase = (activeIndex, type, value) => {
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+
                 /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

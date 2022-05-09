@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import ChooseOnType from '../../src/components/choose-on-type';
 import HashTagFeed from '../../src/components/hashtag-feed';
 import HashTagFeedIphone from '../../src/components/hashtag-feed-iphone';
-import { updateUtmData } from '../../src/utils/web';
+import { updateCampaignId, updateUtmData } from '../../src/utils/web';
  
 export default function Hipi() {
   const router = useRouter();
@@ -11,6 +11,7 @@ export default function Hipi() {
   useEffect(()=>{
     const queryStrings = router?.query;
     updateUtmData(queryStrings);
+    updateCampaignId(queryStrings);
   },[]);
 
   return (

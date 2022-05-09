@@ -41,9 +41,9 @@ import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
-import { viewEvents } from '../../sources/social';
 import HamburgerMenu from '../hamburger-menu';
 import { trackEvent } from '../../analytics/firebase';
+import { viewEventsCall } from '../../analytics/view-events';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -123,6 +123,8 @@ function FeedIphone({ router }) {
   const { t } = useTranslation();
   const { id } = router?.query;
   const { videoId } = router?.query;
+  let { campaign_id = null} = router?.query;
+  campaign_id = campaign_id ? campaign_id : localStorage.get('campaign_id');
 
   const {show} = useDrawer();
 
@@ -164,14 +166,10 @@ function FeedIphone({ router }) {
     }
   },[initialPlayStarted])
 
-  const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }
 
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id, videoId:videoId, firstApiCall:firstApiCall });
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id, videoId: videoId, firstApiCall: firstApiCall });
+  const dataFetcher = () => getHomeFeed({ type: id, videoId:videoId, firstApiCall:firstApiCall,campaign_id:campaign_id });
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id, videoId: videoId, firstApiCall: firstApiCall, campaign_id:campaign_id });
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
@@ -537,7 +535,7 @@ console.log('errorrr',e)
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
-                router?.replace(`/feed/${id}`);
+                // router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {
@@ -562,6 +560,9 @@ console.log('errorrr',e)
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

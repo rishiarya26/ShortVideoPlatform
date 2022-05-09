@@ -5,7 +5,7 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { localStorage } from "../../src/utils/storage";
-import { updateUtmData } from "../../src/utils/web";
+import { updateCampaignId, updateUtmData } from "../../src/utils/web";
 
 export default function Hipi() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function Hipi() {
       if(router){
         const queryStrings = router?.query;
         updateUtmData(queryStrings);
+        updateCampaignId(queryStrings);
         // console.log(queryStrings)
         const {id} = router?.query;
         id && router?.push(`/feed/for-you?videoId=${id}`);

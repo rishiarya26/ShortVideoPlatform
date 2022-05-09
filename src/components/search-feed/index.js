@@ -22,7 +22,6 @@ import { inject } from '../../analytics/async-script-loader';
 import Mute from '../commons/svgicons/mute';
 import { numberFormatter } from '../../utils/convert-to-K';
 import usePreviousValue from '../../hooks/use-previous';
-import { viewEvents } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
@@ -31,7 +30,7 @@ import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
-
+import { viewEventsCall } from '../../analytics/view-events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -494,6 +493,10 @@ try{
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
+                viewEventsCall(activeVideoId, 'user_video_end', 
+                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+
               /***************/
 
             const activeId = slides[activeIndex]?.id;

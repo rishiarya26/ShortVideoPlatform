@@ -11,7 +11,7 @@ import Users from '../src/components/users';
 import { getItem } from '../src/utils/cookie';
 import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
-import { updateUtmData } from '../src/utils/web';
+import { updateCampaignId, updateUtmData } from '../src/utils/web';
 import isEmptyObject from '../src/utils/is-object-empty';
 
 
@@ -79,6 +79,7 @@ export default function Hipi(params) {
    /*************/
         const queryStrings = router?.query;
         updateUtmData(queryStrings);
+        updateCampaignId(queryStrings);
     }catch(e){
       console.log('something went wrong with id')
     }
@@ -133,7 +134,6 @@ export default function Hipi(params) {
             content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
           }
         ],
-
         }}
      />
       {/* <VideoJsonLd

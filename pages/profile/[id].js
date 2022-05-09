@@ -9,7 +9,7 @@ import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
 import { getItem } from '../../src/utils/cookie';
 import { localStorage } from '../../src/utils/storage';
-import { updateUtmData } from '../../src/utils/web';
+import { updateCampaignId, updateUtmData } from '../../src/utils/web';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -31,6 +31,7 @@ export default function Hipi(params) {
     setType(userType);
       const queryStrings = router?.query;
       updateUtmData(queryStrings);
+      updateCampaignId(queryStrings);
   }catch(e){
     console.log('something went wrong with id')
   }

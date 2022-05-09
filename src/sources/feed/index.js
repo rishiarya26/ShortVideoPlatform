@@ -4,49 +4,56 @@ import useAuth from '../../hooks/use-auth';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
+import { detectGeoLocationByZee } from '../geo-location';
 import { transformSuccess, transformError } from '../transform/feed';
 import { getSingleFeed } from './embed';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
-// let geoData = localStorage && localStorage?.get('geo-info');
-async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall }) {
+let geoData = localStorage?.get('geo-info') || null;
+
+/* Feed API with login */
+async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall, campaign_id='' }) {
 
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&campaign_id=${campaign_id || ''}`;
      let tokens = localStorage.get('tokens');
-    //  tokens = JSON.parse(tokens);
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
-      // if(geoData){
+   if(geoData){     
         response = await get(apiPath,null,{
         Authorization: `Bearer ${shortsAuthToken}`,
         'access-token': accessToken,
-        // 'X-GEO-IPADDR' : geoData?.ip,
-        // 'X-GEO-COUNTRY-CODE':geoData?.country,
-        // 'X-GEO-REGION-CODE':geoData?.state_code,
-        // 'X-GEO-CITY':geoData?.city,
-        // 'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
-        // 'X-GEO-PINCODE':geoData?.pin
+        'X-GEO-IPADDR' : geoData?.ip || '',
+        'X-GEO-COUNTRY-CODE':geoData?.country || '',
+        'X-GEO-REGION-CODE':geoData?.state_code || '',
+        'X-GEO-CITY':geoData?.city || '',
+        'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+        'X-GEO-PINCODE':geoData?.pin || ''
       })
-    // }else{
-    //     response = await get(apiPath,null,{
-    //       Authorization: `Bearer ${shortsAuthToken}`,
-    //       'access-token': accessToken,
-    //   })}
+    }else{
+      const respGeoInfo = await detectGeoLocationByZee();
+        const geoLocationInfo = respGeoInfo?.data;
+          if(geoLocationInfo){
+            console.log("No GEO_DATA*****",geoLocationInfo );
+            response = await get(apiPath,null,{
+              'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || '',
+              'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
+              'X-GEO-CITY':geoLocationInfo?.city || '',
+              'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
+              'X-GEO-PINCODE':geoLocationInfo?.pin || '',
+          })
+      }}
 
       if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
-        // const items = response.data.responseData;
         const data = await getSingleVideo({id : videoId});
         console.log("l",data)
         const video = data?.data;
         console.log("l",data)
         response.data.firstVideo = video;
         console.log('first',video)
-        // console.log("resppp", response, data)
       }
 
     response.data.requestedWith = { page, total };
@@ -56,26 +63,35 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
   }
 }
 
-
-async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , firstApiCall}) {
+/* Feed API without login */
+async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , firstApiCall, campaign_id=''}) {
    console.log('fT',firstTimeCall)
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    // const apiPath = `${getApiBasePath('charmboard')}/v3.6/demo/hipi/2`;
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
-    // if(geoData){
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&campaign_id=${campaign_id || ''}`;
+    if(geoData){
       response = await get(apiPath,null,{
-      // 'X-GEO-IPADDR' : geoData?.ip,
-      // 'X-GEO-COUNTRY-CODE':geoData?.country,
-      // 'X-GEO-REGION-CODE':geoData?.state_code,
-      // 'X-GEO-CITY':geoData?.city,
-      // 'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
-      // 'X-GEO-PINCODE':geoData?.pin
+        'X-GEO-IPADDR' : geoData?.ip || '',
+        'X-GEO-COUNTRY-CODE':geoData?.country || '',
+        'X-GEO-REGION-CODE':geoData?.state_code || '',
+        'X-GEO-CITY':geoData?.city || '',
+        'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+        'X-GEO-PINCODE':geoData?.pin || ''
     })
-  // }else{
-  //     response = await get(apiPath);
-  //   }
+  }else{
+    const respGeoInfo = await detectGeoLocationByZee();
+    const geoLocationInfo = respGeoInfo?.data;
+      if(geoLocationInfo){
+        console.log("No GEO_DATA*****",geoLocationInfo );
+        response = await get(apiPath,null,{
+          'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || '',
+          'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
+          'X-GEO-CITY':geoLocationInfo?.city || '',
+          'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
+          'X-GEO-PINCODE':geoLocationInfo?.pin || '',
+      })
+  }}
     
     console.log('v-id',videoId)
     if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
