@@ -44,6 +44,7 @@ import SwipeUp from '../commons/svgicons/swipe-up';
 import HamburgerMenu from '../hamburger-menu';
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
+import { localStorage } from '../../utils/storage';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -124,7 +125,7 @@ function FeedIphone({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id : localStorage.get('campaign_id');
+  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
 
   const {show} = useDrawer();
 
