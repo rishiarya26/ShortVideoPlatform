@@ -22,6 +22,7 @@ import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
+import { detectGeoLocationByZee } from '../src/sources/geo-location';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -169,20 +170,15 @@ function Hipi({
      }
   }
 
-  // const getGeoLocationInfo =async()=>{
-  //   try{ 
-  //     const resp = await detectGeoLocationByZee();
-  //     localStorage.set('geo-info',resp?.data)
-  //     // console.log(resp?.data?.country_name)
-  //     // setCountry(resp?.data?.country_name || 'India');
-  //     // if(resp?.data?.country_name === 'India'){
-  //     //   setItem('cookie-agreed','yes');
-  //     // }
-  //   }
-  //    catch(e){
-
-  //    }
-  // }
+  const getGeoLocationInfo =async()=>{
+    try{ 
+      const resp = await detectGeoLocationByZee();
+      localStorage.set('geo-info',resp?.data)
+    }
+     catch(e){
+    console.log("error in geo-api/setting it to localStorage",e)
+     }
+  }
 
   // useEffect(()=>{
   //   setItem('cookie-agreed','yes');
@@ -218,7 +214,7 @@ function Hipi({
     inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
     cookieAgree !== 'yes' && getCountry();
-    // getGeoLocationInfo();
+    getGeoLocationInfo();
     let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
     const userAgent = window?.navigator.userAgent;
@@ -249,7 +245,7 @@ function Hipi({
 
     useEffect(()=>{
    try{   
-    let tokens = localStorage.get('tokens');
+    let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {

@@ -118,13 +118,20 @@ const deleteLike = async ({ socialId }) => {
   }
 };
 
-const viewCountUpdate = async ({ id, event = 'user_video_start'}) => {
+const viewCountUpdate = async ({ id, event = 'user_video_start', duration='', timeSpent=''}) => {
   let response = {};
  
   try {
-    const payload = {
+    const payload =  (event === 'user_video_end') ?
+     {
       "assetId": id,
-      "event": event
+      "event": event,
+      "duration":duration,
+      "timeSpent":timeSpent
+  }:
+  {
+    "assetId": id,
+    "event": event
   }
   console.log("api called", payload)
    const userId = localStorage.get('user-id') || null;

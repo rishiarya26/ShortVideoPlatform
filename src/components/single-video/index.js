@@ -10,7 +10,7 @@ import EmbedSeekbar from '../emded-seekbar';
 import FooterMenu from '../footer-menu';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import { viewEvents } from '../../sources/social';
+import { viewEventsCall } from '../../analytics/view-events';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -55,11 +55,6 @@ export default function SingleVideo(props){
       }
     },[initialPlayStarted])
 
-    const viewEventsCall = async(id, event)=>{
-      console.log("event to send", id, event)
-     await viewEvents({id:id, event:event})
-    }   
-
   useEffect(() => {
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
@@ -76,6 +71,10 @@ export default function SingleVideo(props){
       }else {
         viewEventsCall(props?.id,'view')
       }
+      viewEventsCall(props?.id, 'user_video_end', 
+      {timeSpent: watchedTime,
+       duration :  tDuration});
+
       /***************/
     });
   }, []);

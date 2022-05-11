@@ -27,9 +27,16 @@ function updateUtmData(queryStrings){
   localStorage.set('utm-data',utmData)
 }
 
+function updateCampaignId(queryStrings){
+  const oldCampaignId = localStorage?.get('campaign_id') || ''
+    let campaign_id = queryStrings?.campaign_id || oldCampaignId;
+    (campaign_id !== oldCampaignId) && localStorage.set('campaign_id',campaign_id);
+}
+
 export {
   CopyToClipBoard,
   ScrollToTop,
-  updateUtmData
+  updateUtmData,
+  updateCampaignId
 };
 

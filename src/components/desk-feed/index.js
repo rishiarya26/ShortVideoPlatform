@@ -66,12 +66,14 @@ const DeskDownloadApp = dynamic(
   let { id = 'for-you' } = router?.query;
   console.log(id)
   const { videoId } = router?.query;
+  let { campaign_id = null} = router?.query;
+  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
+
   const {show} = useDrawer();
 
-
   // selecting home feed api based on before/after login
-  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall});
-  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId:videoId, firstApiCall:firstApiCall});
+  const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});
+  const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId:videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 

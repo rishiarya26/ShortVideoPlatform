@@ -5,6 +5,5 @@ export default function Custom404() {
     <div>
       <Error/>
     </div>
-      
   );
 }

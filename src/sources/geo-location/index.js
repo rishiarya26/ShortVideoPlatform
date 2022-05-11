@@ -16,17 +16,14 @@ async function detectGeoLocation() {
 }
 
 async function detectGeoLocationByZee() {
-    let response = {};
-    try {  
-      const data = await detectGeoLocation();  
-      const apiPath = `https://country-stage.zee5.com/country`;
-      response = await get(apiPath);
-      response.data.ip = data?.data?.ip;
-      return Promise.resolve(response);
-    } catch (err) {
-      return Promise.reject(err);
-    }
+  let response = {};
+  try {   
+    const apiPath = `https://xtra.zee5.com/country`;
+    response = await get(apiPath,null, {'content-type':'noHeaders'});
+    return Promise.resolve(response);
+  } catch (err) {
+    return Promise.reject(err);
   }
-
+}
 
 export { detectGeoLocation, detectGeoLocationByZee };
