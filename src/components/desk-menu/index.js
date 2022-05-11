@@ -71,6 +71,13 @@ useEffect(()=>{
         <div className="flex flex-col pb-6 pt- 4 sm-menu ">
               {isLoggedIn}
         </div>
+        <div className="flex text-xs text-gray-400 border-t border-gray-200 pt-4 flex-wrap"> 
+          <a className="pr-2 cursor-pointer">About</a>
+          <a className="pr-2 cursor-pointer">Terms of Use</a>
+          <a className="pr-2 cursor-pointer">Community Guidelines</a>
+          <a className="pr-2 cursor-pointer">Privacy Policy</a>
+          <a className="pr-2 cursor-pointer">Brand Assets</a>
+        </div>
         
      </div>
     )

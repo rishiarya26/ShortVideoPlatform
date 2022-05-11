@@ -27,19 +27,19 @@ function About() {
         }}
       />
     <div className="h-screen  w-screen flex flex-col justify-between">
-      <div className="w-full h-20 head-shadow flex items-center justify-center lg:justify-start lg:px-10 py-2">
-        <div className="w-14">
+      <div className="w-full h-24 head-shadow flex items-center justify-center lg:justify-start lg:px-10 py-4">
+        <div className="w-12">
         <img  src={withBasePath('icons/Logo_hipi.png')} alt="hipi logo" /> 
         </div> 
       </div>
       <div className='w-full flex '>
-          <div className='w-1/2 bg-gray-300'>
-
+          <div className='w-1/2 bg-gray-300 h-screen'>
+          <img  src={withBasePath('images/about/about_hipi.jpg')} alt="hipi logo" /> 
           </div>
-          <div className='w-1/2 flex-col flex p-8 '> 
-             <h1 className='text-5xl font-extrabold'>
+          <div className='w-1/2 flex-col flex p-8 px-20 justify-center'> 
+             <h1 className='text-5xl font-bold text-gray-8  px-16'>
              Hipi with us</h1>
-             <p className='text-gray-600 pt-4'>
+             <p className='text-gray-500 text-lg pt-4 px-16'>
              Hipi is the leading short form video destination that inspires creativity and passion. Made in India, Hipi has already become India’s favourite short video platform for many talented creators. Hipi brings moments of joy, inspiration, and discovery. The platform empowers brands and merchants to harness the power of storytelling and product discovery in an industry-changing, retail marketing environment. Hipi can be downloaded on the Google Play store and the Apple App Store.
              </p>
           </div>
