@@ -2,6 +2,7 @@
 import { withBasePath } from '../../config';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import StaticFooter from '../static-footer';
+import { useRouter } from "next/router";
 
 function About() {
   //Desktop links
@@ -17,6 +18,8 @@ function About() {
     device && (window.location.href = `${stores[device]}`);
   }
 
+  const router = useRouter();
+
   return (
     <>
      <SeoMeta
@@ -28,7 +31,7 @@ function About() {
       />
     <div className="h-screen  w-screen flex flex-col justify-between">
       <div className="w-full h-24 head-shadow flex items-center justify-center lg:justify-start lg:px-10 py-4">
-        <div className="w-12">
+        <div className="w-12 cursor-pointer" onClick={()=>router.push('/feed/for-you')} >
         <img  src={withBasePath('icons/Logo_hipi.png')} alt="hipi logo" /> 
         </div> 
       </div>

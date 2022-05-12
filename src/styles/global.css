@@ -254,19 +254,19 @@ img{
     line-height: 1.8;
     font-weight: 400;
     color: #666666;
-    background: #000;
+    /* background: #000;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b0025), color-stop(100%, #000));
     background: -webkit-linear-gradient(top, #2b0025, #000);
     background: -webkit-gradient(linear, left top, left bottom, from(#2b0025), to(#000));
     background: linear-gradient(
 180deg
-, #2b0025 0, #000);
+, #2b0025 0, #000); */
 }
 	.tray-container {
 	    padding: 0 7.5% 24px;
 	}
 	.tnc-text{
-		color: #fff;
+		/* color: #fff; */
 		overflow-y: auto;
 	    height: 100%;
 	    font-size: 14px;
@@ -328,6 +328,9 @@ span.swiper-pagination-bullet {
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";   
     /* font-weight: normal; */
     letter-spacing: unset;
+}
+.tnc-text{
+  padding: 0 10%;
 }
 .video-card{
   width: 100%;
