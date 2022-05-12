@@ -13,7 +13,7 @@ export const ONE_TAP_DOWNLOAD = 'https://hipi.onelink.me/tMco/1e3e4b5e';
 export const DYNAMIC_ONE_TAP_DOWNLOAD = 'https://onelink.appsflyer.com/shortlink/v1/tMco';
 export const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.zee5.hipi';
 export const IOS_STORE = 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008';
-export const VERSION = '4.0.0';
+export const VERSION = '4.0.1';
 export const APP_NAME = 'HiPi';
 export const LANGUAGE = 'en';
 export const GOOGLE_CLIENT_ID_PREROD = '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com';

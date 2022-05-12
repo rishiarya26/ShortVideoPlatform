@@ -67,7 +67,7 @@ const DeskDownloadApp = dynamic(
   console.log(id)
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id : localStorage.get('campaign_id');
+  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
 
   const {show} = useDrawer();
 

@@ -245,7 +245,7 @@ function Hipi({
 
     useEffect(()=>{
    try{   
-    let tokens = localStorage.get('tokens');
+    let tokens = localStorage.get('tokens') || null;
     // tokens = tokens && JSON.parse(tokens);
   
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
