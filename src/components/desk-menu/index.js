@@ -71,6 +71,14 @@ useEffect(()=>{
         <div className="flex flex-col pb-6 pt- 4 sm-menu ">
               {isLoggedIn}
         </div>
+        <div className="flex text-xs text-gray-400 border-t border-gray-200 pt-4 flex-wrap static_links"> 
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</a>
+        </div>
+        <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div>
         
      </div>
     )
