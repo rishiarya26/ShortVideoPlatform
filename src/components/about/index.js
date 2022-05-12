@@ -37,7 +37,7 @@ function About() {
       </div>
       <div className='w-full flex '>
           <div className='w-1/2 bg-gray-300 h-screen'>
-          <img  src={withBasePath('images/about/about_hipi.jpg')} alt="hipi logo" /> 
+          <img  src={withBasePath('images/about/about_hipi_low.jpg')} alt="hipi logo" /> 
           </div>
           <div className='w-1/2 flex-col flex p-8 px-20 justify-center'> 
              <h1 className='text-5xl font-bold text-gray-8  px-16'>

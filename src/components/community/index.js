@@ -19,7 +19,7 @@ const router = useRouter();
           <Back/>
     </div> */}
 	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-16" data-align="center">
-		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1"><strong data-renderer-mark="true"><u data-renderer-mark="true">HiPi Community Guidelines</u></strong><button className="sc-fBuWsC bDAhfN"></button></h1>
+		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1">HiPi Community Guidelines</h1>
 	</div>
 	<p data-renderer-start-pos="28"><strong data-renderer-mark="true">A.&nbsp;&nbsp;&nbsp;&nbsp;Adult Nudity and Sexual Content&nbsp;</strong></p>
 	<p data-renderer-start-pos="68">As a platform, we aim to keep our Application free from any obscene, pornographic or sexually explicit content. This includes Content which may be either partially or fully animated. Since we are a platform that is family oriented, we encourage you to evaluate your Content for any such material, and use great discretion before uploading the Content.&nbsp;</p>
