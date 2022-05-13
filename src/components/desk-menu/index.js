@@ -78,7 +78,7 @@ useEffect(()=>{
           <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</a>
           <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</a>
         </div>
-        <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div>
+        {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
         
      </div>
     )
