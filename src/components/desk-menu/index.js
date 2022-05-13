@@ -71,7 +71,7 @@ useEffect(()=>{
        
               {isLoggedIn}
        
-        <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links"> 
+        <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
           <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</a>
           <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</a>
           <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</a>

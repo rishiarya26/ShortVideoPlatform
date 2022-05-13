@@ -39,13 +39,15 @@ function About() {
       <Header/>
       <div className='w-full flex '>
           <div className='w-1/2 bg-gray-300 h-screen'>
-          <img  src={withBasePath('images/about/about_hipi_desk.jpg')} alt="hipi logo" /> 
+          <img  src={withBasePath('images/about/hipi_about.jpg')} alt="hipi logo" /> 
           </div>
           <div className='w-1/2 flex-col flex p-8 px-20 justify-center'> 
              <h1 className='text-5xl font-bold text-gray-8  px-16'>
              Hipi with us</h1>
-             <p className='text-gray-500 text-lg pt-4 px-16'>
-             Hipi is the leading short form video destination that inspires creativity and passion. Made in India, Hipi has already become India’s favourite short video platform for many talented creators. Hipi brings moments of joy, inspiration, and discovery. The platform empowers brands and merchants to harness the power of storytelling and product discovery in an industry-changing, retail marketing environment. Hipi can be downloaded on the Google Play store and the Apple App Store.
+             <p className='text-gray-600 text-2xl pt-4 px-16'>Hipi is the leading short form video destination that inspires creativity and passion.</p>
+             <p className='text-gray-500 font-light text-lg pt-4 px-16'>Hipi brings moments of joy, inspiration, and discovery. The platform empowers creators, brands and merchants to harness the power of storytelling and product discovery in an industry-changing, retail marketing environment. </p>
+             <p className='text-gray-500 font-light text-lg pt-4 px-16'>
+             Hipi can be downloaded on the Google Play store and the Apple App Store.
              </p>
           </div>
       </div>

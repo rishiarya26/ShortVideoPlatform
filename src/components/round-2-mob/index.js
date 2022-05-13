@@ -134,7 +134,7 @@ const onStoreRedirect =(device)=>{
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
           </div> */}
           <div className="flex w-full text-gray-400 text-xs items-center text-center mb-4">
-          <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
+          <p>Copyright © 2022 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
           <div className="flex justify-center w-full">
             <a href={links.facebook} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">

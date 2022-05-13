@@ -24,7 +24,7 @@ function StaticFooter() {
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
           </div> */}
           <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
-          <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
+          <p>Copyright © 2022 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
           <div className="flex justify-end items-center w-1/2">
             <a>

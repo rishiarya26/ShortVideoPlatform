@@ -20,17 +20,17 @@ function Terms() {
 		<div className='mt-12  md:mt-24'>
 	        <h1>Terms of Use</h1>
 			</div>
-	        <p>Welcome to HiPi. We provide you with access to a free to use, interactive platform HiPi available
-	        on Zee5 mobile app. You can access the platform (“HiPi”) through your app store or the website
-	        www.zee5.com/HiPi (“Site”) and the Application (as hereinafter defined), through which you can
+	        <p>Welcome to Hipi. We provide you with access to a free to use, interactive platform Hipi available
+	        on Zee5 mobile app. You can access the platform (“Hipi”) through your app store or the website
+	        www.zee5.com/Hipi (“Site”) and the Application (as hereinafter defined), through which you can
 	        create, share and view content and connect with other users(“Service”). These terms of use along
-	        with the Community Guidelines available at www.zee5.com/HiPi (together referred to as “HiPi
-	        Terms of Use”), the Site’s terms of use accessible at www.zee5.com/HiPi (“Site Terms of Use”) and
-	        the Privacy Policy accessible at www.zee5.com/HiPi (“Privacy Policy”) govern your use of the
+	        with the Community Guidelines available at www.zee5.com/Hipi (together referred to as “Hipi
+	        Terms of Use”), the Site’s terms of use accessible at www.zee5.com/Hipi (“Site Terms of Use”) and
+	        the Privacy Policy accessible at www.zee5.com/Hipi (“Privacy Policy”) govern your use of the
 	        Service.
 	        </p>
-	        <p>In case of any conflict between the Site Terms of Use and the HiPi Terms of Use in connection with
-	        your use of the Service, these HiPi Terms of Use shall prevail.
+	        <p>In case of any conflict between the Site Terms of Use and the Hipi Terms of Use in connection with
+	        your use of the Service, these Hipi Terms of Use shall prevail.
 	        This document is an electronic record in terms of Information Technology Act, 2000 and rules
 	        thereunder pertaining to electronic records in various statutes as amended by the Information
 	        Technology Act, 2000 and rules made thereunder.</p>
@@ -43,11 +43,11 @@ function Terms() {
 	        POLICIES WHICH GOVERN THIS SITE. IF YOU DO NOT ACCEPT TO THE TERMS, YOU ARE NOT
 	        ENTITLED TO AVAIL OF/USE THE SERVICE, AND ANY USE BY YOU OF THE SERVICE SHALL BE
 	        UNAUTHORIZED.</p>
-	        <p>For the purpose of these HiPi Terms of Use, the terms "You" "Your" or "User" shall mean any person,
-	        natural or legal who uses or browses HiPi. The term "We", "Us", "Our" shall mean ZEEL.</p>
+	        <p>For the purpose of these Hipi Terms of Use, the terms "You" "Your" or "User" shall mean any person,
+	        natural or legal who uses or browses Hipi. The term "We", "Us", "Our" shall mean ZEEL.</p>
 	        <h3>DEFINITIONS</h3>
 
-	        <p>Certain words and expressions in the HiPi Terms of Use have a specific meaning, and are
+	        <p>Certain words and expressions in the Hipi Terms of Use have a specific meaning, and are
 	        reproduced below for ease of reference:
 	        1. 'Application' means the ZEE5 application owned by ZEEL to provide the Content on Devices,
 	        which is available on various platforms such as iOS, android and supported web browsers
@@ -66,19 +66,19 @@ function Terms() {
 	        links) including any developments in such protocols or any other protocols which may be
 	        developed which give equivalent, reduced or enhanced functionality compared with such
 	        protocols.
-	        6. “Community Guidelines” means HiPi’s community guidelines available at:
-	        www.zee5.com/HiPi
+	        6. “Community Guidelines” means Hipi’s community guidelines available at:
+	        www.zee5.com/Hipi
 	        </p>
 	        <h3>REGISTRATION</h3>
-	        <p>This Service can only be availed of by registered users who have registered on HiPi. You will not be
-	        permitted to post any Posts (as hereinafter defined) without registering on HiPi first. To register
-	        yourself on HiPi, You may be required to provide certain personal information to ZEEL, such as your
-	        name, age, gender, email address, mobile number. You may only register on HiPi if you are above
+	        <p>This Service can only be availed of by registered users who have registered on Hipi. You will not be
+	        permitted to post any Posts (as hereinafter defined) without registering on Hipi first. To register
+	        yourself on Hipi, You may be required to provide certain personal information to ZEEL, such as your
+	        name, age, gender, email address, mobile number. You may only register on Hipi if you are above
 	        18 years of age.</p>
-	        <p>On successful registration on HiPi, ZEEL will intimate You of the same, and You will be entitled to
+	        <p>On successful registration on Hipi, ZEEL will intimate You of the same, and You will be entitled to
 	        avail of the Service.</p>
 	        <h3>ELIGIBILITY</h3>
-	        <p>Unless otherwise specified, HiPi is available for individuals who have attained the age of majority
+	        <p>Unless otherwise specified, Hipi is available for individuals who have attained the age of majority
 	        or older. If You are under the relevant age of majority in Your jurisdiction, You may only access or
 	        use the Service in accordance with applicable law which enables a minor in your jurisdiction to
 	        access such a service. In India, by accessing, browsing, uploading or downloading Content and/or
@@ -101,33 +101,33 @@ function Terms() {
 	        Your access to and use of the Services is also subject to all applicable laws, rules, and regulations</p>
 	        <h3>USER GENERATED CONTENT ON HIPI</h3>
 
-	        <p>The HiPi platform will be made available on the Site by ZEEL to enable You to share your comments,
+	        <p>The Hipi platform will be made available on the Site by ZEEL to enable You to share your comments,
 	        pictures and/or videos (“Posts”) with other Users on the Site for an interactive experience. You may
 	        add music, filters, and other template elements to such Posts as may be made available by ZEEL
-	        on HiPi from time- to- time (“Templates”). ZEEL hereby grants you a revocable, non-exclusive,
+	        on Hipi from time- to- time (“Templates”). ZEEL hereby grants you a revocable, non-exclusive,
 	        royalty free and worldwide license to use the Templates solely for the purpose of creating and
-	        publishing your Posts on HiPi.</p>
+	        publishing your Posts on Hipi.</p>
 	        <p>Whether or not your Posts are made in combination with ZEEL’s preinstalled Templates, your Posts
 	        are considered as newly created audio-visual electronic records for which you are the publisher
 	        and author.</p>
-	        <p>By sharing Posts on HiPi, you understand, acknowledge and agree that such Posts may be viewed
-	        by the other users on HiPi, and the same can be limited at your own discretion by You changing the
+	        <p>By sharing Posts on Hipi, you understand, acknowledge and agree that such Posts may be viewed
+	        by the other users on Hipi, and the same can be limited at your own discretion by You changing the
 	        privacy settings of your user profile to limit the audience of your Posts to certain groups only. The
-	        Posts would also continue to remain on the HiPi platform until removed by You or removed in
-	        accordance with the conditions mentioned elsewhere in these HiPi Terms of Use.</p>
+	        Posts would also continue to remain on the Hipi platform until removed by You or removed in
+	        accordance with the conditions mentioned elsewhere in these Hipi Terms of Use.</p>
 	        <h3>OWNERSHIP OF POSTS AND ACCOUNT</h3>
 	        <p>You retain all ownership right, title and interest in your account and in the Posts (excluding any
-	        Templates used) which you publish on HiPi, including any images contained therein. However, by
+	        Templates used) which you publish on Hipi, including any images contained therein. However, by
 	        submitting the Posts, you hereby grant ZEEL a worldwide, perpetual, royalty free, non-exclusive,
 	        sub-licensable right to reproduce, distribute, issue copies, make available, publicly communicate
 	        and display copies of the Posts shared by You.</p>
 	        <p>You represent and warrant that you have taken all requisite consents, permissions or licenses
-	        required for uploading your Post on HiPi, including, but not limited to, consents from individuals
+	        required for uploading your Post on Hipi, including, but not limited to, consents from individuals
 	        featured in your Posts, and/or any consents or licenses required for music and/or artwork
-	        contained in your Post, prior to uploading such Posts on HiPi. ZEEL does not assume any
+	        contained in your Post, prior to uploading such Posts on Hipi. ZEEL does not assume any
 	        responsibility or liability for any Posts including any content therein.</p>
 	        <p>ZEEL reserves the right to disallow or delete any Posts which it determines, in its sole discretion, is
-	        in violation of these HiPi Terms of Use, and/or its Community Guidelines.</p>
+	        in violation of these Hipi Terms of Use, and/or its Community Guidelines.</p>
 	        <h3>YOUR RESPONSIBILITY</h3>
 	        <p>In addition to the responsibilities set out in the Site Terms of Use and the Community Guidelines,
 	        You Undertake that, without prejudice to Your obligation to otherwise comply with applicable laws,
@@ -150,35 +150,35 @@ function Terms() {
 	        foreign states, or public order or causes incitement to the commission of any cognizable
 	        offence or prevents investigation of any offence or is insulting any other nation.
 	        You further undertake that:
-	        • You shall not buy, sell, or transfer any part of Your account, or profile on HiPi, including your
+	        • You shall not buy, sell, or transfer any part of Your account, or profile on Hipi, including your
 	        username, login credentials, password, badges or Posts.
 	        • You shall not report any Posts or user accounts unless they are genuinely in violation of
-	        any law, the Community Guidelines, or any provision of these HiPi Terms of Use.</p>
+	        any law, the Community Guidelines, or any provision of these Hipi Terms of Use.</p>
 	        <h3>REPORTING OF POSTS</h3>
-	        <p>In case You believe that any Post on HiPi violates any law, our Community Guidelines, or any
-	        provision of these HiPi Terms of Use, you may report such Posts by clicking on the ‘report’ button
+	        <p>In case You believe that any Post on Hipi violates any law, our Community Guidelines, or any
+	        provision of these Hipi Terms of Use, you may report such Posts by clicking on the ‘report’ button
 	        on the Post. You may be required to provide reasons for reporting such Posts.
 	        Upon such Post being reported, ZEEL shall take up to 48 hours to review such Post, and determine
-	        whether such Post is required to be taken down from HiPi. You acknowledge and agree that ZEEL’s
+	        whether such Post is required to be taken down from Hipi. You acknowledge and agree that ZEEL’s
 	        decision in all such matters will be final binding, and ZEEL shall not be liable for any claims in this
 	        regard.</p>
 	        <h3>REPORTING OF ACCOUNTS</h3>
-	        <p>In case You believe that any User account on HiPi violates any law, our Community Guidelines, or
-	        any provision of these HiPi Terms of Use, you may report such account by clicking on the ‘report’
+	        <p>In case You believe that any User account on Hipi violates any law, our Community Guidelines, or
+	        any provision of these Hipi Terms of Use, you may report such account by clicking on the ‘report’
 	        button on the User’s profile. You may be required to provide reasons for reporting such Accounts.
 	        Upon such account being reported, the details of a user’s profile are sent to ZEEL, and ZEEL shall
 	        take up to 48 hours to review such User’s profile to determine whether such profile, or certain
-	        specific posts from the profile, are required to be taken down from HiPi. You acknowledge and
+	        specific posts from the profile, are required to be taken down from Hipi. You acknowledge and
 	        agree that ZEEL’s decision in all such matters will be final binding, and ZEEL shall not be liable for
 	        any claims in this regard.</p>
 	        <h3>TERMINATION OF SERVICE</h3>
-	        <p>ZEEL reserves the right to suspend, limit and/or terminate your use of Your account on the HiPi
+	        <p>ZEEL reserves the right to suspend, limit and/or terminate your use of Your account on the Hipi
 	        platform, or the Service, upon providing you with notice, if, in ZEEL’s opinion, that you have
-	        breached its Community Guidelines and/or the HiPi Terms of Use and/or any other policy or
+	        breached its Community Guidelines and/or the Hipi Terms of Use and/or any other policy or
 	        guideline which may be issued by ZEEL from time to time.</p>
 	        <h3>FEEDBACK</h3>
 	        <p>ZEEL welcomes and encourages YOU to provide feedback, comments and suggestions for
-	        improvements to HiPi ("Feedback"). YOU may submit Feedback at the Help Center. YOU
+	        improvements to Hipi ("Feedback"). YOU may submit Feedback at the Help Center. YOU
 	        acknowledge and agree that all Feedback will be the sole and exclusive property of ZEEL and YOU
 	        hereby irrevocably assign to ZEEL all of YOUR right, title, and interest in and to all Feedback,
 	        including without limitation all worldwide patent rights, copyright rights, trade secret rights, and
@@ -249,11 +249,11 @@ function Terms() {
 	        <p>The relationship between ZEEL and You is on a principal-to-principal basis. You are in no way ZEEL’s
 	        legal representative, partner or agent for any reason whatsoever.</p>
 	        <h3>EXPORT LAWS</h3>
-	        <p>YOU agree to comply fully with all Indian export laws and regulations to ensure that HiPi are not
+	        <p>YOU agree to comply fully with all Indian export laws and regulations to ensure that Hipi are not
 	        exported or re-exported directly or indirectly in violation of, or used for any purposes prohibited by,
 	        such laws and regulations.</p>
 	        <h3>CONFIDENTIALITY</h3>
-	        <p>YOU agree that HiPi, including, but not limited to, the object code components, provided to YOU is
+	        <p>YOU agree that Hipi, including, but not limited to, the object code components, provided to YOU is
 	        "Confidential Information" of ZEEL. YOU shall retain all Confidential Information in strict confidence
 	        at least with the same amount of diligence that YOU exercise in preserving the secrecy of YOUR
 	        most-valuable information, but in no event less than reasonable diligence.</p>
@@ -283,7 +283,7 @@ function Terms() {
 	        <p>Any notices or other communications required will be in writing and emailed to ZEEL
 	        at support.in@zee5.com. For notices made by e-mail, the date of receipt will be deemed the date
 	        on which such notice is transmitted.
-	        In the event you have any complaints with respect to any Content on HiPi, please write to us
+	        In the event you have any complaints with respect to any Content on Hipi, please write to us
 	        at support.in@zee5.com. with details of the objectionable content and Your details including Your
 	        name and mobile number and such other details as may be requested by Us. Based on the
 	        complaint raised, we will take reasonable measures to resolve the issue. You hereby expressly
@@ -291,7 +291,7 @@ function Terms() {
 	        Further, You hereby expressly agree that ZEEL makes no representations under these Terms of
 	        Use that any complaint raised by You will be resolved to Your satisfaction. All steps to be taken by
 	        ZEEL in this regard shall be at the sole discretion of ZEEL.
-	        If You have any claims with respect to the ownership of Content transmitted through HiPi, please
+	        If You have any claims with respect to the ownership of Content transmitted through Hipi, please
 	        follow the “Ownership Claims and Dispute Resolution Mechanism”
 	        at www.zee5.com/privacypolicy.</p>
 	        <h3>LAW & DISPUTES</h3>
@@ -301,13 +301,13 @@ function Terms() {
 	        <h3>ENTIRE AGREEMENT AND AMENDMENT</h3>
 	        <p>These TERMS expressly supersedes and completely replaces any and all prior ‘Terms of Use’. ZEEL
 	        shall not be bound by or liable to YOU for any pre-existing or contemporaneous written or oral
-	        representations or warranties, made by anyone, with respect to HiPi including any authorized
+	        representations or warranties, made by anyone, with respect to Hipi including any authorized
 	        agents, employees, or representatives.</p>
 	        <p>ZEEL reserves the right, at its sole discretion, to modify the TERMS from time to time (“Updated
 	        Terms of Use”). The Updated Terms of Use shall be effective immediately and shall supersede
 	        these Terms of Use. ZEEL shall not be under an obligation to notify you of any changes to the Terms
 	        of Use. YOU shall be solely responsible for reviewing the Terms of Use from time to time for any
-	        modifications. By continuing to use HiPi after the Updated Terms of Use have been published, YOU
+	        modifications. By continuing to use Hipi after the Updated Terms of Use have been published, YOU
 	        affirm YOUR agreement to the Updated Terms of Use.</p>
 	        <h3>CONTACT</h3>
 	        <p>You have any questions about these Terms of Use, please contact ZEEL at support.in@zee5.com.</p>
