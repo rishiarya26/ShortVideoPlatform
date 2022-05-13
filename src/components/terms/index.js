@@ -4,22 +4,20 @@ import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
-
+import Header from '../desk-header';
 function Terms() {
 	const router = useRouter();
   return (
     <div className="static_body relative">
-		<div className="w-full head-shadow flex items-center justify-center hidden md:flex  lg:justify-start lg:px-10 py-4">
-	<div className="w-12 cursor-pointer" onClick={()=>router.push('/feed/for-you')} >
-	<img  src={withBasePath('icons/Logo_hipi.png')} alt="hipi logo" /> 
-	</div> 
-  </div>
+	
+  <div className='hidden md:flex'><Header/></div>
+
       <div className="tray-container">
 		<div className="tnc-text">
 		{/* <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
           <Back/>
         </div> */}
-		<div className='mt-16'>
+		<div className='mt-12  md:mt-24'>
 	        <h1>Terms of Use</h1>
 			</div>
 	        <p>Welcome to HiPi. We provide you with access to a free to use, interactive platform HiPi available

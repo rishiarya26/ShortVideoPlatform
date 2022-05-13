@@ -3,22 +3,19 @@ import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
+import Header from '../desk-header';
 
 function Community() {
 const router = useRouter();
   return (
     <div className="static_body relative">
-		<div className="w-full head-shadow flex items-center justify-center hidden md:flex  lg:justify-start lg:px-10 py-4">
-	<div className="w-12 cursor-pointer" onClick={()=>router.push('/feed/for-you')} >
-	<img  src={withBasePath('icons/Logo_hipi.png')} alt="hipi logo" /> 
-	</div> 
-  </div>
+		<div className='hidden md:flex'><Header/></div>
       <div className="tray-container">
                 <div className="tnc-text ">
      {/* <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
           <Back/>
     </div> */}
-	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-16" data-align="center">
+	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-12  md:mt-24" data-align="center">
 		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1">HiPi Community Guidelines</h1>
 	</div>
 	<p data-renderer-start-pos="28"><strong data-renderer-mark="true">A.&nbsp;&nbsp;&nbsp;&nbsp;Adult Nudity and Sexual Content&nbsp;</strong></p>
