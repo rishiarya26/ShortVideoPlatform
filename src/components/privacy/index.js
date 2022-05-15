@@ -4,17 +4,19 @@ import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
+import Header from '../desk-header';
 
-function Community() {
+function Privacy() {
 	const router = useRouter()
   return (
     <div className="static_body relative">
+		<div className='hidden md:flex'><Header/></div>
       <div className="tray-container">
 		<div className="tnc-text">
-		<div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
+		{/* <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
           <Back/>
-    </div>
-	<div className='mt-16'>
+    </div> */}
+	<div className='mt-12 md:mt-24'>
 	        <h1 className="">Privacy Policy</h1>
 			</div>
 	        <p>We, Zee Entertainment Enterprises Limited ("we", "us", "ZEEL") value the trust placed in use by You and therefore, we follow the highest standards of privacy guidelines to protect the information shared by You with us.</p>
@@ -63,5 +65,5 @@ function Community() {
   );
 }
 
-export default Community;
+export default Privacy;
 

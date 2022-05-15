@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 import { withBasePath } from '../../config';
+import { useRouter } from 'next/router';
 
 function Home() {
   //Desktop links
@@ -15,6 +16,7 @@ function Home() {
   }
 
  
+	const router = useRouter();
   // const {close} = useDrawer();
 
   const onStoreRedirect =(device)=>{
@@ -24,7 +26,7 @@ function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col justify-between">
       <div className=" header_landing w-full h-22 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 py-2">
-        <img className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        <img className="w-14 cursor-pointer" onClick={()=>router.push('/feed/for-you')}  src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className="p-8 h-full flex-col justify-start">
         <p className="border-b-4 border-red-500 flex w-1/12 font-semibold text-xl py-2">Logo</p>
@@ -72,7 +74,7 @@ function Home() {
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
           </div> */}
           <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
-          <p>Copyright © 2021 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
+          <p>Copyright © 2022 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
         </div>
           <div className="flex justify-end items-center w-1/2">
             {/* <a>

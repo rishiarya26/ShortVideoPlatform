@@ -3,18 +3,20 @@ import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
+import Header from '../desk-header';
 
 function Community() {
 const router = useRouter();
   return (
     <div className="static_body relative">
+		<div className='hidden md:flex'><Header/></div>
       <div className="tray-container">
                 <div className="tnc-text ">
-     <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
+     {/* <div onClick={()=>router.back()}  className="p-4 flex items-center justify-center absolute left-0 top-3">
           <Back/>
-    </div>
-	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-16" data-align="center">
-		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1"><strong data-renderer-mark="true"><u data-renderer-mark="true">HiPi Community Guidelines</u></strong><button className="sc-fBuWsC bDAhfN"></button></h1>
+    </div> */}
+	<div className="fabric-editor-block-mark sc-kPVwWT fuAEZn mt-12  md:mt-24" data-align="center">
+		<h1 id="HiPi-Community-Guidelines" data-renderer-start-pos="1">HiPi Community Guidelines</h1>
 	</div>
 	<p data-renderer-start-pos="28"><strong data-renderer-mark="true">A.&nbsp;&nbsp;&nbsp;&nbsp;Adult Nudity and Sexual Content&nbsp;</strong></p>
 	<p data-renderer-start-pos="68">As a platform, we aim to keep our Application free from any obscene, pornographic or sexually explicit content. This includes Content which may be either partially or fully animated. Since we are a platform that is family oriented, we encourage you to evaluate your Content for any such material, and use great discretion before uploading the Content.&nbsp;</p>

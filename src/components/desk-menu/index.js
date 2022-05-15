@@ -39,7 +39,7 @@ const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
        ];
 
         const loginComp = 
-        <>
+        <div className="flex flex-col pb-6 pt- 4 sm-menu border-b border-gray-200">
         <p className="text-sm font-small text-gray-400 p-2 mt-2 font-sans">
            Log in to follow creators, like videos, and view comments.
         </p>
@@ -48,7 +48,7 @@ const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
           className="font-semibold border border-hipired rounded text-hipired text-base p-2 mt-4 ">
           Log in
         </button>
-        </>
+        </div>
 
 const tokens = localStorage?.get('tokens') || null;
 
@@ -68,9 +68,17 @@ useEffect(()=>{
         {/* <div onClick={router.push('/feed/for-you')} className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
-        <div className="flex flex-col pb-6 pt- 4 sm-menu ">
+       
               {isLoggedIn}
+       
+        <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</a>
+          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</a>
         </div>
+        {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
         
      </div>
     )
