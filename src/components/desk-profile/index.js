@@ -43,6 +43,7 @@ import Play from '../commons/svgicons/play-outlined';
 import CartLg from '../commons/svgicons/cart-lg';
 import CartLgLight from '../commons/svgicons/cart-lg-light';
 import VerifiedLg from '../commons/svgicons/verified-lg';
+import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),

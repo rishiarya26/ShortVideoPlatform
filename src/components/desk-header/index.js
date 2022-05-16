@@ -16,8 +16,9 @@ import fallbackUser from '../../../public/images/users.png'
 import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
+import DeskSearch from "../desk-search";
 
-const Header = ({doReload, type='normal', typeParam})=>{
+const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
    
@@ -68,7 +69,9 @@ const redirectToFeed = ()=>{
       <div onClick={typeParam === 'for-you' ? (doReload && (()=>doReload())) : redirectToFeed} className="w-14 cursor-pointer">
       <img  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
-
+     <div>
+        <DeskSearch type={searchType}/>
+      </div> 
       {/* <div>
          <div className="flex bg-gray-100 rounded-full py-2 px-6 items-center relative">
             <div>

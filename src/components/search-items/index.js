@@ -16,10 +16,10 @@ async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
         try{
           const response = await getSuggestions(searchTerm); 
-          console.log('search',response)
+          console.log('search',response?.data)
           if(response.status === 'success'){
               console.log('search',response)
-              setSuggestions(response?.data?.users)
+              setSuggestions(response?.data)
           }
           }
         catch(e){
@@ -132,11 +132,11 @@ const SearchItems = ({router,type})=>{
 
        suggestions:   <div className="bg-white absolute top-20 h-screen w-screen flex flex-col" >
        {suggestions?.map((suggestion,id)=>(
-         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.firstName)} className="flex flex-col w-full p-3 bg-white">
+         <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} className="flex flex-col w-full p-3 bg-white">
              <div className="flex justify-between w-full">
                  <div  className="flex items-center ">
                      <SearchXs/>
-                     <p className="pl-2">{suggestion?.firstName}</p>
+                     <p className="pl-2">{suggestion?.suggestionName}</p>
                  </div>
          <SearchArrow />
              </div>

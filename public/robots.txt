@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://hipi.co.in/lang-en/sitemap/sitemap.xml

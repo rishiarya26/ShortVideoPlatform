@@ -34,6 +34,9 @@ import Top from '../commons/svgicons/top'
 import LoginFollowing from '../desk-login-following';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { removeItem } from '../../utils/cookie';
+import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
+import CircularLoader from '../commons/circular-loader';
+import CircularLoaderSearch from '../commons/circular-loader-search';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -67,7 +70,7 @@ const DeskDownloadApp = dynamic(
   console.log(id)
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
+  campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
   const {show} = useDrawer();
 
@@ -221,7 +224,7 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
  dataLength={items?.length} 
  next={getFeedData} 
  hasMore={hasMore} 
- loader={<h3> Loading...</h3>}
+ loader={<div className='w-full flex justify-center pb-6'><CircularLoaderSearch/></div>}
  endMessage={<h4>Error</h4>}
 >
      {items.map((item,id)=>
@@ -309,10 +312,7 @@ const info ={
             <ErrorComp retry={doRetry}/>
             }
         </div>
-        <div className='px-4 py-2 rounded-full border-gray-300 border text-gray-600 fixed right-4 cursor-pointer bottom-12 bg-white text-xs font-bold' onClick={()=>show('Download App',DeskDownloadApp,'broad')}>Get App</div>
-        <button onClick={()=>window?.scrollTo({ top: 0, behavior: 'smooth' })} className='fixed bottom-2 right-4 p-2 flex justify-center items-center rounded-full bg-hipired white'>
-            <Top/>
-        </button>
+       <DeskDownloadAppGoTop/>
     </div>
 </>
           

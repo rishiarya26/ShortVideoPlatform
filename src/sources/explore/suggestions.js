@@ -7,7 +7,7 @@ import { transformSuccess, transformError } from '../transform/explore/suggestio
 async function fetchSearchResult(keyword) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/search?keyword=${keyword}`;
+    const apiPath = `${getApiBasePath('hipi')}/v2/shorts/search/suggestions?search_keyword=${keyword}`;
     response = await get(apiPath);
     response.data.requestedWith = { keyword };
     return Promise.resolve(response);

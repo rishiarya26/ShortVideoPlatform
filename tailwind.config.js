@@ -68,6 +68,7 @@ module.exports = {
     maxWidth: 
     {
       '20v':'20vw',
+      '28v':'28vw',
       '30v':'30vw',
       '38v':'38vw',
       '50v':'50vw',
