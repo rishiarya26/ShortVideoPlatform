@@ -38,6 +38,7 @@ const SearchItems = ({router,type})=>{
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [suggestionListIndex, setSuggestionListIndex] = useState(0);
     
     useEffect(()=>{
         if(type === 'results'){
@@ -64,14 +65,20 @@ const SearchItems = ({router,type})=>{
     return arr;
    }
 
-    const handleSearch=()=>{
-        setShowSuggestions(false)
+    const handleSearch=(term)=>{
+        setShowSuggestions(false);
+        console.log('TERM***',term)
         // const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
         // searchHis && removeItem(searchHis);
         // searchHis.unshift(searchTerm)
         // localStorage.set('search-suggestions-history',searchHis);
         // setSearchHistory(searchHis);
-        searchTerm && router?.push(`/search/${searchTerm}`);
+        if(term!==undefined && term!==null){
+            router?.push(`/search/${term}`)
+            setSearchTerm(term);
+            // inputRef?.blur();
+        }
+        setSuggestionListIndex(0);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -90,11 +97,15 @@ const SearchItems = ({router,type})=>{
         router?.push(`/search/${value}`);
     }
    
-    const onKeyboardEnter =(e) =>{
+    const onKeyboardEnter =(e, suggestionsSelectedIndex) =>{
+        console.log("SELEC",suggestionListIndex)
         console.log("kp",e.keyCode, e.which, e)
         //it triggers by pressing the enter key
         if (e?.which === 13) {
-            handleSearch();
+            (suggestionsSelectedIndex!==undefined && suggestionListIndex!==null) ? 
+            handleSearch(suggestions?.[suggestionsSelectedIndex]?.suggestionName) :
+            handleSearch(searchTerm);
+            inputRef && inputRef?.current?.blur();
         }
     }
 
@@ -118,23 +129,45 @@ const SearchItems = ({router,type})=>{
         return ()=> document.body.removeEventListener('click',closeDrop);
     },[])
 
- /* ***************** */   
+ /* ***************** */     
+ const myRefs = useRef([]);
+
+  const handleKeyUp = (e, targetElem) => {
+      console.log('**&**',e, targetElem);
+    if(suggestionListIndex !==null && suggestionListIndex !==undefined){
+      let tempSug = suggestionListIndex===0 ? 0 : (suggestionListIndex || 0);
+    if (e?.key === "ArrowUp" && targetElem) {
+        tempSug =  (tempSug > 0 ? tempSug-1 : suggestions.length-1)
+      targetElem?.focus();
+    }else{
+        if(e?.key === "ArrowDown" && targetElem){
+            tempSug = (tempSug === suggestions.length-1 ? 0 : tempSug+1) ;
+            targetElem?.focus();
+    }
+   }
+   setSuggestionListIndex(tempSug);
+    }else{
+        setSuggestionListIndex(0);
+    }
+  };
 
     const SuggestionsList = () =>(
         <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col" >
         <>{suggestions?.map((suggestion,id)=>(
-            <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} className="flex flex-col w-full p-3 bg-white cursor-pointer">
+            <div ref={(el)=>(myRefs.current[id] = el)}
+            key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} 
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">
                         <SearchXs/>
                         <p className="pl-2">{suggestion?.suggestionName}</p>
                     </div>
-            <SearchArrow />
+                     <SearchArrow />
                 </div>
             </div>
         ))}
         <div className='flex flex-col w-full p-3 bg-white cursor-pointer' 
-        onClick={handleSearch}>{`View all results for "${searchTerm}"`}</div>
+        onClick={()=>handleSearch(searchTerm)}>{`View all results for "${searchTerm}"`}</div>
         </>
         </div>
     ) 
@@ -154,8 +187,9 @@ const SearchItems = ({router,type})=>{
                     value={searchTerm}
                     placeholder="Search Users and Videos" 
                     onClick={()=>setShowSuggestions(true)}
-                    onKeyPress={onKeyboardEnter}
+                    onKeyPress={(e)=>onKeyboardEnter(e,suggestionListIndex && suggestionListIndex)}
                     ref={inputRef}
+                    onKeyDown={(e)=>handleKeyUp(e,myRefs?.current[suggestionListIndex])}
                     />
                     </div>
                     {/* <button className="ml-4">
@@ -173,7 +207,7 @@ const SearchItems = ({router,type})=>{
                     <div className="pl-4">
                     <Search/>     
                     </div>} */}
-                    <div onClick={handleSearch} className="pl-4 cursor-pointer">
+                    <div onClick={()=>handleSearch(searchTerm)} className="pl-4 cursor-pointer">
                     <Search/>  </div>
                     </div>
                     {showSuggestions && searchTerm?.length > 0 && suggestions?.length > 0 &&
