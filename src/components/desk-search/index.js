@@ -73,12 +73,12 @@ const SearchItems = ({router,type})=>{
         // searchHis.unshift(searchTerm)
         // localStorage.set('search-suggestions-history',searchHis);
         // setSearchHistory(searchHis);
-        if(term!==undefined && term!==null){
+        if(term){
             router?.push(`/search/${term}`)
             setSearchTerm(term);
             // inputRef?.blur();
         }else{
-            router?.push(`/search/${searchTerm}`)
+            searchTerm && router?.push(`/search/${searchTerm}`);
         }
         setSuggestionListIndex(0);
     }
@@ -209,7 +209,7 @@ const SearchItems = ({router,type})=>{
                     <div className="pl-4">
                     <Search/>     
                     </div>} */}
-                    <div onClick={()=>handleSearch(searchTerm)} className="pl-4 cursor-pointer">
+                    <div onClick={()=>handleSearch(searchTerm && searchTerm)} className="pl-4 cursor-pointer">
                     <Search/>  </div>
                     </div>
                     {showSuggestions && searchTerm?.length > 0 && suggestions?.length > 0 &&
