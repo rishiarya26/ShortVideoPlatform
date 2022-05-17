@@ -66,12 +66,12 @@ const SearchItems = ({router,type})=>{
 
     const handleSearch=()=>{
         setShowSuggestions(false)
-        const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
-        searchHis && removeItem(searchHis);
-        searchHis.unshift(searchTerm)
-        localStorage.set('search-suggestions-history',searchHis);
-        setSearchHistory(searchHis);
-        router?.push(`/search/${searchTerm}`);
+        // const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
+        // searchHis && removeItem(searchHis);
+        // searchHis.unshift(searchTerm)
+        // localStorage.set('search-suggestions-history',searchHis);
+        // setSearchHistory(searchHis);
+        searchTerm && router?.push(`/search/${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -122,7 +122,7 @@ const SearchItems = ({router,type})=>{
 
     const SuggestionsList = () =>(
         <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col" >
-        {suggestions?.map((suggestion,id)=>(
+        <>{suggestions?.map((suggestion,id)=>(
             <div key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} className="flex flex-col w-full p-3 bg-white cursor-pointer">
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">
@@ -133,6 +133,9 @@ const SearchItems = ({router,type})=>{
                 </div>
             </div>
         ))}
+        <div className='flex flex-col w-full p-3 bg-white cursor-pointer' 
+        onClick={handleSearch}>{`View all results for "${searchTerm}"`}</div>
+        </>
         </div>
     ) 
 
@@ -170,7 +173,7 @@ const SearchItems = ({router,type})=>{
                     <div className="pl-4">
                     <Search/>     
                     </div>} */}
-                    <div onClick={()=>handleSearch()} className="pl-4 cursor-pointer">
+                    <div onClick={handleSearch} className="pl-4 cursor-pointer">
                     <Search/>  </div>
                     </div>
                     {showSuggestions && searchTerm?.length > 0 && suggestions?.length > 0 &&

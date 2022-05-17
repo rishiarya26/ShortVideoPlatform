@@ -26,7 +26,7 @@ function Error({ retry }) {
         </svg>
 
       </div>
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </>
   );
 }

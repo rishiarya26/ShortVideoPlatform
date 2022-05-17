@@ -34,11 +34,11 @@ function DeskSearchResults({router}) {
       <Users item={searchTerm}/>,
       <Videos item={searchTerm}/>, 
       // <Sounds/>, 
-      <Hashtags item={searchTerm}/>
+      // <Hashtags item={searchTerm}/>
   ]; 
 
  const items = {
-   display : ['Top','Users', 'Videos', 'Hashtags'],
+   display : ['Top','Users', 'Videos'],
    defaultValue : selectedIndex
  }
 
@@ -52,7 +52,6 @@ function DeskSearchResults({router}) {
     <div>
       <div className="h-screen items-center w-screen flex flex-col ">
         {/* <div className="search_box w-full z-10 fixed top-0"> </div >  */}
-        
         <Header searchType='results'/>
         <div className="flex mt-2 bg-white  w-feed relative thin_bar w-feed">
           <div className='w-feed-menu menu-sm pt-24'>

@@ -68,7 +68,7 @@ const Users = ({item, type = 'normal', router}) =>{
        let data = [...items];
        data = data?.concat(resp.data);
        setItems(data);
-       if(data?.data?.length === 18){
+       if(resp?.data?.length === 18){
         setHasMore(true);
         }else{
           setHasMore(false);
@@ -105,8 +105,8 @@ const Users = ({item, type = 'normal', router}) =>{
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-medium text-sm text-gray-700">{`${item?.firstName} ${item?.lastName}`} </p>
-                        <p className="text-xs text-gray-400">{item?.userId}</p>
+                        <p className="font-medium text-sm text-gray-700">{item?.userId}</p>
+                        <p className="text-xs text-gray-400">{`${item?.firstName} ${item?.lastName}`}</p>
                         <p className="text-xs text-gray-400">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>

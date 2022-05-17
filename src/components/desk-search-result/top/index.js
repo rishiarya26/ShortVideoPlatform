@@ -54,7 +54,7 @@ const TopItems = ({item, redirectTab}) =>{
                     <div className="head flex flex-col">
                       <p className="text-sm font-bold">Users</p>
                     </div>
-                    <div onClick={()=>redirectTab(1)} className="flex items-center justify-center text-sm text-gray-500">
+                    <div onClick={()=>redirectTab(1)} className="cursor-pointer flex items-center justify-center text-sm text-gray-500">
                       See more
                       <RightArrow />
                     </div>
@@ -68,7 +68,7 @@ const TopItems = ({item, redirectTab}) =>{
                       </div>
                       <div className="flex flex-col justify-between pl-2">
                         <p className="font-bold text-sm text-gray-700 ">{item?.userId} </p>
-                        <p className="text-xs text-gray-600 font-light">{item?.userId}</p>
+                        <p className="text-xs text-gray-600 font-light">{`${item?.firstName} ${item?.lastName}`}</p>
                         <p className="text-xs text-gray-600 font-light whitespace-nowrap"><span className="font-semibold">{numberFormatter(item?.followers)}</span> Followers</p>
                         
                         
