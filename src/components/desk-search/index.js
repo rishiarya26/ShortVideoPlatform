@@ -17,9 +17,9 @@ async function search(searchTerm, setSuggestions, setLoading) {
     /* eslint-disable no-param-reassign */
         try{
           const response = await getSuggestions(searchTerm); 
-          console.log('search',response?.data)
+        //   console.log('search',response?.data)
           if(response.status === 'success'){
-              console.log('search',response);
+            //   console.log('search',response);
               setSuggestions(response?.data);
               setLoading && setLoading(false);
           }
@@ -38,7 +38,7 @@ const SearchItems = ({router,type})=>{
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     const [loading, setLoading] = useState(false);
-    const [suggestionListIndex, setSuggestionListIndex] = useState(0);
+    const [suggestionListIndex, setSuggestionListIndex] = useState();
     
     useEffect(()=>{
         if(type === 'results'){
@@ -77,6 +77,8 @@ const SearchItems = ({router,type})=>{
             router?.push(`/search/${term}`)
             setSearchTerm(term);
             // inputRef?.blur();
+        }else{
+            router?.push(`/search/${searchTerm}`)
         }
         setSuggestionListIndex(0);
     }
