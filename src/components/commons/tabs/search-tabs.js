@@ -12,7 +12,7 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
         // console.log(items[selected])
     }
   return (
-    <div className="flex items-center w-full mt-20 text-gray-400 justify-center font-semibold">
+    <div className="flex border-b border-gray-100 items-center w-full mt-20 search-tab-mt text-gray-400 justify-center font-semibold">
       { items?.display.map((data, id) => (
                <div
                key={id}

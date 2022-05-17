@@ -5,7 +5,7 @@ import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/explore/videos';
 
 async function fetchSearchResult({
-   keyword, limit='20', offset='1'
+   keyword, limit='12', offset='1'
 }) {
   let response = {};
   try {

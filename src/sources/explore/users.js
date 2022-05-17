@@ -5,7 +5,7 @@ import { apiMiddleWare } from '../../network/utils';
 import { transformSuccess, transformError } from '../transform/explore/users';
 
 async function fetchSearchResult({
-  keyword, limit='20', offset='1'
+  keyword, limit='18', offset='1'
 }) {
   console.log("keyword",keyword)
   let response = {};

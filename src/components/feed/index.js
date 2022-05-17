@@ -126,7 +126,7 @@ function Feed({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
+  campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
  const {show} = useDrawer();
 
@@ -215,6 +215,7 @@ function Feed({ router }) {
       totalDuration : duration
     }
     if(currentTime > 6.8 && currentTime < 7.1){
+      console.log("**",currentTime);
       viewEventsCall(activeVideoId,'view')
     }
     setVideoDurationDetails(videoDurationDetail);
