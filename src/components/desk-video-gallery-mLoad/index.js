@@ -96,13 +96,13 @@ return (
                activeHoverIndex={activeHoverIndex}
                />
          </div>
-         <div className='truncate text-sm w-full mb-1 mt-1 text-gray-700 pr-1'>
+         <div className='truncate text-sm w-full mb-1 mt-1 text-gray-600 font-light pr-1'>
                {item?.description}
             </div>
          {/* <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div> */}
          <div className='cursor-pointer flex w-full mb-3 justify-start items-center' onClick={()=>router?.push(`/@${item?.videoOwners?.userName}`)}>
-            <div className='flex w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={fallbackUsers?.src}/></div>
-            <p className='pl-2 text-sm text-gray-700'>{item?.videoOwners?.userName}</p>
+            <div className='flex w-6 min-w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={fallbackUsers?.src}/></div>
+            <p className='pl-1 text-base truncate text-gray-700'>{item?.videoOwners?.userName}</p>
          </div>
       </span>
       ))}

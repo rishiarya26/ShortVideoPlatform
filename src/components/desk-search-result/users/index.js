@@ -105,15 +105,15 @@ const Users = ({item, type = 'normal', router}) =>{
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-medium text-sm text-gray-700">{item?.userId}</p>
-                        <p className="text-xs text-gray-400">{`${item?.firstName} ${item?.lastName}`}</p>
-                        <p className="text-xs text-gray-400">{numberFormatter(item?.followers)} Followers</p>
+                        <p className="font-semibold text-base text-gray-700">{item?.userId}</p>
+                        <p className="text-sm text-gray-400">{`${item?.firstName} ${item?.lastName}`}</p>
+                        <p className="text-sm pt-1 text-gray-400">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>
                  {followButton[type]}
               </span>
                  )): 
-                 <div className="flex w-full h-1/3 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
+                 <div className="flex w-full h-36 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
                  }
               {showLoading ? <div className="flex w-full justify-center py-6"><CircularLoaderSearch/></div> : 
               offset > 1 && 

@@ -508,7 +508,12 @@ span.swiper-pagination-bullet {
     width: 692px;
     max-width: 692px;
 }
-
+.W-search{
+  margin-right: 16px;
+  margin-left: 16px;
+  width: 742px;
+  max-width: 742px;
+}
 .overlay-z-index{
   z-index: 25;
 }

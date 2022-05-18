@@ -179,10 +179,10 @@ const SearchItems = ({router,type})=>{
 
                 <div>
                 <div className={`${showSuggestions ? 'border border-gray-300' : ''} flex bg-gray-100 rounded-full py-1 min-w-28 max-w-28 px-6 pl-4 justify-between items-center relative`}>
-                    <div>
+                    <div className='flex'>
                     <input
                     onChange={onTermChange}
-                    className=" w-full bg-transparent px-1 py-2 pl-2"
+                    className=" w-72 bg-transparent px-1 py-2 pl-2"
                     type="search"
                     autoComplete="off"
                     name="Search"
@@ -193,17 +193,21 @@ const SearchItems = ({router,type})=>{
                     ref={inputRef}
                     onKeyDown={(e)=>handleKeyUp(e,myRefs?.current[suggestionListIndex])}
                     />
+                    <div className='flex w-6 justify-end items-center mr-4'>
+                     {searchTerm?.length > 0 && (loading ? <div> <CircularProgress/></div>:
+                      <button className="ml-4" onClick={()=>setSearchTerm('')}>
+                    <Close />
+                    </button>)}
                     </div>
+                    </div>
+
                     {/* <button className="ml-4">
                         <CloseSolid/>
                     </button> */}
                     <div className="flex items-center">
-                    {searchTerm?.length > 0 && (loading ?  <CircularProgress/>:
-                      <button className="ml-4" onClick={()=>setSearchTerm('')}>
-                    <Close />
-                    </button>)}
+                   
                     {/* bar */}
-                    <div className=" ml-4 w-px h-8 bg-gray-300">
+                    <div className=" w-px h-8 bg-gray-300">
                     </div> 
                     {/* {!showSuggestions && 
                     <div className="pl-4">

@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
    id, likesCount, videoUrl, activeHoverIndex }) {
-  const formattedViewCount =  numberFormatter(viewCount)
+  const formattedViewCount =  numberFormatter(viewCount);
   const [showLoader, setShowLoader] = useState(false);
 
   return (

@@ -67,6 +67,7 @@ module.exports = {
        },
     maxWidth: 
     {
+      '6':'24px',
       '20v':'20vw',
       '28v':'28vw',
       '30v':'30vw',

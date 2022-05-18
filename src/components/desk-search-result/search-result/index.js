@@ -18,12 +18,14 @@ function DeskSearchResults({router}) {
 
   useEffect(()=>{
     const item = router?.query?.item;
-    setSearchTerm(item)
+    setSearchTerm(item);
+    setSelectedIndex(0);
   },[])
 
   useEffect(()=>{
     const item = router?.query?.item;
-    setSearchTerm(item)
+    setSearchTerm(item);
+    setSelectedIndex(0);
   },[router?.asPath])
  
   const redirectTab = (selected) =>{
@@ -57,7 +59,7 @@ function DeskSearchResults({router}) {
           <div className='w-feed-menu menu-sm pt-24'>
           <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
-          <div className='W-feed-vid pl-6 pt-24 flex flex-col no_bar'>
+          <div className='W-search pl-6 pt-24 flex flex-col no_bar'>
             <div className='w-full bg-white sticky top-16 z-9'>
             <div className='w-3/5'>
         <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>

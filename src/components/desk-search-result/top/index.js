@@ -52,7 +52,7 @@ const TopItems = ({item, redirectTab}) =>{
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
-                      <p className="text-sm font-bold">Users</p>
+                      <p className="text-base font-semibold">Users</p>
                     </div>
                     <div onClick={()=>redirectTab(1)} className="cursor-pointer flex items-center justify-center text-sm text-gray-500">
                       See more
@@ -67,9 +67,9 @@ const TopItems = ({item, redirectTab}) =>{
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2">
-                        <p className="font-bold text-sm text-gray-700 ">{item?.userId} </p>
-                        <p className="text-xs text-gray-600 font-light">{`${item?.firstName} ${item?.lastName}`}</p>
-                        <p className="text-xs text-gray-600 font-light whitespace-nowrap"><span className="font-semibold">{numberFormatter(item?.followers)}</span> Followers</p>
+                        <p className="font-semibold text-base text-gray-700 ">{item?.userId} </p>
+                        <p className="text-sm text-gray-600 font-light ">{`${item?.firstName} ${item?.lastName}`}</p>
+                        <p className="text-sm text-gray-600 font-light pt-1 whitespace-nowrap"><span className="font-semibold">{numberFormatter(item?.followers)}</span> Followers</p>
                         
                         
                     </div>
@@ -115,7 +115,7 @@ const TopItems = ({item, redirectTab}) =>{
 <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
-                      <p className="text-sm font-bold">Videos</p>
+                      <p className="text-base font-semibold">Videos</p>
                     </div>
                     {/* <div onClick={()=>redirectTab(1)} className="flex items-center justify-center text-sm text-gray-500">
                       See more

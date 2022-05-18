@@ -18,7 +18,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&campaign_id=${campaign_id || ''}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
      let tokens = localStorage.get('tokens');
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
@@ -31,7 +31,8 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         'X-GEO-REGION-CODE':geoData?.state_code || '',
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
-        'X-GEO-PINCODE':geoData?.pin || ''
+        'X-GEO-PINCODE':geoData?.pin || '',
+        'campaign_id':campaign_id || ''
       })
     }else{
       const respGeoInfo = await detectGeoLocationByZee();
@@ -69,7 +70,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&campaign_id=${campaign_id || ''}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     if(geoData){
       response = await get(apiPath,null,{
         'X-GEO-IPADDR' : geoData?.ip || '',
@@ -77,7 +78,8 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         'X-GEO-REGION-CODE':geoData?.state_code || '',
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
-        'X-GEO-PINCODE':geoData?.pin || ''
+        'X-GEO-PINCODE':geoData?.pin || '',
+        'campaign_id':campaign_id || ''
     })
   }else{
     const respGeoInfo = await detectGeoLocationByZee();
@@ -90,6 +92,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
           'X-GEO-CITY':geoLocationInfo?.city || '',
           'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
           'X-GEO-PINCODE':geoLocationInfo?.pin || '',
+          'campaign_id':campaign_id || ''
       })
   }}
     
