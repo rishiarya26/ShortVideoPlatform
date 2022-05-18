@@ -54,7 +54,7 @@ function Home() {
               <div className="flex justify-center p-4">
                 <img className="w-16 py-4 text-center" src={withBasePath('assets/document.png')} alt="hipi logo" />
                 </div>
-                <p className="flex justify-center" >Brand guideline</p>
+                <p className="flex justify-center" >Brand guidelines</p>
                 <div className="flex justify-end">
                 <a href={withBasePath('assets/Hipi_brand_guideline.pdf')} download>
                    <img className="w-12 p-2" src={withBasePath('assets/download.png')} alt="" />
@@ -74,7 +74,7 @@ function Home() {
             <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
           </div> */}
           <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
-          <p>Copyright © 2022 Zee Entertainment Enterprises Ltd. All rights reserved.</p>
+          <p>Copyright © 2022 . All rights reserved.</p>
         </div>
           <div className="flex justify-end items-center w-1/2">
             {/* <a>

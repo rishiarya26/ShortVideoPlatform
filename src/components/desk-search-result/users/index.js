@@ -113,7 +113,7 @@ const Users = ({item, type = 'normal', router}) =>{
                  {followButton[type]}
               </span>
                  )): 
-                 <div className="flex w-full h-1/3 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
+                 <div className="flex w-full h-36 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
                  }
               {showLoading ? <div className="flex w-full justify-center py-6"><CircularLoaderSearch/></div> : 
               offset > 1 && 

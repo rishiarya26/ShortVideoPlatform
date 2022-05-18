@@ -18,12 +18,14 @@ function DeskSearchResults({router}) {
 
   useEffect(()=>{
     const item = router?.query?.item;
-    setSearchTerm(item)
+    setSearchTerm(item);
+    setSelectedIndex(0);
   },[])
 
   useEffect(()=>{
     const item = router?.query?.item;
-    setSearchTerm(item)
+    setSearchTerm(item);
+    setSelectedIndex(0);
   },[router?.asPath])
  
   const redirectTab = (selected) =>{

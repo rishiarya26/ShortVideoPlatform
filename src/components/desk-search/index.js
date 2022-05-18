@@ -17,9 +17,9 @@ async function search(searchTerm, setSuggestions, setLoading) {
     /* eslint-disable no-param-reassign */
         try{
           const response = await getSuggestions(searchTerm); 
-          console.log('search',response?.data)
+        //   console.log('search',response?.data)
           if(response.status === 'success'){
-              console.log('search',response);
+            //   console.log('search',response);
               setSuggestions(response?.data);
               setLoading && setLoading(false);
           }
@@ -38,7 +38,7 @@ const SearchItems = ({router,type})=>{
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     const [loading, setLoading] = useState(false);
-    const [suggestionListIndex, setSuggestionListIndex] = useState(0);
+    const [suggestionListIndex, setSuggestionListIndex] = useState();
     
     useEffect(()=>{
         if(type === 'results'){
@@ -73,10 +73,12 @@ const SearchItems = ({router,type})=>{
         // searchHis.unshift(searchTerm)
         // localStorage.set('search-suggestions-history',searchHis);
         // setSearchHistory(searchHis);
-        if(term!==undefined && term!==null){
+        if(term){
             router?.push(`/search/${term}`)
             setSearchTerm(term);
             // inputRef?.blur();
+        }else{
+            searchTerm && router?.push(`/search/${searchTerm}`);
         }
         setSuggestionListIndex(0);
     }
@@ -177,10 +179,10 @@ const SearchItems = ({router,type})=>{
 
                 <div>
                 <div className={`${showSuggestions ? 'border border-gray-300' : ''} flex bg-gray-100 rounded-full py-1 min-w-28 max-w-28 px-6 pl-4 justify-between items-center relative`}>
-                    <div>
+                    <div className='flex'>
                     <input
                     onChange={onTermChange}
-                    className=" w-full bg-transparent px-1 py-2 pl-2"
+                    className=" w-72 bg-transparent px-1 py-2 pl-2"
                     type="search"
                     autoComplete="off"
                     name="Search"
@@ -191,23 +193,27 @@ const SearchItems = ({router,type})=>{
                     ref={inputRef}
                     onKeyDown={(e)=>handleKeyUp(e,myRefs?.current[suggestionListIndex])}
                     />
+                    <div className='flex w-6 justify-end items-center mr-4'>
+                     {searchTerm?.length > 0 && (loading ? <div> <CircularProgress/></div>:
+                      <button className="ml-4" onClick={()=>setSearchTerm('')}>
+                    <Close />
+                    </button>)}
                     </div>
+                    </div>
+
                     {/* <button className="ml-4">
                         <CloseSolid/>
                     </button> */}
                     <div className="flex items-center">
-                    {searchTerm?.length > 0 && (loading ?  <CircularProgress/>:
-                      <button className="ml-4" onClick={()=>setSearchTerm('')}>
-                    <Close />
-                    </button>)}
+                   
                     {/* bar */}
-                    <div className=" ml-4 w-px h-8 bg-gray-300">
+                    <div className=" w-px h-8 bg-gray-300">
                     </div> 
                     {/* {!showSuggestions && 
                     <div className="pl-4">
                     <Search/>     
                     </div>} */}
-                    <div onClick={()=>handleSearch(searchTerm)} className="pl-4 cursor-pointer">
+                    <div onClick={()=>handleSearch(searchTerm && searchTerm)} className="pl-4 cursor-pointer">
                     <Search/>  </div>
                     </div>
                     {showSuggestions && searchTerm?.length > 0 && suggestions?.length > 0 &&
