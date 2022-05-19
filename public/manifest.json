@@ -1,8 +1,8 @@
 {
-  "short_name": "hipiStarter",
-  "name": "hipiStarter",
+  "short_name": "Hipi",
+  "name": "Hipi",
   "lang": "en",
-  "description": "Bootstrapping kit for webapps at hipi",
+  "description": "hipi",
   "start_url": "https://hipi.co.in/feed/for-you",
   "background_color": "#00aae7",
   "theme_color": "#00aae7",
@@ -22,7 +22,7 @@
       "sizes": "180x180"
     },
     {
-      "src": "/icons/output-onlinepngtools.png",
+      "src": "/icons/output-onlinepngtools_1.png",
       "type": "image/png",
       "sizes": "512x512"
     },
