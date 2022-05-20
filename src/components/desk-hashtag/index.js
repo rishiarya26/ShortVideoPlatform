@@ -370,7 +370,15 @@ setRetry = retry;
   //     behavior: 'smooth',
   //     block: 'start',
   //   });
-  
+  const redirect = (item) =>{
+if(item?.indexOf('#')){
+  router?.push(`/hashtag/${item}`)
+}else{
+  if(item?.indexOf('@')){
+    router?.push(`/@${item}`)
+  }
+}
+  }
 
   return (
     <div className="flex flex-col w-screen h-screen">
