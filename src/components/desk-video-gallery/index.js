@@ -151,9 +151,10 @@ export default function DeskVideoGallery({
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
                   {item?.content_description?.split(' ')?.map((item)=>(
-              <div onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
+              <p className='inline-block'><span className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
                 {item}
-              </div>
+              </span>
+              </p>
             ))}
                 </div>
              </span>
