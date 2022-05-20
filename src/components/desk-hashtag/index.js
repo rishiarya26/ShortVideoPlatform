@@ -67,16 +67,16 @@ function DeskHashtag({
   isFollow=false, userVerified
 }) {
   const [videoData, setVideoData] = useState({});
-  const [selectedTab, setSelectedTab] = useState('all');
+  // const [selectedTab, setSelectedTab] = useState('all');
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  const [showLoading, setShowLoading] = useState(isFetching);
+  const [offset, setOffset] = useState(2);
   const [isFollowing,setIsFollowing] = useState();
   /****** for video detail - start ******/
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
-  const [details, setDetails] = useState({})
+  const [details, setDetails] = useState({});
 
   const {item = ''} = router?.query;
 
@@ -94,7 +94,7 @@ function DeskHashtag({
   
   const hideVideoDetail = ()=>{
     setShowVideoDetail(false);
-    window.history.replaceState('Profile Page','Profile',`/${userHandle}`);
+    window.history.replaceState('Hashtag Page','Hashtag',`/hashtag/${item}`);
   }
 
   const handleUpClick=()=>{
@@ -164,10 +164,10 @@ function DeskHashtag({
   //   document?.documentElement?.scrollTop(0);
   // },[])
 
-  useEffect(()=>{
-    setIsFetching(false);
-    setOffset(2);
-  },[selectedTab])
+  // useEffect(()=>{
+  //   setIsFetching(false);
+  //   setOffset(2);
+  // },[selectedTab])
   
   useEffect(() => {
     setTimeout(()=>{
@@ -197,19 +197,20 @@ function DeskHashtag({
   // // const [fetchState, retry, data] = useFetcher(dataFetcher);
   // const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
-  const onDataFetched = data => {
-    setDetails(data?.details);
-    setVideoData({items: data?.data});
-}
-const dataFetcher = () => item && getHashTagVideos({ keyword:  item , offset: `${offset}` });
-let [fetchState, retry, data] = useFetcher(dataFetcher, onDataFetched);
-setRetry = retry;
+  // const onDataFetched = data => {
+  //   setDetails(data?.details);
+  //   setVideoData({items: data?.data});
+  // }
+  const dataFetcher = () => item && getHashTagVideos({ keyword:  item });
+  let [fetchState, retry, data] = useFetcher(dataFetcher);
+  setRetry = retry;
 
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
     setVideoData(videos);
+    data && setDetails(data?.details);
   }, [fetchState]);
 
   const handleBackClick = () => {
@@ -448,7 +449,7 @@ if(item?.indexOf('#')){
               status={videoData?.status}
               retry={retry && retry}
               userId={id}
-              type={selectedTab}
+              // type={selectedTab}
               page='profile'
               showLoading={showLoading}
               fetchMoreListItems={fetchMoreListItems}

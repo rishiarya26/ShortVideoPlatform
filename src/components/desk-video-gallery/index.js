@@ -150,14 +150,18 @@ export default function DeskVideoGallery({
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
-                  {item?.content_description?.split(' ')?.map((item)=>(
-              <div onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
-                {item}
-              </div>
-            ))}
-                </div>
-             </span>
-             ))}
+                  {item?.content_description?.replaceAll('\n',' ')?.split(' ')?.map((item)=>{
+                    console.log("item",item)
+                    return(
+                      <div onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
+                      {item}
+                    </div>
+                    )
+             
+                   })}
+                      </div>
+                  </span>
+                  ))}
               {showLoading &&  
         <div onClick={fetchMoreListItems} className="w-full flex justify-center py-2">
           <Refresh/>
