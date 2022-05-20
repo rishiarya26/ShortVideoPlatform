@@ -374,83 +374,82 @@ setRetry = retry;
 
   return (
     <div className="flex flex-col w-screen h-screen">
-     {showVideoDetail && 
-       <div className='z-20 fixed top-0 left-0 w-full'>
-         <VideoDetail
-         userName={videoDetailData?.userName} 
-         likesCount={videoDetailData?.likesCount} 
-         music_title={videoDetailData?.music_title} 
-         userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
-         url={videoDetailData?.video_url} 
-         firstFrame={videoDetailData?.firstFrame} 
-         firstName={videoDetailData?.firstName}
-         lastName={videoDetailData?.lastName} 
-         description={videoDetailData?.content_description} 
-         updateActiveIndex={updateActiveIndex} 
-         videoId={videoDetailData?.content_id}
-         handleUpClick={handleUpClick} 
-         handleDownClick={handleDownClick}
-         hideVideoDetail={hideVideoDetail}
-         shareCount={videoDetailData?.shareCount}
-         activeIndex={vDetailActiveIndex}
-         socialId={videoDetailData?.getSocialId}
-         userVerified={userVerified === 'Verified' ? 'verified' : ''}
-         />
-       </div>}
-    <Header/>
-    <div className="flex w-screen h-screen bg-white relative pt-24">
-    <div className='w-2/12 w-prof-menu menu-sm'>
-    <DeskMenu width={'w-prof-menu menu-sm-w'}/>
-    </div>
-    
-    <div className="w-10/12 pl-8">
-    <div className="w-full h-full flex flex-col p-4"> 
-        <div className="flex w-full">
-          <div className="w-28v flex h-28v bg-gray-300 relative rounded-full" >
-            <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
-          </div>
-          <div className="flex flex-col justify-between px-4 ">
-            <div className="flex flex-col">
-              <p className="text-sm font-semibold">{details?.hashtagName}</p>
-              {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
-            </div>
-            <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
-              {/* <Save /> */}
-              <p className="pl-2 text-xs font-medium">Add to favorites</p>
-            </div>
-          </div>
+      {showVideoDetail && 
+      <div className='z-20 fixed top-0 left-0 w-full'>
+        <VideoDetail
+        userName={videoDetailData?.userName} 
+        likesCount={videoDetailData?.likesCount} 
+        music_title={videoDetailData?.music_title} 
+        userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
+        url={videoDetailData?.video_url} 
+        firstFrame={videoDetailData?.firstFrame} 
+        firstName={videoDetailData?.firstName}
+        lastName={videoDetailData?.lastName} 
+        description={videoDetailData?.content_description} 
+        updateActiveIndex={updateActiveIndex} 
+        videoId={videoDetailData?.content_id}
+        handleUpClick={handleUpClick} 
+        handleDownClick={handleDownClick}
+        hideVideoDetail={hideVideoDetail}
+        shareCount={videoDetailData?.shareCount}
+        activeIndex={vDetailActiveIndex}
+        socialId={videoDetailData?.getSocialId}
+        userVerified={userVerified === 'Verified' ? 'verified' : ''}
+        />
+      </div>
+      }
+      <Header/>
+      <div className="flex w-screen h-screen bg-white relative pt-24">
+        <div className='w-2/12 w-prof-menu menu-sm'>
+            <DeskMenu width={'w-prof-menu menu-sm-w'}/>
         </div>
-        <div className="flex text-sm text-gray-400 py-2">
-          <p>
-            {details?.hashTagDesc}
-            {/* <span className="font-medium text-gray-500">#hashtag</span> */}
-         </p>
+        <div className="w-10/12 pl-8">
+            <div className='flex flex-col w-full pb-0 p-4'>
+               <div className='flex head-hash'>
+                  <div className="w-32 flex h-32 bg-gray-300 relative rounded-full" >
+                        <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
+                  </div>
+                      <div className="flex flex-col justify-between px-4 ">
+                        <div className="flex flex-col">
+                            <p className="text-sm font-semibold">{details?.hashtagName}</p>
+                            {/* 
+                            <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
+                            */}
+                        </div>
+                        <div onClick={()=>
+                            show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
+                            {/* 
+                            <Save />
+                            */}
+                            <p className="pl-2 text-xs font-medium">Add to favorites</p>
+                        </div>
+                      </div>
+                </div>
+                <div className="flex text-sm text-gray-400 p-2">
+                  <p>
+                    {details?.hashTagDesc}
+                    {/* <span className="font-medium text-gray-500">#hashtag</span> */}
+                  </p>
+              </div>
+            </div>
+
+            <div className="w-full h-full flex flex-col p-4 ">   
+              <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
+              <DeskVideoGallery
+              items={videoData?.items}
+              status={videoData?.status}
+              retry={retry && retry}
+              userId={id}
+              type={selectedTab}
+              page='profile'
+              showLoading={showLoading}
+              fetchMoreListItems={fetchMoreListItems}
+              updateActiveIndex={updateActiveIndex}
+              />
+            </div>
+            </div>
         </div>
       </div>
-    
-      <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      {/* <div className='w-1/3'>
-      <UserTab
-        onTabChange={onTabChange}
-        items={info.tabs[type]}
-        selected={selectedTab}
-        onLikedVideosTab={onLikedVideosTab}
-      />
-   </div> */}
-      <DeskVideoGallery
-        items={videoData?.items}
-        status={videoData?.status}
-        retry={retry && retry}
-        userId={id}
-        type={selectedTab}
-        page='profile'
-        showLoading={showLoading}
-        fetchMoreListItems={fetchMoreListItems}
-        updateActiveIndex={updateActiveIndex}
-      />
-    </div>
-    </div>
-    </div>
   );
 }
 
