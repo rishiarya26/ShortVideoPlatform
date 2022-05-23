@@ -81,13 +81,13 @@ const TopItems = ({item, redirectTab}) =>{
 
 
 {/* hashtags */}
-{/* {data?.items?.hashtags?.length > 0 && <div className="flex flex-col p-4">
+{data?.items?.hashtags?.length > 0 && <div className="flex flex-col p-4">
           <div className="users flex flex-col">
                 <div className=" head w-full flex mb-2 justify-between">
                     <div className="head flex flex-col">
                       <p className="text-sm font-bold">HASHTAGS</p>
                     </div>
-                    <div onClick={()=>redirectTab(3)} className="flex items-center justify-center text-sm text-gray-500">
+                    <div onClick={()=>redirectTab(3)} className="flex items-center justify-center text-sm text-gray-500 cursor-pointer">
                       See more
                       <RightArrow />
                     </div>
@@ -95,7 +95,7 @@ const TopItems = ({item, redirectTab}) =>{
              
                  <div className="flex min-w-full overflow-x-auto no_bar">
                  {data?.items?.hashtags?.map((item, id)=>(
-                 <div onClick={()=>toHashtag(item?.hashtag)} key={id}  className="m-1 flex relative">
+                 <div onClick={()=>toHashtag(item?.hashtag)} key={id}  className="m-1 flex relative cursor-pointer">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
@@ -106,7 +106,7 @@ const TopItems = ({item, redirectTab}) =>{
                        )) }
                  </div>  
           </div>
-        </div>} */}
+        </div>} 
 
 
 

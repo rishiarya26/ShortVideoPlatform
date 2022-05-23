@@ -36,11 +36,11 @@ function DeskSearchResults({router}) {
       <Users item={searchTerm}/>,
       <Videos item={searchTerm}/>, 
       // <Sounds/>, 
-      // <Hashtags item={searchTerm}/>
+      <Hashtags item={searchTerm}/>
   ]; 
 
  const items = {
-   display : ['Top','Users', 'Videos'],
+   display : ['Top','Users', 'Videos', 'Hashtags'],
    defaultValue : selectedIndex
  }
 
