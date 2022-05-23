@@ -91,6 +91,10 @@ function DeskHashtag({
   useEffect(()=>{
     setIsFollowing(isFollow);
   },[isFollow])
+
+  useEffect(()=>{
+
+  },[item])
   
   const hideVideoDetail = ()=>{
     setShowVideoDetail(false);
@@ -373,7 +377,7 @@ function DeskHashtag({
   //   });
   const redirect = (item) =>{
 if(item?.indexOf('#')){
-  router?.push(`/hashtag/${item}`)
+  window.location.href= `/hashtag/${item}`;
 }else{
   if(item?.indexOf('@')){
     router?.push(`/@${item}`)
@@ -413,33 +417,32 @@ if(item?.indexOf('#')){
             <DeskMenu width={'w-prof-menu menu-sm-w'}/>
         </div>
         <div className="w-10/12 pl-8">
-            <div className='flex flex-col w-full pb-0 p-4'>
+            <div className='flex flex-col w-full pb-0 p-5'>
                <div className='flex head-hash'>
-                  <div className="w-32 flex h-32 bg-gray-300 relative rounded-full" >
+                  <div className="w-32 min-w-32 flex h-32 bg-gray-300 relative rounded-full" >
                         <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
                   </div>
-                      <div className="flex flex-col justify-between px-4 ">
+                      <div className="flex flex-col px-4 ">
                         <div className="flex flex-col">
-                            <p className="text-sm font-semibold">{details?.hashtagName}</p>
+                            <p className="text-3xl font-semibold">{details?.hashtagName}</p>
                             {/* 
                             <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
                             */}
                         </div>
-                        <div onClick={()=>
+                        {/* <div onClick={()=>
                             show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
-                            {/* 
                             <Save />
-                            */}
                             <p className="pl-2 text-xs font-medium">Add to favorites</p>
+                        </div> */}
+                        <div className="flex text-base text-gray-500 p-2 pl-0 truncate w-1/2">
+                            <p>
+                              {details?.hashTagDesc}
+                              {/* <span className="font-medium text-gray-500">#hashtag</span> */}
+                            </p>
                         </div>
                       </div>
                 </div>
-                <div className="flex text-sm text-gray-400 p-2">
-                  <p>
-                    {details?.hashTagDesc}
-                    {/* <span className="font-medium text-gray-500">#hashtag</span> */}
-                  </p>
-              </div>
+               
             </div>
 
             <div className="w-full h-full flex flex-col p-4 ">   
