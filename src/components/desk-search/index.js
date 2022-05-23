@@ -50,11 +50,16 @@ const SearchItems = ({router,type})=>{
         }
     },[])
 
-    const onTermChange=(e)=>{
-       setSuggestions([]);
-       setLoading(true);
-       optimisedSearch(e.currentTarget.value, setSuggestions, setLoading);
-       setSearchTerm(e.currentTarget.value)
+    const onTermChange=(e)=>{ 
+        console.log("e",e)
+        if(searchTerm?.length === 0 && e?.currentTarget.value === ' '){}
+        else{
+            setSuggestions([]);
+            setLoading(true);
+            optimisedSearch(e.currentTarget.value, setSuggestions, setLoading);
+            setSearchTerm(e.currentTarget.value)
+        }
+ 
     }
 
    const removeItem = (arr) =>{
@@ -66,13 +71,9 @@ const SearchItems = ({router,type})=>{
    }
 
     const handleSearch=(term)=>{
+       try{ 
         setShowSuggestions(false);
         console.log('TERM***',term)
-        // const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
-        // searchHis && removeItem(searchHis);
-        // searchHis.unshift(searchTerm)
-        // localStorage.set('search-suggestions-history',searchHis);
-        // setSearchHistory(searchHis);
         if(term){
             router?.push(`/search/${term}`)
             setSearchTerm(term);
@@ -81,6 +82,9 @@ const SearchItems = ({router,type})=>{
             searchTerm && router?.push(`/search/${searchTerm}`);
         }
         setSuggestionListIndex(0);
+      }catch(e){
+          console.log('issue')
+      }
     }
 
     const searchFromList = (e,id,value) =>{
@@ -103,7 +107,7 @@ const SearchItems = ({router,type})=>{
         console.log("SELEC",suggestionListIndex)
         console.log("kp",e.keyCode, e.which, e)
         //it triggers by pressing the enter key
-        if (e?.which === 13) {
+        if (searchTerm && e?.which === 13) {
             (suggestionsSelectedIndex!==undefined && suggestionListIndex!==null) ? 
             handleSearch(suggestions?.[suggestionsSelectedIndex]?.suggestionName) :
             handleSearch(searchTerm);
@@ -136,6 +140,9 @@ const SearchItems = ({router,type})=>{
 
   const handleKeyUp = (e, targetElem) => {
       console.log('**&**',e, targetElem);
+    //   if(searchTerm?.length === 0 && e?.keyCode === '32') {
+    //     //   e.preventDefault();
+    //   }else{
     if(suggestionListIndex !==null && suggestionListIndex !==undefined){
       let tempSug = suggestionListIndex===0 ? 0 : (suggestionListIndex || 0);
     if (e?.key === "ArrowUp" && targetElem) {
@@ -143,14 +150,15 @@ const SearchItems = ({router,type})=>{
       targetElem?.focus();
     }else{
         if(e?.key === "ArrowDown" && targetElem){
-            tempSug = (tempSug === suggestions.length-1 ? 0 : tempSug+1) ;
+            tempSug = (tempSug === suggestions.length-1 ? 0 : tempSug+1);
             targetElem?.focus();
     }
-   }
+   } 
    setSuggestionListIndex(tempSug);
     }else{
         setSuggestionListIndex(0);
-    }
+      }
+    // }
   };
 
     const SuggestionsList = () =>(
@@ -175,8 +183,6 @@ const SearchItems = ({router,type})=>{
     ) 
 
     return(
-
-
                 <div>
                 <div className={`${showSuggestions ? 'border border-gray-300' : ''} flex bg-gray-100 rounded-full py-1 min-w-28 max-w-28 px-6 pl-4 justify-between items-center relative`}>
                     <div className='flex'>
