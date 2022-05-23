@@ -2,18 +2,36 @@
 // import VideoFooter from '../videofooter/loader';
 // import Seekbar from '../seekbar/loader';
 
+import Hash from "../../commons/svgicons/hash";
+
 function Loader() {
   return (
-    <>
-      <div>
-              <div className="flex p-2 min-w-3/5 mr-2 items-center">
-                      <div className=" w-10v flex h-10v bg-gray-300 relative rounded-full overflow-hidden" >
-                          </div>
-                      <div className="flex flex-col justify-between pl-2 pb-2 items-center">
-                        <p className="font-medium text-sm text-gray-700 w-36 h-4 bg-gray-200"> </p>
-                    </div>
-                  </div>   
-           </div>
+    <><div className="p-4">
+       <div className="flex cursor-pointer justify-between my-4 items-center">
+                         <div className="flex items-center">
+                             <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
+                               <Hash/>
+                             </div>
+                             <p className="ml-4 h-6 w-24 bg-gray-200 flex">
+                              
+                               </p>
+                         </div>
+                         <div className="text-sm w-8 h-4 bg-gray-300 items-center">
+                        </div>
+                       </div>
+                       <div className="flex cursor-pointer justify-between my-4 items-center">
+                         <div className="flex items-center">
+                             <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
+                               <Hash/>
+                             </div>
+                             <p className="ml-4 h-6 w-24 bg-gray-200 flex">
+                              
+                               </p>
+                         </div>
+                         <div className="text-sm w-8 h-4 bg-gray-300 items-center">
+                        </div>
+                       </div>
+                       </div>
     </>
   );
 }
