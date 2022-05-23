@@ -3,6 +3,7 @@ import { useState } from "react";
 import { trimHash } from "../../utils/string"
 import MusicBlack from "../commons/svgicons/music-black";
 import Verified from "../commons/svgicons/verified";
+import Description from "../desk-description";
 import DeskHoverInfo from "../desk-hover-info";
 
 const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed',userVerified})=>{
@@ -14,22 +15,39 @@ const [show, setShow] = useState(false);
        detail : <div>{`${firstName} ${lastName}`}</div>
    }
 
-    const toHashTag =(hashtag)=>{
-        let finalValue = hashtag;
-        if(hashtag?.includes('#')){
-          hashtag = trimSpace(hashtag)
-          finalValue = trimHash(hashtag)
-        }
-        // router?.push(`/hashtag/${finalValue}`)
-      }
+    // const toHashTag =(hashtag)=>{
+    //     let finalValue = hashtag;
+    //     if(hashtag?.includes('#')){
+    //       hashtag = trimSpace(hashtag)
+    //       finalValue = trimHash(hashtag)
+    //     }
+    //     // router?.push(`/hashtag/${finalValue}`)
+    //   }
      
-      const toUser =(username)=>{
-        // let finalValue = username;
-        // if(hashtag?.includes('#')){
-        //   finalValue = trimHash(hashtag)
-        // }
-        // router?.push(`/${username}`)
-      }
+      // const toUser =(username)=>{
+      //   // let finalValue = username;
+      //   // if(hashtag?.includes('#')){
+      //   //   finalValue = trimHash(hashtag)
+      //   // }
+      //   // router?.push(`/${username}`)
+      // }
+
+      const redirect = (item) =>{
+        try{  
+          if(item?.indexOf('#')!==-1){
+            const trimmedHashtag = trimHash(item);
+            console.log("item",trimmedHashtag);
+            router?.push(`/hashtag/${trimmedHashtag}`);
+          }else
+          if(item?.indexOf('@')!==-1){
+            const userHandle = (item);
+            // console.log("item",trimmedHashtag);
+            router?.push(`/${userHandle}`);
+          }
+        }catch(e){
+            console.log("error in hashtag redirect",e)
+          }
+        }
 
     return(
         <div className="header flex flex-col relative">
@@ -46,11 +64,12 @@ const [show, setShow] = useState(false);
           {userVerified === 'verified' ? <div className="ml-2"><Verified/></div>:''}
         </div> 
         <div className=" text-sm font-light text-gray-600 w-8/12 mb-1">
-     {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
+        <Description description={description} />
+     {/* {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
            <span key={id} className={item?.includes('#') ? 'text-sm font-normal text-gray-900':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
             item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
             </span>
-         ))}
+         ))} */}
      </div>
         <p className="font-medium text-sm mb-4 text-gray-700">
            <MusicBlack/>

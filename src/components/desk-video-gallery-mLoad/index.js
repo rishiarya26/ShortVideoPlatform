@@ -12,6 +12,8 @@ import Error from './error';
 import Loading from './loader';
 import fallbackUsers from '../../../public/images/users.png'
 import CircularLoaderSearch from '../commons/circular-loader-search';
+import { trimHash } from '../../utils/string';
+
 let setRetry;
 const ErrorComp = () => (
 <Error retry={setRetry} />
@@ -67,6 +69,31 @@ const validItemsLength = items?.length > 0;
 //   index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
 //   router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
 // }
+const redirect = (item) =>{
+   
+
+   try{  if(item?.indexOf('#')!==-1){
+       const trimmedHashtag = trimHash(item);
+       console.log("item",trimmedHashtag);
+       router?.push(`/hashtag/${trimmedHashtag}`)
+     }else
+     if(item?.indexOf('@')!==-1){
+       const userHandle = (item);
+       // console.log("item",trimmedHashtag);
+       router?.push(`/${userHandle}`);
+     }
+    
+    }catch(e){
+       console.log("error in hashtag redirect",e)
+     }
+     // }else{
+     //   if(item?.indexOf('@')){
+     //     router?.push(`/@${item}`)
+     //   }
+     // }
+       }
+
+       
 return (
 <>
 {status && (
@@ -96,9 +123,17 @@ return (
                activeHoverIndex={activeHoverIndex}
                />
          </div>
-         <div className='truncate text-sm w-full mb-1 mt-1 text-gray-600 font-light pr-1'>
+         {/* <div className='truncate text-sm w-full mb-1 mt-1 text-gray-600 font-light pr-1'>
                {item?.description}
-            </div>
+            </div> */}
+            <div className='line-clamp-2 text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
+                  {item?.description?.split(' ')?.map((item,id)=>(
+              <p key={id} className='inline-block'><span className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
+                {item}
+              </span>
+              </p>
+            ))}
+                </div>
          {/* <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div> */}
          <div className='cursor-pointer flex w-full mb-3 justify-start items-center' onClick={()=>router?.push(`/@${item?.videoOwners?.userName}`)}>
             <div className='flex w-6 min-w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={fallbackUsers?.src}/></div>

@@ -72,11 +72,11 @@ useEffect(()=>{
               {isLoggedIn}
        
         <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
-          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</a>
-          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</a>
-          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</a>
-          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</a>
-          <a className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</a>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
         </div>
         {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
         
