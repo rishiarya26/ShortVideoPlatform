@@ -17,13 +17,14 @@ function DeskSearchResults({router}) {
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    console.log('@RRR',router)
+    const item = router?.query?.term;
     setSearchTerm(item);
     setSelectedIndex(0);
   },[])
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    const item = router?.query?.term;
     setSearchTerm(item);
     setSelectedIndex(0);
   },[router?.asPath])

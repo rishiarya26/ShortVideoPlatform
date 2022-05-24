@@ -12,15 +12,33 @@ import RightArrow from "../commons/svgicons/right-arrow";
 import Search from "../commons/svgicons/search";
 import { getSearchResults } from "../../sources/search/search";
 import CircularProgress from "../commons/circular-loader-search";
+import { getTopSearches } from "../../sources/explore/top";
+import Img from "../commons/image";
+import fallbackUsers from '../../../public/images/users.png';
+import { trimHash } from "../../utils/string";
 
 async function search(searchTerm, setSuggestions, setLoading) {
     /* eslint-disable no-param-reassign */
         try{
-          const response = await getSuggestions(searchTerm); 
-        //   console.log('search',response?.data)
+          const trimmedTerm = 
+          (searchTerm.indexOf('#') === 0 || searchTerm.indexOf('@') === 0) ? searchTerm?.substring(1) : '';
+          const response = await getSuggestions(trimmedTerm || searchTerm);
+          const originalSugg = response?.data;
+          const topResp = await getTopSearches(trimmedTerm || searchTerm);
           if(response.status === 'success'){
-            //   console.log('search',response);
-              setSuggestions(response?.data);
+            topResp?.data?.items?.hashtags.map((item,id)=>{
+                if(id < 2){
+                const hashtagSugg = { suggestionName : item.hashtag, type:'hashtag'}
+                originalSugg.push(hashtagSugg);
+                }
+            })
+            topResp?.data?.items?.users.map((item,id)=>{
+                if(id < 2){
+                const usersSugg = { users : item, type:'users', first: id===0 ? true:false}
+                originalSugg.push(usersSugg);
+                }
+            })
+              setSuggestions(originalSugg);
               setLoading && setLoading(false);
           }
           }
@@ -34,7 +52,7 @@ async function search(searchTerm, setSuggestions, setLoading) {
 
 const SearchItems = ({router,type})=>{
     const [searchTerm, setSearchTerm] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions, setSuggestions] = useState({data:[]});
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     const [loading, setLoading] = useState(false);
@@ -42,24 +60,23 @@ const SearchItems = ({router,type})=>{
     
     useEffect(()=>{
         if(type === 'results'){
-            const {item = ''} = router?.query;
-            if(item?.length > 0){
-                setSearchTerm(item);
-                search(item,setSuggestions,setLoading);
+            const {term = ''} = router?.query;
+            if(term?.length > 0){
+                setSearchTerm(term);
+                search(term,setSuggestions,setLoading);
             }
         }
     },[])
 
     const onTermChange=(e)=>{ 
-        console.log("e",e)
         if(searchTerm?.length === 0 && e?.currentTarget.value === ' '){}
         else{
-            setSuggestions([]);
+            setSuggestions({data:[]});
             setLoading(true);
             optimisedSearch(e.currentTarget.value, setSuggestions, setLoading);
             setSearchTerm(e.currentTarget.value)
+            setSuggestionListIndex(0);
         }
- 
     }
 
    const removeItem = (arr) =>{
@@ -73,13 +90,12 @@ const SearchItems = ({router,type})=>{
     const handleSearch=(term)=>{
        try{ 
         setShowSuggestions(false);
-        console.log('TERM***',term)
         if(term){
-            router?.push(`/search/${term}`)
+            router?.push(`/search?term=${term}`)
             setSearchTerm(term);
             // inputRef?.blur();
         }else{
-            searchTerm && router?.push(`/search/${searchTerm}`);
+            searchTerm && router?.push(`/search?term=${searchTerm}`);
         }
         setSuggestionListIndex(0);
       }catch(e){
@@ -100,20 +116,30 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        router?.push(`/search/${value}`);
+        router?.push(`/search?term=${value}`);
     }
    
     const onKeyboardEnter =(e, suggestionsSelectedIndex) =>{
-        console.log("SELEC",suggestionListIndex)
-        console.log("kp",e.keyCode, e.which, e)
         //it triggers by pressing the enter key
         if (searchTerm && e?.which === 13) {
-            (suggestionsSelectedIndex!==undefined && suggestionListIndex!==null) ? 
-            handleSearch(suggestions?.[suggestionsSelectedIndex]?.suggestionName) :
+            if((suggestionsSelectedIndex!==undefined && suggestionListIndex!==null)){
+            (suggestions?.[suggestionsSelectedIndex]?.type === 'hashtag' ?redirectToHashtag(trimHash(suggestions?.[suggestionsSelectedIndex]?.suggestionName)) :
+            suggestions?.[suggestionsSelectedIndex]?.type === 'users' ? redirectToUsers(suggestions?.[suggestionsSelectedIndex]?.users?.userHandle) :
+            handleSearch(suggestions?.[suggestionsSelectedIndex]?.suggestionName));
+        }else {
             handleSearch(searchTerm);
+        }
             inputRef && inputRef?.current?.blur();
         }
     }
+
+    const redirectToUsers = (item)=>{
+      window.location.href = `/${item}`
+    }
+
+    const redirectToHashtag = (item)=>{
+        window.location.href = `/hashtag/${item}`
+      }
 
 /* For click outside search, sugessions list should close */
   const inputRef = useRef();
@@ -139,33 +165,47 @@ const SearchItems = ({router,type})=>{
  const myRefs = useRef([]);
 
   const handleKeyUp = (e, targetElem) => {
-      console.log('**&**',e, targetElem);
-    //   if(searchTerm?.length === 0 && e?.keyCode === '32') {
-    //     //   e.preventDefault();
-    //   }else{
     if(suggestionListIndex !==null && suggestionListIndex !==undefined){
       let tempSug = suggestionListIndex===0 ? 0 : (suggestionListIndex || 0);
     if (e?.key === "ArrowUp" && targetElem) {
-        tempSug =  (tempSug > 0 ? tempSug-1 : suggestions.length-1)
+        tempSug =  (tempSug > 0 ? tempSug-1 : 0);
       targetElem?.focus();
     }else{
         if(e?.key === "ArrowDown" && targetElem){
-            tempSug = (tempSug === suggestions.length-1 ? 0 : tempSug+1);
+            tempSug = (tempSug === suggestions.length-1 ? suggestions.length-1 : tempSug+1);
             targetElem?.focus();
-    }
-   } 
+    }} 
    setSuggestionListIndex(tempSug);
     }else{
         setSuggestionListIndex(0);
       }
-    // }
   };
 
     const SuggestionsList = () =>(
-        <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col" >
+        <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md h-56v rounded-lg overflow-scroll flex flex-col" >
         <>{suggestions?.map((suggestion,id)=>(
-            <div ref={(el)=>(myRefs.current[id] = el)}
-            key={id} onClick={(e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} 
+            <>
+            {suggestion?.type === 'users' ? 
+            <>
+            {suggestion?.first && <div>Accounts</div>}
+            <div 
+            ref={(el)=>(myRefs.current[id] = el)} 
+            onClick={()=>router.push(`/@${suggestion?.users?.userHandle}`)}
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}
+            >
+                <div className='w-14 h-14 overflow-hidden rounded-full'>
+                    <Img data={suggestion?.users?.userIcon} fallback={fallbackUsers?.src}/>
+                </div>
+                <div>{suggestion?.users?.userHandle}</div>
+                <div>{`${suggestion?.users?.firstName || ''} ${suggestion?.users?.lastName || ''}`}</div>
+            </div>
+            </> :  
+            <div 
+            ref={(el)=>(myRefs.current[id] = el)}
+            key={id} 
+            onClick={suggestion?.type === 'hashtag' ? 
+            ()=>router.push(`/hashtag/${trimHash(suggestion?.suggestionName)}`) : 
+            (e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} 
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">
@@ -174,8 +214,35 @@ const SearchItems = ({router,type})=>{
                     </div>
                      <SearchArrow />
                 </div>
+            </div>}
+            </>
+        ))}
+        {/* {suggestions?.hashtags?.map((suggestion,id)=>(
+            <div ref={(el)=>(myRefs.current[id] = el)}
+            key={id} onClick={()=>router.push(`/hashtag/${suggestion?.hashtag}`)} 
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
+                <div className="flex justify-between w-full">
+                    <div  className="flex items-center ">
+                        <SearchXs/>
+                        <p className="pl-2">{suggestion?.hashtag}</p>
+                    </div>
+                     <SearchArrow />
+                </div>
             </div>
         ))}
+        {suggestions?.userNames?.map((suggestion,id)=>(
+            <div ref={(el)=>(myRefs.current[id] = el)}
+            key={id} onClick={()=>router?.push(`/@${suggestion?.userHandle}`)} 
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
+                <div className="flex justify-between w-full">
+                    <div  className="flex items-center ">
+                        <SearchXs/>
+                        <p className="pl-2">{suggestion?.userHandle}</p>
+                    </div>
+                     <SearchArrow />
+                </div>
+            </div>
+        ))} */}
         <div className='flex flex-col w-full p-3 bg-white cursor-pointer' 
         onClick={()=>handleSearch(searchTerm)}>{`View all results for "${searchTerm}"`}</div>
         </>
@@ -230,9 +297,6 @@ const SearchItems = ({router,type})=>{
                     }
                 </div>
                 </div>
-
-
-            
     )
 }
 
