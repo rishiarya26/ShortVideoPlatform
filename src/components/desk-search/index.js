@@ -182,22 +182,23 @@ const SearchItems = ({router,type})=>{
   };
 
     const SuggestionsList = () =>(
-        <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md h-56v rounded-lg overflow-scroll flex flex-col" >
+        <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col max-h-85v" >
         <>{suggestions?.map((suggestion,id)=>(
             <>
             {suggestion?.type === 'users' ? 
             <>
-            {suggestion?.first && <div>Accounts</div>}
+            {suggestion?.first && <div className="text-sm font-semibold p-3 text-gray-500">Accounts</div>}
             <div 
             ref={(el)=>(myRefs.current[id] = el)} 
             onClick={()=>router.push(`/@${suggestion?.users?.userHandle}`)}
-            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}
-            >
-                <div className='w-14 h-14 overflow-hidden rounded-full'>
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex text-sm  w-full p-3 bg-white cursor-pointer`}>
+                <div className='w-8 h-8 overflow-hidden rounded-full'>
                     <Img data={suggestion?.users?.userIcon} fallback={fallbackUsers?.src}/>
                 </div>
-                <div>{suggestion?.users?.userHandle}</div>
-                <div>{`${suggestion?.users?.firstName || ''} ${suggestion?.users?.lastName || ''}`}</div>
+                <div className="flex flex-col ml-2">
+                <div className="text-sm font-semibold">{suggestion?.users?.userHandle}</div>
+                <div className="text-xs text-gray-600">{`${suggestion?.users?.firstName || ''} ${suggestion?.users?.lastName || ''}`}</div>
+                </div>
             </div>
             </> :  
             <div 
@@ -206,7 +207,7 @@ const SearchItems = ({router,type})=>{
             onClick={suggestion?.type === 'hashtag' ? 
             ()=>router.push(`/hashtag/${trimHash(suggestion?.suggestionName)}`) : 
             (e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} 
-            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
+            className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 text-sm bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">
                         <SearchXs/>
@@ -243,7 +244,7 @@ const SearchItems = ({router,type})=>{
                 </div>
             </div>
         ))} */}
-        <div className='flex flex-col w-full p-3 bg-white cursor-pointer' 
+        <div className='flex flex-col w-full p-3 bg-white text-sm cursor-pointer' 
         onClick={()=>handleSearch(searchTerm)}>{`View all results for "${searchTerm}"`}</div>
         </>
         </div>
