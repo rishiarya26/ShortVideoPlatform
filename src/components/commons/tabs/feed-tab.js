@@ -11,7 +11,7 @@ const FeedTabs = ({ items = [], router }) => {
       { items.map((data, id) => (
         <React.Fragment key={id}>
           <Link href={`/feed/${data.path}`}>
-            <span className={data.path === selected ? 'font-bold ' : ''}>{data.display}</span>
+            <h2 className={data.path === selected ? 'font-bold ' : ''}>{data.display}</h2>
           </Link>
           { id < items.length - 1 ? <pre> | </pre> : '' }
         </React.Fragment>

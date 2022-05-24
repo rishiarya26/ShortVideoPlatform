@@ -260,7 +260,7 @@ const SearchItems = ({router,type})=>{
                     autoComplete="off"
                     name="Search"
                     value={searchTerm}
-                    placeholder="Search Users and Videos" 
+                    placeholder="Search Users, Videos and Hashtags" 
                     onClick={()=>setShowSuggestions(true)}
                     onKeyPress={(e)=>onKeyboardEnter(e,suggestionListIndex && suggestionListIndex)}
                     ref={inputRef}

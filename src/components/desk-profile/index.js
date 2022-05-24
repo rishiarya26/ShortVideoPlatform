@@ -402,7 +402,7 @@ function DeskUsers({
                <div className="flex flex-col h-32 justify-between">
                   <div>
                   <h3 className=" mb-1 mt-1.5 flex items-center font-bold text-2xl ">{userHandle} <div className="ml-2">{userVerified === 'Verified' ?<VerifiedLg/> : ''} </div></h3>
-                  <p className="font-medium text-gray-600 py-1 p-2 text-lg">{firstName} {lastName}</p>
+                  <h1 className="font-medium text-gray-600 py-1 p-2 text-lg">{firstName} {lastName}</h1>
                   
                   </div>
                   {/* <button className="font-semibold text-md border border-hipired rounded-md py-1 px-24 mr-1 h-10 bg-hipired text-white"> */}
