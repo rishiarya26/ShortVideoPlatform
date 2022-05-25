@@ -44,6 +44,7 @@ import CartLg from '../commons/svgicons/cart-lg';
 import CartLgLight from '../commons/svgicons/cart-lg-light';
 import VerifiedLg from '../commons/svgicons/verified-lg';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
+import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -60,21 +61,24 @@ const LandscapeView = dynamic(
     ssr: false
   }
 );
-
-function DeskUsers({
+let setRetry;
+function DeskHashtag({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',
   isFollow=false, userVerified
 }) {
   const [videoData, setVideoData] = useState({});
-  const [selectedTab, setSelectedTab] = useState('all');
+  // const [selectedTab, setSelectedTab] = useState('all');
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  const [showLoading, setShowLoading] = useState(isFetching);
+  const [offset, setOffset] = useState(2);
   const [isFollowing,setIsFollowing] = useState();
   /****** for video detail - start ******/
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+  const [details, setDetails] = useState({});
+
+  const {item = ''} = router?.query;
 
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
@@ -87,10 +91,14 @@ function DeskUsers({
   useEffect(()=>{
     setIsFollowing(isFollow);
   },[isFollow])
+
+  useEffect(()=>{
+
+  },[item])
   
   const hideVideoDetail = ()=>{
     setShowVideoDetail(false);
-    window.history.replaceState('Profile Page','Profile',`/${userHandle}`);
+    window.history.replaceState('Hashtag Page','Hashtag',`/hashtag/${item}`);
   }
 
   const handleUpClick=()=>{
@@ -122,15 +130,15 @@ function DeskUsers({
 
   async function fetchMoreListItems() {
    try{
-    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
-    console.log("fetchedMore",response)
+    const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
+    console.log("fetchedMore",response);
     if(response?.data?.length > 0){
       let data = {...videoData};
       if(data.items){
         data.items = data?.items?.concat(response?.data);
         data.status = 'success';
       }else{
-        const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+        const response = item && await getHashTagVideos({ keyword:  item , offset: `1` });
         data.items = resp?.data?.concat(response?.data);
         data.status = 'success';
       }
@@ -160,17 +168,17 @@ function DeskUsers({
   //   document?.documentElement?.scrollTop(0);
   // },[])
 
-  useEffect(()=>{
-    setIsFetching(false);
-    setOffset(2);
-  },[selectedTab])
+  // useEffect(()=>{
+  //   setIsFetching(false);
+  //   setOffset(2);
+  // },[selectedTab])
   
   useEffect(() => {
     setTimeout(()=>{
       const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Profile';
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile'})
+      mixpanelEvents['Page Name'] = 'Hashtag';
+      fbq.event('Screen View');
+      trackEvent('Screen_View',{'Page Name' :'Hashtag'});
       track('Screen View',mixpanelEvents );
     },500);
   }, []);
@@ -188,16 +196,25 @@ function DeskUsers({
     // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
-  // eslint-disable-next-line no-unused-vars
-  // const [fetchState, retry, data] = useFetcher(dataFetcher);
-  const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
+  // const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+  // // eslint-disable-next-line no-unused-vars
+  // // const [fetchState, retry, data] = useFetcher(dataFetcher);
+  // const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
+
+  // const onDataFetched = data => {
+  //   setDetails(data?.details);
+  //   setVideoData({items: data?.data});
+  // }
+  const dataFetcher = () => item && getHashTagVideos({ keyword:  item });
+  let [fetchState, retry, data] = useFetcher(dataFetcher);
+  setRetry = retry;
 
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
     setVideoData(videos);
+    data && setDetails(data?.details);
   }, [fetchState]);
 
   const handleBackClick = () => {
@@ -358,140 +375,94 @@ function DeskUsers({
   //     behavior: 'smooth',
   //     block: 'start',
   //   });
-  
+  const redirect = (item) =>{
+if(item?.indexOf('#')){
+  window.location.href= `/hashtag/${item}`;
+}else{
+  if(item?.indexOf('@')){
+    router?.push(`/@${item}`)
+  }
+}
+  }
 
   return (
     <div className="flex flex-col w-screen h-screen">
-     {showVideoDetail && 
-       <div className='z-20 fixed top-0 left-0 w-full'>
-         <VideoDetail
-         userName={videoDetailData?.userName} 
-         likesCount={videoDetailData?.likesCount} 
-         music_title={videoDetailData?.music_title} 
-         userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
-         url={videoDetailData?.video_url} 
-         firstFrame={videoDetailData?.firstFrame} 
-         firstName={videoDetailData?.firstName}
-         lastName={videoDetailData?.lastName} 
-         description={videoDetailData?.content_description} 
-         updateActiveIndex={updateActiveIndex} 
-         videoId={videoDetailData?.content_id}
-         handleUpClick={handleUpClick} 
-         handleDownClick={handleDownClick}
-         hideVideoDetail={hideVideoDetail}
-         shareCount={videoDetailData?.shareCount}
-         activeIndex={vDetailActiveIndex}
-         socialId={videoDetailData?.getSocialId}
-         userVerified={userVerified === 'Verified' ? 'verified' : ''}
-         />
-       </div>}
-    <Header/>
-    <div className="flex w-screen h-screen bg-white relative pt-24">
-    <div className='w-2/12 w-prof-menu menu-sm'>
-    <DeskMenu width={'w-prof-menu menu-sm-w'}/>
-    </div>
-    
-    <div className="w-10/12 pl-8">
-      <div className="profile-details flex flex-col w-1/2 relative text-gray-700"> 
-         {/* <div className="absolute right-4 top-4">
-            <ShareOutline/>
-         </div> */}
-            <div className="flex items-center pb-2">
-               <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
-               <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
-               <div className="flex flex-col h-32 justify-between">
-                  <div>
-                  <h3 className=" mb-1 mt-1.5 flex items-center font-bold text-2xl ">{userHandle} <div className="ml-2">{userVerified === 'Verified' ?<VerifiedLg/> : ''} </div></h3>
-                  <h1 className="font-medium text-gray-600 py-1 p-2 text-lg">{firstName} {lastName}</h1>
-                  
-                  </div>
-                  {/* <button className="font-semibold text-md border border-hipired rounded-md py-1 px-24 mr-1 h-10 bg-hipired text-white"> */}
-          {info.function[type]}
-        {/* </button> */}
-               </div>
-            </div>
-            <div className="list flex  mt-8">
-                  <div className="flex text-gray-700 items-end">
-                     <p className="font-semibold text-lg">{numberFormatter(following)}</p>
-                     <p className="pl-2">Following</p>
-                  </div>
-                  <div className="flex text-gray-700 items-end ml-4">
-                     <p className="font-semibold text-lg">{numberFormatter(followers)}</p>
-                     <p className="pl-2">Followers</p>
-                  </div>
-                  <div className="flex text-gray-700 items-end ml-4">
-                     <p className="font-semibold text-lg">{numberFormatter(totalLikes)}</p>
-                     <p className="pl-2">Likes</p>
-                  </div>
-            </div>
-            <div className="Bio">
-               <p className="py-4 pr-12 text-gray-00 text-md h-full flex items-center">
-                                 {bio}
-               </p>
-            </div>
-            </div>
-      {/* <div className="header flex w-full flex-col items-center pt-7 pb-2">
-        <div className="flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
-          </div>
-          <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
+      {showVideoDetail && 
+      <div className='z-20 fixed top-0 left-0 w-full'>
+        <VideoDetail
+        userName={videoDetailData?.userName} 
+        likesCount={videoDetailData?.likesCount} 
+        music_title={videoDetailData?.music_title} 
+        userProfilePicUrl={videoDetailData?.userProfilePicUrl} 
+        url={videoDetailData?.video_url} 
+        firstFrame={videoDetailData?.firstFrame} 
+        firstName={videoDetailData?.firstName}
+        lastName={videoDetailData?.lastName} 
+        description={videoDetailData?.content_description} 
+        updateActiveIndex={updateActiveIndex} 
+        videoId={videoDetailData?.content_id}
+        handleUpClick={handleUpClick} 
+        handleDownClick={handleDownClick}
+        hideVideoDetail={hideVideoDetail}
+        shareCount={videoDetailData?.shareCount}
+        activeIndex={vDetailActiveIndex}
+        socialId={videoDetailData?.getSocialId}
+        userVerified={userVerified === 'Verified' ? 'verified' : ''}
+        />
+      </div>
+      }
+      <Header/>
+      <div className="flex w-screen h-screen bg-white relative pt-24">
+        <div className='w-2/12 w-prof-menu menu-sm'>
+            <DeskMenu width={'w-prof-menu menu-sm-w'}/>
         </div>
-        <div className="followboard flex justify-around w-1/2 py-2">
-          <div onClick={toShowFollowing} className="flex flex-col items-center">
-            <p className="font-semibold text-sm">{numberFormatter(following)}</p>
-            <p className="text-xs">Following</p>
-          </div>
-          <div onClick={toShowFollowers} className="flex flex-col items-center px-9">
-            <p className="font-semibold text-sm">{numberFormatter(followers)}</p>
-            <p className="text-xs">Followers</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <p className="font-semibold text-sm">{numberFormatter(totalLikes)}</p>
-            <p className="text-xs">Likes</p>
-          </div>
-        </div>
-        <div className="p-4 h-full flex items-center justify-center">
-          {info.function[type]}
-        </div>
-        <div className="p-4 px-12 text-gray-400 text-sm text-center h-full flex items-center justify-center">
-          {bio}
-        </div>
-      </div> */}
-      <div className="tabs flex justify-around  border-t-2 border-grey-600" />
-      <div className='w-1/3'>
-      <UserTab
-        onTabChange={onTabChange}
-        items={info.tabs[type]}
-        selected={selectedTab}
-        onLikedVideosTab={onLikedVideosTab}
-      />
-   </div>
-      <DeskVideoGallery
-        items={videoData?.items}
-        status={videoData?.status}
-        retry={retry && retry}
-        userId={id}
-        type={selectedTab}
-        page='profile'
-        showLoading={showLoading}
-        fetchMoreListItems={fetchMoreListItems}
-        updateActiveIndex={updateActiveIndex}
-      />
-     
-{/* <LandscapeView/> */}
-      {/* {type === 'others' && <div className="bottom-0 app_cta p-3 sticky h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center z-10">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
+        <div className="w-10/12 pl-8">
+            <div className='flex flex-col w-full pb-0 p-6'>
+               <div className='flex head-hash'>
+                  <div className="w-32 min-w-32 flex h-32 bg-gray-300 relative rounded-full" >
+                        <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
+                  </div>
+                      <div className="flex flex-col px-4 ">
+                        <div className="flex flex-col">
+                            <h1 className="text-3xl font-semibold">{details?.hashtagName}</h1>
+                            {/* 
+                            <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
+                            */}
+                        </div>
+                        {/* <div onClick={()=>
+                            show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
+                            <Save />
+                            <p className="pl-2 text-xs font-medium">Add to favorites</p>
+                        </div> */}
+                        <div className="flex text-base text-gray-500 pt-2 pl-0 w-3/4 line-clamp-3">
+                            <h2>
+                              {details?.hashTagDesc}
+                              {/* <span className="font-medium text-gray-500">#hashtag</span> */} 
+                            </h2>
+                        </div>
+                      </div>
+                </div>
+               
             </div>
-         </div>} */}
-    </div>
-    </div>
-    </div>
+
+            <div className="w-full h-full flex flex-col p-4 ">   
+              <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
+              <DeskVideoGallery
+              items={videoData?.items}
+              status={videoData?.status}
+              retry={retry && retry}
+              userId={id}
+              // type={selectedTab}
+              page='profile'
+              showLoading={showLoading}
+              fetchMoreListItems={fetchMoreListItems}
+              updateActiveIndex={updateActiveIndex}
+              />
+            </div>
+            </div>
+        </div>
+      </div>
   );
 }
 
-export default withRouter(DeskUsers);
+export default withRouter(DeskHashtag);

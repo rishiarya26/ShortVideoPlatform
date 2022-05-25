@@ -153,6 +153,8 @@ const handleSeekbar=()=> {
 const pushToProfile = ()=>{
    window.location.href = `/@${userName}`
 }
+
+
 return (
 <>
 <div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">

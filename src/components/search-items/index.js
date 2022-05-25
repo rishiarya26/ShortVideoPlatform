@@ -37,7 +37,7 @@ const SearchItems = ({router,type})=>{
     
     useEffect(()=>{
         if(type === 'results'){
-            const {item = ''} = router?.query;
+            const {term: item = ''} = router?.query;
             if(item?.length > 0){
                 setSearchTerm(item);
                 search(item,setSuggestions)
@@ -65,7 +65,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        router?.push(`/search/${searchTerm}`);
+        router?.push(`/search?term=${searchTerm}`);
     }
 
     const searchFromList = (e,id,value) =>{
@@ -81,7 +81,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        router?.push(`/search/${value}`);
+        router?.push(`/search?term${value}`);
     }
 
 //     const onSearchHistoryDelete =(e) =>{

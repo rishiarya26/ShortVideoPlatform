@@ -14,12 +14,12 @@ function SearchResult({router}) {
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    const item = router?.query?.term;
     setSearchTerm(item)
   },[])
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    const item = router?.query?.term;
     setSearchTerm(item)
   },[router?.asPath])
  

@@ -11,19 +11,24 @@ import SearchItems from '../../search-items';
 import deskSearch from '../../desk-search';
 import Header from '../../desk-header';
 import DeskMenu from '../../desk-menu';
+import { trimHash } from '../../../utils/string';
 
 function DeskSearchResults({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    console.log('@RRR',router)
+    let item = router?.query?.term;
+    console.log("ROUER",router)
+    item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item);
     setSelectedIndex(0);
   },[])
 
   useEffect(()=>{
-    const item = router?.query?.item;
+    let item = router?.query?.term;
+    item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item);
     setSelectedIndex(0);
   },[router?.asPath])
@@ -36,11 +41,11 @@ function DeskSearchResults({router}) {
       <Users item={searchTerm}/>,
       <Videos item={searchTerm}/>, 
       // <Sounds/>, 
-      // <Hashtags item={searchTerm}/>
+      <Hashtags item={searchTerm}/>
   ]; 
 
  const items = {
-   display : ['Top','Users', 'Videos'],
+   display : ['Top','Users', 'Videos', 'Hashtags'],
    defaultValue : selectedIndex
  }
 
@@ -62,15 +67,14 @@ function DeskSearchResults({router}) {
           <div className='W-search pl-6 pt-24 flex flex-col no_bar'>
             <div className='w-full bg-white sticky top-16 z-9'>
             <div className='w-3/5'>
-        <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
-        </div>
-        </div>
+          <Tabs items={items} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
+          </div>
+          </div>
         {components[selectedIndex]}
         </div>
       </div>
     </div>
     </div>
   );
-  
 }
 export default withRouter(DeskSearchResults);
