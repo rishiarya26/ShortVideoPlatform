@@ -256,8 +256,8 @@ function Explore() {
                       <Hash />
                     </div>
                     <div className="head flex flex-col">
-                      <p className="text-sm font-semibold">{content?.widgetName}</p>
-                      <p className="text-sm text-gray-400">trending</p>
+                      <p className="text-sm font-medium text-gray-600">{content?.widgetName}</p>
+                      <p className="text-xs text-gray-400">Trending</p>
                     </div>
                   </div>
                   <div  className="flex items-center justify-center">
@@ -289,7 +289,7 @@ function Explore() {
               : content?.widgetContentType === 'User' &&  (
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
-                    <p className="text-sm font-semibold font-medium">{content?.widgetName}</p>
+                    <p className="text-sm font-medium">{content?.widgetName}</p>
                     <div onClick={()=> toUserList(content?.widgetName)} className="flex items-center justify-center">
                       <RightArrow />
                     </div>

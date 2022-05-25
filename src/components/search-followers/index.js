@@ -35,7 +35,7 @@ import SearchBlack from "../commons/svgicons/search-black";
         {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>onTermChange('')}>
         <Close />
         </button>}
-        <div className="absolute left-0 top-2 p-4">
+        <div className="absolute left-1 top-2 p-4">
         <SearchBlack/>        </div>
         </div>
     </div>
