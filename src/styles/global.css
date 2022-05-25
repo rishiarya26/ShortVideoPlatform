@@ -3,7 +3,8 @@
 @tailwind utilities;
 *{
     margin: 0;
-    font-family: "Open Sans";   
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";   
+    /* font-family: "Open Sans";    */
     /* font-weight: normal; */
     letter-spacing: .3px;
 }
@@ -74,6 +75,12 @@ img{
 } */
 /* body{
 } */
+.text-xxxs{
+  font-size: 8px;
+}
+.text-xxs{
+  font-size: 10px;
+}
 .video-card img, .trending_card img{
   height: 100%;
 }
