@@ -27,6 +27,7 @@ import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import DeskHoverInfo from "../desk-hover-info";
 import VerifiedLg from "../commons/svgicons/verified-lg";
+import Description from "../desk-description";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -71,6 +72,23 @@ const pushToProfile = ()=>{
 const gotUrl = window?.location?.href;
 let domain = (new URL(gotUrl));
 domain = domain?.origin;
+
+const redirect = (item) =>{
+   try{  
+     if(item?.indexOf('#')!==-1){
+       const trimmedHashtag = trimHash(item);
+       console.log("item",trimmedHashtag);
+       router?.push(`/hashtag/${trimmedHashtag}`);
+     }else
+     if(item?.indexOf('@')!==-1){
+       const userHandle = (item);
+       // console.log("item",trimmedHashtag);
+       router?.push(`/${userHandle}`);
+     }
+   }catch(e){
+       console.log("error in hashtag redirect",e)
+     }
+   }
 
 return (
 <div className="flex w-screen h-screen">
@@ -133,11 +151,7 @@ return (
                </div>
             </div>
             <div className=" text-sm w-8/12 mb-2 mt-1 text-gray-700">
-            {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'text-sm font-semibold text-gray-700':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
-               item?.includes('@') ? toUser(item) : item?.includes('https') && window?.open(item)}>{item}{' '}
-               </span>
-            ))}
+            <Description description={description} />
            </div>
             <div className="w-8/12 my-1 text-sm">
                <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">

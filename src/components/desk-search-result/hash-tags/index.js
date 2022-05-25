@@ -88,7 +88,7 @@ function HashTags({item}) {
              
              <div className="flex flex-col w-full ">
                  {items?.length > 0 ? items.map((item, id)=>(
-                 <div key={id} onClick={()=>toHashtag(item?.hashtag)}  className="flex justify-between my-4 items-center">
+                 <div key={id} onClick={()=>toHashtag(item?.hashtag)}  className="flex cursor-pointer justify-between my-4 items-center">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>

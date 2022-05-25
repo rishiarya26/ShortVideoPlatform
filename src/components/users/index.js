@@ -304,7 +304,7 @@ function Users({
           <div className="w-24 h-24 rounded-full overflow-hidden">
             <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
           </div>
-          <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
+          <h1 className="font-medium p-2 text-sm">{firstName} {lastName}</h1>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
           <div onClick={toShowFollowing} className="flex flex-col items-center">

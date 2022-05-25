@@ -26,7 +26,7 @@ export default function Login({ toggle, loading, setAuth }) {
        <div onClick={()=>router.push('/login/phone?option=password')}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
-          <div className="flex justify-center w-full font-semibold">
+          <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
             <p>Use phone or Email</p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function Login({ toggle, loading, setAuth }) {
       <div onClick={()=>setAuth('login')}>
       <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
-        <div className="flex justify-center w-full font-semibold">
+        <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
           <p>Use phone or Email</p>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function Login({ toggle, loading, setAuth }) {
    </div>}
       <div className="p-2 flex flex-col items-center">
         <h1 className="text-lg font-bold">Login to Hipi</h1>
-        <p className="text-center text-sm">Like the video, manage your account and do much more</p>
+        <p className="text-center text-gray-400 mt-2 text-sm">Like the video, manage your account and do much more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
@@ -79,7 +79,7 @@ export default function Login({ toggle, loading, setAuth }) {
           </div>
         </div> */}
       </div>
-      <div className="my-2 ">
+      <div className="my-2 text-xs md:text-base">
         <p>
           Don't have an account? 
           <span onClick={() => toggle('signup')} className="text-red-600 font-medium"> Sign Up</span>

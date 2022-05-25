@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { localStorage } from '../../utils/storage';
+import { trimHash } from '../../utils/string';
 import ComponentStateHandler from '../commons/component-state-handler';
 import Refresh from '../commons/svgicons/refresh';
 import DeskVideoCard from '../desk-video-card';
@@ -82,6 +83,29 @@ export default function DeskVideoGallery({
   //   index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
   //   router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
   // }
+  const redirect = (item) =>{
+   
+
+  try{  if(item?.indexOf('#')!==-1){
+      const trimmedHashtag = trimHash(item);
+      console.log("item",trimmedHashtag);
+      window.location.href=`/hashtag/${trimmedHashtag}`;
+    }else
+    if(item?.indexOf('@')!==-1){
+      const userHandle = (item);
+      // console.log("item",trimmedHashtag);
+      router?.push(`/${userHandle}`);
+    }
+  
+  }catch(e){
+      console.log("error in hashtag redirect",e)
+    }
+    // }else{
+    //   if(item?.indexOf('@')){
+    //     router?.push(`/@${item}`)
+    //   }
+    // }
+      }
 
   return (
     <>
@@ -98,10 +122,12 @@ export default function DeskVideoGallery({
               (id === items?.length-1) ? 
               <span ref={lastItemInView} className="w-1/5 flex flex-col items-center p-1 tab-card" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
-               onClick={()=>updateActiveIndex(id)}
                   >
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
-               <div className='flex flex-col w-full min-h-28 tab-card-h max-h-28 '> 
+               <div 
+                 onClick={()=>updateActiveIndex(id)} 
+                 className='flex flex-col w-full min-h-28 tab-card-h max-h-28 '
+               > 
                <DeskVideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 
                   videoTitle ={item?.videoTitle} 
@@ -113,14 +139,22 @@ export default function DeskVideoGallery({
                   activeHoverIndex={activeHoverIndex}
                 />
                 </div>
-                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
-             </span> :
+                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
+                  {item?.content_description?.replace('\n',' ')?.split(' ')?.map((item,id)=>(
+              <p key={id} className='inline-block'><span className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
+                {item}
+              </span>
+              </p>
+            ))}
+                </div>             </span> :
                <span className="w-1/5 flex flex-col items-center p-1 tab-card" key={id} 
                onMouseOver={()=>handleMouseEnter(id)}
-               onClick={()=>updateActiveIndex(id)}
                   >
                {/* // <Link  className="w-1/3 p-1" href={page === 'search' ? `/search-feed/${item?.content_id}?type=normal` : `/profile-feed/${userId}?videoId=${data?.content_id}&type=${type}`}> */}
-               <div className='flex flex-col w-full min-h-28 tab-card-h max-h-28'> 
+               <div   
+                onClick={()=>updateActiveIndex(id)} 
+                className='flex flex-col w-full min-h-28 tab-card-h max-h-28'
+               > 
                <DeskVideoCard 
                   thumbnailUrl={item?.thumbnailUrl} 
                   videoTitle ={item?.videoTitle} 
@@ -132,7 +166,14 @@ export default function DeskVideoGallery({
                   activeHoverIndex={activeHoverIndex}
                 />
                 </div>
-                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div>
+                <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
+                  {item?.content_description?.replace('\n',' ')?.split(' ')?.map((item,id)=>(
+                 <p key={id} className='inline-block'><span className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : null}>
+                {item}
+              </span>
+              </p>
+            ))}
+                </div>
              </span>
              ))}
               {showLoading &&  

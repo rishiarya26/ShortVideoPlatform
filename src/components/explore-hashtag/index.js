@@ -107,7 +107,7 @@ function HashTag({router}) {
           </div>
           <div className="flex flex-col justify-between px-4 ">
             <div className="flex flex-col">
-              <p className="text-sm font-semibold">{details?.hashtagName}</p>
+              <h1 className="text-sm font-semibold">{details?.hashtagName}</h1>
               {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
             <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">

@@ -176,7 +176,7 @@ export const GoogleButton =({loading}) =>{
         render={renderProps => (
             <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
          <div className="justify-self-start"><Google/></div>
-         <div className="flex justify-center w-full font-semibold">
+         <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
            <p>Continue with Google</p>
          </div>
       </div></>

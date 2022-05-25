@@ -25,14 +25,13 @@ function transformSuccess(resp) {
     payload.message = getMessage(data, {});
     payload['http-status'] = data.status;
     let payloadData = []
-
-    // responseData?.some((data,id)=>{
-    //    payloadData.push(data)
-    //    if(id>1){
-    //        return true;
-    //    }
-    // })
-    payload.data = data.responseData;
+    const finalResp = []
+    data.responseData?.forEach((item,id)=>{
+      console.log("item",item)
+      id <8 && finalResp.push(item);
+    })
+    console.log("FR",finalResp)
+    payload.data = finalResp;
     payload.requestedWith = { ...data.requestedWith };
     return payload;
   } catch (err) {
