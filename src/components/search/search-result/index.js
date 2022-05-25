@@ -8,18 +8,21 @@ import Videos from '../videos';
 import Sounds from '../sounds';
 import Hashtags from '../hash-tags';
 import SearchItems from '../../search-items';
+import { trimHash } from '../../../utils/string';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(()=>{
-    const item = router?.query?.term;
+    let item = router?.query?.term;
+    item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item)
   },[])
 
   useEffect(()=>{
-    const item = router?.query?.term;
+    let item = router?.query?.term;
+    item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item)
   },[router?.asPath])
  

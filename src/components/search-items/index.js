@@ -11,10 +11,12 @@ import { Back } from "../commons/svgicons/back";
 import RightArrow from "../commons/svgicons/right-arrow";
 import SearchBlack from "../commons/svgicons/search-black";
 import { getSearchResults } from "../../sources/search/search";
+import { trimHash } from "../../utils/string";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
         try{
+          searchTerm = searchTerm?.indexOf('#') === 0 ? trimHash(searchTerm) : searchTerm   
           const response = await getSuggestions(searchTerm); 
           console.log('search',response?.data)
           if(response.status === 'success'){
@@ -65,7 +67,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
-        router?.push(`/search?term=${searchTerm}`);
+        searchTerm?.indexOf('#') === 0 ? router?.push(`/search?term=%23${trimHash(searchTerm)}`) : router?.push(`/search?term=${searchTerm}`)
     }
 
     const searchFromList = (e,id,value) =>{
@@ -81,7 +83,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        router?.push(`/search?term${value}`);
+        router?.push(`/search?term=${value}`);
     }
 
 //     const onSearchHistoryDelete =(e) =>{
