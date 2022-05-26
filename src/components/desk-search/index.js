@@ -195,7 +195,7 @@ const SearchItems = ({router,type})=>{
 
     const SuggestionsList = () =>{
         console.log("SUG",suggestions)
-       return <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col max-h-85v" >
+       return <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-85v" >
         <>{suggestions?.map((suggestion,id)=>(
             <div key={id}>
             {suggestion?.type === 'users' ? 

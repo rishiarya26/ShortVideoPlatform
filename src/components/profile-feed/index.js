@@ -29,6 +29,7 @@ import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
+import { getCanonicalUrl } from '../../utils/web';
 
 SwiperCore.use([Mousewheel]);
 
@@ -443,7 +444,8 @@ try{
         data={{
           title: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
-          description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`        
+          description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`,
+          canonical: getCanonicalUrl && getCanonicalUrl(),        
         }}
      />
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>

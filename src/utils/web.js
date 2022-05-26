@@ -33,10 +33,36 @@ function updateCampaignId(queryStrings){
     (campaign_id !== oldCampaignId) && localStorage.set('campaign_id',campaign_id);
 }
 
+function getHostname(){
+  const url = document?.location?.href;
+  let domain = (new URL(url));
+  console.log("FF",domain, url)
+  let hostname  = domain?.hostname || null;
+  return hostname;
+}
+
+function getUrl(){
+  const url = document?.location?.href;
+  return url;
+}
+
+function getCanonicalUrl(orgUrl){
+  const url = orgUrl || document &&  document?.location?.href;
+  let domain = (new URL(url));
+  console.log("FF",domain)
+  let hostname  = domain?.hostname || null;
+  let pathname  = domain?.pathname || '';
+  let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
+  return finalUrl;
+}
+
 export {
   CopyToClipBoard,
   ScrollToTop,
   updateUtmData,
-  updateCampaignId
+  updateCampaignId,
+  getHostname,
+  getUrl,
+  getCanonicalUrl
 };
 

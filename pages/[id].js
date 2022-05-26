@@ -11,7 +11,7 @@ import Users from '../src/components/users';
 import { getItem } from '../src/utils/cookie';
 import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
-import { updateCampaignId, updateUtmData } from '../src/utils/web';
+import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
 import isEmptyObject from '../src/utils/is-object-empty';
 
 
@@ -24,6 +24,8 @@ export default function Hipi(params) {
     errorCode,
     message,
   } = params;
+
+  console.log("PU**",params.uri)
 
   const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
 
@@ -134,7 +136,9 @@ export default function Hipi(params) {
             content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
           }
         ],
+        canonical: getCanonicalUrl && getCanonicalUrl(params?.uri),
         }}
+        
      />
       {/* <VideoJsonLd
        hasPart={[
@@ -189,7 +193,7 @@ export async function getServerSideProps(ctx) {
   const {
     req, params
   } = ctx;
-  // const uri = new URL(req.url, `http://${req.headers.host}`).href;
+  const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   const trimmedUserHandle = id && id.replace('@','');
   let data = {};
@@ -207,7 +211,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      // uri,
+      uri,
       ...data
     }
   };

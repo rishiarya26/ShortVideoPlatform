@@ -6,6 +6,7 @@ import { commonEvents } from "../src/analytics/mixpanel/events";
 import { track } from "../src/analytics";
 import { useEffect } from "react";
 import * as fbq from '../src/analytics/fb-pixel'
+import { getCanonicalUrl } from "../src/utils/web";
 
 
 export default function Hipi() {
@@ -22,6 +23,7 @@ export default function Hipi() {
           title: 'Hipi #SahiPakdeHain contest',
           // image: item?.thumbnail,
           description: 'Participate in #SahiPakdeHain contest and win rewards. A contest to ignite your passion of acting by becoming the Bhabiji with your fun take on it. A contest which offers you a platform where you allow your unique personality to show through these videos.',
+          canonical: getCanonicalUrl && getCanonicalUrl(),
           // canonical: 'https://hipi.co.in/feed/[id]',
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
