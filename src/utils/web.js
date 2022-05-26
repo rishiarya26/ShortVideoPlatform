@@ -36,7 +36,6 @@ function updateCampaignId(queryStrings){
 function getHostname(){
   const url = document?.location?.href;
   let domain = (new URL(url));
-  console.log("FF",domain, url)
   let hostname  = domain?.hostname || null;
   return hostname;
 }
@@ -49,7 +48,6 @@ function getUrl(){
 function getCanonicalUrl(orgUrl){
   const url = orgUrl || (document &&  document?.location?.href);
   let domain = (new URL(url));
-  console.log("FF",domain)
   let hostname  = domain?.hostname || null;
   let pathname  = domain?.pathname || '';
   let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
