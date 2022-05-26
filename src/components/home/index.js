@@ -25,7 +25,6 @@ function Home() {
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
         }}
       />
     <div className="h-screen  w-screen flex flex-col justify-between">

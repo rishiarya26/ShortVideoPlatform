@@ -47,7 +47,7 @@ function getUrl(){
 }
 
 function getCanonicalUrl(orgUrl){
-  const url = orgUrl || document &&  document?.location?.href;
+  const url = orgUrl || (document &&  document?.location?.href);
   let domain = (new URL(url));
   console.log("FF",domain)
   let hostname  = domain?.hostname || null;
@@ -55,7 +55,7 @@ function getCanonicalUrl(orgUrl){
   let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
   return finalUrl;
 }
-
+           
 export {
   CopyToClipBoard,
   ScrollToTop,

@@ -24,8 +24,10 @@ export const deleteAllCookies = () => {
 export const setItem = (key, val, opt = {}) => {
   if (!canUseDom) return false;
   let cookieStr ='';
-  (opt?.domain) ? cookieStr = `${key}=${val}; path=${opt.path || '/'}; domain = ${opt.domain}` 
-  : cookieStr = `${key}=${val}; path=${opt.path || '/'};`
+  (opt?.domain && opt?.expires) ? cookieStr = `${key}=${val}; path=${opt.path || '/'}; domain = ${opt.domain}; expires=${opt.expires}` 
+  : opt?.domain ? cookieStr = `${key}=${val}; path=${opt.path || '/'}; domain = ${opt.domain}` :
+  opt?.expires ? cookieStr = `${key}=${val}; path=${opt.path || '/'}; expires=${opt.expires}` :
+  cookieStr = `${key}=${val}; path=${opt.path || '/'}`
   console.log(cookieStr)
   document.cookie = cookieStr;
   return true;
