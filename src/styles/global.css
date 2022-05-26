@@ -6,7 +6,7 @@
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";   
     /* font-family: "Open Sans";    */
     /* font-weight: normal; */
-    letter-spacing: .3px;
+    letter-spacing: normal;
 }
 html {
   box-sizing: border-box;
@@ -87,7 +87,7 @@ img{
 .hashtag{
     font-weight: 600;
     font-size: 12px;
-    letter-spacing: .85px;
+    letter-spacing: .3px;
 }
 .Video_sheet{
     /* scroll-snap-type: y mandatory; */
