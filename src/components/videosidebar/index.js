@@ -300,7 +300,7 @@ const handleSaveMoments = () =>{
               <Liked />
             </div>
 
-            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
           </div>
         ) : (
           <div>
@@ -311,7 +311,7 @@ const handleSaveMoments = () =>{
             >
               <Like />
             </div>
-            <p className="text-sm text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
           </div>
        )} 
 
@@ -344,7 +344,7 @@ const handleSaveMoments = () =>{
         type === 'feed' ? 'flex' : 'hidden'
       } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
-          <p className="text-sm text-center">Embed</p>
+          <p className="text-xs mt-1 text-center">Embed</p>
         </div>
       {/* <div
         role="presentation"

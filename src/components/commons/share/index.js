@@ -18,7 +18,7 @@ export const ShareComp = ({ videoId, type='normal'}) => {
 { type === 'profile' ?  <ShareOutline/> :
       (
       <><Share />  
-      <p className="text-sm text-center">Share</p>
+      <p className="text-xs mt-1 text-center">Share</p>
       </>)}
     </div>
   );
