@@ -254,7 +254,7 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
     </span>
      )}
 </InfiniteScroll>
-: <div className=' w-full flex justify-center p-28 items-center'>No Videos Found</div>}
+: <div className=' w-full flex justify-center p-28 text-gray-600 items-center'>No Videos Found</div>}
 </div>
 
 const showLoginFollowing = <LoginFollowing/>;

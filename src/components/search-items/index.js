@@ -173,7 +173,7 @@ const SearchItems = ({router,type})=>{
               {info.back[type]}
             <input
               onChange={onTermChange}
-              className=" w-full bg-gray-100 px-4 py-2 pl-8"
+              className=" w-full bg-gray-100 text-xs flex items-center px-4 py-3 pl-8"
               type="search"
               autoComplete="off"
               name="Search"
@@ -185,7 +185,7 @@ const SearchItems = ({router,type})=>{
             {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
             <Close />
             </button>}
-           {type === 'explore' && !showSuggestions && <div className="absolute left-0 top-2 p-4">
+           {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-2 p-4">
               <SearchBlack/>       
             </div>}
             </div>

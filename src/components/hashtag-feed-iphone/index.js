@@ -578,7 +578,7 @@ try{
                 <SwipeUp/>
                <div className="w-4 h-16 bg-white bg-opacity-20 rounded-full absolute top-1 left-1"></div>
               </div>
-              <div className="flex py-2 px-4 bg-gray text-white font-semibold mt-12">Swipe up for next video</div>
+              <div className="flex py-2 px-4 bg-gray text-white font-medium mt-12">Swipe up for next video</div>
               </div>}
 
               {<div

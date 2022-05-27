@@ -39,13 +39,13 @@ export default function VideoGallery({
 
   const noData = {
     all: <>
-      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="font-semibold text-gray-600">{t('NO_VIDEOS')}</p>
       <p className="text-center text-sm text-gray-500 my-2">
         {t('NO_VIDEOS_PUBLISHED')}
       </p>
     </>,
     PRIVATE: <>
-      <p className="font-semibold">{t('NO_VIDEOS')}</p>
+      <p className="font-semibold text-gray-600">{t('NO_VIDEOS')}</p>
       <p className="text-center text-sm text-gray-500 my-2">
         {t('NO_VIDEOS_PUBLISHED')}
       </p>
