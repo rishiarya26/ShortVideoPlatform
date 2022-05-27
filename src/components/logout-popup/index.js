@@ -34,9 +34,9 @@ const device = getItem('device-type')
     <>
       <div className="flex justify-center items-center flex-col z-1">
         <p className="  my-4 text-center px-4 pt-14"> Are you sure you want to logout ?</p>
-        <div className="flex justify-between px-6 w-1/2 py-4">
-            <div onClick={logout} className="flex font-medium">Yes</div>
-            <div onClick={()=>close()}>No</div>
+        <div className="flex justify-between px-6 py-4">
+            <div onClick={logout} className="flex font-medium cursor-pointer text-gray-600 border shadow-md border-gray-200 px-6 mx-2 py-1">Yes</div>
+            <div onClick={()=>close()} className="flex font-medium cursor-pointer text-gray-600 border shadow-md border-gray-200 px-6 mx-2 py-1">No</div>
         </div>
         
       </div>
