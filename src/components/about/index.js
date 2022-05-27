@@ -4,8 +4,15 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import StaticFooter from '../static-footer';
 import { useRouter } from "next/router";
 import Header from '../desk-header';
+import { getCanonicalUrl } from '../../utils/web';
+import { useEffect, useState } from 'react';
 
 function About() {
+  const [url, setUrl] = useState('');
+
+  useEffect(()=>{
+    setUrl(document?.location?.href);
+  },[]);
   //Desktop links
   const stores = {
     android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
@@ -27,7 +34,8 @@ function About() {
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
+          canonical: url && getCanonicalUrl(url),
         }}
       />
     <div className="h-screen  w-screen flex flex-col justify-between">

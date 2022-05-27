@@ -20,6 +20,7 @@ const LoadComp = () => (<Loader />);
 
 const TopItems = ({item, redirectTab}) =>{
     const [data, setData] = useState();
+    console.log("ITEM***",item)
 
     const router = useRouter();
 

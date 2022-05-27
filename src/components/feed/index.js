@@ -45,6 +45,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
+import { getCanonicalUrl } from '../../utils/web';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -729,6 +730,8 @@ try{
 }
 
 
+
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -740,7 +743,7 @@ try{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          // canonical: 'https://hipi.co.in/feed/[id]',
+          canonical: getCanonicalUrl && getCanonicalUrl(),
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
           //   description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',

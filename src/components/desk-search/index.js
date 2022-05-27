@@ -18,21 +18,24 @@ import fallbackUsers from '../../../public/images/users.png';
 import { trimHash } from "../../utils/string";
 
 async function search(searchTerm, setSuggestions, setLoading) {
+    // optimisedSearch.cancel();
+    // setSuggestions([]);
     /* eslint-disable no-param-reassign */
         try{
           const trimmedTerm = 
-          (searchTerm.indexOf('#') === 0 || searchTerm.indexOf('@') === 0) ? searchTerm?.substring(1) : '';
-          const response = await getSuggestions(trimmedTerm || searchTerm);
-          const originalSugg = response?.data;
-          const topResp = await getTopSearches(trimmedTerm || searchTerm);
+          (searchTerm.indexOf('#') === 0 || searchTerm.indexOf('@') === 0) ? searchTerm?.substring(1) : searchTerm;
+          const response = await getSuggestions(trimmedTerm);
+          const topResp = await getTopSearches(trimmedTerm);
+          const originalSugg = response?.data || [];
           if(response.status === 'success'){
-            topResp?.data?.items?.hashtags.map((item,id)=>{
+              console.log("OO",originalSugg, topResp)
+            topResp?.data?.items?.hashtags?.map((item,id)=>{
                 if(id < 2){
                 const hashtagSugg = { suggestionName : item.hashtag, type:'hashtag'}
                 originalSugg.push(hashtagSugg);
                 }
             })
-            topResp?.data?.items?.users.map((item,id)=>{
+            topResp?.data?.items?.users?.map((item,id)=>{
                 if(id < 2){
                 const usersSugg = { users : item, type:'users', first: id===0 ? true:false}
                 originalSugg.push(usersSugg);
@@ -48,7 +51,7 @@ async function search(searchTerm, setSuggestions, setLoading) {
           }
   }
   
-  const optimisedSearch = debounce(search, 200);
+  const optimisedSearch = debounce(search, 800);
 
 const SearchItems = ({router,type})=>{
     const [searchTerm, setSearchTerm] = useState('');
@@ -71,9 +74,10 @@ const SearchItems = ({router,type})=>{
     const onTermChange=(e)=>{ 
         if(searchTerm?.length === 0 && e?.currentTarget.value === ' '){}
         else{
-            setSuggestions({data:[]});
+            setSuggestions([]);
             setLoading(true);
-            optimisedSearch(e.currentTarget.value, setSuggestions, setLoading);
+            optimisedSearch.cancel();
+            e?.currentTarget?.value !== '' && optimisedSearch(e.currentTarget.value, setSuggestions, setLoading);
             setSearchTerm(e.currentTarget.value)
             setSuggestionListIndex(0);
         }
@@ -91,20 +95,28 @@ const SearchItems = ({router,type})=>{
        try{ 
         setShowSuggestions(false);
         if(term){
+            if(term.indexOf('#') === 0){
+                term = trimHash(term);
+                term = `%23${term}`
+            }
             router?.push(`/search?term=${term}`)
-            setSearchTerm(term);
+            // setSearchTerm(`#${term}`);
             // inputRef?.blur();
         }else{
+            if(searchTerm.indexOf('#') === 0){
+                searchTerm = trimHash(searchTerm);
+                searchTerm = `%23${searchTerm}`
+            }
             searchTerm && router?.push(`/search?term=${searchTerm}`);
         }
         setSuggestionListIndex(0);
       }catch(e){
-          console.log('issue')
+          console.log('issue with searching',e)
       }
     }
 
     const searchFromList = (e,id,value) =>{
-        setShowSuggestions(false)
+        setShowSuggestions(false);
         if(id === 'suggestions'){
             const searchHis = [...searchHistory];
             const result = searchHis.includes(value);
@@ -181,10 +193,11 @@ const SearchItems = ({router,type})=>{
       }
   };
 
-    const SuggestionsList = () =>(
-        <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-hidden flex flex-col max-h-85v" >
+    const SuggestionsList = () =>{
+        // console.log("SUG",suggestions)
+       return <div className="bg-white absolute left-0 top-16 min-w-28 shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-85v" >
         <>{suggestions?.map((suggestion,id)=>(
-            <>
+            <div key={id}>
             {suggestion?.type === 'users' ? 
             <>
             {suggestion?.first && <div className="text-sm font-semibold p-3 text-gray-500">Accounts</div>}
@@ -203,9 +216,9 @@ const SearchItems = ({router,type})=>{
             </> :  
             <div 
             ref={(el)=>(myRefs.current[id] = el)}
-            key={id} 
+            // key={id} 
             onClick={suggestion?.type === 'hashtag' ? 
-            ()=>router.push(`/hashtag/${trimHash(suggestion?.suggestionName)}`) : 
+            ()=>redirectToHashtag(trimHash(suggestion?.suggestionName)) : 
             (e)=>searchFromList(e,'suggestions',suggestion?.suggestionName)} 
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 text-sm bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
@@ -216,7 +229,7 @@ const SearchItems = ({router,type})=>{
                      <SearchArrow />
                 </div>
             </div>}
-            </>
+            </div>
         ))}
         {/* {suggestions?.hashtags?.map((suggestion,id)=>(
             <div ref={(el)=>(myRefs.current[id] = el)}
@@ -248,7 +261,7 @@ const SearchItems = ({router,type})=>{
         onClick={()=>handleSearch(searchTerm)}>{`View all results for "${searchTerm}"`}</div>
         </>
         </div>
-    ) 
+    } 
 
     return(
                 <div>

@@ -31,6 +31,7 @@ import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
+import { getCanonicalUrl } from '../../utils/web';
 
 SwiperCore.use([Mousewheel]);
 
@@ -107,8 +108,11 @@ function SearchFeed({ router }) {
   },[initialPlayStarted])
 
   const viewEventsCall = async(id, event)=>{
-    console.log("event to send", id, event)
+  try{  console.log("event to send", id, event)
    await viewEvents({id:id, event:event})
+  }catch(e){
+    console.log('issue in view events',e)
+  }
   }
 
   const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
@@ -445,7 +449,8 @@ try{
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
+          canonical: getCanonicalUrl && getCanonicalUrl(),
         }}
      />
       <>

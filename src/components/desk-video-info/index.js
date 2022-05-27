@@ -11,8 +11,8 @@ const [show, setShow] = useState(false);
 
    const router = useRouter();
    const fullName = {
-       feed : `${firstName} ${lastName}`,
-       detail : <div>{`${firstName} ${lastName}`}</div>
+       feed : `${firstName || ''} ${lastName || ''}`,
+       detail : <div>{`${firstName || ''} ${lastName || ''}`}</div>
    }
 
     // const toHashTag =(hashtag)=>{

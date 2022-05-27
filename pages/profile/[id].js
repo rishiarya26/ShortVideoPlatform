@@ -9,7 +9,7 @@ import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
 import { getItem } from '../../src/utils/cookie';
 import { localStorage } from '../../src/utils/storage';
-import { updateCampaignId, updateUtmData } from '../../src/utils/web';
+import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../../src/utils/web';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -56,7 +56,7 @@ export default function Hipi(params) {
           title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi - ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
           // image: item?.thumbnail,
           description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
-          keywords : `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`        
+          keywords : `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`,        
         }}
      />
       {/* <SeoMeta

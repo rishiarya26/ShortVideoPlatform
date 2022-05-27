@@ -127,14 +127,14 @@ return (
             <div className="flex justify-between items-center">
                <div className="flex items-center">
                   {/* <img   alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} /> */}
-                  <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
+                  <div onClick={pushToProfile} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
                    <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
                   </div>
                   <div className="flex flex-col">
                   <div className='flex items-center'>
                   <span  
                      className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <div onClick={type === 'profile' ? pushToProfile : (()=>router?.push(`/@${userName}`))} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
+                      <div onClick={pushToProfile} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
                        {userName} 
                       </div>
                      <div className='usrdeck absolute z-50 top-4 -left-16'>

@@ -37,7 +37,10 @@ export const generateUUID = persist => {
     return v.toString(16);
   });
   if (persist) {
-    setItem('guest-token',uuid,{ path: '/' });
+    let expireTime = new Date();
+    expireTime = new Date(expireTime?.getTime() +3600 * 1000 * 24 * 365 * 10);
+   
+    setItem('guest-token',uuid,{ path: '/', expires: expireTime?.toGMTString() });
   }
   return uuid;
 };

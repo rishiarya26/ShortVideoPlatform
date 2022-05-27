@@ -37,6 +37,7 @@ import { removeItem } from '../../utils/cookie';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import CircularLoader from '../commons/circular-loader';
 import CircularLoaderSearch from '../commons/circular-loader-search';
+import { getCanonicalUrl } from '../../utils/web';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -271,6 +272,7 @@ const info ={
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
+          canonical: getCanonicalUrl && getCanonicalUrl(),
         }}
       />
     <div className="flex flex-col w-full thin_bar items-center font-sans">

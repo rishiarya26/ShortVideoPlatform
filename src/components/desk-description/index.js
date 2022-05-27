@@ -26,7 +26,7 @@ const Description = ({description}) =>{
               <p key={id} className='inline-block'>
                 <span 
                  className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} 
-                 onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : item?.includes('https') && window?.open(item)}>
+                 onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : item?.includes('https') ? window?.open(item) : undefined}>
                 {item}
               </span>
               </p>

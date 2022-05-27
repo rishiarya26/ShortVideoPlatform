@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 import { withBasePath } from '../../config';
+import { getCanonicalUrl } from '../../utils/web';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import StaticFooter from '../static-footer';
 
@@ -23,7 +24,7 @@ function Home() {
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.'
+          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
         }}
       />
     <div className="h-screen  w-screen flex flex-col justify-between">

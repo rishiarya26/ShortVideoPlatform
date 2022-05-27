@@ -86,7 +86,8 @@ export default function DeskVideoGallery({
   const redirect = (item) =>{
    
 
-  try{  if(item?.indexOf('#')!==-1){
+  try{  
+      if(item?.indexOf('#')!==-1){
       const trimmedHashtag = trimHash(item);
       console.log("item",trimmedHashtag);
       window.location.href=`/hashtag/${trimmedHashtag}`;
@@ -94,7 +95,7 @@ export default function DeskVideoGallery({
     if(item?.indexOf('@')!==-1){
       const userHandle = (item);
       // console.log("item",trimmedHashtag);
-      router?.push(`/${userHandle}`);
+      window.location.href=`/${userHandle}`;
     }
   
   }catch(e){

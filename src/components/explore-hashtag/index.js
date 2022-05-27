@@ -18,6 +18,7 @@ import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { trackEvent } from '../../analytics/firebase';
+import { getCanonicalUrl } from '../../utils/web';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -93,7 +94,8 @@ function HashTag({router}) {
         data={{
           title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
-          description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`        
+          description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`,
+          canonical: getCanonicalUrl && getCanonicalUrl(),        
         }}
      />
     <div>
