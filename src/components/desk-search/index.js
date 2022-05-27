@@ -55,7 +55,7 @@ async function search(searchTerm, setSuggestions, setLoading) {
 
 const SearchItems = ({router,type})=>{
     const [searchTerm, setSearchTerm] = useState('');
-    const [suggestions, setSuggestions] = useState({data:[]});
+    const [suggestions, setSuggestions] = useState([]);
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
     const [loading, setLoading] = useState(false);
