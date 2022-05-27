@@ -17,7 +17,7 @@ function Privacy() {
           openGraph: {
             images: [
               {
-                url: hipiLogo?.src,
+                url: 'https://www.hipi.co.in/icons/hipi_logo_og.png',
                 width: 152,
                 height: 152,
                 alt: "hipi logo",
