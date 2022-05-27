@@ -5,10 +5,29 @@ import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
+import hipiLogo from '../../../public/icons/apple-icon-152x152-dunplab-manifest-17016.png'
 
 function Privacy() {
 	const router = useRouter()
   return (
+	<>  
+	      <SeoMeta
+        data={{
+          openGraph: {
+            images: [
+              {
+                url: hipiLogo?.src,
+                width: 152,
+                height: 152,
+                alt: "hipi logo",
+              }
+			],
+			type: 'image/png',
+            site_name: 'Hipi'
+          }
+        }}
+      />
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
       <div className="tray-container">
@@ -62,6 +81,7 @@ function Privacy() {
 	    </div>   
 	</div>
     </div>
+	</>
   );
 }
 
