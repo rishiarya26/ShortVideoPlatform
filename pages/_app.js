@@ -277,6 +277,14 @@ function Hipi({
       }
     }, [router.events])
 
+    const showCookies = ()=>(
+      <>
+     { setTimeout(()=>(
+        <Cookies/>
+      ),[1000])}
+      </>
+    )
+
   return (
     <>
       <Head>

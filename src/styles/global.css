@@ -752,3 +752,7 @@ color: rgb(172, 211, 205);
     min-height: 43vw;
   }
 }
+
+title:first-letter {
+  text-transform: capitalize
+}
