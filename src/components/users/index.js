@@ -62,6 +62,8 @@ function Users({
     setIsFollowing(isFollow);
   },[isFollow])
 
+
+
   // async function showPopUp(){
   //   show('', detectDeviceModal, 'extraSmall');
   //   setIsFetching(false);
@@ -288,6 +290,21 @@ function Users({
   const toShowFollowers = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=followers`))
 
   return (
+    <>
+    {/* <SeoMeta
+    data={{
+      title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
+      // image: item?.thumbnail,
+      description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
+      additionalMetaTags:[{
+        name: 'keywords',
+        content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
+      }
+    ],
+    canonical: url && getCanonicalUrl(url),
+    }}
+    
+ /> */}
     <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
@@ -356,6 +373,7 @@ function Users({
             </div>
          </div>} */}
     </div>
+    </>
   );
 }
 

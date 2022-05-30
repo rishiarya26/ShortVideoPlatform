@@ -20,6 +20,7 @@ export default function Hipi(params) {
   const [type,setType] = useState('others');
   const [item, setItem] = useState(params?.data || {});
   const [status,setStatus] = useState(params?.status === 'fail' ? 'pending' : 'success');
+  const [url, setUrl] = useState('');
   let {
     errorCode,
     message,
@@ -52,7 +53,7 @@ export default function Hipi(params) {
 
   useEffect(()=>{
     try{ 
-
+      setUrl(document?.location?.href);
       //if api fails at server side for special characters - retry call
       if(status === 'pending' && isEmptyObject(item)){
         profileApiRetry();
@@ -136,7 +137,7 @@ export default function Hipi(params) {
             content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
           }
         ],
-        canonical: getCanonicalUrl && getCanonicalUrl(params?.uri),
+        canonical: url && getCanonicalUrl(url),
         }}
         
      />

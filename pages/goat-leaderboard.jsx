@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { commonEvents } from "../src/analytics/mixpanel/events";
 import { track } from "../src/analytics";
 import * as fbq from '../src/analytics/fb-pixel'
-import { getCanonicalUrl } from "../src/utils/web";
+// import { getCanonicalUrl } from "../src/utils/web";
 
 export default function Hipi() {
   useEffect(()=>{
@@ -21,7 +21,6 @@ export default function Hipi() {
         data={{
           title: 'Hipi GOAT contest leaderboard - Singing Talent hunt.',
           description: 'Leaderboard for Hipi GOAT contest on Hipi. Top performers will get coaching sessions from Shilpa Rao and Rupali Jagga. And opportunity to perform at Finale episode of Zee Saregamapa.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
         }}
       />
     <ChooseComp mobile={<GoatMobLb/>} desktop={<GoatDeskLb/>}/>
