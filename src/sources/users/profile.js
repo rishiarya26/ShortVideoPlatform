@@ -13,6 +13,10 @@ import {
   transformSuccess as transformSuccessFollow,
   transformError as transformErrorFollow
 } from '../transform/users/follow';
+import {
+  transformSuccess as transformSuccessPopular,
+  transformError as transformErrorPopular
+} from '../transform/users/popular-profiles';
 import { localStorage } from '../../utils/storage';
 import { getSingleFeed } from '../feed/embed';
 
@@ -71,12 +75,12 @@ async function fetchUserProfileAfterLogin(id) {
 //   }
 // }
 
-async function fetchPopularUser({ lang }) {
+async function fetchPopularUser() {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/popular`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/users/popular?limit=10&offset=1`;
     response = await get(apiPath);
-    response.data.requestedWith = { lang };
+    // response.data.requestedWith = { lang };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -230,7 +234,7 @@ const [getUserFollowing] = apiMiddleWare(fetchUserFollowing, transformSuccess, t
 const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transformSuccess, transformError);
 // const [getSoundDetails] = apiMiddleWare(fetchSoundDetails, transformSuccess, transformError);
 // const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
-// const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccess, transformError);
+const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccessPopular, transformErrorPopular);
 const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
 const [toFollow] = apiMiddleWare(follow, transformSuccessFollow, transformErrorFollow, {requiresAuth : true})
 
@@ -242,7 +246,7 @@ export {
   getUserRecommendation,
   // getSoundDetails,
   // getSimilarProfile,
-  // getPopularUser,
+  getPopularUser,
   getProfileVideos,
   toFollow
 };

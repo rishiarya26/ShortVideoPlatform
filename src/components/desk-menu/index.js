@@ -1,7 +1,7 @@
 /*eslint-disable react/display-name */
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
@@ -12,6 +12,7 @@ import Tabs from '../commons/tabs/desk-feed-tab';
 import HomeRed from "../commons/svgicons/home-red";
 import FollowingRed from "../commons/svgicons/following-red";
 import { localStorage } from "../../utils/storage";
+import DeskPopularUsersList from "../desk-popular-users";
 
 const login = dynamic(
   () => import('../auth-options'),
@@ -68,9 +69,10 @@ useEffect(()=>{
         {/* <div onClick={router.push('/feed/for-you')} className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
-       
               {isLoggedIn}
-       
+        <div>
+          <DeskPopularUsersList />
+        </div>
         <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
