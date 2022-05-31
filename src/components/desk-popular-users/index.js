@@ -31,22 +31,24 @@ const DeskPopularUsersList = () =>{
  
     return(
         <>
-        <div>Popular Users</div>
+        <div className="flex items-center font-medium text-sm text-gray-600 my-2">Popular Users</div>
         {loading ?
          <div>Loading....</div>
         : items?.map((item,id)=>(
-            <div onClick={()=>pushToProfile(item?.userHandle)} className='flex flex-col' key={id}>
-             <Img data={item?.profilepicimageurl} fallback={fallbackUsers?.src} />
-             <div className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <div  className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
+            <div onClick={()=>pushToProfile(item?.userHandle)} className='flex cursor-pointer items-center hover:bg-gray-100 py-2 pr-4 mr-2' key={id}>
+             <div className=" w-8 flex h-8 bg-gray-300 relative rounded-full overflow-hidden"><Img data={item?.profilepicimageurl} fallback={fallbackUsers?.src} /></div>
+             <div className="flex flex-col ml-2">
+             <div className="usrhvr flex flex-col relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
+                      <div  className="flex items-center text-sm text-gray-800 font-semibold cursor-pointer">
                        {item?.userName} 
                       </div>
                      <div className='usrdeck absolute z-50 top-4 -left-16'>
                      <DeskHoverInfo id={item?.userName}/>
                      </div>  
             </div>
-             <div> {`${item?.firstName || ''} ${item?.lastName || ''}`} </div>
+            <div className="flex items-center text-xs text-gray-600 cursor-pointer font-light"> {`${item?.firstName || ''} ${item?.lastName || ''}`} </div>
             </div>
+          </div>
           ))}
         </>
     )
