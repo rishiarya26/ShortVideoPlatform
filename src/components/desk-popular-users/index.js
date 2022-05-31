@@ -42,8 +42,6 @@ const DeskPopularUsersList = () =>{
          <div className="flex flex-col justify-between pl-2">
          <p className="h-2 w-24 mt-2 bg-gray-200"></p>
            <p className="h-2 w-24 mt-2 bg-gray-200"></p>
-           
-           
        </div>
      </div></div>
         : items?.map((item,id)=>(
