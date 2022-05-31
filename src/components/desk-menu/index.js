@@ -62,7 +62,7 @@ useEffect(()=>{
 },[tokens]);
 
     return(
-        <div className={`${width} flex fixed max-h-85v overflow-y-scroll mt-24 flex-col p-4 pt-0 relative`}>
+        <div className={`${width} flex fixed max-h-85v overflow-y-scroll hover:thin_bar flex-col p-4 pt-0 z-1 relative`}>
          
         <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>

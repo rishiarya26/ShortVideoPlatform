@@ -36,7 +36,7 @@ const DeskPopularUsersList = () =>{
         {loading ?
          <div>  
            <div  className="flex py-2 pl-2 pr-4 mr-2">
-         <div className=" w-16 flex h-16 bg-gray-200 relative rounded-full overflow-hidden" >
+         <div className=" w-8 flex h-8 bg-gray-200 relative rounded-full overflow-hidden" >
          
          </div>
          <div className="flex flex-col justify-between pl-2">
@@ -47,18 +47,18 @@ const DeskPopularUsersList = () =>{
        </div>
      </div></div>
         : items?.map((item,id)=>(
-           id<7 && 
+           id<15 && 
            <div onClick={()=>pushToProfile(item?.userHandle)} className='flex cursor-pointer items-center hover:bg-gray-100 py-2 pr-4 mr-2' key={id}>
              <div className=" w-8 flex h-8 bg-gray-300 relative rounded-full overflow-hidden"><Img data={item?.profilepicimageurl} fallback={fallbackUsers?.src} /></div>
              <div className="flex flex-col ml-2">
-             <div className="usrhvr flex flex-col relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <div  className="flex items-center text-sm text-gray-800 font-semibold cursor-pointer">
+             <div className="flex flex-col relative font-semibold text-base text-gray-700 cursor-pointer">
+                      <div  className="flex items-center text-sm text-gray-800 font-bold cursor-pointer">
                        {item?.userName} 
                        <span className='ml-1'>{item?.tag === 'Verified' ? <Verified/> : ''}</span>
                       </div>
-                     <div className='usrdeck absolute z-50 top-4 -left-16'>
+                     {/* <div className='usrdeck absolute z-50 top-4 -left-16'>
                      <DeskHoverInfo id={item?.userName}/>
-                     </div>  
+                     </div>   */}
             </div>
             <div className="flex items-center text-xs text-gray-600 cursor-pointer font-light"> {`${item?.firstName || ''} ${item?.lastName || ''}`} </div>
             </div>

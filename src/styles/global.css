@@ -444,6 +444,9 @@ span.swiper-pagination-bullet {
 .z-9{
   z-index: 9;
 }
+.z-1{
+  z-index: 1;
+}
 
  @keyframes whirlpool {
   
