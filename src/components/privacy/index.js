@@ -20,6 +20,7 @@ function Privacy() {
 	},[])
   return (
 	<>  
+	
 	      <SeoMeta
         data={{
 			additionalMetaTags:[{
