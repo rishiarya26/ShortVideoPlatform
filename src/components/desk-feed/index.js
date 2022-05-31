@@ -302,7 +302,7 @@ const info ={
        </div>}
         <Header doReload={doReload} typeParam={id}/>
         <div className="flex mt-2 bg-white justify-between relative thin_bar w-feed">
-          <div className='w-feed-menu menu-sm'>
+          <div className='w-feed-menu menu-sm pt-24'>
           <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
             { fetchState === 'success' ?
