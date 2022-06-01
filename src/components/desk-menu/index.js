@@ -70,7 +70,7 @@ useEffect(()=>{
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
               {isLoggedIn}
-        <div className="pb-2 border-b border-gray-200">
+        <div className="pb-2 border-b border-gray-200 ">
           <DeskPopularUsersList />
         </div>
         <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
