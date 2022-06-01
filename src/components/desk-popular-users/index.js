@@ -32,7 +32,7 @@ const DeskPopularUsersList = () =>{
  
     return(
         <>
-        {items?.length>0 && <div className="flex items-center font-medium text-sm text-gray-600 my-2">Popular Users</div>}
+        {items?.length>0 && <div className="flex items-center font-medium text-sm text-gray-600 mb-2 mt-4">Popular Users</div>}
         {loading ?
          <div>  
            <div  className="flex py-2 pl-2 pr-4 mr-2">
@@ -45,7 +45,7 @@ const DeskPopularUsersList = () =>{
        </div>
      </div></div>
         : items?.map((item,id)=>(
-           id<15 && 
+           id<6 && 
            <div onClick={()=>pushToProfile(item?.userHandle)} className='flex cursor-pointer items-center hover:bg-gray-100 py-2 pr-4 mr-2' key={id}>
              <div className=" w-8 flex h-8 bg-gray-300 relative rounded-full overflow-hidden"><Img data={item?.profilepicimageurl} fallback={fallbackUsers?.src} /></div>
              <div className="flex flex-col ml-2">

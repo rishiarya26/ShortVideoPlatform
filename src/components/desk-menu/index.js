@@ -62,7 +62,7 @@ useEffect(()=>{
 },[tokens]);
 
     return(
-        <div className={`${width} flex fixed max-h-85v overflow-y-scroll hover:thin_bar flex-col p-4 pt-0 z-1 relative`}>
+        <div className={`${width} flex fixed max-h-85v  hover:thin_bar flex-col p-4 pt-0 z-1 relative`}>
          
         <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>
@@ -70,7 +70,7 @@ useEffect(()=>{
         <div onClick={router.push('/feed/following')} className='flex items-center'><Following/><p className="font-semibold text-lg py-2 pl-3">Following </p></div> */}
         </div>
               {isLoggedIn}
-        <div>
+        <div className="pb-2 border-b border-gray-200">
           <DeskPopularUsersList />
         </div>
         <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
