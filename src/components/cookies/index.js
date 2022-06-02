@@ -13,11 +13,12 @@ setItem('cookie-agreed','yes');
 
 useEffect(()=>{
    setDelayComp(true);
-},[2000])
+},[6000])
 const router = useRouter();
 return (
    <>
 {delayComp && <div className={`w-full h-full ${close ? 'hidden' : 'flex'} justify-center cookie_layout items-center z-20 bg-black bg-opacity-70 fixed top-0 left-0 overflow-hidden p-6`}>
+
 <div className="cookie_wrapper w-full max-h-full bg-white flex flex-col items-center justify-between overflow-scroll">
    <div className="p-8 py-8 flex flex-col justify-center">
       <p className=" h1_cookie text-3xl font-medium text-purple-800 text-center mb-4">Cookie consent</p>
@@ -31,6 +32,7 @@ return (
       <div className="border-2 border-gray-500 p-2 px-6 rounded-full text-base mt-4">Decline all cookies</div>
    </div>
 </div>
+
 </div>}
 </>
 );
