@@ -40,7 +40,7 @@ function StaticFooter() {
     <div className='flex w-full flex-col'>
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300 border-b border-gray-500">
         <div className='flex flex-col justify-center items-center'>
-            <div className='text-xl font-semibold text-gray-100 py-2'>
+            <div className='text-xl font-semibold text-gray-100 pb-2 pt-4'>
               Download now
             </div>
            

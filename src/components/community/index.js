@@ -212,6 +212,7 @@ const router = useRouter();
 	<p data-renderer-start-pos="14537"><u data-renderer-mark="true">Do not post Content in any locations where you do not have permission to do so, such as inside religious places or on private property.&nbsp;</u></p>
 </div>
 	</div>
+	<StaticFooter/>
     </div>
   );
 }
