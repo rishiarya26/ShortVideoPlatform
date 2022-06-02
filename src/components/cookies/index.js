@@ -10,7 +10,11 @@ const cookiesAccepted = ()=>{
 setClose(true);
 setItem('cookie-agreed','yes');
 }
-
+const cookiesDecline = ()=>{
+   setClose(true);
+   setItem('cookie-agreed','yes');
+   }
+   
 useEffect(()=>{
    setTimeout(()=>{
       setDelayComp(true);
@@ -33,7 +37,7 @@ return (
    </div>
    <div className="button_cook bg-gray-100 w-full p-4 py-8 flex flex-col items-center">
       <button onClick={cookiesAccepted} className="border-2 border-gray-500 p-2 px-6 rounded-full text-base cursor-pointer">Accept all cookies</button>
-      <div className="border-2 border-gray-500 p-2 px-6 rounded-full text-base mt-4">Decline all cookies</div>
+      <div onClick={cookiesDecline} className="border-2 cursor-pointer border-gray-500 p-2 px-6 rounded-full text-base mt-4">Decline all cookies</div>
    </div>
 </div>
 
