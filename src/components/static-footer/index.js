@@ -2,6 +2,18 @@
  /*eslint-disable @next/next/no-html-link-for-pages*/
 import { withBasePath } from '../../config';
 import { useRouter } from 'next/router';
+import Qr from '../commons/svgicons/qr';
+import dynamic from 'next/dynamic';
+import useDrawer from '../../hooks/use-drawer';
+
+const DeskQr = dynamic(
+    () => import('../desk-qr-code'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
+
 
 function StaticFooter() {
 
@@ -23,7 +35,7 @@ function StaticFooter() {
     const onStoreRedirect =(device)=>{
       device && (window?.open(`${stores[device]}`));
     }
-
+    const {show} = useDrawer();
   return (
     <div className='flex w-full flex-col'>
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300 border-b border-gray-500">
@@ -33,9 +45,9 @@ function StaticFooter() {
             </div>
            
 <div className="flex justify-center w-1/2 items-center px-10 mt-6 mb-6">
-        <div className='flex px-4 py-2 border border-gray-100 mx-4 rounded'>qr code</div>
-            <div onClick={()=>onStoreRedirect('android')} className=" w-32 mx-4"> <img className="cursor-pointer " src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')} className=" w-32 mx-4"><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+        <div className='flex px-4 py-1.5 border border-gray-300 hover:border-gray-200 cursor-pointer mx-4 items-center rounded' onClick={()=>show('Download App',DeskQr,'broad')}> <Qr/> <p className='max-w-max ml-1 text-xs'>QR CODE</p></div>
+            <div onClick={()=>onStoreRedirect('android')} className=" w-32 mx-4"> <img className="cursor-pointer " src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')} className=" w-32 mx-2"><img src={withBasePath('icons/app_store_2.png')} className="cursor-pointer" alt="hipi logo" /> </div>
           </div>
         </div>
     </div>
