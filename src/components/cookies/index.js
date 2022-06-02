@@ -12,8 +12,12 @@ setItem('cookie-agreed','yes');
 }
 
 useEffect(()=>{
-   setDelayComp(true);
-},[6000])
+   setTimeout(()=>{
+      setDelayComp(true);
+      console.log('timeout')
+   },[10000])
+},[])
+
 const router = useRouter();
 return (
    <>
