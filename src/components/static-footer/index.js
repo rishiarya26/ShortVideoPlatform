@@ -12,24 +12,53 @@ function StaticFooter() {
     twitter : 'https://twitter.com/HiPiOfficialApp',
     instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en'
   }
+    //Desktop links
+    const stores = {
+      android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+      ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
+    };
+  
+    // const {close} = useDrawer();
+  
+    const onStoreRedirect =(device)=>{
+      device && (window?.open(`${stores[device]}`));
+    }
 
   return (
+    <div className='flex w-full flex-col'>
+    <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300 border-b border-gray-500">
+        <div className='flex flex-col justify-center items-center'>
+            <div className='text-xl font-semibold text-gray-100 py-2'>
+              Download now
+            </div>
+           
+<div className="flex justify-center w-1/2 items-center px-10 mt-6 mb-6">
+        <div className='flex px-4 py-2 border border-gray-100 mx-4 rounded'>qr code</div>
+            <div onClick={()=>onStoreRedirect('android')} className=" w-32 mx-4"> <img className="cursor-pointer " src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')} className=" w-32 mx-4"><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+          </div>
+        </div>
+    </div>
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
-        <div className="flex w-full text-sm">
-          {/* <div className="flex w-1/2">
-            <a href="/community" className="px-2 cursor-pointer">Community Guidelines</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="/terms" className="px-2 cursor-pointer">Terms of Use</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
-          </div> */}
-          <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
+        <div className="flex w-full text-xs justify-between py-4">
+        <div className="flex flex-col">
+          <div className="flex text-gray-400">
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
+          </div> 
+          <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
           <p>Copyright © 2022. All rights reserved.</p>
         </div>
-          <div className="flex justify-end items-center w-1/2">
-            <a>
-              <p className="mx-4 cursor-pointer" onClick={()=>router.push('/brand-assets')} >Hipi Brand Assets</p>
-            </a>  
+        </div>
+          <div className="flex justify-end items-center w-1/5">
+            
             <a href={links.facebook} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M14 0H2C0.9005 0 0 0.9005 0 2V14C0 15.1005 0.9005 15.999 1.999 15.999H8.068V10.262H6.1515V7.7635H8.068V6.5115C8.068 4.581 9.493 3.0695 11.3125 3.0695H13.078V5.892H11.4975C11.0845 5.892 10.9635 6.1295 10.9635 6.4565V7.7625H13.078V10.262H10.9635V16H13.999C15.0995 16 15.998 15.1005 15.998 14.001V2C16 0.9005 15.1005 0 14 0Z" fill="white" />
@@ -60,6 +89,7 @@ function StaticFooter() {
         </div>
         
 
+      </div>
       </div>
   );
 }

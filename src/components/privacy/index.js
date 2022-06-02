@@ -97,6 +97,7 @@ function Privacy() {
 			<p>ZEEL is a company based in India. By browsing/using ZEE5, You hereby acknowledge that ZEEL is not responsible or liable in any manner to comply with any local laws of Your territory except India with respect to ZEE5.</p>
 	    </div>   
 	</div>
+	<StaticFooter/>
     </div>
 	</>
   );
