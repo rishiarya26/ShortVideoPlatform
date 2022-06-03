@@ -16,7 +16,7 @@ import { GOOGLE_ONE_TAP } from '../src/constants';
 import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
-import Cookies from '../src/components/cookies'
+// import Cookies from '../src/components/cookies'
 import { init } from '../src/get-social';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
@@ -277,13 +277,13 @@ function Hipi({
       }
     }, [router.events])
 
-    const showCookies = ()=>(
-      <>
-     { setTimeout(()=>(
-        <Cookies/>
-      ),[1000])}
-      </>
-    )
+    // const showCookies = ()=>(
+    //   <>
+    //  { setTimeout(()=>(
+    //     <Cookies/>
+    //   ),[1000])}
+    //   </>
+    // )
 
   return (
     <>
@@ -317,7 +317,7 @@ function Hipi({
           `,
         }}
       />
-                      {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
+                      {/* {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>} */}
                       <Component {...pageProps} />
                     </Layout>
                   </RouteStateProvider>
