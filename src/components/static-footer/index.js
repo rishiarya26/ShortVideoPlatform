@@ -1,10 +1,12 @@
 /*eslint-disable @next/next/no-img-element */
  /*eslint-disable @next/next/no-html-link-for-pages*/
+ /*eslint-disable react/display-name */
 import { withBasePath } from '../../config';
 import { useRouter } from 'next/router';
 import Qr from '../commons/svgicons/qr';
 import dynamic from 'next/dynamic';
 import useDrawer from '../../hooks/use-drawer';
+import Youtube from '../commons/svgicons/youtube';
 
 const DeskQr = dynamic(
     () => import('../desk-qr-code'),
@@ -22,7 +24,8 @@ function StaticFooter() {
   const links={
     facebook : 'https://www.facebook.com/HiPiOfficialApp',
     twitter : 'https://twitter.com/HiPiOfficialApp',
-    instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en'
+    instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
+    youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ'
   }
     //Desktop links
     const stores = {
@@ -85,6 +88,9 @@ function StaticFooter() {
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M16 1.5377C15.4111 1.79864 14.7792 1.97561 14.1153 2.05462C14.7932 1.64868 15.3121 1.00481 15.5581 0.239948C14.9222 0.61587 14.2203 0.888838 13.4724 1.03681C12.8736 0.397935 12.0217 0 11.0769 0C9.26422 0 7.7945 1.46973 7.7945 3.28139C7.7945 3.53833 7.82349 3.78929 7.87949 4.02926C5.15201 3.89227 2.73347 2.58552 1.11477 0.59987C0.831818 1.08379 0.670851 1.64766 0.670851 2.24957C0.670851 3.38837 1.25075 4.39318 2.13059 4.98105C1.59268 4.96307 1.08677 4.81509 0.64387 4.56913V4.61013C0.64387 6.19983 1.77566 7.52657 3.27637 7.82854C3.00142 7.90252 2.71148 7.94352 2.41153 7.94352C2.19959 7.94352 1.99462 7.92252 1.79365 7.88252C2.21156 9.18728 3.42335 10.1361 4.85909 10.1621C3.73629 11.042 2.32055 11.5649 0.782851 11.5649C0.517909 11.5649 0.256942 11.5489 0 11.5199C1.45273 12.4527 3.17742 12.9966 5.03107 12.9966C11.0689 12.9966 14.3693 7.99552 14.3693 3.65833L14.3583 3.23342C15.0032 2.77347 15.5611 2.19559 16 1.5377Z" fill="white" />
               </svg>
+            </a>
+            <a href={links.youtube} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
+                <Youtube/>
             </a>
             {/* <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
