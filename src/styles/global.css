@@ -195,6 +195,19 @@ img{
   background-color: darkgrey;
   /* outline: 1px solid slategrey; */
 }
+
+.menu_bar::-webkit-scrollbar {
+	width: 2px;
+  transition: color .3s ease;
+}
+.menu_bar::-webkit-scrollbar-track {
+	background-color: rgb(255, 255, 255);
+	-webkit-border-radius: 1px;
+}
+.menu_bar::-webkit-scrollbar-thumb {
+	background-color: rgb(242 242 242);
+	-webkit-border-radius: 4px;
+}
 .login_pop{
   min-width: 472px;
 }

@@ -1,7 +1,21 @@
 /*eslint-disable @next/next/no-img-element */
  /*eslint-disable @next/next/no-html-link-for-pages*/
+ /*eslint-disable react/display-name */
 import { withBasePath } from '../../config';
 import { useRouter } from 'next/router';
+import Qr from '../commons/svgicons/qr';
+import dynamic from 'next/dynamic';
+import useDrawer from '../../hooks/use-drawer';
+import Youtube from '../commons/svgicons/youtube';
+
+const DeskQr = dynamic(
+    () => import('../desk-qr-code'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
+
 
 function StaticFooter() {
 
@@ -10,26 +24,56 @@ function StaticFooter() {
   const links={
     facebook : 'https://www.facebook.com/HiPiOfficialApp',
     twitter : 'https://twitter.com/HiPiOfficialApp',
-    instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en'
+    instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
+    youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ'
   }
-
+    //Desktop links
+    const stores = {
+      android: 'https://play.google.com/store/apps/details?id=com.zee5.hipi',
+      ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
+    };
+  
+    // const {close} = useDrawer();
+  
+    const onStoreRedirect =(device)=>{
+      device && (window?.open(`${stores[device]}`));
+    }
+    const {show} = useDrawer();
   return (
+    <div className='flex w-full flex-col'>
+    <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300 border-b border-gray-500">
+        <div className='flex flex-col justify-center items-center'>
+            <div className='text-xl font-semibold text-gray-100 pb-2 pt-4'>
+              Download now
+            </div>
+           
+<div className="flex justify-center w-1/2 items-center px-10 mt-6 mb-6">
+        <div className='flex px-4 py-1.5 border border-gray-300 hover:border-gray-200 cursor-pointer mx-4 items-center rounded' onClick={()=>show('Download App',DeskQr,'broad')}> <Qr/> <p className='max-w-max ml-1 text-xs'>QR CODE</p></div>
+            <div onClick={()=>onStoreRedirect('android')} className=" w-32 mx-4"> <img className="cursor-pointer " src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')} className=" w-32 mx-2"><img src={withBasePath('icons/app_store_2.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+          </div>
+        </div>
+    </div>
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
-        <div className="flex w-full text-sm">
-          {/* <div className="flex w-1/2">
-            <a href="/community" className="px-2 cursor-pointer">Community Guidelines</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="/terms" className="px-2 cursor-pointer">Terms of Use</a>
-            <p className="text-xs leading-5 text-gray-500">|</p>
-            <a href="/privacy" className="px-2 cursor-pointer">Community Centre</a>
-          </div> */}
-          <div className="flex w-full text-gray-400 text-xs items-center w-1/2">
+        <div className="flex w-full text-xs justify-between py-4">
+        <div className="flex flex-col">
+          <div className="flex text-gray-400">
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
+          <p className="text-xs leading-5 text-gray-500">|</p>
+          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
+          </div> 
+          <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
           <p>Copyright © 2022. All rights reserved.</p>
         </div>
-          <div className="flex justify-end items-center w-1/2">
-            <a>
-              <p className="mx-4 cursor-pointer" onClick={()=>router.push('/brand-assets')} >Hipi Brand Assets</p>
-            </a>  
+        </div>
+          <div className="flex justify-end items-center w-1/5">
+            
             <a href={links.facebook} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M14 0H2C0.9005 0 0 0.9005 0 2V14C0 15.1005 0.9005 15.999 1.999 15.999H8.068V10.262H6.1515V7.7635H8.068V6.5115C8.068 4.581 9.493 3.0695 11.3125 3.0695H13.078V5.892H11.4975C11.0845 5.892 10.9635 6.1295 10.9635 6.4565V7.7625H13.078V10.262H10.9635V16H13.999C15.0995 16 15.998 15.1005 15.998 14.001V2C16 0.9005 15.1005 0 14 0Z" fill="white" />
@@ -44,6 +88,9 @@ function StaticFooter() {
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M16 1.5377C15.4111 1.79864 14.7792 1.97561 14.1153 2.05462C14.7932 1.64868 15.3121 1.00481 15.5581 0.239948C14.9222 0.61587 14.2203 0.888838 13.4724 1.03681C12.8736 0.397935 12.0217 0 11.0769 0C9.26422 0 7.7945 1.46973 7.7945 3.28139C7.7945 3.53833 7.82349 3.78929 7.87949 4.02926C5.15201 3.89227 2.73347 2.58552 1.11477 0.59987C0.831818 1.08379 0.670851 1.64766 0.670851 2.24957C0.670851 3.38837 1.25075 4.39318 2.13059 4.98105C1.59268 4.96307 1.08677 4.81509 0.64387 4.56913V4.61013C0.64387 6.19983 1.77566 7.52657 3.27637 7.82854C3.00142 7.90252 2.71148 7.94352 2.41153 7.94352C2.19959 7.94352 1.99462 7.92252 1.79365 7.88252C2.21156 9.18728 3.42335 10.1361 4.85909 10.1621C3.73629 11.042 2.32055 11.5649 0.782851 11.5649C0.517909 11.5649 0.256942 11.5489 0 11.5199C1.45273 12.4527 3.17742 12.9966 5.03107 12.9966C11.0689 12.9966 14.3693 7.99552 14.3693 3.65833L14.3583 3.23342C15.0032 2.77347 15.5611 2.19559 16 1.5377Z" fill="white" />
               </svg>
+            </a>
+            <a href={links.youtube} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
+                <Youtube/>
             </a>
             {/* <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
               <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
@@ -60,6 +107,7 @@ function StaticFooter() {
         </div>
         
 
+      </div>
       </div>
   );
 }
