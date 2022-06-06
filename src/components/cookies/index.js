@@ -19,7 +19,7 @@ useEffect(()=>{
    setTimeout(()=>{
       setDelayComp(true);
       console.log('timeout')
-   },[10000])
+   },[5000])
 },[])
 
 const router = useRouter();

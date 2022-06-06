@@ -182,6 +182,9 @@ return (
         :
         <video
          id={index}
+         onContextMenu={(e)=>{
+            e.preventDefault();
+            return false}}
          playsInline
          muted={muted}
          autoPlay

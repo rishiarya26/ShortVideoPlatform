@@ -95,7 +95,7 @@ function HashTag({router}) {
           title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
           description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`,
-          canonical: getCanonicalUrl && getCanonicalUrl(),        
+          canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
         }}
      />
     <div>

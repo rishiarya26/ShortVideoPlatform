@@ -45,7 +45,8 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl } from '../../utils/web';
+import { getCanonicalUrl, getUrl } from '../../utils/web';
+import { getURL } from 'next/dist/next-server/lib/utils';
 // import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
@@ -130,6 +131,8 @@ function Feed({ router }) {
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
  const {show} = useDrawer();
+
+ useEffect(()=>{console.log("router",getURL())},[])
 
   const onDataFetched = data => {
     if(data?.data?.length > 0){
@@ -744,30 +747,20 @@ try{
           // image: item?.thumbnail,
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
           canonical: getCanonicalUrl && getCanonicalUrl(),
-          // openGraph: {
-          //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
-          //   description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',
-          //   url: hostname || '',
-          //   images: [
-          //     {
-          //       url: item?.thumbnail,
-          //       width: 800,
-          //       height: 600,
-          //       alt: item?.music_title
-          //     },
-          //     { url: item?.userProfilePicUrl }
-          //   ],
-          //   type: 'video.movie',
-          //   video: {
-          //     actors: [
-          //       {
-          //         role: item?.userName
-          //       }
-          //     ],
-          //     tag: item?.genre
-          //   },
-          //   site_name: 'HiPi'
-          // }
+          openGraph: {
+            title: 'HIPI.CO.IN',
+            description: 'www.hipi.co.in',
+            url: getUrl(),
+            images: [
+              {
+                url: videoId ? items?.[0]?.thumbnail : undefined,
+                width: 800,
+                height: 600,
+                alt: ''
+              }
+            ],
+            site_name: 'Hipi'
+          }
         }}
       />
       {/* <VideoJsonLd
