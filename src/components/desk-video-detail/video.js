@@ -66,6 +66,10 @@ const Video = ({url, firstFrame})=>{
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           autoPlay
+          onContextMenu={(e)=>{
+            e.preventDefault();
+            return false}}
+         controlsList="nodownload"
           playsInline
           key={url}
           onTimeUpdate={handleUpdateSeekbar}

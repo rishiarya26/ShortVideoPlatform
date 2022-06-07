@@ -67,7 +67,7 @@ const redirectToFeed = ()=>{
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
    <div className="w-3/4 w-feed h-16 flex bg-white items-center px-6 justify-between">
       <div onClick={typeParam === 'for-you' ? (doReload && (()=>doReload())) : redirectToFeed} className="w-14 cursor-pointer">
-      <img  src={withBasePath('icons/Logo_hipi.png')} />
+      <img alt="hipi logo"  src={withBasePath('icons/Logo_hipi.png')} />
       </div>
      <div>
         <DeskSearch type={searchType}/>

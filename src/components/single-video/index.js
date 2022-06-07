@@ -187,6 +187,10 @@ export default function SingleVideo(props){
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         // autoPlay
+        onContextMenu={(e)=>{
+          e.preventDefault();
+          return false}}
+       controlsList="nodownload"
         playsInline
         key={props.url}
         onTimeUpdate={handleUpdateSeekbar}
