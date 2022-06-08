@@ -13,6 +13,11 @@ import HomeRed from "../commons/svgicons/home-red";
 import FollowingRed from "../commons/svgicons/following-red";
 import { localStorage } from "../../utils/storage";
 import DeskPopularUsersList from "../desk-popular-users";
+import Fb from "../commons/svgicons/facebook-gray";
+import Instagram from "../commons/svgicons/instagram-gray";
+import TwitterW from "../commons/svgicons/twitter-white";
+import Youtube from "../commons/svgicons/youtube-gray";
+import TwitterG from "../commons/svgicons/twitter-gray";
 
 const login = dynamic(
   () => import('../auth-options'),
@@ -21,6 +26,13 @@ const login = dynamic(
     ssr: false
   }
 );
+
+const links={
+  facebook : 'https://www.facebook.com/HiPiOfficialApp',
+  twitter : 'https://twitter.com/HiPiOfficialApp',
+  instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
+  youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ'
+}
 
 const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
     const {show} = useDrawer();
@@ -62,7 +74,7 @@ useEffect(()=>{
 },[tokens]);
 
     return(
-        <div className={`${width} flex fixed max-h-85v  menu_bar hover:overflow-y-scroll flex-col p-4 pt-0 z-1 relative`}>
+        <div className={`${width} flex fixed max-h-85v menu_bar overflow-y-scroll flex-col p-4 pt-0 z-1 relative`}>
          
         <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>
@@ -79,6 +91,20 @@ useEffect(()=>{
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
+        </div>
+        <div className="flex py-4 flex-wrap items-center sm-menu">
+              <a target="_blank" href={links.facebook}  className="pr-4" rel="noreferrer">
+                <Fb/>
+              </a>
+              <a target="_blank" href={links.instagram} className="pr-4" rel="noreferrer">
+                <Instagram/>
+              </a>
+              <a target="_blank" href={links.twitter} className="pr-4" rel="noreferrer">
+                <TwitterG/>
+            </a>
+              <a target="_blank" href={links.youtube} className="pr-4" rel="noreferrer">
+                <Youtube/>
+              </a>
         </div>
         {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
         

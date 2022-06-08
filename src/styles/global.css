@@ -196,7 +196,7 @@ img{
   /* outline: 1px solid slategrey; */
 }
 
-.menu_bar::-webkit-scrollbar {
+.menu_bar:hover::-webkit-scrollbar {
 	width: 2px;
   transition: color .3s ease;
 }
