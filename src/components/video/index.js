@@ -122,6 +122,10 @@ function Video(props) {
 
    const selectVideoPlayer = {
     'multi-player-muted' : <video
+    onContextMenu={(e)=>{
+      e.preventDefault();
+      return false}}
+   controlsList="nodownload"
       playsInline
       muted={props?.muted ? true : false}
       autoPlay
@@ -147,6 +151,10 @@ function Video(props) {
       /> 
       </video>,
        'multi-player-non-muted' : <video
+       onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
        playsInline
       //  muted={props.muted ? true : false}
       //  autoPlay
@@ -173,6 +181,10 @@ function Video(props) {
        </video>,
       'single-player' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         playsInline
       //   muted={props.muted ? true : false}
         autoPlay
@@ -202,6 +214,10 @@ function Video(props) {
         <img className="h-screen" src={firstFrame}></img>,
         'single-player-muted' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         playsInline
         muted={props.muted ? true : false}
         autoPlay
