@@ -256,6 +256,7 @@ function Feed({ router }) {
       shopContent.data = response?.data;
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
+      shopContent.adData = response?.adData;
     } catch (e) {
       isShoppable = false;
     }
@@ -634,6 +635,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       description={item?.content_description}
                       onCloseChamboard={onCloseChamboard}
                       setClose={setClose}
+                      adData={shop?.adData}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
@@ -731,9 +733,6 @@ try{
   console.log("final onelink",link);
   window?.open(link);
 }
-
-
-
 
   return (
     <ComponentStateHandler

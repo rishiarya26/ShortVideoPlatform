@@ -2,9 +2,10 @@ import { useState } from "react";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 import fallbackImg from '../../../../public/images/fallback-charms.png'
+import CardRibbon from "../../card-ribbon";
 
-const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index}) =>{
-    const [show, setShow] = useState(false);
+const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index,shopNameImg,ribbonData}) =>{
+    const [show, setShow] = useState(false);  
     return(
     <>
            {/* Card div */}
@@ -21,6 +22,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
             </div>
            
            <div className="flex relative w-full">
+           <CardRibbon ribbonData={ribbonData}/>
                <div className="flex w-1/2">
                {thumbnail && <Img data={thumbnail}  fallback={fallbackImg?.src}/> }
                </div>
@@ -44,10 +46,10 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                     </button>
                             {show && <p className="pt-1">{title && title}</p>}
                             </div>}
-  {(thumbnail && thumbnailProduct) && <div className="flex justify-between ites-center w-full">
+  {(thumbnail && thumbnailProduct) && <div className=" pt-2">
                         <div className="flex items-center">
-                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
-                        </div>
+                        {shopNameImg  ?<div className="max-h-12 ad_logo"> <Img data={shopNameImg}/> </div>:
+                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>}                        </div>
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">
                             <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>

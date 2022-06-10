@@ -1,56 +1,26 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/display-name */
-import { useCallback, useEffect, useRef, useState, createRef } from 'react';
-import DeskVideo from '../desk-video';
+import { useEffect, useState, createRef } from 'react';
 import Error from './error';
 import Loading from './loader';
 import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
-import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
-import CloseSolid from "../commons/svgicons/close-solid";
-import Search from "../commons/svgicons/search";
-import { withBasePath } from '../../config';
 import useAuth from '../../hooks/use-auth';
-import {FixedSizeList} from "react-window"
 import { withRouter } from 'next/router';
-import Card from '../desktop/card'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../desk-video';
-import Mute from "../commons/svgicons/mute";
-import MusicBlack from "../commons/svgicons/music-black";
-import Comment from "../commons/svgicons/comment-black"
-import Like from "../commons/svgicons/like-black";
-import Share from "../commons/svgicons/share-black";
-import dynamic from 'next/dynamic';
-import useDrawer from '../../hooks/use-drawer';
 import { localStorage } from '../../utils/storage';
-import Refresh from '../commons/svgicons/refresh';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Header from '../desk-header';
-import SideBar from '../desk-menu';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
-import Top from '../commons/svgicons/top'
 import LoginFollowing from '../desk-login-following';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { removeItem } from '../../utils/cookie';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
-import CircularLoader from '../commons/circular-loader';
 import CircularLoaderSearch from '../commons/circular-loader-search';
 import { getCanonicalUrl, getUrl } from '../../utils/web';
-
-SwiperCore?.use([Mousewheel]);
+import usePreviousValue from '../../hooks/use-previous';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
-
-const DeskDownloadApp = dynamic(
-  () => import('../desk-download-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
  function DeskFeed({ router }) {
   const [items, setItems] = useState([]);
@@ -63,17 +33,15 @@ const DeskDownloadApp = dynamic(
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [retry, setRetry] = useState(false);
   const [reload, setReload] = useState(false);
-  // const [tokens, setTokens] = useState();
-  const tokens = localStorage.get('tokens') || null;
-  // const [id, setId] = useState('for-you');
+  const [tokens, setTokens] = useState(localStorage.get('tokens') || false);
 
-  let { id = 'for-you' } = router?.query;
-  console.log(id)
+  const preTokensValue = usePreviousValue({tokens});
+  const tokensPresent = localStorage.get('tokens') || null;
+
+  let { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
-
-  const {show} = useDrawer();
 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});
@@ -84,18 +52,17 @@ const DeskDownloadApp = dynamic(
   useEffect(()=>{console.log("items changed to - ",items)},[items])
 
   useEffect(()=>{
-
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
-    // setId(router?.query?.id);
-    // getInitialData();
   },[])
 
   useEffect(()=>{
+   if(id){ 
     setItems([]);
     setFetchState('pending');
     getInitialData();
+  }
   },[id])
 
   const doReload = ()=>{
@@ -103,9 +70,15 @@ const DeskDownloadApp = dynamic(
   }
 
   useEffect(()=>{
-  if(!tokens){
-    doReload();
+  if(!tokens && tokensPresent){
+    setTokens(true);
   }
+  },[tokensPresent])
+
+  useEffect(()=>{
+    //prevalue is false & current token is true i.e. user has logged in & feed needs reload
+    console.log('preValue',preTokensValue?.tokens, tokens, tokensPresent)
+    preTokensValue?.tokens === false && tokens && doReload();
   },[tokens])
 
   useEffect(()=>{
@@ -156,8 +129,6 @@ const DeskDownloadApp = dynamic(
      catch(err){
      }
   } 
-
-  // useEffect(()=>{console.log("id changed",id)},[id]);
 
 const refs = items?.length > 0 && items.reduce((acc, value, index) => {
   acc[index] = createRef();
@@ -215,10 +186,6 @@ useEffect(()=>{
     setRetry(false);
   }
 },[retry])
-
-// const toggleFeed = (value)=>{
-//   setId(id);
-// }
 
 const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
 {items && items?.length > 0 ? <InfiniteScroll 

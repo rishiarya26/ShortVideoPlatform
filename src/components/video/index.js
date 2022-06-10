@@ -280,6 +280,7 @@ function Video(props) {
          saveLook={props.saveLook}
          comp={props?.comp}
          description={props?.description}
+         adCards={props?.adData}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
@@ -306,6 +307,8 @@ function Video(props) {
          shopType={props?.shopType}
          charmData = {props?.charmData}
          onCloseChamboard={props?.onCloseChamboard}
+         shopCards={props?.shopCards}
+         adCards={props?.adData}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed
@@ -321,7 +324,7 @@ function Video(props) {
          />
       )
       ) : (
-      <ProductCards
+         !props?.adData?.monitisation && <ProductCards
          shopCards={props?.shopCards}
          videoId={props?.activeVideoId}
          profileFeed={props.profileFeed}

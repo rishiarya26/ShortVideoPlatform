@@ -20,6 +20,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const [topCharms, setTopCharms] = useState(null);
  const [expand, setExpand] = useState(false);
  const [selectedIndex, setSelectedIndex] = useState(null);
+ const [firstScroll, setFirstScroll] = useState(1);
 
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
   items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
@@ -263,6 +264,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
          />
          ))}
          </div>
@@ -279,6 +282,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
          />
          ))}
          </div>
@@ -317,6 +322,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              heading = {item?.heading}
              thumbnailProduct ={item?.product_img_url}
              index={id}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
          />
           ))}
          </div>
@@ -355,6 +362,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              heading = {item?.heading}
              thumbnailProduct = {item?.product_rounded_img_url ? item?.product_img_url : null}
              index={id}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
            />
           ))}
         </div>
@@ -376,6 +385,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              heading = {item?.heading}
              thumbnailProduct = {item?.product_rounded_img_url}
              index={id+1}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
            />
           ))}
         </div>

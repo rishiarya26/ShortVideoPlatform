@@ -275,6 +275,7 @@ function FeedIphone({ router }) {
       shopContent.data = response?.data;
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
+      shopContent.adData = response?.adData;
     } catch (e) {
       isShoppable = false;
     }
@@ -628,6 +629,7 @@ console.log('errorrr',e)
                       description={item?.content_description}
                       onCloseChamboard={onCloseChamboard}
                       setClose={setClose}
+                      adData={shop?.adData}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>

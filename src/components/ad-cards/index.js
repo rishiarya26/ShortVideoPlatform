@@ -9,8 +9,8 @@ import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 
-function ProductCards({
-  shopCards, videoId, comp, loading
+function AdCards({
+  adCards, videoId, comp, loading
 }) {
   const charmboardDrawer = dynamic (
     () => import('../charmboard'),
@@ -20,6 +20,7 @@ function ProductCards({
     }
   );
 
+  useEffect(()=>{console.log("ad-card",adCards, adCards?.[0]?.card_id)},[])
   const {show } = useDrawer();
   // const [loading, setLoading] = useState(true);
   // const loaded = () => {
@@ -30,34 +31,35 @@ function ProductCards({
   // }, []);
 
   // const { t } = useTranslation();
-  const shopCardsLength = shopCards?.length;
+  const adCardsLength = adCards?.length;
   const type = {
-    profile: 'bottom-12 flex w-6/12 h-24 justify-between items-center p-2 absolute',
-    embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
-    single: 'bottom-16 flex w-6/12 h-24 justify-between items-center p-2 fixed',
-
+    feed: 'bottom-0 flex right-0 justify-between items-center p-2 absolute',
+    profile: 'bottom-0 flex right-0 justify-between items-center p-2 absolute',
+    embed: 'bottom-4 flex h-24 right-0 justify-between items-center p-2 absolute',
+    single: 'bottom-16 flex h-24 right-0 justify-between items-center p-2 fixed',
   };
+
+
   return (
     <div
       className={type[comp]}
     >
-      <div className="flex flex-col">
-        <div className="flex">
-          {shopCardsLength > 0 && shopCards.map((data, id) => (
+          {adCardsLength > 0 && adCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
+              className="w-14 h-14 ml-2 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
-              onClick={() =>   show('',charmboardDrawer , 'big', { videoId : videoId})}
+              onClick={comp === 'feed' ? 
+              ()=> window.open(data?.product_url) :
+              () => show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id})
+            }
             >
-              <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
+              <Img data={data?.img_url} height={120} width={120} fallbakc={fallbackShop?.src}/>
             </div>
           ))
           }
-        </div>
-      </div>
     </div>
   );
 }
 
-export default ProductCards;
+export default AdCards;

@@ -6,6 +6,7 @@ import Feed from '../../src/components/feed';
 import FeedIphone from '../../src/components/feed-iphone';
 import { getItem } from '../../src/utils/cookie';
 import { updateCampaignId, updateUtmData } from '../../src/utils/web';
+import {websiteSchema, organisationSchema} from '../../src/utils/schema'
 
 export default function Hipi() {
   const router = useRouter();
@@ -20,6 +21,14 @@ export default function Hipi() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+       <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organisationSchema) }}
+      />
     {device === 'desktop' ?  <DeskFeed/> : 
     device === 'mobile' &&
     <ChooseOnType android={<Feed/>} ios={<FeedIphone/>}/>}

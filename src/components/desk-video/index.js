@@ -185,7 +185,6 @@ return (
          onContextMenu={(e)=>{
             e.preventDefault();
             return false}}
-         controlsList="nodownload"
          playsInline
          muted={muted}
          autoPlay
