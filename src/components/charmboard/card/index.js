@@ -2,7 +2,7 @@ import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
 import Arrow from "../../commons/svgicons/arrow-red";
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
-   shopNameImg,ribbonData,id}) =>{
+   shopNameImg,ribbonData,id, actualPrice, salePrice}) =>{
 
 return(
 <>
@@ -21,6 +21,9 @@ return(
                {shopNameImg ? <div className="max-h-12 ad_logo"><Img data={shopNameImg}/></div> :
                 <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
                }
+               {actualPrice && <p className='text-gray-500 pl-2 pr-2'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+               {salePrice && <p>{`${' '} ₹${salePrice || ''}`}</p>}
+            
             </div>
             <div onClick={()=>
                window?.open(shopLink)} className="flex px-4 py-2 ">

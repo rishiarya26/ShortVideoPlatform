@@ -3,7 +3,7 @@ import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
-const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData}) =>{
+const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice}) =>{
     return(
     <>
            {/* Card div */}
@@ -33,7 +33,10 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                         <div className="flex items-center">
                        
                         {shopNameImg  ? <div className="max-h-12 ad_logo"> <Img data={shopNameImg}/> </div> :
-                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>}                                               </div>
+                        <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>}  
+                          {actualPrice && <p className='text-gray-500 pl-2 pr-2'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+                          {salePrice && <p>{`${' '} ₹${salePrice || ''}`}</p>}                                             
+                          </div>
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex px-4 py-2 ">
                         <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>

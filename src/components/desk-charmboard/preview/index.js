@@ -266,6 +266,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              category = {item?.category}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
          ))}
          </div>
@@ -284,6 +286,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              category = {item?.category}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
          ))}
          </div>
@@ -324,6 +328,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              index={id}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
           ))}
          </div>
@@ -364,6 +370,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              index={id}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
            />
           ))}
         </div>
@@ -387,6 +395,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              index={id+1}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
            />
           ))}
         </div>
