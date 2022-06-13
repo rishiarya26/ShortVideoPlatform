@@ -246,7 +246,7 @@ const info ={
             url: videoId && getUrl(),
             images: [
               {
-                url: videoId ? items?.[0]?.thumbnail : undefined,
+                url: "https://www.hipi.co.in/icons/icon-512x512.png",
                 width: 800,
                 height: 600,
                 alt: ''
