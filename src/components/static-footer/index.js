@@ -50,32 +50,32 @@ function StaticFooter() {
               Download now
             </div>
            
-<div className="flex justify-center w-1/2 items-center px-10 mt-6 mb-6">
-        <div className='flex px-4 py-1.5 border border-gray-300 hover:border-gray-200 cursor-pointer mx-4 items-center rounded' onClick={()=>show('Download App',DeskQr,'broad')}> <Qr/> <p className='max-w-max ml-1 text-xs'>QR CODE</p></div>
+<div className="flex justify-center md:w-1/2 items-center px-10 py-2 md:py-0 md:mt-6 md:mb-6">
+        <div className='hidden md:flex px-4 py-1.5 border border-gray-300 hover:border-gray-200 cursor-pointer mx-4 items-center rounded' onClick={()=>show('Download App',DeskQr,'broad','medium')}> <Qr/> <p className='max-w-max ml-1 text-xs'>QR CODE</p></div>
             <div onClick={()=>onStoreRedirect('android')} className=" w-32 mx-4"> <img className="cursor-pointer " src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
             <div onClick={()=> onStoreRedirect('ios')} className=" w-32 mx-2"><img src={withBasePath('icons/app_store_2.png')} className="cursor-pointer" alt="hipi logo" /> </div>
           </div>
         </div>
     </div>
     <div className="w-full static_footer bg-black flex py-3 justify-between flex-col px-10 text-gray-300">
-        <div className="flex w-full text-xs justify-between py-4">
+        <div className="flex w-full text-xs justify-between flex-col md:flex-row py-4">
         <div className="flex flex-col">
-          <div className="flex text-gray-400">
+          <div className="flex text-gray-400 flex-col md:flex-row">
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
-          <p className="text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flextext-xs leading-5 text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
-          <p className="text-xs leading-5 text-gray-500">|</p>
+          <p className=" hidden md:flex text-xs leading-5 text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
-          <p className="text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flex text-xs leading-5 text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
-          <p className="text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flex text-xs leading-5 text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
           </div> 
           <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
           <p>Copyright © 2022. All rights reserved.</p>
         </div>
         </div>
-          <div className="flex justify-end items-center w-1/5">
+          <div className="flex md:justify-end py-2 md:py-0   items-center w-1/5">
              
             <a target="_blank" href={links.facebook} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
              <FbW/>
