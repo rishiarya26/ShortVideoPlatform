@@ -804,5 +804,8 @@ title:first-letter {
   left: 0;
 }
 .ad_logo img{
-max-height: 3rem;
+  max-height: 3rem;
+  object-fit: contain;
+  object-position: 0;
+  background-color: #fff;
 }

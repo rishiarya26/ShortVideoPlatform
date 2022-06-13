@@ -46,16 +46,18 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                     </button>
                             {show && <p className="pt-1">{title && title}</p>}
                             </div>}
-  {(thumbnail && thumbnailProduct) && <div className=" pt-2">
+  {(thumbnail && thumbnailProduct) && <div className="flex justify-between ites-center w-full pt-2">
                         <div className="flex items-center">
                         {shopNameImg  ?<div className="max-h-12 ad_logo"> <Img data={shopNameImg}/> </div>:
                         <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>} 
-                         {actualPrice && <p className='text-gray-500 pl-2 pr-2'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
-                          {salePrice && <p>{`${' '} ₹${salePrice || ''}`}</p>}
-                                               </div>
+                        </div>
+                        <div className="flex items-center">
+                        {actualPrice && <p className='text-gray-400 pl-2 pr-2 text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+                          {salePrice && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">
-                            <div className="flex rounded py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
+                            <div className="flex rounded w-20 py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
+                        </div>
                         </div>
                     </div>}
                 </div>
