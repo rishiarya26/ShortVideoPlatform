@@ -56,7 +56,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                           {salePrice && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">
-                            <div className="flex rounded w-20 py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
+                            <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                         </div>
                     </div>}

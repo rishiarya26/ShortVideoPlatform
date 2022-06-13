@@ -36,7 +36,7 @@ function HeadMeta() {
       <script type="text/javascript" src="/agents/instana.js" />
 
       <script type="text/javascript" src="/embeds/hipi.js" /> */}
-      <meta name="theme-color" content="#00aae7" />
+      <meta name="theme-color" content="#fff" />
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
