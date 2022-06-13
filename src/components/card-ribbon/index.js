@@ -1,8 +1,8 @@
 const CardRibbon = ({ribbonData})=>{
     const positionRibbon = {
-        1:"label_top_left" ,
-        2:"label_bottom_left",
-        3:"label_bottom_right",
+        1:"label_bottom_left",
+        2:"label_bottom_right",
+        3:"label_top_left" ,
         4:"label_top_right"
      }
     return(
