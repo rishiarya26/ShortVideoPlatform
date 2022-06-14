@@ -78,6 +78,10 @@ function Embedvideo(props) {
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
+       onContextMenu={(e)=>{
+        e.preventDefault();
+        return false}}
+     controlsList="nodownload"
         playsInline
         loop
         key={props.url}

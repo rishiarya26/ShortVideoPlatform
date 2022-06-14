@@ -10,14 +10,23 @@ const cookiesAccepted = ()=>{
 setClose(true);
 setItem('cookie-agreed','yes');
 }
-
+const cookiesDecline = ()=>{
+   setClose(true);
+   setItem('cookie-agreed','yes');
+   }
+   
 useEffect(()=>{
-   setDelayComp(true);
-},[2000])
+   setTimeout(()=>{
+      setDelayComp(true);
+      console.log('timeout')
+   },[5000])
+},[])
+
 const router = useRouter();
 return (
    <>
 {delayComp && <div className={`w-full h-full ${close ? 'hidden' : 'flex'} justify-center cookie_layout items-center z-20 bg-black bg-opacity-70 fixed top-0 left-0 overflow-hidden p-6`}>
+
 <div className="cookie_wrapper w-full max-h-full bg-white flex flex-col items-center justify-between overflow-scroll">
    <div className="p-8 py-8 flex flex-col justify-center">
       <p className=" h1_cookie text-3xl font-medium text-purple-800 text-center mb-4">Cookie consent</p>
@@ -28,9 +37,10 @@ return (
    </div>
    <div className="button_cook bg-gray-100 w-full p-4 py-8 flex flex-col items-center">
       <button onClick={cookiesAccepted} className="border-2 border-gray-500 p-2 px-6 rounded-full text-base cursor-pointer">Accept all cookies</button>
-      <div className="border-2 border-gray-500 p-2 px-6 rounded-full text-base mt-4">Decline all cookies</div>
+      <div onClick={cookiesDecline} className="border-2 cursor-pointer border-gray-500 p-2 px-6 rounded-full text-base mt-4">Decline all cookies</div>
    </div>
 </div>
+
 </div>}
 </>
 );

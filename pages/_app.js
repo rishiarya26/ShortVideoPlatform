@@ -16,13 +16,13 @@ import { GOOGLE_ONE_TAP } from '../src/constants';
 import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
-import Cookies from '../src/components/cookies'
 import { init } from '../src/get-social';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
+import Cookies from '../src/components/cookies';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -149,6 +149,7 @@ function Hipi({
 
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
+  const [showCookies, setShowCookies] = useState(false);
 
   const router = useRouter();
   
@@ -277,13 +278,21 @@ function Hipi({
       }
     }, [router.events])
 
-    const showCookies = ()=>(
-      <>
-     { setTimeout(()=>(
-        <Cookies/>
-      ),[1000])}
-      </>
-    )
+    // const showCookies = ()=>(
+    //   <>
+    //  { setTimeout(()=>(
+    //     <Cookies/>
+    //   ),[1000])}
+    //   </>
+    // )
+
+    useEffect(()=>{
+      window.onload = function () {
+        setTimeout(function () {
+            setShowCookies(true);
+        }, 5000);
+    }
+    },[])
 
   return (
     <>
@@ -317,8 +326,8 @@ function Hipi({
           `,
         }}
       />
-                      {(getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                       <Component {...pageProps} />
+                      {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>
                   </RouteStateProvider>
                 </SnackbarProvider>

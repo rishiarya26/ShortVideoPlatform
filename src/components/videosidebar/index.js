@@ -34,6 +34,8 @@ import { localStorage } from '../../utils/storage';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
+import ProductCards from '../product-cards';
+import AdCards from '../ad-cards';
 
 // const DummyComp = () => (<div />);
 // const CommentTray = dynamic(() => import('../comment-tray'), {
@@ -61,8 +63,9 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard
+  charmData,onCloseChamboard, shopCards,adCards
 }) {
+
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
   const [reactionCount, setReactionCount] = useState({likes : likes});
   const [isSaved, setIsSaved] = useState(false);
@@ -362,9 +365,25 @@ const handleSaveMoments = () =>{
         shareCount={props.share}
       />
       </div> */}
-
+{canShop === 'success' && profileFeed &&
+   adCards?.monitisation &&
+   <AdCards
+   adCards={adCards?.monitisationCardArray}
+   videoId={activeVideoId}
+   profileFeed={profileFeed}
+   comp={comp}
+   /> 
+}
       {canShop === 'success' && (!profileFeed
         &&(
+          adCards?.monitisation ?
+          <AdCards
+          adCards={adCards?.monitisationCardArray}
+          videoId={activeVideoId}
+          profileFeed={profileFeed}
+          comp={comp}
+          />
+          :
           <div
             className={`${
               type === 'feed' && saveLook ? 'block' : 'hidden'

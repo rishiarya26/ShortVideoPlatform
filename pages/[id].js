@@ -13,6 +13,7 @@ import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profi
 import { localStorage } from '../src/utils/storage';
 import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
 import isEmptyObject from '../src/utils/is-object-empty';
+import { breadcrumbSchema, personSchema, videoSchema } from '../src/utils/schema';
 
 
 // TODO enable mock mode here
@@ -127,6 +128,18 @@ export default function Hipi(params) {
   }
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+      />
+       <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
     <SeoMeta
         data={{
           title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
@@ -139,8 +152,8 @@ export default function Hipi(params) {
         ],
         canonical: url && getCanonicalUrl(url),
         }}
-        
      />
+
       {/* <VideoJsonLd
        hasPart={[
       { keywords:`${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`        

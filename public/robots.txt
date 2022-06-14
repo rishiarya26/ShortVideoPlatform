@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://www.hipi.co.in/lang-en/profile/sitemap_0.xml
+Sitemap: https://www.hipi.co.in/lang-en/sitemapindex.xml

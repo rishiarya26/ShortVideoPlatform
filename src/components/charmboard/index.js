@@ -8,7 +8,7 @@ import { localStorage } from '../../utils/storage';
 import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
 
-function Charmboard({videoId, setClose }) {
+function Charmboard({videoId, setClose, idToScroll }) {
 const [charms, setCharms] = useState(null)   
 const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])
@@ -22,7 +22,7 @@ const getTopCharms = async() =>{
          if(videoId){
             const resp = await canShop({videoId});
             setCharms(resp);
-            resp.charmData[0].id = 0;
+            resp.charmData[0].id = resp?.charmData?.[0]?.charm_id;
             setFilteredItem(resp.charmData[0])
          }
       }catch(e){
@@ -31,7 +31,9 @@ const getTopCharms = async() =>{
    }
 }
 
-useEffect(()=>{getSavedMoments()},[])
+useEffect(()=>{getSavedMoments()
+   console.log('ading',idToScroll)
+},[])
 
 const getSavedMoments = () =>{
     const userId = localStorage.get('user-id') || getItem('guest-token');
@@ -87,18 +89,18 @@ const onSavedExpandToggle = (index)=>{
   setSavedItems(tempCharms);
 }
 
-const onExpandToggle = (index)=>{
+const onExpandToggle = (charmId)=>{
    const tempCharms = {...charms};
    tempCharms?.charmData?.forEach((item,id)=>{
-      if(id === index){
+      if(item?.id === charmId){
          item.expand = !(item?.expand);
       }
   })
   const itemToPush = tempCharms?.charmData?.filter((item,id)=>{ 
    if(item.expand === true){
-      item.id = id
-   }  
-   return (item.expand === true)
+      item.id = charmId
+   }
+   return (item.expand === true);
    });
    console.log('expand-true',itemToPush)
    if(itemToPush.length > 0){
@@ -116,11 +118,12 @@ const deleteFilteredSavedItem = ()=>{
 
 const compToShow = {
    0 :  <>
-   {filteredItem ?
-    <CharmPreview key={filteredItem.id} id={filteredItem.id}  onExpandToggle ={ onExpandToggle}charmId = {filteredItem?.charm_id} charms={filteredItem} initalExpand={false} loader={false} comp='normal'/>
+   {
+   filteredItem ?
+    <CharmPreview key={filteredItem.id} id={filteredItem.id}  onExpandToggle ={ onExpandToggle}charmId = {filteredItem?.charm_id} charms={filteredItem} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll}/>
     :
     charms?.charmData?.map((item,id)=>(
-      <CharmPreview key={id} id={id}  onExpandToggle ={ onExpandToggle}charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} comp='normal'/>
+      <CharmPreview key={id} id={id}  onExpandToggle ={ onExpandToggle} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll}/>
      ))
 }     
      </>,
@@ -128,11 +131,11 @@ const compToShow = {
    1 : <>
     {filteredSavedItem ?
     <CharmPreview key={filteredSavedItem.id} id={filteredSavedItem.id}  onExpandToggle ={ onSavedExpandToggle}charmId = {filteredSavedItem?.charm_id} charms={filteredSavedItem} initalExpand={false} loader={false} comp='saved'
-    deleteFilteredSavedItem={deleteFilteredSavedItem}/>
+    deleteFilteredSavedItem={deleteFilteredSavedItem} idToScroll={idToScroll}/>
     :
     savedItems && savedItems?.map((item,id)=>(
        <CharmPreview key={item?.charm_id} id={item?.charm_id} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} onExpandToggle={onSavedExpandToggle} comp='saved' videoId={videoId}
-       getSavedMoments={getSavedMoments}/> 
+       getSavedMoments={getSavedMoments} idToScroll={idToScroll}/> 
     ))}
     </>
 }

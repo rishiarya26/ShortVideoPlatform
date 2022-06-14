@@ -45,6 +45,8 @@ import CartLgLight from '../commons/svgicons/cart-lg-light';
 import VerifiedLg from '../commons/svgicons/verified-lg';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { getCanonicalUrl } from '../../utils/web';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -386,6 +388,15 @@ if(item?.indexOf('#')){
   }
 
   return (
+    <>
+    <SeoMeta
+    data={{
+      title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
+      // image: item?.thumbnail,
+      description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`,
+      canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
+    }}
+ />
     <div className="flex flex-col w-screen h-screen">
       {showVideoDetail && 
       <div className='z-20 fixed top-0 left-0 w-full'>
@@ -462,6 +473,7 @@ if(item?.indexOf('#')){
             </div>
         </div>
       </div>
+      </>
   );
 }
 

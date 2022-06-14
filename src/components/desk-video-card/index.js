@@ -24,6 +24,10 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
         //  onLoadStart={()=>setShowLoader(true)}
         //  onCanPlay={()=>setShowLoader(false)}
          id={id}
+         onContextMenu={(e)=>{
+          e.preventDefault();
+          return false}}
+       controlsList="nodownload"
          playsInline
          muted={true}
          autoPlay

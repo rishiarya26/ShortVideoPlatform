@@ -122,6 +122,10 @@ function Video(props) {
 
    const selectVideoPlayer = {
     'multi-player-muted' : <video
+    onContextMenu={(e)=>{
+      e.preventDefault();
+      return false}}
+   controlsList="nodownload"
       playsInline
       muted={props?.muted ? true : false}
       autoPlay
@@ -147,6 +151,10 @@ function Video(props) {
       /> 
       </video>,
        'multi-player-non-muted' : <video
+       onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
        playsInline
       //  muted={props.muted ? true : false}
       //  autoPlay
@@ -173,6 +181,10 @@ function Video(props) {
        </video>,
       'single-player' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         playsInline
       //   muted={props.muted ? true : false}
         autoPlay
@@ -202,6 +214,10 @@ function Video(props) {
         <img className="h-screen" src={firstFrame}></img>,
         'single-player-muted' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         playsInline
         muted={props.muted ? true : false}
         autoPlay
@@ -264,6 +280,7 @@ function Video(props) {
          saveLook={props.saveLook}
          comp={props?.comp}
          description={props?.description}
+         adCards={props?.adData}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
@@ -290,6 +307,8 @@ function Video(props) {
          shopType={props?.shopType}
          charmData = {props?.charmData}
          onCloseChamboard={props?.onCloseChamboard}
+         shopCards={props?.shopCards}
+         adCards={props?.adData}
          />
       {/* TO-DO  comdition acc to comp */}
       {props.canShop === 'success' && (!props.profileFeed
@@ -305,7 +324,7 @@ function Video(props) {
          />
       )
       ) : (
-      <ProductCards
+         !props?.adData?.monitisation && <ProductCards
          shopCards={props?.shopCards}
          videoId={props?.activeVideoId}
          profileFeed={props.profileFeed}

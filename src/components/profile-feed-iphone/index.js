@@ -283,6 +283,7 @@ function ProfileFeedIphone({ router }) {
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
       shopContent.type= response?.type;
+      shopContent.adData = response?.adData;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -563,6 +564,7 @@ function ProfileFeedIphone({ router }) {
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
                       description={item?.content_description}
+                      adData={shop?.adData}
                     />
 
                   </SwiperSlide>

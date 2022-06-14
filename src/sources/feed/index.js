@@ -128,7 +128,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 }
 
 // const options = selected === info[after]
-const [getHomeFeed, clearHomeFeed] = apiMiddleWare(fetchHomeFeed, transformSuccess, transformError, {shouldCache : false});
+const [getHomeFeed, clearHomeFeed] = apiMiddleWare(fetchHomeFeed, transformSuccess, transformError, {shouldCache : false,requiresAuth: false});
 const [getHomeFeedWLogin, clearHomeFeedWLogin] = apiMiddleWare(fetchHomeFeedWithLogin, transformSuccess, transformError, 
     {shouldCache : false, requiresAuth: true});
 

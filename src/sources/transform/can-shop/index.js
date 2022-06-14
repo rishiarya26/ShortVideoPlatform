@@ -27,6 +27,7 @@ function transformSuccess(resp) {
       payload.isShoppable = true;
       data?.data?.[0]?.topCharms.forEach((item,id)=>{id ===  0 ? item.expand = true : item.expand = false;})
       payload.charmData = data?.data?.[0]?.topCharms;
+      payload.adData = {monitisation : data?.data?.[0]?.monitisation, monitisationCardArray:data?.data?.[0]?.monitisationCardArray}
     }
 
     console.log("can-shop",payload);

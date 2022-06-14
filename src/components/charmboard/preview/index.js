@@ -14,12 +14,13 @@ import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
 
 const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
-   deleteFilteredSavedItem}) =>{
+   deleteFilteredSavedItem, idToScroll}) =>{
  const [items, setItems] = useState({});
  const [loading, setLoading] = useState(loader);
  const [topCharms, setTopCharms] = useState(null);
  const [expand, setExpand] = useState(false);
  const [selectedIndex, setSelectedIndex] = useState(null);
+ const [firstScroll, setFirstScroll] = useState(true);
 
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
   items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
@@ -29,6 +30,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const beautyRef = useRef(null);
  const hairRef = useRef(null);
  const recipeRef = useRef(null);
+
+ let scrollRefs = useRef(null);
 
    const [outfit, inViewOutfit] = useInView({
      threshold: 0.1
@@ -78,13 +81,42 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
     useEffect(()=>{
        savedItems ? setItems(savedItems) :  getCharmsData();
       setTopCharms(charms)
-     comp === 'normal' &&  setExpand((charms?.expand));
+      console.log('ading-inside',charms, items,topCharms, charmId);
+
+     comp === 'normal' &&  setExpand(charms?.expand);
+  setTimeout(()=>{
+        //  window.scrollTo(0, scrollRefs?.current?.offsetTop);
+        scrollRefs && scrollRefs?.current?.scrollIntoView({behavior: "smooth" , block:'center'})
+                  setFirstScroll(false);
+        // scrollRefs?.current?.[idToScroll]?.current?.scrollIntoView({ behavior: "smooth" });
+      },[1000])
+    //  window.onload(()=>{
+    //   // setTimeout(()=>{
+    //     //  window.scrollTo(0, scrollRefs?.current?.offsetTop);
+    //     scrollRefs && scrollRefs?.current?.scrollIntoView({behavior: "smooth" })
+    //               // setFirstScroll(false);
+    //     // scrollRefs?.current?.[idToScroll]?.current?.scrollIntoView({ behavior: "smooth" });
+    //   // },[1000])
+    //  },[1000])
     },[])
 
+    // useEffect(()=>{
+    //  scrollRefs.current && (scrollRefs = undefined)
+    // },[scrollRefs])
+
     useEffect(()=>{
-       console.log("expand changed",charms?.expand)
-       comp === 'normal' &&  setExpand((charms?.expand));
-      },[charms?.expand])
+      expand && getCharmsData();
+    },[expand])
+
+    useEffect(()=>{
+      console.log("expand changed",charms?.expand)
+      comp === 'normal' &&  setExpand((charms?.expand));
+     },[charms?.expand])
+
+    // useEffect(()=>{
+    //    console.log("expand changed",charms?.expand)
+    //    comp === 'normal' &&  setExpand((charms?.expand));
+    //   },[charms?.expand])
 
     useEffect(()=>{
       items &&  console.log("charms",items)
@@ -239,7 +271,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
                    </div>
                    <div className='cta flex px-2'>
                <div onClick={()=>{
-                 onExpandToggle(id);
+                 onExpandToggle(charmId);
                 setExpand(!expand);
                }} className='flex flex-col items-center'>
                   
@@ -258,16 +290,24 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
         {(items?.outfit?.length > 0 || items?.accessories?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">STYLE INSPIRATION FROM THIS LOOK</div>} 
-            {items && items?.outfit?.map((item,id) =>(
+            {items && items?.outfit?.map((item,id) =>{
+              console.log("ading-final",item?.card_id, idToScroll,3935255)
+         return <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
            <CharmCard 
              key = {id}
+             id={item?.card_id}
              thumbnail = {item?.product_img_url}
              title = {item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
              category = {item?.category}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
-         ))}
+         </div>
+        })}
          </div>
          </div>
          }
@@ -275,14 +315,21 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          <div className="w-full" ref={accRef}>
          <div ref={acc} id={'acc'} >
            {items && items?.accessories?.map((item, id) =>(
-           <CharmCard 
+          <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
+         <CharmCard 
              key = {id}
+             id={item?.card_id}
              thumbnail = {item?.product_img_url}
              title = {item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
              category = {item?.category}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
+         </div>
          ))}
          </div>
          </div>
@@ -310,18 +357,26 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          </div>
           }
           {expand && items && items?.beauty?.map((item, id) =>(
-            id>0 && <CharmCardBeauty 
+            id>0 && 
+            <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
+            <CharmCardBeauty 
              key={id}
+             id={item?.card_id}
              thumbnail =  {item?.product_rounded_img_url || null}
              title = {item?.title}
-             shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
+             shopName = {(item?.product_url ?  getOrigin(item?.product_url): '')}
+             shopNameImg={item?.camp_img_url || null}
              shopLink = {item?.product_url}
+             ribbonData={item?.card_labels || []}
              category = {item?.category}
              subTitle = {item?.sub_title}
              heading = {item?.heading}
              thumbnailProduct ={item?.product_img_url}
              index={id}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
          />
+         </div>
           ))}
          </div>
          </div>
@@ -350,18 +405,26 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           } 
           
           {expand && items && items?.hair?.map((item, id) =>(
-             id > 0 && <CharmCardBeauty 
+             id > 0 && 
+             <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
+             <CharmCardBeauty 
              key={id}
+             id={item?.card_id}
              thumbnail = {item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url}
              title = {item?.title}
              shopName = {item?.product_url ? getOrigin(item.product_url): ''}
              shopLink = {item?.product_url}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
              category = {item?.category}
              subTitle = {item?.sub_title}
              heading = {item?.heading}
              thumbnailProduct = {item?.product_rounded_img_url ? item?.product_img_url : null}
              index={id}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
            />
+           </div>
           ))}
         </div>
         </div>
@@ -371,8 +434,10 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
         <div className="w-full" ref={recipeRef}>
         <div className="w-full" ref={recipe}>
           {expand && items && items?.recipe?.map((item, id) =>(
-             <CharmCardRecipe 
+          <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
+          <CharmCardRecipe 
              key={id}
+             id={item?.card_id}
              thumbnail = {item?.product_img_url}
              title = {item?.title}
              shopName = {item?.title}
@@ -382,7 +447,11 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              heading = {item?.heading}
              thumbnailProduct = {item?.product_rounded_img_url}
              index={id+1}
+             ribbonData={item?.card_labels || []}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
            />
+           </div>
           ))}
         </div>
         </div>

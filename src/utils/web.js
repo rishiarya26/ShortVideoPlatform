@@ -46,7 +46,7 @@ function getUrl(){
 }
 
 function getCanonicalUrl(orgUrl){
-  console.log('org',orgUrl);
+  // console.log('org',orgUrl);
   const url = orgUrl || (document &&  document?.location?.href);
   let domain = (new URL(url));
   let hostname  = domain?.hostname || null;

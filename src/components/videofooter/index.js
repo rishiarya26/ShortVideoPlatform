@@ -25,12 +25,13 @@ function VideoFooter({
   canShop,
   saveLook,
   comp,
-  description
+  description,
+  adCards
 }) {
   const [loaded, setLoaded] = useState(false);
   // TO-DO common classes
   const type = {
-    profile: `${canShop === 'success' ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
+    profile: `${(canShop === 'success' &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
     feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
     embed: `${canShop === 'success' ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
     single: `${canShop === 'success' ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,

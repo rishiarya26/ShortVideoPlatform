@@ -122,6 +122,10 @@ function Video(props) {
        </video>,
       'single-player' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         playsInline
         autoPlay
         preload="auto"
@@ -144,6 +148,10 @@ function Video(props) {
         'single-player-muted' : (props.id && props.activeVideoId && (props.id === props?.activeVideoId)) ?  
       <video
         playsInline
+        onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+      controlsList="nodownload"
         muted={props.muted ? true : false}
         autoPlay
         preload="auto"
