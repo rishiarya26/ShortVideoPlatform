@@ -61,7 +61,7 @@ function DeskSearchResults({router}) {
         {/* <div className="search_box w-full z-10 fixed top-0"> </div >  */}
         <Header searchType='results'/>
         <div className="flex mt-2 bg-white  w-feed relative thin_bar w-feed">
-          <div className='w-feed-menu menu-sm pt-24'>
+          <div className='w-feed-menu menu-sm '>
           <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
           <div className='W-search pl-6 pt-24 flex flex-col no_bar'>

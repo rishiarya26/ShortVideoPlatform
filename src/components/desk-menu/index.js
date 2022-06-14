@@ -74,8 +74,8 @@ useEffect(()=>{
 },[tokens]);
 
     return(
-        <div className={`${width} flex fixed max-h-85v menu_bar overflow-y-scroll flex-col p-4 pt-0 z-1 relative`}>
-         
+        <div className={`${width} flex fixed max-h-100v menu_bar overflow-y-scroll flex-col p-4 pt-24 z-1 relative`}>
+          
         <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>
         {/* <div onClick={router.push('/feed/for-you')} className='flex items-center'> <Home/> <p className="font-semibold text-lg py-2 pl-4">For You </p></div>
