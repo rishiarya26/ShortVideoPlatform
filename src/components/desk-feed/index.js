@@ -252,6 +252,7 @@ const info ={
                 alt: ''
               },
             ],
+            type: 'image/png',
             site_name: 'Hipi'
           }
         }}

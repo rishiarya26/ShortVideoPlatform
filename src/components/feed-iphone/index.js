@@ -737,6 +737,15 @@ try{
           // image: item?.thumbnail,
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
           canonical: getCanonicalUrl && getCanonicalUrl(),
+          images: [
+            {
+              url: videoId ? items?.[0]?.thumbnail : undefined,
+              width: 800,
+              height: 600,
+              alt: ''
+            }
+          ],
+          site_name: 'Hipi'
         }}
       />
       {/* <VideoJsonLd
