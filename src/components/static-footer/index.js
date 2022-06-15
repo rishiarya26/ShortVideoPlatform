@@ -62,13 +62,13 @@ function StaticFooter() {
         <div className="flex flex-col">
           <div className="flex text-gray-400 flex-col md:flex-row">
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
-          <p className="hidden md:flex text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
-          <p className=" hidden md:flex text-xs leading-5 text-gray-500">|</p>
+          <p className=" hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
-          <p className="hidden md:flex text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
-          <p className="hidden md:flex text-xs leading-5 text-gray-500">|</p>
+          <p className="hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
           </div> 
           <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
