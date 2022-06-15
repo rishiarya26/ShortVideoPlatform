@@ -1,6 +1,6 @@
 /*eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
-import Fb from '../commons/svgicons/facebook';
+import Fb from '../commons/svgicons/facebook-blue';
 import Google from '../commons/svgicons/google';
 import Instagram from '../commons/svgicons/instagram';
 import Twitter from '../commons/svgicons/twitter';

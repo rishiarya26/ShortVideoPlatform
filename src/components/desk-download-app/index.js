@@ -26,8 +26,8 @@ function DeskDownloadApp() {
       <div className='flex w-1/2 flex-col items-center px-4' >
       <p className='text-medium text-gray-800 text-center pb-4'>Download from app stores</p>
           <div className="flex w-full flex-col  items-center px-10 mt-6">
-            <div onClick={()=>onStoreRedirect('android')} className=" w-full "> <img className="cursor-pointer " src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')} className=" w-full mt-6"><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+            <div onClick={()=>onStoreRedirect('android')} className=" w-full "> <img className="cursor-pointer " src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')} className=" w-full mt-6"><img src={withBasePath('icons/app_store_1.png')} className="cursor-pointer" alt="hipi logo" /> </div>
           </div></div>
       </div>
     </>

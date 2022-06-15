@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Hipi() {
-  // useEffect(()=>{
-  //   router.push('https://protect-eu.mimecast.com/s/qxxcCPz2qUmlnPLSrOvgJ?domain=hipihelpcenter.zee5.com');
-  // },[])
+  const router = useRouter();
+  useEffect(()=>{
+    router.push('https://protect-eu.mimecast.com/s/qxxcCPz2qUmlnPLSrOvgJ?domain=hipihelpcenter.zee5.com');
+  },[])
   return (
-    <><Privacy/></>
+    <></>
   );
 }

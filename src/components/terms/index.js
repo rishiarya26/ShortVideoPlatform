@@ -313,6 +313,7 @@ function Terms() {
 	        <p>You have any questions about these Terms of Use, please contact ZEEL at support.in@zee5.com.</p>
 	    </div>   
 	</div>
+	<StaticFooter/>
     </div>
   );
 }

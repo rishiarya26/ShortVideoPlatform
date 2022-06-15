@@ -98,8 +98,8 @@ const onStoreRedirect =(device)=>{
 <div className="flex w-full absolute -bottom-8 mt-6 z-10 justify-center items-center flex-col">
   <p className="text-xl font-bold"> Download the Hipi app now :</p>
   <div className="flex w-full mt-2 justify-center">
-           <div onClick={()=>onStoreRedirect('android')}> <img alt="" className="pr-4 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')}><img alt="" src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+           <div onClick={()=>onStoreRedirect('android')}> <img alt="" className="pr-4 cursor-pointer" src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')}><img alt="" src={withBasePath('icons/app_store_1.png')} className="cursor-pointer" alt="hipi logo" /> </div>
             </div>
           </div>
 </div>

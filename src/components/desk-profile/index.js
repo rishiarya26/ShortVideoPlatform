@@ -387,7 +387,7 @@ function DeskUsers({
        </div>}
     <Header/>
     <div className="flex w-screen h-screen bg-white relative pt-24">
-    <div className='w-2/12 w-prof-menu menu-sm'>
+    <div className='w-2/12 w-prof-menu -mt-24 menu-sm'>
     <DeskMenu width={'w-prof-menu menu-sm-w'}/>
     </div>
     

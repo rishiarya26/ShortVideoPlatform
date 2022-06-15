@@ -43,8 +43,8 @@ function Home() {
           Download the App or hit www.hipi.co.in on your Android or iOS mobile device.
           </p>
           <div className="flex w-full mt-6">
-           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-2 cursor-pointer" src={withBasePath('icons/play_store.png')} alt="hipi logo" /></div>
-            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store.png')} className="cursor-pointer" alt="hipi logo" /> </div>
+           <div onClick={()=>onStoreRedirect('android')}> <img className="pr-2 cursor-pointer" src={withBasePath('icons/play_store_1.png')} alt="hipi logo" /></div>
+            <div onClick={()=> onStoreRedirect('ios')}><img src={withBasePath('icons/app_store_1.png')} className="cursor-pointer" alt="hipi logo" /> </div>
           </div>
         </div>
       </div>
