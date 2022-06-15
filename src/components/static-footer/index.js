@@ -61,7 +61,7 @@ function StaticFooter() {
         <div className="flex w-full text-xs justify-between flex-col md:flex-row py-4">
         <div className="flex flex-col">
           <div className="flex text-gray-400 flex-col md:flex-row">
-          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
+          <div className="mx-2 hidden md:flex  cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/about')}>About</div>
           <p className="hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
           <p className=" hidden md:flex text-xs  text-gray-500">|</p>
@@ -69,7 +69,7 @@ function StaticFooter() {
           <p className="hidden md:flex text-xs  text-gray-500">|</p>
           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
           <p className="hidden md:flex text-xs  text-gray-500">|</p>
-          <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
+          <div className="mx-2 hidden md:flex  cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
           </div> 
           <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
           <p>Copyright © 2022. All rights reserved.</p>
