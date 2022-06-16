@@ -40,7 +40,7 @@ const Videos = ({item}) =>{
   
   const hideVideoDetail = ()=>{
     setShowVideoDetail(false);
-    window.history.replaceState('Search Page','videos',`/search/${item}`);
+    window.history.replaceState('Search Page','videos',`/search?term=${item}`);
   }
 
   const handleUpClick=()=>{
