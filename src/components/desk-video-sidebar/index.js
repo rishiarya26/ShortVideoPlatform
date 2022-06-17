@@ -188,7 +188,7 @@ useEffect(()=>{
                <div onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })} className='text-gray-600 p-2'>Embed</div>
                <div onClick={()=>{
                   console.log('v****',videoId)
-                if(domain){  CopyToClipBoard(`${domain}/@${userName}/video/${videoId}`)
+                if(domain){  CopyToClipBoard(`${domain}/video/${videoId}`)
                   showSnackbar({ message: 'Copied to Clipboard' });}
             }} className='text-gray-600 p-2'>Copy Link</div>
             </div>

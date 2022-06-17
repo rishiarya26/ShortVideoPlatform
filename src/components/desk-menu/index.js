@@ -85,12 +85,14 @@ useEffect(()=>{
         <div className="pb-2 border-b border-gray-200 ">
           <DeskPopularUsersList />
         </div>
-        <div className="flex text-xs text-gray-400 pt-4 flex-wrap static_links sm-menu"> 
+        <div className="flex text-xs text-gray-400 pt-4 pr-8 flex-wrap static_links sm-menu"> 
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/about')}>About</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/community-guidelines.html')} >Community Guidelines</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router?.push('/privacy-policy.html')}>Privacy Policy</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/brand-assets')}>Brand Assets</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/grievance')}>Grievance</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router.push('/contact-us')}>Contact Us</div>
         </div>
         <div className="flex py-4 flex-wrap items-center sm-menu">
               <a target="_blank" href={links.facebook}  className="pr-4" rel="noreferrer">
