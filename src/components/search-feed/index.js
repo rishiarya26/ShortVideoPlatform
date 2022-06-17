@@ -61,8 +61,6 @@ function SearchFeed({ router }) {
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
 
-  console.log('router',router?.query)
-
   // const { videoId = items?.[0]?.content_id } = router?.query;
 
 
@@ -450,7 +448,6 @@ try{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
         }}
      />
       <>
