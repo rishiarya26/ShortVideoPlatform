@@ -57,11 +57,13 @@ function Grievance() {
 			</div>
 
 		<h3 className='text-gray-800 font-medium'>Lodging of Grievance</h3>
-      <p className='flex flex-col'>If you wish to register any complaint in respect of any audio visual content uploaded on Hipi, please register the complaint with our grievance officer Ms. Shrutika Saraswat at grievance@hipi.co.in , in the format mentioned below, in order to take cognisance of the complaint and make the resolution process quick and efficient:
+      <div className='flex flex-col'>
+		<p>If you wish to register any complaint in respect of any audio visual content uploaded on Hipi, please register the complaint with our grievance officer Ms. Shrutika Saraswat at <span><a className='text-gray-800 font-medium cursor-pointer' href='mailto:grievance@hipi.co.in'>grievance@hipi.co.in</a></span>, in the format mentioned below, in order to take cognisance of the complaint and make the resolution process quick and efficient:</p>
 	  <span className='flex'><span className='pr-1'>(i)</span> Full Name</span>
 	  <span className='flex'><span className='pr-1'>(ii)</span> Email </span>
 	  <span className='flex'><span className='pr-1'>(iii)</span> Content link and screenshot of the content</span>
-	  <span className='flex'><span className='pr-1'>(iv)</span> Short summary of complaint or other additional information </span></p>
+	  <span className='flex'><span className='pr-1'>(iv)</span> Short summary of complaint or other additional information </span>
+	  </div>
 	  <p>Please note that in absence of the complaint not filed in the aforesaid format and/or incomplete and/or if misleading and vague in nature, the complaint will be considered as “invalid complaint”.</p>
 
 

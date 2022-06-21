@@ -47,13 +47,13 @@ function Contact() {
       />
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
-		<div className='w-full flex '>
-          <div className='w-1/2 h-screen pl-32 pr-4'>
+		<div className='w-full flex flex-col md:flex-row md:py-24 py-8'>
+          <div className='md:w-1/2 md:pl-32 pl-4 pr-4'>
           <img className='object-contain'  src={withBasePath('images/contact.jpg')} alt="hipi logo" /> 
           </div>
-          <div className='w-1/2 flex-col flex p-8 px-32 justify-center tray-container'> 
+          <div className='md:w-1/2 flex-col flex p-8 px-32 justify-center tray-container text-center'> 
 		  <h1 className="">Contact Us</h1>
-				<p className='flex flex-col'>You can contact us for product feedback, content collaborations, and general enquiries by sending an email at <a className='text-gray-800 font-medium cursor-pointer' href='mailto:contact@hipi.co.in'>contact@hipi.co.in</a>
+				<p className='flexflex-col'>You can contact us for product feedback, content collaborations, and general enquiries by sending an email at<span> <a className='text-gray-800 font-medium cursor-pointer' href='mailto:contact@hipi.co.in'>contact@hipi.co.in</a></span>
 			</p>
           </div>
       </div>
