@@ -171,6 +171,7 @@ function SearchFeed({ router }) {
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
       shopContent.type = response?.type;
+      shopContent.adData = response?.adData;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -544,6 +545,7 @@ try{
              muted={muted}
              player={'multi-player-muted'}
              description={item?.description}
+             adData={shop?.adData}
           />
           </SwiperSlide>
           )})}
