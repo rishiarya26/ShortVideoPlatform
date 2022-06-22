@@ -53,7 +53,7 @@ function Contact() {
           </div>
           <div className='md:w-1/2 flex-col flex p-8 px-32 justify-center tray-container text-center'> 
 		  <h1 className="">Contact Us</h1>
-				<p className='flexflex-col'>You can contact us for product feedback, content collaborations, and general enquiries by sending an email at<span> <a className='text-gray-800 font-medium cursor-pointer' href='mailto:contact@hipi.co.in'>contact@hipi.co.in</a></span>
+				<p className='flexflex-col'>You can contact us for product feedback, content collaborations, and general enquiries by sending an email at<span> <a target="_blank" className='text-gray-800 font-medium cursor-pointer' href='mailto:contact@hipi.co.in' rel="noreferrer">contact@hipi.co.in</a></span>
 			</p>
           </div>
       </div>

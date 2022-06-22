@@ -58,7 +58,7 @@ function Grievance() {
 
 		<h3 className='text-gray-800 font-medium'>Lodging of Grievance</h3>
       <div className='flex flex-col'>
-		<p>If you wish to register any complaint in respect of any audio visual content uploaded on Hipi, please register the complaint with our grievance officer Ms. Shrutika Saraswat at <span><a className='text-gray-800 font-medium cursor-pointer' href='mailto:grievance@hipi.co.in'>grievance@hipi.co.in</a></span>, in the format mentioned below, in order to take cognisance of the complaint and make the resolution process quick and efficient:</p>
+		<p>If you wish to register any complaint in respect of any audio visual content uploaded on Hipi, please register the complaint with our grievance officer Ms. Shrutika Saraswat at <span><a target="_blank" className='text-gray-800 font-medium cursor-pointer' href='mailto:grievance@hipi.co.in' rel="noreferrer">grievance@hipi.co.in</a></span>, in the format mentioned below, in order to take cognisance of the complaint and make the resolution process quick and efficient:</p>
 	  <span className='flex'><span className='pr-1'>(i)</span> Full Name</span>
 	  <span className='flex'><span className='pr-1'>(ii)</span> Email </span>
 	  <span className='flex'><span className='pr-1'>(iii)</span> Content link and screenshot of the content</span>
