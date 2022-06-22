@@ -18,7 +18,7 @@ export function getNetworkConnection() {
   const networkInformation = window?.navigator?.connection;
   const effectiveType = networkInformation?.effectiveType;
   localStorage.set('network-strength',effectiveType)
-  let networkStrength = 'low';
+  let networkStrength = 'fast';
   if (effectiveType === '4g') {
     networkStrength = 'fast';
   } else if (effectiveType === '3g') {
