@@ -23,14 +23,19 @@ function Grievance() {
 	
 	      <SeoMeta
         data={{
+			title: 'Grievance Redressal Process at Hipi',
+          // image: item?.thumbnail,
+          description: 'If you wish to register any complaints in respect of any audio, visual content uploaded on Hipi app, please register the complaint with our grievance officer.',
+          canonical: url && getCanonicalUrl(url),
+
 			additionalMetaTags:[{
 				name: 'fb:app_id',
 				content: '255188469592363'
 			  }
 			],
           openGraph: {
-				title: 'Privacy Policy',
-				description: 'Privacy Policy',
+				title: 'Grievance',
+				description: 'hipi.co.in',
 				url:url && getCanonicalUrl(url) ,
             images: [
               {

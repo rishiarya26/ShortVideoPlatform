@@ -23,14 +23,19 @@ function Contact() {
 	
 	      <SeoMeta
         data={{
+			title: 'Contact Hipi-Indian Short Video Maker App',
+          // image: item?.thumbnail,
+          description: 'Contact us for product feedback, content collaboration,& general enquires by sending an email at contact@hipi.co.in',
+          canonical: url && getCanonicalUrl(url),
+
 			additionalMetaTags:[{
 				name: 'fb:app_id',
 				content: '255188469592363'
 			  }
 			],
           openGraph: {
-				title: 'Privacy Policy',
-				description: 'Privacy Policy',
+				title: 'Contact us ',
+				description: 'hipi.co.in',
 				url:url && getCanonicalUrl(url) ,
             images: [
               {
