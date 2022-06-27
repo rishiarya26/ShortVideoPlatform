@@ -235,7 +235,7 @@ const info ={
 
   return (
     <>
-     <SeoMeta
+     {/* <SeoMeta
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
@@ -256,7 +256,7 @@ const info ={
             site_name: 'Hipi'
           }
         }}
-      />
+      /> */}
     <div className="flex flex-col w-full thin_bar items-center font-sans">
        {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>

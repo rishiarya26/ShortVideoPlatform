@@ -731,7 +731,7 @@ try{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-       <SeoMeta
+       {/* <SeoMeta
         data={{
           title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
           // image: item?.thumbnail,
@@ -747,7 +747,7 @@ try{
           ],
           site_name: 'Hipi'
         }}
-      />
+      /> */}
       {/* <VideoJsonLd
         name={item.music_title}
         description={item.content_description}

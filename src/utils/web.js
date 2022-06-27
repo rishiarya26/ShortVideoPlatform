@@ -34,25 +34,31 @@ function updateCampaignId(queryStrings){
 }
 
 function getHostname(){
-  const url = document?.location?.href;
-  let domain = (new URL(url));
-  let hostname  = domain?.hostname || null;
-  return hostname;
+  if(typeof window !== "undefined"){
+    const url = document?.location?.href;
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    return hostname;
+  }
 }
 
 function getUrl(){
-  const url = document?.location?.href;
-  return url;
+  if(typeof window !== "undefined"){
+    const url = document?.location?.href;
+    return url;
+  }
 }
 
 function getCanonicalUrl(orgUrl){
   // console.log('org',orgUrl);
-  const url = orgUrl || (document &&  document?.location?.href);
-  let domain = (new URL(url));
-  let hostname  = domain?.hostname || null;
-  let pathname  = domain?.pathname || '';
-  let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
-  return finalUrl;
+  if(typeof window !== "undefined"){
+    const url = orgUrl || (document &&  document?.location?.href);
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    let pathname  = domain?.pathname || '';
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
+    return finalUrl;
+  }
 }
            
 export {
