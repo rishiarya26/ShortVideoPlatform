@@ -7,13 +7,12 @@ const Description = ({description}) =>{
         try{  
           if(item?.indexOf('#')!==-1){
             const trimmedHashtag = trimHash(item);
-            console.log("item",trimmedHashtag);
             window.location.href = `/hashtag/${trimmedHashtag}`;
-          }else
-          if(item?.indexOf('@')!==-1){
+          }else if(item?.indexOf('@')!==-1){
             const userHandle = (item);
-            // console.log("item",trimmedHashtag);
             router?.push(`/${userHandle}`);
+          }else if(item?.indexOf('https')!==-1){
+            window?.open(item)
           }
         }catch(e){
             console.log("error in hashtag redirect",e)
@@ -26,7 +25,7 @@ const Description = ({description}) =>{
               <p key={id} className='inline-block'>
                 <span 
                  className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} 
-                 onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1) ? ()=>redirect(item) : item?.includes('https') ? window?.open(item) : undefined}>
+                 onClick={ (item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1 || item?.includes('https')) ? ()=>redirect(item) : undefined}>
                 {item}
               </span>
               </p>
