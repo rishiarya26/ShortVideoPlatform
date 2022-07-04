@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getItem } from "../../utils/cookie"
 
 export default function ChooseOnType({android, ios}) {
-  const [device, setDevice] = useState('');
+  const [device, setDevice] = useState('android');
  
     useEffect(()=>{
      const type = getItem('device-info');
