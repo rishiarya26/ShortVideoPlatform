@@ -1,7 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
-import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
@@ -15,7 +14,7 @@ const router = useRouter();
 			title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
           // image: item?.thumbnail,
           description: 'Are you a supermom? Hipi welcomes you to participate SuperMomIndia contest and WIN a chance of a lifetime to be on the top TV show DID-SuperMoms, on ZEE TV. Participate Now!',
-          canonical: url && getCanonicalUrl(url),
+          //canonical: url && getCanonicalUrl(url),
 
 			additionalMetaTags:[{
 				name: 'fb:app_id',
@@ -25,7 +24,7 @@ const router = useRouter();
           openGraph: {
 				title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
 				description: 'hipi.co.in',
-				url:url && getCanonicalUrl(url) ,
+				//url:url && getCanonicalUrl(url) ,
             images: [
               {
                 url: 'https://www.hipi.co.in/icons/icon-512x512.png',
