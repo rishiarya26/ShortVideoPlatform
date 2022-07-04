@@ -10,7 +10,11 @@ const router = useRouter();
   return (
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
+		<div className='md:mt-16'>
 		<img alt="" src={withBasePath('images/supermoms_banner_hipi.png')} />
+		</div>
+		<div className='tnc-text'>
+		
       <div className="px-4">
   
 	<div className="mt-6" data-align="center">
@@ -84,6 +88,7 @@ const router = useRouter();
 	
 	</div>
 	
+	</div>
 	</div>
 	<StaticFooter/>
     </div>
