@@ -116,7 +116,7 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-    req, params
+    params
   } = ctx;
   // const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;

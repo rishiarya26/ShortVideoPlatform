@@ -140,7 +140,6 @@ const viewCountUpdate = async ({ id, event = 'user_video_start', duration='', ti
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
-      'content-type': 'application/json',
       // 'X-GEO-IPADDR' : geoData?.ip,
       // 'X-GEO-COUNTRY-CODE':geoData?.country,
       // 'X-GEO-REGION-CODE':geoData?.state_code,
@@ -172,7 +171,6 @@ const getDynamicOneLink = async({videoId}) => {
     console.log("api called", payload)
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/appsflyer`;
     response = await post(apiPath, {data: payload}, {
-      'content-type': 'application/json'
     });
     response.data.status = 'success';
     response.data.message = '';

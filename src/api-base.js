@@ -10,7 +10,7 @@ export const apiBaseEndPoints = {
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     charmboard:
-    'https://stagingmobile.charmboard.com',
+    'https://mapi.charmboard.com',
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
@@ -24,7 +24,7 @@ export const apiBaseEndPoints = {
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
     charmboard:
-    'https://stagingmobile.charmboard.com',
+    'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
@@ -40,8 +40,7 @@ export const apiBaseEndPoints = {
     hipi: 'https://hipigwapi.zee5.com/api',
     app: 'https://preprod.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
-    charmboard:
-    'https://stagingmobile.charmboard.com',
+    charmboard:'https://mapi.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
@@ -57,7 +56,7 @@ export const apiBaseEndPoints = {
     app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
-    'https://stagingmobile.charmboard.com',
+    'https://mapi.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',
