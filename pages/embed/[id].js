@@ -123,11 +123,11 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-    req, params
+     params
     // , locale,
     // defaultLocale, locales
   } = ctx;
-  const uri = new URL(req.url, `http://${req.headers.host}`).href;
+  //const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   let data = {};
 
@@ -145,7 +145,7 @@ export async function getServerSideProps(ctx) {
   }
   return {
     props: {
-      uri,
+      //uri,
       // locale,
       // locales,
       // defaultLocale,

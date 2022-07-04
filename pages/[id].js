@@ -27,7 +27,7 @@ export default function Hipi(params) {
     message,
   } = params;
 
-  console.log("PU**",params.uri)
+  //console.log("PU**",params.uri)
 
   const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
 
@@ -205,9 +205,9 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-    req, params
+     params
   } = ctx;
-  const uri = new URL(req.url, `http://${req.headers.host}`).href;
+  //const uri = new URL(req.url, `http://${req.headers.host}`).href;
   const { id } = params;
   const trimmedUserHandle = id && id.replace('@','');
   let data = {};
@@ -225,7 +225,6 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      uri,
       ...data
     }
   };
