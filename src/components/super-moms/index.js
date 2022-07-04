@@ -4,10 +4,42 @@ import { withBasePath } from '../../config';
 import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
+import { SeoMeta } from '../commons/head-meta/seo-meta';
 
 function Community() {
 const router = useRouter();
   return (
+	<>
+	 <SeoMeta
+        data={{
+			title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
+          // image: item?.thumbnail,
+          description: 'Are you a supermom? Hipi welcomes you to participate SuperMomIndia contest and WIN a chance of a lifetime to be on the top TV show DID-SuperMoms, on ZEE TV. Participate Now!',
+          canonical: url && getCanonicalUrl(url),
+
+			additionalMetaTags:[{
+				name: 'fb:app_id',
+				content: '255188469592363'
+			  }
+			],
+          openGraph: {
+				title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
+				description: 'hipi.co.in',
+				url:url && getCanonicalUrl(url) ,
+            images: [
+              {
+                url: 'https://www.hipi.co.in/icons/icon-512x512.png',
+                width: 512,
+                height: 512,
+                alt: "hipi logo",
+              }
+			],
+			type: 'image/png',
+            site_name: 'Hipi'
+          }
+        }}
+      />
+	
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
 		<div className='md:mt-16'>
@@ -93,6 +125,7 @@ const router = useRouter();
 	</div>
 	<StaticFooter/>
     </div>
+	</>
   );
 }
 
