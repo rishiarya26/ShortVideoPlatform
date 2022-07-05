@@ -4,9 +4,18 @@ import { withBasePath } from '../../config';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
+import {getCanonicalUrl} from '../../utils/web';
+import { useEffect, useState } from 'react';
 
 function Community() {
 const router = useRouter();
+
+	const [url, setUrl] = useState('');
+
+	useEffect(()=>{
+		setUrl(document?.location?.href);
+	},[]) 
+
   return (
 	<>
 	 <SeoMeta
@@ -14,7 +23,7 @@ const router = useRouter();
 			title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
           // image: item?.thumbnail,
           description: 'Are you a supermom? Hipi welcomes you to participate SuperMomIndia contest and WIN a chance of a lifetime to be on the top TV show DID-SuperMoms, on ZEE TV. Participate Now!',
-          //canonical: url && getCanonicalUrl(url),
+          canonical: url && getCanonicalUrl(url),
 
 			additionalMetaTags:[{
 				name: 'fb:app_id',
@@ -24,7 +33,7 @@ const router = useRouter();
           openGraph: {
 				title: 'SuperMomIndia Contest on Hipi| DID SuperMoms',
 				description: 'hipi.co.in',
-				//url:url && getCanonicalUrl(url) ,
+				url:url && getCanonicalUrl(url) ,
             images: [
               {
                 url: 'https://www.hipi.co.in/icons/icon-512x512.png',
@@ -42,8 +51,8 @@ const router = useRouter();
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
 		<div className='md:mt-16'>
-		<img className='flex md:hidden' alt="" src={withBasePath('images/supermoms_banner_hipi.png')} />
-		<img className='hidden md:flex'alt="" src={withBasePath('images/SuperMomIndia-Web.jpg')} />
+		<img className='flex md:hidden' alt="Supermonindia contest" src={withBasePath('images/supermoms_banner_hipi.png')} />
+		<img className='hidden md:flex'alt="Supermonindia contest" src={withBasePath('images/SuperMomIndia-Web.jpg')} />
 		</div>
 		<div className='tnc-text'>
 		
