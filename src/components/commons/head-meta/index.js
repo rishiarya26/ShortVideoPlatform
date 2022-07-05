@@ -17,29 +17,32 @@ function HeadMeta() {
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
-      {/* font family include */}
-      <link rel="preconnect" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-      <link rel="dns-prefetch" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-      <link rel="preload" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+      <link rel="preconnect" href="https://hipigwapi.zee5.com"/>
+      <link rel="preconnect" href="https://www.hipi.co.in" as="document" />
+      <link rel="preconnect" href="https://websdk.getsocial.im/getsocial.min.js" as="script" />
+      <link rel="preconnect" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" as="font" />
+
+      
+      
       {/* <title>{APP_NAME}</title> */}
 
       {/* hipi.co.in */}
-      <link rel="preconnect" href="https://www.hipi.co.in" as="document" />
-      <link rel="preload" href="https://www.hipi.co.in" as="document" />
-      <link rel="preload" href="https://www.hipi.co.in/feed/for-you" as="document" />
+      <link rel="preload" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+      <link rel="preload" href="https://www.hipi.co.in" as="fetch" />
+      <link rel="preload" href="https://www.hipi.co.in/feed/for-you" as="fetch" />
 
       {/* <link rel="dns-prefetch" href="https://eum.instana.io" /> */}
+      <link rel="dns-prefetch" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
       <link rel="dns-prefetch" href="http://fonts.gstatic.com" />
       <link rel="dns-prefetch" href="http://cdn.mxpnl.com" />
       <link rel="dns-prefetch" href="https://assets2.charmboard.com" />
       <link rel="dns-prefetch" href="https://media.charmboard.com" />
       <link rel="dns-prefetch" href="https://www.hipi.co.in" />
       <link rel="dns-prefetch" href="https://devqa2.charmboard.com" />
-      <link rel="preconnect" href="https://hipigwapi.zee5.com"/>
       <link rel="dns-prefetch" href="https://hipigwapi.zee5.com"/>
 
       {/* get social link */}
-      <link rel="preconnect" href="https://websdk.getsocial.im/getsocial.min.js" as="script" />
+     
       <link rel="preload" href="https://websdk.getsocial.im/getsocial.min.js" as="script" />
       <link rel="dns-prefetch" href="https://websdk.getsocial.im/getsocial.min.js" as="script" />
       
