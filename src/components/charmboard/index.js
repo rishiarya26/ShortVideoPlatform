@@ -7,6 +7,7 @@ import Tabs from '../commons/tabs/charmboard-maintab';
 import { localStorage } from '../../utils/storage';
 import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
+import Loader from './loader';
 
 function Charmboard({videoId, setClose, idToScroll }) {
 const [charms, setCharms] = useState(null)   
@@ -14,18 +15,23 @@ const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])
 const [filteredItem, setFilteredItem] = useState(null);
 const [filteredSavedItem, setFilteredSavedItem] = useState(null);
+const [loading, setLoading] = useState(false);
 
 const {close} = useDrawer();
 const getTopCharms = async() =>{
    if(!charms){
       try{
+         setLoading(true);
          if(videoId){
             const resp = await canShop({videoId});
             setCharms(resp);
+            setLoading(false);
             resp.charmData[0].id = resp?.charmData?.[0]?.charm_id;
             setFilteredItem(resp.charmData[0])
+      
          }
       }catch(e){
+         setLoading(false);
          console.log(e)
       }
    }
@@ -48,6 +54,10 @@ const getSavedMoments = () =>{
        }
     }
 }
+
+// useEffect(()=>{
+//    console.log("***&&&****",savedItems)
+// },[savedItems])
 
 useEffect(()=>{
    fetchData?.[selectedIndex]();
@@ -116,6 +126,10 @@ const deleteFilteredSavedItem = ()=>{
    getSavedMoments();
 }
 
+// useEffect(()=>{
+//    console.log("***&&))",filteredItem);
+// },[setFilteredSavedItem])
+
 const compToShow = {
    0 :  <>
    {
@@ -133,10 +147,11 @@ const compToShow = {
     <CharmPreview key={filteredSavedItem.id} id={filteredSavedItem.id}  onExpandToggle ={ onSavedExpandToggle}charmId = {filteredSavedItem?.charm_id} charms={filteredSavedItem} initalExpand={false} loader={false} comp='saved'
     deleteFilteredSavedItem={deleteFilteredSavedItem} idToScroll={idToScroll}/>
     :
-    savedItems && savedItems?.map((item,id)=>(
-       <CharmPreview key={item?.charm_id} id={item?.charm_id} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} onExpandToggle={onSavedExpandToggle} comp='saved' videoId={videoId}
+    savedItems && savedItems?.map((item,id)=>{
+       item.expand = false;
+       return <CharmPreview key={id} id={item?.charm_id} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} onExpandToggle={onSavedExpandToggle} comp='saved' videoId={videoId}
        getSavedMoments={getSavedMoments} idToScroll={idToScroll}/> 
-    ))}
+   })}
     </>
 }
 
@@ -152,9 +167,11 @@ return (
    </div>
    <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
    <div className='flex w-full flex-col pb-6 overflow-y-auto'>
-   {compToShow?.[selectedIndex]}
+   {compToShow?.[selectedIndex] }
+   {/* {!loading ? compToShow?.[selectedIndex] 
+    : (selectedIndex === 0 ? <Loader/> : selectedIndex === 1 && <LoaderSavedItems/>) 
+     } */}
    </div>
-
 </div>
 );
 }

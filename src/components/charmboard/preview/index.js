@@ -13,8 +13,8 @@ import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
 
-const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
-   deleteFilteredSavedItem, idToScroll}) =>{
+const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
+   deleteFilteredSavedItem, idToScroll,onSavedExpandToggle}) =>{
  const [items, setItems] = useState({});
  const [loading, setLoading] = useState(loader);
  const [topCharms, setTopCharms] = useState(null);
@@ -84,7 +84,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
       console.log('ading-inside',charms, items,topCharms, charmId);
 
      comp === 'normal' &&  setExpand(charms?.expand);
-  setTimeout(()=>{
+     setTimeout(()=>{
         //  window.scrollTo(0, scrollRefs?.current?.offsetTop);
         scrollRefs && scrollRefs?.current?.scrollIntoView({behavior: "smooth" , block:'center'})
                   setFirstScroll(false);
@@ -109,8 +109,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
     },[expand])
 
     useEffect(()=>{
-      console.log("expand changed",charms?.expand)
-      comp === 'normal' &&  setExpand((charms?.expand));
+       setExpand((charms?.expand));
      },[charms?.expand])
 
     // useEffect(()=>{
@@ -118,9 +117,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
     //    comp === 'normal' &&  setExpand((charms?.expand));
     //   },[charms?.expand])
 
-    useEffect(()=>{
-      items &&  console.log("charms",items)
-      },[items])
+    // useEffect(()=>{
+    //   items &&  console.log("charms",items)
+    //   },[items])
 
     const selectTab = () =>{
        let result = [];
@@ -271,7 +270,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
                    </div>
                    <div className='cta flex px-2'>
                <div onClick={()=>{
-                 onExpandToggle(charmId);
+                onExpandToggle(charmId);
+            
                 setExpand(!expand);
                }} className='flex flex-col items-center'>
                   
@@ -285,7 +285,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2'> 
+          <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> 
+          </div>}
          {expand && 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
@@ -450,6 +452,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
              ribbonData={item?.card_labels || []}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             shopNameImg={item?.camp_img_url || null}
            />
            </div>
           ))}

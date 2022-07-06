@@ -3,14 +3,13 @@ import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
-const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice}) =>{
+const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice, shopNameImg}) =>{
     return(
     <>
            {/* Card div */}
            <div className="flex flex-col w-full my-4 shadow-md">
             <div className="flex head_bg bg_hair w-full h-14 ">
                 <div className="heading w-1/2 flex justify-center items-center">
-                    
                     <p className="text-md text-white font-semibold px-2"><span className="numb-hair mr-2">{index}</span></p>
                 </div>
             </div>
