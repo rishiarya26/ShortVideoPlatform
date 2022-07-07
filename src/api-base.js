@@ -5,7 +5,7 @@ export const apiBaseEndPoints = {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
     app: 'https://preprod.hipi.co.in/',
-    stagingMobile: 'https://stagingmobile.charmboard.com',
+    stagingMobile: 'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
@@ -40,7 +40,8 @@ export const apiBaseEndPoints = {
     hipi: 'https://hipigwapi.zee5.com/api',
     app: 'https://preprod.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
-    charmboard:'https://mapi.charmboard.com',
+    charmboard:
+    'https://mapi.charmboard.com',
     login: 'https://whapi.zee5.com/v1/user',
     whapi: 'https://whapi-prod-node.zee5.com',
     otp: 'https://b2bapi.zee5.com',

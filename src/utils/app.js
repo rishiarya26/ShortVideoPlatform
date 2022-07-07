@@ -2,7 +2,7 @@ import canUseDom from 'can-use-dom';
 import cloneDeep from 'lodash/cloneDeep';
 import { setItem } from './cookie';
 import { GUEST_TOKEN, NO_SUPPORT } from '../constants';
-import { commonEvents } from '../analytics/mixpanel/events';
+import { toTrackMixpanel } from '../analytics/mixpanel/events';
 import { track } from '../analytics';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
@@ -39,66 +39,41 @@ export const generateUUID = persist => {
   if (persist) {
     let expireTime = new Date();
     expireTime = new Date(expireTime?.getTime() +3600 * 1000 * 24 * 365 * 10);
-   
     setItem('guest-token',uuid,{ path: '/', expires: expireTime?.toGMTString() });
   }
   return uuid;
 };
 
 
-export const share = (id, videoActiveIndex=null, toTrackMixpanel=null) => {
- 
-  console.log(id)
-  // const url = document?.location?.href;
-  // let domain = (new URL(url));
-  // domain = domain?.hostname;
-  // const finalUrl = (id && domain && `https://${domain}/video${id}`) || document?.location?.href;
-  // console.log(`https://${domain}/video/${id}`)
-  // console.log(finalUrl)
-  if (navigator.share) {
-    toTrackMixpanel && videoActiveIndex && toTrackMixpanel(videoActiveIndex,'share');
-   try{ 
-    const url = document?.location?.href;
-    let domain = (new URL(url));
-    domain = domain?.hostname;
-    const finalUrl = (id && domain && `https://${domain}/video/${id}`) || document?.location?.href;
-   
-    // const canonicalElement = document.querySelector('link[rel=canonical]');
-    // const url = canonicalElement?.href || document.location.href;
-    return navigator.share({
-      url : finalUrl
-    });
-  }catch(e){
-    alert('something went wrong',e)
-  }
-  }
-  return Promise.reject(NO_SUPPORT);
-};
+export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' }) => {
+  console.log("tyee",type)
+ const mixpanel = {
+   video : toTrackMixpanel &&  toTrackMixpanel('share',{pageName:pageName, tabName:tabName && tabName},{content_id:id, userId:creatorId, userName:userName }),
+   profile : ''
+ }
 
-export const shareProfile = (id, videoActiveIndex=null, toTrackMixpanel=null) => {
- 
-  console.log(id)
-  // const url = document?.location?.href;
-  // let domain = (new URL(url));
-  // domain = domain?.hostname;
-  // const finalUrl = (id && domain && `https://${domain}/video${id}`) || document?.location?.href;
-  // console.log(`https://${domain}/video/${id}`)
-  // console.log(finalUrl)
   if (navigator.share) {
-    // toTrackMixpanel && videoActiveIndex && toTrackMixpanel(videoActiveIndex,'share');
    try{ 
+   type && mixpanel[type];
     const url = document?.location?.href;
+    console.log("url",url)
     let domain = (new URL(url));
     domain = domain?.hostname;
-    const finalUrl = (id && domain && `https://${domain}/${id}`) || document?.location?.href;
    
+    const shareUrl = {
+      video : id && domain &&`https://${domain}/video/${id}`,
+      profile : id && domain && `https://${domain}/${id}`
+    }
+    console.log("tyeefinal",shareUrl[type])
+     const finalUrl = (type && (shareUrl[type])) || document?.location?.href;
+     console.log("final",finalUrl)
     // const canonicalElement = document.querySelector('link[rel=canonical]');
     // const url = canonicalElement?.href || document.location.href;
     return navigator.share({
       url : finalUrl
     });
   }catch(e){
-    alert('something went wrong',e)
+    console.error('something went wrong during share',e)
   }
   }
   return Promise.reject(NO_SUPPORT);

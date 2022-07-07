@@ -12,15 +12,18 @@ import CharmCardRecipe from "../card/recipe";
 import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
+import useIntersect from "../../../hooks/use-intersect";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
-const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
-   deleteFilteredSavedItem, idToScroll,onSavedExpandToggle}) =>{
+const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
+   deleteFilteredSavedItem, idToScroll, pageName, tabName}) =>{
  const [items, setItems] = useState({});
  const [loading, setLoading] = useState(loader);
  const [topCharms, setTopCharms] = useState(null);
  const [expand, setExpand] = useState(false);
  const [selectedIndex, setSelectedIndex] = useState(null);
  const [firstScroll, setFirstScroll] = useState(true);
+ const [productIdChange, setProductIdChange] = useState();
 
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
   items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
@@ -56,6 +59,10 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
       setSelectedIndex(index);
    },[100]) 
 }   
+
+const onProductChange = (id)=>{
+  setProductIdChange(id);
+}
 
  const getCharmsData = async() =>{
      try{
@@ -145,6 +152,20 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
        display : selectTab()
    }
     const onTabChange=(selected)=>{
+      try{
+        selected === 0 ?
+        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId}) :
+        selected === 1 ?
+        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId}):
+        selected === 2 ?
+        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId}) :
+        selected === 3 ?
+        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId}) :
+        selected === 4 &&
+        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId})
+     }catch(e){
+        console.error('mixpanel issue in tab change on shop')
+     }
         const scrollToElemant = {
            0 : outfitRef,
            1 : accRef,
@@ -156,7 +177,7 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
     }
 
     const onScroll = () => {
-      console.log(inViewOutfit, inViewAcc, inViewBeauty, inViewHair, inViewRecipe)
+      // console.log(inViewOutfit, inViewAcc, inViewBeauty, inViewHair, inViewRecipe)
        if(!inViewAcc && !inViewBeauty && !inViewHair && !inViewRecipe && inViewOutfit){
           setSelectedIndex(0);
        }
@@ -232,8 +253,7 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
                  </div>
     }
 
-    const getOrigin =(url)=>{
-      console.log("URL",url)
+    const getBrand =(url)=>{
        if(!url){
          return ''
        }else{
@@ -244,7 +264,6 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
         }else{
           finalOrigin = origin.split('.')[0]
         }
-        console.log('origin **',finalOrigin)
         if(finalOrigin){
           return finalOrigin 
         }
@@ -293,20 +312,26 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
          <div ref={outfit} id='outfit'>
         {(items?.outfit?.length > 0 || items?.accessories?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">STYLE INSPIRATION FROM THIS LOOK</div>} 
             {items && items?.outfit?.map((item,id) =>{
-              console.log("ading-final",item?.card_id, idToScroll,3935255)
+              // console.log("ading-final",item?.card_id, idToScroll,3935255)
          return <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
            <CharmCard 
              key = {id}
              id={item?.card_id}
              thumbnail = {item?.product_img_url}
              title = {item?.title}
-             shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
+             shopName = {item?.product_url ? getBrand(item?.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
              category = {item?.category}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             productName={item?.subsub_category}  
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
          />
          </div>
         })}
@@ -323,13 +348,19 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              id={item?.card_id}
              thumbnail = {item?.product_img_url}
              title = {item?.title}
-             shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
+             shopName = {item?.product_url ? getBrand(item?.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
              category = {item?.category}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             productName={item?.subsub_category}
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
          />
          </div>
          ))}
@@ -366,7 +397,7 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              id={item?.card_id}
              thumbnail =  {item?.product_rounded_img_url || null}
              title = {item?.title}
-             shopName = {(item?.product_url ?  getOrigin(item?.product_url): '')}
+             shopName = {(item?.product_url ?  getBrand(item?.product_url): '')}
              shopNameImg={item?.camp_img_url || null}
              shopLink = {item?.product_url}
              ribbonData={item?.card_labels || []}
@@ -377,6 +408,12 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              index={id}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             productName={item?.subsub_category}
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
          />
          </div>
           ))}
@@ -414,7 +451,7 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              id={item?.card_id}
              thumbnail = {item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url}
              title = {item?.title}
-             shopName = {item?.product_url ? getOrigin(item.product_url): ''}
+             shopName = {item?.product_url ? getBrand(item.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
              ribbonData={item?.card_labels || []}
@@ -425,6 +462,12 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              index={id}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             productName={item?.subsub_category}
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
            />
            </div>
           ))}
@@ -452,6 +495,12 @@ const CharmPreview = ({charmId, initalExpand = false, charms, loader, savedItems
              ribbonData={item?.card_labels || []}
              actualPrice = {item?.actual_price}
              salePrice={item?.sale_price}
+             productName={item?.subsub_category}
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
              shopNameImg={item?.camp_img_url || null}
            />
            </div>

@@ -1,16 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 import fallbackImg from '../../../../public/images/fallback-charms.png'
 import CardRibbon from "../../card-ribbon";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import useIntersect from "../../../hooks/use-intersect";
 
-const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice}) =>{
+const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId
+}) =>{
+ 
+       useEffect(()=>{
+          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})
+       },[productIdChange])
+ 
+       const onProductInView =(entry)=>{
+          if(entry?.isIntersecting){
+             id !== productIdChange && onProductChange(id);
+          }
+        }
+          const [beautyProductRef] = useIntersect({
+            callback: onProductInView,
+            rootMargin: '100px',
+            threshold: [0.85, 0.85]
+            });  
+ 
+         const onProductClick= ()=>{
+          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})  
+          window?.open(shopLink)
+         }   
     const [show, setShow] = useState(false);
 
     return(
     <>
            {/* Card div */}
-           <div className="flex flex-col w-full my-4 shadow-md">
+           <div ref={beautyProductRef} className="flex flex-col w-full my-4 shadow-md">
             <div className={category === 'beauty' ? "flex head_bg bg_beauty w-full h-14 ":
              "flex head_bg bg_hair w-full h-14 "
              }>
@@ -27,9 +51,12 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
                <div className="flex w-1/2">
                {thumbnail && <Img data={thumbnail}  fallback={fallbackImg?.src}/> }
                </div>
-                {thumbnailProduct ? <div onClick={()=> window?.open(shopLink)} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-
-                <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
+                {thumbnailProduct ? 
+                <div onClick={()=> {
+                    onProductClick()
+                    window?.open(shopLink)}} 
+                    className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
+                  <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                   <p className="text-xs px-2 h-44 text-gray-600">{title && title}</p>

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import useDrawer from '../../../hooks/use-drawer';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
@@ -74,8 +75,14 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
         otp
       };
       try {
+        toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
         const response = await verifyOTP(payload);
         if (response.data.status === 200) {
+          try{
+            toTrackMixpane('loginSuccess',{method:'phone', pageName: 'login'})
+          }catch(e){
+            console.error('mixpanel - login verify otp error')
+          }
           showMessage({ message: t('SUCCESS_LOGIN') });
           if(device === 'desktop'){
              close();
@@ -85,6 +92,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
           }
         }
       } catch (error) {
+        toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
         showMessage({ message: t('INCORRECT_OTP') });
       }
     },

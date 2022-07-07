@@ -34,7 +34,9 @@ const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
     const userId = response?.data?.userDetails?.id;
+    const userDetails = response?.data?.userDetails;
     localStorage.set('user-id', userId);
+    localStorage.set('user-details',userDetails);
     setTimeout(()=>{
       init();
     },200)

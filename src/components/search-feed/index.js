@@ -61,11 +61,15 @@ function SearchFeed({ router }) {
   const { ref = '' } = router?.query;
   const {type = 'normal'} = router?.query;
 
+  console.log('router',router?.query)
+
+  const pageName = 'Search Feed'
+
   // const { videoId = items?.[0]?.content_id } = router?.query;
 
 
   useEffect(() => {
-    inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
@@ -124,6 +128,13 @@ function SearchFeed({ router }) {
       data && setActiveVideoId(videoId);
   };
 
+    /* mixpanel - monetization cards impression */
+    useEffect(()=>{
+      // console.log("aAAAADDD",shop?.adData)
+      // shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+    },[shop])
+   /************************ */ 
+
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
   const validItemsLength = items?.length > 0;
@@ -171,7 +182,7 @@ function SearchFeed({ router }) {
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
       shopContent.type = response?.type;
-      shopContent.adData = response?.adData;
+      shopContent.adData=response?.adData;
     } catch (e) {
       console.log('error in canShop');
     }

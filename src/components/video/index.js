@@ -98,19 +98,19 @@ function Video(props) {
    threshold: [0.30, 0.75]
    });
 
-   useEffect(()=>{
-         // console.log("id",props?.id, props?.activeVideoId);
-   },[props?.activeVideoId]) 
+   // useEffect(()=>{
+   //       // console.log("id",props?.id, props?.activeVideoId);
+   // },[props?.activeVideoId]) 
 
-   useEffect(()=>{
-      if(props?.comp === 'feed'){
-      if(props.initialPlayStarted && play === true){
-      props?.toTrackMixpanel(props.videoActiveIndex,'pause');
-      }else{
-      prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
-      }
-      }
-   },[play])
+   // useEffect(()=>{
+   //    if(props?.comp === 'feed'){
+   //    if(props.initialPlayStarted && play === true){
+   //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
+   //    }else{
+   //    prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
+   //    }
+   //    }
+   // },[play])
 
    const handleUpdateSeekbar = e => {
    const percentage = (e.target.currentTime / e.target.duration) * 100;
@@ -299,15 +299,14 @@ function Video(props) {
          saved={props.saved}
          profileFeed={props?.profileFeed}
          videoId={props.id}
-         videoActiveIndex={props?.videoActiveIndex}
-         toTrackMixpanel={props?.toTrackMixpanel}
          activeVideoId={props?.activeVideoId}
          comp={props?.comp}
          pageName={props?.pageName}
+         tabName={props?.tabName}
          shopType={props?.shopType}
          charmData = {props?.charmData}
          onCloseChamboard={props?.onCloseChamboard}
-         shopCards={props?.shopCards}
+         creatorId={props?.creatorId}
          adCards={props?.adData}
          />
       {/* TO-DO  comdition acc to comp */}
@@ -321,6 +320,8 @@ function Video(props) {
          loading={props?.loading}
          shopType={props?.shopType}
          setClose={props?.setClose}
+         pageName={props?.pageName}
+         tabName={props?.tabName}
          />
       )
       ) : (
@@ -330,6 +331,8 @@ function Video(props) {
          profileFeed={props.profileFeed}
          comp="profile"
          loading={props?.loading}
+         pageName={props?.pageName}
+         tabName={props?.tabName}
          />
       )
       )}

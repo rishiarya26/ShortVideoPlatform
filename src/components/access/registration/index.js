@@ -7,7 +7,7 @@ import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 import Toggle from '../../commons/svgicons/toggle';
 import CircularProgress from '../../commons/circular-loader-small';
-import { commonEvents } from '../../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
 import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
@@ -131,15 +131,16 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
 
   const sendData = async () => {
     try {
+      const methodMixpanel = data?.type && data.type === 'email' ? 'email' : data.type === 'mobile' && 'phone';
+      toTrackMixpanel('signupInitiated',{method : methodMixpanel, pageName:'signup'})
       const response = await registerUser(data);
       console.log("user registered",response.status)
       // console.log("suces rep",response)
       if (response.status === 'success') {
         /* Mixpanel */
         try{
-          const method = data?.type && data?.type === 'email' ? 'Email' : data?.type === 'mobile' && 'Mobile';
         try{
-          mixpanel('Signup',method);
+          toTrackMixpanel('signupSuccess',{method : methodMixpanel, pageName:'signup'})
         fbq.defEvent('CompleteRegistration');
       }catch(e){
         console.log('error in fb or mixpanel event')
@@ -157,6 +158,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
       }
     } catch (e) {
       if (e.status === 'fail') {
+        toTrackMixpanel('signupFailure',{method : methodMixpanel, pageName:'signup'})
         console.log("user not registered",e)
         showMessage({ message: e.message });
       }

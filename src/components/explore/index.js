@@ -18,7 +18,7 @@ import Like from '../commons/svgicons/like-outlined';
 import { numberFormatter } from '../../utils/convert-to-K';
 import detectDeviceModal from "../open-in-app";
 import useDrawer from '../../hooks/use-drawer';
-import { toLower } from 'lodash';
+import { debounce, toLower } from 'lodash';
 import dynamic from 'next/dynamic';
 import fallbackUsers from '../../../public/images/users.png';
 import fallbackVideos from '../../../public/images/video.png';
@@ -35,7 +35,7 @@ import SwiperCore, {
   Autoplay,Pagination,Navigation
 } from 'swiper';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
@@ -62,9 +62,23 @@ function Explore() {
   const [crousalItems, setCrousalItems] = useState([]);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
-  const [offset, setOffset] = useState(2)
+  const [offset, setOffset] = useState(2);
+  // const [scrollPosition, setPosition] = useState({ scrollX: 0, scrollY: 0 })
+
+  // useEffect(() => {
+  //  function updatePosition() {
+  //      setPosition({ scrollX: window.scrollX, scrollY: window.scrollY })
+  //  }
+
+  //  window.addEventListener('scroll', updatePosition)
+  //  updatePosition()
+
+  //  return () => window.removeEventListener('scroll', updatePosition)
+  // }, [])
 
   const {show} = useDrawer();
+
+  const pageName = 'Discover';
 
   useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
@@ -116,7 +130,7 @@ function Explore() {
     // console.log("8787878",additionalBanner, crousalData)
     // crousalData.shift(additionalBanner.data);
     // console.log(crousalData)
-    setCrousalItems(crousalData)
+    setCrousalItems(crousalData);
     setData(data?.data);
   };
 
@@ -167,17 +181,24 @@ function Explore() {
   }
 
   useEffect(()=>{
-      const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Discover';
+      // const mixpanelEvents = commonEvents();
+      // mixpanelEvents['Page Name'] = 'Discover';
       fbq.event('Screen View');
-      track('Screen View',mixpanelEvents );
+      // track('Screen View',mixpanelEvents );
+      toTrackMixpanel('screenView',{pageName:pageName})
       trackEvent('Screen_View',{'Page Name' : 'Explore'})
       window.onunload = function () {
       window?.scrollTo(0, 1);
     }
   },[])
 
-  const onBannerClick =(contentType, id)=>{
+  const debounceScroll = debounce((e,content,type)=>{
+    // console.log("WWWWWW", e, scrollPosition)
+    toTrackMixpanel('contentBucketSwipe',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:'NA',carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:type})},100)
+
+  const onBannerClick =(contentType, id, index)=>{
+    const item = crousalItems?.length>0 && crousalItems?.[index];
+    toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
     toRedirect?.[contentType](id);
     // (data?.redirectUrl && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
   }
@@ -214,6 +235,21 @@ function Explore() {
               }} 
               pagination={{"clickable": true}} 
               className="mySwiper crousal-swiper"
+              onSwiper={swiper => {
+                const {
+                  activeIndex, slides
+                } = swiper;
+                const item = crousalItems?.length>0 && crousalItems?.[0];
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+              }}
+              onSlideChange={swiperCore => {
+                const {
+                  activeIndex, slides
+                } = swiperCore;
+                const item = crousalItems?.length>0 && crousalItems?.[activeIndex];
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+              }
+              }
             > 
               {crousalItems?.length > 0  && crousalItems.map((data,id)=>
                  (
@@ -224,9 +260,9 @@ function Explore() {
                      key={id} 
                      id={id} 
                      onClick={()=> data?.contentType === 'User' ?
-                      onBannerClick(data?.contentType, data?.user?.userName) :
-                    data?.contentType === 'Hashtag' ? onBannerClick(data?.contentType, data?.displayName) :
-                    onBannerClick(data?.contentType, data?.id)
+                      onBannerClick(data?.contentType, data?.user?.userName, id) :
+                    data?.contentType === 'Hashtag' ? onBannerClick(data?.contentType, data?.displayName, id) :
+                    onBannerClick(data?.contentType, data?.id, id)
                   } 
                      className="carousel_item bg-gray-300 min-w-full relative">
                        <Img data={data?.bannerUrl} title={data?.name || data?.displayName}/>
@@ -252,7 +288,9 @@ function Explore() {
           return (
             content?.widgetContentType === 'Video' ? (
               <div key={id} className="p-2 tray">
-                <div onClick={()=>toHashtagDetails(content?.widgetName)} className="w-full flex mb-2 justify-between">
+                <div onClick={()=>{
+                  toTrackMixpanel('viewMoreSelected',{pageName:pageName},{carousalType:content?.widgetContentType,carousalId:content?.widgetHashtag?.id||content?.widgetId,carousalName:content?.widgetHashtag?.name||content?.widgetName})
+                  toHashtagDetails(content?.widgetHashtag?.name || content?.widgetName)}} className="w-full flex mb-2 justify-between">
                   <div className="flex">
                     <div className="p-2 rounded-full border-2 border-gray-300 mr-2">
                       <Hash />
@@ -267,11 +305,14 @@ function Explore() {
                   </div>
                 </div>
 
-                <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
+                <div onScroll={(e)=>debounceScroll(e,content, 'Video')} className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                      if(id > 5) return null;
                     return (
-                      <div key={id} id={content?.widgetName} onClick={(e)=>toSearchFeed(e, d?.video?.id )} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
+                      <div   key={id} id={content?.widgetName} 
+                      onClick={(e)=>{
+                        toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', ugcId:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
+                        toSearchFeed(e, d?.video?.id )}} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
                         {d?.video?.shoppable === true && <div className="absolute top-2 right-2 z-1">
                            <Cart/>
@@ -292,17 +333,25 @@ function Explore() {
                 <div key={id} className="p-2 circle_tray">
                   <div className="w-full flex justify-between">
                     <p className="text-sm font-medium">{content?.widgetName}</p>
-                    <div onClick={()=> toUserList(content?.widgetName)} className="flex items-center justify-center">
+                    <div onClick={()=> {
+                      toTrackMixpanel('viewMoreSelected',{pageName:pageName},{carousalType:'Creator Profile',carousalId:content?.widgetId,carousalName:content?.widgetName})
+                      // toUserList(content?.widgetName)
+                    }}
+                       className="flex items-center justify-center">
+    
                       <RightArrow />
                     </div>
                   </div>
-                  <div className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
-                    
+                  <div onScroll={(e)=>debounceScroll(e,content,'Creator Profile')} className="flex min-w-full overflow-x-auto min-h-32 no_bar pt-2">
                       { content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                          if(id > 5) return null;
                         return (
                           // <>
-                          <div key={id} onClick={()=>router?.push(`/@${d?.user?.userName}`)} className="my-1 px-2 flex flex-col justify-center items-center">
+                          <div key={id} 
+                          onClick={()=>{
+                            toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetId,carousalName:content?.widgetName,carousalType:'Creator Profile', creatorId:d?.id, creatorName:`${d?.firstName || ''} ${d?.lastName || ''}`})
+                            router?.push(`/@${d?.user?.userName}`)
+                          }} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
                                  </div>

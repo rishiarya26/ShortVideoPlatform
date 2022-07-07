@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { track } from '../../../analytics';
-import { commonEvents } from '../../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../../analytics/mixpanel/events';
 // import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
 import { userLogin } from '../../../sources/auth';
@@ -33,24 +33,27 @@ export default function Email({
       e.preventDefault();
       setPending(true);
       try {
+        toTrackMixpanel('loginInitiated',{method:'email', pageName:'login'})
         const finalData = { ...data };
         finalData.type = 'email';
         const response = await userLogin(finalData);
         if (response.status === 'success') {
-         device === 'mobile' && router?.push({
-            pathname: '/feed/for-you'
-          });
-          if(device === 'desktop'){
-            close();
-          }
-          /* Mixpanel */
-          try{
-            mixpanel('Login');
+           /* Mixpanel */
+           try{
+            toTrackMixpanel('loginSuccess',{method:'email', pageName:'login'})
           fbq.defEvent('CompleteRegistration');
         }catch(e){
           console.log('error in fb or mixpanel event')
         }
-           /* Mixpanel */
+           /* Mixpanel */        
+         if(device === 'mobile'){
+            router?.push({
+            pathname: '/feed/for-you'
+          });
+          }
+          if(device === 'desktop'){
+            close();
+          }
           showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);
 
@@ -58,6 +61,7 @@ export default function Email({
       } catch (e) {
         showMessage({ message: t('FAIL_EMAIL_LOGIN') });
         setPending(false);
+        toTrackMixpanel('loginFailure',{method:'email',pageName:'login'})
       }
     },
     signup: async e => {

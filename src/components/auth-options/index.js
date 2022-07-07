@@ -10,7 +10,7 @@ import DeskSignup from '../desk-signup'
 import { localStorage } from '../../utils/storage';
 import useSnackbar from '../../hooks/use-snackbar';
 
-export default function AuthOptions({showMessage}) {
+export default function AuthOptions({showMessage, pageName, tabName=null}) {
   const [showLoginOptons, setShowLoginOptons] = useState(true);
   const [loading, setLoading] = useState(true);
   const [authMethod, setAuthMethod] = useState(null);
@@ -43,9 +43,9 @@ export default function AuthOptions({showMessage}) {
       :
       showLoginOptons ? 
         // <Suspense fallback={<div>Loading...</div>}> 
-        <Login toggle={toggle} loading={loading} setAuth={toLoginOptions}/>
+        <Login toggle={toggle} loading={loading} setAuth={toLoginOptions} pageName={pageName} tabName={tabName}/>
         // {/* </Suspense> */}
-        : <Signup toggle={toggle} loading={loading} setAuth={toLoginOptions}/>}
+        : <Signup toggle={toggle} loading={loading} setAuth={toLoginOptions} pageName={pageName} tabName={tabName}/>}
     </>
   );
 }

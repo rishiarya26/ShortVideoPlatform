@@ -28,6 +28,8 @@ const options = (methodName, body, headersOpt = {}) => {
       ...body && { body: JSON.stringify(body) },
       headers: {
         Accept: 'application/json',
+        // 'content-type': 'application/json',
+        // 'guest-token': getUserId(),
         ...headersOpt
       }
     };

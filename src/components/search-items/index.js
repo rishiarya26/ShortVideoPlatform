@@ -12,6 +12,7 @@ import RightArrow from "../commons/svgicons/right-arrow";
 import SearchBlack from "../commons/svgicons/search-black";
 import { getSearchResults } from "../../sources/search/search";
 import { trimHash } from "../../utils/string";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 
 async function search(searchTerm, setSuggestions) {
     /* eslint-disable no-param-reassign */
@@ -36,6 +37,8 @@ const SearchItems = ({router,type})=>{
     const [suggestions, setSuggestions] = useState([]);
     const [searchHistory, setSearchHistory] = useState([])
     const [showSuggestions,setShowSuggestions] = useState(false)
+
+    const pageName = (type === 'explore') ? 'Discover' : (type === 'results') && 'Discover Search Results';
     
     useEffect(()=>{
         if(type === 'results'){
@@ -61,6 +64,7 @@ const SearchItems = ({router,type})=>{
    }
 
     const handleSearch=()=>{
+        toTrackMixpanel('searchBtnClicked',{pageName:pageName},{query: trimHash(searchTerm || '')})
         setShowSuggestions(false)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
         searchHis && removeItem(searchHis);
@@ -83,6 +87,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
+        toTrackMixpanel('searchSuggSelected',{pageName:pageName},{query:searchTerm, suggestionSelected:value})
         router?.push(`/search?term=${value}`);
     }
 
@@ -179,10 +184,15 @@ const SearchItems = ({router,type})=>{
               name="Search"
               value={searchTerm}
               placeholder="Search" 
-              onClick={()=>setShowSuggestions(true)}
+              onClick={()=>{
+                toTrackMixpanel('searchInitiated',{pageName:pageName})  
+                setShowSuggestions(true)}}
               onKeyPress={onKeyboardEnter}
             />
-            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" onClick={()=>setSearchTerm('')}>
+            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" 
+             onClick={()=>{
+                 toTrackMixpanel('searchCancel',{pageName: pageName},{query: searchTerm})
+                 setSearchTerm('')}}>
             <Close />
             </button>}
            {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-2 p-4">
@@ -190,6 +200,7 @@ const SearchItems = ({router,type})=>{
             </div>}
             </div>
            {showSuggestions && info.list[type]}
+           {showSuggestions && searchTerm?.length > 2 && toTrackMixpanel('searchSuggLoaded',{pageName:pageName},{query:searchTerm, resultsLength:suggestions?.length})}
         </div>
     )
 }

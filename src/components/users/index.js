@@ -19,12 +19,12 @@ import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
-import { shareProfile } from '../../utils/app';
+import { share } from '../../utils/app';
 import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
@@ -57,6 +57,9 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
+
+  const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
+  const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
 
   useEffect(()=>{
     setIsFollowing(isFollow);
@@ -112,11 +115,11 @@ function Users({
   
   useEffect(() => {
     setTimeout(()=>{
-      const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Profile';
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Profile'})
-      track('Screen View',mixpanelEvents );
+      if(type === 'others'){
+        toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName})
+      }
     },500);
   }, []);
 
@@ -159,16 +162,34 @@ function Users({
   // }
 
   const followUser = async(followerId,userId, follow) =>{
+    try{
     const response = await toFollow({ userId:followerId,followerId:userId,follow:follow});
     if(response){
+      if(isFollowing){
+        toTrackMixpanel('unFollow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id})
+      }else{
+        toTrackMixpanel('follow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id});
+      }  
      setIsFollowing(!isFollowing);
   } 
+}catch(e){
+console.log("onClick follow btn issue ",e);
+}
   }
 
   const userId = localStorage?.get('user-id');
   const followFunc = !isFollowing;
 
-  const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))
+  const onFollowClick = ()=>{
+    if(isFollowing){
+     toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Unfollow - Creator Profile', type: 'Button'},{userName:userHandle, userId:id})
+    }else{
+      toTrackMixpanel('cta',{pageName:pageName, tabName:tabName, name: 'Follow - Creator Profile', type: 'Button'},{userName:userHandle, userId:id})
+    } 
+    followUser(id, userId, followFunc)
+  }
+
+  const toShowFollow = useAuth( ()=>show('',login, 'medium',{pageName:pageName, tabName:tabName}), onFollowClick)
 
   const info = {
     header: {
@@ -193,7 +214,7 @@ function Users({
       rightButton: {
         others:   
       <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
+        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>share({id: id, type:'profile'}))}
         className="flex relative py-2  px-3 text-center items-end flex-col"
       >
       <ShareComp type={'profile'}/>
@@ -286,8 +307,8 @@ function Users({
   //   liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
   // }
 
-  const toShowFollowing = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=following`))
-  const toShowFollowers = useAuth( ()=>show('',login, 'medium'), ()=>router?.push(`/profile-detail/${id}?type=followers`))
+  const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=>router?.push(`/profile-detail/${id}?type=following`))
+  const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=>router?.push(`/profile-detail/${id}?type=followers`))
 
   return (
     <>

@@ -23,6 +23,8 @@ import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
+import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
+import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -150,6 +152,10 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
+  const [session, setSession] = useState(true);
+  const [sessionTimer, setSessionTimer] = useState(0);
+  const [timerArr, setTimerArr] = useState([])
+  const [enableSession , setEnableSession] = useState(true)
 
   const router = useRouter();
   
@@ -278,21 +284,118 @@ function Hipi({
       }
     }, [router.events])
 
-    // const showCookies = ()=>(
-    //   <>
-    //  { setTimeout(()=>(
-    //     <Cookies/>
-    //   ),[1000])}
-    //   </>
-    // )
+ /* Extract out Mixpanel - Custom session event logic */   
 
+  // let setTimeoutsTracker = [];
+  // function logout() {
+  //      console.error("reset - session end - from logout")
+  //      toTrackMixpanel('sessionEnd')
+  //      setTimeoutsTracker = null;
+  //      clearTimeouts();
+  //      setSessionTimer(undefined);
+  //      window.sessionStorage.setItem("sessionT",undefined);
+  //      window.sessionStorage.setItem("sessionEventTrack",null);
+  //      clearTimeouts();
+  // }
+  
+
+//   const setTimeouts = (timer) => {
+//     setTimeoutsTracker = setTimeoutsTracker ===  (undefined || null) ? [] : setTimeoutsTracker;
+//     setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && logout()}, 1000 * 60));
+//   };
+
+//   const clearTimeouts = () => {
+//       if (setTimeoutsTracker?.length >0){ 
+//         setTimeoutsTracker.map((data)=>{
+//           clearTimeout(data)
+//         })
+//   };
+// }
+
+  // const resetTimeout = () => {
+  //  let timer =  window.sessionStorage.getItem("sessionT");
+  //     if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
+  //       console.error("reset - session start R");
+  //       toTrackMixpanel('sessionStart')
+  //       setSessionTimer(0);
+  //       window.sessionStorage.setItem("sessionEventTrack",undefined);
+  //       window.sessionStorage.setItem("sessionT",0);
+  //       timer = 0;
+  //     }
+  //     clearTimeouts();
+  //     setTimeouts(timer);
+  // };
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log("reset timer ",sessionTimer)
+  //     if(sessionTimer < 6){
+  //     setSessionTimer(sessionTimer+1)
+  //     window.sessionStorage.setItem("sessionT",sessionTimer+1);
+  //     }
+  //     else{
+  //      if( sessionTimer === 6) { 
+  //        console.error('reset - session end')
+  //        toTrackMixpanel('sessionEnd')
+  //        console.error('reset - session start T')
+  //        toTrackMixpanel('sessionStart')
+  //       setSessionTimer(0)
+  //       window.sessionStorage.setItem("sessionT",0);
+  //       resetTimeout();
+  //      }
+  //     }
+  //   }, 1000 * 60);
+
+  //   return () => clearInterval(interval);
+  // });
+ /*************************** */
     useEffect(()=>{
+      // console.log("Router**",document.referrer)
+      // console.error("reset - session start")
+      // toTrackMixpanel('sessionStart')
+      // if(typeof document != "undefined"){
+      //   console.log('sessDoc',document?.referrer,document?.referrer?.includes('hipi.co.in'))
+      //   const timer =  window.sessionStorage.getItem("sessionT") === 'null' ? 0 : window.sessionStorage.getItem("sessionT");
+      //   if(timer !== null && document?.referrer?.includes('hipi.co.in')){
+      //     console.log('sessTimer',timer)
+      //     window.sessionStorage.setItem("sessionT",timer || 0);
+      //     setSessionTimer(timer || 0);
+      //   }else{
+      //     window.sessionStorage.setItem("sessionT",0);
+      //     setSessionTimer(0);
+      //     console.error("reset - session start");
+      //     toTrackMixpanel('sessionStart');
+      //   }
+      // }
+
+
       window.onload = function () {
+        // window.sessionStorage.setItem('sessionEventTrack',undefined)
         setTimeout(function () {
             setShowCookies(true);
         }, 5000);
     }
-    },[])
+
+    //   const events = [
+    //     'load',
+    //     'mousemove',
+    //     'mousedown',
+    //     'click',
+    //     'scroll',
+    //     'keypress',
+    //     'touchmove'
+    // ];
+
+    // events.forEach((data)=>{
+    //   window.addEventListener(data,resetTimeout);
+    // })
+    // return () => {
+    //   events.forEach((data)=>{
+    //     window.addEventListener(data,resetTimeout);
+    //     clearTimeouts();
+    //   })
+    // }
+  },[])
 
   return (
     <>

@@ -31,7 +31,7 @@ import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
 import ProductCards from '../product-cards';
@@ -62,8 +62,8 @@ const detectDeviceModal = dynamic(
 function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
-  profileFeed, videoId, toTrackMixpanel, videoActiveIndex, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard, shopCards,adCards
+  profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -71,9 +71,11 @@ function VideoSidebar({
   const [isSaved, setIsSaved] = useState(false);
   const { show } = useDrawer();
 
-  const info = { desktop: 'desktop', mobile: 'mobile' };
+  // const info = { desktop: 'desktop', mobile: 'mobile' };
+  const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
 
-  const value = useDevice(devices, [info.desktop, info.mobile]);
+
+  // const value = useDevice(devices, [info.desktop, info.mobile]);
 
 
   const { showSnackbar } = useSnackbar();
@@ -82,19 +84,17 @@ function VideoSidebar({
   // const { showSnackbar } = useSnackBar();
 
   const showLoginOptions = () => {
-    show('', login, 'medium');
+    show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
   };
 
   const like = () => {
      postReaction('like',socialId);
      setIsLiked({like : true});
      getVideoReactions(socialId, 'now', 'add');
-     const mixpanelEvents = commonEvents();
-     mixpanelEvents['UGC Id'] = activeVideoId;
-    //  mixpanelEvents['Creator Id'] = videoOwnersId;
-     const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-     mixpanelEvents['Page Name'] = compName;
-     track('UGC Liked',mixpanelEvents)
+     /* mixpanel - like */
+     toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
+     toTrackMixpanel('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+     /********* */
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
@@ -197,13 +197,12 @@ const checkSaveLook =()=>{
       single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
     };
 
-useEffect(()=>{
-},[reactionCount])
 
   /* check saved state & delete or add the item object from charm api & video Id 
   in saved-item in local storage object. */
 const handleSaveMoments = () =>{
   console.log('clicked ***',isSaved)
+
   const userId = localStorage?.get('user-id') || getItem('guest-token');
   if(isSaved){
   //   setIsSaved(false);
@@ -232,6 +231,7 @@ const handleSaveMoments = () =>{
   //     }
     }
     else{
+     
       setIsSaved(true);
       // add video id & object item to local storage
       const savedData = localStorage?.get(`saved-items${userId}`) || {videoIds : [], savedItems:[]}
@@ -292,12 +292,10 @@ const handleSaveMoments = () =>{
                 deleteReaction('like', socialId );
                 setIsLiked({like : false, reactionTime: 'now'});
                 getVideoReactions(socialId, 'now', 'delete')
-                const mixpanelEvents = commonEvents();
-                mixpanelEvents['UGC Id'] = activeVideoId;
-                // mixpanelEvents['Creator Id'] = videoOwnersId;
-                const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-                mixpanelEvents['Page Name'] = compName;
-                track('UGC Unliked',mixpanelEvents)
+                /* mixpanel - dislike */
+                toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
+                toTrackMixpanel('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+                /******************** */
               }}
             >
               <Liked />
@@ -334,8 +332,11 @@ const handleSaveMoments = () =>{
         </div>
       </div>
       <div
-        onClick={(value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
-          toTrackMixpanel ? ()=>share(videoId, videoActiveIndex, toTrackMixpanel) : ()=>share(videoId, videoActiveIndex))}
+        onClick={
+          // (value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
+          ()=>share({id:videoId,creatorId:videoOwnersId, userName:userName, pageName:pageName, tabName:tabName, type:'video'})
+          // )
+        }
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
         } "relative py-2  px-3 text-center items-end flex-col `}
@@ -372,6 +373,8 @@ const handleSaveMoments = () =>{
    videoId={activeVideoId}
    profileFeed={profileFeed}
    comp={comp}
+   pageName={pageName}
+   tabName={tabName}
    /> 
 }
       {canShop === 'success' && (!profileFeed
@@ -382,13 +385,22 @@ const handleSaveMoments = () =>{
           videoId={activeVideoId}
           profileFeed={profileFeed}
           comp={comp}
+          pageName={pageName}
+          tabName={tabName}
           />
           :
           <div
             className={`${
               type === 'feed' && saveLook ? 'block' : 'hidden'
             } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
-            onClick={handleSaveMoments}
+            onClick={()=>{handleSaveMoments();
+              try{
+                toTrackMixpanel('saveLook',{pageName:compName,tabName:(tabName && tabName) || null},{content_id:videoId})
+                toTrackMixpanel('shoppingPopUp',{pageName:compName, tabName:tabName && tabName|| null},{content_id:videoId})
+             }catch{
+              console.error('mixpanel issue - discover look click')
+             }
+            }}
           >
             <Shop text={shopType === 'recipe' ? (!isSaved ? 'LIST THE INGREDIENTS' : 'LIST THE INGREDIENTS ') : (!isSaved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK ')}  saved={isSaved}/>
           </div>

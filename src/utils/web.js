@@ -60,6 +60,29 @@ function getCanonicalUrl(orgUrl){
     return finalUrl;
   }
 }
+
+const getReffererPage = (reffereUrl) =>{
+  const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
+  let pageName = null;
+  console.log("**&&",refferUrl?.includes('/feed'), typeof document != "undefined", typeof refferUrl === 'string')
+  if(refferUrl && typeof refferUrl === 'string'){
+
+    reffereUrl?.includes('/feed') ? (pageName = 'Feed'):''
+    reffereUrl?.includes('/explore') && (pageName = 'Discover')
+    reffereUrl?.includes('/profile-feed') && (pageName = 'Profile Feed')
+    reffereUrl?.includes('/hashtag-feed') && (pageName = 'Hashtag Feed')
+    reffereUrl?.includes('/hashtag') && (pageName = 'Hashtag Details')
+    reffereUrl?.includes('/@') && (pageName = 'Creator Profile')
+    reffereUrl?.includes('/terms-conditions.html') && (pageName = 'Terms of Use')
+    reffereUrl?.includes('/community-guidelines.html') && (pageName = 'Community Guidelines')
+    reffereUrl?.includes('/privacy-policy.html') && (pageName = 'Privacy Policy')
+    reffereUrl?.includes('/login') && (pageName = 'Login')
+    reffereUrl?.includes('/signup') && (pageName = 'Signup')
+    reffereUrl?.includes('/search?term') && (pageName = 'Discover Search Results')
+  }
+  console.log("**&&**",pageName)
+  return pageName;
+}
            
 export {
   CopyToClipBoard,
@@ -68,6 +91,7 @@ export {
   updateCampaignId,
   getHostname,
   getUrl,
-  getCanonicalUrl
+  getCanonicalUrl,
+  getReffererPage
 };
 

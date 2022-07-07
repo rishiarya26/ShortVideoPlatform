@@ -12,7 +12,7 @@ export const init = () => {
   initiated = true;
 };
 export const track = (event, payload) => {
-  console.log(event,payload)
+  // console.log(event,payload)
   if (!initiated) init();
   trackEvent(event, payload);
 };

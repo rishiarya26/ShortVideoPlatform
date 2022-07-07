@@ -12,18 +12,25 @@ import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
 // import useSnackbar from '../../hooks/use-snackbar';
 import { useEffect } from 'react';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
-export default function Login({ toggle, loading, setAuth }) {
+export default function Login({ toggle, loading, setAuth, pageName, tabName=null }) {
   const { close } = useDrawer();
   const router = useRouter();
   const device = getItem('device-type')
+
+  useEffect(()=>{
+    toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login'})
+  },[])
 
   // const {showSnackbar} = useSnackbar();
   // useEffect(()=>{showSnackbar({message : 'working 3'})},[])
 
   const chooseComp = {
     mobile :   
-       <div onClick={()=>router.push('/login/phone?option=password')}>
+       <div onClick={()=>{
+        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Login',ctaName:'Phone or Email'})
+         router.push('/login/phone?option=password')}}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
@@ -53,7 +60,7 @@ export default function Login({ toggle, loading, setAuth }) {
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton loading={loading}/>
+        <GoogleButton loading={loading} type='login' />
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

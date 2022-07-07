@@ -10,16 +10,22 @@ import { useRouter } from 'next/router';
 import { GoogleButton } from '../social-login/google';
 import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
-export default function Signup({ toggle, setAuth }) {
+export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const router= useRouter();
   const { close } = useDrawer();
   const device = getItem('device-type')
 
+  useEffect(()=>{
+    toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Signup'})
+  },[])
 
   const chooseComp = {
     mobile :   
-      <div onClick={()=>router.push('/signup/phone')}>
+      <div onClick={()=>{
+        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Signup',ctaName:'Phone or Email'})
+        router.push('/signup/phone')}}>
       <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center w-full font-semibold">
@@ -49,7 +55,7 @@ export default function Signup({ toggle, setAuth }) {
       </div>
       <div className="socail flex flex-col w-full my-4">
         {chooseComp[device]}
-        <GoogleButton/>
+        <GoogleButton type='signup' pageName={pageName} tabName={tabName || null}/>
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

@@ -196,6 +196,8 @@ export default function Hipi(params) {
      {device === 'mobile' && type === 'self' &&
        <FooterMenu 
          selectedTab="profile"
+        //  pageName={type === 'self' ? 'My Profile' : type === 'others' && 'Creator Profile'}
+        //  tabName={''}
        />
      }
     </>

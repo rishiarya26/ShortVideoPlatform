@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import useIntersect from "../../../hooks/use-intersect";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
-const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice, shopNameImg}) =>{
+const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg}) =>{
+    useEffect(()=>{
+        productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})
+     },[productIdChange])
+
+     const onProductInView =(entry)=>{
+        if(entry?.isIntersecting){
+           id !== productIdChange && onProductChange(id);
+        }
+      }
+        const [recipeRef] = useIntersect({
+          callback: onProductInView,
+          rootMargin: '100px',
+          threshold: [0.85, 0.85]
+          });  
+
+       const onProductClick= ()=>{
+        toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})  
+        window?.open(shopLink)
+       }   
     return(
     <>
            {/* Card div */}
-           <div className="flex flex-col w-full my-4 shadow-md">
+           <div ref={recipeRef} className="flex flex-col w-full my-4 shadow-md">
             <div className="flex head_bg bg_hair w-full h-14 ">
                 <div className="heading w-1/2 flex justify-center items-center">
                     <p className="text-md text-white font-semibold px-2"><span className="numb-hair mr-2">{index}</span></p>
@@ -20,7 +42,8 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                     <Img data={thumbnailProduct}/>
                </div>
                 <div onClick={()=>
-                        window?.open(shopLink)} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
+                        {  onProductClick()
+                            window?.open(shopLink)}} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                     <Img data={thumbnail}/> 
                 </div>
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}

@@ -16,7 +16,7 @@ import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { trackEvent } from '../../analytics/firebase';
 import { getCanonicalUrl } from '../../utils/web';
 
@@ -34,6 +34,8 @@ function HashTag({router}) {
   const {item = ''} = router?.query;
   const {show} = useDrawer();
 
+  const pageName = 'Hashtag Details'
+
   // async function showPopUp(){
   //   show('', detectDeviceModal, 'extraSmall');
   //   setIsFetching(false);
@@ -41,11 +43,9 @@ function HashTag({router}) {
 
   useEffect(()=>{
     setTimeout(()=>{
-      const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Hashtag Details';
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Hashtag'})
-      track('Screen View',mixpanelEvents );
+      toTrackMixpanel('screenView',{pageName:pageName})
     },[500])
     window.onunload = function () {
       window?.scrollTo(0, 1);

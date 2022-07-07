@@ -55,7 +55,7 @@ function transformSuccess(resp) {
       payloadObject.video_url = videoUrl;
       payloadObject.content_description = d?.description;
       payloadObject.userId = d?.videoOwnersId || d?.videoOwners?.id;
-      payloadObject.videoOwnersId = d?.videoOwnersId;
+      payloadObject.videoOwnersId = d?.videoOwnersId || d?.videoOwners?.id;
       payloadObject.getSocialId = d?.getSocialId;
       payloadObject.id = d?.id;
       payloadObject.genre = d?.genre || null;

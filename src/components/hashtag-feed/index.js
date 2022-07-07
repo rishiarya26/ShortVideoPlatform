@@ -19,7 +19,7 @@ import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
@@ -50,12 +50,14 @@ function HashTagFeed({ router }) {
   const [offset, setOffset] = useState(2);
   const [loadMore, setLoadMore] = useState(true);
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
   const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   // const { type = 'all' } = router?.query;
+  const pageName = 'Hashtag Feed'
 
   const loaded = () => {
     setLoading(false);
@@ -94,21 +96,25 @@ function HashTagFeed({ router }) {
    loadItems();
   },[videoActiveIndex])
 
+  useEffect(()=>{
+    if(initialLoadComplete){
+      toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+    }
+  },[initialLoadComplete])
 
   useEffect(() => {
    setTimeout(()=>{ inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     // const guestId = getItem('guest-token');
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Page Name'] = 'Hashtag Feed';
     fbq.event('Screen View')
     trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
-    track('Screen View',mixpanelEvents );},500);
+      toTrackMixpanel('screenView',{pageName:pageName});
+  },500);
   }, []);
 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel(videoActiveIndex,'play')
+      toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
       ToTrackFbEvents(videoActiveIndex,'play')
       toTrackFirebase(videoActiveIndex,'play')
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -119,8 +125,16 @@ function HashTagFeed({ router }) {
   const onDataFetched = data => {
     let videos = data?.data;
     data && setItems(videos);
+    setInitialLoadComplete(true);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
   };
+
+  /* mixpanel - monetization cards impression */
+  useEffect(()=>{
+    // console.log("aAAAADDD",shop?.adData)
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+  },[shop])
+ /************************ */ 
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
@@ -141,8 +155,8 @@ function HashTagFeed({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
       toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
@@ -173,6 +187,7 @@ function HashTagFeed({ router }) {
       response?.isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
       shopContent.data = response?.data;
       shopContent.type = response?.type;
+      shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
     } catch (e) {
       console.log('error in canShop');
@@ -195,55 +210,6 @@ function HashTagFeed({ router }) {
     setsaveLook(!saveLook);
   };
 
-  /*******  Mixpanel *************/
-  const toTrackMixpanel = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const mixpanelEvents = commonEvents();
-
-    const toTrack = {
-      'impression' : ()=> track('UGC Impression', mixpanelEvents),
-      'swipe' : ()=> {
-        mixpanelEvents['UGC Duration'] = value?.duration
-        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
-        track('UGC Swipe', mixpanelEvents)
-      },
-      'play' : () => track('UGC Play', mixpanelEvents),
-      'pause' : () => track('Pause', mixpanelEvents),
-      'resume' : () => track('Resume', mixpanelEvents),
-      'share' : () => track('UGC Share Click', mixpanelEvents),
-      'replay' : () => track('UGC Replayed', mixpanelEvents),
-      'watchTime' : () => {
-        mixpanelEvents['UGC Consumption Type'] = value?.watchTime
-        mixpanelEvents['UGC Duration'] = value?.duration
-        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
-        track('UGC Watch Time',mixpanelEvents)
-      },
-      'cta' : ()=>{
-        mixpanelEvents['Element'] = value?.name
-        mixpanelEvents['Button Type'] = value?.type
-        track('CTAs', mixpanelEvents)
-      },
-      'savelook' : ()=>{
-        track('Save Look', mixpanelEvents)
-      }
-    }
-
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-
-    mixpanelEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    mixpanelEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    mixpanelEvents['Page Name'] = 'Feed';
-
-    toTrack?.[type]();
-  }
 
   const ToTrackFbEvents = (activeIndex, type, value) => {
     const item = items[activeIndex];
@@ -343,7 +309,7 @@ function HashTagFeed({ router }) {
 
   
  const onStoreRedirect = async ()=>{
-  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
+  toTrackMixpanel('cta',{pageName:pageName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
   fbq.event('App Open CTA')
   trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
@@ -417,7 +383,9 @@ try{
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
 
-              toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+              // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+              toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
               toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -426,6 +394,7 @@ try{
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                  toTrackMixpanel('skip',{pageName:pageName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                   viewEventsCall(activeVideoId,'skip')
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
@@ -476,7 +445,6 @@ try{
                       saved={item?.saveLook}
                       activeVideoId={activeVideoId}
                       comp="profile"
-                      pageName="hashtag"
                       profileFeed
                       loading={loading}
                       muted={muted}
@@ -484,7 +452,8 @@ try{
                       firstFrame={item?.firstFrame}
                       player={'single-player-muted'}
                       description={item?.content_description}
-                      adData = {shop?.adData}
+                      pageName={pageName}
+                      adData={shop?.adData}
                     />
 
                   </SwiperSlide>

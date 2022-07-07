@@ -13,8 +13,8 @@ async function getCharmboardData({ charmId }) {
       'charmboard'
     )}/v3.6/zee/charm/46930?charmId=${charmId}`;
     response = await get(apiPath,null,{webkey:'1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84',
-    'content-type': 'application/json'});    
-response.data.requestedWith = { charmId };
+    'content-type': 'application/json'});
+    response.data.requestedWith = { charmId };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.resolve({ data: '' });

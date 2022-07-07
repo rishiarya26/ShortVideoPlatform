@@ -7,7 +7,7 @@ import { CountryCode } from '../../commons/button/country-code';
 import { userLogin } from '../../../sources/auth';
 import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
 import { sendOTP } from '../../../sources/auth/send-otp';
-import { commonEvents } from '../../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
 import * as fbq from '../../../analytics/fb-pixel'
 import useDrawer from '../../../hooks/use-drawer';
@@ -47,22 +47,17 @@ export default function Mobile({
     return resp;
   }
 
-  const mixpanel = (type) =>{
-    const mixpanelEvents = commonEvents();
-    mixpanelEvents['Method'] = 'Mobile';
-    track(`${type} Result`,mixpanelEvents );
-  }
-
   const submit = {
     loginPassword: async () => {
       try {
+        toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'})  
         const finalData = { ...data };
         finalData.type = 'Mobile';
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await userLogin(finalData);
         if (response.status === 'success') {
           try{
-          mixpanel('Login')
+            toTrackMixpanel('loginSuccess',{method: 'phone', pageName: 'login'})  
           fbq.defEvent('CompleteRegistration');
         }catch(e){
           console.log('error in fb or mixpanel event')
@@ -76,16 +71,18 @@ export default function Mobile({
           showMessage({ message: t('SUCCESS_LOGIN') });
         }
       } catch (e) {
+        toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
         showMessage({ message: t('FAIL_MOBILE_LOGIN') });
       }
     },
     loginOtp: async () => {
       try {
+        toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'}) 
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
+          // toTrackMixpane('loginSuccess',{method:'phone'})
           setSeconds(59);
-          mixpanel('Login')
           fbq.defEvent('CompleteRegistration');
            if(device === 'mobile'){ 
              router?.push({
@@ -97,6 +94,7 @@ export default function Mobile({
         }
       } catch (e) {
         if (e.errorCode === 404) {
+          toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
           showMessage({ message: t('NOT_REGISTERED') });
         }
       }

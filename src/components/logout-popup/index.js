@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import useDialog from '../../hooks/use-dialog';
 import useDrawer from '../../hooks/use-drawer';
 import useSnackbar from '../../hooks/use-snackbar';
@@ -14,9 +15,10 @@ const device = getItem('device-type')
 
   const logout = () => {
   try{
+    toTrackMixpanel('logoutInitiated')
       localStorage.remove('tokens');
       localStorage.remove('user-id');
-     
+      toTrackMixpanel('logoutSuccess')
       // if(device === 'desktop'){
       //   closePopUp();
       // }else if(device === 'mobile'){
@@ -25,6 +27,7 @@ const device = getItem('device-type')
       // }
     }
     catch(e){
+      toTrackMixpanel('logoutFailure')
         showSnackbar({ message: 'Something went wrong' });
         console.log('errorww',e);
     }

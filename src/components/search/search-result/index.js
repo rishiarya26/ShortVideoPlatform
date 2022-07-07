@@ -9,6 +9,8 @@ import Sounds from '../sounds';
 import Hashtags from '../hash-tags';
 import SearchItems from '../../search-items';
 import { trimHash } from '../../../utils/string';
+import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
+import { DISCOVER_SEARCH_RESULTS } from '../../../constants';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -17,7 +19,8 @@ function SearchResult({router}) {
   useEffect(()=>{
     let item = router?.query?.term;
     item = item?.indexOf('#') === 0 ? trimHash(item) : item;
-    setSearchTerm(item)
+    setSearchTerm(item);
+    toTrackMixpanel('screenView',{pageName:DISCOVER_SEARCH_RESULTS})
   },[])
 
   useEffect(()=>{

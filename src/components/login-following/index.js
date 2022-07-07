@@ -23,7 +23,7 @@ const login = dynamic(
 //   }
 // );
 
-const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
+const LoginFollowing = ({pageName, tabName=null,toTrackMixpanel, activeIndex}) =>{
     const {show} = useDrawer();
 
     // const stores = {
@@ -44,7 +44,7 @@ const LoginFollowing = ({toTrackMixpanel, activeIndex}) =>{
     // }
 
     const showLoginOptions = () => {
-        show('', login, 'medium');
+        show('', login, 'medium',{pageName:pageName, tabName:tabName || ''});
       };
 
     return(

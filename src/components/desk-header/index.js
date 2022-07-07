@@ -17,6 +17,7 @@ import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
 import DeskSearch from "../desk-search";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
@@ -101,7 +102,9 @@ const redirectToFeed = ()=>{
              }
            {showlogoutMenu && 
             <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
-            <div onClick={()=>show('Logout', LogoutPopup, 'small')} className="flex items-center ">
+            <div onClick={()=>{
+               toTrackMixpanel('cta',{name: 'Logout'})
+               show('Logout', LogoutPopup, 'small')}} className="flex items-center ">
             <Logout/>
             <p className="text-base px-3">Logout</p>
             </div>

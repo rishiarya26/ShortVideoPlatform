@@ -7,9 +7,10 @@ import Tabs from '../commons/tabs/charmboard-maintab';
 import { localStorage } from '../../utils/storage';
 import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
-import Loader from './loader';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+// import Loader from './loader';
 
-function Charmboard({videoId, setClose, idToScroll }) {
+function Charmboard({videoId, setClose, idToScroll,pageName, tabName }) {
 const [charms, setCharms] = useState(null)   
 const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])
@@ -17,6 +18,8 @@ const [filteredItem, setFilteredItem] = useState(null);
 const [filteredSavedItem, setFilteredSavedItem] = useState(null);
 const [loading, setLoading] = useState(false);
 
+// const tabName = selectedIndex === 0 ? 'In This Video' : selectedIndex === 1 && 'Saved Moments'
+console.log("PT",pageName,tabName)
 const {close} = useDrawer();
 const getTopCharms = async() =>{
    if(!charms){
@@ -38,7 +41,12 @@ const getTopCharms = async() =>{
 }
 
 useEffect(()=>{getSavedMoments()
-   console.log('ading',idToScroll)
+   // console.log('ading',idToScroll)
+ try{
+      toTrackMixpanel('shopPageImp',{pageName:pageName,tabName:tabName},{content_id:videoId})
+   }catch(e){
+      console.error('mixpanel issue in shop page impression',e);
+   }
 },[])
 
 const getSavedMoments = () =>{
@@ -75,6 +83,14 @@ const fetchData = {
    1 : getSavedMoments
 }
 const onTabChange=(selected)=>{
+   try{
+      selected === 1 ?
+      toTrackMixpanel('cta',{pageName:pageName,name:'Saved Moments'},{content_id:videoId}) :
+      selected === 0 &&
+      toTrackMixpanel('cta',{pageName:pageName,name:'In This Video'},{content_id:videoId})
+   }catch(e){
+      console.error('mixpanel issue in tab change on shop')
+   }
    setSelectedIndex(selected);
 }
 
@@ -134,10 +150,10 @@ const compToShow = {
    0 :  <>
    {
    filteredItem ?
-    <CharmPreview key={filteredItem.id} id={filteredItem.id}  onExpandToggle ={ onExpandToggle}charmId = {filteredItem?.charm_id} charms={filteredItem} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll}/>
+    <CharmPreview key={filteredItem.id} id={filteredItem.id}  onExpandToggle ={ onExpandToggle}charmId = {filteredItem?.charm_id} charms={filteredItem} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll} videoId={videoId} pageName={pageName} tabName={tabName}/>
     :
     charms?.charmData?.map((item,id)=>(
-      <CharmPreview key={id} id={id}  onExpandToggle ={ onExpandToggle} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll}/>
+      <CharmPreview key={id} id={id}  onExpandToggle ={ onExpandToggle} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} comp='normal' idToScroll={idToScroll} videoId={videoId} pageName={pageName} tabName={tabName}/>
      ))
 }     
      </>,
@@ -145,12 +161,12 @@ const compToShow = {
    1 : <>
     {filteredSavedItem ?
     <CharmPreview key={filteredSavedItem.id} id={filteredSavedItem.id}  onExpandToggle ={ onSavedExpandToggle}charmId = {filteredSavedItem?.charm_id} charms={filteredSavedItem} initalExpand={false} loader={false} comp='saved'
-    deleteFilteredSavedItem={deleteFilteredSavedItem} idToScroll={idToScroll}/>
+    deleteFilteredSavedItem={deleteFilteredSavedItem} idToScroll={idToScroll} videoId={videoId} pageName={pageName} tabName={tabName}/>
     :
     savedItems && savedItems?.map((item,id)=>{
        item.expand = false;
        return <CharmPreview key={id} id={item?.charm_id} charmId = {item?.charm_id} charms={item} initalExpand={false} loader={false} onExpandToggle={onSavedExpandToggle} comp='saved' videoId={videoId}
-       getSavedMoments={getSavedMoments} idToScroll={idToScroll}/> 
+       getSavedMoments={getSavedMoments} idToScroll={idToScroll} pageName={pageName} tabName={tabName}/>  
    })}
     </>
 }

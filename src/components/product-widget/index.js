@@ -2,22 +2,18 @@
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
 import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png'
 import useDrawer from '../../hooks/use-drawer';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 function ProductWidget({
-  shopCards, handleSaveLook, videoId, loading, shopType, setClose
+  shopCards, handleSaveLook, videoId, loading, shopType, setClose, pageName, tabName
 }) {
 
-
-  // useEffect(() => {
-  //   inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-  // }, []);
   const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
 
@@ -28,6 +24,10 @@ function ProductWidget({
       ssr: false
     }
   );
+
+  useEffect(()=>{
+    // toTrackMixpanel('shoppingPopUp',{pageName:pageName, tabName:tabName && tabName|| null},{content_id:videoId})
+  },[])
 
   const {show } = useDrawer();
 
@@ -46,12 +46,13 @@ function ProductWidget({
           {t('ITEMS')} */}
         </div>
         <div className="flex">
-          {!loading ? shopCardsLength > 0 && shopCards.map((data, id) => (
+          {shopCardsLength > 0 ? shopCards.map((data, id) => (
             <div
               key={id}
               className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
               onClick={() => {
+                toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName && tabName || ''},{productId:id || null}) 
                 show('',charmboardDrawer , 'big', { videoId : videoId, setClose : setClose})
                 setClose('open');             
               }}

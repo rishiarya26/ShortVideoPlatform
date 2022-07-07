@@ -2,7 +2,7 @@ import { getTopSearches } from "../../../sources/explore/top";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
 import Loader from '../top/loader';
 import Error from '../top/error';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { numberFormatter } from "../../../utils/convert-to-K";
 import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { DISCOVER_SEARCH_RESULTS } from "../../../constants";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -23,6 +25,11 @@ const TopItems = ({item, redirectTab}) =>{
 
     const onDataFetched=(data)=>{
         setData(data?.data);
+        /* mixpanel - Search Executed */
+        const results = data?.data?.items;
+        console.log("R-E",results,item)
+        const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0)
+        toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS},{query:item,resultsLength:resultsLength})
       }
      
      const dataFetcher = ()=> item && getTopSearches(item && item)
@@ -60,7 +67,9 @@ const TopItems = ({item, redirectTab}) =>{
            
                   <div className="card_list flex min-w-full overflow-x-auto no_bar">
                   {data?.items?.users?.map((item, id)=>(
-                  <div onClick={()=>router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
+                  <div onClick={()=>{
+                    toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS},{creatorId:item?.userId,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE})
+                    router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>

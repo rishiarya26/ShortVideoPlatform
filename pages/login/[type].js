@@ -6,7 +6,7 @@ import useSnackbar from '../../src/hooks/use-snackbar';
 const Hipi = () => {
   const {showSnackbar} = useSnackbar();
   return(
-  <Auth authType="login" showMessage={showSnackbar}/>
+  <Auth authType="login" showMessage={showSnackbar} />
 )};
 
 export default withRouter(Hipi);

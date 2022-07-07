@@ -7,24 +7,25 @@ import { GOOGLE_CLIENT_ID_PREROD } from "../../constants";
 import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
-import { commonEvents } from "../../analytics/mixpanel/events";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
 import { getAllItems, getItem, removeItem } from "../../utils/cookie";
 import Cookies from "../cookies";
 
-export const GoogleButton =({loading}) =>{
+export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
 
-    const mixpanel = (type) =>{
-        const mixpanelEvents = commonEvents();
-        mixpanelEvents['Method'] = 'Google';
-        track(`${type} Result`,mixpanelEvents );
-      }
+    // const mixpanel = (type) =>{
+    //     const mixpanelEvents = commonEvents();
+    //     mixpanelEvents['Method'] = 'Google';
+    //     track(`${type} Result`,mixpanelEvents );
+    //   }
 
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
 
     const onTokenFetched = async(data)=>{
+      toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:type,ctaName:'Google'})
         console.log("got token... about to call api",data, data?.tokenId);
         // const allCookies = Cookies.getAll();
         const arrSplit = document?.cookie?.split(";");
@@ -47,12 +48,13 @@ export const GoogleButton =({loading}) =>{
         // console.log("RESPPP", resppp);
         //  const googleToken = data?.Zb?.access_token;
          try{  
+             toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
              const response = await login(data?.tokenId);
              if(response.status === 'success'){
                 showSnackbar({ message: 'Login Successful' })
                  close();
                  try{
-                  mixpanel('Login')
+                  toTrackMixpanel(`${type || ''}Success`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
                  fbq.defEvent('CompleteRegistration');
                 }catch(e){
                     console.log('error in fb or mixpanel event')
@@ -61,9 +63,9 @@ export const GoogleButton =({loading}) =>{
            console.log(response);
         }
         catch(e){
+          toTrackMixpanel(`${type || ''}Failure`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
             if(e.code === 2){  
                 const response = await registerUser(data?.tokenId);
-                
                console.log(response);
               }
             // showSnackbar({message: 'Something went wrong..'})
@@ -122,7 +124,7 @@ export const GoogleButton =({loading}) =>{
             showSnackbar({ message: 'Login Successful' })
              close();
              try{
-             mixpanel('Login')
+            //  mixpanel('Login')
              fbq.defEvent('CompleteRegistration');
             }catch(e){
                 console.log('error in fb or mixpanel event')

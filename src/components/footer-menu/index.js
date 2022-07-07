@@ -30,7 +30,7 @@ import { useEffect } from 'react';
 // );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
- setClose} ){
+ setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
 
@@ -40,12 +40,14 @@ const info ={
   canShop={canShop}
   shopType={shopType && shopType}
   setClose={setClose}
+  pageName={pageName}
+  tabName={tabName}
 />,
  noShop: null
 }
 
 const toShow = {
-  login :  ()=>show('', login, 'medium'),
+  login :  ()=>show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''}),
   profile : ()=>{
    try{ 
      const userId = localStorage.get('user-id');

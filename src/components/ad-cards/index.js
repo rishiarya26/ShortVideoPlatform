@@ -8,9 +8,10 @@ import Img from '../commons/image';
 import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 function AdCards({
-  adCards, videoId, comp, loading
+  adCards, videoId, comp, loading, pageName, tabName
 }) {
   const charmboardDrawer = dynamic (
     () => import('../charmboard'),
@@ -26,9 +27,9 @@ function AdCards({
   // const loaded = () => {
   //   setLoading(false);
   // };
-  // useEffect(() => {
-  //   inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-  // }, []);
+  useEffect(() => {
+  //  adCards?.map { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})}
+  }, []);
 
   // const { t } = useTranslation();
   const adCardsLength = adCards?.length;
@@ -50,8 +51,12 @@ function AdCards({
               className="w-14 h-14 ml-2 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
               onClick={comp === 'feed' ? 
-              ()=> window.open(data?.product_url) :
-              () => show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id})
+              ()=>{
+                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})
+                window.open(data?.product_url)} :
+              () => {
+                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})
+                show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id})}
             }
             >
               <Img data={data?.img_url} height={120} width={120} fallbakc={fallbackShop?.src}/>

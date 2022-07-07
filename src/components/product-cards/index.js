@@ -10,7 +10,7 @@ import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 
 function ProductCards({
-  shopCards, videoId, comp, loading
+  shopCards, videoId, comp, loading,pageName,tabName
 }) {
   const charmboardDrawer = dynamic (
     () => import('../charmboard'),
@@ -48,7 +48,9 @@ function ProductCards({
               key={id}
               className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
-              onClick={() =>   show('',charmboardDrawer , 'big', { videoId : videoId})}
+              onClick={() =>   {
+                toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
+                show('',charmboardDrawer , 'big', { videoId : videoId})}}
             >
               <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
             </div>
