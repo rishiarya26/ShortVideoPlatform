@@ -11,7 +11,7 @@ import {websiteSchema, organisationSchema} from '../../src/utils/schema'
 import { getSingleFeed } from '../../src/sources/feed/embed';
 import { SeoMeta } from '../../src/components/commons/head-meta/seo-meta';
 
-export default function Hipi({data}) {
+export default function Hipi({data ={}}) {
   const router = useRouter();
   const device = getItem('device-type');
   let { thumbnail= 'https://www.hipi.co.in/icons/icon-512x512.png', content_description='www.hipi.co.in', music_title='' } = data;
