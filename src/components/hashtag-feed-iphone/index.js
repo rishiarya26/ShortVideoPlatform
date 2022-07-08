@@ -14,8 +14,8 @@ import { canShop } from '../../sources/can-shop';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+// import { inject } from '../../analytics/async-script-loader';
+// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
@@ -171,7 +171,9 @@ function HashTagFeedIphone({ router }) {
     },[initialLoadComplete])
   
   useEffect(() => {
-    setTimeout(()=>{ inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    setTimeout(()=>{
+      setLoading(false);
+      // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       // const guestId = getItem('guest-token');
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
@@ -276,8 +278,8 @@ function HashTagFeedIphone({ router }) {
   };
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
   }, [activeVideoId]);
 
@@ -493,7 +495,6 @@ try{
                   <SwiperSlide
                     key={id}
                     id={item?.content_id}
-
                   >
                     <Video
                       updateSeekbar={updateSeekbar}
@@ -511,7 +512,7 @@ try{
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}

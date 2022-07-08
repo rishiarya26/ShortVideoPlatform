@@ -53,9 +53,9 @@ function SearchFeed({ router }) {
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
-  const loaded = () => {
-    setLoading(false);
-  };
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
 
   const { id : videoId = items?.[0]?.content_id } = router?.query;
   const { ref = '' } = router?.query;
@@ -70,6 +70,7 @@ function SearchFeed({ router }) {
 
   useEffect(() => {
     // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    setLoading(false);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
@@ -190,8 +191,8 @@ function SearchFeed({ router }) {
   };
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
   }, [activeVideoId]);
 

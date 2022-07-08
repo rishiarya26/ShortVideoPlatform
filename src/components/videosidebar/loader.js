@@ -8,31 +8,32 @@ import EmbedIcon from '../commons/svgicons/embedicon';
 function VideoSidebar() {
   // TODO add useTranslation for alt tags as well
   return (
-    <div className="absolute bottom-16 right-0 text-white">
-      <div className="relative p-3 text-center flex justify-center">
-        <div
-          className="usrimg w-12 h-12 rounded-full bg-gray-500"
-        />
-        <div className="absolute bottom-0 ">
-          <Follow />
+    <div className="bottom-28 videoFooter absolute right-0 flex-col  flex text-white ml-2">
+      <div className="relative py-2 px-3 text-center justify-end flex">
+        <div className="flex flex-col items-center">
+          <div
+            className="usrimg w-10 h-10 rounded-full bg-gray-500"
+          />
+          <div className="absolute bottom-0">
+            <Follow />
+          </div>
         </div>
       </div>
-      <div className="relative p-2 text-center flex flex-col items-center">
-
+      <div className="flex relative py-2 px-3 text-center justify-end">
         <div role="presentation">
           <Like />
         </div>
         <p className="text-sm h-6" />
       </div>
-      <div className="relative p-2 text-center flex flex-col items-center">
+      <div className="flex relative py-2  px-3 text-center items-end flex-col">
         <Comment />
         <p className="text-sm h-6" />
       </div>
-      <div className="relative p-2 text-center flex flex-col items-center">
+      <div className="flex relative py-2  px-3 text-center items-end flex-col">
         <Share />
         <p className="text-sm h-6" />
       </div>
-      <div className="relative p-2 text-center flex flex-col items-center">
+      <div className="flex relative py-2  px-3 text-center items-end flex-col mb-28">
         <EmbedIcon />
         <p className="text-sm h-6" />
       </div>

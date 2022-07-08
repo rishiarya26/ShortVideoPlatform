@@ -59,9 +59,9 @@ function HashTagFeed({ router }) {
   // const { type = 'all' } = router?.query;
   const pageName = 'Hashtag Feed'
 
-  const loaded = () => {
-    setLoading(false);
-  };
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
 
   const loadMoreItems = async() =>{
     let videos = [...items]
@@ -103,7 +103,10 @@ function HashTagFeed({ router }) {
   },[initialLoadComplete])
 
   useEffect(() => {
-   setTimeout(()=>{ inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    
+   setTimeout(()=>{
+    //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+    setLoading(false);
     // const guestId = getItem('guest-token');
     fbq.event('Screen View')
     trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
@@ -196,8 +199,8 @@ function HashTagFeed({ router }) {
   };
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
   }, [activeVideoId]);
 
@@ -437,7 +440,7 @@ try{
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}

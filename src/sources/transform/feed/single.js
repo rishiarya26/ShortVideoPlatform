@@ -60,6 +60,7 @@ function transformSuccess(resp) {
         payloadObject.firstName= d?.videoOwners?.firstName || null;
         payloadObject.lastName = d?.videoOwners?.lastName || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
+        payloadObject.shoppable = d?.shoppable || false;
 
       });
       payload.data = payloadObject;

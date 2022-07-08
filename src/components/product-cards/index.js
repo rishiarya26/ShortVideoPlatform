@@ -8,6 +8,7 @@ import Img from '../commons/image';
 import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 function ProductCards({
   shopCards, videoId, comp, loading,pageName,tabName

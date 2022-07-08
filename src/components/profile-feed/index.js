@@ -14,8 +14,8 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+// import { inject } from '../../analytics/async-script-loader';
+// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
@@ -107,7 +107,8 @@ function ProfileFeed({ router }) {
 
   useEffect(() => {
     setTimeout(()=>{
-      inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      setLoading(false);
       // const guestId = getItem('guest-token');
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
@@ -212,8 +213,8 @@ function ProfileFeed({ router }) {
   };
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
   }, [activeVideoId]);
 
@@ -549,7 +550,7 @@ try{
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}

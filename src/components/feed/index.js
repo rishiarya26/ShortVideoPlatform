@@ -33,8 +33,8 @@ import {
 // import Spinner from '../commons/svgicons/spinner';
 // import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+// import { inject } from '../../analytics/async-script-loader';
+// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
@@ -103,9 +103,9 @@ function Feed({ router }) {
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
 
-  const loaded = () => {
-    setLoading(false);
-  };
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
 
   const setClose = (value)=>{
       setOnCloseChamboard(value)
@@ -150,9 +150,9 @@ function Feed({ router }) {
         data?.data?.[2] && toUpdateShowData.push(data?.data?.[2]);
         setItems(data?.data);
         setToShowItems(toUpdateShowData);
-        setActiveVideoId(videoIdInitialItem);
         setInitialLoadComplete(true);
         setFirstApiCall(false);
+        setActiveVideoId(videoIdInitialItem);
         // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
     }else{
@@ -261,16 +261,18 @@ function Feed({ router }) {
     let isShoppable;
     const shopContent = { ...shop };
     try {
-      const response = await canShop({ videoId: activeVideoId });
+      const response = await canShop({ videoId: activeVideoId  });
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
     } catch (e) {
+      console.error("$",e)
       // isShoppable = false;
     }
     isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
+    console.log('$$$$', shopContent)
     setShop(shopContent);
   };
 
@@ -328,10 +330,12 @@ function Feed({ router }) {
   },[videoActiveIndex])
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    activeVideoId && getCanShop();
+    // setShop({ isShoppable: 'pending' });
+    setShop({});
+    // console.log('$$$$$',items, videoActiveIndex, items?.[videoActiveIndex]?.shoppable)
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setSaveLook(true);
-  }, [activeVideoId]);
+  },[activeVideoId]);
 
   const toggleSaveLook = (value) => {
     /********* Mixpanel ***********/
@@ -350,7 +354,6 @@ const ToTrackFbEvents = (activeIndex, type, value) => {
   const item = items[activeIndex];
   const fbEvents = {}
 
-  
 // console.log('FB events',fbq)
   const toTrack = {
     'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
@@ -563,7 +566,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
@@ -637,7 +640,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
               : ''}
               <FooterMenu 
               videoId={activeVideoId}
-              canShop={shop.isShoppable}
+              canShop={items?.[videoActiveIndex]?.shoppable}
               type="shop"
               selectedTab="home"
               shopType={shop?.type && shop.type}
@@ -737,10 +740,8 @@ try{
             </div>
          </div>
 
-
           {/* hamburger */}
          <HamburgerMenu/>
-
 
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />

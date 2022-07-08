@@ -57,7 +57,6 @@ function transformSuccess(resp) {
         payloadObject.viewCount = d?.viewCount;
         payloadObject.firstFrame= d?.firstFrame || null;
 
-
         payloadData.push(payloadObject);
       });
       if(data?.firstVideo){

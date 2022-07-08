@@ -155,6 +155,8 @@ function VideoSidebar({
 //            }
 // },[])
 
+useEffect(()=>{console.log("$$$",adCards)},[])
+
 useEffect(()=>{
   if(onCloseChamboard === 'close'){
     checkSaveLook();
@@ -366,7 +368,7 @@ const handleSaveMoments = () =>{
         shareCount={props.share}
       />
       </div> */}
-{canShop === 'success' && profileFeed &&
+{canShop && profileFeed &&
    adCards?.monitisation &&
    <AdCards
    adCards={adCards?.monitisationCardArray}
@@ -377,7 +379,7 @@ const handleSaveMoments = () =>{
    tabName={tabName}
    /> 
 }
-      {canShop === 'success' && (!profileFeed
+      {canShop && (!profileFeed
         &&(
           adCards?.monitisation ?
           <AdCards

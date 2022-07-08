@@ -10,8 +10,6 @@ import ProductWidget from '../product-widget';
 import ProductCards from '../product-cards';
 import CircularProgress from '../commons/circular-loader'
 import { PreviousMap } from 'postcss';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import usePreviousValue from '../../hooks/use-previous';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import DynamicImg from '../commons/image-dynamic';
@@ -29,6 +27,7 @@ function Video(props) {
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
 
+   useEffect(()=>{console.log("$$",props?.adData)},[])
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
    //    if(player){
@@ -276,7 +275,7 @@ function Video(props) {
          musicCoverTitle={props.musicCoverTitle}
          type="feed"
          hashTags={props.hashTags}
-         canShop={props.canShop}
+         canShop={props?.canShop || false}
          saveLook={props.saveLook}
          comp={props?.comp}
          description={props?.description}
@@ -295,7 +294,7 @@ function Video(props) {
          type="feed"
          handleSaveLook={props.handleSaveLook}
          saveLook={props.saveLook}
-         canShop={props.canShop}
+         canShop={props?.canShop ||  false}
          saved={props.saved}
          profileFeed={props?.profileFeed}
          videoId={props.id}
@@ -309,8 +308,8 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          />
-      {/* TO-DO  comdition acc to comp */}
-      {props.canShop === 'success' && (!props.profileFeed
+      {/* TO-DO  condition acc to comp */}
+      {props.canShop && (!props.profileFeed
       ? (!props.saveLook
       && (
       <ProductWidget

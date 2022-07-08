@@ -37,7 +37,7 @@ import {
 // import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
 import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
@@ -122,7 +122,8 @@ function FeedIphone({ router }) {
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
         toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
         trackEvent('Screen_View',{'Page Name' :'Feed'})
-        inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+        // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+        setLoading(false);
       }
     },1500);
   }, [initialLoadComplete]);
@@ -364,8 +365,8 @@ console.log('errorrr',e)
   },[videoActiveIndex])
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setSaveLook(true);
   }, [activeVideoId]);
 
@@ -570,7 +571,7 @@ console.log('errorrr',e)
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
@@ -639,7 +640,7 @@ console.log('errorrr',e)
               : ''}
               <FooterMenu 
               videoId={activeVideoId}
-              canShop={shop.isShoppable}
+              canShop={items?.[videoActiveIndex]?.shoppable}
               type="shop"
               selectedTab="home"
               shopType = {shop?.type}

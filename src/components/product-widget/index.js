@@ -1,7 +1,5 @@
 /*eslint-disable react/display-name */
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
-import { inject } from '../../analytics/async-script-loader';
 import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
@@ -25,10 +23,6 @@ function ProductWidget({
     }
   );
 
-  useEffect(()=>{
-    // toTrackMixpanel('shoppingPopUp',{pageName:pageName, tabName:tabName && tabName|| null},{content_id:videoId})
-  },[])
-
   const {show } = useDrawer();
 
   return (
@@ -38,12 +32,6 @@ function ProductWidget({
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">
           {shopType === 'recipe' ? 'Ingredients from this recipe' : t('PRODUCT_CAN_BUY')}
-          {/* {' '}
-          |
-          {' '}
-          {shopCardsLength}
-          {' '}
-          {t('ITEMS')} */}
         </div>
         <div className="flex">
           {shopCardsLength > 0 ? shopCards.map((data, id) => (

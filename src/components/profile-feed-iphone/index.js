@@ -13,8 +13,7 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL, ONE_TAP_DOWNLOAD } from '../../constants';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
@@ -77,9 +76,9 @@ function ProfileFeedIphone({ router }) {
 
   const pageName = 'Profile Feed';
 
-  const loaded = () => {
-    setLoading(false);
-  };
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
 
   const loadMoreItems = async() =>{
     let videos = [...items]
@@ -173,7 +172,8 @@ function ProfileFeedIphone({ router }) {
   
   useEffect(() => {
     setTimeout(()=>{
-      inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
+      setLoading(false);
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
       toTrackMixpanel('screenView',{pageName:pageName});
@@ -306,8 +306,8 @@ function ProfileFeedIphone({ router }) {
   };
 
   useEffect(() => {
-    setShop({ isShoppable: 'pending' });
-    getCanShop();
+    setShop({});
+    items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
   }, [activeVideoId]);
 
@@ -518,7 +518,7 @@ function ProfileFeedIphone({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={shop?.isShoppable}
+                      canShop={item?.shoppable}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}

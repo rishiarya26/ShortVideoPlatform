@@ -1,11 +1,7 @@
 /*eslint-disable react/display-name*/
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
-// import useTranslation from '../../hooks/use-translation';
+import { useEffect } from 'react';
 import Img from '../commons/image';
-import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';

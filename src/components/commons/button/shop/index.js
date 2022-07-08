@@ -26,7 +26,7 @@ export const Shop = ({
 
   return (
     <>
-      {canShop !== 'pending' ? canShop === 'success' && (
+      {canShop && 
         <button
           className="rounded cursor-pointer text-white py-1 px-4 font-semibold bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
           // eslint-disable-next-line no-undef
@@ -34,14 +34,7 @@ export const Shop = ({
         >
            {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
         </button>
-      )
-        : (
-          <button
-            className="animate-pulse rounded text-white py-1 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base uppercase focus:outline-none"
-          >
-            {shopType && shopType === 'recipe' ? 'MAKE' :  t('SHOP')}
-          </button>
-        )}
+        }
     </>
   );
 };

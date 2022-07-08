@@ -1,22 +1,22 @@
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from 'react';
-import VideoFooter from '../videofooter/index';
-import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
-import ProductWidget from '../product-widget';
-import ProductCards from '../product-cards';
-import CircularProgress from '../commons/circular-loader'
-import { PreviousMap } from 'postcss';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import usePreviousValue from '../../hooks/use-previous';
-import SwipeUp from '../commons/svgicons/swipe-up';
-import DynamicImg from '../commons/image-dynamic';
-import Img from '../commons/image';
-import { withRouter } from 'next/router';
+// import VideoFooter from '../videofooter/index';
+// import VideoSidebar from '../videosidebar/index';
+// import ProductWidget from '../product-widget';
+// import ProductCards from '../product-cards';
+// import CircularProgress from '../commons/circular-loader'
+// import { PreviousMap } from 'postcss';
+// import { inject } from '../../analytics/async-script-loader';
+// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
+// import SwipeUp from '../commons/svgicons/swipe-up';
+// import DynamicImg from '../commons/image-dynamic';
+// import Img from '../commons/image';
+// import { withRouter } from 'next/router';
 
 
 function Video(props) {

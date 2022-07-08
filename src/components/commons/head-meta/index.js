@@ -21,7 +21,25 @@ function HeadMeta() {
       {/* <link rel="preconnect" href="https://www.hipi.co.in" as="document" /> */}
       {/* <link rel="preconnect" href="https://websdk.getsocial.im/getsocial.min.js" as="script" /> */}
       <link rel="preconnect" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" as="font" />
-
+      <link rel="preconnect" href="http://fonts.gstatic.com" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="http://cdn.mxpnl.com" />
+      <link rel="preconnect" href="https://assets2.charmboard.com" />
+      <link rel="preconnect" href="https://media.charmboard.com" />
+      <link rel="preconnect" href="https://www.hipi.co.in" />
+      <link rel="preconnect" href="https://devqa2.charmboard.com" />
+      <link rel="preconnect" href="https://hipigwapi.zee5.com"/>
+      <link rel="preconnect" href="https://mapi.charmboard.com"/>
+      <link rel="preconnect" href="https://xtra.zee5.com"/>
+      <link rel="preconnect" href="https://ipapi.co"/>
+      <link rel="preconnect" href="https://websdk.getsocial.im"/>
+      <link rel="preconnect" href="https://akamaividz2.zee5.com"/>
+      <link rel="preconnect" href="https://preprod.hipi.co.in"/>
+      <link rel="preconnect" href="https://firebase.googleapis.com"/>
+      <link rel="preconnect" href="https://z5shorts.akamaized.net"/>
+      <link rel="preconnect" href="https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com"/>
+      <link rel="preconnect" href="https://www.google-analytics.com" />
+      <link rel="preconnect" href="https://api-js.mixpanel.com" />
 
 
       {/* <title>{APP_NAME}</title> */}
