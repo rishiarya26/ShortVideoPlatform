@@ -57,7 +57,7 @@ function HashTag({router}) {
 
   async function fetchMoreListItems() {
     try{
-     const response = item && await getHashTagVideos({ keyword:  item , offset: `${offset}` });
+     const response = item && await getHashTagVideos({ keyword: item , offset: `${offset}` });
      if(response?.data?.length > 0){
        let updateData = [...items];
        updateData = updateData?.concat(response?.data);
