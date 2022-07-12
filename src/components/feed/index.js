@@ -11,57 +11,32 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
-import { Shop } from '../commons/button/shop';
-import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
-import Play from '../commons/svgicons/play';
-import Img from '../commons/image';
 import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
-import useDrawer from '../../hooks/use-drawer';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
-import {
-  SeoMeta,
-  VideoJsonLd
-} from '../../components/commons/head-meta/seo-meta';
-// import Spinner from '../commons/svgicons/spinner';
-// import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
-// import { inject } from '../../analytics/async-script-loader';
-// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
-import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
-import { getActivityDetails } from '../../get-social';
 import { localStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl, getUrl } from '../../utils/web';
-import { getURL } from 'next/dist/next-server/lib/utils';
-// import {sessionStorage} from "../../utils/storage"
  
 SwiperCore?.use([Mousewheel]);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
-
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 const LandscapeView = dynamic(
   () => import('../landscape'),
@@ -74,7 +49,6 @@ const LandscapeView = dynamic(
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
-  // const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -98,14 +72,8 @@ function Feed({ router }) {
   let { campaign_id = null} = router?.query;
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
- const {show} = useDrawer();
-
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
-
-  // const loaded = () => {
-  //   setLoading(false);
-  // };
 
   const setClose = (value)=>{
       setOnCloseChamboard(value)
@@ -116,16 +84,13 @@ function Feed({ router }) {
     if(initialLoadComplete === true){
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
-      // console.log('FB event ',fbq.event)
       fbq.event('Screen View')
       trackEvent('Screen_View',{'Page Name' :'Feed'});
-      // alert('useEffect called');
     }
   },1500);
   }, [initialLoadComplete]);
 
   useEffect(()=>{    
-    console.log("UGC",shop, items) 
     shop?.isShoppable == 'success' && setInitalShopContentAdded(true)
 },[shop])
 
@@ -134,7 +99,6 @@ function Feed({ router }) {
     toTrackMixpanel('impression',{pageName:pageName,tabName:tabName,isShoppable:shop?.isShoppable !== 'pending' ? shop?.isShoppable : 'fail', isMonetization : shop?.adCards?.monitisation || false},items?.[videoActiveIndex]);  
   },[initailShopContentAdded])
 
-  // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -165,7 +129,6 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    // console.log("aAAAADDD",shop?.adData)
     shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
   },[shop])
  /************************ */ 
@@ -190,7 +153,6 @@ function Feed({ router }) {
      try{
        const data =  await fetchData({ type: id });
        updateItems = updateItems.concat(data?.data);
-      //  setOffset(offset+1)
        setItems(updateItems);
       }
      catch(err){
@@ -218,8 +180,6 @@ function Feed({ router }) {
   }
 
   const validItemsLength = toShowItems?.length > 0;
-  // console.log(toShowItems, validItemsLength)
-  // setRetry = retry && retry;
 
   const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
@@ -229,7 +189,6 @@ function Feed({ router }) {
       totalDuration : duration
     }
     if(currentTime > 6.8 && currentTime < 7.1){
-      console.log("**",currentTime);
       viewEventsCall(activeVideoId,'view')
     }
     setVideoDurationDetails(videoDurationDetail);
@@ -247,7 +206,6 @@ function Feed({ router }) {
        toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
        toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
-      //  viewEventsCall(activeVideoId, 'completed');
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
      }
@@ -269,10 +227,8 @@ function Feed({ router }) {
       shopContent.adData = response?.adData;
     } catch (e) {
       console.error("$",e)
-      // isShoppable = false;
     }
     isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
-    console.log('$$$$', shopContent)
     setShop(shopContent);
   };
 
@@ -291,16 +247,12 @@ function Feed({ router }) {
     if(deleteItemIndex >=0 && videoActiveIndex >=3){
       updateShowItems[deleteItemIndex] = null;
     }
-
-    // console.log(updateShowItems)
-
   setToShowItems(updateShowItems);
  }
 
  const decrementingShowItems = async() =>{
   let updateShowItems = [...toShowItems];
   const dataItem = [...items]
-  // setMuted(false)
   /* Add */
   const  incrementGap = 2;
   let insertItemIndex = videoActiveIndex-incrementGap;
@@ -312,13 +264,11 @@ function Feed({ router }) {
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
 
-    //  console.log(updateShowItems)
     setToShowItems(updateShowItems);
  }
 
   useEffect(()=>{
     if(preVideoActiveIndex?.videoActiveIndex){
-      // toTrackMixpanel(preVideoActiveIndex?.videoActiveIndex,'durationWatchTime',{watchTime : preCurrentT?.currentT}) 
     }
     if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
       //swipe-down
@@ -330,9 +280,7 @@ function Feed({ router }) {
   },[videoActiveIndex])
 
   useEffect(() => {
-    // setShop({ isShoppable: 'pending' });
     setShop({});
-    // console.log('$$$$$',items, videoActiveIndex, items?.[videoActiveIndex]?.shoppable)
     items?.[videoActiveIndex]?.shoppable && getCanShop();
     setSaveLook(true);
   },[activeVideoId]);
@@ -354,7 +302,6 @@ const ToTrackFbEvents = (activeIndex, type, value) => {
   const item = items[activeIndex];
   const fbEvents = {}
 
-// console.log('FB events',fbq)
   const toTrack = {
     'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
     'swipe' : ()=> {
@@ -383,18 +330,8 @@ const ToTrackFbEvents = (activeIndex, type, value) => {
     },
   }
 
-  // const hashTags = item?.hashtags?.map((data)=> data.name);
-
   fbEvents['Creator ID'] = item?.userId;
-  // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-  // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
   fbEvents['UGC ID'] = item?.content_id;
-  // mixpanelEvents['Short Post Date'] = 'NA';
-  // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-  // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-  // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-  // mixpanelEvents['UGC Genre'] = item?.genre;
-  // mixpanelEvents['UGC Description'] = item?.content_description;
   fbEvents['Page Name'] = 'Feed';
 
   toTrack?.[type]();
@@ -422,26 +359,10 @@ const toTrackFirebase = (activeIndex, type, value) => {
     'savelook' : ()=>{
       trackEvent('Save_Look', events)
     }
-    // 'downloadClick' : () => {
-    //   events['Popup Name'] = 'Download App',
-    //   events['Element'] = 'Download App',
-    //   events['Button Type'] = 'Link',
-    //   trackEvent('Popup CTAs', events)
-    // }
   }
 
-  // const hashTags = item?.hashtags?.map((data)=> data.name);
-
   events['Creator ID'] = item?.userId;
-  // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-  // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
   events['UGC ID'] = item?.content_id;
-  // mixpanelEvents['Short Post Date'] = 'NA';
-  // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-  // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-  // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-  // mixpanelEvents['UGC Genre'] = item?.genre;
-  // mixpanelEvents['UGC Description'] = item?.content_description;
   events['Page Name'] = 'Feed';
 
   toTrack?.[type]();
@@ -467,8 +388,6 @@ const toTrackFirebase = (activeIndex, type, value) => {
                   activeIndex, slides
                 } = swiper;
                 setInitialPlayStarted(false);
-                // router?.replace(`/feed/${id}`);
-                // toTrackMixpanel(0, 'impression');
               }}
               onSlideChange={swiperCore => {
                 const {
@@ -505,34 +424,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                   slides[activeIndex].firstChild.firstChild.currentTime = 0
                 }
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
-                   
-                /********* getReactions - getSocial *******/
-                // const item = items?.find(item => item?.content_id === activeId);
-                // console.log("item**",item)
-                // let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-                //   if (tokens?.shortsAuthToken && tokens?.accessToken 
-                //     // && tokens?.getSocialToken
-                //     ) {
-                //   const getLikeReaction = async()=>{  
-                //      let dataItems = [...toShowItems]; 
-                //      const isLiked =  await getVideoReactions(item);
-                //      console.log('isLiked', isLiked)
-                //      dataItems.forEach((item)=>{
-                //        if(item?.content_id === activeId){
-                //          item.isLiked !== isLiked && (item.isLiked = isLiked); 
-                //        } 
-                //      })
-                //      setToShowItems(dataItems);
-                //     }
-                //     getLikeReaction();
-                //     }
-                   
-                  
-               
-                /*******************************************/
-                // const dataItems = [...items];
-                // const seoItem = dataItems?.find(item => item?.content_id === activeId);
-                // seoItem && setSeoItem(seoItem);
+
                 activeIndex && setVideoActiveIndex(activeIndex);
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
@@ -561,11 +453,9 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       profilePic={item?.userProfilePicUrl}
                       userName={item?.userName}
                       musicCoverTitle={item?.musicCoverTitle}
-                      // videoid={item.content_id}
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      // thumbnail={item.poster_image_url}
                       canShop={item?.shoppable}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
@@ -592,8 +482,6 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       pageName={pageName}
                       tabName={tabName}
                       adData={shop?.adData}
-                      // toggleIsSaved={toggleIsSaved}
-                      // setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -617,13 +505,6 @@ const toTrackFirebase = (activeIndex, type, value) => {
               </div>
               <div className="flex py-2 px-4 bg-gray text-white font-medium mt-12">Swipe up for next video</div>
               </div>}
-              {/* <div
-                onClick={()=>setInitialPlayButton(false)}
-                className="absolute top-1/2 justify-center w-screen"
-                style={{ display: initialPlayButton ? 'flex' : 'none' }}
-              >
-                <Play/>
-              </div> */}
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
@@ -661,20 +542,17 @@ const toTrackFirebase = (activeIndex, type, value) => {
     'following' : toShowFollowing
   }
 
-  let hostname;
-  if (typeof window !== 'undefined') {
-    hostname = window?.location?.hostname;
- }
+//   let hostname;
+//   if (typeof window !== 'undefined') {
+//     hostname = window?.location?.hostname;
+//  }
 
  
 const onStoreRedirect = async ()=>{
   fbq.event('App Open CTA')
-  // console.log(getItem('device-info'))
   toTrackMixpanel('cta',{pageName:pageName,tabName:tabName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
   trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
-  const device = getItem('device-info');
-  // console.log(device)
 try{  
  if(activeVideoId){ 
    try{ const resp = await getOneLink({videoId : activeVideoId});
@@ -698,36 +576,6 @@ try{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-     {/* <SeoMeta
-        data={{
-          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
-          // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
-          openGraph: {
-            title: 'HIPI.CO.IN',
-            description: 'www.hipi.co.in',
-            url: getUrl(),
-            images: [
-              {
-                url: videoId ? items?.[0]?.thumbnail : undefined,
-                width: 800,
-                height: 600,
-                alt: ''
-              }
-            ],
-            site_name: 'Hipi'
-          }
-        }}
-      /> */}
-      {/* <VideoJsonLd
-        name={item.music_title}
-        description={item.content_description}
-        contentUrl={item.video_url}
-        embedUrl={hostname}
-        thumbnailUrls={item.thumbnailUrls}
-        watchCount={item.likesCount}
-      /> */}
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
       {/* open cta */}
