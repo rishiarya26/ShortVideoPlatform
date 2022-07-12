@@ -23,8 +23,8 @@ import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
-import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
-import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
+// import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
+// import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';

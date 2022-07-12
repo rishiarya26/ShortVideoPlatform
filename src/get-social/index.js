@@ -9,12 +9,13 @@ export const init = async() => {
 //    setTimeout(()=>{ 
     //    if(initiated){
     
-    GetSocialSDK?.GetSocial?.init({
-        appId: 'YInJ8G70y098',
-        appName: 'Hipi'
-    }) 
+
     // console.log('r',r)
     try{
+        GetSocialSDK?.GetSocial?.init({
+            appId: 'YInJ8G70y098',
+            appName: 'Hipi'
+        }) 
     let tokens = localStorage.get('tokens');
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken && tokens?.getSocialToken) {
         auth();

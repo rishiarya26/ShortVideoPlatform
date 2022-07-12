@@ -141,16 +141,16 @@ export default function Hipi(params) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
     <SeoMeta
-        data={{
-          title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
-          // image: item?.thumbnail,
-          description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
-          additionalMetaTags:[{
-            name: 'keywords',
-            content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
-          }
+      data={{
+        title: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,
+        // image: item?.thumbnail,
+        description: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi. ${item?.followers || ''} followers, Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
+        additionalMetaTags:[{
+        name: 'keywords',
+        content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi, ${item?.firstName || ''} ${item?.lastName || ''},${item?.userHandle || ''}`
+        }
         ],
-        canonical: url && getCanonicalUrl(url),
+        canonical: url && getCanonicalUrl(url),
         }}
      />
 
