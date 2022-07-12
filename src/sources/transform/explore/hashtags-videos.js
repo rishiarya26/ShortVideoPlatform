@@ -48,7 +48,7 @@ function transformSuccess(resp) {
         payloadObject.id = d?.id;
         payloadObject.genre = d?.genre;
         payloadObject.userProfilePicUrl = d?.videoOwners?.profilePicImgUrl;
-        payloadObject.userName = d?.videoOwners.userName;
+        payloadObject.userName = d?.videoOwners?.userName;
         payloadObject.likesCount = d?.lCount;
         payloadObject.music_title = d?.sound?.name;
         payloadObject.hashTags = d?.hashtags;

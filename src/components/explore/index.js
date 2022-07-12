@@ -156,6 +156,7 @@ function Explore() {
   }
 
   const toHashtagDetails = (hashTag)=>{
+    console.log("R-hashtag",hashTag)
     let tHashtag = trimHash(hashTag);
     tHashtag = toLower(tHashtag);
     router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
