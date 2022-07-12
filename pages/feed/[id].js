@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import Error from 'next/error';
+import { useEffect } from 'react';
 import ChooseOnType from '../../src/components/choose-on-type';
 import DeskFeed from '../../src/components/desk-feed';
 import Feed from '../../src/components/feed';
@@ -20,7 +19,6 @@ export default function Hipi({data ={}}) {
     const queryStrings = router?.query;
     updateUtmData(queryStrings);
     updateCampaignId(queryStrings);
-    console.log("data**",thumbnail)
   },[])
 
   return (

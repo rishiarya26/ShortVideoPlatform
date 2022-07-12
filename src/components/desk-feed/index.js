@@ -13,10 +13,8 @@ import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import LoginFollowing from '../desk-login-following';
-import { SeoMeta } from '../commons/head-meta/seo-meta';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import CircularLoaderSearch from '../commons/circular-loader-search';
-import { getCanonicalUrl, getUrl } from '../../utils/web';
 import usePreviousValue from '../../hooks/use-previous';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
@@ -235,28 +233,6 @@ const info ={
 
   return (
     <>
-     {/* <SeoMeta
-        data={{
-          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
-          openGraph: {
-            title: 'HIPI.CO.IN',
-            description: 'www.hipi.co.in',
-            url: videoId && getUrl(),
-            images: [
-              {
-                url: "https://www.hipi.co.in/icons/icon-512x512.png",
-                width: 800,
-                height: 600,
-                alt: ''
-              },
-            ],
-            type: 'image/png',
-            site_name: 'Hipi'
-          }
-        }}
-      /> */}
     <div className="flex flex-col w-full thin_bar items-center font-sans">
        {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>

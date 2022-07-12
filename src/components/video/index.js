@@ -6,16 +6,26 @@ import VideoSidebar from '../videosidebar/index';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
-import ProductWidget from '../product-widget';
-import ProductCards from '../product-cards';
-import CircularProgress from '../commons/circular-loader'
-import { PreviousMap } from 'postcss';
 import usePreviousValue from '../../hooks/use-previous';
-import SwipeUp from '../commons/svgicons/swipe-up';
-import DynamicImg from '../commons/image-dynamic';
-import Img from '../commons/image';
+import dynamic from 'next/dynamic';
+
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
+
+
+
+ const ProductWidget = dynamic(() => import("../product-widget"), {
+   // eslint-disable-next-line react/display-name
+   loading: () => <div />,
+   ssr: false,
+ });
+
+ const ProductCards= dynamic(() => import("../product-cards"), {
+   // eslint-disable-next-line react/display-name
+   loading: () => <div />,
+   ssr: false,
+ });
+
 function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
@@ -97,9 +107,7 @@ function Video(props) {
    threshold: [0.30, 0.75]
    });
 
-   // useEffect(()=>{
-   //       // console.log("id",props?.id, props?.activeVideoId);
-   // },[props?.activeVideoId]) 
+   
 
    // useEffect(()=>{
    //    if(props?.comp === 'feed'){

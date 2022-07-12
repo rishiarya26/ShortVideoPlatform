@@ -20,14 +20,10 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { share } from '../../utils/app';
-import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
+import {  toTrackMixpanel } from '../../analytics/mixpanel/events';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 
@@ -274,9 +270,6 @@ console.log("onClick follow btn issue ",e);
     }
   };
 
-
-  
-    
 // const onStoreRedirect = async ()=>{
 //   // toTrackMixpanel('downloadClick');
 //   let link = ONE_TAP_DOWNLOAD;
@@ -312,20 +305,6 @@ console.log("onClick follow btn issue ",e);
 
   return (
     <>
-    {/* <SeoMeta
-    data={{
-      title: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi `,
-      // image: item?.thumbnail,
-      description: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
-      additionalMetaTags:[{
-        name: 'keywords',
-        content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi`
-      }
-    ],
-    canonical: url && getCanonicalUrl(url),
-    }}
-    
- /> */}
     <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
@@ -384,7 +363,7 @@ console.log("onClick follow btn issue ",e);
         fetchMoreListItems={fetchMoreListItems}
       />
      
-<LandscapeView/>
+      <LandscapeView/>
       {/* {type === 'others' && <div className="bottom-0 app_cta p-3 sticky h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center z-10">
             <p className="text-sm">
             Get the full experience on the Hipi app
