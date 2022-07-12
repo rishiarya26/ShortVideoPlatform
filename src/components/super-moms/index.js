@@ -81,7 +81,7 @@ const router = useRouter();
 	<p className='mb-2 pl-2'>Step 4: You are done! Now, share it with your friends and family to gain maximum likes and shares on your Hipi video. </p>
 
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>What are the video necessities? </h3>
-	<p className='mb-2 pl-2'>1. The video should clearly bring out the special talent of the contestant. It should be in a 9:16 format. </p>
+	<p className='mb-2 pl-2'>1. The video should clearly bring out the special talent of the contestant.</p>
 	<p className='mb-2 pl-2'>2. It should be in a 9:16 format. </p>
 	<p className='mb-2 pl-2'>3. It should not exceed 90 seconds (about 1 and a half minutes).</p>   
 	<p className='mb-2 pl-2'>4. The video can be in your preferred language. </p>
