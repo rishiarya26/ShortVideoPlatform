@@ -1,53 +1,41 @@
 /*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
-import { withRouter } from 'next/router';
 import Video from '../video';
 import Error from './error';
 import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
-// import FooterMenu from '../footer-menu';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
-import { Shop } from '../commons/button/shop';
-import { clearHomeFeed, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
-import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
-import Play from '../commons/svgicons/play';
-import Img from '../commons/image';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
 import Mute from '../commons/svgicons/mute';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
-import * as fbq from '../../analytics/fb-pixel'
-
-import { getItem } from '../../utils/cookie';
-import {
-  SeoMeta,
-  VideoJsonLd
-} from '../../components/commons/head-meta/seo-meta';
-// import Like from '../commons/svgicons/like';
 import CircularProgress from '../commons/circular-loader'
-import { inject } from '../../analytics/async-script-loader';
-// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
-import { commonEvents } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import HamburgerMenu from '../hamburger-menu';
+
+import * as fbq from '../../analytics/fb-pixel'
+import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import { canShop } from '../../sources/can-shop';
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { localStorage } from '../../utils/storage';
-import { getCanonicalUrl } from '../../utils/web';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-// import {sessionStorage} from "../../utils/storage"
+import { ONE_TAP_DOWNLOAD } from '../../constants';
+import { getOneLink } from '../../sources/social';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { getItem } from '../../utils/cookie';
+
+
  
 SwiperCore?.use([Mousewheel]);
 
@@ -75,7 +63,6 @@ const LandscapeView = dynamic(
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
-  // const [item,setSeoItem] = useState({})
   const [toShowItems, setToShowItems] = useState([])
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -94,7 +81,6 @@ function FeedIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
-
   const { t } = useTranslation();
   const { id } = router?.query;
   const { videoId } = router?.query;
@@ -105,11 +91,6 @@ function FeedIphone({ router }) {
 
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
-
-
-  const loaded = () => {
-    setLoading(false);
-  };
 
   const setClose = (value)=>{
     setOnCloseChamboard(value)
@@ -122,55 +103,40 @@ function FeedIphone({ router }) {
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
         toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
         trackEvent('Screen_View',{'Page Name' :'Feed'})
-        // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
         setLoading(false);
       }
     },1500);
   }, [initialLoadComplete]);
 
-  // const [offset, setOffset] = useState(1)
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const pretoInsertElemant = usePreviousValue({toInsertElements});
-  // const preCurrentT = usePreviousValue({currentT});
+  
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const preShopData = usePreviousValue({shop});
 
   const onDataFetched = data => {
-    if(data){
-      // console.log('showItems', toShowItems)
-      // console.log('items',items)
-      // console.log('currentIndex',videoActiveIndex)
-      // console.log('id',activeVideoId)
-      // console.log('preId',preActiveVideoId)
-      //   setVideoActiveIndex(0)
-      //   setActiveVideoId(null)
-        
+    if(data){  
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         const videos = data?.data;
         /* show pop up & call api for next items after specified index */
         const insertItemsIndex = videoId ? 5 : 4
-        //set first three item in showItems
-        // toUpdateShowData.push(data?.data?.[0]);
-        // toUpdateShowData.push(data?.data?.[1]);
-        // toUpdateShowData.push(data?.data?.[2]);
         setItems(videos);
         setToShowItems(videos);
         setActiveVideoId(videoIdInitialItem);
         setToInsertElements(insertItemsIndex);
         setInitialLoadComplete(true);
         setFirstApiCall(false);
-        // setSeoItem(data?.data[0]);
     }
   }
 
-/* mixpanel - monetization cards impression */
-useEffect(()=>{
-  // console.log("aAAAADDD",shop?.adData)
-  shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
-},[shop])
-/************************ */ 
+  /* mixpanel - monetization cards impression */
+  useEffect(()=>{
+    // console.log("aAAAADDD",shop?.adData)
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+  },[shop])
+  /************************ */ 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
@@ -187,20 +153,6 @@ useEffect(()=>{
   const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id, videoId: videoId, firstApiCall: firstApiCall, campaign_id:campaign_id });
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
-
-  // const getFeedData = async() =>{
-  //   let updateItems = [...items];
-  //    try{
-  //      const data =  await fetchData({ type: id });
-  //      console.log(data)
-  //      updateItems = updateItems.concat(data?.data);
-  //     //  setOffset(offset+1)
-  //      setItems(updateItems);
-  //     }
-  //    catch(err){
-  //    }
-  //    return updateItems;
-  // } 
 
   const getFeedData = async() =>{
     let updateItems = [...items];

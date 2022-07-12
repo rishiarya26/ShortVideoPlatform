@@ -23,7 +23,6 @@ import LoginFollowing from '../login-following';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import CircularProgress from '../commons/circular-loader'
-import { getItem } from '../../utils/cookie';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { localStorage } from '../../utils/storage';

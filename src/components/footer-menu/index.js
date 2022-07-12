@@ -3,33 +3,36 @@ import Home from '../commons/svgicons/home';
 import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
-// import useDrawer from '../../hooks/use-drawer';
-// import useTranslation from '../../hooks/use-translation';
-// import ShoppingWidget from '../shopping-widget';
 import SnackBar from '../commons/snackbar';
 import { Shop } from '../commons/button/shop';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import useAuth from "../../hooks/use-auth"
-import SearchBlack from '../commons/svgicons/search-black';
-import ProfileActive from '../commons/svgicons/profile-active';
-import SearchActive from '../commons/svgicons/search-active';
-import HomeActive from '../commons/svgicons/home-active';
 import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { useEffect } from 'react';
 
-// const login = dynamic(
-//   () => import('../auth-options'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
 
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
+const ProfileActive = dynamic(() => import('../commons/svgicons/profile-active'),{
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const SearchActive = dynamic(() => import('../commons/svgicons/search-active'),{
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const HomeActive = dynamic(() => import('../commons/svgicons/home-active'),{
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();

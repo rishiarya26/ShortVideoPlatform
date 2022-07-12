@@ -2,54 +2,52 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/display-name */
 // /*eslint-disable react/display-name */
-import { withBasePath } from '../../config';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Like from '../commons/svgicons/like';
-import Liked from '../commons/svgicons/liked';
-import Follow from '../commons/svgicons/follow';
-import Comment from '../commons/svgicons/comment';
-import Shop from '../commons/svgicons/shop';
-import EmbedIcon from '../commons/svgicons/embedicon';
-// import { share } from '../../utils/app';
-// import { CopyToClipBoard } from '../../utils/web';
-// import { getCurrentUri } from '../../utils/location';
-// import { getDeviceType } from '../../hooks/use-device';
+
 import useDrawer from '../../hooks/use-drawer';
-// import useSnackBar from '../../hooks/use-snackbar';
-// import { postLike, deleteLike } from '../../sources/social';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
 import useDialog from '../../hooks/use-dialog';
 import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
 import { share } from '../../utils/app';
-import useDevice, { devices } from '../../hooks/use-device';
 import fallbackUser from "../../../public/images/users.png"
 import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
 import { localStorage } from '../../utils/storage';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
 import { getItem } from '../../utils/cookie';
-import ProductCards from '../product-cards';
 import AdCards from '../ad-cards';
 
-// const DummyComp = () => (<div />);
-// const CommentTray = dynamic(() => import('../comment-tray'), {
-//   loading: () => <div />,
-//   ssr: false
-// });
-
-const login = dynamic(
-  () => import('../auth-options'),
-  {
+const login = dynamic(() => import('../auth-options'),{
     loading: () => <div />,
     ssr: false
   }
 );
+
+const Like = dynamic(()=> import('../commons/svgicons/like'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Liked = dynamic(()=> import('../commons/svgicons/liked'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Comment = dynamic(()=> import('../commons/svgicons/comment'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Shop = dynamic(()=> import('../commons/svgicons/shop'),{
+  loading: () => <div />,
+  ssr: false
+})
+const EmbedIcon = dynamic(()=> import('../commons/svgicons/embedicon'),{
+  loading: () => <div />,
+  ssr: false
+})
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -63,26 +61,18 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards
+  charmData,onCloseChamboard, tabName = null, adCards
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
   const [reactionCount, setReactionCount] = useState({likes : likes});
   const [isSaved, setIsSaved] = useState(false);
   const { show } = useDrawer();
-
-  // const info = { desktop: 'desktop', mobile: 'mobile' };
   const compName = comp === 'feed' ? 'Feed' : comp === 'profile' ? 'Profile Feed' : pageName === 'hashtag' ? 'Hashtag Feed' : 'Feed';
-
-
-  // const value = useDevice(devices, [info.desktop, info.mobile]);
-
-
   const { showSnackbar } = useSnackbar();
   const { show: showDialog } = useDialog();
   const router = useRouter();
-  // const { showSnackbar } = useSnackBar();
-
+  
   const showLoginOptions = () => {
     show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
   };
@@ -140,20 +130,25 @@ function VideoSidebar({
     }
     return isLiked;
   }
-//   useEffect(()=>{
-//     // setIsLiked({like : false, reactionTime: 'past'});
-//        let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-//          if (tokens?.shortsAuthToken && tokens?.accessToken 
-//            // && tokens?.getSocialToken
-//            ) {
-//          const getLikeReaction = async()=>{  
-//             const isLiked =  await getVideoReactions(socialId, 'past');
-         
-//             setIsLiked({like : isLiked, reactionTime: 'past'});
-//            }
-//            getLikeReaction();
-//            }
-// },[])
+
+  /** 
+   * 
+   * useEffect(()=>{
+      // setIsLiked({like : false, reactionTime: 'past'});
+        let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+          if (tokens?.shortsAuthToken && tokens?.accessToken 
+            // && tokens?.getSocialToken
+            ) {
+          const getLikeReaction = async()=>{  
+              const isLiked =  await getVideoReactions(socialId, 'past');
+          
+              setIsLiked({like : isLiked, reactionTime: 'past'});
+            }
+            getLikeReaction();
+            }
+        },[])
+  */
+  
 
 useEffect(()=>{console.log("$$$",adCards)},[])
 
