@@ -218,7 +218,7 @@ function Hipi({
       console.log("** error in deleting gs cookies **");
     }
     console.log('mounted');
-    inject(GOOGLE_ONE_TAP , null, loaded);
+    // inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
     cookieAgree !== 'yes' && getCountry();
     getGeoLocationInfo();
@@ -241,6 +241,7 @@ function Hipi({
       },[1000])
    
     }
+    // let timer = setTimeout(()=> {},1000)
  
     // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
 
@@ -415,19 +416,6 @@ function Hipi({
                     <Layout>
                     <Script
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', ${fbq.FB_PIXEL_ID});
-          `,
-        }}
       />
                       <Component {...pageProps} />
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}

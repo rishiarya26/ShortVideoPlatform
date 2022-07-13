@@ -67,10 +67,12 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
 /* Feed API without login */
 async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , firstApiCall, campaign_id=''}) {
    console.log('fT',firstTimeCall)
+   console.time("concatenation");
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+   
     if(geoData){
       response = await get(apiPath,null,{
         'X-GEO-IPADDR' : geoData?.ip || '',
@@ -95,6 +97,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
           'campaign_id':campaign_id || ''
       })
   }}
+   console.timeEnd("concatenation");
     
     console.log('v-id',videoId)
     if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
