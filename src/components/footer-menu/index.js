@@ -1,8 +1,4 @@
 /*eslint-disable react/display-name*/
-import Home from '../commons/svgicons/home';
-import Add from '../commons/svgicons/add';
-import Search from '../commons/svgicons/search';
-import Profile from '../commons/svgicons/profile';
 import SnackBar from '../commons/snackbar';
 import { Shop } from '../commons/button/shop';
 import useDrawer from '../../hooks/use-drawer';
@@ -13,6 +9,26 @@ import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 
+const Home = dynamic(() => import('../commons/svgicons/home'),{
+  loading: () => <div />,
+  ssr: false
+}
+);
+const Add = dynamic(() => import('../commons/svgicons/add'),{
+  loading: () => <div />,
+  ssr: false
+}
+);
+const Search = dynamic(() => import('../commons/svgicons/search'),{
+  loading: () => <div />,
+  ssr: false
+}
+);
+const Profile = dynamic(() => import('../commons/svgicons/profile'),{
+  loading: () => <div />,
+  ssr: false
+}
+);
 
 const ProfileActive = dynamic(() => import('../commons/svgicons/profile-active'),{
     loading: () => <div />,

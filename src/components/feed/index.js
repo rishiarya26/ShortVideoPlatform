@@ -20,8 +20,6 @@ import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import LoginFollowing from '../login-following';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
@@ -30,6 +28,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
+import UserExperience from '../commons/user-experience';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -541,55 +540,20 @@ const toTrackFirebase = (activeIndex, type, value) => {
     'following' : toShowFollowing
   }
 
-//   let hostname;
-//   if (typeof window !== 'undefined') {
-//     hostname = window?.location?.hostname;
-//  }
-
- 
-const onStoreRedirect = async ()=>{
-  fbq.event('App Open CTA')
-  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-  trackEvent('App_Open_CTA')
-  let link = ONE_TAP_DOWNLOAD;
-try{  
- if(activeVideoId){ 
-   try{ const resp = await getOneLink({videoId : activeVideoId});
-    link = resp?.data;
-    console.log("one link resp",resp);
-  }
-    catch(e){
-      console.log('error android onelink',e)
-    }
-  }
- }
-  catch(e){
-  }
-  console.log("final onelink",link);
-  window?.open(link);
-}
-
   return (
-    <ComponentStateHandler
-      state={fetchState}
-      Loader={LoadComp}
-      ErrorComp={ErrorComp}
-    >
-    <>
-      <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {/* open cta */}
-      <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
-
-          {/* hamburger */}
-         <HamburgerMenu/>
-
+    <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
+      <React.Fragment>
+        <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
+        {/* open cta */}
+        <UserExperience
+          pageName={pageName}
+          tabName={tabName}
+          items={items}
+          videoActiveIndex={videoActiveIndex}
+          activeVideoId={activeVideoId}
+        />
+        {/* hamburger */}
+        <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
@@ -597,11 +561,10 @@ try{
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>
-      </div>
-      <LandscapeView/>
-    </>
+        </div>
+        <LandscapeView/>
+      </React.Fragment>
     </ComponentStateHandler>
-
   );
 }
 

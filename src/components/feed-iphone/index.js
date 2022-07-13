@@ -34,6 +34,7 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
+import UserExperience from '../commons/user-experience';
 
 
  
@@ -649,45 +650,16 @@ try{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-       {/* <SeoMeta
-        data={{
-          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
-          // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
-          images: [
-            {
-              url: videoId ? items?.[0]?.thumbnail : undefined,
-              width: 800,
-              height: 600,
-              alt: ''
-            }
-          ],
-          site_name: 'Hipi'
-        }}
-      /> */}
-      {/* <VideoJsonLd
-        name={item.music_title}
-        description={item.content_description}
-        contentUrl={item.video_url}
-        embedUrl={hostname}
-        thumbnailUrls={item.thumbnailUrls}
-        watchCount={item.likesCount}
-      /> */}
-    <>
+    <React.Fragment>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-
-      <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
-
-         <HamburgerMenu/>
-
+         <UserExperience
+          pageName={pageName}
+          tabName={tabName}
+          items={items}
+          videoActiveIndex={videoActiveIndex}
+          activeVideoId={activeVideoId}
+        />
+        <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
@@ -697,7 +669,7 @@ try{
         </div>
       </div>
       <LandscapeView/>
-    </>
+    </React.Fragment>
     </ComponentStateHandler>
 
   );

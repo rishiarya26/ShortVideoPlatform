@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-
 import useDrawer from '../../hooks/use-drawer';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
@@ -165,19 +164,17 @@ const checkSaveLook =()=>{
   const saved = savedItems?.videoIds?.includes(activeVideoId) || false;
   setIsSaved(saved);
 }
-  useEffect(()=>{
-            
-             checkSaveLook();
-             setIsLiked({like : false, reactionTime: 'past'});
-                let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-                  if (tokens?.shortsAuthToken && tokens?.accessToken )
-                {
-                  const getLikeReaction = async()=>{  
-                     const isLiked =  await getVideoReactions(socialId, 'past');
-                     setIsLiked({like : isLiked, reactionTime: 'past'});
-                    }
-                    getLikeReaction();
-                }
+  useEffect(()=>{  
+    checkSaveLook();
+    setIsLiked({like : false, reactionTime: 'past'});
+      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+        if (tokens?.shortsAuthToken && tokens?.accessToken){
+        const getLikeReaction = async()=>{  
+          const isLiked =  await getVideoReactions(socialId, 'past');
+          setIsLiked({like : isLiked, reactionTime: 'past'});
+        }
+        getLikeReaction();
+      }
   },[activeVideoId])
 
     let optProfilePic = profilePic;
