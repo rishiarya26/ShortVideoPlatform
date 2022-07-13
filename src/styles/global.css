@@ -825,3 +825,7 @@ title:first-letter {
   object-position: 0;
   background-color: #fff;
 }
+.absolute_cntr{
+  transform: translate(-50%);
+  left: 50%;
+}

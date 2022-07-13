@@ -1,4 +1,5 @@
 /*eslint-disable @next/next/no-img-element */
+/*eslint-disable react/display-name */
 
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -22,7 +23,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import SwipeUp from '../commons/svgicons/swipe-up';
+import SwipeUp from '../commons/svgicons/swipe-up'; 
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
@@ -30,12 +31,22 @@ import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
+import dynamic from 'next/dynamic';
 
 SwiperCore.use([Mousewheel]);
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
+
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 function ProfileFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
@@ -52,6 +63,13 @@ function ProfileFeed({ router }) {
   const [loadMore, setLoadMore] = useState(true);
   const [userDetails, setUserDetails] = useState({})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [showAppBanner, setShowAppBanner]=useState(false);
+  const notNowClick=()=>{
+    setShowAppBanner(false);
+  }
+  const showBanner=()=>{
+    setShowAppBanner(true);
+  }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -566,6 +584,7 @@ try{
                       description={item?.content_description}
                       pageName={pageName}
                       adData={shop?.adData}
+                      showBanner={showBanner}
                     />
 
                   </SwiperSlide>
@@ -606,6 +625,7 @@ try{
           </div>
         </div>
       </>
+      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </ComponentStateHandler>
   );
 };

@@ -1,3 +1,5 @@
+/*eslint-disable react/display-name */
+
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -19,8 +21,9 @@ import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
+import { commonEvents } from '../../analytics/mixpanel/events';
+import { track } from '../../analytics'; 
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
@@ -29,12 +32,22 @@ import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
+import dynamic from 'next/dynamic';
 
 SwiperCore.use([Mousewheel]);
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
+
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 function HashTagFeed({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
@@ -50,6 +63,13 @@ function HashTagFeed({ router }) {
   const [offset, setOffset] = useState(2);
   const [loadMore, setLoadMore] = useState(true);
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [showAppBanner, setShowAppBanner]=useState(false);
+  const showBanner=()=>{
+    setShowAppBanner(true);
+  }
+  const notNowClick=()=>{
+    setShowAppBanner(false);
+  }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -455,8 +475,9 @@ try{
                       firstFrame={item?.firstFrame}
                       player={'single-player-muted'}
                       description={item?.content_description}
+                      adData = {shop?.adData}
+                      showBanner={showBanner}
                       pageName={pageName}
-                      adData={shop?.adData}
                     />
 
                   </SwiperSlide>
@@ -499,6 +520,7 @@ try{
           </div>
         </div>
       </>
+      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </ComponentStateHandler>
   );
 };

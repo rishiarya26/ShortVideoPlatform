@@ -332,6 +332,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             dominantColor={item?.dominant_color}
          />
          </div>
         })}
@@ -361,6 +362,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             dominantColor={item?.dominant_color}
          />
          </div>
          ))}
@@ -468,6 +470,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             dominantColor={item?.dominant_color}
            />
            </div>
           ))}
@@ -501,6 +504,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
            />
            </div>

@@ -1,10 +1,8 @@
 // import App from "next/app"
 import { useEffect, useState } from 'react';
-// import { isLocalEnv } from 'config';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-// import { Workbox, messageSW } from 'workbox-window';
 import Layout from '../src/components/commons/layout';
 import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
@@ -152,10 +150,6 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
-  const [session, setSession] = useState(true);
-  const [sessionTimer, setSessionTimer] = useState(0);
-  const [timerArr, setTimerArr] = useState([])
-  const [enableSession , setEnableSession] = useState(true)
 
   const router = useRouter();
   
@@ -234,15 +228,13 @@ function Hipi({
 
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens are there in _app.js')
-      // let getSocialInitialised = localStorage.get('get-social') || 'fail'
       setTimeout(()=>{
         init();
         initFirebase();
       },[1000])
    
     }
- 
-    // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
+
 
     }
     catch(e){
@@ -251,20 +243,20 @@ function Hipi({
     },[])
 
     useEffect(()=>{
-   try{   
-    let tokens = localStorage.get('tokens') || null;
-    // tokens = tokens && JSON.parse(tokens);
-  
-    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-      console.log('tokens there in _app.js')
-      setTimeout(()=>{
-        init();
-        initFirebase();
-      },[1000])
-     }else{
-      if(loading === false){
-        oneTapGoogle();
-    }
+      try{   
+        let tokens = localStorage.get('tokens') || null;
+        // tokens = tokens && JSON.parse(tokens);
+      
+        if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+          console.log('tokens there in _app.js')
+          setTimeout(()=>{
+            init();
+            initFirebase();
+          },[1000])
+        }else{
+          if(loading === false){
+            oneTapGoogle();
+        }
       }}catch(e){
 
       }

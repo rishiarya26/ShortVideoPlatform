@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name */
 
 import debounce from "lodash.debounce";
 import { useState } from "react";
@@ -12,10 +13,19 @@ import { useRouter } from "next/router";
 import useInfiniteScroll from "../../hooks/use-infinite-scroll";
 import useDrawer from "../../hooks/use-drawer";
 import detectDeviceModal from "../open-in-app"
+import dynamic from 'next/dynamic';
 
 let setRetry;
 const ErrorComp = () => (<Error retry = {setRetry && setRetry}/>);
 const LoadComp = () => (<Loader />);
+
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 async function search(userId, searchTerm, setItems) {
     /* eslint-disable no-param-reassign */
@@ -37,6 +47,7 @@ async function search(userId, searchTerm, setItems) {
     const [items,setItems] = useState([]);
     const [refreshList, setrefreshList] = useState(0);
     const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
+    const [showAppBanner, setShowAppBanner] = useState(false)
   
     const {show} = useDrawer();
   
@@ -55,12 +66,17 @@ async function search(userId, searchTerm, setItems) {
       //  }else{
       //   setIsFetching(false);
       // if(offset === 2){
-        show('', detectDeviceModal, 'extraSmall');
+        // show('', detectDeviceModal, 'extraSmall');
+        setShowAppBanner(true)
         setIsFetching(false);
       //   setOffset(offset+1);
     }
 
     const router = useRouter();
+
+    const notNowClick = ()=>{
+      setShowAppBanner(false);
+    }
 
     const onTermChange=(term)=>{
         optimisedSearch(userId,term, setItems);
@@ -110,6 +126,7 @@ async function search(userId, searchTerm, setItems) {
           </button>}
           </div>
         </div>))}
+        {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
         </div>
         </ComponentStateHandler>
     )
