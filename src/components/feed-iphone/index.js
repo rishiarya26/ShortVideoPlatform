@@ -16,11 +16,11 @@ import FooterMenu from '../footer-menu';
 import dynamic from 'next/dynamic';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-import LoginFollowing from '../login-following';
+// import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
-import Mute from '../commons/svgicons/mute';
+// import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
-import SwipeUp from '../commons/svgicons/swipe-up';
+// import SwipeUp from '../commons/svgicons/swipe-up';
 import HamburgerMenu from '../hamburger-menu';
 
 import * as fbq from '../../analytics/fb-pixel'
@@ -47,6 +47,22 @@ const detectDeviceModal = dynamic(
     ssr: false
   }
 );
+
+const LoginFollowing = dynamic(()=> import('../login-following'),{
+  loading: () => <div />,
+  ssr: false
+})
+
+const SwipeUp = dynamic(()=> import('../commons/svgicons/swipe-up'),{
+  loading: () => <div />,
+  ssr: false
+})
+
+const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
+  loading: () => <div />,
+  ssr: false
+})
+
 
 
 let setRetry;

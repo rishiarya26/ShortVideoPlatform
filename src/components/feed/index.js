@@ -1,5 +1,6 @@
 /*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import { withRouter } from 'next/router';
@@ -15,14 +16,13 @@ import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
-import dynamic from 'next/dynamic';
-import Mute from '../commons/svgicons/mute';
+// import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-import LoginFollowing from '../login-following';
+// import LoginFollowing from '../login-following';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import SwipeUp from '../commons/svgicons/swipe-up';
+// import SwipeUp from '../commons/svgicons/swipe-up';
 import { localStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
@@ -43,6 +43,23 @@ const LandscapeView = dynamic(
     ssr: false
   }
 );
+
+const LoginFollowing = dynamic(()=> import('../login-following'),{
+  loading: () => <div />,
+  ssr: false
+})
+
+const SwipeUp = dynamic(()=> import('../commons/svgicons/swipe-up'),{
+  loading: () => <div />,
+  ssr: false
+})
+
+const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
+  loading: () => <div />,
+  ssr: false
+})
+
+
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
