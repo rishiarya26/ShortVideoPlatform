@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ChooseOnType from '../../src/components/choose-on-type';
 //import DeskFeed from '../../src/components/desk-feed';
-import Feed from '../../src/components/feed';
+// import Feed from '../../src/components/feed';
 //import FeedIphone from '../../src/components/feed-iphone';
 import { getItem } from '../../src/utils/cookie';
 import { getCanonicalUrl, getUrl, updateCampaignId, updateUtmData } from '../../src/utils/web';
@@ -17,10 +17,10 @@ const DeskFeed = dynamic(()=> import('../../src/components/desk-feed'),{
   ssr: false
 })
 
-// const Feed = dynamic(()=> import('../../src/components/feed'),{
-//   loading: () => <div />,
-//   ssr: false
-// })
+const Feed = dynamic(()=> import('../../src/components/feed'),{
+  loading: () => <div />,
+  ssr: false
+})
 
 const FeedIphone = dynamic(()=> import('../../src/components/feed-iphone'),{
   loading: () => <div />,
@@ -77,26 +77,26 @@ export default function Hipi({data ={}}) {
   );
 }
 
-// export async function getServerSideProps({query}) {
-//   const { videoId } = query;
-//   let data = {};
-//   try {
-//     data = await getSingleFeed({id:videoId});
-//   } catch (e) {
-//     data = {
-//       status: e?.status || 400,
-//       errorCode: e?.errorCode || 400,
-//       'http-status': e['http-status'],
-//       message: e?.message || 'something went wrong',
-//       thumbnail: "https://www.hipi.co.in/icons/icon-512x512.png",
-//       content_description: 'www.hipi.co.in',
-//       music_title:""
-//     };
-//   }
-//   return {
-//     props: {
-//       ...data
-//     }
-//   };
-// }
+export async function getServerSideProps({query}) {
+  const { videoId } = query;
+  let data = {};
+  try {
+    data = await getSingleFeed({id:videoId});
+  } catch (e) {
+    data = {
+      status: e?.status || 400,
+      errorCode: e?.errorCode || 400,
+      'http-status': e['http-status'],
+      message: e?.message || 'something went wrong',
+      thumbnail: "https://www.hipi.co.in/icons/icon-512x512.png",
+      content_description: 'www.hipi.co.in',
+      music_title:""
+    };
+  }
+  return {
+    props: {
+      ...data
+    }
+  };
+}
 

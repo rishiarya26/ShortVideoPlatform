@@ -1,10 +1,8 @@
 // import App from "next/app"
 import { useEffect, useState } from 'react';
-// import { isLocalEnv } from 'config';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-// import { Workbox, messageSW } from 'workbox-window';
 import Layout from '../src/components/commons/layout';
 import { TranslationProvider } from '../src/hooks/use-translation';
 import { RouteStateProvider } from '../src/hooks/use-route-state';
@@ -23,16 +21,6 @@ import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
-// import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
-// import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
-// import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
-
-// import { SW_IGNORE } from '../src/constants';
-// import { doesStringMatch } from '../src/utils/string';
-
-// TODO add withBasePath for everything that gets affected because of base-path i18n
-
-// test changes
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
@@ -152,16 +140,20 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
-  const [session, setSession] = useState(true);
-  const [sessionTimer, setSessionTimer] = useState(0);
-  const [timerArr, setTimerArr] = useState([])
-  const [enableSession , setEnableSession] = useState(true)
+
 
   const router = useRouter();
   
   const loaded = ()=>{
     setLoading(false)
   }
+
+  // const loadedGS=()=>{
+  //   setLoadingGS(false);
+  //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
+  //     window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
+  //   }
+  // }
 
   const getCountry = async()=>{
     try{ 
@@ -218,7 +210,7 @@ function Hipi({
       console.log("** error in deleting gs cookies **");
     }
     console.log('mounted');
-    // inject(GOOGLE_ONE_TAP , null, loaded);
+    inject(GOOGLE_ONE_TAP , null, loaded);
     const cookieAgree = getItem('cookie-agreed');
     cookieAgree !== 'yes' && getCountry();
     getGeoLocationInfo();
@@ -234,16 +226,13 @@ function Hipi({
 
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
       console.log('tokens are there in _app.js')
-      // let getSocialInitialised = localStorage.get('get-social') || 'fail'
       setTimeout(()=>{
         init();
         initFirebase();
       },[1000])
    
     }
-    // let timer = setTimeout(()=> {},1000)
- 
-    // console.log("device DD", window?.navigator.appVersion,window?.navigator.vendor,window?.navigator?.mediaDevices)
+
 
     }
     catch(e){
@@ -252,20 +241,20 @@ function Hipi({
     },[])
 
     useEffect(()=>{
-   try{   
-    let tokens = localStorage.get('tokens') || null;
-    // tokens = tokens && JSON.parse(tokens);
-  
-    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-      console.log('tokens there in _app.js')
-      setTimeout(()=>{
-        init();
-        initFirebase();
-      },[1000])
-     }else{
-      if(loading === false){
-        oneTapGoogle();
-    }
+      try{   
+        let tokens = localStorage.get('tokens') || null;
+        // tokens = tokens && JSON.parse(tokens);
+      
+        if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+          console.log('tokens there in _app.js')
+          setTimeout(()=>{
+            init();
+            initFirebase();
+          },[1000])
+        }else{
+          if(loading === false){
+            oneTapGoogle();
+        }
       }}catch(e){
 
       }
@@ -416,6 +405,19 @@ function Hipi({
                     <Layout>
                     <Script
         strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
       />
                       <Component {...pageProps} />
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
