@@ -16,13 +16,10 @@ import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
-// import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-// import LoginFollowing from '../login-following';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-// import SwipeUp from '../commons/svgicons/swipe-up';
 import { localStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
@@ -36,41 +33,27 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
+const LandscapeView = dynamic(() => import('../landscape'),{
+  loading: () => <div />,
+  ssr: false
+});
 const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
   ssr: false
-})
-
+});
 const SwipeUp = dynamic(()=> import('../commons/svgicons/swipe-up'),{
   loading: () => <div />,
   ssr: false
-})
-
+});
 const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
   loading: () => <div />,
   ssr: false
-})
+});
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
-  const [toShowItems, setToShowItems] = useState([])
+  const [toShowItems, setToShowItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [videoActiveIndex, setVideoActiveIndex] = useState(0)
@@ -86,7 +69,7 @@ function Feed({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('');
   const [showAppBanner, setShowAppBanner] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
 
   const { t } = useTranslation();
@@ -106,9 +89,9 @@ function Feed({ router }) {
       setOnCloseChamboard(value)
   }
 
-  const notNowClick = ()=>{
-    setShowAppBanner(null);
-  }
+  // const notNowClick = ()=>{
+  //   setShowAppBanner(null);
+  // }
 
   useEffect(() => {
      setTimeout(()=>{
