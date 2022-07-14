@@ -25,7 +25,6 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
-import UserExperience from '../commons/user-experience';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -49,6 +48,11 @@ const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
   loading: () => <div />,
   ssr: false
 });
+const UserExperience = dynamic(()=> import('../commons/user-experience'),{
+  loading: () => <div />,
+  ssr: false
+});
+
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
