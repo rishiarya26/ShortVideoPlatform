@@ -20,6 +20,7 @@ import { localStorage } from '../../utils/storage';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 import AdCards from '../ad-cards';
+import { GET_SOCIAL_LOADED } from '../../constants';
 
 const login = dynamic(() => import('../auth-options'),{
     loading: () => <div />,
@@ -75,6 +76,8 @@ function VideoSidebar({
   const showLoginOptions = () => {
     show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
   };
+
+  const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
 
   const like = () => {
      postReaction('like',socialId);
@@ -282,7 +285,7 @@ const handleSaveMoments = () =>{
           <div>
             <div
               role="presentation"
-              onClick={() => {
+              onClick={getSocialLoaded === 'false' ? null : () => {
                 deleteReaction('like', socialId );
                 setIsLiked({like : false, reactionTime: 'now'});
                 getVideoReactions(socialId, 'now', 'delete')
