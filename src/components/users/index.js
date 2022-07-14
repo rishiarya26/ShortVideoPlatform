@@ -1,19 +1,15 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
-import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { withRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
-import { Back } from '../commons/svgicons/back';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
-import LikedList from '../commons/svgicons/liked-list';
-import Lock from '../commons/svgicons/lock';
-import Listing from '../commons/svgicons/listing';
 import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
-import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
@@ -27,29 +23,31 @@ import {  toTrackMixpanel } from '../../analytics/mixpanel/events';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+const LikedList = dynamic(()=> import('../commons/svgicons/liked-list'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Lock = dynamic(()=> import('../commons/svgicons/lock'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Listing = dynamic(()=> import('../commons/svgicons/listing'),{
+  loading: () => <div />,
+  ssr: false
+})
+const Back = dynamic(()=> import('../commons/svgicons/back'),{
+  loading: () => <div />,
+  ssr: false
+});
+const LandscapeView = dynamic(() => import('../landscape'),{
+  loading: () => <div />,
+  ssr: false
+});
+const AppBanner = dynamic(() => import('../app-banner'),{
+  loading: () => <div />,
+  ssr: false
+});
 
 function Users({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',

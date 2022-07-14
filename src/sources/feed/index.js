@@ -1,12 +1,9 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
-import useAuth from '../../hooks/use-auth';
 import { apiMiddleWare } from '../../network/utils';
-import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { detectGeoLocationByZee } from '../geo-location';
 import { transformSuccess, transformError } from '../transform/feed';
-import { getSingleFeed } from './embed';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;

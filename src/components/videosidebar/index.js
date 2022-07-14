@@ -23,39 +23,29 @@ import AdCards from '../ad-cards';
 import { GET_SOCIAL_LOADED } from '../../constants';
 
 const login = dynamic(() => import('../auth-options'),{
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
+  loading: () => <div />,
+  ssr: false
+});
 const Like = dynamic(()=> import('../commons/svgicons/like'),{
   loading: () => <div />,
   ssr: false
-})
+});
 const Liked = dynamic(()=> import('../commons/svgicons/liked'),{
   loading: () => <div />,
   ssr: false
-})
+});
 const Comment = dynamic(()=> import('../commons/svgicons/comment'),{
   loading: () => <div />,
   ssr: false
-})
+});
 const Shop = dynamic(()=> import('../commons/svgicons/shop'),{
   loading: () => <div />,
   ssr: false
-})
+});
 const EmbedIcon = dynamic(()=> import('../commons/svgicons/embedicon'),{
   loading: () => <div />,
   ssr: false
-})
-
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+});
 
 function VideoSidebar({
   socialId,
@@ -305,7 +295,7 @@ const handleSaveMoments = () =>{
             <div
               id="like"
               role="presentation"
-              onClick={() => selectedLike()}
+              onClick={getSocialLoaded === 'false' ? null : () => selectedLike()}
             >
               <Like />
             </div>

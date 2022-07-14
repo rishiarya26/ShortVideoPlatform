@@ -67,8 +67,6 @@ const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
   ssr: false
 })
 
-
-
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
@@ -100,11 +98,6 @@ function Feed({ router }) {
   const showBanner =()=>{
     setShowAppBanner(true);
   }
-
-  // const loaded = () => {
-  //   setLoading(false);
-  // };
-//  const {show} = useDrawer();
 
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';

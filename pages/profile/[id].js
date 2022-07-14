@@ -1,15 +1,13 @@
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import {
-  SeoMeta
-} from '../../src/components/commons/head-meta/seo-meta';
+import { SeoMeta } from '../../src/components/commons/head-meta/seo-meta';
 import FooterMenu from '../../src/components/footer-menu';
 import Users from '../../src/components/users';
 import { getUserProfile } from '../../src/sources/users/profile';
 import { getItem } from '../../src/utils/cookie';
 import { localStorage } from '../../src/utils/storage';
-import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../../src/utils/web';
+import { updateCampaignId, updateUtmData } from '../../src/utils/web';
 
 // TODO enable mock mode here
 export default function Hipi(params) {
@@ -23,19 +21,18 @@ export default function Hipi(params) {
   const router = useRouter();
 
   useEffect(()=>{
-  try{ 
-    let userType = 'others'
-    const tokens = localStorage.get('tokens');
-    const userId = localStorage.get('user-id')
-    tokens && userId && userId === item?.id && (userType = 'self');
-    setType(userType);
-      const queryStrings = router?.query;
-      updateUtmData(queryStrings);
-      updateCampaignId(queryStrings);
-  }catch(e){
-    console.log('something went wrong with id')
-  }
-
+    try{ 
+      let userType = 'others'
+      const tokens = localStorage.get('tokens');
+      const userId = localStorage.get('user-id')
+      tokens && userId && userId === item?.id && (userType = 'self');
+      setType(userType);
+        const queryStrings = router?.query;
+        updateUtmData(queryStrings);
+        updateCampaignId(queryStrings);
+    }catch(e){
+      console.log('something went wrong with id')
+    }
   },[])
 
   if (status === 'fail') {
@@ -59,39 +56,7 @@ export default function Hipi(params) {
           keywords : `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`,        
         }}
      />
-      {/* <SeoMeta
-        data={{
-          title: item.userHandle,
-          image: item.profilePic,
-          description: item.bio,
-          canonical: params.uri,
-          openGraph: {
-            title: item.userHandle,
-            description: item.bio,
-            url: params.uri,
-            images: [
-              {
-                url: item.profilePic,
-                width: 800,
-                height: 600,
-                alt: item.userHandle
-              },
-              { url: item.profilePic }
-            ],
-            type: 'profile',
-            video: {
-              actors: [
-                {
-                  role: item.userHandle
-                }
-              ],
-              tag: item.tag
-            },
-            site_name: 'Hipi'
-          }
-        }}
-      /> */}
-  <Users
+      <Users
         followers={item?.followers}
         following={item?.following}
         totalLikes={item?.totalLikes}

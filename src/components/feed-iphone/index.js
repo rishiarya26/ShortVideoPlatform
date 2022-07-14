@@ -16,13 +16,9 @@ import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-// import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
-// import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
-// import SwipeUp from '../commons/svgicons/swipe-up';
 import HamburgerMenu from '../hamburger-menu';
-
 import * as fbq from '../../analytics/fb-pixel'
 import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
@@ -36,54 +32,33 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 import UserExperience from '../commons/user-experience';
 
-
- 
 SwiperCore?.use([Mousewheel]);
-
-// const detectDeviceModal = dynamic(
-//   () => import('../open-in-app'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
 
 const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
   ssr: false
 })
-
 const SwipeUp = dynamic(()=> import('../commons/svgicons/swipe-up'),{
   loading: () => <div />,
   ssr: false
 })
-
 const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
   loading: () => <div />,
   ssr: false
 })
+const LandscapeView = dynamic(() => import('../landscape'),{
+  loading: () => <div />,
+  ssr: false
+});
 
-
+const AppBanner = dynamic(() => import('../app-banner'),{
+  loading: () => <div />,
+  ssr: false
+});
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
-
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
@@ -121,13 +96,14 @@ function FeedIphone({ router }) {
 
   const setClose = (value)=>{
     setOnCloseChamboard(value)
-}
-const showBanner=()=>{
-  setShowAppBanner(true);
-}
-const notNowClick = ()=>{
-  setShowAppBanner(false);
-}
+  }
+  const showBanner=()=>{
+    setShowAppBanner(true);
+  }
+  const notNowClick = ()=>{
+    setShowAppBanner(false);
+  }
+  
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){

@@ -1,55 +1,47 @@
 /*eslint-disable react/display-name*/
+import dynamic from 'next/dynamic';
 import SnackBar from '../commons/snackbar';
 import { Shop } from '../commons/button/shop';
 import useDrawer from '../../hooks/use-drawer';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'; 
 import useAuth from "../../hooks/use-auth"
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import ProfileActive from '../commons/svgicons/profile-active';
 import { useState } from 'react';
 
 const Home = dynamic(() => import('../commons/svgicons/home'),{
   loading: () => <div />,
   ssr: false
-}
-);
+});
 const Add = dynamic(() => import('../commons/svgicons/add'),{
   loading: () => <div />,
   ssr: false
-}
-);
+});
 const Search = dynamic(() => import('../commons/svgicons/search'),{
   loading: () => <div />,
   ssr: false
-}
-);
+});
 const Profile = dynamic(() => import('../commons/svgicons/profile'),{
   loading: () => <div />,
   ssr: false
-}
-);
-
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
+});
+const ProfileActive = dynamic(() => import('../commons/svgicons/profile-active'),{
+  loading: () => <div />,
+  ssr: false
+});
 const SearchActive = dynamic(() => import('../commons/svgicons/search-active'),{
     loading: () => <div />,
     ssr: false
-  }
-);
-
+});
 const HomeActive = dynamic(() => import('../commons/svgicons/home-active'),{
     loading: () => <div />,
     ssr: false
-  }
-);
+});
+const AppBanner = dynamic(() => import('../app-banner'),{
+  loading: () => <div />,
+  ssr: false
+});
+
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType,
  setClose,pageName, tabName=null} ){
