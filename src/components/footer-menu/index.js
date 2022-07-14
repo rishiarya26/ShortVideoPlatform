@@ -5,7 +5,6 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import useAuth from "../../hooks/use-auth"
-import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import ProfileActive from '../commons/svgicons/profile-active';
