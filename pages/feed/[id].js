@@ -77,26 +77,26 @@ export default function Hipi({data ={}}) {
   );
 }
 
-export async function getServerSideProps({query}) {
-  const { videoId } = query;
-  let data = {};
-  try {
-    data = await getSingleFeed({id:videoId});
-  } catch (e) {
-    data = {
-      status: e?.status || 400,
-      errorCode: e?.errorCode || 400,
-      'http-status': e['http-status'],
-      message: e?.message || 'something went wrong',
-      thumbnail: "https://www.hipi.co.in/icons/icon-512x512.png",
-      content_description: 'www.hipi.co.in',
-      music_title:""
-    };
-  }
-  return {
-    props: {
-      ...data
-    }
-  };
-}
+// export async function getServerSideProps({query}) {
+//   const { videoId } = query;
+//   let data = {};
+//   try {
+//     data = await getSingleFeed({id:videoId});
+//   } catch (e) {
+//     data = {
+//       status: e?.status || 400,
+//       errorCode: e?.errorCode || 400,
+//       'http-status': e['http-status'],
+//       message: e?.message || 'something went wrong',
+//       thumbnail: "https://www.hipi.co.in/icons/icon-512x512.png",
+//       content_description: 'www.hipi.co.in',
+//       music_title:""
+//     };
+//   }
+//   return {
+//     props: {
+//       ...data
+//     }
+//   };
+// }
 

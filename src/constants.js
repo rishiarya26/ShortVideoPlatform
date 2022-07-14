@@ -15,11 +15,13 @@ export const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.
 export const IOS_STORE = 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008';
 export const VERSION = '4.2.0';
 export const APP_NAME = 'HiPi';
+export const APP_ID = "YInJ8G70y098";
 export const LANGUAGE = 'en';
 export const GOOGLE_CLIENT_ID_PREROD = '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com';
 export const GOOGLE_CLIENT_ID_LOCAL = '1089855202811-en5ek78kvh7sst9bfmu62femgr15u0tk.apps.googleusercontent.com';
 export const FACEBOOK_PIXEL_ID = '493676215515717'
 export const DISCOVER_SEARCH_RESULTS = 'Discover Search Results'
 export const CREATOR_PROFILE = 'Creator Profile'
+export const GET_SOCIAL = "https://websdk.getsocial.im/getsocial.min.js";
+export const GET_SOCIAL_LOADED = 'get_social_loaded';
 export const FULL_EXPERIENCE = 'Get the full experience on the Hipi app'
- 

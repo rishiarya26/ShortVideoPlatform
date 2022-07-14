@@ -10,7 +10,7 @@ import { getLocales } from '../src/sources/app';
 import HeadMeta from '../src/components/commons/head-meta';
 import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
-import { GOOGLE_ONE_TAP } from '../src/constants';
+import { GOOGLE_ONE_TAP, GET_SOCIAL, GET_SOCIAL_LOADED  } from '../src/constants';
 import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
@@ -21,6 +21,18 @@ import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
+
+const scriptSrc = `
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', ${fbq.FB_PIXEL_ID});
+`;
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
@@ -140,12 +152,21 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
-
+  const [loadingGS, setLoadingGS] = useState(true);
 
   const router = useRouter();
   
   const loaded = ()=>{
     setLoading(false)
+  }
+
+  const loadedGS=()=>{
+    setLoadingGS(false);
+    if(typeof window !== "undefined"){
+      if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
+        window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
+      }
+    }
   }
 
   // const loadedGS=()=>{
@@ -183,61 +204,76 @@ function Hipi({
   //   setItem('cookie-agreed','yes');
   // },[country])
 
-  useEffect(()=>{
-   try{ 
-    try{
+  const updatingGoogleCookies = () =>{
+    try {
       const gotUrl = window?.location?.href;
       let domain = (new URL(gotUrl));
       domain = domain?.hostname;
       const arrSplit = document?.cookie?.split(";");
-  
-      for(let i = 0; i < arrSplit?.length; i++)
-      {
-          const cookie = arrSplit?.[i]?.trim();
-          const cookieName = cookie?.split("=")[0];
-      
-          // If the prefix of the cookie's name matches the one specified, remove it
-          if(cookieName?.indexOf("_gs_auth_") === 0) {
-             console.log("COOKIE",cookieName)
-              // Remove the cookie
-              cookieName && 
-              removeItem(cookieName);
-              // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          }
+      for (let i = 0; i < arrSplit?.length; i++) {
+        const cookie = arrSplit?.[i]?.trim();
+        const cookieName = cookie?.split("=")[0];
+        // If the prefix of the cookie's name matches the one specified, remove it
+        if (cookieName?.indexOf("_gs_auth_") === 0) {
+          console.log("COOKIE", cookieName)
+          // Remove the cookie
+          cookieName && removeItem(cookieName);
+          // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
       }
-
-    }catch(e){
+    } catch (e) {
       console.log("** error in deleting gs cookies **");
     }
-    console.log('mounted');
-    inject(GOOGLE_ONE_TAP , null, loaded);
-    const cookieAgree = getItem('cookie-agreed');
-    cookieAgree !== 'yes' && getCountry();
-    getGeoLocationInfo();
-    let tokens = localStorage.get('tokens') || null;
-    // tokens = tokens && JSON.parse(tokens);
-    const userAgent = window?.navigator.userAgent;
-    const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
-    localStorage.set('device-modal',deviceModel);
+  }
 
-    const networkInformation = window?.navigator?.connection;
-    const effectiveType = networkInformation?.effectiveType;
-    localStorage.set('network-strength',effectiveType);
+  useEffect(()=>{
+    let timer;
+    try{ 
+      if(typeof window !== "undefined"){
+        if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
+          window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
+        }
+        window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, false);
+      }
+  
+      /**loading scripts */
 
-    if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-      console.log('tokens are there in _app.js')
-      setTimeout(()=>{
-        init();
-        initFirebase();
-      },[1000])
-   
-    }
+      timer = setTimeout(()=>{
+        inject(GOOGLE_ONE_TAP , null, loaded);
+        inject(GET_SOCIAL , null, loadedGS);
+        inject('', scriptSrc);
+      },2500);
 
+      updatingGoogleCookies();
 
+      console.log('mounted');
+      // inject(GOOGLE_ONE_TAP , null, loaded);
+      const cookieAgree = getItem('cookie-agreed');
+      cookieAgree !== 'yes' && getCountry();
+      getGeoLocationInfo();
+      let tokens = localStorage.get('tokens') || null;
+      // tokens = tokens && JSON.parse(tokens);
+      const userAgent = window?.navigator.userAgent;
+      const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
+      localStorage.set('device-modal',deviceModel);
+      const networkInformation = window?.navigator?.connection;
+      const effectiveType = networkInformation?.effectiveType;
+      localStorage.set('network-strength',effectiveType);
+
+      if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+        console.log('tokens are there in _app.js')
+        setTimeout(()=>{
+          init();
+          initFirebase();
+        },[3000])
+      }
     }
     catch(e){
-    
     }
+
+    /** unmount */
+    return () => clearTimeout(timer);
+
     },[])
 
     useEffect(()=>{
@@ -248,7 +284,7 @@ function Hipi({
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
           console.log('tokens there in _app.js')
           setTimeout(()=>{
-            init();
+            //init();
             initFirebase();
           },[1000])
         }else{
@@ -259,6 +295,20 @@ function Hipi({
 
       }
     },[loading])
+
+    useEffect(()=>{
+      try{
+        let tokens = localStorage.get('tokens') || null;
+        if(tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+          if(loadingGS=== false){
+            init()
+          }
+        }
+      }
+      catch(e){
+        console.error(e);
+      }
+    },[loadingGS])
 
     useEffect(() => {
       // This pageview only triggers the first time (it's important for Pixel to have real information)
