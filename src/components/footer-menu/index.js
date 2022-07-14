@@ -8,6 +8,8 @@ import useAuth from "../../hooks/use-auth"
 import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
+import ProfileActive from '../commons/svgicons/profile-active';
+import { useState } from 'react';
 
 const Home = dynamic(() => import('../commons/svgicons/home'),{
   loading: () => <div />,
@@ -30,7 +32,9 @@ const Profile = dynamic(() => import('../commons/svgicons/profile'),{
 }
 );
 
-const ProfileActive = dynamic(() => import('../commons/svgicons/profile-active'),{
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
     loading: () => <div />,
     ssr: false
   }
@@ -77,6 +81,14 @@ const toShow = {
   }
 }
 
+const [showAppBanner, setShowAppBanner]=useState(false);
+const showBanner=()=>{
+  setShowAppBanner(true);
+}
+const notNowClick=()=>{
+  setShowAppBanner(false);
+}
+
 const chooseProfile = useAuth(toShow.login, toShow.profile);
 
   return (
@@ -94,7 +106,7 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
           {info[type]}
         </div> 
             <div
-              onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "create"})}
+              onClick={() => showBanner && showBanner()}
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
@@ -106,7 +118,7 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
       </div>
       </div>
       <SnackBar />
-      
+      {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
     </div>
   );
 }

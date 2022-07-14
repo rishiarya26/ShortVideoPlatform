@@ -26,7 +26,8 @@ function VideoFooter({
   saveLook,
   comp,
   description,
-  adCards
+  adCards,
+  showBanner
 }) {
   const [loaded, setLoaded] = useState(false);
   // TO-DO common classes
@@ -67,10 +68,9 @@ function VideoFooter({
     router?.push(`/${username}`)
   }
 
+
   return (
-    <div
-      className={type[comp]}
-    >
+    <div className={type[comp]} >
       <div className="videoFooter__text w-full break-words">
         {/*
         {canShop === 'success' && (
@@ -101,7 +101,7 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
        {musicTitle && <div className="w-8/12 my-1 text-sm">
           {music[comp]}
-          <span onClick={()=>show('', detectDeviceModal, 'extraSmall', {text: "profile"})} className=" my-1 text-sm w-4/12">
+          <span onClick={()=>showBanner && showBanner()} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>
         </div>}

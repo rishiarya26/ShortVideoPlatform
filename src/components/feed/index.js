@@ -36,6 +36,14 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 const LandscapeView = dynamic(
   () => import('../landscape'),
   {
@@ -78,7 +86,9 @@ function Feed({ router }) {
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
-  const [onCloseChamboard, setOnCloseChamboard] = useState('')
+  const [onCloseChamboard, setOnCloseChamboard] = useState('');
+  const [showAppBanner, setShowAppBanner] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
 
   const { t } = useTranslation();
@@ -87,11 +97,24 @@ function Feed({ router }) {
   let { campaign_id = null} = router?.query;
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
+  const showBanner =()=>{
+    setShowAppBanner(true);
+  }
+
+  // const loaded = () => {
+  //   setLoading(false);
+  // };
+//  const {show} = useDrawer();
+
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
 
   const setClose = (value)=>{
       setOnCloseChamboard(value)
+  }
+
+  const notNowClick = ()=>{
+    setShowAppBanner(null);
   }
 
   useEffect(() => {
@@ -292,6 +315,7 @@ function Feed({ router }) {
       //swipe-up
       toShowItems.length > 0 && decrementingShowItems();
     }
+    if(videoActiveIndex === 6) showAppBanner===false && setShowAppBanner(true);
   },[videoActiveIndex])
 
   useEffect(() => {
@@ -497,6 +521,9 @@ const toTrackFirebase = (activeIndex, type, value) => {
                       pageName={pageName}
                       tabName={tabName}
                       adData={shop?.adData}
+                      showBanner={showBanner}
+                      // toggleIsSaved={toggleIsSaved}
+                      // setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -542,6 +569,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
               shopType={shop?.type && shop.type}
               shop={shop}
               setClose={setClose}
+              showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
               />
@@ -575,6 +603,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
+        
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

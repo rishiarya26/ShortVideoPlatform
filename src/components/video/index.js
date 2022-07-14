@@ -288,6 +288,7 @@ function Video(props) {
          comp={props?.comp}
          description={props?.description}
          adCards={props?.adData}
+         showBanner={props?.showBanner}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
@@ -315,6 +316,7 @@ function Video(props) {
          onCloseChamboard={props?.onCloseChamboard}
          creatorId={props?.creatorId}
          adCards={props?.adData}
+         showBanner={props?.showBanner}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

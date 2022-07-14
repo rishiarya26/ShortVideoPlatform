@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import Video from '../video';
 import Error from './error';
+import dynamic from 'next/dynamic';
 import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
@@ -13,7 +14,6 @@ import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
-import dynamic from 'next/dynamic';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 // import LoginFollowing from '../login-following';
@@ -40,13 +40,13 @@ import UserExperience from '../commons/user-experience';
  
 SwiperCore?.use([Mousewheel]);
 
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const detectDeviceModal = dynamic(
+//   () => import('../open-in-app'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
@@ -77,6 +77,14 @@ const LandscapeView = dynamic(
   }
 );
 
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
   const [items, setItems] = useState([]);
@@ -98,6 +106,8 @@ function FeedIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
+  const [showAppBanner, setShowAppBanner] = useState(false);
+
   const { t } = useTranslation();
   const { id } = router?.query;
   const { videoId } = router?.query;
@@ -112,7 +122,12 @@ function FeedIphone({ router }) {
   const setClose = (value)=>{
     setOnCloseChamboard(value)
 }
-
+const showBanner=()=>{
+  setShowAppBanner(true);
+}
+const notNowClick = ()=>{
+  setShowAppBanner(false);
+}
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
@@ -291,7 +306,8 @@ function FeedIphone({ router }) {
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
   setMuted(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  setShowAppBanner(true);
+  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
@@ -309,7 +325,8 @@ console.log('errorrr',e)
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  setShowAppBanner(true);
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
  }
@@ -331,6 +348,7 @@ console.log('errorrr',e)
        decrementingShowItems();
       }
     }
+    // if(videoActiveIndex === 6) showAppBanner===false && setShowAppBanner(true);
   },[videoActiveIndex])
 
   useEffect(() => {
@@ -563,6 +581,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
+                      showBanner={showBanner}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -617,6 +636,7 @@ console.log('errorrr',e)
               onCloseChamboard={onCloseChamboard}
               pageName={pageName}
               tabName={tabName}
+              showBanner={showBanner}
               />
             </Swiper>
 
@@ -684,6 +704,7 @@ try{
           <div className="playkit-player" />
         </div>
       </div>
+      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
       <LandscapeView/>
     </React.Fragment>
     </ComponentStateHandler>

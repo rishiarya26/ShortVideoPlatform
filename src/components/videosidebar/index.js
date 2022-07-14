@@ -60,7 +60,7 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard, tabName = null, adCards
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -86,7 +86,7 @@ function VideoSidebar({
      /********* */
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
-  const comment = () => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+  const comment = () =>showBanner && showBanner();
   
   const selectedLike = useAuth(showLoginOptions, like);
   const selectedComment = useAuth(showLoginOptions, comment);
@@ -319,7 +319,8 @@ const handleSaveMoments = () =>{
         <div 
            id="comment"
            role="presentation"
-           onClick={() => show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})}
+           onClick={() =>showBanner && showBanner()}
+
         >
           <Comment />
           {/* <p className="text-sm text-center">0</p> */}
@@ -400,7 +401,7 @@ const handleSaveMoments = () =>{
           </div>
         )
       )}
-
+    {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
     </div>
   );
 }

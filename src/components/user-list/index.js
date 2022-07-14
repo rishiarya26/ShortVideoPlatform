@@ -1,3 +1,5 @@
+/*eslint-disable react/display-name */
+
 import { Back } from '../commons/svgicons/back';
 import { withRouter } from 'next/router';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
@@ -14,6 +16,15 @@ import { numberFormatter } from '../../utils/convert-to-K';
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
 const LoadComp = () => (<Loading />);
+
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 
 function UserList({router}) {
   const [items, setItems] = useState({})
@@ -34,6 +45,11 @@ function UserList({router}) {
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
+
+  const[ShowAppBanner, setShowAppBanner]=useState(false);
+  const notNowClick=()=>{
+    setShowAppBanner(false)
+  }
 
   return (
     <ComponentStateHandler
@@ -62,7 +78,7 @@ function UserList({router}) {
               <p className="text-sm text-gray-400">{numberFormatter(data?.user?.followers)} Followers</p>
             </div>
           </div>
-          <div onClick={()=>show('',detectDownload,'extraSmall')} className="flex items-center">
+          <div onClick={()=>setShowAppBanner(true)} className="flex items-center">
             <button  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
               Follow
             </button>
@@ -70,6 +86,7 @@ function UserList({router}) {
         </div>))}
       </div>    
     </div>
+    { ShowAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
     </ComponentStateHandler>
   );
 }

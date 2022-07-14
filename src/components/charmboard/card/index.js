@@ -7,9 +7,10 @@ import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
-   productIdChange,
+   productIdChange, dominantColor,
    onProductChange}) =>{
 
+  
       useEffect(()=>{
          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})
       },[productIdChange])
@@ -28,12 +29,13 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
         const onProductClick= ()=>{
          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})  
          window?.open(shopLink)
-        }   
+        }  
+ 
 return(
 <>
 {/* Card div */}
 <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
-   <div onClick={onProductClick} className="w-full overflow-hidden relative min-h-60">
+   <div onClick={onProductClick} style={{backgroundColor: `${dominantColor}7a` || "gray"}}  className="w-full overflow-hidden relative min-h-49v">
    <CardRibbon ribbonData={ribbonData}/>
       <Img data={thumbnail}/> 
       {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}

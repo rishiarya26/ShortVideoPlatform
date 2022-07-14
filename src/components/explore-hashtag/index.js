@@ -1,4 +1,6 @@
 /*eslint-disable react/no-unescaped-entities */
+/*eslint-disable react/display-name */
+
 import Save from '../commons/svgicons/save';
 import { Back } from '../commons/svgicons/back';
 import { withRouter } from 'next/router';
@@ -14,6 +16,7 @@ import { withBasePath } from '../../config';
 import useDrawer from '../../hooks/use-drawer';
 import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
+import dynamic from 'next/dynamic';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
 import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
@@ -24,12 +27,25 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 function HashTag({router}) {
   const [items,setItems] = useState([]);
   const [details, setDetails] = useState({})
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching);
   const [offset, setOffset] = useState(2);
+  const [showAppBanner, setShowAppBanner] = useState(false);
+
+  const notNowClick = () =>{
+    setShowAppBanner(false);
+  }
 
   const {item = ''} = router?.query;
   const {show} = useDrawer();
@@ -112,7 +128,7 @@ function HashTag({router}) {
               <h1 className="text-sm font-semibold">{details?.hashtagName}</h1>
               {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
-            <div onClick={()=>show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
+            <div onClick={()=>setShowAppBanner(true)} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
               <Save />
               <p className="pl-2 text-xs font-medium">Add to favorites</p>
             </div>
@@ -134,6 +150,7 @@ function HashTag({router}) {
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}
       />
+     {showAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
     </div>
     </ComponentStateHandler>
   );

@@ -47,6 +47,15 @@ const detectDeviceModal = dynamic(
   }
 );
 
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+
 function HashTagFeedIphone({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
@@ -63,6 +72,13 @@ function HashTagFeedIphone({ router }) {
   const [toShowItems, setToShowItems] = useState([]);
   const [deletedTill, setDeletedTill] = useState();
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [ShowAppBanner, setShowAppBanner]=useState(false);
+  const notNowClick=()=>{
+    setShowAppBanner(false)
+  }
+  const showBanner=()=>{
+    setShowAppBanner(true)
+  }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -126,7 +142,8 @@ function HashTagFeedIphone({ router }) {
      deletedTill = pretoInsertElemant?.toInsertElements-6-1;
      setDeletedTill(deletedTill);
      setMuted(true);
-     show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+    //  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+    setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
      catch(e){
@@ -527,8 +544,9 @@ try{
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
                       description={item?.content_description}
+                      adData = {shop?.adData}
+                      showBanner={showBanner}
                       pageName={pageName}
-                      adData={shop?.adData}
                     />
 
                   </SwiperSlide>
@@ -570,6 +588,7 @@ try{
             <div className="playkit-player" />
           </div>
         </div>
+        {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''}
       </>
     </ComponentStateHandler>
   );

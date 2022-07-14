@@ -27,6 +27,7 @@ function transformSuccess(resp) {
         item?.category === 'beauty' && details.beauty.push(item);
         item?.category === 'hair' && details.hair.push(item);
         item?.category === 'recipe' && details.recipe.push(item);
+
     })
     payload.data = details;
 
