@@ -67,7 +67,7 @@ const router = useRouter();
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>Who can participate? </h3>
 	<p>Anyone who has the knack of making short entertaining videos! The participant must be an Indian and above 18 years. If you are under 18, parental/guardian approval is needed.</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>What is the prize?</h3>
-	<p>If you video gets selected, you will get to be on TV! Your video will go viral on the very popular Lav Re To Video on ZEE Yuva, and will be watched by millions of viewers!</p>
+	<p>If your video gets selected, you will get to be on TV! Your video will go viral on the very popular Lav Re To Video on ZEE Yuva, and will be watched by millions of viewers!</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>Sounds exciting! How can I participate?</h3>
 	<p>Follow these simple steps to rock it on TV: </p>
 	<p className='mb-2 pl-2'>Step 1: Download the Hipi app from play store or app store </p>
@@ -79,7 +79,7 @@ const router = useRouter();
 	<p>Following conditions must be fulfilled to feature your video on TV:</p>
 	<p className='mb-2 pl-2'>1. The video must be original and exclusively uploaded on Hipi.</p>
 	<p className='mb-2 pl-2'>2. The duration of the video should be 60 seconds. </p>
-	<p className='mb-2 pl-2'>3.	The video should be use any audio from Lav Re To Video playlist on Hipi</p>   
+	<p className='mb-2 pl-2'>3.	The video should be made using any audio from Lav Re To Video playlist on Hipi</p>   
 	
 	<p>We know you might have some additional queries. So, here are some frequently asked questions we have answered for you. </p>
 	
