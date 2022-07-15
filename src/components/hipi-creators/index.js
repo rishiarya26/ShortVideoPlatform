@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Header from '../desk-header';
 import { getCanonicalUrl } from '../../utils/web';
 import { useEffect, useState } from 'react';
-// import Quote from '../commons/svgicons/quote';
+import Quote from '../commons/svgicons/quote';
 import { getItem } from '../../utils/cookie';
 import Form from './form';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -126,10 +126,10 @@ canonical: url && getCanonicalUrl(url),
                     </div>
                     <div className='w-full pl-6'>
                     <div className='absolute rotate-180  top-0 left-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <h2 className='text-gray-500 font-light text-lg text-center pb-2'> Hear what <span className='text-gray-800 font-medium'>Chirag Tomar</span> Hipi G.O.A.T Winner has to say</h2>
                     <p className='text-gray-500 font-light text-lg '> Hipi has changed my life and gave me a chance to perform at Zee Sa Re Ga Ma Pa 2022 Finale along with Grammy Nominee Shilpa Rao, in front of A-List of the Music Industry. It all started with me participating in Hipi G.O.A.T contest. Hipi has given me the greatest opportunity to showcase my talent in social media and on Hipi App. Once again thank you so much Hipi for giving me all these opportunities.</p>
@@ -145,10 +145,10 @@ canonical: url && getCanonicalUrl(url),
                     </div>
                     <div className='w-full pl-6'>
                     <div className='absolute rotate-180  top-0 left-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <h2 className='text-gray-500 font-light text-lg text-center pb-2'> Hear what <span className='text-gray-800 font-medium'>Sid Patill</span> Hipi Creator has to say</h2>
                     <p className='text-gray-500 font-light text-lg '>I was your typical next-door guy uploading videos for fun... until Hipi happened to me! The Hipi team guided me in both, technical and ideation aspects of creating videos to make my content highly engaging and of top-notch quality. Being a content creator on Hipi helped me level up my content game so much that I landed a chance to be a part of the Zee Rishtey awards. It was a surreal experience, shaking hands with my favorite stars and walking the red carpet of such prestigious TV awards! I heartily thank Hipi for all the love and learning I’ve received; it changed my life for the better! </p>
@@ -164,10 +164,10 @@ canonical: url && getCanonicalUrl(url),
                     </div>
                     <div className='w-full pl-6'>
                     <div className='absolute rotate-180  top-0 left-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        {/* <Quote/> */}
+                        <Quote/>
                     </div>
                     <h2 className='text-gray-500 font-light text-lg text-center pb-2'> Hear what <span className='text-gray-800 font-medium'>Sara Gurpal</span> Hipi Creator has to say</h2>
                     <p className='text-gray-500 font-light text-lg '>Hipi for me is like a second home, where I can just be myself and do my thing. The platform has helped me get in touch with my fans and expand my fanbase with a newer audience. As an avid content creator, I personally love all the features of the app, and their contests are the cherry on top with crazy good rewards! I was invited to be a part of celebs special episode of the most iconic game reality show, Antakshari on Zee Punjab, and it was a super-hit! Hipi will always be my fun space❤️ Hipi karo, more karo!</p>
