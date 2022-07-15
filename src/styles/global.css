@@ -854,3 +854,20 @@ title:first-letter {
     background-position: 468px 0; 
   }
 }
+/* creator */
+.testimonials_swiper .swiper-container{
+  padding-bottom : 40px;
+  }
+  .testimonials_swiper span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: rgb(223, 7, 7);
+    opacity: 1;
+    width: 24px;
+    border-radius: 4px;
+  }
+  
+  /* target all bullets */
+  .testimonials_swiper span.swiper-pagination-bullet {
+    background-color: rgb(141, 137, 137);
+    opacity: 1;
+  }
+  
