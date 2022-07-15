@@ -11,34 +11,42 @@ import { trackEvent } from '../../analytics/firebase';
 function AppBanner({notNowClick, videoId}) {
 
 
-    // useEffect(()=>{
-    //     toTrackMixpanel('launch');
-    //     fbq.event('App Download Popup')
-    //     trackEvent('App_Download_Popup');
-    //   },[])
+    useEffect(()=>{
+        toTrackMixpanel('launch');
+        fbq.event('App Download Popup')
+        trackEvent('App_Download_Popup');
+      },[])
 
-    //   const toTrackMixpanel = (type) =>{
-    //     const toTrack ={
-    //       'launch': () => {
-    //         mixpanelEvents['Popup Name'] = 'Download App'
-    //         track('Popup Launch', mixpanelEvents)
-    //       },
-    //       'downloadClick' : () => {
-    //         mixpanelEvents['Popup Name'] = 'Download App',
-    //         mixpanelEvents['Element'] = 'Download App',
-    //         mixpanelEvents['Button Type'] = 'Link',
-    //         track('Popup CTAs', mixpanelEvents)
-    //       }
-    //     }
+      const toTrackMixpanel = (type) =>{
+        const toTrack ={
+          'launch': () => {
+            mixpanelEvents['Popup Name'] = 'Download App'
+            track('Popup Launch', mixpanelEvents)
+          },
+          'downloadClick' : () => {
+            mixpanelEvents['Popup Name'] = 'Download App',
+            mixpanelEvents['Element'] = 'Download App',
+            mixpanelEvents['Button Type'] = 'Link',
+            track('Popup CTAs', mixpanelEvents)
+          },
+          'notNow' : () => {
+            mixpanelEvents['Popup Name'] = 'Download App',
+            mixpanelEvents['Element'] = 'Not Now',
+            mixpanelEvents['Button Type'] = 'Link',
+            track('Popup CTAs', mixpanelEvents)
+          }
+        }
     
-    //     const mixpanelEvents = commonEvents();
-    //     toTrack?.[type]();
-    //   }
+        const mixpanelEvents = commonEvents();
+        toTrack?.[type]();
+      }
 
 
 
     const onStoreRedirect = async ()=>{
-       
+        toTrackMixpanel('downloadClick');
+        fbq.event('App Download CTA');
+        trackEvent('App_Download_CTA')
         let link = ONE_TAP_DOWNLOAD;
         const device = getItem('device-info');
         console.log(device)
@@ -92,7 +100,9 @@ function AppBanner({notNowClick, videoId}) {
                     </div>
                 </div>
             </div>
-            <div onClick={notNowClick} className="my-2 text-xs md:text-base text-gray-800" >
+            <div onClick={()=>
+                {toTrackMixpanel('notNow')
+                 notNowClick()}} className="my-2 text-xs md:text-base text-gray-800" >
                 <p>Not now</p>
             </div>
         </div>
