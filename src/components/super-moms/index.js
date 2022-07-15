@@ -7,7 +7,7 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import {getCanonicalUrl} from '../../utils/web';
 import { useEffect, useState } from 'react';
 
-function Community() {
+function SuperMoms() {
 const router = useRouter();
 
 	const [url, setUrl] = useState('');
@@ -137,5 +137,5 @@ const router = useRouter();
   );
 }
 
-export default Community;
+export default SuperMoms;
 
