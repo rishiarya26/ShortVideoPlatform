@@ -77,11 +77,11 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
       try {
         toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
         const response = await verifyOTP(payload);
-        if (response.data.status === 200) {
+        if (response?.data?.status === 200) {
           try{
-            toTrackMixpane('loginSuccess',{method:'phone', pageName: 'login'})
+            toTrackMixpanel('loginSuccess',{method:'phone', pageName: 'login'})
           }catch(e){
-            console.error('mixpanel - login verify otp error')
+            console.error('mixpanel - login verify otp error',e)
           }
           showMessage({ message: t('SUCCESS_LOGIN') });
           if(device === 'desktop'){

@@ -498,6 +498,34 @@ function Feed({ router }) {
     'following' : toShowFollowing
   }
 
+//   let hostname;
+//   if (typeof window !== 'undefined') {
+//     hostname = window?.location?.hostname;
+//  }
+
+ 
+const onStoreRedirect = async ()=>{
+  fbq.event('App Open CTA')
+  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+  trackEvent('App_Open_CTA')
+  let link = ONE_TAP_DOWNLOAD;
+try{  
+ if(activeVideoId){ 
+   try{ const resp = await getOneLink({videoId : activeVideoId});
+    link = resp?.data;
+    console.log("one link resp",resp);
+  }
+    catch(e){
+      console.log('error android onelink',e)
+    }
+  }
+ }
+  catch(e){
+  }
+  console.log("final onelink",link);
+  window?.open(link);
+}
+
   return (
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
       <React.Fragment>

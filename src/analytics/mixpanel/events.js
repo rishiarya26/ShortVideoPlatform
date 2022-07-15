@@ -241,6 +241,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Popup Name'] = item?.name;
         globalCommonEvents['Popup CTAs'] = item?.ctaName;
+        globalCommonEvents['elemant'] = item?.elemant;
         track('Popup CTAs', globalCommonEvents);
        },
        'sessionStart' :  ()=>{

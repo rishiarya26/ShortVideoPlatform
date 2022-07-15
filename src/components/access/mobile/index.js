@@ -55,7 +55,7 @@ export default function Mobile({
         finalData.type = 'Mobile';
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await userLogin(finalData);
-        if (response.status === 'success') {
+        if (response?.status === 'success') {
           try{
             toTrackMixpanel('loginSuccess',{method: 'phone', pageName: 'login'})  
           fbq.defEvent('CompleteRegistration');
@@ -77,7 +77,7 @@ export default function Mobile({
     },
     loginOtp: async () => {
       try {
-        toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'}) 
+        // toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'}) 
         const mobile = `${data?.countryCode}${data?.mobile}`;
         const response = await verifyUser(mobile);
         if (response.status === 'success') {
