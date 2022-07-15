@@ -7,8 +7,9 @@ import Tabs from '../commons/tabs/charmboard-maintab';
 import { localStorage } from '../../utils/storage';
 import { getItem } from '../../utils/cookie';
 import useDrawer from '../../hooks/use-drawer';
+import Loader from './loader';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-// import Loader from './loader';
+import LoaderSavedItems from './loader-saved-items';
 
 function Charmboard({videoId, setClose, idToScroll,pageName, tabName }) {
 const [charms, setCharms] = useState(null)   
@@ -28,10 +29,9 @@ const getTopCharms = async() =>{
          if(videoId){
             const resp = await canShop({videoId});
             setCharms(resp);
-            setLoading(false);
             resp.charmData[0].id = resp?.charmData?.[0]?.charm_id;
             setFilteredItem(resp.charmData[0])
-      
+            setLoading(false);
          }
       }catch(e){
          setLoading(false);
@@ -91,6 +91,7 @@ const onTabChange=(selected)=>{
    }catch(e){
       console.error('mixpanel issue in tab change on shop')
    }
+   setCharms(null);
    setSelectedIndex(selected);
 }
 
@@ -183,10 +184,10 @@ return (
    </div>
    <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/>
    <div className='flex w-full flex-col pb-6 overflow-y-auto'>
-   {compToShow?.[selectedIndex] }
-   {/* {!loading ? compToShow?.[selectedIndex] 
+
+   {!loading ? compToShow?.[selectedIndex] 
     : (selectedIndex === 0 ? <Loader/> : selectedIndex === 1 && <LoaderSavedItems/>) 
-     } */}
+     }
    </div>
 </div>
 );
