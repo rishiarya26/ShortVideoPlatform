@@ -577,7 +577,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
  
 const onStoreRedirect = async ()=>{
   fbq.event('App Open CTA')
-  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
   trackEvent('App_Open_CTA')
   let link = ONE_TAP_DOWNLOAD;
 try{  

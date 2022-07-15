@@ -24,7 +24,7 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const chooseComp = {
     mobile :   
       <div onClick={()=>{
-        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Signup',ctaName:'Phone or Email'})
+        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Signup',ctaName:'Phone or Email',elemant:'Phone or Email'})
         router.push('/signup/phone')}}>
       <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
