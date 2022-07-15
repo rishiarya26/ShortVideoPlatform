@@ -33,6 +33,7 @@ import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
 SwiperCore.use([Mousewheel]);
 
