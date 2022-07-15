@@ -31,6 +31,8 @@ import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 import UserExperience from '../commons/user-experience';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -149,8 +151,8 @@ function FeedIphone({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
-      ToTrackFbEvents(videoActiveIndex,'play')
-      toTrackFirebase(videoActiveIndex,'play');
+      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'})
+      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -219,11 +221,12 @@ function FeedIphone({ router }) {
       toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
       toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
-      toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'}, { watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
+      
 
       fbq.event('UGC_Played_Complete')
-      ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -349,98 +352,6 @@ console.log('errorrr',e)
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
-  const ToTrackFbEvents = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const fbEvents = {}
-  
-    
-  console.log('FB events',fbq)
-    const toTrack = {
-      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-      'swipe' : ()=> {
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Swipe', fbEvents)
-      },
-      'play' : () => fbq.event('UGC Play', fbEvents),
-      'pause' : () => fbq.event('Pause', fbEvents),
-      'resume' : () => fbq.event('Resume', fbEvents),
-      'share' : () => fbq.event('UGC Share Click', fbEvents),
-      'replay' : () => fbq.event('UGC Replayed', fbEvents),
-      'watchTime' : () => {
-        fbEvents['UGC Consumption Type'] = value?.watchTime
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Watch Time',fbEvents)
-      },
-      'cta' : ()=>{
-        fbEvents['Element'] = value?.name
-        fbEvents['Button Type'] = value?.type
-        fbq.event('CTAs', fbEvents)
-      },
-      'savelook' : ()=>{
-        fbq.event('Save Look', fbEvents)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    fbEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    fbEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    fbEvents['Page Name'] = 'Feed';
-  
-    toTrack?.[type]();
-  }
-  const toTrackFirebase = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const events = {}
-  
-    const toTrack = {
-      'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share Click', events),
-      'replay' : () => trackEvent('UGC_Replayed', events),
-      'watchTime' : () => {
-        events['UGC Consumption Type'] = value?.watchTime
-        events['UGC Duration'] = value?.duration
-        events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC_Watch_Time',events)
-      },
-      'cta' : ()=>{
-        events['Element'] = value?.name
-        events['Button Type'] = value?.type
-        trackEvent('CTAs', events)
-      },
-      'savelook' : ()=>{
-        trackEvent('Save_Look', events)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    events['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    events['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    events['Page Name'] = 'Feed';
-  
-    toTrack?.[type]();
-  }
-  
-
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -479,8 +390,8 @@ console.log('errorrr',e)
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
 
-                ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-                toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

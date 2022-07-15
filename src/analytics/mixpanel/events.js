@@ -81,9 +81,9 @@ export const toTrackMixpanel = (type, value, item) => {
 
     const bannerType = {
       Hashtag: 'Hashtag',
-Sound:'Sound',
-User:'Creator Profile',
-Video:'Video'
+      Sound:'Sound',
+      User:'Creator Profile',
+      Video:'Video'
     }
 
     const getBannerType = () =>{

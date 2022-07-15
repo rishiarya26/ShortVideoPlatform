@@ -25,6 +25,8 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -153,9 +155,10 @@ function Feed({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
+      // let currentActiveFeedItem = items?.[videoActiveIndex];
       toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
-      ToTrackFbEvents(videoActiveIndex,'play');
-      toTrackFirebase(videoActiveIndex,'play');
+      ToTrackFbEvents('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
+      toTrackFirebase('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -219,10 +222,9 @@ function Feed({ router }) {
        toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
        fbq.event('UGC_Played_Complete ')
-       ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
-
-       toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-       toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration}, {  duration : duration, durationWatchTime: duration})
+       toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+       toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
@@ -317,76 +319,6 @@ function Feed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-const ToTrackFbEvents = (activeIndex, type, value) => {
-  const item = items[activeIndex];
-  const fbEvents = {}
-
-  const toTrack = {
-    'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-    'swipe' : ()=> {
-      fbEvents['UGC Duration'] = value?.duration
-      fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-      fbq.event('UGC Swipe', fbEvents)
-    },
-    'play' : () => fbq.event('UGC Play', fbEvents),
-    'pause' : () => fbq.event('Pause', fbEvents),
-    'resume' : () => fbq.event('Resume', fbEvents),
-    'share' : () => fbq.event('UGC Share Click', fbEvents),
-    'replay' : () => fbq.event('UGC Replayed', fbEvents),
-    'watchTime' : () => {
-      fbEvents['UGC Consumption Type'] = value?.watchTime
-      fbEvents['UGC Duration'] = value?.duration
-      fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-      fbq.event('UGC Watch Time',fbEvents)
-    },
-    'cta' : ()=>{
-      fbEvents['Element'] = value?.name
-      fbEvents['Button Type'] = value?.type
-      fbq.event('CTAs', fbEvents)
-    },
-    'savelook' : ()=>{
-      fbq.event('Save Look', fbEvents)
-    },
-  }
-
-  fbEvents['Creator ID'] = item?.userId;
-  fbEvents['UGC ID'] = item?.content_id;
-  fbEvents['Page Name'] = 'Feed';
-
-  toTrack?.[type]();
-}
-/*****************************/
-const toTrackFirebase = (activeIndex, type, value) => {
-  const item = items[activeIndex];
-  const events = {}
-
-  const toTrack = {
-    'play' : () => trackEvent('UGC_Play', events),
-    'share' : () => trackEvent('UGC_Share Click', events),
-    'replay' : () => trackEvent('UGC_Replayed', events),
-    'watchTime' : () => {
-      events['UGC Consumption Type'] = value?.watchTime
-      events['UGC Duration'] = value?.duration
-      events['UGC Watch Duration'] = value?.durationWatchTime
-      trackEvent('UGC_Watch_Time',events)
-    },
-    'cta' : ()=>{
-      events['Element'] = value?.name
-      events['Button Type'] = value?.type
-      trackEvent('CTAs', events)
-    },
-    'savelook' : ()=>{
-      trackEvent('Save_Look', events)
-    }
-  }
-
-  events['Creator ID'] = item?.userId;
-  events['UGC ID'] = item?.content_id;
-  events['Page Name'] = 'Feed';
-
-  toTrack?.[type]();
-}
-
   const swiper = <Swiper
               className="max-h-full"
               direction="vertical"
@@ -416,14 +348,15 @@ const toTrackFirebase = (activeIndex, type, value) => {
                 setInitialPlayStarted(false);
 
                 setShowSwipeUp({count : 1, value:false});
+                let currentActiveFeedItem = items?.[videoActiveIndex];
 
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
-                ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-                toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

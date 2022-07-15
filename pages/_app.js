@@ -235,7 +235,7 @@ function Hipi({
         inject(GOOGLE_ONE_TAP , null, loaded);
         inject(GET_SOCIAL , null, loadedGS);
         inject('', scriptSrc);
-      },2500);
+      },0);
 
       updatingGoogleCookies();
 
@@ -258,7 +258,7 @@ function Hipi({
         setTimeout(()=>{
           init();
           initFirebase();
-        },[3000])
+        },[500])
       }
     }
     catch(e){
