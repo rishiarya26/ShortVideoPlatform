@@ -25,7 +25,7 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
+import { getOneLink, viewEvents } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';

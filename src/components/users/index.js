@@ -22,24 +22,11 @@ import { localStorage } from '../../utils/storage';
 import {  toTrackMixpanel } from '../../analytics/mixpanel/events';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import LikedList from '../commons/svgicons/liked-list';
+import Lock from '../commons/svgicons/lock';
+import Listing from '../commons/svgicons/listing';
+import { Back } from '../commons/svgicons/back_white';
 
-
-const LikedList = dynamic(()=> import('../commons/svgicons/liked-list'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Lock = dynamic(()=> import('../commons/svgicons/lock'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Listing = dynamic(()=> import('../commons/svgicons/listing'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Back = dynamic(()=> import('../commons/svgicons/back'),{
-  loading: () => <div />,
-  ssr: false
-});
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
   ssr: false
@@ -153,15 +140,6 @@ function Users({
   const handleBackClick = () => {
     router.back();
   };
-
-  // const handleFollow = async()=>{
-  //   let response = {}
-  //   try{
-  //   response = await toFollow({followerId:id})
-  //   }catch(e){
-
-  //   }
-  // }
 
   const followUser = async(followerId,userId, follow) =>{
     try{
