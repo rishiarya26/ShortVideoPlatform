@@ -20,9 +20,9 @@ const router = useRouter();
 	<>
 	 <SeoMeta
         data={{
-			title: 'LavReToVideo Contest on Hipi',
+			title: '#LavReToVideo Contest on Hipi| Lav Re To Video on Zee Yuva',
           // image: item?.thumbnail,
-          description: 'If you have ever dreamt of being popular on TV, then Hipi has an exclusive opportunity for you! The #LavReToVideo contest is your once in a lifetime opportunity to showcase your amazing talent on TV! Yes, your videos will go viral on the very popular Marathi show, Lav Re To Video on Zee Yuva.',
+          description: 'The #LavReToVideo contest is your once on in a lifetime opportunity to showcase your amazing talent on TV! Yes, your videos will go viral on the very popular Marathi show, Lav Re To Video on Zee Yuva.',
           canonical: url && getCanonicalUrl(url),
 
 			additionalMetaTags:[{
@@ -31,7 +31,7 @@ const router = useRouter();
 			  }
 			],
           openGraph: {
-				title: 'LavReToVideo Contest on Hipi',
+				title: '#LavReToVideo Contest on Hipi| Lav Re To Video on Zee Yuva',
 				description: 'hipi.co.in',
 				url:url && getCanonicalUrl(url) ,
             images: [
@@ -51,8 +51,8 @@ const router = useRouter();
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
 		<div className='md:mt-16'>
-		<img className='flex md:hidden' alt="#LavReToVideo contest" src={withBasePath('images/lavreto/LavReToMob.jpg')} />
-		<img className='hidden md:flex'alt="#LavReToVideo contest" src={withBasePath('images/lavreto/LavReToDesk.jpg')} />
+		<img className='flex md:hidden' alt="Lav Re To Video Contest on Hipi App" src={withBasePath('images/lavreto/LavReToMob.jpg')} />
+		<img className='hidden md:flex'alt="Lav Re To Video Contest on Hipi App" src={withBasePath('images/lavreto/LavReToDesk.jpg')} />
 		</div>
 		<div className='tnc-text'>
 		
