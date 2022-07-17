@@ -6,6 +6,7 @@ import { GoogleButton } from '../social-login/google';
 import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { useEffect } from 'react';
 
 export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const router= useRouter();
@@ -13,7 +14,11 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const device = getItem('device-type')
 
   useEffect(()=>{
-    toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Signup'})
+   try{
+      toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Signup'})
+    }catch(e){
+      console.error('mixpanel - signup')
+    }
   },[])
 
   const chooseComp = {
