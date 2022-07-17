@@ -1,8 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/no-unescaped-entities */
 import { useRouter } from 'next/router';
-import { withBasePath } from '../../config';
-import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
 function Terms() {

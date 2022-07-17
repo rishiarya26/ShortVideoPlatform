@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { Back } from "../commons/svgicons/back";
 import Close from "../commons/svgicons/close-black";
 import SearchBlack from "../commons/svgicons/search-black";
 

@@ -15,14 +15,11 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
-// import { inject } from '../../analytics/async-script-loader';
-// import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
 import SwipeUp from '../commons/svgicons/swipe-up'; 
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';

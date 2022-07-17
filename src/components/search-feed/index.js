@@ -10,17 +10,11 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { getNetworkConnection } from '../../utils/device-details';
-import SwiperSlideComp from '../swiper.js';
-import fallbackUser from "../../../public/images/users.png"
 import CircularProgress from '../commons/circular-loader'
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
-import { inject } from '../../analytics/async-script-loader';
 import Mute from '../commons/svgicons/mute';
-import { numberFormatter } from '../../utils/convert-to-K';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
@@ -30,8 +24,6 @@ import { getOneLink, viewEvents } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
-import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl } from '../../utils/web';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 

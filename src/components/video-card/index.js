@@ -4,7 +4,6 @@ import Img from '../commons/image';
 import Cart from '../commons/svgicons/cart';
 import Play from '../commons/svgicons/play-outlined';
 import fallbackVideo from '../../../public/images/video.png';
-import Like from '../commons/svgicons/like-outlined';
 
 export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable, id, likesCount }) {
   const formattedViewCount =  numberFormatter(viewCount)

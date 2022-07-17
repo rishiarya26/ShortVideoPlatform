@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { getLeaderboardData } from '../../sources/leaderboard';
 import Img from '../commons/image';
 import fallbackUsers from '../../../public/images/users.png';
-import { Back } from '../commons/svgicons/back';
 
 function Round3ParticipantM() {
   const [data, setData] = useState(null);

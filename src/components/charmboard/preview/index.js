@@ -12,7 +12,6 @@ import CharmCardRecipe from "../card/recipe";
 import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
-import useIntersect from "../../../hooks/use-intersect";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
 const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,

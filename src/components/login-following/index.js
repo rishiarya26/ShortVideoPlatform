@@ -1,9 +1,6 @@
 /*eslint-disable react/display-name */
 import dynamic from "next/dynamic";
-import { ONE_TAP_DOWNLOAD } from "../../constants";
-import useAuth from "../../hooks/use-auth";
 import useDrawer from "../../hooks/use-drawer";
-import { getOS } from "../../utils/device-details";
 import Door from "../commons/svgicons/door-open";
 import FooterMenu from "../footer-menu";
 

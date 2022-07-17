@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { getHashTags } from "../../../sources/explore/hashtags";
-import { numberFormatter } from "../../../utils/convert-to-K";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
 import Loader from "./loader";
 import Error from "./error";

@@ -11,18 +11,13 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
-import { inject } from '../../analytics/async-script-loader';
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 import CircularProgress from '../commons/circular-loader'
 import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics'; 
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';

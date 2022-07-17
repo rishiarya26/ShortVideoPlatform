@@ -21,31 +21,17 @@ import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 import AdCards from '../ad-cards';
 import { GET_SOCIAL_LOADED } from '../../constants';
+import Like from '../commons/svgicons/like';
+import Liked from '../commons/svgicons/liked';
+import Comment from '../commons/svgicons/comment';
+import Shop from '../commons/svgicons/shop';
+import EmbedIcon from '../commons/svgicons/embedicon';
 
 const login = dynamic(() => import('../auth-options'),{
   loading: () => <div />,
   ssr: false
 });
-const Like = dynamic(()=> import('../commons/svgicons/like'),{
-  loading: () => <div />,
-  ssr: false
-});
-const Liked = dynamic(()=> import('../commons/svgicons/liked'),{
-  loading: () => <div />,
-  ssr: false
-});
-const Comment = dynamic(()=> import('../commons/svgicons/comment'),{
-  loading: () => <div />,
-  ssr: false
-});
-const Shop = dynamic(()=> import('../commons/svgicons/shop'),{
-  loading: () => <div />,
-  ssr: false
-});
-const EmbedIcon = dynamic(()=> import('../commons/svgicons/embedicon'),{
-  loading: () => <div />,
-  ssr: false
-});
+
 
 function VideoSidebar({
   socialId,

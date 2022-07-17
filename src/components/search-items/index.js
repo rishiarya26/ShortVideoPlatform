@@ -8,9 +8,7 @@ import { getSuggestions } from "../../sources/explore/suggestions";
 import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
 import { Back } from "../commons/svgicons/back";
-import RightArrow from "../commons/svgicons/right-arrow";
 import SearchBlack from "../commons/svgicons/search-black";
-import { getSearchResults } from "../../sources/search/search";
 import { trimHash } from "../../utils/string";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 
