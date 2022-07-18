@@ -130,7 +130,7 @@ export default function SingleVideo(props){
     mixpanelEvents['UGC Description'] = props?.description || 'NA';
     mixpanelEvents['Page Name'] = 'Video';
 
-    toTrack?.[type]();
+    type && toTrack?.[type] && toTrack?.[type]();
   }
 
 

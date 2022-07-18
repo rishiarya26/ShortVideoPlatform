@@ -346,7 +346,7 @@ function Feed({ router }) {
     // mixpanelEvents['UGC Description'] = item?.content_description;
     mixpanelEvents['Page Name'] = 'Feed';
 
-    toTrack?.[type]();
+    type && toTrack?.[type] && toTrack?.[type]();
   }
   /*****************************/
 

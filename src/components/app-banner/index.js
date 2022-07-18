@@ -38,7 +38,7 @@ function AppBanner({notNowClick, videoId}) {
         }
     
         const mixpanelEvents = commonEvents();
-        toTrack?.[type]();
+        type && toTrack?.[type] && toTrack?.[type]();
       }
 
 

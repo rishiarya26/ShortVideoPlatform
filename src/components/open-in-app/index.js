@@ -42,7 +42,7 @@ export default function DownloadAppWidget({videoId}) {
     }
 
     const mixpanelEvents = commonEvents();
-    toTrack?.[type]();
+    type && toTrack?.[type] && toTrack?.[type]();
   }
   /***************************/
 
