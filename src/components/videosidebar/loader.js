@@ -14,12 +14,12 @@ function VideoSidebar() {
           <div
             className="usrimg w-10 h-10 rounded-full bg-gray-500"
           />
-          <div className="absolute bottom-0">
+          {/* <div className="absolute bottom-0">
             <Follow />
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="flex relative py-2 px-3 text-center justify-end">
+      <div className="flex relative py-2 px-3 text-center justify-end flex-col">
         <div role="presentation">
           <Like />
         </div>

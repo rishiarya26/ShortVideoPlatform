@@ -527,7 +527,7 @@ try{
 }
 
   return (
-    <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
+    <ComponentStateHandler state={'pending'} Loader={LoadComp} ErrorComp={ErrorComp} >
       <React.Fragment>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}

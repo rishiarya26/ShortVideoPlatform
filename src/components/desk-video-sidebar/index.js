@@ -1,5 +1,4 @@
 /*eslint-disable react/display-name */
-import useDialog from "../../hooks/use-dialog";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
 import { numberFormatter } from "../../utils/convert-to-K";
@@ -14,6 +13,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { localStorage } from "../../utils/storage";
+import { GET_SOCIAL_LOADED } from "../../constants";
 
 const login = dynamic(
    () => import('../auth-options'),
@@ -27,6 +27,8 @@ const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialI
   showVideoDetail, commentCount})=>{
    const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
    const [reactionCount, setReactionCount] = useState({likes : likes});
+
+   const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
  
     const {showSnackbar} = useSnackbar();
     const {show: showDialog} = useDrawer();
@@ -143,11 +145,10 @@ useEffect(()=>{
           <div>
             <div
               role="presentation"
-              onClick={() => selectDisLike()}
+              onClick={getSocialLoaded === 'false' ? null : () => selectDisLike()}
             >
               <Liked />
             </div>
-
             <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
           </div>
         ) : (
@@ -155,7 +156,7 @@ useEffect(()=>{
             <div
               id="like"
               role="presentation" className="cursor-pointer"
-              onClick={() => selectedLike()}
+              onClick={getSocialLoaded === 'false' ? null : () => selectedLike()}
             >
               <Like />
             </div>
