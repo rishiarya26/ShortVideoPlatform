@@ -11,7 +11,7 @@ export const commonEvents = ({ userId = 'NA', content_id = 'NA', page = 'NA' }) 
 export const toTrackFirebase = (type, commonInfo = {}, value) => {
     const events = commonEvents(commonInfo);
     const toTrack = {
-      'play' : () => trackEvent('UGC_Play_firebase', events),
+      'play' : () => trackEvent('UGC_Play', events),
       'share' : () => trackEvent('UGC_Share Click', events),
       'replay' : () => trackEvent('UGC_Replayed', events),
       'watchTime' : () => {

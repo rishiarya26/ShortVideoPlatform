@@ -18,7 +18,7 @@ export const ToTrackFbEvents = (type, commonInfo = {}, value) => {
         fbEvents['UGC Watch Duration'] = value?.durationWatchTime
         fbq.event('UGC Swipe', fbEvents)
       },
-      'play' : () => fbq.event('UGC Play for fb', fbEvents),
+      'play' : () => fbq.event('UGC Play', fbEvents),
       'pause' : () => fbq.event('Pause', fbEvents),
       'resume' : () => fbq.event('Resume', fbEvents),
       'share' : () => fbq.event('UGC Share Click', fbEvents),
