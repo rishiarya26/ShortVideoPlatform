@@ -27,6 +27,8 @@ import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import SwipeUp from '../commons/svgicons/swipe-up';
+import Mute from '../commons/svgicons/mute';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -42,14 +44,7 @@ const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
   ssr: false
 });
-const SwipeUp = dynamic(()=> import('../commons/svgicons/swipe-up'),{
-  loading: () => <div />,
-  ssr: false
-});
-const Mute = dynamic(()=> import('../commons/svgicons/mute'),{
-  loading: () => <div />,
-  ssr: false
-});
+
 const UserExperience = dynamic(()=> import('../commons/user-experience'),{
   loading: () => <div />,
   ssr: false
