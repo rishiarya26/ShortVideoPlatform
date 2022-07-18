@@ -53,7 +53,7 @@ function VideoSidebar({
     show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
   };
 
-  const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
+  //const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
 
   const like = () => {
      postReaction('like',socialId);
@@ -261,7 +261,7 @@ const handleSaveMoments = () =>{
           <div>
             <div
               role="presentation"
-              onClick={getSocialLoaded === 'false' ? null : () => {
+              onClick={() => {
                 deleteReaction('like', socialId );
                 setIsLiked({like : false, reactionTime: 'now'});
                 getVideoReactions(socialId, 'now', 'delete')
@@ -281,7 +281,7 @@ const handleSaveMoments = () =>{
             <div
               id="like"
               role="presentation"
-              onClick={getSocialLoaded === 'false' ? null : () => selectedLike()}
+              onClick={() => selectedLike()}
             >
               <Like />
             </div>

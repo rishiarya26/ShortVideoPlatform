@@ -28,7 +28,7 @@ const VideoSidebar = ({likesCount: likes, shareCount, userName, videoId, socialI
    const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
    const [reactionCount, setReactionCount] = useState({likes : likes});
 
-   const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
+   //const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
  
     const {showSnackbar} = useSnackbar();
     const {show: showDialog} = useDrawer();
@@ -141,11 +141,11 @@ useEffect(()=>{
 <div
         className={`feed relative py-2  px-3 text-center justify-end`}
       >
-        {isLiked?.like ? (
+        { isLiked?.like ? (
           <div>
             <div
               role="presentation"
-              onClick={getSocialLoaded === 'false' ? null : () => selectDisLike()}
+              onClick={() => selectDisLike()}
             >
               <Liked />
             </div>
@@ -156,7 +156,7 @@ useEffect(()=>{
             <div
               id="like"
               role="presentation" className="cursor-pointer"
-              onClick={getSocialLoaded === 'false' ? null : () => selectedLike()}
+              onClick={() => selectedLike()}
             >
               <Like />
             </div>

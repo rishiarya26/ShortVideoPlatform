@@ -22,18 +22,6 @@ import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
 
-const scriptSrc = `
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', ${fbq.FB_PIXEL_ID});
-`;
-
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
   return DrawerProvider;
@@ -152,7 +140,7 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
-  const [loadingGS, setLoadingGS] = useState(true);
+  // const [loadingGS, setLoadingGS] = useState(true);
 
   const router = useRouter();
   
@@ -160,14 +148,14 @@ function Hipi({
     setLoading(false)
   }
 
-  const loadedGS=()=>{
-    setLoadingGS(false);
-    if(typeof window !== "undefined"){
-      if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
-        window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
-      }
-    }
-  }
+  // const loadedGS=()=>{
+  //   setLoadingGS(false);
+  //   if(typeof window !== "undefined"){
+  //     if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
+  //       window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
+  //     }
+  //   }
+  // }
 
   const getCountry = async()=>{
     try{ 
@@ -220,27 +208,25 @@ function Hipi({
   }
 
   useEffect(()=>{
-    let timer;
+    //let timer;
     try{ 
-      if(typeof window !== "undefined"){
-        if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
-          window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
-        }
-        window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, false);
-      }
+      // if(typeof window !== "undefined"){
+      //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
+      //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
+      //   }
+      //   window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, false);
+      // }
   
       /**loading scripts */
 
-      timer = setTimeout(()=>{
-        inject(GOOGLE_ONE_TAP , null, loaded);
-        inject(GET_SOCIAL , null, loadedGS);
-        inject('', scriptSrc);
-      },0);
+      // timer = setTimeout(()=>{
+      //   inject(GOOGLE_ONE_TAP , null, loaded);
+      // },0);
 
       updatingGoogleCookies();
 
       console.log('mounted');
-      // inject(GOOGLE_ONE_TAP , null, loaded);
+      inject(GOOGLE_ONE_TAP , null, loaded);
       const cookieAgree = getItem('cookie-agreed');
       cookieAgree !== 'yes' && getCountry();
       getGeoLocationInfo();
@@ -265,7 +251,7 @@ function Hipi({
     }
 
     /** unmount */
-    return () => clearTimeout(timer);
+    // return () => clearTimeout(timer);
 
     },[])
 
@@ -277,7 +263,7 @@ function Hipi({
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
           console.log('tokens there in _app.js')
           setTimeout(()=>{
-            //init();
+            init();
             initFirebase();
           },[1000])
         }else{
@@ -289,19 +275,19 @@ function Hipi({
       }
     },[loading])
 
-    useEffect(()=>{
-      try{
-        let tokens = localStorage.get('tokens') || null;
-        if(tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-          if(loadingGS=== false){
-            init()
-          }
-        }
-      }
-      catch(e){
-        console.error(e);
-      }
-    },[loadingGS])
+    // useEffect(()=>{
+    //   try{
+    //     let tokens = localStorage.get('tokens') || null;
+    //     if(tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+    //       if(loadingGS=== false){
+    //         init()
+    //       }
+    //     }
+    //   }
+    //   catch(e){
+    //     console.error(e);
+    //   }
+    // },[loadingGS])
 
     useEffect(() => {
       // This pageview only triggers the first time (it's important for Pixel to have real information)
@@ -453,6 +439,19 @@ function Hipi({
                     <Layout>
                     <Script
         strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
       />
                       <Component {...pageProps} />
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
