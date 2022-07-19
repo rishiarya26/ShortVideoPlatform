@@ -373,7 +373,6 @@ function Explore() {
            
       </div>
       <FooterMenu selectedTab="search"/>
-      <LandscapeView/>
     </ComponentStateHandler>
   );
 }

@@ -32,6 +32,7 @@ import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
 
@@ -589,6 +590,7 @@ try{
           </div>
         </div>
         {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''}
+        <Landscape/>
       </>
     </ComponentStateHandler>
   );

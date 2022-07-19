@@ -34,6 +34,7 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
+import Landscape from '../landscape';
 
 
  
@@ -51,14 +52,6 @@ SwiperCore?.use([Mousewheel]);
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
-
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -717,7 +710,7 @@ try{
         </div>
       </div>
       {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
-      <LandscapeView/>
+      <Landscape/>
     </>
     </ComponentStateHandler>
 

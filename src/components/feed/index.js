@@ -629,7 +629,7 @@ try{
           <div className="playkit-player" />
         </div>
       </div>
-      <Landscape/>
+       <Landscape/> 
       {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </>
     </ComponentStateHandler>
