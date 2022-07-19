@@ -30,6 +30,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
+import Landscape from '../landscape';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -45,13 +46,13 @@ const AppBanner = dynamic(
   }
 );
 
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const LandscapeView = dynamic(
+//   () => import('../landscape'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
@@ -628,7 +629,7 @@ try{
           <div className="playkit-player" />
         </div>
       </div>
-      <LandscapeView/>
+      <Landscape/>
       {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </>
     </ComponentStateHandler>
