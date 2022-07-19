@@ -34,6 +34,7 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
+import Landscape from '../landscape';
 
 SwiperCore?.use([Mousewheel]);
 

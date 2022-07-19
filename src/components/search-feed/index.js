@@ -32,6 +32,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
+import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
 
@@ -588,6 +589,7 @@ try{
           </div>
         </div>
       </>
+      <Landscape/>
     </ComponentStateHandler>
   );
 }
