@@ -252,7 +252,7 @@ function ProfileFeedIphone({ router }) {
     data && setItems(videos);
     setInitialLoadComplete(true);
     data && setToShowItems(videos);
-    console.log("before",activeVideoId)
+    console.log("before",activeVideoId);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
   };
