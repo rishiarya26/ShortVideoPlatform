@@ -14,6 +14,7 @@ import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import ProfileActive from '../commons/svgicons/profile-active';
 import { useState } from 'react';
+import { getItem } from '../../utils/cookie';
 
 
 const AppBanner = dynamic(
@@ -40,6 +41,7 @@ function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
+  const device = getItem('device-info')
 
 const info ={
   shop:  <Shop
@@ -90,7 +92,9 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
           {info[type]}
         </div> 
             <div
-              onClick={() => showBanner && showBanner()}
+              onClick={() =>{
+                device === 'iphone' && show('', detectDeviceModal, 'extraSmall', {text: "create"});
+                device === 'android' && showBanner && showBanner()}}
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />

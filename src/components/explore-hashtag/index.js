@@ -22,6 +22,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { trackEvent } from '../../analytics/firebase';
 import { getCanonicalUrl } from '../../utils/web';
+import { getItem } from '../../utils/cookie';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -42,6 +43,8 @@ function HashTag({router}) {
   const [showLoading, setShowLoading] = useState(isFetching);
   const [offset, setOffset] = useState(2);
   const [showAppBanner, setShowAppBanner] = useState(false);
+
+  const device = getItem('device-info')
 
   const notNowClick = () =>{
     setShowAppBanner(false);
@@ -128,7 +131,9 @@ function HashTag({router}) {
               <h1 className="text-sm font-semibold">{details?.hashtagName}</h1>
               {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
-            <div onClick={()=>setShowAppBanner(true)} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
+            <div onClick={()=>{
+               device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
+               device === 'android' && setShowAppBanner(true)}} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
               <Save />
               <p className="pl-2 text-xs font-medium">Add to favorites</p>
             </div>
@@ -150,7 +155,7 @@ function HashTag({router}) {
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}
       />
-     {showAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
+     {(device === 'android' && showAppBanner) ? <AppBanner notNowClick={notNowClick}/> : ''}
     </div>
     </ComponentStateHandler>
   );

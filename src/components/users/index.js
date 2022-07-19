@@ -130,6 +130,7 @@ function Users({
   const { show } = useDrawer();
   const { t } = useTranslation();
   const deviceType = getItem('device-type');
+  const device = getItem('device-info');
 
   const onTabChange = selected => {
     setSelectedTab(selected);
@@ -244,7 +245,9 @@ console.log("onClick follow btn issue ",e);
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button onClick={() =>setShowAppBanner(true)}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
+          <button onClick={() =>{
+            device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
+            device === 'android' && setShowAppBanner(true)}}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>
         {/* </Link> */}
@@ -387,7 +390,7 @@ const notNowClick=()=>{
             </div>
          </div>} */}
     </div>
-      {ShowAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
+      {device === 'android' && ShowAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
     </>
   );
 }

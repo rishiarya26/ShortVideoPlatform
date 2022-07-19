@@ -14,7 +14,7 @@ export const commonEvents = ()=>{
          const device = getItem('device-type') || 'desktop'
          isMobile = (device === 'mobile') ?  true :  false
         }catch(e){
-            console.log(e)
+            console.log(e);
         }
         return isMobile;
     }
@@ -44,6 +44,7 @@ export const commonEvents = ()=>{
     utmData?.utm_source && (payload['App UTM Source'] = utmData?.utm_source);
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
+    // payload['Unique Device Id'] = chrome.tabs.windowId;
     // payload['Source'] = getReffererPage() || 'NA';
     return payload;
 }

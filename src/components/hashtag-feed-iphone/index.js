@@ -47,13 +47,13 @@ const detectDeviceModal = dynamic(
   }
 );
 
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const AppBanner = dynamic(
+//   () => import('../app-banner'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 
 function HashTagFeedIphone({ router }) {
@@ -72,13 +72,13 @@ function HashTagFeedIphone({ router }) {
   const [toShowItems, setToShowItems] = useState([]);
   const [deletedTill, setDeletedTill] = useState();
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
-  const [ShowAppBanner, setShowAppBanner]=useState(false);
-  const notNowClick=()=>{
-    setShowAppBanner(false)
-  }
-  const showBanner=()=>{
-    setShowAppBanner(true)
-  }
+  // const [ShowAppBanner, setShowAppBanner]=useState(false);
+  // const notNowClick=()=>{
+  //   setShowAppBanner(false)
+  // }
+  // const showBanner=()=>{
+  //   setShowAppBanner(true)
+  // }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -142,8 +142,8 @@ function HashTagFeedIphone({ router }) {
      deletedTill = pretoInsertElemant?.toInsertElements-6-1;
      setDeletedTill(deletedTill);
      setMuted(true);
-    //  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+     show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+    // setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
      catch(e){
@@ -545,7 +545,7 @@ try{
                       player={'multi-player-muted'}
                       description={item?.content_description}
                       adData = {shop?.adData}
-                      showBanner={showBanner}
+                      // showBanner={showBanner}
                       pageName={pageName}
                     />
 
@@ -588,7 +588,7 @@ try{
             <div className="playkit-player" />
           </div>
         </div>
-        {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''}
+        {/* {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''} */}
       </>
     </ComponentStateHandler>
   );

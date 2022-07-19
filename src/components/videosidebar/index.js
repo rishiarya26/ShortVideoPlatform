@@ -72,6 +72,8 @@ function VideoSidebar({
   const { showSnackbar } = useSnackbar();
   const { show: showDialog } = useDialog();
   const router = useRouter();
+
+  const device = getItem('device-info');
   
   const showLoginOptions = () => {
     show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
@@ -322,8 +324,9 @@ const handleSaveMoments = () =>{
         <div 
            id="comment"
            role="presentation"
-           onClick={() =>showBanner && showBanner()}
-
+           onClick={() =>{
+           device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+           device === 'android' &&  showBanner && showBanner()}}
         >
           <Comment />
           {/* <p className="text-sm text-center">0</p> */}

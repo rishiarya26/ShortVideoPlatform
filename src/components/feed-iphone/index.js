@@ -35,18 +35,15 @@ import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 
-
- 
 SwiperCore?.use([Mousewheel]);
 
-// const detectDeviceModal = dynamic(
-//   () => import('../open-in-app'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
-
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -60,13 +57,13 @@ const LandscapeView = dynamic(
   }
 );
 
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const AppBanner = dynamic(
+//   () => import('../app-banner'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
@@ -89,7 +86,7 @@ function FeedIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
-  const [showAppBanner, setShowAppBanner] = useState(false);
+  // const [showAppBanner, setShowAppBanner] = useState(false);
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -105,12 +102,12 @@ function FeedIphone({ router }) {
   const setClose = (value)=>{
     setOnCloseChamboard(value)
 }
-const showBanner=()=>{
-  setShowAppBanner(true);
-}
-const notNowClick = ()=>{
-  setShowAppBanner(false);
-}
+// const showBanner=()=>{
+//   setShowAppBanner(true);
+// }
+// const notNowClick = ()=>{
+//   setShowAppBanner(false);
+// }
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
@@ -289,8 +286,8 @@ const notNowClick = ()=>{
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
   setMuted(true);
-  setShowAppBanner(true);
-  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
@@ -308,8 +305,8 @@ console.log('errorrr',e)
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
-  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-  setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // setShowAppBanner(true);
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
  }
@@ -564,7 +561,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
-                      showBanner={showBanner}
+                      // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -619,7 +616,7 @@ console.log('errorrr',e)
               onCloseChamboard={onCloseChamboard}
               pageName={pageName}
               tabName={tabName}
-              showBanner={showBanner}
+              // showBanner={showBanner}
               />
             </Swiper>
 
@@ -716,7 +713,7 @@ try{
           <div className="playkit-player" />
         </div>
       </div>
-      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+      {/* {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
       <LandscapeView/>
     </>
     </ComponentStateHandler>
