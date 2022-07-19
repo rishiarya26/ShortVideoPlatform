@@ -8,6 +8,9 @@ import Hash from "../../commons/svgicons/hash";
 import useTranslation from "../../../hooks/use-translation";
 import { trimHash } from "../../../utils/string";
 import { useRouter } from "next/router";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { toTrackReco } from "../../../analytics/view-events";
+import { DISCOVER_SEARCH_RESULTS } from "../../../constants";
 // import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
@@ -18,6 +21,8 @@ function HashTags({item}) {
   const [items, setItems] = useState();
   const {t} = useTranslation();
   const router = useRouter();
+
+  const searchTerm = item;
 
     const onDataFetched=(data)=>{
       setItems(data?.data);
@@ -54,7 +59,14 @@ function HashTags({item}) {
              
              <div className="flex flex-col w-full ">
                  {items?.length > 0 ? items.map((item, id)=>(
-                 <div key={id} onClick={()=>toHashtag(item?.hashtag)}  className="flex justify-between my-4 items-center">
+                 <div key={id} onClick={()=>{
+                  try{
+                    toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Hashtags'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag',query:searchTerm})
+                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                   }catch(e){
+                     console.error('search result click',e)
+                   }
+                   toHashtag(item?.hashtag)}}  className="flex justify-between my-4 items-center">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>

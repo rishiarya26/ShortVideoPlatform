@@ -12,7 +12,8 @@ import dynamic from "next/dynamic";
 import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
-import { DISCOVER_SEARCH_RESULTS } from "../../../constants";
+import { CREATOR_PROFILE, DISCOVER_SEARCH_RESULTS } from "../../../constants";
+import { toTrackReco } from "../../../analytics/view-events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -20,6 +21,7 @@ const LoadComp = () => (<Loader />);
 
 const TopItems = ({item, redirectTab}) =>{
     const [data, setData] = useState();
+    const searchTerm = item;
 
     const router = useRouter();
 
@@ -29,7 +31,7 @@ const TopItems = ({item, redirectTab}) =>{
         const results = data?.data?.items;
         console.log("R-E",results,item)
         const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0)
-        toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS},{query:item,resultsLength:resultsLength})
+        item && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
       }
      
      const dataFetcher = ()=> item && getTopSearches(item && item)
@@ -68,7 +70,12 @@ const TopItems = ({item, redirectTab}) =>{
                   <div className="card_list flex min-w-full overflow-x-auto no_bar">
                   {data?.items?.users?.map((item, id)=>(
                   <div onClick={()=>{
-                    toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS},{creatorId:item?.userId,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE})
+                    try{
+                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.userId,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
+                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                    }catch(e){
+                      console.error('search result click',e)
+                    }
                     router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
@@ -100,7 +107,14 @@ const TopItems = ({item, redirectTab}) =>{
              
                  <div className="flex min-w-full overflow-x-auto no_bar">
                  {data?.items?.hashtags?.map((item, id)=>(
-                 <div onClick={()=>toHashtag(item?.hashtag)} key={id}  className="m-1 flex relative">
+                 <div onClick={()=>{
+                  try{
+                    toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
+                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                   }catch(e){
+                     console.error('search result click',e)
+                   }
+                   toHashtag(item?.hashtag)}} key={id}  className="m-1 flex relative">
                          <div className="flex items-center">
                              <div className="flex rounded-full border-2 border-gray-200 p-2 items-center">
                                <Hash/>
@@ -129,7 +143,14 @@ const TopItems = ({item, redirectTab}) =>{
                 </div>
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                    {data?.items?.videos?.map((item, id)=>(
-                    <div onClick={()=>router?.push(`/single-video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                    <div onClick={()=>{
+                      try{
+                        toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
+                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                       }catch(e){
+                         console.error('search result click',e)
+                       }
+                      router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

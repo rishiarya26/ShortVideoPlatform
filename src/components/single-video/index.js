@@ -62,7 +62,7 @@ export default function SingleVideo(props){
     track('Screen View',mixpanelEvents );
     toTrackMixpanel('impression');
     window.addEventListener("beforeunload", ()=>{
-      toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
+      watchedTime > 0 && toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
        /*** video events ***/
        if(watchedTime < 3){
         viewEventsCall(props?.id,'skip')

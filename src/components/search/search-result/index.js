@@ -10,17 +10,21 @@ import Hashtags from '../hash-tags';
 import SearchItems from '../../search-items';
 import { trimHash } from '../../../utils/string';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
-import { DISCOVER_SEARCH_RESULTS } from '../../../constants';
+import { DISCOVER_SEARCH_RESULTS, SEARCH_EVENT } from '../../../constants';
+import { toTrackReco } from '../../../analytics/view-events';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('')
 
+  const pageName = 'Discover Search Results'
+  let searchedTerm = router?.query?.term;
+
   useEffect(()=>{
     let item = router?.query?.term;
     item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item);
-    toTrackMixpanel('screenView',{pageName:DISCOVER_SEARCH_RESULTS})
+    toTrackMixpanel('screenView',{pageName:DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]})
   },[])
 
   useEffect(()=>{
@@ -46,6 +50,25 @@ function SearchResult({router}) {
  }
 
  const onTabChange = (compNo)=>{
+  try{
+    const trackReco={
+     0: null,
+     1 : ()=>toTrackReco(SEARCH_EVENT,{"message": searchedTerm, "objectID": "user_tab_secondary_query", "position": "0", "queryID": "user_tab_secondary_query"}),
+     2 : ()=>toTrackReco(SEARCH_EVENT,{"message": searchedTerm , "objectID": "video_tab_secondary_query", "position": "0", "queryID": "video_tab_secondary_query"}),
+     3 : ()=>toTrackReco(SEARCH_EVENT,{ "message": searchedTerm, "objectID": "hashtag_tab_secondary_query", "position": "0", "queryID": "hashtag_tab_secondary_query"}) 
+   }
+   trackReco?.[compNo]?.();
+
+   const trackMixpanel={
+    0: ()=>toTrackReco('cta',{pageName:DISCOVER_SEARCH_RESULTS, tabName:items?.display?.[selectedIndex], elemant:items?.display?.[selectedIndex]}),
+    1 : ()=>toTrackReco('cta',{pageName:DISCOVER_SEARCH_RESULTS, tabName:items?.display?.[selectedIndex], elemant:items?.display?.[selectedIndex]}),
+    2 : ()=>toTrackReco('cta',{pageName:DISCOVER_SEARCH_RESULTS, tabName:items?.display?.[selectedIndex], elemant:items?.display?.[selectedIndex]}),
+    3 : ()=>toTrackReco('cta',{pageName:DISCOVER_SEARCH_RESULTS, tabName:items?.display?.[selectedIndex], elemant:items?.display?.[selectedIndex]}) 
+  }
+  trackMixpanel?.[compNo]?.();
+  }catch(e){
+    console.error("reco event",e)
+  }
    setSelectedIndex(compNo)
  }
 

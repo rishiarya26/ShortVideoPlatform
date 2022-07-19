@@ -21,8 +21,8 @@ import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
-// import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
-// import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
+import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
+import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -150,6 +150,10 @@ function Hipi({
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
+  const [session, setSession] = useState(true);
+  const [sessionTimer, setSessionTimer] = useState(null);
+  const [timerArr, setTimerArr] = useState([])
+  const [enableSession , setEnableSession] = useState(true)
 
   const router = useRouter();
   
@@ -279,7 +283,7 @@ function Hipi({
  /* Extract out Mixpanel - Custom session event logic */   
 
   // let setTimeoutsTracker = [];
-  // function logout() {
+  // function endSessionOnIdle() {
   //      console.error("reset - session end - from logout")
   //      toTrackMixpanel('sessionEnd')
   //      setTimeoutsTracker = null;
@@ -293,7 +297,7 @@ function Hipi({
 
 //   const setTimeouts = (timer) => {
 //     setTimeoutsTracker = setTimeoutsTracker ===  (undefined || null) ? [] : setTimeoutsTracker;
-//     setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && logout()}, 1000 * 60));
+//     setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && endSessionOnIdle()}, 1000 * 60));
 //   };
 
 //   const clearTimeouts = () => {
@@ -336,20 +340,24 @@ function Hipi({
   //       resetTimeout();
   //      }
   //     }
-  //   }, 1000 * 60);
+  //   }, 1000*60);
 
   //   return () => clearInterval(interval);
   // });
  /*************************** */
     useEffect(()=>{
       // console.log("Router**",document.referrer)
-      // console.error("reset - session start")
-      // toTrackMixpanel('sessionStart')
+      // // console.error("reset - session start")
+      // // toTrackMixpanel('sessionStart')
       // if(typeof document != "undefined"){
-      //   console.log('sessDoc',document?.referrer,document?.referrer?.includes('hipi.co.in'))
-      //   const timer =  window.sessionStorage.getItem("sessionT") === 'null' ? 0 : window.sessionStorage.getItem("sessionT");
-      //   if(timer !== null && document?.referrer?.includes('hipi.co.in')){
-      //     console.log('sessTimer',timer)
+      //   console.log('sessDoc',document?.referrer,document?.referrer?.includes('localhost'))
+      //   let timer =  window.sessionStorage.getItem("sessionT") === 'null' ? 0 : window.sessionStorage.getItem("sessionT");
+      //   console.log('sessTimer',parseInt(timer),typeof timer)
+      //   if(timer !== null && document?.referrer?.includes('localhost')){
+      //     console.log('sessTimer**',timer,typeof timer)
+      //     if(typeof timer === 'string'){
+      //       timer = parseInt(timer);
+      //     } 
       //     window.sessionStorage.setItem("sessionT",timer || 0);
       //     setSessionTimer(timer || 0);
       //   }else{
@@ -359,7 +367,6 @@ function Hipi({
       //     toTrackMixpanel('sessionStart');
       //   }
       // }
-
 
       window.onload = function () {
         // window.sessionStorage.setItem('sessionEventTrack',undefined)

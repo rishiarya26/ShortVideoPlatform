@@ -3,7 +3,7 @@ import { track } from "../index";
 import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
-// import { getReffererPage } from "../../utils/web";
+import { getReffererPage } from "../../utils/web";
 
 export const commonEvents = ()=>{
    
@@ -44,7 +44,8 @@ export const commonEvents = ()=>{
     utmData?.utm_source && (payload['App UTM Source'] = utmData?.utm_source);
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
-    // payload['Source'] = getReffererPage() || 'NA';
+    console.log("reff",document?.referrer);
+    payload['Source'] = getReffererPage() || 'NA';
     return payload;
 }
 
@@ -81,9 +82,9 @@ export const toTrackMixpanel = (type, value, item) => {
 
     const bannerType = {
       Hashtag: 'Hashtag',
-Sound:'Sound',
-User:'Creator Profile',
-Video:'Video'
+      Sound:'Sound',
+      User:'Creator Profile',
+      Video:'Video'
     }
 
     const getBannerType = () =>{
@@ -293,14 +294,15 @@ Video:'Video'
           track('Search Executed',globalCommonEvents);
         },
         'searchResultClicked' : ()=>{
+          addPageTabName();
           addUgcId();
           commonWithIds();
           globalCommonEvents['Search Query'] = item?.query || 'NA';
           globalCommonEvents['Results Returned'] = item?.results || 'NA';
           globalCommonEvents['Hashtag ID']= item?.hashTagId || 'NA';
           globalCommonEvents['Hashtag Name']	= item?.hashtagName || 'NA';
-          globalCommonEvents['Sound ID']	= item?.soundId || 'NA';
-          globalCommonEvents['Sound Name']= item?.soundName || 'NA';
+          // globalCommonEvents['Sound ID']	= item?.soundId || 'NA';
+          // globalCommonEvents['Sound Name']= item?.soundName || 'NA';
           globalCommonEvents['Creator ID'] = item?.creatorId || 'NA'
           globalCommonEvents['Creator Handle'] = item?.creatorHandle || 'NA'
           globalCommonEvents['Object Type'] = item?.objType || 'NA'
@@ -311,34 +313,6 @@ Video:'Video'
           globalCommonEvents['Search Query'] = item?.query || 'NA';
           track('Search Cancelled',globalCommonEvents);
         },
-        // 'contentBucketSwipe' : ()=>{
-        //   addUgcId();
-        //   commonWithIds();
-        //   globalCommonEvents['Search Query'] = item?.query || 'NA';
-        //   globalCommonEvents['Results Returned'] = item?.results || 'NA';
-        //   globalCommonEvents['Hashtag ID']= item?.hashTagId || 'NA';
-        //   globalCommonEvents['Hashtag Name']	= item?.hashtagName || 'NA';
-        //   globalCommonEvents['Horizonal Index']	= item?.horizontalIndex || 'NA';
-        //   globalCommonEvents['Vertical Index']= item?.verticalIndex || 'NA';
-        //   globalCommonEvents['Carousal ID'] = item?.carousalId;
-        //   globalCommonEvents['Carousal Name'] = item?.carousalName;
-        //   globalCommonEvents['Carousal Type'] = item?.carousalType;
-        //   track('Content Bucket Swipe',globalCommonEvents);
-        // },
-        // 'contentBucketSwipe' : ()=>{
-        //   addUgcId();
-        //   commonWithIds();
-        //   globalCommonEvents['Search Query'] = item?.query || 'NA';
-        //   globalCommonEvents['Results Returned'] = item?.results || 'NA';
-        //   globalCommonEvents['Hashtag ID']= item?.hashTagId || 'NA';
-        //   globalCommonEvents['Hashtag Name']	= item?.hashtagName || 'NA';
-        //   globalCommonEvents['Horizonal Index']	= item?.horizontalIndex || 'NA';
-        //   globalCommonEvents['Vertical Index']= item?.verticalIndex || 'NA';
-        //   globalCommonEvents['Carousal ID'] = item?.carousalId;
-        //   globalCommonEvents['Carousal Name'] = item?.carousalName;
-        //   globalCommonEvents['Carousal Type'] = item?.carousalType;
-        //   track('Content Bucket Swipe',globalCommonEvents);
-        // },
         'contentBucketSwipe' : ()=>{
           commonWithIds();
           globalCommonEvents['Hashtag ID']= item?.hashTagId || 'NA';
@@ -356,7 +330,7 @@ Video:'Video'
           // globalCommonEvents['Hashtag ID']= item?.hashTagId || 'NA';
           // globalCommonEvents['Hashtag Name']	= item?.hashtagName || 'NA';
           globalCommonEvents['Creator ID']= item?.creatorId || 'NA';
-          globalCommonEvents['Creator Name']	= item?.creatorName || 'NA';
+          globalCommonEvents['Creator Handle']	= item?.creatorName || 'NA';
           globalCommonEvents['Horizonal Index']	= item?.horizontalIndex || 'NA';
           globalCommonEvents['Vertical Index']= item?.verticalIndex || 'NA';
           globalCommonEvents['Carousal ID'] = item?.carousalId;
@@ -366,8 +340,6 @@ Video:'Video'
         },
         'viewMoreSelected' : ()=>{
           commonWithIds();
-          // globalCommonEvents['Horizonal Index']	= item?.horizontalIndex || 'NA';
-          // globalCommonEvents['Vertical Index']= item?.verticalIndex || 'NA';
           globalCommonEvents['Carousal ID'] = item?.carousalId;
           globalCommonEvents['Carousal Name'] = item?.carousalName;
           globalCommonEvents['Carousal Type'] = item?.carousalType;
@@ -384,20 +356,6 @@ Video:'Video'
       //   track('Popup CTAs', mixpanelEvents)
       // }
     }
-
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-
-    // mixpanelEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    // mixpanelEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-
 
     type && toTrack?.[type] && toTrack?.[type]();
   }
