@@ -11,8 +11,10 @@ import { Back } from "../commons/svgicons/back";
 import SearchBlack from "../commons/svgicons/search-black";
 import { trimHash } from "../../utils/string";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
+import { toTrackReco } from "../../analytics/view-events";
+import { SEARCH_EVENT } from "../../constants";
 
-async function search(searchTerm, setSuggestions) {
+async function search(searchTerm, setSuggestions,pageName, showSuggestions) {
     /* eslint-disable no-param-reassign */
         try{
           searchTerm = searchTerm?.indexOf('#') === 0 ? trimHash(searchTerm) : searchTerm   
@@ -20,6 +22,11 @@ async function search(searchTerm, setSuggestions) {
           console.log('search',response?.data)
           if(response.status === 'success'){
               console.log('search',response)
+             try{
+                // toTrackMixpanel('searchSuggLoaded',{pageName:pageName},{query:searchTerm, resultsLength:response?.data?.length})
+             }catch(e){
+                 console.error('mixpanel issue',e);
+             }
               setSuggestions(response?.data)
           }
           }
@@ -43,7 +50,7 @@ const SearchItems = ({router,type})=>{
             const {term: item = ''} = router?.query;
             if(item?.length > 0){
                 setSearchTerm(item);
-                search(item,setSuggestions)
+                search(item,setSuggestions, pageName, showSuggestions)
             }
         }
     },[])
@@ -62,7 +69,9 @@ const SearchItems = ({router,type})=>{
    }
 
     const handleSearch=()=>{
+       try{
         toTrackMixpanel('searchBtnClicked',{pageName:pageName},{query: trimHash(searchTerm || '')})
+        toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "primary_search_query_response", "position": "0", "queryID": "primary_search_query_response"})
         setShowSuggestions(false)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
         searchHis && removeItem(searchHis);
@@ -70,6 +79,9 @@ const SearchItems = ({router,type})=>{
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
         searchTerm?.indexOf('#') === 0 ? router?.push(`/search?term=%23${trimHash(searchTerm)}`) : router?.push(`/search?term=${searchTerm}`)
+     }catch(e){
+         console.error('search btn clicked',e)
+     }
     }
 
     const searchFromList = (e,id,value) =>{
@@ -86,6 +98,7 @@ const SearchItems = ({router,type})=>{
             }  
         }   
         toTrackMixpanel('searchSuggSelected',{pageName:pageName},{query:searchTerm, suggestionSelected:value})
+        toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "autocomplete_search_query_response", "position": "0", "queryID": "autocomplete_search_query_response"})
         router?.push(`/search?term=${value}`);
     }
 
@@ -189,7 +202,7 @@ const SearchItems = ({router,type})=>{
             />
             {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" 
              onClick={()=>{
-                 toTrackMixpanel('searchCancel',{pageName: pageName},{query: searchTerm})
+                 toTrackMixpanel('searchCancelled',{pageName: pageName},{query: searchTerm})
                  setSearchTerm('')}}>
             <Close />
             </button>}
@@ -198,7 +211,7 @@ const SearchItems = ({router,type})=>{
             </div>}
             </div>
            {showSuggestions && info.list[type]}
-           {showSuggestions && searchTerm?.length > 2 && toTrackMixpanel('searchSuggLoaded',{pageName:pageName},{query:searchTerm, resultsLength:suggestions?.length})}
+           {showSuggestions && suggestions?.length > 2 && toTrackMixpanel('searchSuggLoaded',{pageName:pageName},{query:searchTerm, resultsLength:suggestions?.length})}
         </div>
     )
 }

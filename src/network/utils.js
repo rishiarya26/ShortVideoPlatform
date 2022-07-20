@@ -74,7 +74,7 @@ export function apiMiddleWare(
         resp = await backoff(_promise, params);
       } else {
         if(!requiresAuth){
-          console.log('api middle ware in direct call', _promise)
+          // console.log('api middle ware in direct call', _promise)
           resp = await _promise(params);
         }
       }

@@ -35,6 +35,7 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import SwipeUp from "../commons/svgicons/swipe-up";
 import Mute from '../commons/svgicons/mute';
+import Landscape from '../landscape';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -56,6 +57,7 @@ const AppBanner = dynamic(() => import('../app-banner'),{
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
+
 
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
@@ -383,7 +385,7 @@ console.log('errorrr',e)
                 setInitialPlayStarted(false);
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-                toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
 
                 ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -568,7 +570,7 @@ try{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-    <React.Fragment>
+    <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
          <UserExperience
           pageName={pageName}
@@ -587,8 +589,8 @@ try{
         </div>
       </div>
       {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
-      <LandscapeView/>
-    </React.Fragment>
+      <Landscape/>
+    </>
     </ComponentStateHandler>
 
   );

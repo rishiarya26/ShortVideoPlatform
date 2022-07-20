@@ -9,6 +9,9 @@ import { withRouter } from "next/router";
 import { Back } from "../../commons/svgicons/back";
 import useTranslation from "../../../hooks/use-translation";
 import fallbackUsers from '../../../../public/images/users.png'
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { toTrackReco } from "../../../analytics/view-events";
+import { CREATOR_PROFILE, DISCOVER_SEARCH_RESULTS } from "../../../constants";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -17,6 +20,8 @@ const LoadComp = () => (<Loader />);
 const Users = ({item, type = 'normal', router}) =>{
     const [items, setItems] = useState();
     const {ref = ''} = router?.query;
+
+    const searchTerm = item;
 
     const {t} = useTranslation();
     const onDataFetched=(data)=>{
@@ -59,7 +64,14 @@ const Users = ({item, type = 'normal', router}) =>{
            {heading[type]}
                  {items?.length > 0 ? items.map((item, id)=>(
                <span key={item?.id}>
-                  <div onClick={()=>router?.push(`/@${item?.userHandle}`)} key={id} className="flex p-2 min-w-3/5 mr-2">
+                  <div onClick={()=>{
+                      try{
+                        toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Users'},{creatorId:item?.userId,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE,query:searchTerm})
+                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                       }catch(e){
+                         console.error('search result click',e)
+                       }
+                    router?.push(`/@${item?.userHandle}`)}} key={id} className="flex p-2 min-w-3/5 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                           <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                           </div>

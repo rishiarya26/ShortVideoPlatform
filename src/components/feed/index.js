@@ -29,6 +29,8 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import Mute from '../commons/svgicons/mute';
+import Landscape from '../landscape';
+import AppBanner from '../app-banner';
  
 SwiperCore?.use([Mousewheel]);
 
@@ -50,6 +52,13 @@ const UserExperience = dynamic(()=> import('../commons/user-experience'),{
   ssr: false
 });
 
+// const LandscapeView = dynamic(
+//   () => import('../landscape'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
@@ -79,12 +88,12 @@ function Feed({ router }) {
   let { campaign_id = null} = router?.query;
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
+  const pageName = 'Feed';
+  const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+
   const showBanner =()=>{
     setShowAppBanner(true);
   }
-
-  const pageName = 'Feed';
-  const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
 
   const setClose = (value)=>{
       setOnCloseChamboard(value)
@@ -241,7 +250,7 @@ function Feed({ router }) {
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
     } catch (e) {
-      console.error("$",e)
+      // isShoppable = false;
     }
     isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
     setShop(shopContent);
@@ -349,7 +358,7 @@ function Feed({ router }) {
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-                toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
@@ -523,7 +532,7 @@ try{
 
   return (
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
-      <React.Fragment>
+      <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
         <UserExperience
@@ -543,9 +552,10 @@ try{
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>
-        </div>
-        <LandscapeView/>
-      </React.Fragment>
+      </div>
+       <Landscape/> 
+      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+    </>
     </ComponentStateHandler>
   );
 }

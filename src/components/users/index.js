@@ -16,7 +16,11 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { share } from '../../utils/app';
+import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
+// import { track } from '../../analytics';
+// import { ONE_TAP_DOWNLOAD } from '../../constants';
+// import { getOneLink } from '../../sources/social';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import {  toTrackMixpanel } from '../../analytics/mixpanel/events';

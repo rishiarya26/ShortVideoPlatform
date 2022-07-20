@@ -26,6 +26,9 @@ import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { viewEventsCall } from '../../analytics/view-events';
+import { getCanonicalUrl } from '../../utils/web';
+import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
 
@@ -64,7 +67,6 @@ function SearchFeed({ router }) {
 
   useEffect(() => {
     // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-    setLoading(false);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
@@ -414,6 +416,7 @@ try{
           </div>
         </div>
       </>
+      <Landscape/>
     </ComponentStateHandler>
   );
 }

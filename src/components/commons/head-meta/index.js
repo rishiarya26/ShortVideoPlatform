@@ -50,7 +50,6 @@ function HeadMeta() {
       <link rel="preload" href="https://www.hipi.co.in/feed/for-you" as="document" />
 
       {/* <link rel="dns-prefetch" href="https://eum.instana.io" /> */}
-      <link rel="dns-prefetch" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
       <link rel="dns-prefetch" href="http://fonts.gstatic.com" />
       <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       <link rel="dns-prefetch" href="http://cdn.mxpnl.com" />

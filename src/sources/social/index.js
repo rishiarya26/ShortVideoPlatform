@@ -118,11 +118,11 @@ const deleteLike = async ({ socialId }) => {
   }
 };
 
-const viewCountUpdate = async ({ id, event = 'user_video_start', duration='', timeSpent=''}) => {
+const viewCountUpdate = async ({headers, payloads, id, event = 'user_video_start', duration='', timeSpent=''}) => {
   let response = {};
- 
+  let payload;
   try {
-    const payload =  (event === 'user_video_end') ?
+    payload =  (event === 'user_video_end') ?
      {
       "assetId": id,
       "event": event,
@@ -133,6 +133,8 @@ const viewCountUpdate = async ({ id, event = 'user_video_start', duration='', ti
     "assetId": id,
     "event": event
   }
+
+  payloads ? (payload = payloads) : ''
   console.log("api called", payload)
    const userId = localStorage.get('user-id') || null;
   //  const geoData = localStorage.get('geo-info') || null;
@@ -140,6 +142,7 @@ const viewCountUpdate = async ({ id, event = 'user_video_start', duration='', ti
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
+      ...headers
       // 'X-GEO-IPADDR' : geoData?.ip,
       // 'X-GEO-COUNTRY-CODE':geoData?.country,
       // 'X-GEO-REGION-CODE':geoData?.state_code,

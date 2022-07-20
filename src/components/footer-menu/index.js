@@ -1,4 +1,5 @@
 /*eslint-disable react/display-name*/
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import SnackBar from '../commons/snackbar';
 import { Shop } from '../commons/button/shop';
@@ -7,22 +8,23 @@ import { useRouter } from 'next/router';
 import useAuth from '../../hooks/use-auth'
 import login from '../auth-options'
 import { localStorage } from '../../utils/storage';
-import { useState } from 'react';
 import Home from '../commons/svgicons/home';
 import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
 import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
-import HomeActive from '../commons/svgicons/home-active';
+import HomeActive from '../commons/svgicons/home-active'
 
-const AppBanner = dynamic(() => import('../app-banner'),{
-  loading: () => <div />,
-  ssr: false
-});
+const AppBanner = dynamic(
+  () => import('../app-banner'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
-
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType,
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
