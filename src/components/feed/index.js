@@ -99,9 +99,9 @@ function Feed({ router }) {
       setOnCloseChamboard(value)
   }
 
-  // const notNowClick = ()=>{
-  //   setShowAppBanner(null);
-  // }
+  const notNowClick = ()=>{
+    setShowAppBanner(null);
+  }
 
   useEffect(() => {
      setTimeout(()=>{
