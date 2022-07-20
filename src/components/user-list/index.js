@@ -12,6 +12,7 @@ import fallbackUsers from '../../../public/images/users.png';
 import useDrawer from '../../hooks/use-drawer';
 import detectDownload from '../open-in-app'
 import { numberFormatter } from '../../utils/convert-to-K';
+import { getItem } from '../../utils/cookie';
 
 let retry;
 const ErrorComp = () => (<Error retry={retry} />);
@@ -30,6 +31,7 @@ function UserList({router}) {
   const [items, setItems] = useState({})
   const {ref} =  router?.query;
   const {show} = useDrawer();
+  const device = getItem('device-info');
 
   const transformResponse = (data) =>{  
     const feedData = data?.filter((content) => (content.widgetName === `${ref}`));
@@ -78,7 +80,9 @@ function UserList({router}) {
               <p className="text-sm text-gray-400">{numberFormatter(data?.user?.followers)} Followers</p>
             </div>
           </div>
-          <div onClick={()=>setShowAppBanner(true)} className="flex items-center">
+          <div onClick={()=>{
+            device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall');
+            device==='android' && setShowAppBanner(true)}} className="flex items-center">
             <button  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
               Follow
             </button>
@@ -86,7 +90,7 @@ function UserList({router}) {
         </div>))}
       </div>    
     </div>
-    { ShowAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
+    {device === 'android' && ShowAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
     </ComponentStateHandler>
   );
 }

@@ -15,6 +15,7 @@ import Profile from '../commons/svgicons/profile';
 import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active'
+import { getItem } from '../../utils/cookie';
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -28,6 +29,7 @@ function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, s
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
+  const device = getItem('device-info')
 
 const info ={
   shop:  <Shop
@@ -78,7 +80,9 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
           {info[type]}
         </div> 
             <div
-              onClick={() => showBanner && showBanner()}
+              onClick={() =>{
+                device === 'iphone' && show('', detectDeviceModal, 'extraSmall', {text: "create"});
+                device === 'android' && showBanner && showBanner()}}
               className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />

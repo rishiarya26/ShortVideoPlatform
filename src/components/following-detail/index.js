@@ -65,7 +65,7 @@ async function search(userId,searchTerm,setItems) {
       //  }else{
       //   setIsFetching(false);
       // if(offset === 2){
-        // show('', detectDeviceModal, 'extraSmall');
+        device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
         setShowAppBanner(true);
         setIsFetching(false);
       //   setOffset(offset+1);
@@ -130,7 +130,7 @@ async function search(userId,searchTerm,setItems) {
           </div>
         </div>))}
         </div>
-        {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
+        {device==='android'&& showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
         </ComponentStateHandler>
     )
 }

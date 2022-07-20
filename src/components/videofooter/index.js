@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { getItem } from '../../utils/cookie';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -38,7 +39,9 @@ function VideoFooter({
     single: `${canShop  ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
   };
   const { show } = useDrawer();
-  const router = useRouter()
+  const router = useRouter();
+
+  const device = getItem('device-info');
 
   const music = {
     profile:    <Music />,
@@ -101,7 +104,9 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
        {musicTitle && <div className="w-8/12 my-1 text-sm">
           {music[comp]}
-          <span onClick={()=>showBanner && showBanner()} className=" my-1 text-sm w-4/12">
+          <span onClick={()=>{
+            device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})
+            device === 'android' &&  showBanner && showBanner()}} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>
         </div>}
