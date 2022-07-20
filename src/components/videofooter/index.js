@@ -28,7 +28,8 @@ function VideoFooter({
   comp,
   description,
   adCards,
-  showBanner
+  showBanner,
+  videoId
 }) {
   const [loaded, setLoaded] = useState(false);
   // TO-DO common classes
@@ -105,7 +106,7 @@ function VideoFooter({
        {musicTitle && <div className="w-8/12 my-1 text-sm">
           {music[comp]}
           <span onClick={()=>{
-            device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})
+            device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})
             device === 'android' &&  showBanner && showBanner()}} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>

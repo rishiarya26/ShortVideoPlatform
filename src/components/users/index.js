@@ -40,6 +40,14 @@ const AppBanner = dynamic(() => import('../app-banner'),{
   ssr: false
 });
 
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
 function Users({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',
   isFollow=false
@@ -226,7 +234,7 @@ console.log("onClick follow btn issue ",e);
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
           <button onClick={() =>{
-            device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
+            device === 'ios' && show('', detectDeviceModal, 'extraSmall');
             device === 'android' && setShowAppBanner(true)}}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>

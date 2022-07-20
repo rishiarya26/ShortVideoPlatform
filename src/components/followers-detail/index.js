@@ -68,7 +68,7 @@ async function search(userId, searchTerm, setItems) {
       //  }else{
       //   setIsFetching(false);
       // if(offset === 2){
-        device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
+        device === 'ios' && show('', detectDeviceModal, 'extraSmall');
         setShowAppBanner(true)
         setIsFetching(false);
       //   setOffset(offset+1);

@@ -16,6 +16,7 @@ import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active'
 import { getItem } from '../../utils/cookie';
+import detectDeviceModal from '../open-in-app';
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -24,6 +25,14 @@ const AppBanner = dynamic(
     ssr: false
   }
 );
+
+// const detectDeviceModal = dynamic(
+//   () => import('../open-in-app'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
  setClose,pageName, tabName=null} ){
@@ -81,9 +90,10 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
         </div> 
             <div
               onClick={() =>{
-                device === 'iphone' && show('', detectDeviceModal, 'extraSmall', {text: "create"});
+                console.log(device);
+                device === 'ios' && show('', detectDeviceModal, 'extraSmall', {text: "create"});
                 device === 'android' && showBanner && showBanner()}}
-              className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
+                className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
                 <p className="text-gray-400 text-xxs mt-1.5 select-none">Create</p>

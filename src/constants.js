@@ -23,4 +23,5 @@ export const FACEBOOK_PIXEL_ID = '493676215515717'
 export const DISCOVER_SEARCH_RESULTS = 'Discover Search Results'
 export const CREATOR_PROFILE = 'Creator Profile'
 export const SEARCH_EVENT = 'search_event';
+export const FULL_EXPERIENCE = 'Get the full experience on the Hipi app';
  
