@@ -26,6 +26,7 @@ import Liked from '../commons/svgicons/liked';
 import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
 import EmbedIcon from '../commons/svgicons/embedicon';
+import detectDeviceModal from '../open-in-app';
 
 const login = dynamic(() => import('../auth-options'),{
   loading: () => <div />,
@@ -301,7 +302,7 @@ const handleSaveMoments = () =>{
            id="comment"
            role="presentation"
            onClick={() =>{
-           device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+           device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
            device === 'android' &&  showBanner && showBanner()}}
         >
           <Comment />

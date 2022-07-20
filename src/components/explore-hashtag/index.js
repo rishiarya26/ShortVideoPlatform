@@ -132,7 +132,7 @@ function HashTag({router}) {
               {/* <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p> */}
             </div>
             <div onClick={()=>{
-               device === 'iphone' && show('', detectDeviceModal, 'extraSmall');
+               device === 'ios' && show('', detectDeviceModal, 'extraSmall');
                device === 'android' && setShowAppBanner(true)}} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
               <Save />
               <p className="pl-2 text-xs font-medium">Add to favorites</p>

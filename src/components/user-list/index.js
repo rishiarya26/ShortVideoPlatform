@@ -81,7 +81,7 @@ function UserList({router}) {
             </div>
           </div>
           <div onClick={()=>{
-            device === 'iphone' &&  show('', detectDeviceModal, 'extraSmall');
+            device === 'ios' &&  show('', detectDeviceModal, 'extraSmall');
             device==='android' && setShowAppBanner(true)}} className="flex items-center">
             <button  className="font-semibold text-sm border border-hipired rounded-sm py-1 px-5 mr-1 bg-hipired text-white">
               Follow

@@ -289,6 +289,7 @@ function Video(props) {
          description={props?.description}
          adCards={props?.adData}
          showBanner={props?.showBanner}
+         videoId={props.id}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar
