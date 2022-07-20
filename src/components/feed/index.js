@@ -82,17 +82,12 @@ function Feed({ router }) {
   let { campaign_id = null} = router?.query;
   campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
 
+  const pageName = 'Feed';
+  const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+
   const showBanner =()=>{
     setShowAppBanner(true);
   }
-
-  // const loaded = () => {
-  //   setLoading(false);
-  // };
-//  const {show} = useDrawer();
-
-  const pageName = 'Feed';
-  const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
 
   const setClose = (value)=>{
       setOnCloseChamboard(value)
@@ -249,7 +244,7 @@ function Feed({ router }) {
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
     } catch (e) {
-      console.error("$",e)
+      // isShoppable = false;
     }
     isShoppable ? shopContent.isShoppable = 'success' : shopContent.isShoppable = 'fail';
     setShop(shopContent);
@@ -426,7 +421,7 @@ const toTrackFirebase = (activeIndex, type, value) => {
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-                toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                 ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 

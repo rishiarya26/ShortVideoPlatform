@@ -17,6 +17,8 @@ const Videos = ({item}) =>{
     const [offset, setOffset] = useState(2);
     const [showLoading, setShowLoading] = useState(isFetching)
 
+    const searchTerm = item;
+
     const {t} = useTranslation();
 
     useEffect(()=>{window.sessionStorage.removeItem("searchList")},[]);
@@ -71,6 +73,7 @@ const Videos = ({item}) =>{
         page='search'
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}
+        searchTerm={searchTerm}
       /> : 
       <div className="flex w-full h-1/3 justify-center items-center">{t('NO_ITEM_SEARCH_RESULTS')}</div>
       }

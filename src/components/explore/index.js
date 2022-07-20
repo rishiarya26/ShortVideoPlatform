@@ -35,7 +35,7 @@ import SwiperCore, {
   Autoplay,Pagination,Navigation
 } from 'swiper';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
@@ -310,9 +310,9 @@ function Explore() {
                   {content?.widgetList?.length > 0 && content.widgetList.map((d, id) => {
                      if(id > 5) return null;
                     return (
-                      <div   key={id} id={content?.widgetName} 
+                      <div key={id} id={content?.widgetName} 
                       onClick={(e)=>{
-                        toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', ugcId:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
+                        toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', content_id:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
                         toSearchFeed(e, d?.video?.id )}} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
                         {d?.video?.shoppable === true && <div className="absolute top-2 right-2 z-1">

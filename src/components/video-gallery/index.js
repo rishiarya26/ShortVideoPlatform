@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { toTrackReco } from '../../analytics/view-events';
+import { DISCOVER_SEARCH_RESULTS } from '../../constants';
 import useTranslation from '../../hooks/use-translation';
 import { localStorage } from '../../utils/storage';
 import ComponentStateHandler from '../commons/component-state-handler';
@@ -14,7 +17,7 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems
+  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems, searchTerm
 }) {
 
   const { t } = useTranslation();
@@ -85,8 +88,16 @@ export default function VideoGallery({
             ? (
             <div className="flex flex-wrap flex-row w-full space-x space-y p-1">
             { items?.map((item, id) => (
-               <span className="w-1/3 p-1" key={id} onClick={page === 'search' 
-               ? ()=> router?.push(`/search-feed/${item?.id}?type=normal`)  
+               <span className="w-1/3 p-1" key={id} onClick={
+               page === 'search' 
+               ? ()=> {
+                try{
+                  toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Videos'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
+                  toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                 }catch(e){
+                   console.error('search result click',e)
+                 } 
+                router?.push(`/search-feed/${item?.id}?type=normal`)}  
                : page === 'profile' 
                   ? ()=>toProfileFeed(userId,item?.content_id,type)
                   : ()=>toHashTagFeed(hashTag,item?.content_id,type)}>

@@ -1,5 +1,7 @@
 /*eslint-disable react/display-name */
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
+import { inject } from '../../analytics/async-script-loader';
 import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
@@ -22,6 +24,10 @@ function ProductWidget({
       ssr: false
     }
   );
+
+  useEffect(()=>{
+    // toTrackMixpanel('shoppingPopUp',{pageName:pageName, tabName:tabName && tabName|| null},{content_id:videoId})
+  },[])
 
   const {show } = useDrawer();
 

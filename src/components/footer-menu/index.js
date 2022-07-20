@@ -13,9 +13,10 @@ import detectDeviceModal from '../open-in-app'
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import ProfileActive from '../commons/svgicons/profile-active';
+import SearchActive from '../commons/svgicons/search-active';
+import HomeActive from '../commons/svgicons/home-active'
 import { useState } from 'react';
 import { getItem } from '../../utils/cookie';
-
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -25,19 +26,7 @@ const AppBanner = dynamic(
   }
 );
 
-const SearchActive = dynamic(() => import('../commons/svgicons/search-active'),{
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const HomeActive = dynamic(() => import('../commons/svgicons/home-active'),{
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType,
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
