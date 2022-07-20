@@ -12,7 +12,7 @@ export const toTrackFirebase = (type, commonInfo = {}, value) => {
     const events = commonEvents(commonInfo);
     const toTrack = {
       'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share Click', events),
+      'share' : () => trackEvent('UGC_Share_Click', events),
       'replay' : () => trackEvent('UGC_Replayed', events),
       'watchTime' : () => {
         events['UGC Consumption Type'] = value?.watchTime || 'NA'
