@@ -31,7 +31,8 @@ import SwipeUp from '../commons/svgicons/swipe-up';
 import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
- 
+import UserExperience from  "../commons/user-experience";
+
 SwiperCore?.use([Mousewheel]);
 
 let setRetry;
@@ -47,10 +48,10 @@ const LoginFollowing = dynamic(()=> import('../login-following'),{
   ssr: false
 });
 
-const UserExperience = dynamic(()=> import('../commons/user-experience'),{
-  loading: () => <div />,
-  ssr: false
-});
+// const UserExperience = dynamic(()=> import('../commons/user-experience'),{
+//   loading: () => <div />,
+//   ssr: false
+// });
 
 // const LandscapeView = dynamic(
 //   () => import('../landscape'),
