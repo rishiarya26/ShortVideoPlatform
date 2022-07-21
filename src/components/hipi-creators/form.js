@@ -96,10 +96,10 @@ const Form = ()=>{
          className="w-full border-b border-gray-300 text-lg px-1" 
          type="text" 
          name="instaHandle" 
-         placeholder="Instagram handle" 
+         placeholder="Instagram handle *" 
          onChange={updateData}
          value={data.instaHandle}
-         
+         required
          />
         </div>
         <div className='py-2 flex'>
