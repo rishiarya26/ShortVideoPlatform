@@ -85,7 +85,7 @@ function HeadMeta() {
       {/* <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" /> */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-{/* google verification for SEO */}
+      {/* google verification for SEO */}
       <meta name="google-site-verification" content="ENMIgg299KOVw-fxB4Auaasht3PjJSoPqDvgVZIC0to" />      
       <meta name="facebook-domain-verification" content="8cchm0hfnopz5r253ri0stnmuwoej1" />
 

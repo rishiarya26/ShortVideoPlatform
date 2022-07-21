@@ -1,5 +1,6 @@
 /*eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import { withRouter } from 'next/router';
@@ -15,36 +16,42 @@ import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
-import dynamic from 'next/dynamic';
-import Mute from '../commons/svgicons/mute';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-import LoginFollowing from '../login-following';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import SwipeUp from '../commons/svgicons/swipe-up';
 import { localStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
 import { viewEventsCall } from '../../analytics/view-events';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import SwipeUp from '../commons/svgicons/swipe-up';
+import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
- 
+import AppBanner from '../app-banner';
+import UserExperience from  "../commons/user-experience";
+
 SwiperCore?.use([Mousewheel]);
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+const LandscapeView = dynamic(() => import('../landscape'),{
+  loading: () => <div />,
+  ssr: false
+});
+const LoginFollowing = dynamic(()=> import('../login-following'),{
+  loading: () => <div />,
+  ssr: false
+});
+
+// const UserExperience = dynamic(()=> import('../commons/user-experience'),{
+//   loading: () => <div />,
+//   ssr: false
+// });
 
 // const LandscapeView = dynamic(
 //   () => import('../landscape'),
@@ -57,7 +64,7 @@ const AppBanner = dynamic(
 //TO-DO segregate SessionStorage
 function Feed({ router }) {
   const [items, setItems] = useState([]);
-  const [toShowItems, setToShowItems] = useState([])
+  const [toShowItems, setToShowItems] = useState([]);
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [activeVideoId, setActiveVideoId] = useState(null);
   const [videoActiveIndex, setVideoActiveIndex] = useState(0)
@@ -73,7 +80,7 @@ function Feed({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('');
   const [showAppBanner, setShowAppBanner] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
 
   const { t } = useTranslation();
@@ -153,9 +160,10 @@ function Feed({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
+      // let currentActiveFeedItem = items?.[videoActiveIndex];
       toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
-      ToTrackFbEvents(videoActiveIndex,'play');
-      toTrackFirebase(videoActiveIndex,'play');
+      ToTrackFbEvents('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
+      toTrackFirebase('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -219,10 +227,9 @@ function Feed({ router }) {
        toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
        fbq.event('UGC_Played_Complete ')
-       ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
-
-       toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-       toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration}, {  duration : duration, durationWatchTime: duration})
+       toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+       toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
@@ -317,76 +324,6 @@ function Feed({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
-const ToTrackFbEvents = (activeIndex, type, value) => {
-  const item = items[activeIndex];
-  const fbEvents = {}
-
-  const toTrack = {
-    'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-    'swipe' : ()=> {
-      fbEvents['UGC Duration'] = value?.duration
-      fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-      fbq.event('UGC Swipe', fbEvents)
-    },
-    'play' : () => fbq.event('UGC Play', fbEvents),
-    'pause' : () => fbq.event('Pause', fbEvents),
-    'resume' : () => fbq.event('Resume', fbEvents),
-    'share' : () => fbq.event('UGC Share Click', fbEvents),
-    'replay' : () => fbq.event('UGC Replayed', fbEvents),
-    'watchTime' : () => {
-      fbEvents['UGC Consumption Type'] = value?.watchTime
-      fbEvents['UGC Duration'] = value?.duration
-      fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-      fbq.event('UGC Watch Time',fbEvents)
-    },
-    'cta' : ()=>{
-      fbEvents['Element'] = value?.name
-      fbEvents['Button Type'] = value?.type
-      fbq.event('CTAs', fbEvents)
-    },
-    'savelook' : ()=>{
-      fbq.event('Save Look', fbEvents)
-    },
-  }
-
-  fbEvents['Creator ID'] = item?.userId;
-  fbEvents['UGC ID'] = item?.content_id;
-  fbEvents['Page Name'] = 'Feed';
-
-  toTrack?.[type]();
-}
-/*****************************/
-const toTrackFirebase = (activeIndex, type, value) => {
-  const item = items[activeIndex];
-  const events = {}
-
-  const toTrack = {
-    'play' : () => trackEvent('UGC_Play', events),
-    'share' : () => trackEvent('UGC_Share Click', events),
-    'replay' : () => trackEvent('UGC_Replayed', events),
-    'watchTime' : () => {
-      events['UGC Consumption Type'] = value?.watchTime
-      events['UGC Duration'] = value?.duration
-      events['UGC Watch Duration'] = value?.durationWatchTime
-      trackEvent('UGC_Watch_Time',events)
-    },
-    'cta' : ()=>{
-      events['Element'] = value?.name
-      events['Button Type'] = value?.type
-      trackEvent('CTAs', events)
-    },
-    'savelook' : ()=>{
-      trackEvent('Save_Look', events)
-    }
-  }
-
-  events['Creator ID'] = item?.userId;
-  events['UGC ID'] = item?.content_id;
-  events['Page Name'] = 'Feed';
-
-  toTrack?.[type]();
-}
-
   const swiper = <Swiper
               className="max-h-full"
               direction="vertical"
@@ -416,14 +353,15 @@ const toTrackFirebase = (activeIndex, type, value) => {
                 setInitialPlayStarted(false);
 
                 setShowSwipeUp({count : 1, value:false});
+                let currentActiveFeedItem = items?.[videoActiveIndex];
 
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
-                ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-                toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
@@ -594,27 +532,19 @@ try{
 }
 
   return (
-    <ComponentStateHandler
-      state={fetchState}
-      Loader={LoadComp}
-      ErrorComp={ErrorComp}
-    >
-    <>
-      <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {/* open cta */}
-      <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
-
-          {/* hamburger */}
-         <HamburgerMenu/>
-
-         
+    <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
+      <>
+        <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
+        {/* open cta */}
+        <UserExperience
+          pageName={pageName}
+          tabName={tabName}
+          items={items}
+          videoActiveIndex={videoActiveIndex}
+          activeVideoId={activeVideoId}
+        />
+        {/* hamburger */}
+        <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
@@ -628,7 +558,6 @@ try{
       {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </>
     </ComponentStateHandler>
-
   );
 }
 

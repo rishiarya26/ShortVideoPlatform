@@ -10,17 +10,11 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { getNetworkConnection } from '../../utils/device-details';
-import SwiperSlideComp from '../swiper.js';
-import fallbackUser from "../../../public/images/users.png"
 import CircularProgress from '../commons/circular-loader'
-import { CHARMBOARD_PLUGIN_URL } from '../../constants';
-import { inject } from '../../analytics/async-script-loader';
 import Mute from '../commons/svgicons/mute';
-import { numberFormatter } from '../../utils/convert-to-K';
 import usePreviousValue from '../../hooks/use-previous';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
@@ -30,6 +24,8 @@ import { getOneLink, viewEvents } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import Landscape from '../landscape';
@@ -104,8 +100,8 @@ function SearchFeed({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
-      ToTrackFbEvents(videoActiveIndex,'play')
-      toTrackFirebase(videoActiveIndex,'play')
+      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
+      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -158,11 +154,11 @@ function SearchFeed({ router }) {
         toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
         toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
 
-        toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-        toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+        toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+        toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{  duration : duration, durationWatchTime: duration})
 
-        ToTrackFbEvents(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-        ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+        ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+        ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{  duration : duration, durationWatchTime: duration})
         /*** view events ***/
         viewEventsCall(activeVideoId, 'completed');
         viewEventsCall(activeVideoId, 'user_video_start');
@@ -252,50 +248,9 @@ function SearchFeed({ router }) {
     // mixpanelEvents['UGC Description'] = item?.content_description;
     mixpanelEvents['Page Name'] = 'Search Feed';
 
-    toTrack?.[type]();
-  }
-  const toTrackFirebase = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const events = {}
-  
-    const toTrack = {
-      'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share_Click', events),
-      'replay' : () => trackEvent('UGC_Replayed', events),
-      'watchTime' : () => {
-        events['UGC Consumption Type'] = value?.watchTime
-        events['UGC Duration'] = value?.duration
-        events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC_Watch_Time',events)
-      },
-      'cta' : ()=>{
-        events['Element'] = value?.name
-        events['Button Type'] = value?.type
-        trackEvent('CTAs', events)
-      },
-      'savelook' : ()=>{
-        trackEvent('Save_Look', events)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    events['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    events['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    events['Page Name'] = 'Search Feed';
-  
-    toTrack?.[type]();
+    type && toTrack?.[type] && toTrack?.[type]();
   }
   
-
   
 const onStoreRedirect = async ()=>{
   trackEvent('App_Open_CTA')
@@ -319,133 +274,6 @@ try{
   console.log("final onelink",link);
   window?.open(link);
 }
-
-
-  const ToTrackFbEvents = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const fbEvents = {}
-  
-    
-  console.log('FB events',fbq)
-    const toTrack = {
-      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-      'swipe' : ()=> {
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Swipe', fbEvents)
-      },
-      'play' : () => fbq.event('UGC Play', fbEvents),
-      'pause' : () => fbq.event('Pause', fbEvents),
-      'resume' : () => fbq.event('Resume', fbEvents),
-      'share' : () => fbq.event('UGC Share Click', fbEvents),
-      'replay' : () => fbq.event('UGC Replayed', fbEvents),
-      'watchTime' : () => {
-        fbEvents['UGC Consumption Type'] = value?.watchTime
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Watch Time',fbEvents)
-      },
-      'cta' : ()=>{
-        fbEvents['Element'] = value?.name
-        fbEvents['Button Type'] = value?.type
-        fbq.event('CTAs', fbEvents)
-      },
-      'savelook' : ()=>{
-        fbq.event('Save Look', fbEvents)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    // fbEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    // fbEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    // fbEvents['Page Name'] = 'Search Feed';
-  
-    toTrack?.[type]();
-  }
-
-
-  // const ToTrackFbEvents = (activeIndex, type, value) => {
-  //   const item = items[activeIndex];
-  //   const fbEvents = {}
-  
-    
-  // console.log('FB events',fbq)
-  //   const toTrack = {
-  //     'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-  //     'swipe' : ()=> {
-  //       fbEvents['UGC Duration'] = value?.duration
-  //       fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-  //       fbq.event('UGC Swipe', fbEvents)
-  //     },
-  //     'play' : () => fbq.event('UGC Play', fbEvents),
-  //     'pause' : () => fbq.event('Pause', fbEvents),
-  //     'resume' : () => fbq.event('Resume', fbEvents),
-  //     'share' : () => fbq.event('UGC Share Click', fbEvents),
-  //     'replay' : () => fbq.event('UGC Replayed', fbEvents),
-  //     'watchTime' : () => {
-  //       fbEvents['UGC Consumption Type'] = value?.watchTime
-  //       fbEvents['UGC Duration'] = value?.duration
-  //       fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-  //       fbq.event('UGC Watch Time',fbEvents)
-  //     },
-  //     'cta' : ()=>{
-  //       fbEvents['Element'] = value?.name
-  //       fbEvents['Button Type'] = value?.type
-  //       fbq.event('CTAs', fbEvents)
-  //     },
-  //     'savelook' : ()=>{
-  //       fbq.event('Save Look', fbEvents)
-  //     }
-  //   }
-  
-  //   // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-  //   fbEvents['Creator ID'] = item?.userId;
-  //   // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-  //   // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-  //   fbEvents['UGC ID'] = item?.content_id;
-  //   // mixpanelEvents['Short Post Date'] = 'NA';
-  //   // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-  //   // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-  //   // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-  //   // mixpanelEvents['UGC Genre'] = item?.genre;
-  //   // mixpanelEvents['UGC Description'] = item?.content_description;
-  //   fbEvents['Page Name'] = 'Feed';
-  
-  //   toTrack?.[type]();
-  // }
-
-  
-// const onStoreRedirect = async ()=>{
-//   // toTrackMixpanel('downloadClick');
-//   let link = ONE_TAP_DOWNLOAD;
-//   const device = getItem('device-info');
-//   console.log(device)
-// try{  
-//  if(device === 'android' && videoId){ 
-//    try{ const resp = await getOneLink({videoId : videoId});
-//     link = resp?.data;
-//     console.log("one link resp",resp);}
-//     catch(e){
-//       console.log('error android onelink',e)
-//     }
-//   }
-//  }
-//   catch(e){
-//   }
-//   console.log("final onelink",link);
-//   window?.open(link);
-// }
-
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
@@ -498,21 +326,21 @@ try{
             } = swiperCore;
             setSeekedPercentage(0)
             setInitialPlayStarted(false);
-            toTrackMixpanel(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-            toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+            toTrackMixpanel('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+            toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
             fbq.event('watchTime')
 
-              /*** video events ***/
-                if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
-                  viewEventsCall(activeVideoId,'skip')
-                }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
-                  viewEventsCall(activeVideoId,'no decision')
-                }
-                viewEventsCall(activeVideoId, 'user_video_end', 
-                {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+            /*** video events ***/
+              if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
+                viewEventsCall(activeVideoId,'skip')
+              }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
+                viewEventsCall(activeVideoId,'no decision')
+              }
+              viewEventsCall(activeVideoId, 'user_video_end', 
+              {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
+                duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
 
-              /***************/
+            /***************/
 
             const activeId = slides[activeIndex]?.id;
             setVideoActiveIndex(activeIndex)

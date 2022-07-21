@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-
 import useDrawer from '../../hooks/use-drawer';
 import useAuth from '../../hooks/use-auth';
 import { ShareComp } from '../commons/share';
@@ -21,41 +20,19 @@ import { localStorage } from '../../utils/storage';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
 import AdCards from '../ad-cards';
+import { GET_SOCIAL_LOADED } from '../../constants';
+import Like from '../commons/svgicons/like';
+import Liked from '../commons/svgicons/liked';
+import Comment from '../commons/svgicons/comment';
+import Shop from '../commons/svgicons/shop';
+import EmbedIcon from '../commons/svgicons/embedicon';
+import detectDeviceModal from '../open-in-app';
 
 const login = dynamic(() => import('../auth-options'),{
-    loading: () => <div />,
-    ssr: false
-  }
-);
+  loading: () => <div />,
+  ssr: false
+});
 
-const Like = dynamic(()=> import('../commons/svgicons/like'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Liked = dynamic(()=> import('../commons/svgicons/liked'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Comment = dynamic(()=> import('../commons/svgicons/comment'),{
-  loading: () => <div />,
-  ssr: false
-})
-const Shop = dynamic(()=> import('../commons/svgicons/shop'),{
-  loading: () => <div />,
-  ssr: false
-})
-const EmbedIcon = dynamic(()=> import('../commons/svgicons/embedicon'),{
-  loading: () => <div />,
-  ssr: false
-})
-
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 function VideoSidebar({
   socialId,
@@ -72,10 +49,14 @@ function VideoSidebar({
   const { showSnackbar } = useSnackbar();
   const { show: showDialog } = useDialog();
   const router = useRouter();
+
+  const device = getItem('device-info');
   
   const showLoginOptions = () => {
     show('', login, 'medium',{pageName:pageName, tabName:tabName&& tabName || ''});
   };
+
+  //const getSocialLoaded = window?.sessionStorage?.getItem(GET_SOCIAL_LOADED);
 
   const like = () => {
      postReaction('like',socialId);
@@ -165,19 +146,17 @@ const checkSaveLook =()=>{
   const saved = savedItems?.videoIds?.includes(activeVideoId) || false;
   setIsSaved(saved);
 }
-  useEffect(()=>{
-            
-             checkSaveLook();
-             setIsLiked({like : false, reactionTime: 'past'});
-                let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-                  if (tokens?.shortsAuthToken && tokens?.accessToken )
-                {
-                  const getLikeReaction = async()=>{  
-                     const isLiked =  await getVideoReactions(socialId, 'past');
-                     setIsLiked({like : isLiked, reactionTime: 'past'});
-                    }
-                    getLikeReaction();
-                }
+  useEffect(()=>{  
+    checkSaveLook();
+    setIsLiked({like : false, reactionTime: 'past'});
+      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+        if (tokens?.shortsAuthToken && tokens?.accessToken){
+        const getLikeReaction = async()=>{  
+          const isLiked =  await getVideoReactions(socialId, 'past');
+          setIsLiked({like : isLiked, reactionTime: 'past'});
+        }
+        getLikeReaction();
+      }
   },[activeVideoId])
 
     let optProfilePic = profilePic;
@@ -322,8 +301,9 @@ const handleSaveMoments = () =>{
         <div 
            id="comment"
            role="presentation"
-           onClick={() =>showBanner && showBanner()}
-
+           onClick={() =>{
+           device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+           device === 'android' &&  showBanner && showBanner()}}
         >
           <Comment />
           {/* <p className="text-sm text-center">0</p> */}

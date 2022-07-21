@@ -5,10 +5,6 @@ import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
-import { Back } from '../commons/svgicons/back';
-import UserTab from '../commons/tabs/desk-user-tab';
-import VideoGallery from '../video-gallery';
-import LikedList from '../commons/svgicons/liked-list';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
 import { numberFormatter } from '../../utils/convert-to-K';
@@ -20,46 +16,44 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
-import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import DeskVideoGallery from '../desk-video-gallery';
-import ShareOutline from '../commons/svgicons/share-outline';
-import { withBasePath } from '../../config';
-import CloseSolid from '../commons/svgicons/close-solid';
-import SearchBlack from '../commons/svgicons/search-black';
 import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
-import Mute from '../commons/svgicons/mute';
-import Play from '../commons/svgicons/play-outlined';
-import CartLg from '../commons/svgicons/cart-lg';
-import CartLgLight from '../commons/svgicons/cart-lg-light';
-import VerifiedLg from '../commons/svgicons/verified-lg';
-import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
+import UserTab from '../commons/tabs/desk-user-tab';
 
-const detectDeviceModal = dynamic(
-  () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+const detectDeviceModal = dynamic(() => import('../open-in-app'),{
+  loading: () => <div />,
+  ssr: false
+});
+const Back = dynamic(()=> import('../commons/svgicons/back'),{
+  loading: () => <div />,
+  ssr: false
+});
+const LikedList = dynamic(()=> import('../commons/svgicons/liked-list'),{
+  loading: () => <div />,
+  ssr: false
+})
+const CartLg = dynamic(()=> import('../commons/svgicons/cart-lg'),{
+  loading: () => <div />,
+  ssr: false
+})
+const CartLgLight = dynamic(()=> import('../commons/svgicons/cart-lg-light'),{
+  loading: () => <div />,
+  ssr: false
+})
+const VerifiedLg = dynamic(()=> import('../commons/svgicons/verified-lg'),{
+  loading: () => <div />,
+  ssr: false
+})
 
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
 
 function DeskUsers({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',

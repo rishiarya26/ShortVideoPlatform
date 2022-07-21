@@ -16,13 +16,9 @@ import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
 import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
-import LoginFollowing from '../login-following';
 import useDrawer from '../../hooks/use-drawer';
-import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
-import SwipeUp from '../commons/svgicons/swipe-up';
 import HamburgerMenu from '../hamburger-menu';
-
 import * as fbq from '../../analytics/fb-pixel'
 import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
@@ -34,32 +30,47 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
+import UserExperience from '../commons/user-experience';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import SwipeUp from "../commons/svgicons/swipe-up";
+import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 
 
- 
 SwiperCore?.use([Mousewheel]);
 
-// const detectDeviceModal = dynamic(
-//   () => import('../open-in-app'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
+const LoginFollowing = dynamic(()=> import('../login-following'),{
+  loading: () => <div />,
+  ssr: false
+})
+// const LandscapeView = dynamic(() => import('../landscape'),{
+//   loading: () => <div />,
+//   ssr: false
+// });
 
+SwiperCore?.use([Mousewheel]);
 
-let setRetry;
-const ErrorComp = () => (<Error retry={setRetry} />);
-const LoadComp = () => (<Loading />);
-
-const AppBanner = dynamic(
-  () => import('../app-banner'),
+const detectDeviceModal = dynamic(
+  () => import('../open-in-app'),
   {
     loading: () => <div />,
     ssr: false
   }
 );
+
+let setRetry;
+const ErrorComp = () => (<Error retry={setRetry} />);
+const LoadComp = () => (<Loading />);
+
+
+// const AppBanner = dynamic(
+//   () => import('../app-banner'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 //TO-DO segregate SessionStorage
 function FeedIphone({ router }) {
@@ -82,7 +93,7 @@ function FeedIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
-  const [showAppBanner, setShowAppBanner] = useState(false);
+  // const [showAppBanner, setShowAppBanner] = useState(false);
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -98,12 +109,12 @@ function FeedIphone({ router }) {
   const setClose = (value)=>{
     setOnCloseChamboard(value)
 }
-const showBanner=()=>{
-  setShowAppBanner(true);
-}
-const notNowClick = ()=>{
-  setShowAppBanner(false);
-}
+// const showBanner=()=>{
+//   setShowAppBanner(true);
+// }
+// const notNowClick = ()=>{
+//   setShowAppBanner(false);
+// }
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
@@ -149,8 +160,8 @@ const notNowClick = ()=>{
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
-      ToTrackFbEvents(videoActiveIndex,'play')
-      toTrackFirebase(videoActiveIndex,'play');
+      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'})
+      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -219,11 +230,12 @@ const notNowClick = ()=>{
       toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
       toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
-      toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'}, { watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
+      
 
       fbq.event('UGC_Played_Complete')
-      ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -282,8 +294,8 @@ const notNowClick = ()=>{
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
   setMuted(true);
-  setShowAppBanner(true);
-  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
@@ -301,8 +313,8 @@ console.log('errorrr',e)
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
-  // show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-  setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // setShowAppBanner(true);
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
  }
@@ -349,98 +361,6 @@ console.log('errorrr',e)
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
-  const ToTrackFbEvents = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const fbEvents = {}
-  
-    
-  console.log('FB events',fbq)
-    const toTrack = {
-      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-      'swipe' : ()=> {
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Swipe', fbEvents)
-      },
-      'play' : () => fbq.event('UGC Play', fbEvents),
-      'pause' : () => fbq.event('Pause', fbEvents),
-      'resume' : () => fbq.event('Resume', fbEvents),
-      'share' : () => fbq.event('UGC Share Click', fbEvents),
-      'replay' : () => fbq.event('UGC Replayed', fbEvents),
-      'watchTime' : () => {
-        fbEvents['UGC Consumption Type'] = value?.watchTime
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Watch Time',fbEvents)
-      },
-      'cta' : ()=>{
-        fbEvents['Element'] = value?.name
-        fbEvents['Button Type'] = value?.type
-        fbq.event('CTAs', fbEvents)
-      },
-      'savelook' : ()=>{
-        fbq.event('Save Look', fbEvents)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    fbEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    fbEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    fbEvents['Page Name'] = 'Feed';
-  
-    toTrack?.[type]();
-  }
-  const toTrackFirebase = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const events = {}
-  
-    const toTrack = {
-      'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share Click', events),
-      'replay' : () => trackEvent('UGC_Replayed', events),
-      'watchTime' : () => {
-        events['UGC Consumption Type'] = value?.watchTime
-        events['UGC Duration'] = value?.duration
-        events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC_Watch_Time',events)
-      },
-      'cta' : ()=>{
-        events['Element'] = value?.name
-        events['Button Type'] = value?.type
-        trackEvent('CTAs', events)
-      },
-      'savelook' : ()=>{
-        trackEvent('Save_Look', events)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    events['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    events['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    events['Page Name'] = 'Feed';
-  
-    toTrack?.[type]();
-  }
-  
-
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -479,8 +399,8 @@ console.log('errorrr',e)
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
 
-                ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-                toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
@@ -557,7 +477,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
-                      showBanner={showBanner}
+                      // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>
@@ -612,7 +532,7 @@ console.log('errorrr',e)
               onCloseChamboard={onCloseChamboard}
               pageName={pageName}
               tabName={tabName}
-              showBanner={showBanner}
+              // showBanner={showBanner}
               />
             </Swiper>
 
@@ -662,45 +582,16 @@ try{
       Loader={LoadComp}
       ErrorComp={ErrorComp}
     >
-       {/* <SeoMeta
-        data={{
-          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
-          // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
-          canonical: getCanonicalUrl && getCanonicalUrl(),
-          images: [
-            {
-              url: videoId ? items?.[0]?.thumbnail : undefined,
-              width: 800,
-              height: 600,
-              alt: ''
-            }
-          ],
-          site_name: 'Hipi'
-        }}
-      /> */}
-      {/* <VideoJsonLd
-        name={item.music_title}
-        description={item.content_description}
-        contentUrl={item.video_url}
-        embedUrl={hostname}
-        thumbnailUrls={item.thumbnailUrls}
-        watchCount={item.likesCount}
-      /> */}
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-
-      <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
-
-         <HamburgerMenu/>
-
+         <UserExperience
+          pageName={pageName}
+          tabName={tabName}
+          items={items}
+          videoActiveIndex={videoActiveIndex}
+          activeVideoId={activeVideoId}
+        />
+        <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
@@ -709,7 +600,7 @@ try{
           <div className="playkit-player" />
         </div>
       </div>
-      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+      {/* {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
       <Landscape/>
     </>
     </ComponentStateHandler>

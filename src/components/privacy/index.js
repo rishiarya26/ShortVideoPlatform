@@ -1,12 +1,9 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/no-unescaped-entities */
 import { useRouter } from 'next/router';
-import { withBasePath } from '../../config';
-import { Back } from '../commons/svgicons/back_white';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
-import hipiLogo from '../../../public/icons/apple-icon-152x152-dunplab-manifest-17016.png'
 import { useEffect, useState } from 'react';
 import {getCanonicalUrl} from '../../utils/web'
 

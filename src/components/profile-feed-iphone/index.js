@@ -30,6 +30,8 @@ import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
@@ -46,13 +48,13 @@ const detectDeviceModal = dynamic(
   }
 );
 
-const AppBanner = dynamic(
-  () => import('../app-banner'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
+// const AppBanner = dynamic(
+//   () => import('../app-banner'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
 
 function ProfileFeedIphone({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
@@ -71,13 +73,13 @@ function ProfileFeedIphone({ router }) {
   const [toShowItems, setToShowItems] = useState([]);
   const [deletedTill, setDeletedTill] = useState();
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
-  const [ShowAppBanner, setShowAppBanner]=useState(false);
-  const notNowClick=()=>{
-    setShowAppBanner(false);
-  }
-  const showBanner =()=>{
-    setShowAppBanner(true);
-  }
+  // const [ShowAppBanner, setShowAppBanner]=useState(false);
+  // const notNowClick=()=>{
+  //   setShowAppBanner(false);
+  // }
+  // const showBanner =()=>{
+  //   setShowAppBanner(true);
+  // }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
@@ -141,7 +143,7 @@ function ProfileFeedIphone({ router }) {
      deletedTill = pretoInsertElemant?.toInsertElements-6-1;
      setDeletedTill(deletedTill);
      setMuted(true);
-    //  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+     show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
     setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
@@ -158,7 +160,7 @@ function ProfileFeedIphone({ router }) {
        updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
      }
      setMuted(true);
-    //  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+     show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
     setShowAppBanner(true);
      setDeletedTill(deletedTill-5);
      setToShowItems(updateShowItems);
@@ -226,8 +228,8 @@ function ProfileFeedIphone({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
-      ToTrackFbEvents(videoActiveIndex,'play')
-      toTrackFirebase(videoActiveIndex,'play')
+      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
+      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
 
       viewEventsCall(activeVideoId, 'user_video_start');
     }
@@ -252,7 +254,7 @@ function ProfileFeedIphone({ router }) {
     data && setItems(videos);
     setInitialLoadComplete(true);
     data && setToShowItems(videos);
-    console.log("before",activeVideoId)
+    console.log("before",activeVideoId);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
   };
@@ -287,11 +289,11 @@ function ProfileFeedIphone({ router }) {
       toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
       toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
 
-      toTrackFirebase(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackFirebase(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       fbq.event('UGC_Played_Complete')
-      ToTrackFbEvents(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
+      ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
 
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -338,99 +340,6 @@ function ProfileFeedIphone({ router }) {
     setsaveLook(!saveLook);
   };
   
-  const ToTrackFbEvents = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const fbEvents = {}
-  
-    
-  console.log('FB events',fbq)
-    const toTrack = {
-      'impression' : ()=>  fbq.event('UGC Impression', fbEvents),
-      'swipe' : ()=> {
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Swipe', fbEvents)
-      },
-      'play' : () => fbq.event('UGC Play', fbEvents),
-      'pause' : () => fbq.event('Pause', fbEvents),
-      'resume' : () => fbq.event('Resume', fbEvents),
-      'share' : () => fbq.event('UGC Share Click', fbEvents),
-      'replay' : () => fbq.event('UGC Replayed', fbEvents),
-      'watchTime' : () => {
-        fbEvents['UGC Consumption Type'] = value?.watchTime
-        fbEvents['UGC Duration'] = value?.duration
-        fbEvents['UGC Watch Duration'] = value?.durationWatchTime
-        fbq.event('UGC Watch Time',fbEvents)
-      },
-      'cta' : ()=>{
-        fbEvents['Element'] = value?.name
-        fbEvents['Button Type'] = value?.type
-        fbq.event('CTAs', fbEvents)
-      },
-      'savelook' : ()=>{
-        fbq.event('Save Look', fbEvents)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    // fbEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    // fbEvents['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    // fbEvents['Page Name'] = 'Feed';
-  
-    toTrack?.[type]();
-  }
-
-  const toTrackFirebase = (activeIndex, type, value) => {
-    const item = items[activeIndex];
-    const events = {}
-  
-    const toTrack = {
-      'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share_Click', events),
-      'replay' : () => trackEvent('UGC_Replayed', events),
-      'watchTime' : () => {
-        events['UGC Consumption Type'] = value?.watchTime
-        events['UGC Duration'] = value?.duration
-        events['UGC Watch Duration'] = value?.durationWatchTime
-        trackEvent('UGC_Watch Time',events)
-      },
-      'cta' : ()=>{
-        events['Element'] = value?.name
-        events['Button Type'] = value?.type
-        trackEvent('CTAs', events)
-      },
-      'savelook' : ()=>{
-        trackEvent('Save_Look', events)
-      }
-    }
-  
-    // const hashTags = item?.hashtags?.map((data)=> data.name);
-  
-    events['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
-    // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    events['UGC ID'] = item?.content_id;
-    // mixpanelEvents['Short Post Date'] = 'NA';
-    // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
-    // mixpanelEvents['Hashtag'] = hashTags || 'NA';
-    // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
-    // mixpanelEvents['UGC Genre'] = item?.genre;
-    // mixpanelEvents['UGC Description'] = item?.content_description;
-    events['Page Name'] = 'Profile Feed';
-  
-    toTrack?.[type]();
-  }
-  
-
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -487,9 +396,9 @@ function ProfileFeedIphone({ router }) {
               setShowSwipeUp({count : 1, value:false});
               toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 &&  toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
-              ToTrackFbEvents(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-              toTrackFirebase(videoActiveIndex,'watchTime',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+              ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
@@ -552,7 +461,7 @@ function ProfileFeedIphone({ router }) {
                       description={item?.content_description}
                       pageName={pageName}
                       adData={shop?.adData}
-                      showBanner={showBanner}
+                      // showBanner={showBanner}
                     />
 
                   </SwiperSlide>
@@ -593,7 +502,7 @@ function ProfileFeedIphone({ router }) {
           </div>
         </div>
       </>
-      {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''}
+      {/* {ShowAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>:''} */}
       <Landscape/>
     </ComponentStateHandler>
   );

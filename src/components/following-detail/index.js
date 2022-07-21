@@ -14,6 +14,7 @@ import useInfiniteScroll from "../../hooks/use-infinite-scroll";
 import detectDeviceModal from "../open-in-app"
 import useDrawer from "../../hooks/use-drawer";
 import dynamic from 'next/dynamic';
+import { getItem } from "../../utils/cookie";
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -49,6 +50,7 @@ async function search(userId,searchTerm,setItems) {
     const [showAppBanner, setShowAppBanner] = useState(false)
     
     const {show} = useDrawer();
+    const device = getItem('device-info');
   
     async function showPopUp() {
       // try{
@@ -65,7 +67,7 @@ async function search(userId,searchTerm,setItems) {
       //  }else{
       //   setIsFetching(false);
       // if(offset === 2){
-        // show('', detectDeviceModal, 'extraSmall');
+        device === 'ios' && show('', detectDeviceModal, 'extraSmall');
         setShowAppBanner(true);
         setIsFetching(false);
       //   setOffset(offset+1);
@@ -130,7 +132,7 @@ async function search(userId,searchTerm,setItems) {
           </div>
         </div>))}
         </div>
-        {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
+        {device==='android' && showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
         </ComponentStateHandler>
     )
 }

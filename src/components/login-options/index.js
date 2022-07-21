@@ -1,16 +1,10 @@
 /*eslint-disable react/no-unescaped-entities */
-import Link from 'next/link';
-import Fb from '../commons/svgicons/facebook-blue';
-import Google from '../commons/svgicons/google';
-import Instagram from '../commons/svgicons/instagram';
-import Twitter from '../commons/svgicons/twitter';
 import Mobile from '../commons/svgicons/mobile';
 import useDrawer from '../../hooks/use-drawer';
 import {GoogleButton} from '../social-login/google'
 import { useRouter } from 'next/router';
 import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
-// import useSnackbar from '../../hooks/use-snackbar';
 import { useEffect } from 'react';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 

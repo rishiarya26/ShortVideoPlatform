@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { MIXPANEL, MIXPANEL_DEV, MIXPANEL_PROD } from '../../constants';
+import { MIXPANEL_PROD } from '../../constants';
 import { inject } from '../async-script-loader';
 import queue from '../queue';
 

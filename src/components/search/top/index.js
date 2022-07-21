@@ -2,13 +2,13 @@ import { getTopSearches } from "../../../sources/explore/top";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
 import Loader from '../top/loader';
 import Error from '../top/error';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { numberFormatter } from "../../../utils/convert-to-K";
 import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
 import Img from "../../commons/image";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
+
 import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";

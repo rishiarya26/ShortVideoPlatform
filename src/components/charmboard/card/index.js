@@ -3,7 +3,6 @@ import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
-import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,

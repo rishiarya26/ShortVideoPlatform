@@ -1,27 +1,14 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/display-name*/
 import React from 'react';
-import dynamic from 'next/dynamic';
 import Like from '../commons/svgicons/like';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
-import useDrawer from '../../hooks/use-drawer';
-import { getOS } from '../../utils/device-details';
-import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import { useRouter } from 'next/router';
-
-// const detectDeviceModal = dynamic(
-//   //() => import('../download-app-widget'),
-//   () => import('../open-in-app'),
-//   {
-//     loading: () => <div />,
-//     ssr: false
-//   }
-// );
-
 
 function EmbedVideoSidebar(props) {
 const router = useRouter();

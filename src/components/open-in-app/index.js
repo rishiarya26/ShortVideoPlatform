@@ -1,13 +1,10 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-key */
-import HipiLogo from '../commons/svgicons/hipi-logo-black';
 import { withBasePath } from '../../config';
-import { getOS } from '../../utils/device-details';
-import useDevice, { devices } from '../../hooks/use-device';
 import useDrawer from '../../hooks/use-drawer';
 import { getItem } from '../../utils/cookie';
 import { useEffect } from 'react';
-import { ANDROID_STORE, IOS_STORE, ONE_TAP_DOWNLOAD } from '../../constants';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
@@ -45,7 +42,7 @@ export default function DownloadAppWidget({videoId}) {
     }
 
     const mixpanelEvents = commonEvents();
-    toTrack?.[type]();
+    type && toTrack?.[type] && toTrack?.[type]();
   }
   /***************************/
 

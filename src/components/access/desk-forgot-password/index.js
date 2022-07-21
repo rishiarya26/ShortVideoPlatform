@@ -9,7 +9,6 @@ import { resetPasswordMobile } from "../../../sources/auth/forgot-pass-mobile";
 import {  verifyUserOnly } from "../../../sources/auth/verify-user";
 import { getItem } from "../../../utils/cookie";
 import { CountryCode } from "../../commons/button/country-code"
-import { SubmitButton } from "../../commons/button/submit";
 import { Back } from "../../commons/svgicons/back"
 import ResetPassword from "../reset-password";
 

@@ -14,7 +14,7 @@ export const commonEvents = ()=>{
          const device = getItem('device-type') || 'desktop'
          isMobile = (device === 'mobile') ?  true :  false
         }catch(e){
-            console.log(e)
+            console.log(e);
         }
         return isMobile;
     }
@@ -45,7 +45,7 @@ export const commonEvents = ()=>{
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
-    payload['Source'] = getReffererPage() || 'NA';
+    // payload['Source'] = getReffererPage() || 'NA';
     return payload;
 }
 

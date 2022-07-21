@@ -1,19 +1,15 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
-import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { withRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
 import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
-import { Back } from '../commons/svgicons/back';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
-import LikedList from '../commons/svgicons/liked-list';
-import Lock from '../commons/svgicons/lock';
-import Listing from '../commons/svgicons/listing';
 import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
-import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
@@ -30,25 +26,23 @@ import { localStorage } from '../../utils/storage';
 import {  toTrackMixpanel } from '../../analytics/mixpanel/events';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import LikedList from '../commons/svgicons/liked-list';
+import Lock from '../commons/svgicons/lock';
+import Listing from '../commons/svgicons/listing';
+import { Back } from '../commons/svgicons/back_white';
+import { videoSchema } from '../../utils/schema';
+
+const LandscapeView = dynamic(() => import('../landscape'),{
+  loading: () => <div />,
+  ssr: false
+});
+const AppBanner = dynamic(() => import('../app-banner'),{
+  loading: () => <div />,
+  ssr: false
+});
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const LandscapeView = dynamic(
-  () => import('../landscape'),
-  {
-    loading: () => <div />,
-    ssr: false
-  }
-);
-
-const AppBanner = dynamic(
-  () => import('../app-banner'),
   {
     loading: () => <div />,
     ssr: false
@@ -65,6 +59,7 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
+  const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
@@ -73,6 +68,21 @@ function Users({
     setIsFollowing(isFollow);
   },[isFollow])
 
+  const getVideoSchemaItems = async() =>{
+    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+    if(response?.data?.length > 0){
+      setVideoSchemaItems(response.data);
+    }
+  }
+
+  useEffect(()=>{
+  let timer;
+   timer = setTimeout(()=>{
+    getVideoSchemaItems();
+   },1000)
+
+   return ()=>{clearTimeout(timer);}
+  },[])
 
 
   // async function showPopUp(){
@@ -134,6 +144,7 @@ function Users({
   const { show } = useDrawer();
   const { t } = useTranslation();
   const deviceType = getItem('device-type');
+  const device = getItem('device-info');
 
   const onTabChange = selected => {
     setSelectedTab(selected);
@@ -159,15 +170,6 @@ function Users({
   const handleBackClick = () => {
     router.back();
   };
-
-  // const handleFollow = async()=>{
-  //   let response = {}
-  //   try{
-  //   response = await toFollow({followerId:id})
-  //   }catch(e){
-
-  //   }
-  // }
 
   const followUser = async(followerId,userId, follow) =>{
     try{
@@ -248,7 +250,9 @@ console.log("onClick follow btn issue ",e);
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button onClick={() =>setShowAppBanner(true)}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
+          <button onClick={() =>{
+            device === 'ios' && show('', detectDeviceModal, 'extraSmall');
+            device === 'android' && setShowAppBanner(true)}}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>
         {/* </Link> */}
@@ -323,6 +327,13 @@ const notNowClick=()=>{
 
   return (
     <>
+    {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
+      /* eslint-disable-next-line react/jsx-key */      
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, view: item?.viewCount}))}}
+        />
+    ))}
     <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
@@ -391,7 +402,7 @@ const notNowClick=()=>{
             </div>
          </div>} */}
     </div>
-      {ShowAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
+      {device === 'android' && ShowAppBanner ? <AppBanner notNowClick={notNowClick}/> : ''}
     </>
   );
 }

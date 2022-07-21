@@ -1,19 +1,29 @@
+/* eslint-disable react/display-name */
 import Error from 'next/error';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import {
-  SeoMeta,
-  VideoJsonLd
-} from '../src/components/commons/head-meta/seo-meta';
-import DeskUsers from '../src/components/desk-profile';
-import FooterMenu from '../src/components/footer-menu';
-import Users from '../src/components/users';
 import { getItem } from '../src/utils/cookie';
-import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { localStorage } from '../src/utils/storage';
-import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
+import FooterMenu from '../src/components/footer-menu';
 import isEmptyObject from '../src/utils/is-object-empty';
+import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 import { breadcrumbSchema, personSchema, videoSchema } from '../src/utils/schema';
+import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
+import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
+// import DeskUsers from '../src/components/desk-profile';
+// import Users from '../src/components/users';
+
+const DeskUsers = dynamic(() => import('../src/components/desk-profile'),{
+  loading: () => <div />,
+  ssr: false
+});
+
+const Users = dynamic(() => import('../src/components/users'),{
+  loading: () => <div />,
+  ssr: false
+});
+
 
 
 // TODO enable mock mode here
@@ -126,20 +136,21 @@ export default function Hipi(params) {
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
+
+  const name = item && `${item?.firstName || ''} ${item?.lastName || ''}`
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
-      />
-       <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
+      {item && 
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema({name:name, userHandle:item?.userHandle})) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema({name:name, desc:item?.bio || '', userHandle:item?.userHandle}))}}
+        />
+      </>}
     <SeoMeta
       data={{
         title: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,
@@ -159,38 +170,6 @@ export default function Hipi(params) {
       { keywords:`${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi.`        
       }
        ]}
-      /> */}
-      {/* <SeoMeta
-        data={{
-          title: item.userHandle,
-          image: item.profilePic,
-          description: item.bio,
-          canonical: params.uri,
-          openGraph: {
-            title: item.userHandle,
-            description: item.bio,
-            url: params.uri,
-            images: [
-              {
-                url: item.profilePic,
-                width: 800,
-                height: 600,
-                alt: item.userHandle
-              },
-              { url: item.profilePic }
-            ],
-            type: 'profile',
-            video: {
-              actors: [
-                {
-                  role: item.userHandle
-                }
-              ],
-              tag: item.tag
-            },
-            site_name: 'Hipi'
-          }
-        }}
       /> */}
       {status === 'success' && comp?.[device]}
      {device === 'mobile' && type === 'self' &&

@@ -1,21 +1,22 @@
 /*eslint-disable react/display-name*/
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import SnackBar from '../commons/snackbar';
+import { Shop } from '../commons/button/shop';
+import useDrawer from '../../hooks/use-drawer';
+import { useRouter } from 'next/router'; 
+import useAuth from '../../hooks/use-auth'
+import login from '../auth-options'
+import { localStorage } from '../../utils/storage';
 import Home from '../commons/svgicons/home';
 import Add from '../commons/svgicons/add';
 import Search from '../commons/svgicons/search';
 import Profile from '../commons/svgicons/profile';
-import SnackBar from '../commons/snackbar'; 
-import { Shop } from '../commons/button/shop';
-import useDrawer from '../../hooks/use-drawer';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import useAuth from "../../hooks/use-auth"
-import detectDeviceModal from '../open-in-app'
-import login from "../auth-options"
-import { localStorage } from '../../utils/storage';
 import ProfileActive from '../commons/svgicons/profile-active';
 import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active'
-import { useState } from 'react';
+import { getItem } from '../../utils/cookie';
+import detectDeviceModal from '../open-in-app';
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -25,10 +26,19 @@ const AppBanner = dynamic(
   }
 );
 
+// const detectDeviceModal = dynamic(
+//   () => import('../open-in-app'),
+//   {
+//     loading: () => <div />,
+//     ssr: false
+//   }
+// );
+
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
+  const device = getItem('device-info')
 
 const info ={
   shop:  <Shop
@@ -79,8 +89,11 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
           {info[type]}
         </div> 
             <div
-              onClick={() => showBanner && showBanner()}
-              className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
+              onClick={() =>{
+                console.log(device);
+                device === 'ios' && show('', detectDeviceModal, 'extraSmall', {text: "create"});
+                device === 'android' && showBanner && showBanner()}}
+                className="relative py-3  px-1 text-center flex flex-col text-white text-xs  items-center"
              >
                 <Add />
                 <p className="text-gray-400 text-xxs mt-1.5 select-none">Create</p>
