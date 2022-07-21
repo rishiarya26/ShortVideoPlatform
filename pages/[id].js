@@ -136,20 +136,21 @@ export default function Hipi(params) {
   if (status === 'fail') {
     return <Error message={message} statusCode={errorCode} />;
   }
+
+  const name = item && `${item?.firstName || ''} ${item?.lastName || ''}`
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
-      />
-       <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
+      {item && 
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema({name:name, userHandle:item?.userHandle})) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema({name:name, desc:item?.bio || '', userHandle:item?.userHandle}))}}
+        />
+      </>}
     <SeoMeta
       data={{
         title: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,

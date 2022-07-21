@@ -18,50 +18,50 @@
     "logo": "https://www.hipi.co.in/icons/Logo_hipi.png"
   }
 
-  const personSchema = {
+  const personSchema = ({name, desc, userHandle}) => {
+    const payload ={
       "@context":"https://schema.org/",
       "@type":"Person",
-      "name":"Palak Puswani",
-      "description":"",
-      "alternateName":" Palak Puswani ",
+      "name":name,
+      "description":desc,
+      "alternateName":name,
       "mainEntityOfPage":{"@type":"ProfilePage",
-      "@id":" https://www.hipi.co.in/@Palakpurswani"
+      "@id":`https://www.hipi.co.in/${userHandle}`
   }}
+    return payload;
+  }
   
-  const breadcrumbSchema = {
+  const breadcrumbSchema = ({name, userHandle}) => {
+     const payload = {  
       "@context":"https://schema.org/",
       "@type":"BreadcrumbList",
       "itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Thing","@id":"https://www.hipi.co.in/","name":"Hipi"}},
       {"@type":"ListItem",
       "position":2,
       "item":{"@type":"Thing",
-      "@id":"https://www.hipi.co.in/@Palakpurswani",
-      "name":"Palakpurswani (@Palakpurswani) | Hipi"}}]}
+      "@id":`https://www.hipi.co.in/${userHandle}`,
+      "name":`${name} (${userHandle}) | Hipi`}}]}
+    return payload;
+    }
  
- const videoSchema = {
+ const videoSchema = ({name,userThumnail, videoId,view})=>{
+     const payload = {
+        "view":view,
         "@context": "https://schema.org",
         "@type": "VideoObject",
-        "name": "Palak Purswani on Hipi | Palak Purswani Short Videos on Hipi",
-        "description": "Palak Purswani on Hipi. Check out latest trending videos from Palak Purswani on Hipi. Download the App Now!",
-        "thumbnailUrl": "",
-        "uploadDate": "",  
-        "publisher": {
-          "@type": "Organization",
-          "name": "Purswani",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://akamaividz2.zee5.com/image/upload/v1645511006/hipi/assets/user/5175653f-f480-4bed-955f-c841d7784ddd/5175653f-f480-4bed-955f-c841d7784ddd.jpg",
-            "width": '',
-            "height": ''
-          }
-        },
-        "contentUrl": "https://www.hipi.co.in/video/18c3b535-2806-4e7b-b9e0-1bafb308397d",
+        "name": `${name} on Hipi | ${name} Short Videos on Hipi`,
+        "description": `${name} on Hipi. Check out latest trending videos from ${name} on Hipi. Download the App Now!`,
+        "thumbnailUrl": userThumnail,
+        // "uploadDate": "",  
+        "contentUrl": `https://www.hipi.co.in/video/${videoId}`,
         "potentialAction": {
           "@type": "SeekToAction",
-          "target": "https://www.hipi.co.in/video/18c3b535-2806-4e7b-b9e0-1bafb308397d={seek_to_second_number}",
+          "target": `https://www.hipi.co.in/video/${videoId}={seek_to_second_number}`,
           "startOffset-input": "required name=seek_to_second_number"
         }
       }
+      return payload;
+    }
 
     // const viewAction = {
     //     "@context": "https://schema.org",

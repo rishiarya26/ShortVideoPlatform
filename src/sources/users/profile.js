@@ -155,7 +155,7 @@ async function fetchUserRecommendation({ lang }) {
 }
 
 async function fetchUserProfileVideos({
-  id, limit = '15', offset = '1', type='all', videoId
+  id, limit = '15', offset = '1', type='all', videoId, sortType = ''
 }) {
   console.log("videoId",videoId)
   let response = {};
@@ -167,7 +167,7 @@ async function fetchUserProfileVideos({
 
   try {
     /* eslint-disable max-len */
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?id=${id}&filter=${type}&limit=${limit}&offset=${offset}&sortType=${sortType}`;
     response = await get(apiPath);
     if(videoId && response?.data?.responseData?.length > 0){
       const items = response.data.responseData
