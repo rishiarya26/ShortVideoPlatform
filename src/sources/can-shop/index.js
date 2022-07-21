@@ -12,7 +12,8 @@ async function verifyVideoForShop({ videoId }) {
       'charmboard'
     )}/v3.6/video/ddeaa554-b40e-45ef-8cde-9d940a9d2cae/charm?video_id=${videoId}`;
     response = await get(apiPath,null,{webkey:'1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84',
-    'content-type': 'application/json'});
+    'content-type': 'application/json'
+    });
     response.data.requestedWith = { videoId };
     return Promise.resolve(response);
   } catch (err) {

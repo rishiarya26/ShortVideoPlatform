@@ -61,18 +61,18 @@ canonical: url && getCanonicalUrl(url),
     <div className="md:hidden headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2" ><img alt="hipi logo" className="w-16" src={withBasePath('images/logo_hipi.png')}/></div>
     <div className='w-full flex-col md:flex-row flex md:pt-24 md:pb-4 py-4'>
         <div className='md:w-1/2 w-full md:pl-52 pr-8 md:p-8 px-8'>
-            <img  className='object-contain' src={withBasePath('images/reward/Shine with Hipi.png')} alt="hipi logo" /> 
+            <img  className='object-contain' src={withBasePath('images/reward/Shine_with_Hipi.png')} alt="hipi logo" /> 
         </div>
         <div className='md:w-1/2 w-full flex-col flex md:p-8 px-8 pt-8 md:pr-32 justify-center'>
-            <h1 className='text-3xl font-bold text-gray-800'>Shine & Earn with Hipi</h1>
-            <p className='text-gray-500 font-light text-lg pt-4'>Hipi is India’s fastest growing short video app and is the new favourite platform for talented creators which provides the perfect opportunity for creators to fulfill their dreams. </p>
-            <p className='text-gray-500 font-light text-lg pt-4'> Join Hipi and kick start your career as an influencer. With Hipi you can earn with every step you take as a budding star. Learn more about the opportunities that Hipi can provide you.</p>
+            <h1 className='text-3xl font-bold text-gray-800'>Shine and Earn with Hipi</h1>
+            <p className='text-gray-500 font-light text-lg pt-4'>Hipi is India’s fastest growing short video app. It’s a new favourite for talented creators and provides a perfect opportunity for creators to fulfil their dreams. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Join Hipi and kick start your career as an influencer. With Hipi you can earn with every step you take as a budding star. Learn more about the opportunities that Hipi can provide you.</p>
         </div>
     </div>
     <div className='w-full flex flex-col md:flex-row py-4 md:pb-8'>
         <div className='md:w-1/2 w-full flex-col flex py-8 md:pl-32 md:p-8 px-8 justify-center'>
             <h1 className='text-3xl font-bold text-gray-800'>Get Stardom and Live Your Dream</h1>
-            <p className='text-gray-500 font-light text-lg pt-4'> Showcase your talent on Hipi and rise to stardom just like Chirag Tomar, who is living his dream. This film features Hipi G.O.A.T winner Chirag Tomar and his mother, and is based on true events. Check out his super inspiring journey in the film #HipiKaroMoreKaro,</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Showcase your talent on Hipi and rise to stardom just like Chirag Tomar, who is living his dream. This film features Hipi G.O.A.T winner Chirag Tomar and his mother, and is based on true events. Check out his super inspiring journey in the film #HipiKaroMoreKaro,</p>
         </div>
         <div className='md:w-1/2 w-full flex justify-center px-8 md:pr-32  '>
             {device && iFrameReward[device]}
@@ -84,15 +84,15 @@ canonical: url && getCanonicalUrl(url),
         </div>
         <div className='md:w-1/2 w-full  flex-col flex py-8 md:p-8 px-8 md:pr-32 justify-center'>
             <h1 className='text-3xl font-bold text-gray-800'>Get Cash Rewards</h1>
-            <p className='text-gray-500 font-light text-lg pt-4'>Achieve easy milestones and Earn Money.</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Enrolling into Hipi’s Creator Incentive Program is Easy, Simple and comes with No Minimum Eligibility Criteria. </p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Contact us to talk to our Creator Support Specialist to know more about the incentive structure.</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Achieve easy milestones and earn money.</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Enrolling into Hipi’s Creator Incentive Program is easy, Simple and comes with no minimum eligibility criteria.</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Contact us to talk to our Creator support specialist to know more about the incentive structure.</p>
         </div>
     </div>
     <div className='w-full flex flex-col md:flex-row  py-4 md:pb-8'>
         <div className='md:w-1/2 w-full flex-col flex py-8 md:pl-32 md:p-8 px-8 justify-center'>
-            <h1 className='text-3xl font-bold text-gray-800'>Get Assured Gifts </h1>
-            <p className='text-gray-500 font-light text-lg pt-4'> As you grow on Hipi, with every milestone you achieve, we send you a Goodie Bag as a token of appreciation. We value your efforts.</p>
+            <h1 className='text-3xl font-bold text-gray-800'>Get Assured Gifts</h1>
+            <p className='text-gray-500 font-light text-lg pt-4'>As you grow on Hipi, with every milestone you achieve, we send you a goodie bag as a token of appreciation. We value your efforts.</p>
         </div>
         <div className='md:w-1/2 w-full flex justify-center px-8 md:pr-32 '>
             <img  className='object-contain' src={withBasePath('images/reward/Get Assured Gifts.png')} alt="hipi logo" /> 

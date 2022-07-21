@@ -64,24 +64,23 @@ function getCanonicalUrl(orgUrl){
 const getReffererPage = (reffereUrl) =>{
   const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
-  console.log("**&&",refferUrl?.includes('/feed'), typeof document != "undefined", typeof refferUrl === 'string')
+  console.log("reff**",document?.referrer,refferUrl,refferUrl?.includes('/explore'), typeof document != "undefined", typeof refferUrl,typeof refferUrl === 'string')
   if(refferUrl && typeof refferUrl === 'string'){
-
-    reffereUrl?.includes('/feed') ? (pageName = 'Feed'):''
-    reffereUrl?.includes('/explore') && (pageName = 'Discover')
-    reffereUrl?.includes('/profile-feed') && (pageName = 'Profile Feed')
-    reffereUrl?.includes('/hashtag-feed') && (pageName = 'Hashtag Feed')
-    reffereUrl?.includes('/hashtag') && (pageName = 'Hashtag Details')
-    reffereUrl?.includes('/@') && (pageName = 'Creator Profile')
-    reffereUrl?.includes('/terms-conditions.html') && (pageName = 'Terms of Use')
-    reffereUrl?.includes('/community-guidelines.html') && (pageName = 'Community Guidelines')
-    reffereUrl?.includes('/privacy-policy.html') && (pageName = 'Privacy Policy')
-    reffereUrl?.includes('/login') && (pageName = 'Login')
-    reffereUrl?.includes('/signup') && (pageName = 'Signup')
-    reffereUrl?.includes('/search?term') && (pageName = 'Discover Search Results')
+  console.log("reff__",refferUrl?.includes('/feed'))
+    refferUrl?.includes('/feed') ? (pageName = 'Feed') : 
+    refferUrl?.includes('/explore') ? (pageName = 'Discover') : ''
+    refferUrl?.includes('/profile-feed') ? (pageName = 'Profile Feed') :
+    refferUrl?.includes('/hashtag-feed') ? (pageName = 'Hashtag Feed') :
+    refferUrl?.includes('/hashtag') ? (pageName = 'Hashtag Details'):
+    refferUrl?.includes('/@') ? (pageName = 'Creator Profile'):
+    refferUrl?.includes('/terms-conditions.html') ? (pageName = 'Terms of Use'):
+    refferUrl?.includes('/community-guidelines.html') ? (pageName = 'Community Guidelines'):
+    refferUrl?.includes('/privacy-policy.html') ? (pageName = 'Privacy Policy'):
+    refferUrl?.includes('/login') ? (pageName = 'Login'):
+    refferUrl?.includes('/signup') ? (pageName = 'Signup'):
+    refferUrl?.includes('/search?term') && (pageName = 'Discover Search Results')
   }
-  console.log("**&&**",pageName)
-  return pageName;
+  console.log("reff-pagename",pageName)
 }
            
 export {

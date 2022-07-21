@@ -2,11 +2,12 @@
 
 import { post } from "../../network";
 
-async function postCreatorData({name,hipiHandle,mobile,email,genre}) {
+async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre}) {
   let payload = {
       Name:name,
       Genre:genre,
       'Hipi Handle':hipiHandle,
+      'Insta Handle':instaHandle,
       Mobile:mobile,
       Email:email
   }  

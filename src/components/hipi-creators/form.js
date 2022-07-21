@@ -3,7 +3,7 @@ import useSnackbar from "../../hooks/use-snackbar";
 import { postCreatorData } from "../../sources/google-sheets";
 
 const Form = ()=>{
-    const [data, setData] = useState({name:'',genre:'',hipiHandle:'',mobile:'',email:''});
+    const [data, setData] = useState({name:'',genre:'',hipiHandle:'',instaHandle:'',mobile:'',email:''});
     const [loader, setLoader] = useState(false);
     const [genreList, setGenreList] = useState(['Fashion, Beauty & Lifestyle','Singing','Dance','Acting & Lip Sync','Comedy','Travel & Food','Other'])
     const [showMessage, setShowMessage] = useState(false);
@@ -57,7 +57,7 @@ const Form = ()=>{
            className="w-full border-b border-gray-300 text-lg px-1 " 
            type="text" 
            name="name" 
-           placeholder="Name*"
+           placeholder="Name *"
            onChange={updateData}
            value={data.name}
            required
@@ -88,7 +88,18 @@ const Form = ()=>{
          placeholder="Hipi handle" 
          onChange={updateData}
          value={data.hipiHandle}
-         required
+         
+         />
+        </div>
+        <div className='py-2'>
+        <input
+         className="w-full border-b border-gray-300 text-lg px-1" 
+         type="text" 
+         name="instaHandle" 
+         placeholder="Instagram handle" 
+         onChange={updateData}
+         value={data.instaHandle}
+         
          />
         </div>
         <div className='py-2 flex'>
@@ -97,7 +108,7 @@ const Form = ()=>{
           className="w-full border-b border-gray-300 text-lg px-1 pl-2" 
           type="number" 
           name="mobile" 
-          placeholder="Mobile number*" 
+          placeholder="Mobile number *" 
           onChange={(e)=>e?.currentTarget?.value?.length <=10 && updateData(e)}
           value={data.mobile}
           required
@@ -109,7 +120,7 @@ const Form = ()=>{
           className="w-full border-b border-gray-300 text-lg px-1" 
           type="email" 
           name="email" 
-          placeholder="Email-id*" 
+          placeholder="Email *" 
           onChange={updateData}
           value={data.email}
           required

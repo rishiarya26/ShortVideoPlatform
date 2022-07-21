@@ -26,12 +26,13 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
+import { getOneLink, viewEvents } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
+import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
 
@@ -70,7 +71,6 @@ function SearchFeed({ router }) {
 
   useEffect(() => {
     // inject(CHARMBOARD_PLUGIN_URL, null, loaded);
-    setLoading(false);
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
@@ -588,6 +588,7 @@ try{
           </div>
         </div>
       </>
+      <Landscape/>
     </ComponentStateHandler>
   );
 }
