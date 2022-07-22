@@ -29,8 +29,9 @@ import { trackEvent } from '../../analytics/firebase';
 import LikedList from '../commons/svgicons/liked-list';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
-import { Back } from '../commons/svgicons/back_white';
+import { Back } from '../commons/svgicons/back';
 import { videoSchema } from '../../utils/schema';
+// import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
@@ -80,6 +81,8 @@ function Users({
    timer = setTimeout(()=>{
     getVideoSchemaItems();
    },1000)
+
+   console.log("typo", type);
 
    return ()=>{clearTimeout(timer);}
   },[])
@@ -203,9 +206,9 @@ console.log("onClick follow btn issue ",e);
 
   const info = {
     header: {
-      leftButton: {
+      leftButton: { 
         others: <Back />,
-        self: ''}, 
+        self: <Back />}, 
         // <AddUser/>       },
       notification: {
         others:'' ,
