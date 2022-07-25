@@ -28,6 +28,7 @@ import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import UserTab from '../commons/tabs/desk-user-tab';
+import { videoSchema } from '../../utils/schema';
 
 const detectDeviceModal = dynamic(() => import('../open-in-app'),{
   loading: () => <div />,
@@ -69,6 +70,14 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+  const [videoSchemaItems, setVideoSchemaItems] = useState([])
+
+  const getVideoSchemaItems = async() =>{
+    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+    if(response?.data?.length > 0){
+      setVideoSchemaItems(response.data);
+    }
+  }
 
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
@@ -145,9 +154,18 @@ function DeskUsers({
   }
 
   useEffect(()=>{
+      let timer;
+       timer = setTimeout(()=>{
+        getVideoSchemaItems();
+       },500)
+    
+       console.log("typo", type);
+    
+    
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
+    return ()=>{clearTimeout(timer);}
   },[])
 
   // useEffect(()=>{
@@ -355,6 +373,14 @@ function DeskUsers({
   
 
   return (
+    <>
+     {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
+      /* eslint-disable-next-line react/jsx-key */      
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, view: item?.viewCount}))}}
+        />
+    ))}
     <div className="flex flex-col w-screen h-screen">
      {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>
@@ -485,6 +511,7 @@ function DeskUsers({
     </div>
     </div>
     </div>
+    </>
   );
 }
 
