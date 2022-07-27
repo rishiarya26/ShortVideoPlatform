@@ -7,7 +7,7 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import {getCanonicalUrl} from '../../utils/web';
 import { useEffect, useState } from 'react';
 
-function SuperMoms() {
+function BhangraTaSajda() {
 const router = useRouter();
 
 	const [url, setUrl] = useState('');
@@ -24,14 +24,8 @@ const router = useRouter();
           // image: item?.thumbnail,
           description: 'Participate in #BhangraTaSajda challenge, only on the Hipi app! You can make a video enjoying Bhangra on the Hipi app using #BhangraTaSajda and win. Read on to know more about the contest.',
           canonical: url && getCanonicalUrl(url),
-
-			additionalMetaTags:[{
-				name: 'fb:app_id',
-				content: '255188469592363'
-			  }
-			],
           openGraph: {
-				title: ' #BhangraTaSajda Challenge | Bhangra Dance Video Content on Hipi',
+				title: ' #BhangraTaSajda Challenge | Bhangra Dance Video Content on Hipi ',
 				description: 'hipi.co.in',
 				url:url && getCanonicalUrl(url) ,
             images: [
@@ -96,9 +90,9 @@ const router = useRouter();
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>3.	Do you need to be a trained dancer to participate?</h3>
 	<p>No, not at all. If you enjoy doing Bhangra, you can participate.</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>4.	Do I need to pay to download Hipi?</h3>
-	<p>No, it's free and easy to use.</p>
+	<p>{`No, it's free and easy to use.`}</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>5.	Do I need to pay to participate in the contest?</h3>
-	<p>No, it’s free for all to participate. Just download the Hipi app, create an account or login, and upload your dance videos using #BhangraTaSajda</p>
+	<p>{`No, it’s free for all to participate. Just download the Hipi app, create an account or login, and upload your dance videos using #BhangraTaSajda`}</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>6.	For how long is the contest?</h3>
 	<p>The contest will run for more than a month. Try uploading as many videos as possible for maximum engagement to win.</p>
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>7.	What do I win?</h3>
@@ -132,5 +126,5 @@ const router = useRouter();
   );
 }
 
-export default SuperMoms;
+export default BhangraTaSajda;
 
