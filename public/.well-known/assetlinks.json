@@ -1,6 +1,16 @@
-[{"relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.zee5.hipi",
-      "sha256_cert_fingerprints":
-        ["3A:13:9C:F2:15:97:9C:38:AE:8A:D5:F3:3E:8B:E1:F3:44:BB:EC:BC:6A:89:E1:AF:74:37:BA:D1:46:6D:77:7D", "18:86:71:E0:1B:01:19:3E:7F:31:9F:CB:F7:71:CF:93:5A:8F:32:44:AD:FB:42:6E:F3:8D:8B:F1:F4:07:C7:7E"]}}]
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.zee5.hipi",
+        "sha256_cert_fingerprints": [
+          "3A:13:9C:F2:15:97:9C:38:AE:8A:D5:F3:3E:8B:E1:F3:44:BB:EC:BC:6A:89:E1:AF:74:37:BA:D1:46:6D:77:7D",
+          "18:86:71:E0:1B:01:19:3E:7F:31:9F:CB:F7:71:CF:93:5A:8F:32:44:AD:FB:42:6E:F3:8D:8B:F1:F4:07:C7:7E",
+          "32:75:FF:6B:0B:42:8B:28:0D:C7:98:C2:2C:E2:C3:AC:5D:2D:10:D7:17:24:91:95:5B:B3:F6:C0:07:10:CA:5"
+        ]
+      }
+    }
+  ]

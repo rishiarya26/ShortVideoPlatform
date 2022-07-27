@@ -31,7 +31,6 @@ import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
 import { Back } from '../commons/svgicons/back';
 import { videoSchema } from '../../utils/schema';
-// import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
@@ -81,8 +80,6 @@ function Users({
    timer = setTimeout(()=>{
     getVideoSchemaItems();
    },1000)
-
-   console.log("typo", type);
 
    return ()=>{clearTimeout(timer);}
   },[])
