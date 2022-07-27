@@ -24,4 +24,6 @@ export const DISCOVER_SEARCH_RESULTS = 'Discover Search Results'
 export const CREATOR_PROFILE = 'Creator Profile'
 export const SEARCH_EVENT = 'search_event';
 export const FULL_EXPERIENCE = 'Get the full experience on the Hipi app';
+export const TEST_CUSTOMER_KEY = '68b23e5e4a3770c20f04989fa8e89e0872e1c843';
+export const TOUCHSTONE_SERVICE_URL = 'https://zee-test.testonly.conviva.com';
  
