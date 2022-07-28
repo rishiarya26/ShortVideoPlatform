@@ -117,7 +117,7 @@ img{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
- .h-80{
+ .h-80p{
    height: 80%;
  }
 
@@ -873,3 +873,14 @@ title:first-letter {
     opacity: 1;
   }
   
+  /* STUNNER */
+  .bg_1{
+    background-color: #f9faf6;
+  }
+  .bg_pastel_blue{
+    background-color: #d4f0f5;
+  }
+  .max_800{
+    width: 800px;
+    max-width: 800px;
+  }

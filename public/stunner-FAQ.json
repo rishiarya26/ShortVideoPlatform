@@ -1,7 +1,7 @@
 {"faq" : [
     
    {   "ques" : "Who can Participate in stunner?",
-       "ans" : "Indian citizen above 18 years. If you are under 18 then parental/guardian approval is needed.", "show": false},
+       "ans" : "", "show": false},
 
 { "ques" : "How to make account on Hipi App?",
     "ans" : "Download Hipi app from Play Store or App Store. Signup by answering a few questions and you are good to go.", "show": false},
