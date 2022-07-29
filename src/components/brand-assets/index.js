@@ -31,7 +31,7 @@ function Home() {
         <img className="w-14 cursor-pointer" onClick={()=>router.push('/feed/for-you')}  src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className='hidden md:flex'><Header/></div>
-      <div className="p-8 h-full flex-col justify-start">
+      <div className="p-8 md:pt-16 h-full flex-col justify-start">
         <p className="border-b-4 border-red-500 flex w-1/12 font-semibold text-xl py-2">Logo</p>
         <div className="flex px-4 py-8">
             <div className="shadow-md w-1/3 md:w-1/5 h-1/5 mx-2">

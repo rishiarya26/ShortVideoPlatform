@@ -54,7 +54,7 @@ canonical: url && getCanonicalUrl(url),
     <div className="md:hidden headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2" ><img className="w-16" src={withBasePath('images/logo_hipi.png')}/></div>
     <div className='w-full flex-col md:flex-row flex md:pt-24 md:pb-4 py-4'>
         <div className='md:w-1/2 w-full md:pl-52 pr-8 md:p-8 px-8'>
-            <img alt="earn with Hipi - short video app"  className='object-contain' src={withBasePath('images/reward/Shine_with_Hipi.png')} /> 
+            <img alt="earn with Hipi - short video app"  className='object-contain' src={withBasePath('images/reward/Shine_with_Hipi_1.png')} /> 
         </div>
         <div className='md:w-1/2 w-full flex-col flex md:p-8 px-8 pt-8 md:pr-32 justify-center'>
             <h1 className='text-3xl font-bold text-gray-800'>Shine and Earn with Hipi</h1>

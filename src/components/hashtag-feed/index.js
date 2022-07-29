@@ -23,9 +23,7 @@ import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
-import { viewEventsCall } from '../../analytics/view-events';
+import { toTrackReco, viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
@@ -75,7 +73,7 @@ function HashTagFeed({ router }) {
   const { item } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   // const { type = 'all' } = router?.query;
-  const pageName = 'Hashtag Feed'
+  const pageName = 'Hashtag Details'
 
   // const loaded = () => {
   //   setLoading(false);
@@ -116,7 +114,7 @@ function HashTagFeed({ router }) {
 
   useEffect(()=>{
     if(initialLoadComplete){
-      toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+      toTrackMixpanel('impression',{pageName:pageName, hashtagName:item},items?.[videoActiveIndex]);
     }
   },[initialLoadComplete])
 
@@ -126,16 +124,18 @@ function HashTagFeed({ router }) {
     //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
     setLoading(false);
     // const guestId = getItem('guest-token');
-    fbq.event('Screen View')
-    trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
-      toTrackMixpanel('screenView',{pageName:pageName});
+    //fbq.event('Screen View')
+    ToTrackFbEvents('screenView');
+    toTrackFirebase('screenView',{'page' :'Hashtag Feed'});
+    //trackEvent('Screen_View',{'Page Name' :'Hashtag Feed'})
+    toTrackMixpanel('screenView',{pageName:pageName, hashtagName:item});
   },500);
   }, []);
 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName, hashtagName:item},items?.[videoActiveIndex]);
       ToTrackFbEvents(videoActiveIndex,'play')
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -176,13 +176,14 @@ function HashTagFeed({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName:item},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, hashtagName:item},items?.[videoActiveIndex])
 
       toTrackFirebase('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'}, {  duration : duration, durationWatchTime: duration})
 
-      fbq.event('UGC_Played_Complete')
+      ToTrackFbEvents('ugcPlayedComplete');
+      //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
@@ -236,9 +237,12 @@ function HashTagFeed({ router }) {
 
   
  const onStoreRedirect = async ()=>{
-  toTrackMixpanel('cta',{pageName:pageName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-  fbq.event('App Open CTA')
-  trackEvent('App_Open_CTA')
+  toTrackMixpanel('cta',{pageName:pageName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+  // fbq.event('App Open CTA')
+  // trackEvent('App_Open_CTA')
+  toTrackFirebase('appOpenCTA');
+  ToTrackFbEvents('appOpenCTA');
+
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
@@ -310,9 +314,9 @@ try{
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
 
-              toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+              toTrackMixpanel('impression',{pageName:pageName, hashtagName:item},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashTagName: item},items?.[videoActiveIndex])
               toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -321,7 +325,7 @@ try{
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
-                  toTrackMixpanel('skip',{pageName:pageName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                  toTrackMixpanel('skip',{pageName:pageName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashtagName:item},items?.[videoActiveIndex])
                   viewEventsCall(activeVideoId,'skip')
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')

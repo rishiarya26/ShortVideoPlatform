@@ -8,7 +8,6 @@ import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
 import Img from "../../commons/image";
 import { useRouter } from "next/router";
-
 import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
@@ -30,8 +29,11 @@ const TopItems = ({item, redirectTab}) =>{
         /* mixpanel - Search Executed */
         const results = data?.data?.items;
         console.log("R-E",results,item)
-        const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0)
-        item && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
+        const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0);
+        if(window.sessionStorage.getItem('searchExecuted') === 'true'){
+          searchTerm && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
+          window.sessionStorage.setItem('searchExecuted', false);
+        }
       }
      
      const dataFetcher = ()=> item && getTopSearches(item && item)
@@ -71,7 +73,7 @@ const TopItems = ({item, redirectTab}) =>{
                   {data?.items?.users?.map((item, id)=>(
                   <div onClick={()=>{
                     try{
-                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.userId,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
+                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
                      toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
                     }catch(e){
                       console.error('search result click',e)

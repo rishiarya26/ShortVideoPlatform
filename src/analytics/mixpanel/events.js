@@ -72,8 +72,10 @@ export const toTrackMixpanel = (type, value, item) => {
     // }
 
     const commonWithIds = () =>{
+       const userName = item?.userName?.replace('@','')
         globalCommonEvents['Creator ID'] = item?.userId;
-        globalCommonEvents['Creator Handle'] = `${item?.userName}`;
+        globalCommonEvents['Creator Handle'] = userName;
+        addHashtagName();
         addUgcId();
         addPageTabName();
         // isShopMonetize()
@@ -90,9 +92,21 @@ export const toTrackMixpanel = (type, value, item) => {
     const getBannerType = () =>{
       globalCommonEvents['Banner Type'] = bannerType[item?.bannerType];    }
 
+    const addScreenDetails = ()=>{
+      const userName = item?.userName?.replace('@','')
+      globalCommonEvents['Creator ID'] = item?.userId || 'NA';
+      globalCommonEvents['Creator Handle'] = userName || 'NA';
+      addHashtagName();
+    }   
+
+    const addHashtagName = ()=>{
+      globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
+    }
+
     const toTrack = {
       'impression' : ()=> track('UGC Impression', commonWithIds()),
       'screenView' : ()=> {
+        addScreenDetails();
         addPageTabName();  
         track('Screen View', globalCommonEvents )},
       'tabView' : ()=>{
@@ -110,18 +124,19 @@ export const toTrackMixpanel = (type, value, item) => {
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
-        eventsWithIds['UGC Duration'] = value?.duration
-        eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime
+        eventsWithIds['UGC Duration'] = value?.duration && Math.round(value.duration)
+        eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
         track('UGC Skipped',eventsWithIds)
       }, 
       'watchTime' : () => {
         let eventsWithIds = commonWithIds()  
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
-        eventsWithIds['UGC Duration'] = value?.duration
-        eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime
+        eventsWithIds['UGC Duration'] =  value?.duration && Math.round(value.duration)
+        eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
         track('UGC Watch Time',eventsWithIds)
       },
       'cta' : ()=>{
+        addPageTabName(); 
         globalCommonEvents['Element'] = value?.name
         globalCommonEvents['Button Type'] = value?.type
         track('CTAs', globalCommonEvents)

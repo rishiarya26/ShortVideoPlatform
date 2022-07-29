@@ -16,21 +16,18 @@ import fallbackUser from '../../../public/images/users.png'
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { share } from '../../utils/app';
-import AddUser from '../commons/svgicons/add-user';
 import useAuth from '../../hooks/use-auth';
-// import { track } from '../../analytics';
-// import { ONE_TAP_DOWNLOAD } from '../../constants';
-// import { getOneLink } from '../../sources/social';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import {  toTrackMixpanel } from '../../analytics/mixpanel/events';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import LikedList from '../commons/svgicons/liked-list';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
 import { Back } from '../commons/svgicons/back';
 import { videoSchema } from '../../utils/schema';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+// import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
@@ -133,10 +130,12 @@ function Users({
   
   useEffect(() => {
     setTimeout(()=>{
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile'})
+      toTrackFirebase('screenView', {'page':'Profile'});
+      ToTrackFbEvents('screenView');
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Profile'})
       if(type === 'others'){
-        toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName})
+        toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName},{userId:id, userName:userHandle})
       }
     },500);
   }, []);
@@ -178,7 +177,7 @@ function Users({
       if(isFollowing){
         toTrackMixpanel('unFollow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id})
       }else{
-        toTrackMixpanel('follow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id});
+        toTrackMixpanel('follow',{pageName:pageName,tabName:tabName},{userName: userHandle, userId:id});
       }  
      setIsFollowing(!isFollowing);
   } 

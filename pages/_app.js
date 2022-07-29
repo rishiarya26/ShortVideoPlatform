@@ -23,6 +23,7 @@ import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
 import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
 import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
+import { toGetSocialToken } from '../src/sources/get-social';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -224,6 +225,7 @@ function Hipi({
   useEffect(()=>{
     //let timer;
     try{ 
+      window.sessionStorage.setItem('searchExecuted', false)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
@@ -277,7 +279,7 @@ function Hipi({
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
           console.log('tokens there in _app.js')
           setTimeout(()=>{
-            init();
+            // init();
             initFirebase();
           },[1000])
         }else{
@@ -322,11 +324,11 @@ function Hipi({
       }
     }, [router.events])
 
- /* Extract out Mixpanel - Custom session event logic */   
+ /* To-Do : Extract out Mixpanel - Custom session event logic */   
 
   let setTimeoutsTracker = [];
   function endSessionOnIdle() {
-       console.error("reset - session end - from logout")
+      //  console.error("reset - session end - from logout")
        toTrackMixpanel('sessionEnd')
        setTimeoutsTracker = null;
        clearTimeouts();
@@ -351,7 +353,7 @@ function Hipi({
   const resetTimeout = () => {
    let minutesTracker =  window.sessionStorage.getItem("minutes");
       if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
-        console.error("reset - session start R");
+        // console.error("reset - session start R");
         toTrackMixpanel('sessionStart')
         window.sessionStorage.setItem('seconds',60);
         window.sessionStorage.setItem("sessionEventTrack",undefined);
@@ -371,7 +373,7 @@ function Hipi({
       let secondsTracker = parseInt(window.sessionStorage.getItem('seconds')) || 60;
       window.sessionStorage.setItem('seconds',secondsTracker === 0 ? 60 : secondsTracker-1);
       if(minutesTracker < 6){
-        console.log('checking...',minutesTracker, secondsTracker)
+        // console.log('checking...',minutesTracker, secondsTracker)
         secondsTracker === 1 && window.sessionStorage.setItem('minutes',  minutesTracker+1)
         }
         else{
@@ -379,9 +381,9 @@ function Hipi({
            toTrackMixpanel('sessionEnd')
            toTrackMixpanel('sessionStart')
           window.sessionStorage.setItem("minutes",0);
-          console.error("reset - session end");
+          // console.error("reset - session end");
           window.sessionStorage.setItem('seconds',60);
-          console.error("reset - session start T");
+          // console.error("reset - session start T");
           resetTimeout();
          }
         }}
@@ -407,7 +409,7 @@ function Hipi({
           window.sessionStorage.setItem("minutes",minutesTracker || 0);
         }else{
           window.sessionStorage.setItem("minutes",0);
-          console.error("reset - session start");
+          // console.error("reset - session start");
           toTrackMixpanel('sessionStart');
         }
       }
@@ -418,6 +420,7 @@ function Hipi({
             setShowCookies(true);
         }, 5000);
     }
+    // guestGetSocialToken();
 
       const events = [
         'load',
@@ -439,6 +442,16 @@ function Hipi({
       })
     }
   },[])
+
+ const guestGetSocialToken = async() =>{
+   let response;
+   try{ 
+     response =  await toGetSocialToken();
+    }
+   catch(e){
+     console.error("guest get social error",e)
+     response = await toGetSocialToken();
+   }};
 
   return (
     <>

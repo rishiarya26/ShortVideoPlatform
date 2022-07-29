@@ -37,6 +37,24 @@ export const ToTrackFbEvents = (type, commonInfo = {}, value) => {
       'savelook' : ()=>{
         fbq.event('Save Look', fbEvents)
       },
+      'appDownloadPopup':()=> {
+        fbq.event('App Download Popup');
+      },
+      'appDownloadCTA':()=>{
+        fbq.event('App Download CTA');
+      },
+      'appOpenCTA':()=>{
+        fbq.event('App Open CTA')
+      },
+      'screenView':()=>{
+        fbq.event('Screen View');
+      },
+      'ugcUploadComplete':()=>{
+        fbq.event('UGC_Played_Complete');
+      },
+      'ugcPlayedComplete':()=>{
+        fbq.event("UGC_Played_Complete");
+      }
     }
     type && toTrack?.[type] && toTrack?.[type]();
 }

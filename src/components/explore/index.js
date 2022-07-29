@@ -36,10 +36,9 @@ import SwiperCore, {
 } from 'swiper';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import { getCanonicalUrl } from '../../utils/web';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
@@ -184,10 +183,12 @@ function Explore() {
   useEffect(()=>{
       // const mixpanelEvents = commonEvents();
       // mixpanelEvents['Page Name'] = 'Discover';
-      fbq.event('Screen View');
+      // fbq.event('Screen View');
       // track('Screen View',mixpanelEvents );
+      // trackEvent('Screen_View',{'Page Name' : 'Explore'})
+      toTrackFirebase('screenView',{'page' : 'Explore'})
       toTrackMixpanel('screenView',{pageName:pageName})
-      trackEvent('Screen_View',{'Page Name' : 'Explore'})
+      ToTrackFbEvents('screenView');
       window.onunload = function () {
       window?.scrollTo(0, 1);
     }

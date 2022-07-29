@@ -21,13 +21,13 @@ import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import DeskVideoGallery from '../desk-video-gallery';
 import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import UserTab from '../commons/tabs/desk-user-tab';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { toTrackFirebase } from '../../analytics/firebase/events';
 import { videoSchema } from '../../utils/schema';
 
 const detectDeviceModal = dynamic(() => import('../open-in-app'),{
@@ -181,8 +181,10 @@ function DeskUsers({
     setTimeout(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile';
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile'})
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Profile'})
+      ToTrackFbEvents('screenView');
+      toTrackFirebase('screenView',{'page' :'Profile'});
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

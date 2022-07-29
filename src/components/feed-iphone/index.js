@@ -19,10 +19,8 @@ import useAuth from '../../hooks/use-auth';
 import useDrawer from '../../hooks/use-drawer';
 import CircularProgress from '../commons/circular-loader'
 import HamburgerMenu from '../hamburger-menu';
-import * as fbq from '../../analytics/fb-pixel'
 import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
-import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { localStorage } from '../../utils/storage';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
@@ -121,7 +119,8 @@ function FeedIphone({ router }) {
         const mixpanelEvents = commonEvents();
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
         toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
-        trackEvent('Screen_View',{'Page Name' :'Feed'})
+        // trackEvent('Screen_View',{'Page Name' :'Feed'})
+        toTrackFirebase('screenView',{'page' :'Feed'});
         setLoading(false);
       }
     },1500);
@@ -195,7 +194,8 @@ function FeedIphone({ router }) {
     setItems([])
     setVideoActiveIndex(0)
     setActiveVideoId(null)
-    fbq.event('Screen View')
+    ToTrackFbEvents('screenView');
+    //fbq.event('Screen View')
     toTrackMixpanel('tabView',{pageName:pageName, tabName:tabName});
   },[id])
 
@@ -233,8 +233,8 @@ function FeedIphone({ router }) {
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'}, { watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       
-
-      fbq.event('UGC_Played_Complete')
+      ToTrackFbEvents('ugcUploadComplete');
+      // fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
@@ -553,9 +553,11 @@ console.log('errorrr',e)
 
  const onStoreRedirect = async ()=>{
 
-  fbq.event('App Open CTA');
-  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open', type: 'Button'},items?.[videoActiveIndex]);
-  trackEvent('App_Open_CTA')
+  // fbq.event('App Open CTA');
+  // trackEvent('App_Open_CTA')
+  toTrackFirebase('appOpenCTA');
+  ToTrackFbEvents('appOpenCTA');
+   toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open', type: 'Button'},items?.[videoActiveIndex]);
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)

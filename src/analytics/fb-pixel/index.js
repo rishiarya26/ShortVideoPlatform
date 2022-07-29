@@ -17,7 +17,7 @@ export const event = (name, options = {}) => {
 }
 
 export const defEvent = (name, options = {}) => {
-  if(window?.fbq){
-    window && window?.fbq('track', name, options)
-  }
+    if(window?.fbq){
+      window && window?.fbq('track', name, options)
+    }
   }
