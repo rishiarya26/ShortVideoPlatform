@@ -42,7 +42,7 @@ export const toTrackFirebase = (type, commonInfo = {}, value) => {
       },
       'creatorFormSubmitted' : ()=>{
         commonWithIds();
-        track(' Creator Form Submitted',globalCommonEvents);
+        track('Creator Form Submitted');
       }
     }
     type && toTrack?.[type] && toTrack?.[type]();

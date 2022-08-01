@@ -30,6 +30,7 @@ const TopItems = ({item, redirectTab}) =>{
         const results = data?.data?.items;
         console.log("R-E",results,item)
         const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0);
+        console.log("MIXsearch-executed * ",window.sessionStorage.getItem('searchExecuted'), window.sessionStorage.getItem('searchExecuted') === 'true', typeof window.sessionStorage.getItem('searchExecuted'))
         if(window.sessionStorage.getItem('searchExecuted') === 'true'){
           console.log("MIXsearch-executed",window.sessionStorage.getItem('searchExecuted', typeof window.sessionStorage.getItem('searchExecuted')))
           searchTerm && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})

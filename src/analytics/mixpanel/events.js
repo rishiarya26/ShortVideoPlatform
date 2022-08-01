@@ -362,7 +362,7 @@ export const toTrackMixpanel = (type, value, item) => {
         },
         'creatorFormSubmitted' : ()=>{
           commonWithIds();
-          track(' Creator Form Submitted',globalCommonEvents);
+          track('Creator Form Submitted',globalCommonEvents);
         }
         
         

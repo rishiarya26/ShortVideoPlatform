@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { ToTrackFbEvents } from "../../analytics/fb-pixel/events";
+import { toTrackFirebase } from "../../analytics/firebase/events";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import useSnackbar from "../../hooks/use-snackbar";
 import { postCreatorData } from "../../sources/google-sheets";
 
@@ -26,6 +29,13 @@ const Form = ()=>{
        const resp = await postCreatorData(data);
        if(resp?.['http-status'] === 200){
         console.log('CData',resp);
+        try{
+          toTrackMixpanel('creatorFormSubmitted');
+          toTrackFirebase('creatorFormSubmitted');
+          ToTrackFbEvents('creatorFormSubmitted');
+        }catch(e){
+          console.error('mixpanel issue - submit form')
+        }
         showSnackbar({message : 'Submitted Successfully'});
         setData({name:'',genre:'',hipiHandle:'',mobile:'',email:''});
         setLoader(false);
