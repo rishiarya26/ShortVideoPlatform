@@ -359,6 +359,10 @@ export const toTrackMixpanel = (type, value, item) => {
           globalCommonEvents['Carousal Name'] = item?.carousalName;
           globalCommonEvents['Carousal Type'] = item?.carousalType;
           track('View More Selected',globalCommonEvents);
+        },
+        'creatorFormSubmitted' : ()=>{
+          commonWithIds();
+          track(' Creator Form Submitted',globalCommonEvents);
         }
         
         

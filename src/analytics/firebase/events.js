@@ -39,6 +39,10 @@ export const toTrackFirebase = (type, commonInfo = {}, value) => {
       },
       'screenView':()=>{
         trackEvent('Screen_View', events);
+      },
+      'creatorFormSubmitted' : ()=>{
+        commonWithIds();
+        track(' Creator Form Submitted',globalCommonEvents);
       }
     }
     type && toTrack?.[type] && toTrack?.[type]();

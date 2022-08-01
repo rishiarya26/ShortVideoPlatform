@@ -31,6 +31,7 @@ const TopItems = ({item, redirectTab}) =>{
         console.log("R-E",results,item)
         const resultsLength = (results?.users?.length || 0)+(results?.hashtags?.length || 0)+(results?.videos?.length || 0);
         if(window.sessionStorage.getItem('searchExecuted') === 'true'){
+          console.log("MIXsearch-executed",window.sessionStorage.getItem('searchExecuted', typeof window.sessionStorage.getItem('searchExecuted')))
           searchTerm && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
           window.sessionStorage.setItem('searchExecuted', false);
         }
