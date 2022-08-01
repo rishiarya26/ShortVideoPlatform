@@ -13,9 +13,9 @@ export default function Hipi() {
   <>
   <SeoMeta
         data={{
-          title: 'Hipi GOAT contest - Singing Talent hunt.',
+          title: 'Hipi Stunner 2022 Contest presented By Nikita Anand | Hipi ',
           // image: item?.thumbnail,
-          description: 'Participate in Hipi GOAT contest on Hipi and win weekly cash awards. Top performers will get coaching sessions from Shilpa Rao and Rupali Jagga. And opportunity to perform at Finale episode of Zee Saregamapa.',
+          description: 'Hipi Stunner is designed for you to celebrate your uniqueness both body and in Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner ',
           canonical: url && getCanonicalUrl(url),
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
