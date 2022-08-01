@@ -125,7 +125,7 @@ Hipi Stunner is designed for you to celebrate your uniqueness both body and in s
         
           <div className='flex  w-full flex-col md:flex-row justify-center'>
            {stunnerData.map((item,id)=>(
-           <div key={id} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 max-h-fit ease-in duration-300'>
+           <div key={id} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden'>
               <img className=''alt="Hipi Stunner Challenges" src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
