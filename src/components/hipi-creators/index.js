@@ -21,7 +21,7 @@ SwiperCore.use([Autoplay,Pagination,Navigation]);
 function HipiCreators() {
 const [url, setUrl] = useState('');
 useEffect(()=>{
-setUrl(document?.location?.href);
+setUrl(document?.location?.href); 
 },[]);
 //Desktop links
 const stores = {

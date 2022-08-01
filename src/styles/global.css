@@ -117,7 +117,7 @@ img{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
- .h-80{
+ .h-80p{
    height: 80%;
  }
 
@@ -873,3 +873,40 @@ title:first-letter {
     opacity: 1;
   }
   
+  /* STUNNER */
+  .bg_1{
+    background-color: #f9fbf6;
+  }
+  .bg_pastel_blue{
+    background-color: #f4def2;
+  }
+  .bg-host{
+    background-color: #f9fbf6;
+}
+  .max_800{
+    max-width: 800px;
+  }
+  .br_40{
+    border-radius: 20px;
+  }  
+  
+  .box_shadow_1{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  }
+  .purple_font{
+    color: #6e057a;
+  }
+  .h-fit{
+    height: fit-content;
+  }
+  @media only screen and (min-width: 768px) {
+    .max_800{
+      width: 800px;
+    }
+    .br_40{
+      border-radius: 40px 0px 0px 40px;
+    }  
+    .bg-host{
+        background-color: #f4def2;
+    }
+  }
