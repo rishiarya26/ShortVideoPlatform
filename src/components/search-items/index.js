@@ -71,6 +71,7 @@ const SearchItems = ({router,type})=>{
     const handleSearch=()=>{
        try{
         toTrackMixpanel('searchBtnClicked',{pageName:pageName},{query: trimHash(searchTerm || '')})
+        window.sessionStorage.setItem('searchExecuted','true');
         toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "primary_search_query_response", "position": "0", "queryID": "primary_search_query_response"})
         setShowSuggestions(false)
         const searchHis = searchHistory.length > 0 ? [...searchHistory] : [];
@@ -78,6 +79,7 @@ const SearchItems = ({router,type})=>{
         searchHis.unshift(searchTerm)
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
+        // window.sessionStorage.setItem('searchTerm',searchTerm)
         searchTerm?.indexOf('#') === 0 ? router?.push(`/search?term=%23${trimHash(searchTerm)}`) : router?.push(`/search?term=${searchTerm}`)
      }catch(e){
          console.error('search btn clicked',e)
@@ -98,6 +100,8 @@ const SearchItems = ({router,type})=>{
             }  
         }   
         toTrackMixpanel('searchSuggSelected',{pageName:pageName},{query:searchTerm, suggestionSelected:value})
+        window.sessionStorage.setItem('searchExecuted','true');
+        // window.sessionStorage.setItem('searchTerm',searchTerm)
         toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "autocomplete_search_query_response", "position": "0", "queryID": "autocomplete_search_query_response"})
         router?.push(`/search?term=${value}`);
     }

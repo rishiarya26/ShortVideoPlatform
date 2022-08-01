@@ -26,8 +26,6 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getItem } from '../../utils/cookie';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import { toTrackFirebase } from '../../analytics/firebase/events';
@@ -194,17 +192,20 @@ function ProfileFeedIphone({ router }) {
     setTimeout(()=>{
       //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       setLoading(false);
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
+      toTrackFirebase('screenView',{'page':'Profile Feed'});
+      ToTrackFbEvents('screenView');
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
       toTrackMixpanel('screenView',{pageName:pageName});
     },500)
 
   }, []);
 
   const onStoreRedirect = async ()=>{
-    toTrackMixpanel('cta',{pageName:pageName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-    fbq.event('App Open CTA')
-    trackEvent('App_Open_CTA')
+    toTrackMixpanel('cta',{pageName:pageName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+    // fbq.event('App Open CTA')
+    // trackEvent('App_Open_CTA')
+
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)
@@ -292,7 +293,8 @@ function ProfileFeedIphone({ router }) {
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      fbq.event('UGC_Played_Complete')
+      ToTrackFbEvents('ugcPlayedComplete');
+      //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
 
       // viewEventsCall(activeVideoId, 'completed');

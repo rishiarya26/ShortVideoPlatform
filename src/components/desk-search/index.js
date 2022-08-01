@@ -281,7 +281,7 @@ const SearchItems = ({router,type})=>{
                     onKeyDown={(e)=>handleKeyUp(e,myRefs?.current[suggestionListIndex])}
                     />
                     <div className='flex w-6 justify-end items-center mr-4'>
-                     {searchTerm?.length > 0 && (loading ? <div> <CircularProgress/></div>:
+                     {searchTerm?.length > 2 && (loading ? <div> <CircularProgress/></div>:
                       <button className="ml-4" onClick={()=>setSearchTerm('')}>
                     <Close />
                     </button>)}
@@ -304,7 +304,7 @@ const SearchItems = ({router,type})=>{
                     <Search/>  </div>
                     </div>
                     {showSuggestions && searchTerm?.length > 0 && suggestions?.length > 0 &&
-                    searchTerm?.length > 0 && 
+                    searchTerm?.length > 2 && 
                     <div ref={searchSuggRef}>
                     <SuggestionsList/>
                     </div>

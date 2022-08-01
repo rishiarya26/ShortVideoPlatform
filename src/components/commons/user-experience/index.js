@@ -1,7 +1,8 @@
 import React from 'react'
-import * as fbq from '../../../analytics/fb-pixel'
+import { ToTrackFbEvents } from '../../../analytics/fb-pixel/events';
+import { toTrackFirebase } from '../../../analytics/firebase/events';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
-import { trackEvent } from '../../../analytics/firebase';
+
 import { ONE_TAP_DOWNLOAD, FULL_EXPERIENCE } from '../../../constants';
 import { getOneLink } from '../../../sources/social';
 
@@ -9,9 +10,15 @@ import { getOneLink } from '../../../sources/social';
 export default function UserExperience({pageName, tabName, items, videoActiveIndex, activeVideoId}) {
 
   const onStoreRedirect = async ()=>{
-    fbq.event('App Open CTA')
-    toTrackMixpanel('cta',{pageName:pageName,tabName:tabName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-    trackEvent('App_Open_CTA')
+    // fbq.event('App Open CTA')
+    // trackEvent('App_Open_CTA')
+    ToTrackFbEvents('appOpenCTA');
+    toTrackFirebase('appOpenCTA');
+    //toTrackMixpanel('cta',{pageName:pageName,tabName:tabName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+    
+    // fbq.event('App Open CTA')
+    toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+    // trackEvent('App_Open_CTA')
     let link = ONE_TAP_DOWNLOAD;
     try{  
       if(activeVideoId){ 

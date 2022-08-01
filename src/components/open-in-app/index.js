@@ -8,9 +8,9 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import Close from '../commons/svgicons/close-black';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
 export default function DownloadAppWidget({videoId}) {
   // const stores = {
@@ -20,8 +20,10 @@ export default function DownloadAppWidget({videoId}) {
 
   useEffect(()=>{
     toTrackMixpanel('launch');
-    fbq.event('App Download Popup')
-    trackEvent('App_Download_Popup');
+    // fbq.event('App Download Popup')
+    // trackEvent('App_Download_Popup');
+    toTrackFirebase('appDownloadPopup');
+    ToTrackFbEvents('appDownloadPopup');
   },[])
 
   const {close} = useDrawer();
@@ -60,8 +62,10 @@ export default function DownloadAppWidget({videoId}) {
 // 
   const onStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
-    fbq.event('App Download CTA');
-    trackEvent('App_Download_CTA')
+    ToTrackFbEvents('appDownloadCTA');
+    toTrackFirebase('appDownloadCTA');
+    //fbq.event('App Download CTA');
+    // trackEvent('App_Download_CTA')
     let link = ONE_TAP_DOWNLOAD;
     const device = getItem('device-info');
     console.log(device)

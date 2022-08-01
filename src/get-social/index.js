@@ -4,6 +4,7 @@ import { localStorage } from "../utils/storage";
 let initiated = false;
 
 export const init = async() => {
+    localStorage.set('get-social','pending');
     console.log("*********** CALLED **********")
 //    initGetSocial();
 //    setTimeout(()=>{ 
@@ -21,7 +22,7 @@ export const init = async() => {
         auth();
     }
     }catch(e){
-       console.log('no tokens present during getSocial Auth')
+       console.log('no tokens present during getSocial Auth');
     }    
         // setTimeout(()=>{
         //     getActivityDetails('661518306464375287');
@@ -55,13 +56,26 @@ export const auth = (identityType='my_app')=>{
   }
 }
 
+const retry = ()=>{
+
+}
+
 export const getActivityDetails = async(id)=> {
     let response;
     try{
       response = await GetSocialSDK.Communities.getActivity(id)
     //   console.log('response-activity',response);
     }catch(e){
-        // init()
+      
+    //     setTimeout(async()=>{
+    //         console.log('GETSOCIAL',window)
+    //         if(window?.GetSocialSDK){
+    //             response = await GetSocialSDK.Communities.getActivity(id) 
+    //         }else{
+    //             init();
+    //             response = await GetSocialSDK.Communities.getActivity(id) 
+    //         }
+    //     },1000)
       console.log('error-get-activity',e)
     }
     return response;
@@ -76,12 +90,14 @@ export const postReaction = async(reaction,id) =>{
     init()
        console.log('error-post-like',e);
     }
+    // return response
 }
 
 export const deleteReaction = (reaction,id) =>{
    let response;
     try{ 
         response = GetSocialSDK.Communities.removeReaction(reaction,id);
+        // console.log("liked&&",response)
     }
     catch(e){
         init()

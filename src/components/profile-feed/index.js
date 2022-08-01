@@ -24,8 +24,6 @@ import SwipeUp from '../commons/svgicons/swipe-up';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import { viewEventsCall } from '../../analytics/view-events';
 import { getCanonicalUrl } from '../../utils/web';
 import dynamic from 'next/dynamic';
@@ -128,8 +126,10 @@ function ProfileFeed({ router }) {
       //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       setLoading(false);
       // const guestId = getItem('guest-token');
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
+      toTrackFirebase('screenView',{'page' :'Profile Feed'});
+      ToTrackFbEvents('screenView');
       toTrackMixpanel('screenView',{pageName:pageName});
     },500)
   }, []);
@@ -197,7 +197,8 @@ function ProfileFeed({ router }) {
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
 
-      fbq.event('UGC_Played_Complete')
+      ToTrackFbEvents('ugcPlayedComplete');
+      //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       // viewEventsCall(activeVideoId, 'completed');
@@ -246,9 +247,11 @@ function ProfileFeed({ router }) {
   };
   
 const onStoreRedirect = async ()=>{
-  toTrackMixpanel('cta',{pageName:pageName},{ name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-  fbq.event('App Open CTA')
-  trackEvent('App_Open_CTA')
+  toTrackMixpanel('cta',{pageName:pageName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
+  // fbq.event('App Open CTA')
+  // trackEvent('App_Open_CTA')
+  toTrackFirebase('appOpenCTA');
+  ToTrackFbEvents('appOpenCTA');
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log('payload',device)

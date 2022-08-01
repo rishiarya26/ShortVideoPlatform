@@ -54,7 +54,7 @@ canonical: url && getCanonicalUrl(url),
     <div className="md:hidden headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2" ><img className="w-16" src={withBasePath('images/logo_hipi.png')}/></div>
     <div className='w-full flex-col md:flex-row flex md:pt-24 md:pb-4 py-4'>
         <div className='md:w-1/2 w-full md:pl-52 pr-8 md:p-8 px-8'>
-            <img alt="earn with Hipi - short video app"  className='object-contain' src={withBasePath('images/reward/Shine_with_Hipi.png')} /> 
+            <img alt="earn with Hipi - short video app"  className='object-contain' src={withBasePath('images/reward/Shine_with_Hipi_1.png')} /> 
         </div>
         <div className='md:w-1/2 w-full flex-col flex md:p-8 px-8 pt-8 md:pr-32 justify-center'>
             <h1 className='text-3xl font-bold text-gray-800'>Shine and Earn with Hipi</h1>
@@ -62,6 +62,11 @@ canonical: url && getCanonicalUrl(url),
             <p className='text-gray-500 font-light text-lg pt-4'>Join Hipi and kick start your career as an influencer. With Hipi you can earn with every step you take as a budding star. Learn more about the opportunities that Hipi can provide you.</p>
         </div>
     </div>
+
+    <div className='w-full flex py-4 px-4 md:px-2 md:pb-8 justify-center '>
+        <Form/>
+    </div>
+
     <div className='w-full flex flex-col md:flex-row py-4 md:pb-8'>
         <div className='md:w-1/2 w-full flex-col flex py-8 md:pl-32 md:p-8 px-8 justify-center'>
             <h2 className='text-3xl font-bold text-gray-800'>Get Stardom and Live Your Dream</h2>
@@ -71,7 +76,7 @@ canonical: url && getCanonicalUrl(url),
             {device && iFrameReward[device]}
         </div>
     </div>
-    <div className='w-full flex flex-col-reverse md:flex-row  py-4 md:pb-8'>
+    <div className='w-full flex flex-col-reverse md:flex-row  py-4 md:pb-0'>
         <div className='md:w-1/2 w-full  md:pl-32 md:p-8 px-8 '>
             <img alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div>
@@ -82,7 +87,7 @@ canonical: url && getCanonicalUrl(url),
             <p className='text-gray-500 font-light text-lg pt-4'>Contact us to talk to our Creator support specialist to know more about the incentive structure.</p>
         </div>
     </div>
-    <div className='w-full flex flex-col md:flex-row  py-4 md:pb-8'>
+    <div className='w-full flex flex-col md:flex-row  py-4 md:pb-8 md:pt-0'>
         <div className='md:w-1/2 w-full flex-col flex py-8 md:pl-32 md:p-8 px-8 justify-center'>
             <h4 className='text-3xl font-bold text-gray-800'>Get Assured Gifts</h4>
             <p className='text-gray-500 font-light text-lg pt-4'>As you grow on Hipi, with every milestone you achieve, we send you a goodie bag as a token of appreciation. We value your efforts.</p>
@@ -91,9 +96,7 @@ canonical: url && getCanonicalUrl(url),
             <img alt="Get assured gifts with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Assured Gifts.png')} /> 
         </div>
     </div>
-    <div className='w-full flex py-4 px-4 md:px-2 md:pb-8 justify-center '>
-        <Form/>
-    </div>
+
     <div className='w-full flex'>
         <div className='w-full flex-col flex md:py-8 md:px-8 p-4 justify-center items-center'>
             <p className='text-3xl font-bold text-gray-800'>Testimonials </p>
