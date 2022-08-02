@@ -21,9 +21,9 @@ function HeadMeta() {
       {/* <link rel="preconnect" href="https://www.hipi.co.in" as="document" /> */}
       {/* <link rel="preconnect" href="https://websdk.getsocial.im/getsocial.min.js" as="script" /> */}
       <link rel="preconnect" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" as="font" />
-      <link rel="preconnect" href="http://fonts.gstatic.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="http://cdn.mxpnl.com" />
+      <link rel="preconnect" href="https://cdn.mxpnl.com" />
       <link rel="preconnect" href="https://assets2.charmboard.com" />
       <link rel="preconnect" href="https://media.charmboard.com" />
       <link rel="preconnect" href="https://www.hipi.co.in" />
@@ -50,9 +50,9 @@ function HeadMeta() {
       <link rel="preload" href="https://www.hipi.co.in/feed/for-you" as="document" />
 
       {/* <link rel="dns-prefetch" href="https://eum.instana.io" /> */}
-      <link rel="dns-prefetch" href="http://fonts.gstatic.com" />
+      <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
       <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      <link rel="dns-prefetch" href="http://cdn.mxpnl.com" />
+      <link rel="dns-prefetch" href="https://cdn.mxpnl.com" />
       <link rel="dns-prefetch" href="https://assets2.charmboard.com" />
       <link rel="dns-prefetch" href="https://media.charmboard.com" />
       <link rel="dns-prefetch" href="https://www.hipi.co.in" />

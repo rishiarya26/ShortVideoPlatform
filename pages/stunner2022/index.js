@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
-import ChooseComp from "../src/components/choose-comp";
-import { SeoMeta } from "../src/components/commons/head-meta/seo-meta";
-import { getCanonicalUrl } from "../src/utils/web";
-import Stunner from "../src/components/stunner";
-
+import {  useState } from "react";
+import { SeoMeta } from "../../src/components/commons/head-meta/seo-meta";
+import Stunner from "../../src/components/stunner";
 
 export default function Hipi() {
 
@@ -15,8 +12,7 @@ export default function Hipi() {
         data={{
           title: 'Hipi Stunner 2022 Contest presented By Nikita Anand | Hipi ',
           // image: item?.thumbnail,
-          description: 'Hipi Stunner is designed for you to celebrate your uniqueness both body and in Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner ',
-          canonical: url && getCanonicalUrl(url),
+          description: 'Hipi Stunner is designed for you to celebrate your uniqueness both body and in Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner,a Hipi Stunner ',
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
           //   description: 'Short Video Community - Watch and create entertaining dance, romantic, funny, sad & other short videos. Find fun filters, challenges, famous celebrities and much more only on HiPi',

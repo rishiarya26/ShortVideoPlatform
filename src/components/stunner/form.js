@@ -83,7 +83,7 @@ const Form = ()=>{
           onChange={(e)=>e?.currentTarget?.value?.length <=10 && updateData(e)}
           value={data.mobile}
           required
-          read
+          read="true"
           />
           </div>
         <div className='py-2'>
