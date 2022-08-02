@@ -2,7 +2,6 @@ import { Constants } from "@convivainc/conviva-js-coresdk";
 import { videoAnalytics } from "./index";
 
 export const playerEvents = (type) => {
-  debugger
   console.log(videoAnalytics,"videoAnalytics");
   const events = {
     'buffer':()=> videoAnalytics.reportPlaybackMetric(Constants.Playback.PLAYER_STATE, Constants.PlayerState.BUFFERING),

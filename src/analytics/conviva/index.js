@@ -38,8 +38,8 @@ export const getDeviceMetadata = () =>  {
 export const setContentInfo = (content ={}) =>{
   console.log(localStorage.get('user-id'), 'localstroage');
   let contentMetadata = {};
-  contentMetadata[Constants.ASSET_NAME] = content?.id + `bharat` +`.mp4`;
-  contentMetadata[Constants.STREAM_URL] = content?.url || '';
+  contentMetadata[Constants.ASSET_NAME] = content?.id ?? '';
+  contentMetadata[Constants.STREAM_URL] = content?.url ?? '';
   contentMetadata[Constants.IS_LIVE] = Constants.StreamType.VOD;
   contentMetadata[Constants.PLAYER_NAME] = 'WEB HTML5';
   contentMetadata[Constants.VIEWER_ID] = getItem('guest-token') ?? localStorage('user-id') ?? '';
