@@ -16,6 +16,7 @@ import VideoDetail from '../../src/components/desk-video-detail';
 import DeskMenu from '../../src/components/desk-menu';
 import Header from '../../src/components/desk-header';
 import { videoSchema } from '../../src/utils/schema';
+import { getCanonicalUrl } from '../../src/utils/web';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -25,6 +26,7 @@ const languageCodes = Object.keys(supportedLanguages).map(
 export default function Hipi(params={}) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [videoUrl, setVideoUrl] = useState(null);
+  const [url, setUrl] = useState('');
 
   const router = useRouter();
   const {
@@ -42,6 +44,8 @@ export default function Hipi(params={}) {
 // console.log(item)
   useEffect(() => {
     // console.log(item)
+        setUrl(document?.location?.href);
+        //if api fails at server side for special characters - retry call
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
   }, []);
@@ -113,12 +117,13 @@ export default function Hipi(params={}) {
     <>
      <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc}))}}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description}))}}
         />
       <SeoMeta
         data={{
           title: `${item?.content_description} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
-          description: `${item?.likesCount} likes Watch trending Hipi videos from ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}). Download the App Now!`        
+          description: `${item?.likesCount} likes Watch trending Hipi videos from ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}). Download the App Now!`,        
+          canonical : url && getCanonicalUrl(url),
         }}
      />
       {item && comp?.[device]}
