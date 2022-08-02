@@ -34,7 +34,7 @@ const nextConfig = {
     }];
   },
   images: {
-    domains: ['akamaividz2.zee5.com', 'assets2.charmboard.com','zee5-staging-ressh.cloudinary.com','hipi-assets.s3.ap-south-1.amazonaws.com']
+    domains: ["a.storyblok.com",'akamaividz2.zee5.com', 'assets2.charmboard.com','zee5-staging-ressh.cloudinary.com','hipi-assets.s3.ap-south-1.amazonaws.com']
   },
   // would suggest keeping this false
   trailingSlash: false, // https://github.com/zeit/next.js/issues/8119

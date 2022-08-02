@@ -1,0 +1,70 @@
+.card{
+    box-shadow: 2px 4px 20px rgb(34 90 89 / 20%);
+    @apply mb-4;
+    transition: box-shadow ease-in-out;
+}
+
+.card:hover{
+    box-shadow: none;
+}
+
+
+.card_desc{
+    padding: 28px 32px 32px 22px;
+}
+
+@media only screen and (min-width: 768px) {
+    .card_desc{
+        padding: 46px;
+    }
+}
+
+.creator{
+    background-color: white;
+    color: #fe2c55;
+    border: 1px solid #fe2c55;
+}
+
+.creator:hover{
+    color: white;
+    background-color: #fe2c55;
+}
+
+.news{
+    background-color: white;
+    color: #36d1cc;
+    border: 1px solid #36d1cc;
+}
+
+.news:hover{
+    color: white;
+    background-color: #36d1cc;
+}
+
+.product{
+    background-color: white;
+    color: #8b62ff;
+    border: 1px solid #8b62ff;
+}
+
+.product:hover{
+    color: white;
+    background-color: #8b62ff;
+}
+
+.business{
+    background-color: white;
+    color: #161823;
+    border: 1px solid #161823;
+}
+
+.business:hover{
+    color: white;
+    background-color: #161823;
+}
+
+@media screen and (max-width: 768px) {
+    .image{
+        max-height: 230px;
+    }
+}
