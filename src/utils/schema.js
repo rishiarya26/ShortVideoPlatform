@@ -44,12 +44,12 @@
     return payload;
     }
  
- const videoSchema = ({name,userThumnail, videoId,view})=>{
+ const videoSchema = ({name,userThumnail,desc, videoId,view})=>{
      const payload = {
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": `${name} on Hipi | ${name} Short Videos on Hipi`,
-        "description": `${name} on Hipi. Check out latest trending videos from ${name} on Hipi. Download the App Now!`,
+        "description": desc,
         "thumbnailUrl": userThumnail,
         // "uploadDate": "",  
         "contentUrl": `https://www.hipi.co.in/video/${videoId}`,

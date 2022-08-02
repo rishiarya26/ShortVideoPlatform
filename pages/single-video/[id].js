@@ -1,3 +1,4 @@
+/*eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from 'react';
 import EmbedVideo from '../../src/components/embed-video';
 import { getSingleFeed } from '../../src/sources/feed/embed';
@@ -112,13 +113,12 @@ export default function Hipi(params={}) {
     <>
      <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame}))}}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc}))}}
         />
       <SeoMeta
         data={{
-          title: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} videos on Hipi - Indian Short Video App`,
-          // image: item?.thumbnail,
-          description: `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}) videos on Hipi. Watch ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}'s latest trending videos that you can enjoy and share with your friends.`        
+          title: `${item?.content_description} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
+          description: `${item?.likesCount} likes Watch trending Hipi videos from ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}). Download the App Now!`        
         }}
      />
       {item && comp?.[device]}
