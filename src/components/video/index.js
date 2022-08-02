@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from 'react';
@@ -8,6 +9,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import usePreviousValue from '../../hooks/use-previous';
 import dynamic from 'next/dynamic';
+import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -67,6 +69,7 @@ function Video(props) {
       // setTimeout(() => {
       //   setPlay(false);
       // }, 2000);
+
       } else {
       rootRef.current.children[0].play();
       setPlaying(true);
@@ -78,6 +81,17 @@ function Video(props) {
       }, 2000);
    }
    };
+
+   // const handleWait =() => {
+   //    playerStates('buffer');
+   // }
+   // const handlePlaying=()=>{
+   //    playerStates('playing');
+   // }
+   // const handleEnded=()=>{
+   //    playerStates('ended');
+   // }
+
    // console.log(JSON.stringify(props))
    const handlePlay = entry => {
       if (clicked) {
@@ -106,6 +120,30 @@ function Video(props) {
    rootMargin: '50px',
    threshold: [0.30, 0.75]
    });
+
+   useEffect(()=>{
+      console.log(props.id , props.activeVideoId,"props.activeVideoId", props.index);
+      if(props.id === props.activeVideoId){
+         if(videoAnalytics !== null){
+            console.log('end getting called');
+            reportPlaybackEnded();
+         }
+         reportPlaybackRequested({
+            id: props.id, url: props.url, contentId : props?.id, ref: rootRef?.current?.children[0]
+         });
+      }
+   },[props.activeVideoId])
+
+   useEffect(() => {
+      console.log(props.index,"index");
+      // window.onunload = () => {
+      //    analyticsCleanup();
+      // }
+     return () => {
+      analyticsCleanup();
+     }
+   }, [])
+   
 
    
 
@@ -236,6 +274,11 @@ function Video(props) {
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
+
+      //   onWaiting={handleWait}
+      //   onPlaying={handlePlaying}
+      //   onSeeked={handleEnded}
+
         onClick={handleVideoPress}
         className="vdo_player"
         // onEnded={(e)=> onReplay(e)}

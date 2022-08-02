@@ -32,6 +32,7 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import UserExperience from  "../commons/user-experience";
+import { playerStates, reportPlaybackEnded, reportPlaybackRequested, setPlayer, videoAnalytics } from '../../conviva';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -387,6 +388,20 @@ function Feed({ router }) {
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
+
+              //   if(videoAnalytics !== null){
+              //     console.log('end getting called');
+              //     reportPlaybackEnded();
+              //     //playerStates('buffer');
+              //  }
+              //  //console.log(props.id , props.activeVideoId,"props.activeVideoId", props.index);
+              // //  if(props.id === props.activeVideoId){
+              //   console.log(slides[activeIndex], "slide", currentActiveFeedItem);
+              //     reportPlaybackRequested({
+              //       id: currentActiveFeedItem.id, url: currentActiveFeedItem.video_url, ref: slides[activeIndex]?.firstChild?.firstChild
+              //     });
+                 
+              //  }
               }}
             >
               {
@@ -440,6 +455,7 @@ function Feed({ router }) {
                       tabName={tabName}
                       adData={shop?.adData}
                       showBanner={showBanner}
+                      index={id}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}

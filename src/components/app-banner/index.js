@@ -7,6 +7,7 @@ import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
+import { playerEvents } from '../../analytics/conviva/events.js';
 
 function AppBanner({notNowClick, videoId}) {
 
@@ -15,6 +16,11 @@ function AppBanner({notNowClick, videoId}) {
         toTrackMixpanel('launch');
         fbq.event('App Download Popup')
         trackEvent('App_Download_Popup');
+        playerEvents('waitStarted');
+        () => {
+          console.log('unmounted');
+          playerEvents('waitEnded');
+        }
       },[])
 
       const toTrackMixpanel = (type) =>{
@@ -102,6 +108,7 @@ function AppBanner({notNowClick, videoId}) {
             </div>
             <div onClick={()=>
                 {toTrackMixpanel('notNow')
+                 playerEvents('waitEnded')
                  notNowClick()}} className="my-2 text-xs md:text-base text-gray-800" >
                 <p>Not now</p>
             </div>

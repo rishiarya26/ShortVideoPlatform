@@ -15,6 +15,8 @@ import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import { init } from '../src/get-social';
+// import { initConviva } from '../src/conviva';
+import { initConvivaa } from '../src/analytics/conviva';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
@@ -220,7 +222,7 @@ function Hipi({
     }
   }
 
-  useEffect(()=>{
+  useEffect(()=>{    
     //let timer;
     try{ 
       // if(typeof window !== "undefined"){
@@ -237,7 +239,7 @@ function Hipi({
       // },0);
 
       updatingGoogleCookies();
-
+      initConvivaa()
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       const cookieAgree = getItem('cookie-agreed');
