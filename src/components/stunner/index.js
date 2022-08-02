@@ -60,7 +60,7 @@ const onStoreRedirect =(device)=>{
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_pastel_blue'>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-Hipi Stunner is designed for you to celebrate your uniqueness both body and in style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
+Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
 </p>
   </div>
 </div>
@@ -96,17 +96,19 @@ Hipi Stunner is designed for you to celebrate your uniqueness both body and in s
         </div> */}
       
         <div className='max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold purple_font pb-4'>How does Hipi Stunner unfold:</h3>
+            <h3 className='text-3xl text-center font-bold purple_font pb-4'>How does Hipi Stunner unfold</h3>
             <p className='text-gray-500 font-light text-lg pt-4'>It’s a 6-month contest for everyone and anyone who loves fashion irrespective of gender, age, height, weight or marital status. It’s a platform for all entertainment-loving people to come together to:</p>
             <div className='flex pt-4'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-500 font-light'>Create and consume great fashion-based content</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-500 font-light'>Share and showcase their talent with individuality</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-500 font-light'>Grow into the business of fashion</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-500 font-light'>Feel validated and by being seen, heard, loved and followed.</p></div>
-         <p className='text-gray-500 font-light text-lg pt-4'>Each month the participants enter two fashion-based challenges presented by Nikita Anand, Miss India Universe leading to content that is unique, fresh and entertaining.</p>
-         <p className='text-gray-500 font-light text-lg pt-4'>The best performing videos get visibility in the Discover section of Hipi App.</p>
-         <p className='text-gray-500 font-light text-lg pt-4'>At the end of each month, the very best content creator from amongst the best performing videos is chosen by Nikita Anand for the title of the Hipi Stunner in a memorable and a very special coronation ceremony.</p>
+         <p className='text-gray-500 font-light text-lg pt-4'>Each month the participants enter two fashion-based challenges presented by Nikita Anand that leads to content that is unique, fresh and entertaining.</p>
+         <p className='text-gray-500 font-light text-lg pt-4'>The best performing videos would get visibility in the Discover section of Hipi App.</p>
+         <p className='text-gray-500 font-light text-lg pt-4'>At the end of each month, the very best content creator amongst the best performing videos is chosen by Nikita Anand for the title of the Hipi Stunner in a memorable and a very special coronation ceremony.</p>
          <p className='text-gray-500 font-light text-lg pt-4'>Hipi Stunner gets a cash prize of Rs 1,00,000, and a blue ticked verified account on Hipi App.</p>
          <p className='text-gray-500 font-light text-lg pt-4'>At the end of six months, the six Hipi Stunners get a taste of life in the limelight that many only dream of as they walk the red carpet of the Zee Cine Awards, telecasted worldwide on TV.</p>
+         
+         <p className='text-gray-500 text-right w-full font-light text-xs pt-8 '>* Winners Terms and conditions apply</p>
          
         </div>
     </div>
@@ -132,6 +134,7 @@ Hipi Stunner is designed for you to celebrate your uniqueness both body and in s
               <div className='w-full flex flex-col justify-center items-center py-4'>
               <h4 className="font-medium text-gray-600  bg-white border border-gray-300 -mt-12 px-4 w-40 text-gray-600 text-center">{item?.tag}</h4>
               <h4 className="font-medium text-gray-600 p-4 pb-0 bg-white purple_font">{item?.name}</h4>
+              <p className='text-gray-600 text-sm'>Aug 1 to 14</p>
               {item.show&& <p className='text-sm px-4 text-gray-500 font-light text-lg pt-4' id={id}>{item?.content}</p>}
               <div id={id} className="cursor-pointer flex items-center w-full px-4" onClick={()=>handleClickStunner(id)}>
               <span className=" text-sm pr-2 font-light flex w-full justify-center text-gray-600 py-2" >{item.show ? "- Read less": "+ Read more"}</span>
