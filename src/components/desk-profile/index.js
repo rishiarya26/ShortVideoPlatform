@@ -21,13 +21,14 @@ import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import DeskVideoGallery from '../desk-video-gallery';
 import Header from '../desk-header';
 import DeskMenu from '../desk-menu';
 import VideoDetail from '../desk-video-detail';
 import UserTab from '../commons/tabs/desk-user-tab';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { videoSchema } from '../../utils/schema';
 
 const detectDeviceModal = dynamic(() => import('../open-in-app'),{
   loading: () => <div />,
@@ -69,6 +70,14 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+  const [videoSchemaItems, setVideoSchemaItems] = useState([])
+
+  const getVideoSchemaItems = async() =>{
+    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+    if(response?.data?.length > 0){
+      setVideoSchemaItems(response.data);
+    }
+  }
 
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
@@ -145,9 +154,18 @@ function DeskUsers({
   }
 
   useEffect(()=>{
+      let timer;
+       timer = setTimeout(()=>{
+        getVideoSchemaItems();
+       },500)
+    
+       console.log("typo", type);
+    
+    
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
+    return ()=>{clearTimeout(timer);}
   },[])
 
   // useEffect(()=>{
@@ -163,8 +181,10 @@ function DeskUsers({
     setTimeout(()=>{
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Profile';
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Profile'})
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Profile'})
+      ToTrackFbEvents('screenView');
+      toTrackFirebase('screenView',{'page' :'Profile'});
       track('Screen View',mixpanelEvents );
     },500);
   }, []);
@@ -227,7 +247,7 @@ function DeskUsers({
         // <AddUser/>       },
       notification: {
         others:'' ,
-        self: <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        self: <svg width="14" height="16" viewBox="0 0 14 16" fill="none" >
         <g clipPath="url(#clip0_1962:147)">
         <path d="M13.5799 11.8549L13.2999 11.7095C12.4599 11.0549 11.8999 10.0367 11.8999 9.01855V5.45492C11.8999 3.56401 10.9199 1.74583 9.30992 0.727646C7.90992 -0.217809 6.08992 -0.217809 4.68992 0.727646C3.07992 1.74583 2.09992 3.49128 2.09992 5.45492V8.94583C2.09992 10.0367 1.60992 10.9822 0.699922 11.6367L0.419922 11.8549C0.0699219 12.1458 -0.0700781 12.5822 -7.81268e-05 13.0186C0.139922 13.4549 0.559922 13.7458 0.979922 13.7458H4.19992C4.47992 14.9822 5.59992 15.9276 6.92992 15.9276C8.25992 15.9276 9.30992 14.9822 9.65992 13.7458H12.8799C13.3699 13.7458 13.7199 13.4549 13.8599 13.0186C14.0699 12.6549 13.9299 12.1458 13.5799 11.8549ZM6.99992 14.5458C6.50992 14.5458 6.01992 14.2549 5.80992 13.8186H8.25992C7.97992 14.2549 7.48992 14.5458 6.99992 14.5458ZM9.79992 12.364H4.19992H2.09992C3.00992 11.4913 3.49992 10.2549 3.49992 8.94583V5.45492C3.49992 4.0731 4.19992 2.69128 5.45992 1.96401C6.43992 1.30946 7.62992 1.30946 8.60992 1.96401C9.79992 2.69128 10.4999 4.00037 10.4999 5.45492V8.94583C10.4999 10.2549 10.9899 11.4186 11.8999 12.364H9.79992Z" fill="#161722"/>
         </g>
@@ -248,7 +268,7 @@ function DeskUsers({
       <ShareComp type={'profile'}/>
       </div>, 
         self: <div onClick={()=>router?.push('/profile-settings')}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>
         <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#161722"/>
         <path d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#161722"/>
@@ -355,6 +375,14 @@ function DeskUsers({
   
 
   return (
+    <>
+     {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
+      /* eslint-disable-next-line react/jsx-key */      
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, view: item?.viewCount}))}}
+        />
+    ))}
     <div className="flex flex-col w-screen h-screen">
      {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>
@@ -485,6 +513,7 @@ function DeskUsers({
     </div>
     </div>
     </div>
+    </>
   );
 }
 

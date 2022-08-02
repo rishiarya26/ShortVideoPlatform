@@ -27,6 +27,22 @@ export const toTrackFirebase = (type, commonInfo = {}, value) => {
       },
       'savelook' : ()=>{
         trackEvent('Save_Look', events)
+      },
+      'appDownloadPopup':()=> {
+        trackEvent('App_Download_Popup');
+      },
+      'appDownloadCTA':()=>{
+        trackEvent('App_Download_CTA');
+      },
+      'appOpenCTA':()=>{
+        trackEvent('App_Open_CTA', events);
+      },
+      'screenView':()=>{
+        trackEvent('Screen_View', events);
+      },
+      'creatorFormSubmitted' : ()=>{
+        commonWithIds();
+        track('Creator Form Submitted');
       }
     }
     type && toTrack?.[type] && toTrack?.[type]();

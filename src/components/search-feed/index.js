@@ -22,12 +22,8 @@ import { track } from '../../analytics';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { getOneLink, viewEvents } from '../../sources/social';
 import { getItem } from '../../utils/cookie';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
-import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl } from '../../utils/web';
 import Landscape from '../landscape';
 
 SwiperCore.use([Mousewheel]);
@@ -70,8 +66,10 @@ function SearchFeed({ router }) {
     // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Search Feed';
-    fbq.event('Screen View')
-    trackEvent('Screen_View',{'Page Name' :'Search Feed'})
+    // fbq.event('Screen View')
+    // trackEvent('Screen_View',{'Page Name' :'Search Feed'})
+    toTrackFirebase('screenView',{'page':'Search Feed'});
+    ToTrackFbEvents('screenView')
     track('Screen View',mixpanelEvents );
   }, []);
 
@@ -220,8 +218,8 @@ function SearchFeed({ router }) {
       'replay' : () => track('UGC Replayed', mixpanelEvents),
       'watchTime' : () => {
         mixpanelEvents['UGC Consumption Type'] = value?.watchTime
-        mixpanelEvents['UGC Duration'] = value?.duration
-        mixpanelEvents['UGC Watch Duration'] = value?.durationWatchTime
+        mixpanelEvents['UGC Duration'] = Math.round(value?.duration)
+        mixpanelEvents['UGC Watch Duration'] = Math.round(value?.durationWatchTime)
         track('UGC Watch Time',mixpanelEvents)
       },
       'cta' : ()=>{
@@ -236,26 +234,28 @@ function SearchFeed({ router }) {
 
     // const hashTags = item?.hashtags?.map((data)=> data.name);
 
-    mixpanelEvents['Creator ID'] = item?.userId;
-    // mixpanelEvents['Creator Handle'] = `${item?.userName}`;
+    mixpanelEvents['Creator ID'] = item?.videoOwners?.id;
+    mixpanelEvents['Creator Handle'] = item?.videoOwners?.userName;
     // mixpanelEvents['Creator Tag'] = item?.creatorTag || 'NA';
-    mixpanelEvents['UGC ID'] = item?.content_id;
+    mixpanelEvents['UGC ID'] = item?.id;
     // mixpanelEvents['Short Post Date'] = 'NA';
     // mixpanelEvents['Tagged Handles'] = hashTags || 'NA';
     // mixpanelEvents['Hashtag'] = hashTags || 'NA';
     // mixpanelEvents['Audio Name'] = item?.music_title || 'NA';
     // mixpanelEvents['UGC Genre'] = item?.genre;
     // mixpanelEvents['UGC Description'] = item?.content_description;
-    mixpanelEvents['Page Name'] = 'Search Feed';
+    mixpanelEvents['Page Name'] = 'Discover';
 
     type && toTrack?.[type] && toTrack?.[type]();
   }
   
   
 const onStoreRedirect = async ()=>{
-  trackEvent('App_Open_CTA')
-  fbq.event('App Open CTA')
-  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open', type: 'Button'});
+  // trackEvent('App_Open_CTA')
+  // fbq.event('App Open CTA')
+  toTrackFirebase('appOpenCTA');
+  ToTrackFbEvents('appOpenCTA');
+  toTrackMixpanel(videoActiveIndex,'cta',{name: 'Open App', type: 'Button'});
   let link = ONE_TAP_DOWNLOAD;
   const device = getItem('device-info');
   console.log(device)
@@ -328,7 +328,8 @@ try{
             setInitialPlayStarted(false);
             toTrackMixpanel('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
             toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-            fbq.event('watchTime')
+            ToTrackFbEvents('watchTime');
+            //fbq.event('watchTime')
 
             /*** video events ***/
               if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

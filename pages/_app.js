@@ -25,6 +25,7 @@ import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
 import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
 import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
+import { toGetSocialToken } from '../src/sources/get-social';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -153,9 +154,10 @@ function Hipi({
   const [country, setCountry] = useState('India');
   const [showCookies, setShowCookies] = useState(false);
   const [session, setSession] = useState(true);
-  const [sessionTimer, setSessionTimer] = useState(null);
+  // const [sessionTimer, setSessionTimer] = useState(null);
   const [timerArr, setTimerArr] = useState([])
   const [enableSession , setEnableSession] = useState(true)
+  const [previousTimer, setPreviousTimer] = useState(60);
 
   const router = useRouter();
   
@@ -225,6 +227,7 @@ function Hipi({
   useEffect(()=>{    
     //let timer;
     try{ 
+      window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
@@ -278,7 +281,7 @@ function Hipi({
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
           console.log('tokens there in _app.js')
           setTimeout(()=>{
-            init();
+            // init();
             initFirebase();
           },[1000])
         }else{
@@ -323,121 +326,134 @@ function Hipi({
       }
     }, [router.events])
 
- /* Extract out Mixpanel - Custom session event logic */   
+ /* To-Do : Extract out Mixpanel - Custom session event logic */   
 
-  // let setTimeoutsTracker = [];
-  // function endSessionOnIdle() {
-  //      console.error("reset - session end - from logout")
-  //      toTrackMixpanel('sessionEnd')
-  //      setTimeoutsTracker = null;
-  //      clearTimeouts();
-  //      setSessionTimer(undefined);
-  //      window.sessionStorage.setItem("sessionT",undefined);
-  //      window.sessionStorage.setItem("sessionEventTrack",null);
-  //      clearTimeouts();
-  // }
+  let setTimeoutsTracker = [];
+  function endSessionOnIdle() {
+      //  console.error("reset - session end - from logout")
+       toTrackMixpanel('sessionEnd')
+       setTimeoutsTracker = null;
+       clearTimeouts();
+       window.sessionStorage.setItem("minutes",undefined);
+       window.sessionStorage.setItem("sessionEventTrack",null);
+       clearTimeouts();
+  }
   
+  const setTimeouts = (timer) => {
+    setTimeoutsTracker = setTimeoutsTracker ===  (undefined || null) ? [] : setTimeoutsTracker;
+    setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && endSessionOnIdle()}, 1000 * 60));
+  };
 
-//   const setTimeouts = (timer) => {
-//     setTimeoutsTracker = setTimeoutsTracker ===  (undefined || null) ? [] : setTimeoutsTracker;
-//     setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && endSessionOnIdle()}, 1000 * 60));
-//   };
+  const clearTimeouts = () => {
+      if (setTimeoutsTracker?.length >0){ 
+        setTimeoutsTracker.map((data)=>{
+          clearTimeout(data)
+        })
+  };
+}
 
-//   const clearTimeouts = () => {
-//       if (setTimeoutsTracker?.length >0){ 
-//         setTimeoutsTracker.map((data)=>{
-//           clearTimeout(data)
-//         })
-//   };
-// }
+  const resetTimeout = () => {
+   let minutesTracker =  window.sessionStorage.getItem("minutes");
+      if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
+        // console.error("reset - session start R");
+        toTrackMixpanel('sessionStart')
+        window.sessionStorage.setItem('seconds',60);
+        window.sessionStorage.setItem("sessionEventTrack",undefined);
+        window.sessionStorage.setItem("minutes",0);
+        minutesTracker = 0;
+      }
+      clearTimeouts();
+      setTimeouts(minutesTracker);
+  };
 
-  // const resetTimeout = () => {
-  //  let timer =  window.sessionStorage.getItem("sessionT");
-  //     if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
-  //       console.error("reset - session start R");
-  //       toTrackMixpanel('sessionStart')
-  //       setSessionTimer(0);
-  //       window.sessionStorage.setItem("sessionEventTrack",undefined);
-  //       window.sessionStorage.setItem("sessionT",0);
-  //       timer = 0;
-  //     }
-  //     clearTimeouts();
-  //     setTimeouts(timer);
-  // };
+  useEffect(() => {
+  
+  /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
+    const timeTrackerInterval = setInterval(() => {
+     if(window.sessionStorage.getItem("sessionEventTrack") !== 'null'){
+      let minutesTracker = parseInt(window.sessionStorage.getItem('minutes')) || 0;
+      let secondsTracker = parseInt(window.sessionStorage.getItem('seconds')) || 60;
+      window.sessionStorage.setItem('seconds',secondsTracker === 0 ? 60 : secondsTracker-1);
+      if(minutesTracker < 6){
+        // console.log('checking...',minutesTracker, secondsTracker)
+        secondsTracker === 1 && window.sessionStorage.setItem('minutes',  minutesTracker+1)
+        }
+        else{
+         if( minutesTracker === 6) { 
+           toTrackMixpanel('sessionEnd')
+           toTrackMixpanel('sessionStart')
+          window.sessionStorage.setItem("minutes",0);
+          // console.error("reset - session end");
+          window.sessionStorage.setItem('seconds',60);
+          // console.error("reset - session start T");
+          resetTimeout();
+         }
+        }}
+    }, 1000);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log("reset timer ",sessionTimer)
-  //     if(sessionTimer < 6){
-  //     setSessionTimer(sessionTimer+1)
-  //     window.sessionStorage.setItem("sessionT",sessionTimer+1);
-  //     }
-  //     else{
-  //      if( sessionTimer === 6) { 
-  //        console.error('reset - session end')
-  //        toTrackMixpanel('sessionEnd')
-  //        console.error('reset - session start T')
-  //        toTrackMixpanel('sessionStart')
-  //       setSessionTimer(0)
-  //       window.sessionStorage.setItem("sessionT",0);
-  //       resetTimeout();
-  //      }
-  //     }
-  //   }, 1000*60);
+    return () => {
+      clearInterval(timeTrackerInterval);
+    };
+  });
 
-  //   return () => clearInterval(interval);
-  // });
  /*************************** */
     useEffect(()=>{
-      // console.log("Router**",document.referrer)
-      // // console.error("reset - session start")
-      // // toTrackMixpanel('sessionStart')
-      // if(typeof document != "undefined"){
-      //   console.log('sessDoc',document?.referrer,document?.referrer?.includes('localhost'))
-      //   let timer =  window.sessionStorage.getItem("sessionT") === 'null' ? 0 : window.sessionStorage.getItem("sessionT");
-      //   console.log('sessTimer',parseInt(timer),typeof timer)
-      //   if(timer !== null && document?.referrer?.includes('localhost')){
-      //     console.log('sessTimer**',timer,typeof timer)
-      //     if(typeof timer === 'string'){
-      //       timer = parseInt(timer);
-      //     } 
-      //     window.sessionStorage.setItem("sessionT",timer || 0);
-      //     setSessionTimer(timer || 0);
-      //   }else{
-      //     window.sessionStorage.setItem("sessionT",0);
-      //     setSessionTimer(0);
-      //     console.error("reset - session start");
-      //     toTrackMixpanel('sessionStart');
-      //   }
-      // }
+      console.log("Router**",document.referrer)
+      // console.error("reset - session start")
+      // toTrackMixpanel('sessionStart')
+      if(typeof document != "undefined"){
+        console.log('sessDoc',document?.referrer,document?.referrer?.includes('hipi.co.in'))
+        let minutesTracker =  window.sessionStorage.getItem("minutes") === 'null' ? 0 : window.sessionStorage.getItem("minutes");
+        if(minutesTracker !== null && document?.referrer?.includes('hipi.co.in')){
+          if(typeof minutesTracker === 'string'){
+            minutesTracker = parseInt(minutesTracker);
+          } 
+          window.sessionStorage.setItem("minutes",minutesTracker || 0);
+        }else{
+          window.sessionStorage.setItem("minutes",0);
+          // console.error("reset - session start");
+          toTrackMixpanel('sessionStart');
+        }
+      }
 
       window.onload = function () {
-        // window.sessionStorage.setItem('sessionEventTrack',undefined)
+        window.sessionStorage.setItem('sessionEventTrack',undefined)
         setTimeout(function () {
             setShowCookies(true);
         }, 5000);
     }
+    // guestGetSocialToken();
 
-    //   const events = [
-    //     'load',
-    //     'mousemove',
-    //     'mousedown',
-    //     'click',
-    //     'scroll',
-    //     'keypress',
-    //     'touchmove'
-    // ];
+      const events = [
+        'load',
+        'mousemove',
+        'mousedown',
+        'click',
+        'scroll',
+        'keypress',
+        'touchmove'
+    ];
 
-    // events.forEach((data)=>{
-    //   window.addEventListener(data,resetTimeout);
-    // })
-    // return () => {
-    //   events.forEach((data)=>{
-    //     window.addEventListener(data,resetTimeout);
-    //     clearTimeouts();
-    //   })
-    // }
+    events.forEach((data)=>{
+      window.addEventListener(data,resetTimeout);
+    })
+    return () => {
+      events.forEach((data)=>{
+        window.addEventListener(data,resetTimeout);
+        clearTimeouts();
+      })
+    }
   },[])
+
+ const guestGetSocialToken = async() =>{
+   let response;
+   try{ 
+     response =  await toGetSocialToken();
+    }
+   catch(e){
+     console.error("guest get social error",e)
+     response = await toGetSocialToken();
+   }};
 
   return (
     <>

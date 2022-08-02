@@ -72,7 +72,7 @@ export default function Hipi(params) {
 
       let userType = 'others'
       const tokens = localStorage.get('tokens');
-      const userId = localStorage.get('user-id')
+      const userId = localStorage.get('user-id');
       tokens && userId && userId === item?.id && (userType = 'self');
       setType(userType);
 

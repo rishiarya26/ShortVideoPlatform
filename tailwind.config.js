@@ -46,6 +46,7 @@ module.exports = {
         '20v':'20vw',
         '56v': '56.3vw',
         '70v': '70vw',
+        '80v':'80vh',
        },
       minWidth: {
         '0': '0',

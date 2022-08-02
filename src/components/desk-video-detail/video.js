@@ -5,12 +5,12 @@ import useWindowSize from "../../hooks/use-window-size";
 import CircularProgress from '../commons/circular-loader'
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame})=>{
+const Video = ({url, firstFrame, comp})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
     // const [clicked, setClicked] = useState(false);
-    const [play, setPlay] = useState(true);
+    const [play, setPlay] = useState();
 
     const rootRef = useRef(null);
     const size = useWindowSize();
@@ -18,6 +18,13 @@ const Video = ({url, firstFrame})=>{
     useEffect(()=>{
         setSeekedPercentage(0);
         setPlay(true);
+        if(comp && comp !=='deskSingleVideo'){
+          setPlay(true);
+          setPlaying(true);
+        }else{
+          setPlay(false);
+          setPlaying(false);
+        }
         setInitialPlayStarted(false)
     },[url])
 
@@ -61,11 +68,11 @@ const Video = ({url, firstFrame})=>{
     return(
     <div
       ref={rootRef}
-      className="video_card relative h-screen overflow-hidden"
+      className={`video_card relative ${comp==='deskSingleVideo' ? 'h-80v' : 'h-screen'} overflow-hidden`}
     >
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
-          autoPlay
+          autoPlay={comp==='deskSingleVideo' ? false : true}
           onContextMenu={(e)=>{
             e.preventDefault();
             return false}}
@@ -84,7 +91,7 @@ const Video = ({url, firstFrame})=>{
         >
           <source src={url} type="video/mp4" />
         </video>
-        {seekedPercentage === 0 && <div
+        {comp!=='deskSingleVideo' && seekedPercentage === 0 && <div
                 className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: 'flex text-white' }}
               >

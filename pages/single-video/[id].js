@@ -1,31 +1,161 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import ChooseOnType from '../../src/components/choose-on-type';
-import Feed from '../../src/components/feed';
-import FeedIphone from '../../src/components/feed-iphone';
-import OneVideo from '../../src/components/one-video';
+/*eslint-disable react-hooks/rules-of-hooks */
+import { useState, useEffect } from 'react';
+import EmbedVideo from '../../src/components/embed-video';
+import { getSingleFeed } from '../../src/sources/feed/embed';
+import {
+  SeoMeta,
+  VideoJsonLd
+} from '../../src/components/commons/head-meta/seo-meta';
+import { supportedLanguages } from '../../src/hooks/use-translation';
+import { getEffectiveVideoUrl } from '../../src/utils/content';
+import SingleVideo from '../../src/components/single-video';
 import { getItem } from '../../src/utils/cookie';
-import { updateCampaignId, updateUtmData } from '../../src/utils/web';
+import { useRouter } from 'next/router';
+import Error from '../../src/components/404';
+import VideoDetail from '../../src/components/desk-video-detail';
+import DeskMenu from '../../src/components/desk-menu';
+import Header from '../../src/components/desk-header';
+import { videoSchema } from '../../src/utils/schema';
 
-export default function Hipi() {
-    const router = useRouter();
+const languageCodes = Object.keys(supportedLanguages).map(
+  keyName => supportedLanguages[keyName].code
+);
+
+// TODO enable mock mode here
+export default function Hipi(params={}) {
+  const [seekedPercentage, setSeekedPercentage] = useState(0);
+  const [videoUrl, setVideoUrl] = useState(null);
+
+  const router = useRouter();
+  const {
+    data: item = {},
+    errorCode,
+    message,
+    status
+  } = params;
+  const canShop = item?.canShop?.status || 'fail';
+  const shopCards = item?.canShop?.data;
+  const videoId = item?.content_id;
+  const updateSeekbar = percentage => {
+    setSeekedPercentage(percentage);
+  };
+// console.log(item)
+  useEffect(() => {
+    // console.log(item)
+    const videoUrl = getEffectiveVideoUrl(item.video_urls);
+    setVideoUrl(videoUrl);
+  }, []);
+
+  if (status === 'fail') {
+    return <Error/> ;
+  }
+
   const device = getItem('device-type')
-  // console.log('latest build')
 
-  useEffect(()=>{
-    const queryStrings = router?.query;
-    updateUtmData(queryStrings);
-    updateCampaignId(queryStrings);
-  },[])
-
-  if(device === 'desktop'){ 
-    router?.push('/');
-    return null;
+  const comp = {
+    desktop :  
+    <div className='flex flex-col'>
+    <Header/>
+    <div className='flex w-full pt-16 mt-2 relative'>
+    <div className='w-2/12 w-prof-menu -mt-24 menu-sm'>
+    <DeskMenu width={'w-prof-menu menu-sm-w'}/>
+    </div>
+    <div className="w-10/12 flex flex-col pl-4">
+    <div onClick={()=>router && router.push('/feed/for-you')} className='flex py-6  items-center cursor-pointer'>
+      <svg  width="20" height="20" viewBox="0 0 48 48" fill="currentColor" ><path fillRule="evenodd" clipRule="evenodd" d="M4.58579 22.5858L20.8787 6.29289C21.2692 5.90237 21.9024 5.90237 22.2929 6.29289L23.7071 7.70711C24.0976 8.09763 24.0976 8.7308 23.7071 9.12132L8.82843 24L23.7071 38.8787C24.0976 39.2692 24.0976 39.9024 23.7071 40.2929L22.2929 41.7071C21.9024 42.0976 21.2692 42.0976 20.8787 41.7071L4.58579 25.4142C3.80474 24.6332 3.80474 23.3668 4.58579 22.5858Z"></path></svg>
+      <p className="text-gray-600 font-medium">Back to For You</p>
+    </div>
+    <VideoDetail
+    userName={item?.userName} 
+    likesCount={item?.likesCount} 
+    music_title={item?.music_title} 
+    userProfilePicUrl={item?.userProfilePicUrl} 
+    url={videoUrl && videoUrl} 
+    firstFrame={item?.firstFrame} 
+    firstName={item?.videoOwnersDetail?.firstName}
+    lastName={item?.videoOwnersDetail?.lastName} 
+    description={item?.content_description} 
+    videoId={item?.content_id}
+    shareCount={item?.shareCount}
+    socialId={item?.getSocialId}
+    commentCount={item?.commentCount}
+    userVerified = {item?.verified}
+    comp = 'deskSingleVideo'
+    />
+    </div>
+    </div>
+    </div>,
+    mobile : <SingleVideo
+    updateSeekbar={updateSeekbar}
+    socialId={item?.getSocialId}
+    url={videoUrl}
+    id={item?.content_id}
+    comments={item?.commentsCount}
+    likes={item?.likesCount}
+    music={item?.musicCoverTitle}
+    musicTitle={item?.music_title}
+    profilePic={item?.userProfilePicUrl}
+    userName={item?.userName}
+    musicCoverTitle={item?.musicCoverTitle}
+    hashTags={item?.hashTags}
+    canShop={canShop}
+    shopCards={shopCards}
+    videoId={videoId}
+    poster={item?.firstFrame}
+    seekedPercentage={seekedPercentage}
+    description={item?.content_description}
+    userId={item?.userId}
+    genre={item?.genre}
+  />
   }
 
   return (
     <>
-   <OneVideo/>
+     <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc}))}}
+        />
+      <SeoMeta
+        data={{
+          title: `${item?.content_description} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
+          description: `${item?.likesCount} likes Watch trending Hipi videos from ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}). Download the App Now!`        
+        }}
+     />
+      {item && comp?.[device]}
     </>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  // const contentId = ctx?.query?.id;
+  const {
+     params
+    // , locale,
+    // defaultLocale, locales
+  } = ctx;
+  //const uri = new URL(req.url, `http://${req.headers.host}`).href;
+  const { id } = params;
+  let data = {};
+
+  try {
+    data = await getSingleFeed({
+      id
+    });
+  } catch (e) {
+    data = {
+      status: e.status,
+      errorCode: e.errorCode,
+      'http-status': e['http-status'],
+      message: e.message
+    };
+  }
+  return {
+    props: {
+      // uri,
+      // locale,
+      // locales,
+      // defaultLocale,
+      ...data
+    }
+  };
 }

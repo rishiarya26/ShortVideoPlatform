@@ -8,17 +8,24 @@ import { getOneLink } from '../../sources/social';
 import * as fbq from '../../analytics/fb-pixel'
 import { trackEvent } from '../../analytics/firebase';
 import { playerEvents } from '../../analytics/conviva/events.js';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
 function AppBanner({notNowClick, videoId}) {
 
 
     useEffect(()=>{
+      console.log("callinggggg")
         toTrackMixpanel('launch');
         fbq.event('App Download Popup')
         trackEvent('App_Download_Popup');
         playerEvents('waitStarted');
-        () => {
-          console.log('unmounted');
+        // fbq.event('App Download Popup')
+        //trackEvent('App_Download_Popup');
+        ToTrackFbEvents('appDownloadPopup');
+        toTrackFirebase('appDownloadPopup');
+        
+        () =>{
           playerEvents('waitEnded');
         }
       },[])
@@ -47,12 +54,12 @@ function AppBanner({notNowClick, videoId}) {
         type && toTrack?.[type] && toTrack?.[type]();
       }
 
-
-
     const onStoreRedirect = async ()=>{
         toTrackMixpanel('downloadClick');
-        fbq.event('App Download CTA');
-        trackEvent('App_Download_CTA')
+        ToTrackFbEvents('appDownloadCTA')
+        toTrackFirebase('appDownloadCTA')
+        // fbq.event('App Download CTA');
+        // trackEvent('App_Download_CTA')
         let link = ONE_TAP_DOWNLOAD;
         const device = getItem('device-info');
         console.log(device)

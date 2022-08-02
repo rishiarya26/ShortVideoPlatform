@@ -28,11 +28,14 @@ import Img from "../commons/image";
 import DeskHoverInfo from "../desk-hover-info";
 import VerifiedLg from "../commons/svgicons/verified-lg";
 import Description from "../desk-description";
+import Header from "../desk-header";
+import DeskMenu from "../desk-menu";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified}) {
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,
+comp = 'normal'}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -57,7 +60,7 @@ hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',
 
 useEffect(()=>{
 //  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`
- window.history.replaceState('video detail page','detail',`/video/${videoId}`
+ comp !== 'deskSingleVideo' && window.history.replaceState('video detail page','detail',`/video/${videoId}`
  )
 },[videoId])
 
@@ -73,60 +76,60 @@ const gotUrl = window?.location?.href;
 let domain = (new URL(gotUrl));
 domain = domain?.origin;
 
-const redirect = (item) =>{
-   try{  
-     if(item?.indexOf('#')!==-1){
-       const trimmedHashtag = trimHash(item);
-       console.log("item",trimmedHashtag);
-       router?.push(`/hashtag/${trimmedHashtag}`);
-     }else
-     if(item?.indexOf('@')!==-1){
-       const userHandle = (item);
-       // console.log("item",trimmedHashtag);
-       router?.push(`/${userHandle}`);
-     }
-   }catch(e){
-       console.log("error in hashtag redirect",e)
-     }
+// const redirect = (item) =>{
+//    try{  
+//      if(item?.indexOf('#')!==-1){
+//        const trimmedHashtag = trimHash(item);
+//        console.log("item",trimmedHashtag);
+//        router?.push(`/hashtag/${trimmedHashtag}`);
+//      }else
+//      if(item?.indexOf('@')!==-1){
+//        const userHandle = (item);
+//        // console.log("item",trimmedHashtag);
+//        router?.push(`/${userHandle}`);
+//      }
+//    }catch(e){
+//        console.log("error in hashtag redirect",e)
+//      }
+//    }
+
+   // const 
+
+   const NavigationBtns = {
+      normal : <>
+       {activeIndex > 0 && <div onClick={handleDownClick} className="absolute right-4 top-1/2 -mt-16  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
+          <UpArrow/>
+       </div>}
+       <div onClick={handleUpClick} className="absolute right-4 top-1/2  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
+          <DownArrow/>
+       </div>
+       <div onClick={hideVideoDetail} className="absolute left-4 bg-gray-300 p-2 bg-opacity-30 rounded-full top-6 cursor-pointer">
+          <Close/>
+       </div>
+       </>,
+      deskSingleVideo : ''
    }
 
+   const parentWidth = {
+      normal : 'w-screen h-screen',
+      deskSingleVideo : 'w-full h-full'
+   }
+   const videoheight= {
+      normal : 'h-screen',
+      deskSingleVideo : 'h-80v'
+   }
 return (
-<div className="flex w-screen h-screen">
-   <div className="flex w-8/12 h-screen bg-black justify-center relative overflow-hidden">
-      {/* <div className="video_blur w-8/12">
-         <img src="https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1632757116/hipi/videos/6d362fe8-1f36-450b-b100-14514e4b998e/6d362fe8-1f36-450b-b100-14514e4b998e_00.webp"/>
-      </div> */}
-      <Video url={url} firstFrame={firstFrame} shareCount={shareCount}/>
-      {/* <div className="absolute right-4 bottom-6 cursor-pointer">
-         <Mute/>
-      </div> */}
-     {activeIndex > 0 && <div onClick={handleDownClick} className="absolute right-4 top-1/2 -mt-16  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
-         <UpArrow/>
-      </div>}
-      <div onClick={handleUpClick} className="absolute right-4 top-1/2  bg-gray-300 p-2 bg-opacity-30 rounded-full cursor-pointer">
-         <DownArrow/>
-      </div>
-      <div onClick={hideVideoDetail} className="absolute left-4 bg-gray-300 p-2 bg-opacity-30 rounded-full top-6 cursor-pointer">
-         <Close/>
-      </div>
+<div className={`flex ${parentWidth[comp]}`}>
+   <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
+      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp}/>
+      {NavigationBtns[comp]}
    </div>
-   <div className="flex w-4/12 h-screen overflow-hidden bg-white flex-col">
+   <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>
       <div className="head-sec flex ">
          <div className="videoFooter__text w-full">
-            {/* <div className="flex justify-between items-center pb-2">
-            <div className="avatar">
-                  <div className="flex items-center w-16 h-16 overflow-hidden rounded-full">
-                     <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />    
-                  </div>
-               </div>
-               <div className="flex justify-end">
-                  <button className="font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 h-10 bg-hipired text-white">Follow</button>
-               </div>
-            </div> */}
             <div className="videoFooter__text w-full px-6 pt-4 pb-2">
             <div className="flex justify-between items-center">
                <div className="flex items-center">
-                  {/* <img   alt="profile-pic" className="usrimg w-12 h-12 rounded-full  mr-4" src={userProfilePicUrl} /> */}
                   <div onClick={pushToProfile} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
                    <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
                   </div>
@@ -147,7 +150,6 @@ return (
                   </div>
                </div>   
                <div className="flex justify-end">
-                  {/* <button className="rounded text-md font-semibold  px-6 p-0.5 border border-hipired text-hipired">Follow</button> */}
                </div>
             </div>
             <div className=" text-sm w-8/12 mb-2 mt-1 text-gray-700">
@@ -175,6 +177,7 @@ return (
       userName={userName}
       videoId={videoId}
       socialId={socialId}
+      comp={comp}
    />
          {/* <div className="flex">
             <div className="pr-4 flex items-center">

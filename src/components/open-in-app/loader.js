@@ -11,7 +11,7 @@ function CommentLoader() {
         </div>
         {/* <div id="commentlike" className="flex flex-col items-center">
             <div className="pb-2">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"

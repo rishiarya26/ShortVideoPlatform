@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { localStorage } from "../../utils/storage";
+import { conforms } from "lodash";
 
 const login = dynamic(() => import("../auth-options"), {
   loading: () => <div />,
@@ -30,7 +31,8 @@ const Sidebar = ({
   userName,
   videoId,
   socialId,
-  commentCount
+  commentCount,
+  comp
 }) => {
   const [isLiked, setIsLiked] = useState({ like: false, reactionTime: "past" });
   const [reactionCount, setReactionCount] = useState({ likes: likes });
@@ -58,7 +60,7 @@ const Sidebar = ({
   const like = () => {
     postReaction("like", socialId);
     setIsLiked({ like: true });
-    getVideoReactions(socialId, "now", "add");
+    setTimeout(()=>{getVideoReactions(socialId, "now", "add");},[500]);
     //    const mixpanelEvents = commonEvents();
     //    mixpanelEvents['UGC Id'] = activeVideoId;
     //   //  mixpanelEvents['Creator Id'] = videoOwnersId;
@@ -70,17 +72,19 @@ const Sidebar = ({
   const selectedLike = useAuth(showLoginOptions, like);
 
   const getVideoReactions = async (socialId, time, action) => {
+    console.log("likes Count**",socialId,time,action)
     let isLiked;
     const details = await getActivityDetails(socialId);
+    console.log("%likes Count***",details)
     // console.log('like count',details.reactionsCount.like)
     if (time === "now") {
       if (action === "add") {
         setReactionCount({
-          likes: details?.reactionsCount?.like + 1 || likes + 1,
+          likes: details?.reactionsCount?.like || likes + 1,
         });
       } else if (action === "delete") {
         setReactionCount({
-          likes: details?.reactionsCount?.like - 1 || likes - 1,
+          likes: details?.reactionsCount?.like || likes - 1,
         });
       }
     } else {
@@ -95,6 +99,7 @@ const Sidebar = ({
           ? { like: true, reactionTime: "past" }
           : { like: false, reactionTime: "past" };
     }
+    console.log('like**',isLiked)
     return isLiked;
   };
 
@@ -105,15 +110,32 @@ const Sidebar = ({
        if (tokens?.shortsAuthToken && tokens?.accessToken )
      {  
         setReactionCount({likes : null});
-       const getLikeReaction = async()=>{  
+       
+        { const getLikeReaction = async()=>{  
           const isLiked =  await getVideoReactions(socialId, 'past');
-          setIsLiked({like : isLiked, reactionTime: 'past'});
+          // console.log("%%isLiked",isLiked)
+          setIsLiked(isLiked);
          }
-         getLikeReaction();
+        // setTimeout(()=>{
+        //   console.log('%%**')
+            comp === 'deskSingleVideo' &&  setTimeout(()=>{getLikeReaction()},2000)
+            comp === 'normal' && setTimeout(()=>{getLikeReaction()},1000)
+      }
      }else{
-         setReactionCount({likes : likes});
+         comp === 'normal' && setReactionCount({likes : likes});
      }
   }, [videoId]);
+
+  useEffect(()=>{
+    if(localStorage.get('get-social') === 'success'){
+      const getLikeReaction = async()=>{  
+        const isLiked =  await getVideoReactions(socialId, 'past');
+        console.log("%%isLiked",isLiked)
+        setIsLiked(isLiked);
+       }
+        getLikeReaction()
+    }
+  },[localStorage.get('get-social')])
 
   /*************** LIKE  ********************/
 
@@ -127,7 +149,8 @@ const Sidebar = ({
               onClick={() => {
                 deleteReaction("like", socialId);
                 setIsLiked({ like: false, reactionTime: "now" });
-                getVideoReactions(socialId, "now", "delete");
+                setTimeout(()=>{getVideoReactions(socialId, "now", "delete");},[500]);
+                
                 //  const mixpanelEvents = commonEvents();
                 //  mixpanelEvents['UGC Id'] = activeVideoId;
                 //  // mixpanelEvents['Creator Id'] = videoOwnersId;

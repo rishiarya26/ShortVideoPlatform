@@ -110,8 +110,10 @@ function Feed({ router }) {
     if(initialLoadComplete === true){
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Feed'});
+      //fbq.event('Screen View')
+      ToTrackFbEvents('screenView')
+      //trackEvent('Screen_View',{'Page Name' :'Feed'});
+      toTrackFirebase('screenView',{'page':'Feed'});
     }
   },1500);
   }, [initialLoadComplete]);
@@ -526,9 +528,11 @@ function Feed({ router }) {
 
  
 const onStoreRedirect = async ()=>{
-  fbq.event('App Open CTA')
   toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-  trackEvent('App_Open_CTA')
+  // fbq.event('App Open CTA')
+  // trackEvent('App_Open_CTA')
+  ToTrackFbEvents('appOpenCTA');
+  toTrackFirebase('appOpenCTA');
   let link = ONE_TAP_DOWNLOAD;
 try{  
  if(activeVideoId){ 

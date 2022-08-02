@@ -17,12 +17,12 @@ import useDrawer from '../../hooks/use-drawer';
 import detectDeviceModal from "../open-in-app"
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import dynamic from 'next/dynamic';
-import { track } from '../../analytics';
-import * as fbq from '../../analytics/fb-pixel'
 import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { trackEvent } from '../../analytics/firebase';
 import { getCanonicalUrl } from '../../utils/web';
 import { getItem } from '../../utils/cookie';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { trimHash } from '../../utils/string';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -62,9 +62,14 @@ function HashTag({router}) {
 
   useEffect(()=>{
     setTimeout(()=>{
-      fbq.event('Screen View')
-      trackEvent('Screen_View',{'Page Name' :'Hashtag'})
-      toTrackMixpanel('screenView',{pageName:pageName})
+      //fbq.event('Screen View')
+      //trackEvent('Screen_View',{'Page Name' :'Hashtag'})
+      ToTrackFbEvents('screenView');
+      toTrackFirebase('screenView',{'page' :'Hashtag'});
+      // toTrackMixpanel('screenView',{pageName:pageName});
+      // fbq.event('Screen View')
+      // trackEvent('Screen_View',{'Page Name' :'Hashtag'})
+      toTrackMixpanel('screenView',{pageName:pageName,hashtagName:trimHash(item)})
     },[500])
     window.onunload = function () {
       window?.scrollTo(0, 1);

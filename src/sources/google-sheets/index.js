@@ -22,4 +22,22 @@ async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre})
   }
 }
 
-export { postCreatorData };
+async function postStunnerData({name,ques,mobile,email}) {
+  let payload = {
+      Name:name,
+      Question: ques,
+      Mobile:mobile,
+      Email:email
+  }  
+  let response = {};
+  try {
+    const apiPath = `https://sheet.best/api/sheets/cf9f504c-df62-4fd3-9cfc-873daa27c4d6`;
+    response = await post(apiPath,payload,{'content-type':'json'});
+    console.log('resp**',response);
+    return Promise.resolve(response);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
+export { postCreatorData, postStunnerData };
