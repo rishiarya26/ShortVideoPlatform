@@ -1169,7 +1169,7 @@ export const repoList = {
           viewCount: '52',
           description: 'a',
           duration: '',
-          thumbnail: 'http://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
+          thumbnail: 'https://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
           pristine_image: 'hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c',
           url: 'https://z5shorts.akamaized.net/2020/6/19/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c_512.mp4?hdnea=st=1615285175~exp=1615299575~acl=/*~hmac=0a71db53dd6655bc62bdf564a0fc9b8b08c8d129de26e366f06c7909a7678012',
           video: {
@@ -1189,7 +1189,7 @@ export const repoList = {
               pristine_image: ''
             },
             sound: {
-              thumbnail: 'http://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
+              thumbnail: 'https://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
               author: 'igstest',
               name: 'igstest1595135175699',
               id: 'a39e0ce6-8906-49ae-b8b6-12eadceba74d',
@@ -1209,7 +1209,7 @@ export const repoList = {
               'sports'
             ],
             aiModrationStatus: 'true',
-            soundData: '{"id":"a39e0ce6-8906-49ae-b8b6-12eadceba74d","name":"igstest1595135175699","displayName":"igstest1595135175699","fileUrl":"https://z5shorts.akamaized.net/2020/6/19/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c_audio.mp3","thumbnailUrl":"http://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg","createdOn":"07/19/2020 10:36:15","status":"ACTIVE","album":"igstest1595135175699","artist":"igstest","soundOwnersId":"06630c27-f238-4d92-b543-7ab9d2a9b518","soundType":"music","updatedTimestamp":1595135175700,"isOriginal":true}',
+            soundData: '{"id":"a39e0ce6-8906-49ae-b8b6-12eadceba74d","name":"igstest1595135175699","displayName":"igstest1595135175699","fileUrl":"https://z5shorts.akamaized.net/2020/6/19/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c_audio.mp3","thumbnailUrl":"https://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg","createdOn":"07/19/2020 10:36:15","status":"ACTIVE","album":"igstest1595135175699","artist":"igstest","soundOwnersId":"06630c27-f238-4d92-b543-7ab9d2a9b518","soundType":"music","updatedTimestamp":1595135175700,"isOriginal":true}',
             updatedOn: '07/17/2020 18:28:54',
             lCount: 1,
             users: [
@@ -1242,7 +1242,7 @@ export const repoList = {
               CloudfrontURL: ''
             },
             advancedSettings: '{"A":false,"B":true,"C":true,"D":true,"getSocialId":"","b":{},"d":{},"m":"Post HiPi","n":"a","p":{"a":"vandana ks","b":"06630c27-f238-4d92-b543-7ab9d2a9b518"},"s":true,"t":true,"u":true,"v":true,"y":"https://hipi-videos-stage.s3.ap-south-1.amazonaws.com/src%2Fshorts_1594990529631.mp4","z":0.0}',
-            thumbnailDynamic: 'http://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
+            thumbnailDynamic: 'https://zee5-staging-ressh.cloudinary.com/image/upload/v1595135147/hipi/videos/2a01a3cd-82f6-416e-a78d-0b2718f49b7c/2a01a3cd-82f6-416e-a78d-0b2718f49b7c.jpg',
             moderationSecondaryCategories: [
               'wrestling'
             ],

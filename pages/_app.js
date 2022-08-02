@@ -225,7 +225,7 @@ function Hipi({
   useEffect(()=>{
     //let timer;
     try{ 
-      window.sessionStorage.setItem('searchExecuted', false)
+      window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);

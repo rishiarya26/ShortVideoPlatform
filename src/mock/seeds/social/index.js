@@ -12,10 +12,10 @@ export const comments = {
           'text': 'I love this beautiful app',
           'attachments': [
             {
-              'video': 'http://cdn.getsocial.im/video1.mp4'
+              'video': 'https://cdn.getsocial.im/video1.mp4'
             },
             {
-              'image': 'http://cdn.getsocial.im/image.png'
+              'image': 'https://cdn.getsocial.im/image.png'
             }
           ]
         }
@@ -88,10 +88,10 @@ export const comments = {
           'text': 'This is one more comment',
           'attachments': [
             {
-              'video': 'http://cdn.getsocial.im/video1.mp4'
+              'video': 'https://cdn.getsocial.im/video1.mp4'
             },
             {
-              'image': 'http://cdn.getsocial.im/image.png'
+              'image': 'https://cdn.getsocial.im/image.png'
             }
           ]
         }
@@ -164,10 +164,10 @@ export const comments = {
           'text': 'This is yet another comment',
           'attachments': [
             {
-              'video': 'http://cdn.getsocial.im/video1.mp4'
+              'video': 'https://cdn.getsocial.im/video1.mp4'
             },
             {
-              'image': 'http://cdn.getsocial.im/image.png'
+              'image': 'https://cdn.getsocial.im/image.png'
             }
           ]
         }
