@@ -1,0 +1,52 @@
+.parentContainer{
+    padding: 64px 140px 100px;
+    margin: auto;
+    @apply flex flex-col;
+}
+
+.heading{
+    font-weight: 700;
+    font-size: 57px;
+    line-height: 1;
+}
+
+.container{
+    @apply flex flex-row;
+}
+
+.cardsWrapper{
+    @apply box-border;
+    width: 80%;
+}
+
+.sideBarWrapper{
+    width: 20%;
+}
+.tabWrapper{
+    display: none;
+}
+
+.headerWrapper{
+    width: 100%;
+    max-width: 1150px;
+}
+
+@media screen and (max-width:990px) {
+    .heading{
+        font-weight: 700;
+        font-size: 33px;
+        line-height: 1;
+    }
+    .parentContainer{
+        padding: 40px 24px 50px;
+    }
+    .sideBarWrapper{
+        display: none;
+    }
+    .cardsWrapper{
+        width: 100%;
+    }
+    .tabWrapper{
+        @apply w-full block sticky top-16 z-10;
+    }
+}
