@@ -127,14 +127,15 @@ Hipi Stunner is designed for you to celebrate your uniqueness both in body and s
           <div className='flex  w-full flex-col md:flex-row justify-center'>
            {stunnerData.map((item,id)=>(
            <div key={id} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
-              <div className='overflow-hidden'>
-              <img className=''alt="Hipi Stunner Challenges" src={withBasePath(`images/stunner/${item?.imageURL}`)} />
+              <div className='overflow-hidden cursor-pointer' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
+              <img className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
               <h4 className="font-medium text-gray-600  bg-white border border-gray-300 -mt-12 px-4 w-40 text-gray-600 text-center">{item?.tag}</h4>
               <h4 className="font-medium text-gray-600 p-4 pb-0 bg-white purple_font">{item?.name}</h4>
               <p className='text-gray-700 font-light text-sm'>{item?.date}</p>
-              {item.show&& <p className='text-sm px-4 text-gray-500 font-light text-lg pt-4' id={id}>{item?.content}</p>}
+              {item.show&& <p className='text-sm px-4 text-gray-500 font-light text-lg py-4' id={id}>{item?.content}</p>}
+              {item?.promoUrl&& <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open(item.promoUrl)}>Watch challenge video</div>}
               <div id={id} className="cursor-pointer flex items-center w-full px-4" onClick={()=>handleClickStunner(id)}>
               <span className=" text-sm pr-2 font-light flex w-full justify-center text-gray-600 py-2" >{item.show ? "- Read less": "+ Read more"}</span>
               </div>

@@ -896,6 +896,9 @@ title:first-letter {
   .purple_font{
     color: #6e057a;
   }
+  .purple_bg{
+    background-color: #6e057a;
+  }
   .h-fit{
     height: fit-content;
   }
