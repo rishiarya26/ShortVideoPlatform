@@ -122,39 +122,30 @@ function Video(props) {
    });
 
    useEffect(()=>{
-      console.log(props.id , props.activeVideoId,"props.activeVideoId", props.index);
+      let id = props?.id;
+      let url = props?.url;
+      let currentRef = rootRef?.current?.children[0];
+
       if(props.id === props.activeVideoId){
-         if(videoAnalytics !== null){
-            console.log('end getting called');
-            reportPlaybackEnded();
-         }
-         reportPlaybackRequested({
-            id: props.id, url: props.url, ref: rootRef?.current?.children[0]
-         });
+         if(videoAnalytics !== null) reportPlaybackEnded();
+         reportPlaybackRequested({ id, url, ref: currentRef });
       }
    },[props.activeVideoId])
 
    useEffect(() => {
       if(typeof window !== undefined){
          window?.addEventListener("beforeunload", ()=>{
-            if(videoAnalytics !== null){
-               reportPlaybackEnded();
-            }
+            if(videoAnalytics !== null) reportPlaybackEnded();
          })
       }
       return () => {
          window.removeEventListener('beforeunload', ()=>{
-            if(videoAnalytics !== null){
-               reportPlaybackEnded();
-            }
+            if(videoAnalytics !== null) reportPlaybackEnded();
          });
          analyticsCleanup();
       }
    }, [])
    
-
-   
-
    // useEffect(()=>{
    //    if(props?.comp === 'feed'){
    //    if(props.initialPlayStarted && play === true){

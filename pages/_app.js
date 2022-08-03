@@ -165,15 +165,6 @@ function Hipi({
     setLoading(false)
   }
 
-  // const loadedGS=()=>{
-  //   setLoadingGS(false);
-  //   if(typeof window !== "undefined"){
-  //     if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
-  //       window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
-  //     }
-  //   }
-  // }
-
   const getCountry = async()=>{
     try{ 
       const resp = await detectCountry();
