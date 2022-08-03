@@ -31,11 +31,16 @@
     max-width: 1150px;
 }
 
+.featureCardWrapper{
+    margin-top: 42px;
+}
+
 @media screen and (max-width:990px) {
     .heading{
         font-weight: 700;
         font-size: 33px;
         line-height: 1;
+        text-align: center;
     }
     .parentContainer{
         padding: 40px 24px 50px;

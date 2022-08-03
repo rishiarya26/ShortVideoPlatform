@@ -6,9 +6,10 @@ import StaticFooter from '../components/static-footer';
 import { withBasePath } from "../../src/config";
 import { useRouter } from 'next/router';
 import styles from "./mainPage.module.css";
+import Card from './Card';
 
 const categoriesObj = {"All": "/", "News": "news", "Product": "product", "Creator": "creator", "Business": "business"};
-export default function MainPage({cards,heading="", children}) {
+export default function MainPage({cards,heading="", children, featureCard={}}) {
     const router = useRouter();
     const pathnameExtract = (pathname) => {
         const pathNameArray = pathname.split("/");
@@ -39,6 +40,7 @@ export default function MainPage({cards,heading="", children}) {
         </div>
         <div className={styles.parentContainer}>
            {cards && <div className={styles.heading}>{heading}</div>}
+            {/* <div className={styles.featureCardWrapper}><Card post={featureCard}/></div> */}
             <div className={`${styles.container}  ${cards && "mt-16"}`}>
                 <div className={styles.sideBarWrapper}>
                     <SideBar

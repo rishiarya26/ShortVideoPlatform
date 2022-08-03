@@ -29,20 +29,20 @@ function generateRichPara(paraItem){
 }
 
 
-const Description = ({ blok }) => {
-  const { text:{content} } = blok;
+const Description = ({ blok={} }) => {
+  const { text:{content = {}} = {} } = blok;
 
   return (<div className="mt-3"  {...storyblokEditable(blok)}>
-    {content.map((data)=>{
+    {content.length > 1 && content?.map((data)=>{
       const uuid = generateUUID(false);
       let subPara = "";
       if(data?.content){
-        data.content.forEach((paraItem)=>{
+        data?.content.forEach((paraItem)=>{
           subPara = subPara + generateRichPara(paraItem);
         })
-        return <><span className={styles.link} dangerouslySetInnerHTML={{__html: subPara}}/><br/></>;
+        return <><span key={uuid} className={styles.link} dangerouslySetInnerHTML={{__html: subPara}}/><br/></>;
       } else {
-        return <br/>
+        return <br key={uuid}/>
       }
     })}
   </div>);

@@ -6,11 +6,10 @@ import styles from "./card.module.css";
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-export default function Card({post}) {
-    const { full_slug, content: {body} } = post;
-    const [{ heading, subheading, type}] = body;
-    const image = body?.[0]?.cardImage?.filename;
-    console.log("debug", image)
+export default function Card({post={}}) {
+    const { full_slug=null, content: {body = {}} = {} } = post;
+    const [{ heading=null, subheading=null, type=""}] = body;
+    const image = body?.[0]?.cardImage?.filename || null;
     const newDate = new Date(post?.created_at)
     const router = useRouter();
     const created_at = `${monthNames[newDate.getMonth()]} ${newDate.getDate()}, ${newDate.getFullYear()}`

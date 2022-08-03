@@ -4,7 +4,7 @@ import MainPage from "./MainPage";
 export default function CardSummary({stories, heading}) {
 
   return (
-    <MainPage heading={heading} cards={true}>
+    <MainPage heading={heading} cards={true} featureCard={stories[0]}>
       {stories.length > 0 ? 
         (
           stories?.map((post)=><Card key={post.uuid} post={post}/>)
