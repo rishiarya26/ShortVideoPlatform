@@ -15,10 +15,10 @@ export const initConvivaa = async() => {
     if(process.env.APP_ENV === 'development'){
       convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
       convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
-    }else if(process.env.APP_ENV === 'production'){
+    }else{
       /** prod pulse URL */
-      convivaConfigs[Conviva.Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
-      convivaConfigs[Conviva.Constants.LOG_LEVEL] = Conviva.Constants.LogLevel.DEBUG;
+      convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
+      convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
     }
     Analytics.init(TEST_CUSTOMER_KEY, null, convivaConfigs);
     Analytics.setDeviceMetadata(getDeviceMetadata());
