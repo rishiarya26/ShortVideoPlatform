@@ -20,7 +20,7 @@ const Header = ({ blok }) => {
           {newDate}
         </div>
       </div>
-      <div className="font-semibold text-lg mb-3 md:text-5xl">{heading}</div>
+      <div className="font-semibold text-lg py-5 md:text-5xl">{heading}</div>
       <div><p className="text-gray-600 text-base"><i>{subheading}</i></p></div>
     </div>
 );

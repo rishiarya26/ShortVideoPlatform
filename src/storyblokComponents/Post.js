@@ -13,7 +13,7 @@ export default function Post({story}) {
             <img alt="hipi logo"  src={withBasePath('icons/Logo_hipi.png')} />
           </div>
         </div>
-      <div className="flex mt-4">
+      <div className="flex mt-8">
         <div className="w-1/5"><Sidebar /></div>
         <div className=" w-3/5"><StoryblokComponent blok={story.content} /></div>
         <div className=" w-1/5"></div>

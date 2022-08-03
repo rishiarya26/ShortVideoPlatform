@@ -22,9 +22,11 @@ export default function CardSummary({stories, heading}) {
     }
   return (
       <div className="flex flex-col">
-        <div className="w-full px-6 h-16 head-shadow flex items-center sticky top-0 bg-white z-20">
+        <div className="w-full px-6 h-16 head-shadow flex justify-center items-center sticky top-0 bg-white z-20">
+          <div className="w-feed">
           <div onClick={()=>router.push("/feed/for-you")} className="w-14 cursor-pointer">
             <img alt="hipi logo"  src={withBasePath('icons/Logo_hipi.png')} />
+          </div>
           </div>
         </div>
       <div className="flex flex-col">
@@ -44,7 +46,7 @@ export default function CardSummary({stories, heading}) {
             />
           </div>
           <div className={styles.cardWrapper}>
-            <div className={styles.headingWrapper}><h1>{heading}</h1></div>
+            <div className={styles.headingWrapper}><h1 className="text-5xl font-semibold text-lg mb-8">{heading}</h1></div>
               {stories.length > 0 ? 
                 (
                   stories?.map((post)=><Card key={post.uuid} post={post}/>)

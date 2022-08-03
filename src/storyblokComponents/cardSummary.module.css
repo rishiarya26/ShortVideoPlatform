@@ -11,12 +11,12 @@
 }
 
 .cardWrapper{
-    @apply px-4;
+    @apply px-4 mt-8;
     width: 70%
 }
 
 .headingWrapper{
-    @apply text-center font-bold text-3xl my-5;
+    @apply w-full flex ;
 }
 
 @media screen and (max-width: 990px) {
@@ -30,6 +30,6 @@
         @apply w-full block sticky top-16 z-10;
     }
     .cardWrapper{
-        @apply w-full;
+        @apply w-full ;
     }
 }

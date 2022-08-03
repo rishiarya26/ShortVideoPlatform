@@ -3,7 +3,7 @@ import { generateUUID } from '../utils/app';
 
 export default function SideBar({sideBarArray, currentPage, onChange}){
     return(
-        <div className="flex justify-center mt-16 sticky top-16" style={{height: "max-content"}}>
+        <div className="flex justify-center mt-8 sticky top-16" style={{height: "max-content"}}>
             <div className="flex flex-col text-left">
              {sideBarArray && Object?.keys(sideBarArray)?.map((item,index)=>{
                 const uuid = generateUUID(false);
