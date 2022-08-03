@@ -25,7 +25,7 @@ export default function Card({post}) {
                     {created_at}
                 </div>
             </div>
-            <div className=" font-bold text-xl mb-3">{heading}</div>
+            <div className={styles.heading}>{heading}</div>
             <div><i>{subheading}</i></div>
         </div>
         <div className={styles.imageContainer}>
