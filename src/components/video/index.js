@@ -129,19 +129,27 @@ function Video(props) {
             reportPlaybackEnded();
          }
          reportPlaybackRequested({
-            id: props.id, url: props.url, contentId : props?.id, ref: rootRef?.current?.children[0]
+            id: props.id, url: props.url, ref: rootRef?.current?.children[0]
          });
       }
    },[props.activeVideoId])
 
    useEffect(() => {
-      console.log(props.index,"index");
-      // window.onunload = () => {
-      //    analyticsCleanup();
-      // }
-     return () => {
-      analyticsCleanup();
-     }
+      if(typeof window !== undefined){
+         window?.addEventListener("beforeunload", ()=>{
+            if(videoAnalytics !== null){
+               reportPlaybackEnded();
+            }
+         })
+      }
+      return () => {
+         window.removeEventListener('beforeunload', ()=>{
+            if(videoAnalytics !== null){
+               reportPlaybackEnded();
+            }
+         });
+         analyticsCleanup();
+      }
    }, [])
    
 
