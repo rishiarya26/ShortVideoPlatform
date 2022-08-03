@@ -1,19 +1,9 @@
-import { getStoryblokApi, StoryblokComponent, useStoryblokState } from "@storyblok/react"
-import Header from "../../../src/components/desk-header";
-import Sidebar from "../../../src/storyblokComponents/SideBar";
+import { getStoryblokApi, useStoryblokState } from "@storyblok/react"
+import Post from "../../../src/storyblokComponents/Post";
  
 export default function ProductPost(props) {
   const story = useStoryblokState(props.story);
-  return (
-    <div className="flex flex-col">
-        <Header />
-      <div className="flex mt-24">
-        <div className="w-1/5"><Sidebar /></div>
-        <div className=" w-3/5"><StoryblokComponent blok={story.content} /></div>
-        <div className=" w-1/5"></div>
-      </div>
-    </div>
-  )
+  return <Post story={story}/>
 }
  
 export async function getStaticProps({ params }) {

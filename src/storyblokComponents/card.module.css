@@ -1,6 +1,6 @@
 .card{
+    @apply mb-4 cursor-pointer rounded-lg overflow-hidden w-full flex;
     box-shadow: 2px 4px 20px rgb(34 90 89 / 20%);
-    @apply mb-4;
     transition: box-shadow ease-in-out;
 }
 
@@ -10,14 +10,10 @@
 
 
 .card_desc{
-    padding: 28px 32px 32px 22px;
+    padding: 50px;
+    @apply w-3/5;
 }
 
-@media only screen and (min-width: 768px) {
-    .card_desc{
-        padding: 46px;
-    }
-}
 
 .creator{
     background-color: white;
@@ -63,8 +59,20 @@
     background-color: #161823;
 }
 
-@media screen and (max-width: 768px) {
-    .image{
-        max-height: 230px;
+.imageContainer{
+    @apply w-2/5;
+}
+
+@media screen and (max-width: 990px) {
+    .card{
+        @apply flex-col-reverse;
+    }
+    .imageContainer{
+        @apply w-full;
+        height: 230px;
+    }
+    .card_desc{
+        padding: 28px 32px 32px 22px;
+        @apply w-full;
     }
 }
