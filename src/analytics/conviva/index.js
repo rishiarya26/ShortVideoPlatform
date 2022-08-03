@@ -9,6 +9,9 @@ export let videoAnalytics = null;
 let convivaConfigs = {};
 let customer_key = process?.env?.APP_ENV === 'production' ? CONVIVA_PROD_CUSTOMER_KEY : TEST_CUSTOMER_KEY
 
+console.log(process?.env?.APP_ENV,"process?.env?.APP_ENV");
+console.log(process?.env?.NODE_ENV,"process?.env?.NODE_ENV");
+
 
 export const initConvivaa = async() => {
   //debugger
@@ -18,7 +21,7 @@ export const initConvivaa = async() => {
       convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
     }else{
       /** prod pulse URL */
-      //convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
+      convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
       convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
     }
     Analytics.init(customer_key, null, convivaConfigs);
