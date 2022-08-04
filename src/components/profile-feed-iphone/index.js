@@ -300,6 +300,13 @@ function ProfileFeedIphone({ router }) {
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+
+      try{
+        const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+        window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+       }catch(e){
+         console.error('error in video comp increment',e)
+       }
     }
     /******************************/
     if(currentTime >= duration-0.4){

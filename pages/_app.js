@@ -12,7 +12,7 @@ import { inject } from '../src/analytics/async-script-loader';
 import { oneTapGoogle } from '../src/utils/social/one-tap-google';
 import { GOOGLE_ONE_TAP, GET_SOCIAL, GET_SOCIAL_LOADED  } from '../src/constants';
 import { getItem, removeItem, setItem } from '../src/utils/cookie';
-import { localStorage } from '../src/utils/storage';
+import { localStorage, sessionStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import { init } from '../src/get-social';
 import { useRouter } from 'next/router';
@@ -420,6 +420,9 @@ function Hipi({
             setShowCookies(true);
         }, 5000);
     }
+
+    window.sessionStorage.setItem('videos-completed',0);
+    // sessionStorage.set('videos-completed',0);
     // guestGetSocialToken();
 
       const events = [
@@ -442,6 +445,18 @@ function Hipi({
       })
     }
   },[])
+
+  useEffect(()=>{
+    if(window.sessionStorage.getItem('videos-completed') === 5){
+       toTrackMixpanel('videosCompleted5')
+    }
+    if(window.sessionStorage.getItem('videos-completed') === 10){
+      toTrackMixpanel('videosCompleted10')
+    }
+    if(window.sessionStorage.getItem('videos-completed') === 15){
+    toTrackMixpanel('videosCompleted15')
+    }
+  },[window.sessionStorage.getItem('videos-completed')])
 
  const guestGetSocialToken = async() =>{
    let response;

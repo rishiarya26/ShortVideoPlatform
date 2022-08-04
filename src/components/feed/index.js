@@ -20,7 +20,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { localStorage } from '../../utils/storage';
+import { localStorage, sessionStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
@@ -235,6 +235,12 @@ function Feed({ router }) {
        /*** view events ***/
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+       try{
+        const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+        window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+       }catch(e){
+         console.error('error in video comp increment',e)
+       }
      }
      /******************************/
      if(currentTime >= duration-0.4){
