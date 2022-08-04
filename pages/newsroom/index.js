@@ -2,7 +2,7 @@ import CardSummary from "../../src/storyblokComponents/CardSummary";
 import { getStoryblokData } from "../../src/sources/storyblok"; 
 
 export default function All({stories}) {
-  return <CardSummary stories={stories} heading="Newsletter"/>
+  return <CardSummary stories={stories} heading="Newsroom"/>
 }
 
 export async function getStaticProps() {
