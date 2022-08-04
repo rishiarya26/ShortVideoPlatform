@@ -17,14 +17,26 @@ function transformError(error = {}) {
 function transformSuccess(resp) {
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
-  
+  const paths = [];
   try {
-      if(!Object.keys(data).includes("stories") && !Object.keys(data).includes("story")) {
-      return transformError(data);
+    if(!Object.keys(data).includes("links")) {
+        return transformError(data);
     }
+    Object.keys(data.links).forEach((linkKey) => {
+        if (data.links[linkKey].is_folder) {
+            return;
+          }
+          const slug = data.links[linkKey].slug;
+          if(slug.length < 1){
+            return;
+          }
+          let [categoryType, slugType] = slug.split("/");
+          if(categoryType === resp.category){
+              paths.push({ params: { id: slugType } });
+          }
+      });
     payload.status = 'success';
-    payload['http-status'] = 200;
-    payload.data = data?.stories || data?.story;
+    payload.data = paths;
     return payload;
   } catch (err) {
     data.appError = err.message;

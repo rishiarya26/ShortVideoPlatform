@@ -1,7 +1,7 @@
-import { getStoryblokApi } from "@storyblok/react";
 import CardSummary from "../../../src/storyblokComponents/CardSummary";
+import { getStoryblokData } from "../../../src/sources/storyblok";
 
-export default function Business({story: stories}) {
+export default function Business({stories}) {
   return <CardSummary stories={stories} heading="Business"/>
 }
  
@@ -12,12 +12,16 @@ export async function getStaticProps() {
     starts_with: "business"
   };
  
-  const storyblokApi = getStoryblokApi();
-  let { data } = await storyblokApi.get(`cdn/stories/`, sbParams);
+  let resp;
+    try{
+      resp = await getStoryblokData({params: sbParams});
+    } catch(e) {
+      console.error(e);
+    }
  
   return {
     props: {
-      story: data ? data.stories : false,
+      stories: resp ? resp.data : false,
     },
     revalidate: 3600, // revalidate every hour
   };

@@ -1,4 +1,5 @@
 import { storyblokInit, apiPlugin } from '@storyblok/react';
+import { STORYBLOK_TOKEN } from '../constants';
 import Header from "./Header";
 import VisualContent from "./visualContent";
 import Page from "./Page";
@@ -15,7 +16,7 @@ const components = {
     heading: Heading,
   };
 export const init =  () => storyblokInit({
-    accessToken: "quNBuDdvpWQyR7qL35OGjwtt",
+    accessToken: STORYBLOK_TOKEN,
     use: [apiPlugin],
     components
   });

@@ -1,7 +1,7 @@
-import { getStoryblokApi } from "@storyblok/react";
 import CardSummary from "../../../src/storyblokComponents/CardSummary";
+import { getStoryblokData } from "../../../src/sources/storyblok"; 
 
-export default function News({story: stories}) {
+export default function News({stories}) {
   return <CardSummary stories={stories} heading="News"/>
 }
 export async function getStaticProps() {
@@ -11,13 +11,17 @@ export async function getStaticProps() {
     starts_with: "news"
   };
  
-  const storyblokApi = getStoryblokApi();
-  let { data } = await storyblokApi.get(`cdn/stories/`, sbParams);
+  let resp;
+    try{
+      resp = await getStoryblokData({params: sbParams});
+    } catch(e) {
+      console.error(e);
+    }
  
   return {
     props: {
-      story: data ? data.stories : false,
+      stories: resp ? resp.data : false,
     },
-    revalidate: 3600, // revalidate every hour
+    revalidate: 10, // revalidate every hour
   };
 }
