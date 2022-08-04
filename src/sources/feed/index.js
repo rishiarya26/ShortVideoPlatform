@@ -24,7 +24,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         Authorization: `Bearer ${shortsAuthToken}`,
         'access-token': accessToken,
         'X-GEO-IPADDR' : geoData?.ip || '',
-        'X-GEO-COUNTRY-CODE':geoData?.country || '',
+        'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
         'X-GEO-REGION-CODE':geoData?.state_code || '',
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
@@ -37,7 +37,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
           if(geoLocationInfo){
             console.log("No GEO_DATA*****",geoLocationInfo );
             response = await get(apiPath,null,{
-              'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || '',
+              'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || 'IN',
               'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
               'X-GEO-CITY':geoLocationInfo?.city || '',
               'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
@@ -73,7 +73,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
     if(geoData){
       response = await get(apiPath,null,{
         'X-GEO-IPADDR' : geoData?.ip || '',
-        'X-GEO-COUNTRY-CODE':geoData?.country || '',
+        'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
         'X-GEO-REGION-CODE':geoData?.state_code || '',
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
@@ -86,7 +86,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       if(geoLocationInfo){
         console.log("No GEO_DATA*****",geoLocationInfo );
         response = await get(apiPath,null,{
-          'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || '',
+          'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || 'IN',
           'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
           'X-GEO-CITY':geoLocationInfo?.city || '',
           'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
