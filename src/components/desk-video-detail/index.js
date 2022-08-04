@@ -30,6 +30,7 @@ import VerifiedLg from "../commons/svgicons/verified-lg";
 import Description from "../desk-description";
 import Header from "../desk-header";
 import DeskMenu from "../desk-menu";
+import { analyticsCleanup, reportPlaybackEnded, videoAnalytics } from "../../analytics/conviva";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -58,11 +59,27 @@ comp = 'normal'}) {
       // router?.push(`/${username}`)
     }
 
+   
+
 useEffect(()=>{
 //  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`
  comp !== 'deskSingleVideo' && window.history.replaceState('video detail page','detail',`/video/${videoId}`
  )
 },[videoId])
+
+useEffect(() => {
+   if(typeof window !== undefined){
+      window?.addEventListener("beforeunload", ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      })
+   }
+   return () => {
+      window.removeEventListener('beforeunload', ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      });
+      analyticsCleanup();
+   }
+}, [])
 
 const onEmbedCopy =()=>{
    showSnackbar({ message: 'Copied to Clipboard' });
@@ -121,7 +138,7 @@ domain = domain?.origin;
 return (
 <div className={`flex ${parentWidth[comp]}`}>
    <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
-      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp}/>
+      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId}/>
       {NavigationBtns[comp]}
    </div>
    <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>

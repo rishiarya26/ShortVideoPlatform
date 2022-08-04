@@ -1,11 +1,12 @@
 /*eslint-disable  @next/next/no-img-element */
 import { useEffect, useRef, useState } from "react";
+import { reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from "../../analytics/conviva";
 import { withBasePath } from "../../config";
 import useWindowSize from "../../hooks/use-window-size";
 import CircularProgress from '../commons/circular-loader'
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame, comp})=>{
+const Video = ({url, firstFrame, comp, videoId})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
@@ -14,6 +15,14 @@ const Video = ({url, firstFrame, comp})=>{
 
     const rootRef = useRef(null);
     const size = useWindowSize();
+
+    useEffect(()=>{
+      let currentRef = rootRef?.current?.children?.[0];
+      if(videoAnalytics !== null) reportPlaybackEnded()
+      reportPlaybackRequested({ id: videoId, url, ref: currentRef });
+    },[url])
+
+    
 
     useEffect(()=>{
         setSeekedPercentage(0);
