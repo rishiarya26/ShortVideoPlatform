@@ -1,6 +1,7 @@
 import { storyblokEditable } from "@storyblok/react";
 import { useRouter } from "next/router";
 import styles from "./card.module.css";
+import headerStyles from "./header.module.css";
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -21,7 +22,7 @@ const Header = ({ blok={}, date}) => {
           {newDate}
         </div>
       </div>
-      <div className="font-semibold text-lg py-5 md:text-5xl">{heading}</div>
+      <div className={headerStyles.heading}>{heading}</div>
       <div><p className="text-gray-600 text-base"><i>{subheading}</i></p></div>
     </div>
 );
