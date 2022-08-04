@@ -21,8 +21,8 @@ export default function DownloadAppWidget({videoId}) {
 
   useEffect(()=>{
     toTrackMixpanel('launch');
-    fbq.event('App Download Popup')
-    trackEvent('App_Download_Popup');
+    // fbq.event('App Download Popup')
+    // trackEvent('App_Download_Popup');
     playerEvents('waitStarted');
     
     // fbq.event('App Download Popup')
