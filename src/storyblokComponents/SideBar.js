@@ -11,7 +11,7 @@ export default function SideBar({sideBarArray, currentPage, onChange}){
                     <div
                         key={uuid}
                         onClick={()=>onChange(sideBarArray[item])}
-                        className={`font-bold pt-2 cursor-pointer relative ${styles.tabs} ${sideBarArray[item] === currentPage ? styles.tabs_active:""}`}
+                        className={`font-semibold pt-2 cursor-pointer relative ${styles.tabs} ${sideBarArray[item] === currentPage ? styles.tabs_active:""}`}
                     >
                         {item}
                     </div>

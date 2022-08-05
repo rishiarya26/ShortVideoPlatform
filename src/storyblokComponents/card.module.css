@@ -10,8 +10,12 @@
 
 
 .card_desc{
+    -webkit-flex: 1 1 590px;
+    -ms-flex: 1 1 590px;
+    flex: 1 1 590px;
     padding: 50px;
-    width: 70%;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 
@@ -60,7 +64,13 @@
 }
 
 .imageContainer{
-    width: 30%;
+    -webkit-flex: 1 1 240px;
+    -ms-flex: 1 1 240px;
+    flex: 1 1 240px;
+    margin: 0;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
 }
 
 .heading{
@@ -76,7 +86,9 @@
         height: 230px;
     }
     .card_desc{
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
         padding: 28px 32px 32px 22px;
-        @apply w-full;
     }
 }
