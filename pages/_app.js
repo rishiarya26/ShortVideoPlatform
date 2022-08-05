@@ -393,6 +393,7 @@ function Hipi({
       clearInterval(timeTrackerInterval);
     };
   });
+  const videosCompleted = typeof window !== "undefined" && window.sessionStorage.getItem('videos-completed')
 
  /*************************** */
     useEffect(()=>{
@@ -421,7 +422,7 @@ function Hipi({
         }, 5000);
     }
 
-    window.sessionStorage.setItem('videos-completed',0);
+    window.sessionStorage.setItem('videos-completed',videosCompleted || 0) 
     // sessionStorage.set('videos-completed',0);
     // guestGetSocialToken();
 
@@ -447,6 +448,7 @@ function Hipi({
   },[])
 
   useEffect(()=>{
+    console.log("MIX**",videosCompleted)
     if(window.sessionStorage.getItem('videos-completed') === 5){
        toTrackMixpanel('videosCompleted5')
     }
@@ -456,7 +458,7 @@ function Hipi({
     if(window.sessionStorage.getItem('videos-completed') === 15){
     toTrackMixpanel('videosCompleted15')
     }
-  },[window.sessionStorage.getItem('videos-completed')])
+  },[videosCompleted])
 
  const guestGetSocialToken = async() =>{
    let response;
