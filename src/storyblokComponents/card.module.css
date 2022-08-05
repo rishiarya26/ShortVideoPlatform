@@ -64,9 +64,9 @@
 }
 
 .imageContainer{
-    -webkit-flex: 1 1 240px;
-    -ms-flex: 1 1 240px;
-    flex: 1 1 240px;
+    -webkit-flex: 1 1 300px;
+    -ms-flex: 1 1 300px;
+    flex: 1 1 300px;
     margin: 0;
     -webkit-align-self: stretch;
     -ms-flex-item-align: stretch;
@@ -83,7 +83,7 @@
     }
     .imageContainer{
         @apply w-full;
-        height: 230px;
+        flex:1;
     }
     .card_desc{
         -webkit-flex: 1 1 auto;
