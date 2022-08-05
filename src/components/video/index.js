@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from 'react';
@@ -30,6 +31,7 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
+   const [audioError, setAudioError] = useState('');
 
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
@@ -38,6 +40,15 @@ function Video(props) {
    const videoHeight = `${size.height}`;
 
    useEffect(()=>{console.log("$$",props?.adData)},[])
+
+   useEffect(async()=>{
+      const videoElement = rootRef?.current?.children[0];
+
+      videoElement.addEventListener('suspend', () => {
+         //videoElement.play &&videoElement.play();
+         props.suspendLoader(true);
+       });
+   })
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
    //    if(player){
@@ -132,7 +143,7 @@ function Video(props) {
     onContextMenu={(e)=>{
       e.preventDefault();
       return false}}
-   controlsList="nodownload"
+      controlsList="nodownload"
       playsInline
       muted={props?.muted ? true : false}
       autoPlay
@@ -152,10 +163,10 @@ function Video(props) {
       objectfit="cover"
       key={props.url}
       >
-      <source
-         src={props.url}
-         type="video/mp4"
-      /> 
+         <source
+            src={props.url}
+            type="video/mp4"
+         /> 
       </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
