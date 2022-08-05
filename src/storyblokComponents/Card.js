@@ -28,7 +28,7 @@ export default function Card({post={}}) {
             <div><i>{subheading}</i></div>
         </div>
         <div className={styles.imageContainer}>
-           {image && <img className='h-full w-full object-cover' src={image}/>}
+           {image && <img className='h-full w-full object-cover' src={image} alt="Hipi Newsroom"/>}
         </div>
     </div>
   )

@@ -10,6 +10,8 @@
 }
 
 .tabs{
+    @apply font-bold;
     font-size: 12px;
     line-height: 50px;
+    color: #000000;
 }

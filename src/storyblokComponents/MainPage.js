@@ -39,7 +39,7 @@ export default function MainPage({cards,heading="", children, featureCard={}}) {
             />
         </div>
         <div className={styles.parentContainer}>
-           {cards && <div className={styles.heading}>{heading}</div>}
+           {cards && <h1 className={styles.heading}>{heading}</h1>}
             {/* <div className={styles.featureCardWrapper}><Card post={featureCard}/></div> */}
             <div className={`${styles.container}  ${cards && "mt-16"}`}>
                 <div className={styles.sideBarWrapper}>
