@@ -47,7 +47,7 @@ function Video(props) {
       videoElement.addEventListener('suspend', () => {
          //videoElement.play &&videoElement.play();
          props.suspendLoader(true);
-      }); 
+       });
    })
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
