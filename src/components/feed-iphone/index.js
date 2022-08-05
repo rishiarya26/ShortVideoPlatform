@@ -108,6 +108,7 @@ function FeedIphone({ router }) {
   const setClose = (value)=>{
     setOnCloseChamboard(value)
 }
+
 // const showBanner=()=>{
 //   setShowAppBanner(true);
 // }
@@ -497,7 +498,7 @@ console.log('errorrr',e)
               }
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: (toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: ( toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
                 <CircularProgress/>
               </div>}
