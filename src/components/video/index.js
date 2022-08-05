@@ -31,6 +31,7 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
+   const [audioError, setAudioError] = useState('');
 
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
@@ -40,11 +41,13 @@ function Video(props) {
 
    useEffect(()=>{console.log("$$",props?.adData)},[])
 
-   useEffect(()=>{
+   useEffect(async()=>{
       const videoElement = rootRef?.current?.children[0];
+
       videoElement.addEventListener('suspend', () => {
+         //videoElement.play &&videoElement.play();
          props.suspendLoader(true);
-      }); 
+       });
    })
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
