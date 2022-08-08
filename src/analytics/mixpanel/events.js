@@ -364,9 +364,9 @@ export const toTrackMixpanel = (type, value, item) => {
           commonWithIds();
           track('Creator Form Submitted',globalCommonEvents);
         },
-        'videosCompleted5' : ()=>track('ugc_view_5'),
-        'videosCompleted10' : ()=>track('ugc_view_10'),
-        'videosCompleted15' : ()=>track('ugc_view_15')
+        'videosCompleted5' : ()=>track('ugc_view_5',globalCommonEvents),
+        'videosCompleted10' : ()=>track('ugc_view_10',globalCommonEvents),
+        'videosCompleted15' : ()=>track('ugc_view_15',globalCommonEvents)
 
         
         

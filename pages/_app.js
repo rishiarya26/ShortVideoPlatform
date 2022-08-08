@@ -156,6 +156,7 @@ function Hipi({
   const [timerArr, setTimerArr] = useState([])
   const [enableSession , setEnableSession] = useState(true)
   const [previousTimer, setPreviousTimer] = useState(60);
+  // const [videosCompleted, setVideosCompleted] = useState(0);
 
   const router = useRouter();
   
@@ -363,11 +364,19 @@ function Hipi({
       clearTimeouts();
       setTimeouts(minutesTracker);
   };
+  let videosCompleted = (typeof window !== "undefined" &&  parseInt(window.sessionStorage.getItem('videos-completed'))) || 0
 
   useEffect(() => {
-  
   /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
     const timeTrackerInterval = setInterval(() => {
+
+      /**** for videos completed - mixpnel event ****/
+      if(videosCompleted < window.sessionStorage.getItem('videos-completed')){
+        videoCompletedEvent();
+        videosCompleted = window.sessionStorage.getItem('videos-completed');
+      }
+      /*********************************************/
+
      if(window.sessionStorage.getItem("sessionEventTrack") !== 'null'){
       let minutesTracker = parseInt(window.sessionStorage.getItem('minutes')) || 0;
       let secondsTracker = parseInt(window.sessionStorage.getItem('seconds')) || 60;
@@ -393,7 +402,6 @@ function Hipi({
       clearInterval(timeTrackerInterval);
     };
   });
-  const videosCompleted = typeof window !== "undefined" && window.sessionStorage.getItem('videos-completed')
 
  /*************************** */
     useEffect(()=>{
@@ -421,8 +429,14 @@ function Hipi({
             setShowCookies(true);
         }, 5000);
     }
-
-    window.sessionStorage.setItem('videos-completed',videosCompleted || 0) 
+    console.log('MIX****',videosCompleted)
+    // setVideosCompleted(window.sessionStorage.getItem('videos-completed'));
+    if(!window.sessionStorage.getItem('videos-completed')){
+      window.sessionStorage.setItem('videos-completed', 0);
+      videosCompleted = 0
+    } else{
+      videosCompleted =  window.sessionStorage.getItem('videos-completed');
+    }
     // sessionStorage.set('videos-completed',0);
     // guestGetSocialToken();
 
@@ -447,18 +461,20 @@ function Hipi({
     }
   },[])
 
-  useEffect(()=>{
-    console.log("MIX**",videosCompleted)
-    if(window.sessionStorage.getItem('videos-completed') === 5){
+ const videoCompletedEvent = () =>{
+    const videoCompleted = parseInt(window.sessionStorage.getItem('videos-completed') || '0');
+    console.log("MIX**", window.sessionStorage.getItem('videos-completed'))
+
+    if(videoCompleted === 5){
        toTrackMixpanel('videosCompleted5')
     }
-    if(window.sessionStorage.getItem('videos-completed') === 10){
+    if(videoCompleted === 10){
       toTrackMixpanel('videosCompleted10')
     }
-    if(window.sessionStorage.getItem('videos-completed') === 15){
+    if(videoCompleted === 15){
     toTrackMixpanel('videosCompleted15')
     }
-  },[videosCompleted])
+  }
 
  const guestGetSocialToken = async() =>{
    let response;

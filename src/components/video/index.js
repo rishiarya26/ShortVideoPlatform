@@ -151,6 +151,9 @@ function Video(props) {
       poster={firstFrame}
       objectfit="cover"
       key={props.url}
+      onEnded={()=>{
+         console.log("MIX&&- ended")
+         window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
       <source
          src={props.url}

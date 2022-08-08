@@ -237,6 +237,7 @@ function Feed({ router }) {
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
        try{
         const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+        console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted+1)
         window.sessionStorage.setItem('videos-completed',videosCompleted+1);
        }catch(e){
          console.error('error in video comp increment',e)

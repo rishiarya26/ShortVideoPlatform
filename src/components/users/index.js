@@ -330,7 +330,7 @@ const notNowClick=()=>{
       /* eslint-disable-next-line react/jsx-key */      
       <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, view: item?.viewCount}))}}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, createdOn:item?.createdOn, desc:item?.description}))}}
         />
     ))}
     <div className="relative">

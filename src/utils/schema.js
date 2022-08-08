@@ -52,11 +52,11 @@
         "description": desc,
         "thumbnailUrl": userThumnail,
         "uploadDate": createdOn,  
-        "contentUrl": `https://www.hipi.co.in/video/${videoId}`,
+        "contentUrl": `https://www.hipi.co.in/single-video/${videoId}`,
         "potentialAction": {
           "@type": "SeekToAction",
-          "target": `https://www.hipi.co.in/video/${videoId}={seek_to_second_number}`,
-          "startOffset-input": "required name=seek_to_second_number"
+          "target": `https://www.hipi.co.in/single-video/${videoId}`,
+          "startOffset-input": "required name"
         }
       }
       return payload;
