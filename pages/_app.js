@@ -371,6 +371,8 @@ function Hipi({
   useEffect(() => {
   /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
     const timeTrackerInterval = setInterval(() => {
+      
+     /* Mixpanel - videos completed - 5,10,15 */
       videoCompletedEvent();
 
      if(window.sessionStorage.getItem("sessionEventTrack") !== 'null'){
@@ -430,9 +432,10 @@ function Hipi({
     if(!window.sessionStorage.getItem('videos-completed')){
       window.sessionStorage.setItem('videos-completed', 0);
       // videosCompleted = 0
-    } else{
+    } 
+    // else{
       // videosCompleted =  window.sessionStorage.getItem('videos-completed');
-    }
+    // }
     // sessionStorage.set('videos-completed',0);
     // guestGetSocialToken();
 
