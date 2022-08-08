@@ -48,6 +48,7 @@ export default function Hipi(params={}) {
         //if api fails at server side for special characters - retry call
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
+    console.log('created-on',item);
   }, []);
 
   if (status === 'fail') {
