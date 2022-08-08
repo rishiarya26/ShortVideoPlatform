@@ -9,6 +9,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import usePreviousValue from '../../hooks/use-previous';
 import dynamic from 'next/dynamic';
+import { getItem } from '../../utils/cookie';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -37,15 +38,30 @@ function Video(props) {
    const rootRef = useRef(null);
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
+   const device = getItem('device-info')
 
    useEffect(()=>{console.log("$$",props?.adData)},[])
 
    useEffect(()=>{
-      const videoElement = rootRef?.current?.children[0];
-      videoElement.addEventListener('suspend', () => {
-         props.suspendLoader(true);
-       });
-   })
+      try{
+      if(device === 'ios') 
+      {   const videoElement = rootRef?.current?.children[0];
+          videoElement.addEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+      }
+      }catch(e){
+         console.error(e);
+      }
+
+      return ()=>{
+        if(device === 'ios'){
+            videoElement.removeEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+         }
+       }
+   },[])
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
    //    if(player){
