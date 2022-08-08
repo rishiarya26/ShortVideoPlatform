@@ -280,18 +280,18 @@ function Hipi({
         // tokens = tokens && JSON.parse(tokens);
       
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-          console.log('one tap not initiated - tokens already there in _app.js')
+          console.log('one tap not initiated - tokens already there in _app.js ')
           setTimeout(()=>{
             // init();
             initFirebase();
           },[1000])
         }else{
-          console.log("one tap initated")
+          console.log("one tap initated ")
           if(loading === false){
             oneTapGoogle();
         }
       }}catch(e){
-        console.error("one tap issue")
+        console.error("one tap issue ")
       }
     },[loading])
 

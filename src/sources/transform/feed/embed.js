@@ -54,6 +54,7 @@ function transformSuccess(resp) {
         payloadObject.thumbnail = d?.thumbnailUrl || null;
         payloadObject.videoOwnersDetail = d?.videoOwners || null;
         payloadObject.firstFrame = d?.firstFrame || null;
+        payloadObject.createdOn = d?.createdOn || null
       });
       payload.data = payloadObject;
     } else {

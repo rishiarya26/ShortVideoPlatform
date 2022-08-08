@@ -27,6 +27,7 @@ const getToken = async(response)=>{
  try {
   const googleToken = response?.credential;
   const resp = await login(googleToken);
+  console.log("resp*",resp)
   if(resp.status === 'success'){
     console.log("GOOGLE",resp)
    try{ 
@@ -38,6 +39,7 @@ const getToken = async(response)=>{
   }
  } catch (error) {
    if(error.code === 2){  
+     console.log("one tap - register user")
      await registerUser(response?.credential);
    }
    console.log(error)
