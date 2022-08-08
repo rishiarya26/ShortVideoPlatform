@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from 'react';
@@ -38,6 +39,13 @@ function Video(props) {
    const videoHeight = `${size.height}`;
 
    useEffect(()=>{console.log("$$",props?.adData)},[])
+
+   useEffect(()=>{
+      const videoElement = rootRef?.current?.children[0];
+      videoElement.addEventListener('suspend', () => {
+         props.suspendLoader(true);
+       });
+   })
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
    //    if(player){
@@ -132,7 +140,7 @@ function Video(props) {
     onContextMenu={(e)=>{
       e.preventDefault();
       return false}}
-   controlsList="nodownload"
+      controlsList="nodownload"
       playsInline
       muted={props?.muted ? true : false}
       autoPlay
@@ -155,10 +163,10 @@ function Video(props) {
          console.log("MIX&&- ended")
          window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
-      <source
-         src={props.url}
-         type="video/mp4"
-      /> 
+         <source
+            src={props.url}
+            type="video/mp4"
+         /> 
       </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{

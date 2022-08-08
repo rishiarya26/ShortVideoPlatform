@@ -61,7 +61,7 @@ function transformSuccess(resp) {
         payloadObject.lastName = d?.videoOwners?.lastName || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
         payloadObject.shoppable = d?.shoppable || false;
-        payloadObject.createdOn = d?.createdOn || ''
+        payloadObject.createdOn = d?.createdOn || null
 
       });
       payload.data = payloadObject;

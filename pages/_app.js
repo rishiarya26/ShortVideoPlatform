@@ -371,6 +371,7 @@ function Hipi({
     const timeTrackerInterval = setInterval(() => {
 
       /**** for videos completed - mixpnel event ****/
+      console.log("MIX-----",videosCompleted , "<", window.sessionStorage.getItem('videos-completed'))
       if(videosCompleted < window.sessionStorage.getItem('videos-completed')){
         videoCompletedEvent();
         videosCompleted = window.sessionStorage.getItem('videos-completed');
