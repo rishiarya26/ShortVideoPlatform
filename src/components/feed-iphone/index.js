@@ -491,7 +491,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
-                      suspendLoader={setToSuspendLoaderCb}
+                      suspendLoader={setToSuspendLoaderCb && setToSuspendLoaderCb}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}

@@ -43,7 +43,7 @@ function Video(props) {
    useEffect(()=>{
       const videoElement = rootRef?.current?.children[0];
       videoElement.addEventListener('suspend', () => {
-         props.suspendLoader(true);
+        props?.suspendLoader && props.suspendLoader(true);
        });
    })
    // useEffect(()=>{
