@@ -92,6 +92,7 @@ function FeedIphone({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
   // const [showAppBanner, setShowAppBanner] = useState(false);
+  const [toSuspendLoader, setToSuspendLoader] = useState(false);
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -198,6 +199,8 @@ function FeedIphone({ router }) {
     //fbq.event('Screen View')
     toTrackMixpanel('tabView',{pageName:pageName, tabName:tabName});
   },[id])
+
+  
 
   if (id === 'for-you') {
     const status = fetchState === 'success';
@@ -345,6 +348,10 @@ console.log('errorrr',e)
     setSaveLook(true);
   }, [activeVideoId]);
 
+  const setToSuspendLoaderCb = (val) => {
+    setToSuspendLoader(val);
+  }
+
   const toggleSaveLook = (value) => {
     // /********* Mixpanel ***********/
     // saveLook === true && toTrackMixpanel(videoActiveIndex,'savelook')
@@ -477,6 +484,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
+                      suspendLoader={setToSuspendLoaderCb}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}
@@ -489,7 +497,7 @@ console.log('errorrr',e)
               }
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: ( seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: (toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
                 <CircularProgress/>
               </div>}
@@ -520,7 +528,7 @@ console.log('errorrr',e)
               </div>}
               {validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
-              : <SeekbarLoading type={'aboveFooterMenu'}/>
+              : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
               <FooterMenu 
               videoId={activeVideoId}

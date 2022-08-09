@@ -48,6 +48,7 @@ export default function Hipi(params={}) {
         //if api fails at server side for special characters - retry call
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
+    console.log('created-on',item);
   }, []);
 
   if (status === 'fail') {
@@ -117,7 +118,7 @@ export default function Hipi(params={}) {
     <>
      <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description}))}}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description, createdOn:item?.createdOn}))}}
         />
       <SeoMeta
         data={{

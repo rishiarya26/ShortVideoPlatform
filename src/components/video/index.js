@@ -9,6 +9,7 @@ import useIntersect from '../../hooks/use-intersect';
 import Play from '../commons/svgicons/play';
 import usePreviousValue from '../../hooks/use-previous';
 import dynamic from 'next/dynamic';
+import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
@@ -38,8 +39,30 @@ function Video(props) {
    const rootRef = useRef(null);
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
+   const device = getItem('device-info')
 
    useEffect(()=>{console.log("$$",props?.adData)},[])
+
+   useEffect(()=>{
+      try{
+      if(device === 'ios') 
+      {   const videoElement = rootRef?.current?.children[0];
+          videoElement.addEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+      }
+      }catch(e){
+         console.error(e);
+      }
+
+      return ()=>{
+        if(device === 'ios'){
+            videoElement.removeEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+         }
+       }
+   },[])
    // useEffect(()=>{
    //    const player = rootRef.current.children[0];
    //    if(player){
@@ -81,17 +104,6 @@ function Video(props) {
       }, 2000);
    }
    };
-
-   // const handleWait =() => {
-   //    playerStates('buffer');
-   // }
-   // const handlePlaying=()=>{
-   //    playerStates('playing');
-   // }
-   // const handleEnded=()=>{
-   //    playerStates('ended');
-   // }
-
    // console.log(JSON.stringify(props))
    const handlePlay = entry => {
       if (clicked) {
@@ -169,7 +181,7 @@ function Video(props) {
     onContextMenu={(e)=>{
       e.preventDefault();
       return false}}
-   controlsList="nodownload"
+      controlsList="nodownload"
       playsInline
       muted={props?.muted ? true : false}
       autoPlay
@@ -189,10 +201,10 @@ function Video(props) {
       objectfit="cover"
       key={props.url}
       >
-      <source
-         src={props.url}
-         type="video/mp4"
-      /> 
+         <source
+            src={props.url}
+            type="video/mp4"
+         /> 
       </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
