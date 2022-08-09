@@ -80,6 +80,9 @@
 @media screen and (max-width: 990px) {
     .card{
         @apply flex-col-reverse;
+        width: 400px;
+    }
+    .card:nth-child(1){
     }
     .imageContainer{
         @apply w-full;

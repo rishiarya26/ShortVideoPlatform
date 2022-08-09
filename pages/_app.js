@@ -34,7 +34,14 @@ import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit"
 
 // test changes
 
-storyBlokInit();
+
+(function storyBlokInitSelfFunction(){
+  try{
+    storyBlokInit();
+  } catch(e){
+    console.log("storyblokerr", e);
+  }
+})();
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;

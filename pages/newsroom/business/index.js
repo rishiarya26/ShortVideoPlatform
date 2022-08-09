@@ -1,8 +1,28 @@
 import CardSummary from "../../../src/storyblokComponents/CardSummary";
 import { getStoryblokData } from "../../../src/sources/storyblok";
+import { getCanonicalUrl } from "../../../src/utils/web";
+import { useEffect, useState } from 'react';
+import { SeoMeta } from "../../../src/components/commons/head-meta/seo-meta";
 
 export default function Business({stories}) {
-  return <CardSummary stories={stories} heading="Business"/>
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    if(document && document?.location) {
+      setUrl(document.location.href);
+    }
+  },[])
+  return (
+    <>
+      <SeoMeta
+        data={{
+          title: 'business - Newsroom | Hipi',
+          description: `Get the official business post and catch up on everything Hipi has to offer.`,
+          canonical: url && getCanonicalUrl(url),
+        }}
+      />
+      <CardSummary stories={stories} heading="Business"/>
+    </>
+  )
 }
  
 export async function getStaticProps() {
