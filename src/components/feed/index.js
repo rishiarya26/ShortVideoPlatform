@@ -110,7 +110,7 @@ function Feed({ router }) {
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
-      ToTrackFbEvents('screenView')
+      ToTrackFbEvents('screenView');
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
     }
@@ -223,6 +223,7 @@ function Feed({ router }) {
     if(percentage > 0){
       setInitialPlayStarted(true);
      }
+     console.log("watch - time",currentTime, duration, currentTime>=duration-0.2, currentTime>=duration-0.4)
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
        toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
@@ -235,13 +236,13 @@ function Feed({ router }) {
        /*** view events ***/
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
-       try{
-        const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
-        console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted+1)
-        window.sessionStorage.setItem('videos-completed',videosCompleted+1);
-       }catch(e){
-         console.error('error in video comp increment',e)
-       }
+      //  try{
+      //   const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+      //   console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted+1)
+      //   window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+      //  }catch(e){
+      //    console.error('error in video comp increment',e)
+      //  }
      }
      /******************************/
      if(currentTime >= duration-0.4){

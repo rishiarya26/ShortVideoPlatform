@@ -272,6 +272,15 @@ function Video(props) {
         poster={firstFrame}
         objectfit="cover"
         key={props.url}
+        onSeeked={()=>{
+         try{
+            const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed')) || 0;
+            console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted+1)
+            window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+           }catch(e){
+             console.error('error in video comp increment',e)
+           }
+        }}
         >
          <source
            src={`${props.url}`}

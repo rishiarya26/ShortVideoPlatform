@@ -173,12 +173,12 @@ export default function SingleVideo(props){
        /*** view events ***/
        viewEventsCall(props?.id, 'completed');
        viewEventsCall(props?.id, 'user_video_start');
-       try{
-        const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
-        window.sessionStorage.setItem('videos-completed',videosCompleted+1);
-       }catch(e){
-         console.error('error in video comp increment',e)
-       }
+      //  try{
+      //   const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+      //   window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+      //  }catch(e){
+      //    console.error('error in video comp increment',e)
+      //  }
     }
     /******************************/
   };
@@ -208,6 +208,14 @@ export default function SingleVideo(props){
         width={size.width}
         height={size.height}
         objectfit="cover"
+        onSeeked={()=>{
+          try{
+            const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+            window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+           }catch(e){
+             console.error('error in video comp increment',e)
+           }
+        }}
       >
         <source src={props.url} type="video/mp4" />
       </video>
