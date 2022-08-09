@@ -32,6 +32,7 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
+   const [audioError, setAudioError] = useState('');
 
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);

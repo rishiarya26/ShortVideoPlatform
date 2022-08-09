@@ -1,0 +1,97 @@
+.card{
+    @apply mb-4 cursor-pointer rounded-lg overflow-hidden w-full flex;
+    box-shadow: 2px 4px 20px rgb(34 90 89 / 20%);
+    transition: box-shadow ease-in-out;
+}
+
+.card:hover{
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 25%);
+}
+
+
+.card_desc{
+    -webkit-flex: 1 1 590px;
+    -ms-flex: 1 1 590px;
+    flex: 1 1 590px;
+    padding: 50px;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+
+.creator{
+    background-color: white;
+    color: #fe2c55;
+    border: 1px solid #fe2c55;
+}
+
+.creator:hover{
+    color: white;
+    background-color: #fe2c55;
+}
+
+.news{
+    background-color: white;
+    color: #36d1cc;
+    border: 1px solid #36d1cc;
+}
+
+.news:hover{
+    color: white;
+    background-color: #36d1cc;
+}
+
+.product{
+    background-color: white;
+    color: #8b62ff;
+    border: 1px solid #8b62ff;
+}
+
+.product:hover{
+    color: white;
+    background-color: #8b62ff;
+}
+
+.business{
+    background-color: white;
+    color: #161823;
+    border: 1px solid #161823;
+}
+
+.business:hover{
+    color: white;
+    background-color: #161823;
+}
+
+.imageContainer{
+    -webkit-flex: 1 1 300px;
+    -ms-flex: 1 1 300px;
+    flex: 1 1 300px;
+    margin: 0;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+}
+
+.heading{
+    @apply font-bold mb-3 text-3xl;
+}
+
+@media screen and (max-width: 990px) {
+    .card{
+        @apply flex-col-reverse;
+        width: 400px;
+    }
+    .card:nth-child(1){
+    }
+    .imageContainer{
+        @apply w-full;
+        flex:1;
+    }
+    .card_desc{
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 28px 32px 32px 22px;
+    }
+}
