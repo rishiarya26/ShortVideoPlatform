@@ -20,44 +20,38 @@ import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAn
    // eslint-disable-next-line react/display-name
    loading: () => <div />,
    ssr: false,
- });
+});
 
- const ProductCards= dynamic(() => import("../product-cards"), {
+const ProductCards= dynamic(() => import("../product-cards"), {
    // eslint-disable-next-line react/display-name
    loading: () => <div />,
    ssr: false,
- });
+});
 
 function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
-
+   
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
    const rootRef = useRef(null);
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
 
-   useEffect(()=>{console.log("$$",props?.adData)},[])
+   // console.log(JSON.stringify(props.itemObject));
+   
    // useEffect(()=>{
-   //    const player = rootRef.current.children[0];
-   //    if(player){
-   //       console.log(player, rootRef)
-   //    setTimeout(()=>{
-   //       const promise = player?.play();
-   //       if (promise.then) {
-   //          promise
-   //            .then(() => {})
-   //            .catch(() => {
-   //              // if promise fails, hide the video and fallback to <img> tag
-   //            });
-   //        }
-   //       console.log(promise);
-   //    },0)
-   //   }
-   // },[props?.videoActiveIndex])
+   //    if(props?.comp === 'feed'){
+   //    if(props.initialPlayStarted && play === true){
+   //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
+   //    }else{
+   //    prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
+   //    }
+   //    }
+   // },[play])
 
+   useEffect(()=>{console.log("$$",props?.adData)},[])
 
    const handleVideoPress = () => {
       if (playing) {
@@ -82,17 +76,6 @@ function Video(props) {
    }
    };
 
-   // const handleWait =() => {
-   //    playerStates('buffer');
-   // }
-   // const handlePlaying=()=>{
-   //    playerStates('playing');
-   // }
-   // const handleEnded=()=>{
-   //    playerStates('ended');
-   // }
-
-   // console.log(JSON.stringify(props))
    const handlePlay = entry => {
       if (clicked) {
       if (entry?.isIntersecting) {
@@ -122,13 +105,11 @@ function Video(props) {
    });
 
    useEffect(()=>{
-      let id = props?.id;
-      let url = props?.url;
       let currentRef = rootRef?.current?.children[0];
 
       if(props.id === props.activeVideoId){
          if(videoAnalytics !== null) reportPlaybackEnded();
-         reportPlaybackRequested({ id, url, ref: currentRef });
+         reportPlaybackRequested({ref: currentRef, itemObject:props.itemObject });
       }
    },[props.activeVideoId])
 
@@ -146,37 +127,37 @@ function Video(props) {
       }
    }, [])
    
-   // useEffect(()=>{
-   //    if(props?.comp === 'feed'){
-   //    if(props.initialPlayStarted && play === true){
-   //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
-   //    }else{
-   //    prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
-   //    }
-   //    }
-   // },[play])
-
+   
    const handleUpdateSeekbar = e => {
-   const percentage = (e.target.currentTime / e.target.duration) * 100;
-   percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
+      const percentage = (e.target.currentTime / e.target.duration) * 100;
+      if(e.target.currentTime >= e.target.duration-0.2){
+         handleSeeked();
+      }
+      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
    };
+   
+   const handleSeeked = () =>{
+      let currentRef = rootRef?.current?.children[0];
+      if(videoAnalytics !== null) reportPlaybackEnded();
+      reportPlaybackRequested({ ref: currentRef, itemObject:props.itemObject  });
+   }
    
    const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
-
+   
    const selectVideoPlayer = {
-    'multi-player-muted' : <video
-    onContextMenu={(e)=>{
-      e.preventDefault();
-      return false}}
-   controlsList="nodownload"
-      playsInline
-      muted={props?.muted ? true : false}
-      autoPlay
-      preload="auto"
-      webkit-playsinline = "true"
-      // onLoadCapture ={resetCurrentTime}
-      onTimeUpdate={handleUpdateSeekbar}
+      'multi-player-muted' : <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+         controlsList="nodownload"
+         playsInline
+         muted={props?.muted ? true : false}
+         autoPlay
+         preload="auto"
+         webkit-playsinline = "true"
+         // onLoadCapture ={resetCurrentTime}
+         onTimeUpdate={handleUpdateSeekbar}
       loop
       ref={ref}
       onClick={handleVideoPress}

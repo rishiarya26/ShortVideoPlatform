@@ -6,6 +6,7 @@ import { getItem } from '../../utils/cookie';
 
 
 export let videoAnalytics = null;
+let kNA = "N/A";
 let convivaConfigs = {};
 let customer_key = process?.env?.APP_ENV === 'production' ? CONVIVA_PROD_CUSTOMER_KEY : TEST_CUSTOMER_KEY
 
@@ -41,12 +42,78 @@ export const getDeviceMetadata = () =>  {
 
 export const setContentInfo = (content ={}) =>{
   console.log(localStorage.get('user-id'), 'localstroage');
+  let itemObject = content?.itemObject;
+
+  let videoId = itemObject?.content_id ?? 'N/A';
+  let musicTitle = itemObject?.music_title ?? "N/A";
+  let videoUrl =  itemObject?.video_url ?? "N/A";
+  let language = itemObject?.language ?? 'N/A';
+  let contentDescription = itemObject?.content_description ?? 'N/A';
+  let userName = itemObject?.userName ?? 'N/A';
+  let videoOwnersId = itemObject?.videoOwnersId ?? 'N/A';
+  let creatorTag = itemObject?.creatorTag ?? 'Influencer';
+  let createdOn = itemObject?.createdOn ?? 'N/A';
+  let accessType = localStorage.get('user-id') ? 'registered' : 'guest';
+  let connectionType = typeof window !== undefined ? window?.navigator?.connection?.effectiveType : 'N/A';
+
+
   let contentMetadata = {};
-  contentMetadata[Constants.ASSET_NAME] = content?.id ?? '';
-  contentMetadata[Constants.STREAM_URL] = content?.url ?? '';
+  contentMetadata[Constants.ASSET_NAME] = `${videoId}[${musicTitle}]`  ?? '';
+  contentMetadata[Constants.STREAM_URL] = videoUrl ?? '';
   contentMetadata[Constants.IS_LIVE] = Constants.StreamType.VOD;
-  contentMetadata[Constants.PLAYER_NAME] = 'WEB HTML5';
-  contentMetadata[Constants.VIEWER_ID] = getItem('guest-token') ?? localStorage('user-id') ?? '';
+  contentMetadata[Constants.PLAYER_NAME] = 'HiPi WEB HTML5';
+  contentMetadata[Constants.APPLICATION_VERSION] = "1.0"; //major matrix point to filter
+  contentMetadata[Constants.VIEWER_ID] = getItem('guest-token') ?? localStorage.get('user-id') ?? '';
+  contentMetadata['audioLanguage'] = language;
+  contentMetadata["playerVersion"] = kNA;
+  contentMetadata["connectionType"] = connectionType;
+  contentMetadata["platformName"] = 'Hipi'
+  contentMetadata["adID"] = kNA
+  contentMetadata["filter"] = kNA
+  contentMetadata["genre"] = kNA
+  contentMetadata["category"] = "Shorts"
+  contentMetadata["originalLanguage"] = language;
+  contentMetadata["contentName"] = contentDescription
+  contentMetadata["initPlayback"] = "true"
+  contentMetadata["creatorHandle"] = userName;
+  contentMetadata["creatorID"] = videoOwnersId;
+  contentMetadata["creatorTag"] = creatorTag;
+  contentMetadata["videoType"] = "normal"
+  contentMetadata["playbackCount"] = "1"
+  contentMetadata["contentID"] = videoId;
+  contentMetadata["modelName"] = kNA
+  contentMetadata["autoPlay"] = "true"
+  contentMetadata["affiliate"] = "Zee Entertainment Enterprises Ltd"
+  contentMetadata["contentType"] = "VOD"
+  contentMetadata["pubDate"] = createdOn;
+  contentMetadata["streamingProtocol"] = "MP4"
+  contentMetadata["viewerAge"] = kNA
+  contentMetadata["viewerGender"] = kNA
+  contentMetadata["viewingMode"] = "Portrait"
+  contentMetadata["audioLanguage"] = language;
+  contentMetadata["infoMessage"] = kNA
+  contentMetadata["accessType"] = accessType;
+  contentMetadata["carrier"] = kNA
+  contentMetadata["catchUp"] = kNA
+  contentMetadata["channel"] = kNA
+  contentMetadata["clickID"] = kNA
+  contentMetadata["contentAccessType"] = kNA
+  contentMetadata["dsn"] = kNA
+  contentMetadata["episodeName"] = kNA
+  contentMetadata["episodeNumber"] = kNA
+  contentMetadata["origin"] = kNA
+  contentMetadata["originalLanguage"] = kNA
+  contentMetadata["playbackQuality"] = kNA
+  contentMetadata["episodeNumber"] = kNA
+  contentMetadata["rootID"] = kNA
+  contentMetadata["searchTags"] = kNA
+  contentMetadata["season"] = kNA
+  contentMetadata["show"] = kNA
+  contentMetadata["subtitle"] = kNA
+  contentMetadata["tvbrand"] = kNA
+  contentMetadata["videoEndPoint"] = kNA
+  contentMetadata["videoStartPoint"] = kNA
+
   return contentMetadata;
 }
 
@@ -57,14 +124,14 @@ export const videoAnalyticsRef = () => {
 export const reportPlaybackRequested = (content = {}) => {
   let options = {};
   options[Constants.CONVIVA_MODULE] = HTML5Module;
-  let contentInfo = setContentInfo(content);
+  let contentMetadata = setContentInfo(content);
   try{
     videoAnalytics?.setPlayer(content.ref, options);
-    videoAnalytics?.reportPlaybackRequested(contentInfo);
+    videoAnalytics?.reportPlaybackRequested(contentMetadata);
   }catch(e){
     initConvivaa()
     videoAnalytics?.setPlayer(content.ref, options);
-    videoAnalytics?.reportPlaybackRequested(contentInfo);
+    videoAnalytics?.reportPlaybackRequested(contentMetadata);
   }
 }
 

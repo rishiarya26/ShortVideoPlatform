@@ -458,6 +458,7 @@ function Feed({ router }) {
                       adData={shop?.adData}
                       showBanner={showBanner}
                       index={id}
+                      itemObject={item}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
