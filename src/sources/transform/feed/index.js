@@ -77,6 +77,9 @@ function transformSuccess(resp) {
       payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
       console.log('$$%%',d?.shoppable)
       payloadObject.shoppable = d?.shoppable || false;
+      payloadObject.language = d?.language?.name || '';
+      payloadObject.createdOn = d?.createdOn || '';
+
       
       payloadData.push(payloadObject);
     });

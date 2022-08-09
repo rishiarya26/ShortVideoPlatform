@@ -47,10 +47,11 @@ return(
                {shopNameImg ? <div className="max-h-12 ad_logo"><Img data={shopNameImg}/></div> :
                 <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
                }
+               
             </div>
             <div className="flex items-center">
-            {actualPrice >0 && <p className='text-gray-400 pl-2 pr-2  text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
-               {salePrice >0 && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
+            {actualPrice && <p className='text-gray-400 pl-2 pr-2  text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+               {salePrice && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
             
             <div onClick={()=>
                window?.open(shopLink)} className="flex px-4 py-2 ">

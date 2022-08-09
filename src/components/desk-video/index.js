@@ -20,7 +20,7 @@ import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAn
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
-userVerified}) {
+userVerified, itemObject}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -54,10 +54,10 @@ const router = useRouter();
 
    useEffect(()=>{
       let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
-
+      videoAnalytics?.setPlayer(null);
       if(!!currentRef?.getAttribute('src') && active === true){
          if(videoAnalytics !== null) reportPlaybackEnded();
-         reportPlaybackRequested({ id: videoId, url, ref: currentRef });
+         reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
       }
    },[active]);
 
@@ -75,6 +75,14 @@ const router = useRouter();
          analyticsCleanup();
       }
    }, [])
+
+   
+
+   const handleSeeked = (e) =>{
+      let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
+      if(videoAnalytics !== null) reportPlaybackEnded();
+      reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
+   }
 
    const handlePlay = entry => {
       if (clicked) {
@@ -108,10 +116,15 @@ const router = useRouter();
       }
    },[showVideoDetail])
 
-
    const handleUpdateSeekbar = e => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
+
+      if(e.target.currentTime >= e.target.duration-0.2){
+         handleSeeked();
+      }
+     
       setSeekedPercentage(percentage);
+
       // setVDuration(e.target.duration);
       // const duration = e?.target?.duration;
       // const currentTime = e?.target?.currentTime;

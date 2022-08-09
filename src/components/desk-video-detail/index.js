@@ -154,9 +154,9 @@ return (
                   <div className='flex items-center'>
                   <span  
                      className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <h1 onClick={pushToProfile} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
+                      <div onClick={pushToProfile} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
                        {userName} 
-                      </h1>
+                      </div>
                      <div className='usrdeck absolute z-50 top-4 -left-16'>
                      <DeskHoverInfo id={userName}/>
                      </div>  

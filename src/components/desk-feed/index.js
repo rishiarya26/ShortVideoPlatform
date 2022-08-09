@@ -215,6 +215,7 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
          videoId={item?.content_id}
          socialId={item?.getSocialId}
          userVerified = {item?.verified}
+         itemObject={item}
          />
     </span>
      )}

@@ -44,19 +44,19 @@
     return payload;
     }
  
- const videoSchema = ({name='video',userThumnail='video',desc='video', videoId='video',view, createdOn='video'})=>{
+ const videoSchema = ({name,userThumnail,desc, videoId,view})=>{
      const payload = {
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": `${name} on Hipi | ${name} Short Videos on Hipi`,
         "description": desc,
         "thumbnailUrl": userThumnail,
-        "uploadDate": createdOn,  
-        "contentUrl": `https://www.hipi.co.in/single-video/${videoId}`,
+        // "uploadDate": "",  
+        "contentUrl": `https://www.hipi.co.in/video/${videoId}`,
         "potentialAction": {
           "@type": "SeekToAction",
-          "target": `https://www.hipi.co.in/single-video/${videoId}`,
-          "startOffset-input": "required name"
+          "target": `https://www.hipi.co.in/video/${videoId}={seek_to_second_number}`,
+          "startOffset-input": "required name=seek_to_second_number"
         }
       }
       return payload;
