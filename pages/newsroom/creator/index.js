@@ -15,7 +15,7 @@ export default function Creator({stories}) {
     <>
       <SeoMeta
         data={{
-          title: 'creator - Newsroom | Hipi',
+          title: 'Creator - Newsroom | Hipi',
           description: `Get all the latest post related to creator and catch up on everything Hipi has to offer.`,
           canonical: url && getCanonicalUrl(url),
         }}

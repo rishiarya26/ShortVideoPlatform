@@ -6,7 +6,8 @@ import StaticFooter from '../components/static-footer';
 import { withBasePath } from "../../src/config";
 import { useRouter } from 'next/router';
 import styles from "./mainPage.module.css";
-import Card from './Card';
+import NewsroomIcon from "../components/commons/svgicons/newsroom";
+// import Card from './Card';
 
 const categoriesObj = {"All": "/", "News": "news", "Product": "product", "Creator": "creator", "Business": "business"};
 export default function MainPage({cards,heading="", children, featureCard={}}) {
@@ -39,7 +40,7 @@ export default function MainPage({cards,heading="", children, featureCard={}}) {
             />
         </div>
         <div className={styles.parentContainer}>
-           {cards && <h1 className={styles.heading}>{heading}</h1>}
+           {cards && <span className={styles.headingWrapper}><h1 className={styles.heading}>{heading}</h1> {heading === "Newsroom" && <span className={styles.iconWrapper}><NewsroomIcon height="64px" width="64px" viewBox="0 0 64 64"/></span>}</span>}
             {/* <div className={styles.featureCardWrapper}><Card post={featureCard}/></div> */}
             <div className={`${styles.container}  ${cards && "mt-16"}`}>
                 <div className={styles.sideBarWrapper}>
