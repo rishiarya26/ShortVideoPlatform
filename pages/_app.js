@@ -25,6 +25,7 @@ import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
 import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
+import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -33,6 +34,15 @@ import { initLinkdin } from '../src/analytics/linkdin-pixel';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
+
+(function storyBlokInitSelfFunction(){
+  try{
+    storyBlokInit();
+  } catch(e){
+    console.log("storyblokerr", e);
+  }
+})();
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;

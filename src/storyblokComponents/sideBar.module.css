@@ -1,0 +1,18 @@
+.tabs:hover::after, .tabs_active::after{
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    height: 2px;
+    width: 100%;
+    background: #fe2c55;
+    width: 100%;
+}
+
+.tabs{
+    width: min-content;
+    font-size: 16px;
+    line-height: 36px;
+    font-weight: 500;
+}
