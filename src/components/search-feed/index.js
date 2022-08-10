@@ -25,6 +25,7 @@ import { getItem } from '../../utils/cookie';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
+import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -337,6 +338,9 @@ try{
             toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
             ToTrackFbEvents('watchTime');
             //fbq.event('watchTime')
+
+            /** Mixpanel - increment view count **/
+            incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
             /*** video events ***/
               if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

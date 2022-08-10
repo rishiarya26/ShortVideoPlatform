@@ -29,6 +29,7 @@ import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
+import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -329,6 +330,9 @@ try{
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
+               /** Mixpanel - increment view count **/
+               incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

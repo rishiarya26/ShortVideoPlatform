@@ -32,6 +32,7 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import UserExperience from  "../commons/user-experience";
+import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -365,6 +366,7 @@ function Feed({ router }) {
                 setShowSwipeUp({count : 1, value:false});
                 let currentActiveFeedItem = items?.[videoActiveIndex];
 
+                
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
@@ -373,6 +375,9 @@ function Feed({ router }) {
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
+                /** Mixpanel - increment view count **/
+                incrementCountVideoView(currentActiveFeedItem?.content_id);
+                
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
                   toTrackMixpanel('skip',{pageName:pageName,tabName:tabName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable:preShopData?.shop?.isShoppable, isMonetization:preShopData?.shop?.adData?.isMonetization},items?.[videoActiveIndex])

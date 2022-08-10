@@ -11,11 +11,19 @@
   }
 
   const organisationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Hipi",
-    "url": "https://www.hipi.co.in/",
-    "logo": "https://www.hipi.co.in/icons/Logo_hipi.png"
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Hipi",
+      "url": "https://www.hipi.co.in/",
+      "logo": "https://www.hipi.co.in/icons/Logo_hipi.png",
+      "sameAs": [
+        "https://www.hipi.co.in/",
+        "https://www.facebook.com/HipiOfficialApp",
+        "https://twitter.com/HipiOfficialApp",
+        "https://www.instagram.com/hipiofficialapp/",
+        "https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ",
+        "https://www.linkedin.com/company/hipiofficialapp/"
+      ]
   }
 
   const personSchema = ({name, desc, userHandle}) => {

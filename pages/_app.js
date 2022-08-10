@@ -24,7 +24,7 @@ import Cookies from '../src/components/cookies';
 import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
 import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 import { toGetSocialToken } from '../src/sources/get-social';
-import videoCompletedEvent from '../src/utils/events';
+import { initLinkdin } from '../src/analytics/linkdin-pixel';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -245,6 +245,7 @@ function Hipi({
 
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
+      initLinkdin();
       const cookieAgree = getItem('cookie-agreed');
       cookieAgree !== 'yes' && getCountry();
       getGeoLocationInfo();
@@ -371,9 +372,6 @@ function Hipi({
   useEffect(() => {
   /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
     const timeTrackerInterval = setInterval(() => {
-      
-     /* Mixpanel - videos completed - 5,10,15 */
-      videoCompletedEvent();
 
      if(window.sessionStorage.getItem("sessionEventTrack") !== 'null'){
       let minutesTracker = parseInt(window.sessionStorage.getItem('minutes')) || 0;
@@ -430,7 +428,7 @@ function Hipi({
     
     // setVideosCompleted(window.sessionStorage.getItem('videos-completed'));
     if(!window.sessionStorage.getItem('videos-completed')){
-      window.sessionStorage.setItem('videos-completed', 0);
+      window.sessionStorage.setItem('videos-completed', JSON.stringify({ids:[],value: 0}));
       // videosCompleted = 0
     } 
     // else{
@@ -459,29 +457,6 @@ function Hipi({
       })
     }
   },[])
-
-//  const videoCompletedEvent = () =>{
-// try{
-//   const vCompletedLive = parseInt(window.sessionStorage.getItem('videos-completed') || '0');
-//   if(videosCompleted < vCompletedLive){
-  
-//     console.log("MIX**", window.sessionStorage.getItem('videos-completed'))
-
-//     if(vCompletedLive === 5){
-//        toTrackMixpanel('videosCompleted5')
-//     }
-//     if(vCompletedLive === 10){
-//       toTrackMixpanel('videosCompleted10')
-//     }
-//     if(vCompletedLive === 15){
-//     toTrackMixpanel('videosCompleted15')
-//     }
-//     videosCompleted = vCompletedLive;
-//    }
-//   }catch(e){
-//     console.error('mixpanel- complete videos',e)
-//   }
-//   }
 
  const guestGetSocialToken = async() =>{
    let response;
@@ -522,6 +497,21 @@ function Hipi({
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
+          <Script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          _linkedin_partner_id = "4069492"; 
+          window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
+          window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
+          (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} 
+          var s = document.getElementsByTagName("script")[0]; 
+          var b = document.createElement("script"); b.type = "text/javascript";b.async = true; 
+          b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
+          s.parentNode.insertBefore(b, s);})(window.lintrk);
           `,
         }}
       />

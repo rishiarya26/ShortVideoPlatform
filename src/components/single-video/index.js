@@ -11,6 +11,7 @@ import FooterMenu from '../footer-menu';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
+import { incrementCountVideoView } from '../../utils/events';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -63,6 +64,10 @@ export default function SingleVideo(props){
     toTrackMixpanel('impression');
     window.addEventListener("beforeunload", ()=>{
       watchedTime > 0 && toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
+
+      /** Mixpanel - increment view count **/
+      watchedTime > 0 && incrementCountVideoView(props?.id);
+
        /*** video events ***/
        if(watchedTime < 3){
         viewEventsCall(props?.id,'skip')
@@ -202,19 +207,14 @@ export default function SingleVideo(props){
         onTimeUpdate={handleUpdateSeekbar}
         // ref={ref}
         loop
-        poster={props.poster}
+        poster={props?.poster}
         onClick={handleVideoPress}
         className="vdo_player"
         width={size.width}
         height={size.height}
         objectfit="cover"
         onSeeked={()=>{
-          try{
-            const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
-            window.sessionStorage.setItem('videos-completed',videosCompleted+1);
-           }catch(e){
-             console.error('error in video comp increment',e)
-           }
+          incrementCountVideoView(props?.id);
         }}
       >
         <source src={props.url} type="video/mp4" />

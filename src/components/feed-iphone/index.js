@@ -34,6 +34,7 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import SwipeUp from "../commons/svgicons/swipe-up";
 import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
+import { incrementCountVideoView } from '../../utils/events';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -415,6 +416,9 @@ console.log('errorrr',e)
 
                 ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
+                /** Mixpanel - increment view count **/
+                incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
