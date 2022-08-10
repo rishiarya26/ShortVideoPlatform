@@ -79,6 +79,8 @@ function transformSuccess(resp) {
       payloadObject.shoppable = d?.shoppable || false;
       payloadObject.language = d?.language?.name || '';
       payloadObject.createdOn = d?.createdOn || '';
+      payloadObject.videoDuration = d?.videoDuration || '';
+
 
       
       payloadData.push(payloadObject);

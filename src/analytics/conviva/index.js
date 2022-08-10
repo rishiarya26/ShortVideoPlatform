@@ -55,6 +55,7 @@ export const setContentInfo = (content ={}) =>{
   let createdOn = itemObject?.createdOn ?? 'N/A';
   let accessType = localStorage.get('user-id') ? 'registered' : 'guest';
   let connectionType = typeof window !== undefined ? window?.navigator?.connection?.effectiveType : 'N/A';
+  let videoDuration = itemObject?.videoDuration ?? 'N/A';
 
 
   let contentMetadata = {};
@@ -63,9 +64,11 @@ export const setContentInfo = (content ={}) =>{
   contentMetadata[Constants.IS_LIVE] = Constants.StreamType.VOD;
   contentMetadata[Constants.PLAYER_NAME] = 'HiPi WEB HTML5';
   contentMetadata[Constants.APPLICATION_VERSION] = "1.0"; //major matrix point to filter
+  contentMetadata[Constants.DURATION] = videoDuration;
   contentMetadata[Constants.VIEWER_ID] = getItem('guest-token') ?? localStorage.get('user-id') ?? '';
   contentMetadata['audioLanguage'] = language;
   contentMetadata["playerVersion"] = kNA;
+  contentMetadata['appVersion'] = "1.0";
   contentMetadata["connectionType"] = connectionType;
   contentMetadata["platformName"] = 'Hipi'
   contentMetadata["adID"] = kNA

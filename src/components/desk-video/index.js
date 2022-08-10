@@ -119,7 +119,7 @@ const router = useRouter();
    const handleUpdateSeekbar = e => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
 
-      if(e.target.currentTime >= e.target.duration-0.2){
+      if(e.target.currentTime >= e.target.duration-0.4){
          handleSeeked();
       }
      

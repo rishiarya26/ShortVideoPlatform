@@ -477,6 +477,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
+                      itemObject={item}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}

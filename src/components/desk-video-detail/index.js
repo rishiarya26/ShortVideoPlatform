@@ -35,7 +35,7 @@ import { analyticsCleanup, reportPlaybackEnded, videoAnalytics } from "../../ana
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,itemObject,
 comp = 'normal'}) {
 
    const {show:showDialog} = useDialog();
@@ -138,7 +138,7 @@ domain = domain?.origin;
 return (
 <div className={`flex ${parentWidth[comp]}`}>
    <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
-      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId}/>
+      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId} itemObject={itemObject}/>
       {NavigationBtns[comp]}
    </div>
    <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>
