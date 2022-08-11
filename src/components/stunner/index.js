@@ -65,7 +65,7 @@ useEffect(()=>{
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_pastel_blue'>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
+     Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
 </p>
   </div>
 </div>
