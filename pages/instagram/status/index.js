@@ -1,18 +1,19 @@
 import InstaDeLink from "../../../src/components/insta-de-link";
 import { getUserProfile } from "../../../src/sources/users/profile";
 import Error from 'next/error';
+import Error409 from "../../../src/components/409";
 
 export default function Hipi(data){
     console.log(data)
     if(data?.status === "fail"){
         if(data?.errorCode === 409){  
-         return<></>
+         return<><Error409/></>
         }else{
          return <Error message={data?.message} statusCode={data?.errorCode} />;
       }
     }
     return(
-       <InstaDeLink socialHandles={item?.socialHandles?.instagramUrl || null}/>
+       <InstaDeLink socialHandles={data?.data?.socialHandles?.instagramUrl || null} name={`${data?.data?.firstName || ''} ${data?.data?.lastName || ''}`}/>
     )
 }
 
