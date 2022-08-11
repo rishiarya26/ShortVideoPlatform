@@ -8,6 +8,7 @@ import Close from "../commons/svgicons/close-white"
 import List from "../commons/svgicons/list"
 import PrivacyIco from "../commons/svgicons/privacy"
 import Terms from "../commons/svgicons/terms"
+import NewsroomIcon from "../commons/svgicons/newsroom";
 
 const HamburgerMenu = ()=>{
    const [open, setOpen]= useState(false);
@@ -37,6 +38,10 @@ const HamburgerMenu = ()=>{
           <div onClick={()=>router?.push('/terms-conditions.html')} className="flex items-center py-3">
             <Terms/>
             <p className="text-base px-3">Terms of Use</p>
+          </div>
+          <div onClick={()=>router?.push('/newsroom')} className="flex items-center py-3">
+            <NewsroomIcon height="20px" width="20px"/>
+            <p className="text-base px-3">Newsroom</p>
           </div>
           {/* <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
             <Logout/>

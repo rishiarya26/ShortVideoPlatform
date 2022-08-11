@@ -1,9 +1,10 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import faq from '../../../public/stunner-FAQ.json';
 import stunner from '../../../public/stunnerData.json';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { withBasePath } from '../../config';
 import CloseFaq from '../commons/svgicons/close-faq';
 import OpenFaq from '../commons/svgicons/open-faq';
@@ -41,6 +42,10 @@ const onStoreRedirect =(device)=>{
   updateItem[id].show = !(updateItem[id]?.show);
   setStunnerData(updateItem);
 }
+
+useEffect(()=>{
+  toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
+},[])
   return (
     <div className="w-full h-full">
        {/* <div className=" headerbar w-full h-18 flex items-center fixed top-0 lg:px-10 px-4 py-2 justify-between">
