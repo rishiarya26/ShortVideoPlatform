@@ -224,7 +224,6 @@ function Feed({ router }) {
     if(percentage > 0){
       setInitialPlayStarted(true);
      }
-     console.log("watch - time",currentTime, duration, currentTime>=duration-0.2, currentTime>=duration-0.4)
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
        toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
@@ -360,6 +359,8 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                setVideoDurationDetails({totalDuration: null, currentT:0});
+
                 setSeekedPercentage(0)
                 setInitialPlayStarted(false);
 
@@ -376,6 +377,7 @@ function Feed({ router }) {
                 toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /** Mixpanel - increment view count **/
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && 
                 incrementCountVideoView(currentActiveFeedItem?.content_id);
                 
                 /*** video events ***/

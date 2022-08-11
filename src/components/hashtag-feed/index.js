@@ -318,6 +318,7 @@ try{
               const {
                 activeIndex, slides
               } = swiperCore;
+              setVideoDurationDetails({totalDuration: null, currentT:0})
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
@@ -332,7 +333,7 @@ try{
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                /** Mixpanel - increment view count **/
-               incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
+               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

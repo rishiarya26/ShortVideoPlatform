@@ -332,6 +332,7 @@ try{
             const {
                 activeIndex, slides
             } = swiperCore;
+            setVideoDurationDetails({totalDuration: null, currentT:0})
             setSeekedPercentage(0)
             setInitialPlayStarted(false);
             toTrackMixpanel('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -340,7 +341,7 @@ try{
             //fbq.event('watchTime')
 
             /** Mixpanel - increment view count **/
-            incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
+            preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
             /*** video events ***/
               if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
