@@ -15,7 +15,7 @@ export default function Business({stories}) {
     <>
       <SeoMeta
         data={{
-          title: 'business - Newsroom | Hipi',
+          title: 'Business - Newsroom | Hipi',
           description: `Get the official business post and catch up on everything Hipi has to offer.`,
           canonical: url && getCanonicalUrl(url),
         }}

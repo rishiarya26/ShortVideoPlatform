@@ -1,9 +1,10 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import faq from '../../../public/stunner-FAQ.json';
 import stunner from '../../../public/stunnerData.json';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { withBasePath } from '../../config';
 import CloseFaq from '../commons/svgicons/close-faq';
 import OpenFaq from '../commons/svgicons/open-faq';
@@ -41,6 +42,10 @@ const onStoreRedirect =(device)=>{
   updateItem[id].show = !(updateItem[id]?.show);
   setStunnerData(updateItem);
 }
+
+useEffect(()=>{
+  toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
+},[])
   return (
     <div className="w-full h-full">
        {/* <div className=" headerbar w-full h-18 flex items-center fixed top-0 lg:px-10 px-4 py-2 justify-between">
@@ -60,7 +65,7 @@ const onStoreRedirect =(device)=>{
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_pastel_blue'>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
+     Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.
 </p>
   </div>
 </div>
