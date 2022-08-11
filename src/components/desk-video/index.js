@@ -78,10 +78,14 @@ const router = useRouter();
 
    
 
-   const handleSeeked = (e) =>{
+   const convivaReplaySession = (e) =>{
       let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
       reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
+   }
+
+   const handleSeeked = () => {
+      convivaReplaySession();
    }
 
    const handlePlay = entry => {
@@ -119,9 +123,9 @@ const router = useRouter();
    const handleUpdateSeekbar = e => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
 
-      if(e.target.currentTime >= e.target.duration-0.4){
-         handleSeeked();
-      }
+      // if(e.target.currentTime >= e.target.duration-0.4){
+      //    handleConviva();
+      // }
      
       setSeekedPercentage(percentage);
 
@@ -236,6 +240,7 @@ return (
                      objectfit="contain"
                      key={url}
                      src={active ? url : ""}
+                     onSeeked={handleSeeked}
                      >
                      {/* <source
                               src={url}

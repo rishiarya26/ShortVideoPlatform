@@ -44,23 +44,27 @@ function Video(props) {
    useEffect(()=>{console.log("$$",props?.adData)},[])
 
    useEffect(()=>{
+      const videoElement = rootRef?.current?.children[0];
       try{
-      if(device === 'ios') 
-      {   const videoElement = rootRef?.current?.children[0];
-          videoElement.addEventListener('suspend', () => {
-            props?.suspendLoader && props?.suspendLoader(true);
-          });
-      }
+         if(device === 'ios'){   
+            videoElement.addEventListener('suspend', () => {
+               props?.suspendLoader && props?.suspendLoader(true);
+            });
+         }
       }catch(e){
          console.error(e);
       }
 
       return ()=>{
-        if(device === 'ios'){
-            videoElement.removeEventListener('suspend', () => {
-            props?.suspendLoader && props?.suspendLoader(true);
-          });
-         }
+        try{
+            if(device === 'ios'){
+               videoElement.removeEventListener('suspend', () => {
+               props?.suspendLoader && props?.suspendLoader(true);
+            });
+            }
+        }catch(e){
+            console.log(e);
+        }
        }
    },[])
    // useEffect(()=>{
@@ -151,16 +155,20 @@ function Video(props) {
    
    const handleUpdateSeekbar = e => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
-      if(e.target.currentTime >= e.target.duration-0.4){
-         handleSeeked();
-      }
+      // if(e.target.currentTime >= e.target.duration-0.4){
+      //    handleSeeked();
+      // }
       percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
    };
    
-   const handleSeeked = () =>{
+   const convivaReplaySession = () =>{
       let currentRef = rootRef?.current?.children[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
       reportPlaybackRequested({ ref: currentRef, itemObject:props.itemObject  });
+   }
+
+   const handleSeeked = () => {
+      convivaReplaySession();
    }
    
    const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
@@ -190,6 +198,7 @@ function Video(props) {
       poster={firstFrame}
       objectfit="cover"
       key={props.url}
+      onSeeked={handleSeeked}
       >
       <source
          src={props.url}
@@ -289,6 +298,7 @@ function Video(props) {
         poster={firstFrame}
         objectfit="cover"
         key={props.url}
+        onSeeked={handleSeeked}
         >
          <source
            src={`${props.url}`}
