@@ -5,9 +5,7 @@ import { SeoMeta } from "../src/components/commons/head-meta/seo-meta";
 import { commonEvents } from "../src/analytics/mixpanel/events";
 import { track } from "../src/analytics";
 import { useEffect, useState } from "react";
-import * as fbq from '../src/analytics/fb-pixel'
 import { getCanonicalUrl } from "../src/utils/web";
-import { useRouter } from "next/router";
 
 
 export default function Hipi() {
