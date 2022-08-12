@@ -29,6 +29,7 @@ import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
+import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -189,6 +190,13 @@ function HashTagFeed({ router }) {
       // viewEventsCall(activeVideoId, 'completed');
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+
+      // try{
+      //   const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+      //   window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+      //  }catch(e){
+      //    console.error('error in video comp increment',e)
+      //  }
     }
     /******************************/
     if(currentTime >= duration-0.4){
@@ -310,6 +318,7 @@ try{
               const {
                 activeIndex, slides
               } = swiperCore;
+              setVideoDurationDetails({totalDuration: null, currentT:0})
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
@@ -322,6 +331,9 @@ try{
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+
+               /** Mixpanel - increment view count **/
+               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
 
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){

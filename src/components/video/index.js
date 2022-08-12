@@ -10,6 +10,7 @@ import Play from '../commons/svgicons/play';
 import usePreviousValue from '../../hooks/use-previous';
 import dynamic from 'next/dynamic';
 import { getItem } from '../../utils/cookie';
+import {incrementCountVideoView} from '../../utils/events';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -176,6 +177,9 @@ function Video(props) {
       poster={firstFrame}
       objectfit="cover"
       key={props.url}
+      onEnded={()=>{
+         console.log("MIX&&- ended")
+         window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
          <source
             src={props.url}
@@ -270,6 +274,23 @@ function Video(props) {
         poster={firstFrame}
         objectfit="cover"
         key={props.url}
+        onSeeked={()=>{
+         incrementCountVideoView(props?.id);
+         // try{
+         //    /* mixpanel - view event tracker (videos completed) */
+         //    const videosCompleted = JSON.parse(window.sessionStorage.getItem('videos-completed')) ||{ ids:[], value: 0};
+         //    console.log('MIX-count --++',videosCompleted, " ** incre ** ", videosCompleted.value+1, videosCompleted?.ids?.findIndex((item)=>item === props?.id) === -1,typeof (videosCompleted?.ids?.findIndex((item)=>item === props?.id)), props?.id)
+         //    if(videosCompleted?.ids?.findIndex((item)=>item === props?.id) === -1)
+         //    { console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted.value+1)
+         //      videosCompleted.ids.push(props?.id);
+         //      const updateValue = parseInt(videosCompleted.value)+1
+         //      const updateData = {ids:videosCompleted.ids, value:updateValue}
+         //       window.sessionStorage.setItem('videos-completed',JSON.stringify(updateData));
+         //    }
+         //   }catch(e){
+         //     console.error('error in video comp increment',e)
+         //   }
+        }}
         >
          <source
            src={`${props.url}`}

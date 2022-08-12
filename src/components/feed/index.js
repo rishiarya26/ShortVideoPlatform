@@ -20,7 +20,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import useAuth from '../../hooks/use-auth';
 import CircularProgress from '../commons/circular-loader'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { localStorage } from '../../utils/storage';
+import { localStorage, sessionStorage } from '../../utils/storage';
 import * as fbq from '../../analytics/fb-pixel'
 import HamburgerMenu from '../hamburger-menu';
 import {trackEvent} from '../../analytics/firebase'
@@ -32,6 +32,7 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import UserExperience from  "../commons/user-experience";
+import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -110,7 +111,7 @@ function Feed({ router }) {
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
-      ToTrackFbEvents('screenView')
+      ToTrackFbEvents('screenView');
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
     }
@@ -235,6 +236,13 @@ function Feed({ router }) {
        /*** view events ***/
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
+      //  try{
+      //   const videosCompleted = parseInt(window.sessionStorage.getItem('videos-completed'));
+      //   console.log('MIX-count ++',videosCompleted, " ** incre ** ", videosCompleted+1)
+      //   window.sessionStorage.setItem('videos-completed',videosCompleted+1);
+      //  }catch(e){
+      //    console.error('error in video comp increment',e)
+      //  }
      }
      /******************************/
      if(currentTime >= duration-0.4){
@@ -351,12 +359,15 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                setVideoDurationDetails({totalDuration: null, currentT:0});
+
                 setSeekedPercentage(0)
                 setInitialPlayStarted(false);
 
                 setShowSwipeUp({count : 1, value:false});
                 let currentActiveFeedItem = items?.[videoActiveIndex];
 
+                
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
@@ -365,6 +376,10 @@ function Feed({ router }) {
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
+                /** Mixpanel - increment view count **/
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && 
+                incrementCountVideoView(currentActiveFeedItem?.content_id);
+                
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
                   toTrackMixpanel('skip',{pageName:pageName,tabName:tabName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable:preShopData?.shop?.isShoppable, isMonetization:preShopData?.shop?.adData?.isMonetization},items?.[videoActiveIndex])
