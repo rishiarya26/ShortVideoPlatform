@@ -226,7 +226,7 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Method'] = value?.method;
         track('Signup Initiated', globalCommonEvents)
        },
-       'signupResult' :  ()=>{
+       'signupSuccess' :  ()=>{
         addPageTabName();
         globalCommonEvents['Method'] = value?.method;
         track('Signup Success', globalCommonEvents)
