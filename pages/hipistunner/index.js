@@ -20,20 +20,6 @@ export default function Hipi() {
      
     <Stunner/>
 
-      <StaticFooter/>
-      <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
-        <div className="flex">
-            <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
-            <div className="flex flex-col justify-center ">
-              <p className="text-sm font-semibold">Download Hipi App</p>
-              <p className="text-xs ">Participate in Stunner</p>
-            </div>
-        </div>
-        <div>
-            <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/HSTest" rel="noreferrer" >Install</a>
-        </div>
-      </div>
-
     </div>
 
     
