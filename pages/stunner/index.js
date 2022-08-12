@@ -21,7 +21,7 @@ export default function Hipi() {
     <Stunner/>
 
       <StaticFooter/>
-      <div className="w-full p-4 flex bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
+      <div className="flex md:hidden w-full p-4 bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
         <div className="flex">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
