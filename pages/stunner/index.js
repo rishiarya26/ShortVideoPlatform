@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element*/
+/*eslint-disable react/jsx-no-duplicate-props */
 import { SeoMeta } from "../../src/components/commons/head-meta/seo-meta";
 import Stunner from "../../src/components/stunner";
 import {faqStunner} from "../../src/utils/schema";
@@ -22,7 +24,7 @@ export default function Hipi() {
 
       <StaticFooter/>
       <div className="flex md:hidden w-full p-4 bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
-        <div className="flex">
+        <div className="flex flex-row">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
               <p className="text-sm font-semibold">Download Hipi App</p>
