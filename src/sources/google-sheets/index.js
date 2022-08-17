@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 
+import { STATIC_PAGE_CREATOR_KEY } from "../../constants";
 import { post } from "../../network";
 
 async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre}) {
@@ -14,7 +15,7 @@ async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre})
   let response = {};
   try {
     const apiPath = `https://mapi.charmboard.com/v3.6/user/paidCreator`;
-    response = await post(apiPath,payload,{'content-type':'json'});
+    response = await post(apiPath,payload,{'apikey': STATIC_PAGE_CREATOR_KEY});
     console.log('resp**',response);
     return Promise.resolve(response);
   } catch (err) {
@@ -32,7 +33,7 @@ async function postStunnerData({name,ques,mobile,email}) {
   let response = {};
   try {
     const apiPath = `https://mapi.charmboard.com/v3.6/user/hipiStunner`;
-    response = await post(apiPath,payload,{'content-type':'json'});
+    response = await post(apiPath,payload,{'apikey': STATIC_PAGE_CREATOR_KEY});
     console.log('resp**',response);
     return Promise.resolve(response);
   } catch (err) {
