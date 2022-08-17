@@ -13,7 +13,7 @@ async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre})
   }  
   let response = {};
   try {
-    const apiPath = `https://stagingmobile.charmboard.com/v3.6/user/paidCreator`;
+    const apiPath = `https://mapi.charmboard.com/v3.6/user/paidCreator`;
     response = await post(apiPath,payload,{'content-type':'json'});
     console.log('resp**',response);
     return Promise.resolve(response);
@@ -24,14 +24,14 @@ async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre})
 
 async function postStunnerData({name,ques,mobile,email}) {
   let payload = {
-      Name:name,
-      Question: ques,
-      Mobile:mobile,
-      Email:email
+      name,
+      question: ques,
+      mobile,
+      email
   }  
   let response = {};
   try {
-    const apiPath = `https://sheet.best/api/sheets/94931255-c62e-4781-b95d-8e3d61d85ac2`;
+    const apiPath = `https://mapi.charmboard.com/v3.6/user/hipiStunner`;
     response = await post(apiPath,payload,{'content-type':'json'});
     console.log('resp**',response);
     return Promise.resolve(response);
