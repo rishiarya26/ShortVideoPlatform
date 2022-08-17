@@ -13,7 +13,7 @@ async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre})
   }  
   let response = {};
   try {
-    const apiPath = `https://sheet.best/api/sheets/5d6b89fb-e584-4041-b82d-6f477d29b00b`;
+    const apiPath = `https://sheet.best/api/sheets/55998b34-0575-450d-8ffa-731901d6264e`;
     response = await post(apiPath,payload,{'content-type':'json'});
     console.log('resp**',response);
     return Promise.resolve(response);
@@ -31,7 +31,7 @@ async function postStunnerData({name,ques,mobile,email}) {
   }  
   let response = {};
   try {
-    const apiPath = `https://sheet.best/api/sheets/cf9f504c-df62-4fd3-9cfc-873daa27c4d6`;
+    const apiPath = `https://sheet.best/api/sheets/94931255-c62e-4781-b95d-8e3d61d85ac2`;
     response = await post(apiPath,payload,{'content-type':'json'});
     console.log('resp**',response);
     return Promise.resolve(response);
