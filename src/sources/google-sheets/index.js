@@ -4,16 +4,16 @@ import { post } from "../../network";
 
 async function postCreatorData({name,hipiHandle,instaHandle,mobile,email,genre}) {
   let payload = {
-      Name:name,
-      Genre:genre,
-      'Hipi Handle':hipiHandle,
-      'Insta Handle':instaHandle,
-      Mobile:mobile,
-      Email:email
+      name,
+      genre,
+      hipiHandle,
+      instaHandle,
+      mobile,
+      email
   }  
   let response = {};
   try {
-    const apiPath = `https://sheet.best/api/sheets/55998b34-0575-450d-8ffa-731901d6264e`;
+    const apiPath = `https://stagingmobile.charmboard.com/v3.6/user/paidCreator`;
     response = await post(apiPath,payload,{'content-type':'json'});
     console.log('resp**',response);
     return Promise.resolve(response);
