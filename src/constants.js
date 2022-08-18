@@ -25,5 +25,5 @@ export const CREATOR_PROFILE = 'Creator Profile'
 export const SEARCH_EVENT = 'search_event';
 export const FULL_EXPERIENCE = 'Get the full experience on the Hipi app';
 export const STORYBLOK_TOKEN = 'quNBuDdvpWQyR7qL35OGjwtt'
-export const STATIC_PAGE_CREATOR_KEY = 'HVKJWV0-6V4MYV1-NBT0TBD-PM9EBTF';
+export const STATIC_PAGE_CREATOR_KEY = '1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84';
  
