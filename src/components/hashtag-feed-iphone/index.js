@@ -468,6 +468,7 @@ try{
                       adData = {shop?.adData}
                       // showBanner={showBanner}
                       pageName={pageName}
+                      userVerified = {item?.verified}
                     />
 
                   </SwiperSlide>

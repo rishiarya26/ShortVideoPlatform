@@ -56,9 +56,11 @@ export const ToTrackFbEvents = (type, commonInfo = {}, value) => {
         fbq.event("UGC_Played_Complete");
       },
       'creatorFormSubmitted' : ()=>{
-        commonWithIds();
-        track('Creator Form Submitted');
-      }
+        fbq.event('Creator Form Submitted',fbEvents);
+      },
+      'videosCompleted5' : ()=>fbq.event('ugc_view_5'),
+      'videosCompleted10' : ()=>fbq.event('ugc_view_10'),
+      'videosCompleted15' : ()=>fbq.event('ugc_view_15')
     }
     type && toTrack?.[type] && toTrack?.[type]();
 }

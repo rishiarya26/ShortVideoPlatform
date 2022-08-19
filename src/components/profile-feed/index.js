@@ -404,6 +404,7 @@ try{
                       pageName={pageName}
                       adData={shop?.adData}
                       showBanner={showBanner}
+                      userVerified = {item?.verified}
                     />
 
                   </SwiperSlide>

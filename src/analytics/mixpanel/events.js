@@ -366,7 +366,11 @@ export const toTrackMixpanel = (type, value, item) => {
         },
         'videosCompleted5' : ()=>track('ugc_view_5',globalCommonEvents),
         'videosCompleted10' : ()=>track('ugc_view_10',globalCommonEvents),
-        'videosCompleted15' : ()=>track('ugc_view_15',globalCommonEvents)
+        'videosCompleted15' : ()=>track('ugc_view_15',globalCommonEvents),
+        'stunnerInstallClick' : ()=>{
+          addPageTabName();
+          track('app_install_stunner_footer_click',globalCommonEvents)
+        }
 
         
         

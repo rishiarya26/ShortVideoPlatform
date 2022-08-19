@@ -8,12 +8,13 @@ import Like from '../commons/svgicons/like-outlined';
 import { useState } from 'react';
 
 export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
-   id, likesCount, videoUrl, activeHoverIndex }) {
+   id, likesCount, videoUrl, activeHoverIndex, page,tag }) {
   const formattedViewCount =  numberFormatter(viewCount);
   const [showLoader, setShowLoader] = useState(false);
 
   return (
     <div key={id} className="video-card h-full min-h-28 w-full relative z-0 cursor-pointer rounded overflow-hidden">
+     {page === 'hashTag' && tag && <div className="bg-red-700 text-white py-1 px-2 absolute top-2 left-2 z-10 rounded-sm text-xs">{tag}</div>}
      {shoppable && <div className="absolute top-2 right-2 z-10">
         <Cart/>
       </div>}

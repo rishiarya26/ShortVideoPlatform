@@ -475,6 +475,7 @@ function ProfileFeedIphone({ router }) {
                       description={item?.content_description}
                       pageName={pageName}
                       adData={shop?.adData}
+                      userVerified = {item?.verified}
                       // showBanner={showBanner}
                     />
 

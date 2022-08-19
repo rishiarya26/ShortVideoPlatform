@@ -56,6 +56,8 @@ function transformSuccess(resp) {
         payloadObject.shoppable = d?.shoppable || false
         payloadObject.viewCount = d?.viewCount;
         payloadObject.firstFrame= d?.firstFrame || null;
+        payloadObject.tag = d?.tag?.name || null;
+        payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
 
         payloadData.push(payloadObject);
       });

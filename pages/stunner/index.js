@@ -5,6 +5,8 @@ import Stunner from "../../src/components/stunner";
 import {faqStunner} from "../../src/utils/schema";
 import { withBasePath } from '../../src/config'
 import StaticFooter from "../../src/components/static-footer";
+import { toTrackMixpanel } from "../../src/analytics/mixpanel/events";
+import { toTrackFirebase } from "../../src/analytics/firebase/events";
 
 export default function Hipi() {
   return (
@@ -32,7 +34,13 @@ export default function Hipi() {
             </div>
         </div>
         <div>
-            <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/HSTest" rel="noreferrer" >Install</a>
+            {/* <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/HSTest" rel="noreferrer" >Install</a> */}
+
+            <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" onClick={()=>{
+              toTrackMixpanel('stunnerInstallClick',{pageName:'Hipi Stunner'})
+              toTrackFirebase('stunnerInstallClick',{page:'Hipi Stunner'})
+              window?.open('https://hipi.onelink.me/tMco/HSTest')
+            }} >Install</div>
         </div>
       </div>
 

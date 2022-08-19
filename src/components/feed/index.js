@@ -457,6 +457,7 @@ function Feed({ router }) {
                       tabName={tabName}
                       adData={shop?.adData}
                       showBanner={showBanner}
+                      userVerified = {item?.verified}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
