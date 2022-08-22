@@ -495,7 +495,7 @@ console.log('errorrr',e)
                       pageName={pageName}
                       tabName={tabName}
                       itemObject={item}
-                      suspendLoader={setToSuspendLoaderCb && setToSuspendLoaderCb}
+                      suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
