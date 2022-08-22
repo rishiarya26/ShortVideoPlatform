@@ -226,7 +226,7 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Method'] = value?.method;
         track('Signup Initiated', globalCommonEvents)
        },
-       'signupResult' :  ()=>{
+       'signupSuccess' :  ()=>{
         addPageTabName();
         globalCommonEvents['Method'] = value?.method;
         track('Signup Success', globalCommonEvents)
@@ -363,7 +363,15 @@ export const toTrackMixpanel = (type, value, item) => {
         'creatorFormSubmitted' : ()=>{
           commonWithIds();
           track('Creator Form Submitted',globalCommonEvents);
+        },
+        'videosCompleted5' : ()=>track('ugc_view_5',globalCommonEvents),
+        'videosCompleted10' : ()=>track('ugc_view_10',globalCommonEvents),
+        'videosCompleted15' : ()=>track('ugc_view_15',globalCommonEvents),
+        'stunnerInstallClick' : ()=>{
+          addPageTabName();
+          track('app_install_stunner_footer_click',globalCommonEvents)
         }
+
         
         
  //   'pause' : () => track('Pause', commonWithIds()),

@@ -109,6 +109,8 @@ export default function VideoGallery({
                   likesCount={item.likescount}
                   shoppable = {item.shoppable}
                   id={id} 
+                  page={page}
+                  tag={item?.tag}
                 />
              </span>
              ))}

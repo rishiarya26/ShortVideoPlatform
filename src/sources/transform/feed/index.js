@@ -75,7 +75,6 @@ function transformSuccess(resp) {
       payloadObject.shareCount=d?.sCount || '';
       payloadObject.commentCount=d?.cCount || '';
       payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
-      console.log('$$%%',d?.shoppable)
       payloadObject.shoppable = d?.shoppable || false;
       payloadObject.language = d?.language?.name || '';
       payloadObject.createdOn = d?.createdOn || '';

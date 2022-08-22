@@ -376,13 +376,6 @@ function DeskUsers({
 
   return (
     <>
-     {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
-      /* eslint-disable-next-line react/jsx-key */      
-      <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, view: item?.viewCount}))}}
-        />
-    ))}
     <div className="flex flex-col w-screen h-screen">
      {showVideoDetail && 
        <div className='z-20 fixed top-0 left-0 w-full'>

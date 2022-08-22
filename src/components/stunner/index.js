@@ -47,7 +47,7 @@ useEffect(()=>{
   toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
 },[])
   return (
-    <div className="w-full h-full">
+    <>
        {/* <div className=" headerbar w-full h-18 flex items-center fixed top-0 lg:px-10 px-4 py-2 justify-between">
         <img className="w-16" src={withBasePath('images/stunner/stunner-logo.png')} alt="" /> 
         <div className='flex text-white font-medium'>
@@ -209,10 +209,9 @@ useEffect(()=>{
         </div>
         <Form/>
     </div>
+</>
 
-
-      <StaticFooter/>
-    </div>
+   
   );
 }
 

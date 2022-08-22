@@ -28,4 +28,5 @@ export const TEST_CUSTOMER_KEY = '68b23e5e4a3770c20f04989fa8e89e0872e1c843';
 export const CONVIVA_PROD_CUSTOMER_KEY = '28bbf0a3decf6d1165032bfd835d6e1844c5d44d';
 export const TOUCHSTONE_SERVICE_URL = 'https://zee-test.testonly.conviva.com';
 export const STORYBLOK_TOKEN = 'quNBuDdvpWQyR7qL35OGjwtt'
+export const STATIC_PAGE_CREATOR_KEY = '1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84';
  

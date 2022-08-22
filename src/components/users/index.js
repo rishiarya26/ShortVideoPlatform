@@ -27,6 +27,7 @@ import { Back } from '../commons/svgicons/back';
 import { videoSchema } from '../../utils/schema';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import Verified from '../commons/svgicons/verified';
 // import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
@@ -48,7 +49,8 @@ const detectDeviceModal = dynamic(
 
 function Users({
   userHandle, profilePic, followers, following, totalLikes, firstName= '',lastName = '', id, router, type, bio='',
-  isFollow=false
+  isFollow=false, userVerified
+
 }) {
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
@@ -349,7 +351,9 @@ const notNowClick=()=>{
           <div className="w-24 h-24 rounded-full overflow-hidden">
             <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
           </div>
-          <h1 className="font-medium p-2 text-sm">{firstName} {lastName}</h1>
+          <h1 className="font-medium p-2 text-sm flex">{firstName} {lastName}
+          {userVerified === 'Verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+          </h1>
         </div>
         <div className="followboard flex justify-around w-1/2 py-2">
           <div onClick={toShowFollowing} className="flex flex-col items-center">

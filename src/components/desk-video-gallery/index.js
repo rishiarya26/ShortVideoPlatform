@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { localStorage } from '../../utils/storage';
-import { trimHash } from '../../utils/string';
+import { trimHash, trimHashag } from '../../utils/string';
 import ComponentStateHandler from '../commons/component-state-handler';
 import Refresh from '../commons/svgicons/refresh';
 import DeskVideoCard from '../desk-video-card';
@@ -88,7 +88,7 @@ export default function DeskVideoGallery({
 
   try{  
       if(item?.indexOf('#')!==-1){
-      const trimmedHashtag = trimHash(item);
+      const trimmedHashtag = trimHashag(item);
       console.log("item",trimmedHashtag);
       window.location.href=`/hashtag/${trimmedHashtag}`;
     }else
@@ -165,6 +165,8 @@ export default function DeskVideoGallery({
                   id={id} 
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
+                  tag={item?.tag}
+                  page={page}
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>

@@ -31,7 +31,7 @@ export const trackEvent = (event, properties={}) =>{
    try{ 
     if (!initiated) initFirebase();
     if(app){
-        console.log(event, properties);
+        // console.log('FIRE',event, properties);
         const analytics = getAnalytics(app);   
         logEvent(analytics, event, properties);
     }else{

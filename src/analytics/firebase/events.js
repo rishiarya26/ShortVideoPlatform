@@ -1,4 +1,4 @@
-import { trackEvent } from "./index";
+import { trackEvent as track } from "./index";
 
 export const commonEvents = ({ userId = 'NA', content_id = 'NA', page = 'NA' }) => {
   let payload = {}
@@ -11,39 +11,43 @@ export const commonEvents = ({ userId = 'NA', content_id = 'NA', page = 'NA' }) 
 export const toTrackFirebase = (type, commonInfo = {}, value) => {
     const events = commonEvents(commonInfo);
     const toTrack = {
-      'play' : () => trackEvent('UGC_Play', events),
-      'share' : () => trackEvent('UGC_Share_Click', events),
-      'replay' : () => trackEvent('UGC_Replayed', events),
+      'play' : () => track('UGC_Play', events),
+      'share' : () => track('UGC_Share_Click', events),
+      'replay' : () => track('UGC_Replayed', events),
       'watchTime' : () => {
         events['UGC Consumption Type'] = value?.watchTime || 'NA'
         events['UGC Duration'] = value?.duration || 'NA'
         events['UGC Watch Duration'] = value?.durationWatchTime || 'NA'
-        trackEvent('UGC_Watch_Time',events)
+        track('UGC_Watch_Time',events)
       },
       'cta' : ()=>{
         events['Element'] = value?.name || 'NA'
         events['Button Type'] = value?.type || 'NA'
-        trackEvent('CTAs', events)
+        track('CTAs', events)
       },
       'savelook' : ()=>{
-        trackEvent('Save_Look', events)
+        track('Save_Look', events)
       },
       'appDownloadPopup':()=> {
-        trackEvent('App_Download_Popup');
+        track('App_Download_Popup');
       },
       'appDownloadCTA':()=>{
-        trackEvent('App_Download_CTA');
+        track('App_Download_CTA');
       },
       'appOpenCTA':()=>{
-        trackEvent('App_Open_CTA', events);
+        track('App_Open_CTA', events);
       },
       'screenView':()=>{
-        trackEvent('Screen_View', events);
+        track('Screen_View', events);
       },
       'creatorFormSubmitted' : ()=>{
         commonWithIds();
         track('Creator Form Submitted');
-      }
+      },
+      'videosCompleted5' : ()=>track('ugc_view_5'),
+      'videosCompleted10' : ()=>track('ugc_view_10'),
+      'videosCompleted15' : ()=>track('ugc_view_15'),
+      'stunnerInstallClick' : ()=>track('app_install_stunner_footer_click',events)
     }
     type && toTrack?.[type] && toTrack?.[type]();
 }

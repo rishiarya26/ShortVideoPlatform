@@ -127,6 +127,7 @@ export default function Hipi(params) {
      bio={item?.bio}
      type={type}
      isFollow={isFollowing}
+     userVerified={item?.tag}
    /> 
    }
 

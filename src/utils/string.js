@@ -18,3 +18,8 @@ export const trimHash = (hashTag) =>{
   trimmedHashtag = hashTag?.replace(/^\#+|\#+$/g, '');
   return trimmedHashtag;
 }
+export const trimHashag = (hashTag) =>{
+  let trimmedHashtag = ''
+  trimmedHashtag = hashTag?.replace('#', '');
+  return trimmedHashtag;
+}

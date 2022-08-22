@@ -54,8 +54,8 @@ const router = useRouter();
 
    useEffect(()=>{
       let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
-      videoAnalytics?.setPlayer(null);
       if(!!currentRef?.getAttribute('src') && active === true){
+         videoAnalytics?.setPlayer(null);
          if(videoAnalytics !== null) reportPlaybackEnded();
          reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
       }

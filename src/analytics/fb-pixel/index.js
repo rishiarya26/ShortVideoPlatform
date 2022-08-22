@@ -10,7 +10,7 @@ export const pageview = () => {
 
 // https://developers.facebook.com/docs/facebook-pixel/advanced/
 export const event = (name, options = {}) => {
-  console.log(name, options);
+  console.log('FB',name, options);
   if(window?.fbq){
     window && window?.fbq('trackCustom', name, options)
   }

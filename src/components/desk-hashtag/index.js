@@ -452,7 +452,7 @@ if(item?.indexOf('#')){
               retry={retry && retry}
               userId={id}
               // type={selectedTab}
-              page='profile'
+              page='hashTag'
               showLoading={showLoading}
               fetchMoreListItems={fetchMoreListItems}
               updateActiveIndex={updateActiveIndex}
