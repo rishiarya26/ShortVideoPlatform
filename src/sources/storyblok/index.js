@@ -15,12 +15,13 @@ async function storyblokData({params, parentSlug, slug}) {
     }
 }
 
-async function storyblokPage({params, category}) {
+async function storyblokPage({params, category="", blogType=""}) {
     const storyblokApi = getStoryblokApi();
     let response = {};
     try {
         response = await storyblokApi.get(`cdn/links/`, params);
         response.category = category;
+        response.blogType = blogType;
         return Promise.resolve(response);
     } catch (err) {
         return Promise.reject(err);

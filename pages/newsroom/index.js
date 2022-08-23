@@ -1,4 +1,4 @@
-import CardSummary from "../../src/storyblokComponents/CardSummary";
+import CardSummary from "../../src/storyblokComponents/newsroom/CardSummary";
 import { getStoryblokData } from "../../src/sources/storyblok";
 import { SeoMeta } from "../../src/components/commons/head-meta/seo-meta";
 import { getCanonicalUrl } from "../../src/utils/web";
@@ -29,6 +29,7 @@ export async function getStaticProps() {
   // load the draft version
   let sbParams = {
     version: "draft", // or 'published'
+    starts_with: "newsroom/",
     sort_by: "position:desc",
   };
   let resp;

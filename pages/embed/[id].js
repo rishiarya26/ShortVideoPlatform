@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import Error from 'next/error';
-import EmbedVideo from '../../src/components/embed-video';
-import { getSingleFeed } from '../../src/sources/feed/embed';
+import { useState, useEffect } from "react";
+import Error from "next/error";
+import EmbedVideo from "../../src/components/embed-video";
+import { getSingleFeed } from "../../src/sources/feed/embed";
 import {
   SeoMeta,
-  VideoJsonLd
-} from '../../src/components/commons/head-meta/seo-meta';
-import { supportedLanguages } from '../../src/hooks/use-translation';
-import { getEffectiveVideoUrl } from '../../src/utils/content';
-import { getItem } from '../../src/utils/cookie';
-import { useRouter } from 'next/router';
+  VideoJsonLd,
+} from "../../src/components/commons/head-meta/seo-meta";
+import { supportedLanguages } from "../../src/hooks/use-translation";
+import { getEffectiveVideoUrl } from "../../src/utils/content";
+import { getItem } from "../../src/utils/cookie";
+import { useRouter } from "next/router";
 // import { Shop } from '../../src/components/commons/button/shop';
 
 const languageCodes = Object.keys(supportedLanguages).map(
-  keyName => supportedLanguages[keyName].code
+  (keyName) => supportedLanguages[keyName].code
 );
 
 // TODO enable mock mode here
@@ -22,16 +22,11 @@ export default function Hipi(params) {
   const [videoUrl, setVideoUrl] = useState(null);
 
   const router = useRouter();
-  const {
-    data: item = {},
-    errorCode,
-    message,
-    status
-  } = params;
-  const canShop = item?.canShop?.status || 'fail';
+  const { data: item = {}, errorCode, message, status } = params;
+  const canShop = item?.canShop?.status || "fail";
   const shopCards = item?.canShop?.data;
   const videoId = item?.content_id;
-  const updateSeekbar = percentage => {
+  const updateSeekbar = (percentage) => {
     setSeekedPercentage(percentage);
   };
 
@@ -40,14 +35,14 @@ export default function Hipi(params) {
     setVideoUrl(videoUrl);
   }, []);
 
-  if (status === 'fail') {
+  if (status === "fail") {
     return <Error message={message} statusCode={errorCode} />;
   }
 
-  const device = getItem('device-type')
+  const device = getItem("device-type");
 
-  if(device === 'desktop'){
-     router && router?.push('/');
+  if (device === "desktop") {
+    router && router?.push("/");
     return null;
   }
 
@@ -123,7 +118,7 @@ export default function Hipi(params) {
 export async function getServerSideProps(ctx) {
   // const contentId = ctx?.query?.id;
   const {
-     params
+    params,
     // , locale,
     // defaultLocale, locales
   } = ctx;
@@ -133,14 +128,14 @@ export async function getServerSideProps(ctx) {
 
   try {
     data = await getSingleFeed({
-      id
+      id,
     });
   } catch (e) {
     data = {
       status: e.status,
       errorCode: e.errorCode,
-      'http-status': e['http-status'],
-      message: e.message
+      "http-status": e["http-status"],
+      message: e.message,
     };
   }
   return {
@@ -149,7 +144,7 @@ export async function getServerSideProps(ctx) {
       // locale,
       // locales,
       // defaultLocale,
-      ...data
-    }
+      ...data,
+    },
   };
 }

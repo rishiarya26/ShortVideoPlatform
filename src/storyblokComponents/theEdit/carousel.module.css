@@ -1,0 +1,59 @@
+.container{
+    background: #fff;
+    border-radius: 5px;
+    max-width: 400px;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+    background-repeat: no-repeat;
+    animation: shimmer 2.5s infinite;
+}
+
+.carousel{
+    display: flex;
+    height: 100%;
+    flex-shrink: 0;
+    transition: all 0.5s;
+}
+
+.slide{
+    flex-shrink: 0;
+}
+
+
+.button{
+    position: absolute;
+    top: 50%;
+    font-weight: 900px;
+    background-color: red;
+    color: white;
+    width: 25px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonPrev{
+    transform: translateY(-50%) rotateY(180deg);
+    left: 0;
+}
+
+.buttonNext{
+    transform: translateY(-50%);
+    right: 0;
+}
+
+@keyframes shimmer {
+    100% {-webkit-mask-position:left}
+  }
+
+@media  screen and (max-width: 990px) {
+    /* .container{
+        max-width: 400px;
+    } */
+}

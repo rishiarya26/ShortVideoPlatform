@@ -1,0 +1,10 @@
+.parentContainer {
+  max-width: 740px;
+  align-self: center;
+}
+
+@media screen and (max-width: 500px) {
+  .parentContainer {
+    align-self: auto;
+  }
+}

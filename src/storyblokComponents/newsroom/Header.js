@@ -2,9 +2,9 @@ import { storyblokEditable } from "@storyblok/react";
 import { useRouter } from "next/router";
 import styles from "./card.module.css";
 import headerStyles from "./header.module.css";
-import { getCanonicalUrl } from "../utils/web";
+import { getCanonicalUrl } from "../../utils/web";
 import { useEffect, useState } from "react";
-import { SeoMeta } from "../components/commons/head-meta/seo-meta";
+import { SeoMeta } from "../../components/commons/head-meta/seo-meta";
 
 const monthNames = [
   "January",

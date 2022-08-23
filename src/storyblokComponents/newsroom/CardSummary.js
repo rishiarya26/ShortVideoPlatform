@@ -1,4 +1,4 @@
-import Card from "../../src/storyblokComponents/Card";
+import Card from "./Card";
 import MainPage from "./MainPage";
 import styles from "./card.module.css";
 

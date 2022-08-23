@@ -1,5 +1,5 @@
 import { storyblokEditable } from "@storyblok/react";
-import { generateUUID } from "../utils/app";
+import { generateUUID } from "../../utils/app";
 import styles from "./description.module.css";
 
 
@@ -33,7 +33,7 @@ const Description = ({ blok={} }) => {
   const { text:{content = {}} = {} } = blok;
 
   return (<div className="mt-3"  {...storyblokEditable(blok)}>
-    {content.length > 1 && content?.map((data)=>{
+    {content.length > 0 && content?.map((data)=>{
       const uuid = generateUUID(false);
       let subPara = "";
       if(data?.content){
