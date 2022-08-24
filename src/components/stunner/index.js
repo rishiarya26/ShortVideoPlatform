@@ -67,8 +67,8 @@ useEffect(()=>{
   try{ 
     const response = await getHashTagVideos({ keyword: 'hipistunner' , offset: "1" });
     console.log("fetchedMore",response);
-    if(response?.data?.length >= 5){
-      setStunnerVideos(response?.data?.splice(0,5));
+    if(response?.data?.length >= 7){
+      setStunnerVideos(response?.data?.splice(2,7));
     }}catch(e){
       console.error("Error - hashtag video for stunner",e)
     }})()
