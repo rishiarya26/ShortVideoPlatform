@@ -913,3 +913,63 @@ title:first-letter {
         background-color: #f4def2;
     }
   }
+
+  .h-250c {
+    height: 431px!important;
+  }
+
+  .carousel .sliderSwipe {
+
+    /* width: 500px;
+  
+    height: 536px; */
+    min-height: 431px;
+  
+  }
+  
+
+  .carousel {
+
+    width: 500px;
+  
+    height: 536px;
+    /* min-height: 536px; */
+  
+  }
+  
+
+  @media screen and (max-width: 500px) {
+    .carousel .sliderSwipe {
+      /* width: 500px;
+      height: 536px; */
+      min-height: 85.5vw;
+    
+    }
+    .h-250c  {
+  
+      height: 85.5vw!important; 
+  
+    }
+    .carousel {
+      width: 100vw;
+      height: 109vw;
+      /* min-height: 436px; */
+      
+  
+    }
+  
+  }
+
+  .loader-stunner {
+    -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+
+    background-repeat: no-repeat;
+    background: rgb(231, 231, 231);
+    animation: shimmer 2.5s infinite;
+  }
+
+  @keyframes shimmer {
+
+    100% {-webkit-mask-position:left}
+
+  }
