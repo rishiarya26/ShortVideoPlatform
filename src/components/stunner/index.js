@@ -26,7 +26,6 @@ import { getItem } from '../../utils/cookie';
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
-
 function Stunner() {
  const [items, setItems] = useState(faq?.faq);
  const [stunnerData, setStunnerData] = useState(stunner.stunner);
@@ -66,7 +65,7 @@ const onStoreRedirect =(device)=>{
 useEffect(()=>{
 ( async function(){
   try{ 
-    const response = await getHashTagVideos({ keyword:  'stunner' , offset: "1" });
+    const response = await getHashTagVideos({ keyword: 'hipistunner' , offset: "1" });
     console.log("fetchedMore",response);
     if(response?.data?.length >= 5){
       setStunnerVideos(response?.data?.splice(0,5));
@@ -105,17 +104,20 @@ useEffect(()=>{
     Showcase your style & creativity with 5 <b>monsoon trends</b>. Check out these uber-cool entries for inspiration
 </p>
 
-<div className="stunner_swiper testimonials_swiper carousel pb-8 ">
+<div className="stunner_swiper relative testimonials_swiper carousel">
         <Swiper
+        modules={[Navigation, Pagination]}
         draggable="true"
         spaceBetween={10}
         slidesPerView={2}
         centeredSlides={true} 
         className='h-full'
+        navigation
         // autoplay={{
         // // "delay": 2500,
         // // "disableOnInteraction": false
         // }} 
+        // navigation={{enabled : (device === 'desktop') ?  true : false}}
         pagination={{"clickable": true}} 
         >
    
@@ -146,6 +148,7 @@ useEffect(()=>{
               webkit-playsinline = "true"
               // onTimeUpdate={handleUpdateSeekbar}
               loop
+              navigation
               // onClick={handleVideoPress}
               poster={item?.firstFrame}
               objectfit="cover"
@@ -199,12 +202,14 @@ useEffect(()=>{
             </div>
         </SwiperSlide> */}
         </Swiper>
+        {/* <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> */}
     </div>
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Participate in two challenges to win cash prize of INR 1,00,000 and much more.
-    Missed August Challenge 1? Not a problem. Check out the details here <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    Missed August Challenge 1? Not a problem. Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
     </p>
 
 
