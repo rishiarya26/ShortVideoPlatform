@@ -46,7 +46,6 @@ function Video(props) {
 
    useEffect(()=>{
       let videoElement;
-
       try{
          videoElement = rootRef?.current?.children[0];
       if(device === 'ios') 
