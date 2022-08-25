@@ -23,7 +23,7 @@ const device = getItem('device-type')
       //   closePopUp();
       // }else if(device === 'mobile'){
         close();
-        router && router.push('/feed/for-you');
+        window.location.href = '/feed/for-you'
         console.log("logged out *")
       // }
     }

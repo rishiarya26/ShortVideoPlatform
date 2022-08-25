@@ -23,6 +23,7 @@ import { getItem } from '../../utils/cookie';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { trimHash } from '../../utils/string';
+import {specialHashtagSeo} from '../../utils/seo/index'
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -116,7 +117,7 @@ function HashTag({router}) {
   >
     <SeoMeta
         data={{
-          title: `#${item} Hashtag videos on Hipi - Indian Short Video App`,
+          title: item === 'gay'||item ==='hd'||item ==='aunty'||item ==='badi'||item ==='gtav'||item ==='saxena'||item ==='fifa'||item ==='shaadi'||item ==='sab' ? specialHashtagSeo(item) : `#${item} Hashtag videos on Hipi - Indian Short Video App`,
           // image: item?.thumbnail,
           description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`,
           canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        

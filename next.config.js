@@ -102,10 +102,10 @@ const nextConfig = {
           source: '/(g|G)(o|O)(a|A)(t|T)',
           destination: '/goat',
         },
-        // {
-        //   source: '/(s|S)(t|T)(u|U)(n|N)(n|N)(e|E)(r|R)',
-        //   destination: '/stunner',
-        // }
+        {
+          source: '/(s|S)(t|T)(u|U)(n|N)(n|N)(e|E)(r|R)',
+          destination: '/stunner',
+        }
       ]
     }
 };
