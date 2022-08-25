@@ -24,7 +24,7 @@ const device = getItem('device-type')
       // }else if(device === 'mobile'){
         close();
         router && router.push('/feed/for-you');
-
+        console.log("logged out *")
       // }
     }
     catch(e){

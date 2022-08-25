@@ -50,7 +50,7 @@ function Video(props) {
          videoElement = rootRef?.current?.children[0];
       if(device === 'ios') 
       {    
-          videoElement.addEventListener('suspend', () => {
+          videoElement?.addEventListener('suspend', () => {
             props?.suspendLoader && props?.suspendLoader(true);
           });
       }
