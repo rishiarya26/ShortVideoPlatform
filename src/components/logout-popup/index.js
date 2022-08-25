@@ -23,7 +23,8 @@ const device = getItem('device-type')
       //   closePopUp();
       // }else if(device === 'mobile'){
         close();
-        router?.push('/feed/for-you');
+        router && router.push('/feed/for-you');
+
       // }
     }
     catch(e){
