@@ -84,8 +84,8 @@
     @apply flex-col-reverse;
     width: 400px;
   }
-  .card:nth-child(1) {
-  }
+  /* .card:last-child {
+  } */
   .imageContainer {
     @apply w-full;
     flex: 1;
@@ -96,10 +96,10 @@
     flex: 1 1 auto;
     padding: 28px 32px 32px 22px;
   }
-
   .cardsContainer {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
+    gap: 24px;
   }
 }

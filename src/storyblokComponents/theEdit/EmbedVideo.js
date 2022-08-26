@@ -1,3 +1,4 @@
+/*eslint-disable @next/next/no-img-element*/
 import { useState, useEffect } from "react";
 import Error from "next/error";
 import EmbedVideo from "../../components/embed-video";
@@ -7,7 +8,6 @@ import { getEffectiveVideoUrl } from "../../utils/content";
 import { withBasePath } from "../../config";
 import { useRouter } from "next/router";
 import styles from "./embedVideo.module.css";
-import Image from "next/image";
 
 const languageCodes = Object.keys(supportedLanguages).map(
   (keyName) => supportedLanguages[keyName].code
@@ -79,8 +79,8 @@ export default function Hipi({ id, type = "posterImage" }) {
     <>
       {type === "posterImage" ? (
         <div className={styles.posterWrapper}>
-          <Image objectFit="cover" src={item?.thumbnail} />
-          <Image
+          <img objectFit="cover" src={item?.thumbnail} />
+          <img
             onClick={posterOnClick}
             src={withBasePath("images/play.png")}
             className={styles.playButton}
