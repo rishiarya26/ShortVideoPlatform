@@ -18,7 +18,7 @@ export default function Hipi() {
         />
 <div className="w-screen h-screen relative">
      
-    <Stunner/>
+    <Stunner type='hipiStunner'/>
 
     </div>
 

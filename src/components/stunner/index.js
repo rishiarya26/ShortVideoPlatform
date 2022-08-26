@@ -26,7 +26,7 @@ import { getItem } from '../../utils/cookie';
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
-function Stunner() {
+function Stunner({type= 'stunner'}) {
  const [items, setItems] = useState(faq?.faq);
  const [stunnerData, setStunnerData] = useState(stunner.stunner);
  const [stunnerVideos, setStunnerVideos] = useState([])
@@ -34,7 +34,7 @@ function Stunner() {
  const router = useRouter()
  const challenge1Ref = useRef();
  const device = getItem('device-type')
-
+ const deviceType = getItem('device-info')
 
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
@@ -104,7 +104,7 @@ useEffect(()=>{
     Showcase your style & creativity with 5 <b>monsoon trends</b>. Check out these uber-cool entries for inspiration
 </p>
 
-<div className="stunner_swiper relative testimonials_swiper carousel">
+{type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
         <Swiper
         modules={[Navigation, Pagination]}
         draggable="true"
@@ -204,7 +204,7 @@ useEffect(()=>{
         </Swiper>
         {/* <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div> */}
-    </div>
+    </div>}
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
