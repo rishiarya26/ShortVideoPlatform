@@ -1,30 +1,34 @@
 // import App from "next/app"
-import { useEffect, useState } from 'react';
-import '../src/styles/global.css';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import Layout from '../src/components/commons/layout';
-import { TranslationProvider } from '../src/hooks/use-translation';
-import { RouteStateProvider } from '../src/hooks/use-route-state';
-import { getLocales } from '../src/sources/app';
-import HeadMeta from '../src/components/commons/head-meta';
-import { inject } from '../src/analytics/async-script-loader';
-import { oneTapGoogle } from '../src/utils/social/one-tap-google';
-import { GOOGLE_ONE_TAP, GET_SOCIAL, GET_SOCIAL_LOADED  } from '../src/constants';
-import { getItem, removeItem, setItem } from '../src/utils/cookie';
-import { localStorage, sessionStorage } from '../src/utils/storage';
-import { detectCountry } from '../src/sources/detect-country';
-import { init } from '../src/get-social';
-import { useRouter } from 'next/router';
-import * as fbq from '../src/analytics/fb-pixel'
-import Script from 'next/script'
-import { initFirebase } from '../src/analytics/firebase';
-import { detectGeoLocationByZee } from '../src/sources/geo-location';
-import Cookies from '../src/components/cookies';
-import { toTrackMixpanel } from '../src/analytics/mixpanel/events';
-import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
-import { toGetSocialToken } from '../src/sources/get-social';
-import { initLinkdin } from '../src/analytics/linkdin-pixel';
+import { useEffect, useState } from "react";
+import "../src/styles/global.css";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import Layout from "../src/components/commons/layout";
+import { TranslationProvider } from "../src/hooks/use-translation";
+import { RouteStateProvider } from "../src/hooks/use-route-state";
+import { getLocales } from "../src/sources/app";
+import HeadMeta from "../src/components/commons/head-meta";
+import { inject } from "../src/analytics/async-script-loader";
+import { oneTapGoogle } from "../src/utils/social/one-tap-google";
+import {
+  GOOGLE_ONE_TAP,
+  GET_SOCIAL,
+  GET_SOCIAL_LOADED,
+} from "../src/constants";
+import { getItem, removeItem, setItem } from "../src/utils/cookie";
+import { localStorage, sessionStorage } from "../src/utils/storage";
+import { detectCountry } from "../src/sources/detect-country";
+import { init } from "../src/get-social";
+import { useRouter } from "next/router";
+import * as fbq from "../src/analytics/fb-pixel";
+import Script from "next/script";
+import { initFirebase } from "../src/analytics/firebase";
+import { detectGeoLocationByZee } from "../src/sources/geo-location";
+import Cookies from "../src/components/cookies";
+import { toTrackMixpanel } from "../src/analytics/mixpanel/events";
+import { clearTimeouts, resetTimeout } from "../src/utils/session-track";
+import { toGetSocialToken } from "../src/sources/get-social";
+import { initLinkdin } from "../src/analytics/linkdin-pixel";
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
@@ -35,45 +39,53 @@ import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit"
 
 // test changes
 
-
-(function storyBlokInitSelfFunction(){
-  try{
+(function storyBlokInitSelfFunction() {
+  try {
     storyBlokInit();
-  } catch(e){
+  } catch (e) {
     console.log("storyblokerr", e);
   }
 })();
 
-const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
-  const { DrawerProvider } = module;
-  return DrawerProvider;
-}));
+const DrawerProvider = dynamic(() =>
+  import("../src/hooks/use-drawer").then((module) => {
+    const { DrawerProvider } = module;
+    return DrawerProvider;
+  })
+);
 
-const SnackbarProvider = dynamic(() => import('../src/hooks/use-snackbar').then(module => {
-  const { SnackbarProvider } = module;
-  return SnackbarProvider;
-}));
+const SnackbarProvider = dynamic(() =>
+  import("../src/hooks/use-snackbar").then((module) => {
+    const { SnackbarProvider } = module;
+    return SnackbarProvider;
+  })
+);
 
-const DialogProvider = dynamic(() => import('../src/hooks/use-dialog').then(module => {
-  const { DialogProvider } = module;
-  return DialogProvider;
-}));
+const DialogProvider = dynamic(() =>
+  import("../src/hooks/use-dialog").then((module) => {
+    const { DialogProvider } = module;
+    return DialogProvider;
+  })
+);
 
-const LoaderProvider = dynamic(() => import('../src/hooks/use-loader').then(module => {
-  const { LoaderProvider } = module;
-  return LoaderProvider;
-}));
+const LoaderProvider = dynamic(() =>
+  import("../src/hooks/use-loader").then((module) => {
+    const { LoaderProvider } = module;
+    return LoaderProvider;
+  })
+);
 
-const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(module => {
-  const { OverLayProvider } = module;
-  return OverLayProvider;
-}));
+const OverLayProvider = dynamic(() =>
+  import("../src/hooks/use-overlay").then((module) => {
+    const { OverLayProvider } = module;
+    return OverLayProvider;
+  })
+);
 
 export function reportWebVitals() {
   // console.log(metric);
   // const body = JSON.stringify(metric);
   // const url = 'analytics endpoint';
-
   // Use `navigator.sendBeacon()` if available, falling back to `fetch()`.
   // if (navigator.sendBeacon) {
   //   navigator.sendBeacon(url, body);
@@ -155,25 +167,22 @@ export function reportWebVitals() {
 //   }
 // }
 
-function Hipi({
-  Component, pageProps, locales, locale
-}) {
-
+function Hipi({ Component, pageProps, locales, locale }) {
   const [loading, setLoading] = useState(true);
-  const [country, setCountry] = useState('India');
+  const [country, setCountry] = useState("India");
   const [showCookies, setShowCookies] = useState(false);
   const [session, setSession] = useState(true);
   // const [sessionTimer, setSessionTimer] = useState(null);
-  const [timerArr, setTimerArr] = useState([])
-  const [enableSession , setEnableSession] = useState(true)
+  const [timerArr, setTimerArr] = useState([]);
+  const [enableSession, setEnableSession] = useState(true);
   const [previousTimer, setPreviousTimer] = useState(60);
   // const [videosCompleted, setVideosCompleted] = useState(0);
 
   const router = useRouter();
-  
-  const loaded = ()=>{
-    setLoading(false)
-  }
+
+  const loaded = () => {
+    setLoading(false);
+  };
 
   // const loadedGS=()=>{
   //   setLoadingGS(false);
@@ -184,38 +193,34 @@ function Hipi({
   //   }
   // }
 
-  const getCountry = async()=>{
-    try{ 
+  const getCountry = async () => {
+    try {
       const resp = await detectCountry();
       // console.log(resp?.data?.country_name)
-      setCountry(resp?.data?.country_name || 'India');
-      if(resp?.data?.country_name === 'India'){
-        setItem('cookie-agreed','yes');
+      setCountry(resp?.data?.country_name || "India");
+      if (resp?.data?.country_name === "India") {
+        setItem("cookie-agreed", "yes");
       }
-    }
-     catch(e){
+    } catch (e) {}
+  };
 
-     }
-  }
-
-  const getGeoLocationInfo =async()=>{
-    try{ 
+  const getGeoLocationInfo = async () => {
+    try {
       const resp = await detectGeoLocationByZee();
-      localStorage.set('geo-info',resp?.data)
+      localStorage.set("geo-info", resp?.data);
+    } catch (e) {
+      console.log("error in geo-api/setting it to localStorage", e);
     }
-     catch(e){
-    console.log("error in geo-api/setting it to localStorage",e)
-     }
-  }
+  };
 
   // useEffect(()=>{
   //   setItem('cookie-agreed','yes');
   // },[country])
 
-  const updatingGoogleCookies = () =>{
+  const updatingGoogleCookies = () => {
     try {
       const gotUrl = window?.location?.href;
-      let domain = (new URL(gotUrl));
+      let domain = new URL(gotUrl);
       domain = domain?.hostname;
       const arrSplit = document?.cookie?.split(";");
       for (let i = 0; i < arrSplit?.length; i++) {
@@ -223,7 +228,7 @@ function Hipi({
         const cookieName = cookie?.split("=")[0];
         // If the prefix of the cookie's name matches the one specified, remove it
         if (cookieName?.indexOf("_gs_auth_") === 0) {
-          console.log("COOKIE", cookieName)
+          console.log("COOKIE", cookieName);
           // Remove the cookie
           cookieName && removeItem(cookieName);
           // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -232,19 +237,19 @@ function Hipi({
     } catch (e) {
       console.log("** error in deleting gs cookies **");
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     //let timer;
-    try{ 
-      window.sessionStorage.setItem('searchExecuted', undefined)
+    try {
+      window.sessionStorage.setItem("searchExecuted", undefined);
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
       //   }
       //   window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, false);
       // }
-  
+
       /**loading scripts */
 
       // timer = setTimeout(()=>{
@@ -253,164 +258,177 @@ function Hipi({
 
       updatingGoogleCookies();
 
-      console.log('mounted');
-      inject(GOOGLE_ONE_TAP , null, loaded);
+      console.log("mounted");
+      inject(GOOGLE_ONE_TAP, null, loaded);
       initLinkdin();
-      const cookieAgree = getItem('cookie-agreed');
-      cookieAgree !== 'yes' && getCountry();
+      const cookieAgree = getItem("cookie-agreed");
+      cookieAgree !== "yes" && getCountry();
       getGeoLocationInfo();
-      let tokens = localStorage.get('tokens') || null;
+      let tokens = localStorage.get("tokens") || null;
       // tokens = tokens && JSON.parse(tokens);
       const userAgent = window?.navigator.userAgent;
-      const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
-      localStorage.set('device-modal',deviceModel);
+      const deviceModel =
+        userAgent
+          ?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))
+          ?.split(";")?.[2] ||
+        userAgent
+          ?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))
+          ?.split(";")?.[0];
+      localStorage.set("device-modal", deviceModel);
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
-      localStorage.set('network-strength',effectiveType);
+      localStorage.set("network-strength", effectiveType);
 
       if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-        console.log('tokens are there in _app.js')
-        setTimeout(()=>{
+        console.log("tokens are there in _app.js");
+        setTimeout(() => {
           init();
           initFirebase();
-        },[500])
+        }, [500]);
       }
-    }
-    catch(e){
-    }
+    } catch (e) {}
 
     /** unmount */
     // return () => clearTimeout(timer);
+  }, []);
 
-    },[])
+  useEffect(() => {
+    try {
+      let tokens = localStorage.get("tokens") || null;
+      // tokens = tokens && JSON.parse(tokens);
 
-    useEffect(()=>{
-      try{   
-        let tokens = localStorage.get('tokens') || null;
-        // tokens = tokens && JSON.parse(tokens);
-      
-        if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-          console.log('one tap not initiated - tokens already there in _app.js ')
-          setTimeout(()=>{
-            // init();
-            initFirebase();
-          },[1000])
-        }else{
-          console.log("one tap initated ")
-          if(loading === false){
-            oneTapGoogle();
-        }
-      }}catch(e){
-        console.error("one tap issue ")
-      }
-    },[loading])
-
-    // useEffect(()=>{
-    //   try{
-    //     let tokens = localStorage.get('tokens') || null;
-    //     if(tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-    //       if(loadingGS=== false){
-    //         init()
-    //       }
-    //     }
-    //   }
-    //   catch(e){
-    //     console.error(e);
-    //   }
-    // },[loadingGS])
-
-    useEffect(() => {
-      let handleRouteChange
-      // This pageview only triggers the first time (it's important for Pixel to have real information)
-      try{
-        if(window?.fbq){
-        fbq.pageview()
-      }
-      
-  
-      handleRouteChange = () => {
-        if(window?.fbq){
-          fbq.pageview()
+      if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+        console.log("one tap not initiated - tokens already there in _app.js ");
+        setTimeout(() => {
+          // init();
+          initFirebase();
+        }, [1000]);
+      } else {
+        console.log("one tap initated ");
+        if (loading === false) {
+          oneTapGoogle();
         }
       }
-  
-      router?.events.on('routeChangeComplete', handleRouteChange)
-    }catch(e){
-      console.error("fbq event",e)
+    } catch (e) {
+      console.error("one tap issue ");
     }
-      return () => {
-       try{ 
-         router?.events.off('routeChangeComplete', handleRouteChange)
-      }catch(e){
-        console.error(e)
-      }
-      }
-    }, [router.events])
+  }, [loading]);
 
- /* To-Do : Extract out Mixpanel - Custom session event logic */   
+  // useEffect(()=>{
+  //   try{
+  //     let tokens = localStorage.get('tokens') || null;
+  //     if(tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
+  //       if(loadingGS=== false){
+  //         init()
+  //       }
+  //     }
+  //   }
+  //   catch(e){
+  //     console.error(e);
+  //   }
+  // },[loadingGS])
+
+  useEffect(() => {
+    let handleRouteChange;
+    // This pageview only triggers the first time (it's important for Pixel to have real information)
+    try {
+      if (window?.fbq) {
+        fbq.pageview();
+      }
+
+      handleRouteChange = () => {
+        if (window?.fbq) {
+          fbq.pageview();
+        }
+      };
+
+      router?.events.on("routeChangeComplete", handleRouteChange);
+    } catch (e) {
+      console.error("fbq event", e);
+    }
+    return () => {
+      try {
+        router?.events.off("routeChangeComplete", handleRouteChange);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+  }, [router.events]);
+
+  /* To-Do : Extract out Mixpanel - Custom session event logic */
 
   let setTimeoutsTracker = [];
   function endSessionOnIdle() {
-      //  console.error("reset - session end - from logout")
-       toTrackMixpanel('sessionEnd')
-       setTimeoutsTracker = null;
-       clearTimeouts();
-       window.sessionStorage.setItem("minutes",undefined);
-       window.sessionStorage.setItem("sessionEventTrack",null);
-       clearTimeouts();
+    //  console.error("reset - session end - from logout")
+    toTrackMixpanel("sessionEnd");
+    setTimeoutsTracker = null;
+    clearTimeouts();
+    window.sessionStorage.setItem("minutes", undefined);
+    window.sessionStorage.setItem("sessionEventTrack", null);
+    clearTimeouts();
   }
-  
+
   const setTimeouts = (timer) => {
-    setTimeoutsTracker = setTimeoutsTracker ===  (undefined || null) ? [] : setTimeoutsTracker;
-    setTimeoutsTracker.push(setTimeout(()=>{timer < 5 && endSessionOnIdle()}, 1000 * 60));
+    setTimeoutsTracker =
+      setTimeoutsTracker === (undefined || null) ? [] : setTimeoutsTracker;
+    setTimeoutsTracker.push(
+      setTimeout(() => {
+        timer < 5 && endSessionOnIdle();
+      }, 1000 * 60)
+    );
   };
 
   const clearTimeouts = () => {
-      if (setTimeoutsTracker?.length >0){ 
-        setTimeoutsTracker.map((data)=>{
-          clearTimeout(data)
-        })
+    if (setTimeoutsTracker?.length > 0) {
+      setTimeoutsTracker.map((data) => {
+        clearTimeout(data);
+      });
+    }
   };
-}
 
   const resetTimeout = () => {
-   let minutesTracker =  window.sessionStorage.getItem("minutes");
-      if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
-        // console.error("reset - session start R");
-        toTrackMixpanel('sessionStart')
-        window.sessionStorage.setItem('seconds',60);
-        window.sessionStorage.setItem("sessionEventTrack",undefined);
-        window.sessionStorage.setItem("minutes",0);
-        minutesTracker = 0;
-      }
-      clearTimeouts();
-      setTimeouts(minutesTracker);
+    let minutesTracker = window.sessionStorage.getItem("minutes");
+    if (window.sessionStorage.getItem("sessionEventTrack") === "null") {
+      // console.error("reset - session start R");
+      toTrackMixpanel("sessionStart");
+      window.sessionStorage.setItem("seconds", 60);
+      window.sessionStorage.setItem("sessionEventTrack", undefined);
+      window.sessionStorage.setItem("minutes", 0);
+      minutesTracker = 0;
+    }
+    clearTimeouts();
+    setTimeouts(minutesTracker);
   };
   // let videosCompleted = (typeof window !== "undefined" &&  parseInt(window.sessionStorage.getItem('videos-completed'))) || 0
- 
-  useEffect(() => {
-  /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
-    const timeTrackerInterval = setInterval(() => {
 
-     if(window.sessionStorage.getItem("sessionEventTrack") !== 'null'){
-      let minutesTracker = parseInt(window.sessionStorage.getItem('minutes')) || 0;
-      let secondsTracker = parseInt(window.sessionStorage.getItem('seconds')) || 60;
-      window.sessionStorage.setItem('seconds',secondsTracker === 0 ? 60 : secondsTracker-1);
-      if(minutesTracker < 6){
-        // console.log('checking...',minutesTracker, secondsTracker)
-        secondsTracker === 1 && window.sessionStorage.setItem('minutes',  minutesTracker+1)
+  useEffect(() => {
+    /* Timer - track & update seconds & minutes timer & end session at 7 minutes(minuteTimer === 6) */
+    const timeTrackerInterval = setInterval(() => {
+      if (window.sessionStorage.getItem("sessionEventTrack") !== "null") {
+        let minutesTracker =
+          parseInt(window.sessionStorage.getItem("minutes")) || 0;
+        let secondsTracker =
+          parseInt(window.sessionStorage.getItem("seconds")) || 60;
+        window.sessionStorage.setItem(
+          "seconds",
+          secondsTracker === 0 ? 60 : secondsTracker - 1
+        );
+        if (minutesTracker < 6) {
+          // console.log('checking...',minutesTracker, secondsTracker)
+          secondsTracker === 1 &&
+            window.sessionStorage.setItem("minutes", minutesTracker + 1);
+        } else {
+          if (minutesTracker === 6) {
+            toTrackMixpanel("sessionEnd");
+            toTrackMixpanel("sessionStart");
+            window.sessionStorage.setItem("minutes", 0);
+            // console.error("reset - session end");
+            window.sessionStorage.setItem("seconds", 60);
+            // console.error("reset - session start T");
+            resetTimeout();
+          }
         }
-        else{
-         if( minutesTracker === 6) { 
-           toTrackMixpanel('sessionEnd')
-           toTrackMixpanel('sessionStart')
-          window.sessionStorage.setItem("minutes",0);
-          // console.error("reset - session end");
-          window.sessionStorage.setItem('seconds',60);
-          // console.error("reset - session start T");
-          resetTimeout();
-         }
-        }}
+      }
     }, 1000);
 
     return () => {
@@ -418,84 +436,94 @@ function Hipi({
     };
   });
 
- /*************************** */
-    useEffect(()=>{
-      console.log("Router**",document.referrer)
-      // console.error("reset - session start")
-      // toTrackMixpanel('sessionStart')
-      if(typeof document != "undefined"){
-        console.log('sessDoc',document?.referrer,document?.referrer?.includes('hipi.co.in'))
-        let minutesTracker =  window.sessionStorage.getItem("minutes") === 'null' ? 0 : window.sessionStorage.getItem("minutes");
-        if(minutesTracker !== null && document?.referrer?.includes('hipi.co.in')){
-          if(typeof minutesTracker === 'string'){
-            minutesTracker = parseInt(minutesTracker);
-          } 
-          window.sessionStorage.setItem("minutes",minutesTracker || 0);
-        }else{
-          window.sessionStorage.setItem("minutes",0);
-          // console.error("reset - session start");
-          toTrackMixpanel('sessionStart');
+  /*************************** */
+  useEffect(() => {
+    console.log("Router**", document.referrer);
+    // console.error("reset - session start")
+    // toTrackMixpanel('sessionStart')
+    if (typeof document != "undefined") {
+      console.log(
+        "sessDoc",
+        document?.referrer,
+        document?.referrer?.includes("hipi.co.in")
+      );
+      let minutesTracker =
+        window.sessionStorage.getItem("minutes") === "null"
+          ? 0
+          : window.sessionStorage.getItem("minutes");
+      if (
+        minutesTracker !== null &&
+        document?.referrer?.includes("hipi.co.in")
+      ) {
+        if (typeof minutesTracker === "string") {
+          minutesTracker = parseInt(minutesTracker);
         }
+        window.sessionStorage.setItem("minutes", minutesTracker || 0);
+      } else {
+        window.sessionStorage.setItem("minutes", 0);
+        // console.error("reset - session start");
+        toTrackMixpanel("sessionStart");
       }
-
-      window.onload = function () {
-        window.sessionStorage.setItem('sessionEventTrack',undefined)
-        setTimeout(function () {
-            setShowCookies(true);
-        }, 5000);
     }
-    
+
+    window.onload = function () {
+      window.sessionStorage.setItem("sessionEventTrack", undefined);
+      setTimeout(function () {
+        setShowCookies(true);
+      }, 5000);
+    };
+
     // setVideosCompleted(window.sessionStorage.getItem('videos-completed'));
-    if(!window.sessionStorage.getItem('videos-completed')){
-      window.sessionStorage.setItem('videos-completed', JSON.stringify({ids:[],value: 0}));
+    if (!window.sessionStorage.getItem("videos-completed")) {
+      window.sessionStorage.setItem(
+        "videos-completed",
+        JSON.stringify({ ids: [], value: 0 })
+      );
       // videosCompleted = 0
-    } 
+    }
     // else{
-      // videosCompleted =  window.sessionStorage.getItem('videos-completed');
+    // videosCompleted =  window.sessionStorage.getItem('videos-completed');
     // }
     // sessionStorage.set('videos-completed',0);
     // guestGetSocialToken();
 
-      const events = [
-        'load',
-        'mousemove',
-        'mousedown',
-        'click',
-        'scroll',
-        'keypress',
-        'touchmove'
+    const events = [
+      "load",
+      "mousemove",
+      "mousedown",
+      "click",
+      "scroll",
+      "keypress",
+      "touchmove",
     ];
 
-    events.forEach((data)=>{
-      window.addEventListener(data,resetTimeout);
-    })
+    events.forEach((data) => {
+      window.addEventListener(data, resetTimeout);
+    });
     return () => {
-      events.forEach((data)=>{
-        window.addEventListener(data,resetTimeout);
+      events.forEach((data) => {
+        window.addEventListener(data, resetTimeout);
         clearTimeouts();
-      })
-    }
-  },[])
+      });
+    };
+  }, []);
 
- const guestGetSocialToken = async() =>{
-   let response;
-   try{ 
-     response =  await toGetSocialToken();
+  const guestGetSocialToken = async () => {
+    let response;
+    try {
+      response = await toGetSocialToken();
+    } catch (e) {
+      console.error("guest get social error", e);
+      response = await toGetSocialToken();
     }
-   catch(e){
-     console.error("guest get social error",e)
-     response = await toGetSocialToken();
-   }};
+  };
 
   return (
     <>
       <Head>
         <HeadMeta />
       </Head>
-      <TranslationProvider
-        locale={locale}
-        locales={locales}
-      >
+      <TranslationProvider locale={locale} locales={locales}>
         <OverLayProvider>
           <LoaderProvider>
             <DialogProvider>
@@ -503,10 +531,10 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
-                    <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+                      <Script
+                        strategy="afterInteractive"
+                        dangerouslySetInnerHTML={{
+                          __html: `
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -517,12 +545,12 @@ function Hipi({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', ${fbq.FB_PIXEL_ID});
           `,
-        }}
-      />
-          <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+                        }}
+                      />
+                      <Script
+                        strategy="afterInteractive"
+                        dangerouslySetInnerHTML={{
+                          __html: `
           _linkedin_partner_id = "4069492"; 
           window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
           window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
@@ -532,10 +560,16 @@ function Hipi({
           b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
           s.parentNode.insertBefore(b, s);})(window.lintrk);
           `,
-        }}
-      />
+                        }}
+                      />
                       <Component {...pageProps} />
-                      {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
+                      {showCookies &&
+                        getItem("cookie-agreed") !== "yes" &&
+                        country !== "India" && (
+                          <>
+                            <Cookies />
+                          </>
+                        )}
                     </Layout>
                   </RouteStateProvider>
                 </SnackbarProvider>
@@ -553,14 +587,14 @@ function Hipi({
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-Hipi.getInitialProps = async ctx => {
+Hipi.getInitialProps = async (ctx) => {
   const { router } = ctx;
   const { locale } = router;
   try {
     const locales = await getLocales(locale);
     return {
       locale,
-      locales
+      locales,
     };
   } catch (e) {
     console.log(e);
