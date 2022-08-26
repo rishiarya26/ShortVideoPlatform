@@ -79,6 +79,10 @@
   @apply flex flex-row flex-wrap justify-around;
 }
 
+.cardsContainer {
+  @apply flex flex-row flex-wrap justify-around;
+}
+
 @media screen and (max-width: 990px) {
   .card {
     @apply flex-col-reverse;
