@@ -29,7 +29,7 @@ Oops Something went wrong!
 <div  className="text-base font-semibold mt-6">
 Explore more on Hipi
 </div>
-<button onClick={()=> router?.push('/feed/for-you')} className="rounded-sm text-white py-1 my-2 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base  focus:outline-none">
+<button onClick={()=>  router && router?.push('/feed/for-you')} className="rounded-sm text-white py-1 my-2 px-4 bg-hipired  tracking-wide xxs:text-sm xs:text-base  focus:outline-none">
 Explore
 </button>
 {/* <FooterMenu /> */}

@@ -19,7 +19,7 @@ export default function Hipi() {
   },[])
 
   if(device === 'desktop'){ 
-    router?.push('/');
+     router && router?.push('/');
     return null;
   }
 

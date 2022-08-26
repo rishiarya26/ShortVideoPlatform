@@ -58,7 +58,7 @@ import { Back } from "../../commons/svgicons/back"
                     if (resp.status === 'success') {
                         const response = await resetPasswordMobile(`${phoneData?.countryCode}${phoneData?.mobile}`);
                         if (response.data.code === 1) {        
-                        router?.push({
+                         router && router?.push({
                            pathname: '/verify-otp',
                            query: { ref: 'forgot-password', mobile: `${phoneData?.countryCode}-${phoneData?.mobile}`}
                         });
@@ -79,7 +79,7 @@ import { Back } from "../../commons/svgicons/back"
                 const response = await resetPasswordEmail(emailData.email);
                 if (response.data.code === 1) {        
                 showSnackbar({ message: "Reset Password link sent to your mail. Please reset it & sign in" });
-                router?.push({
+                 router && router?.push({
                    pathname: '/login/email',
                 });
             }}}catch(e){

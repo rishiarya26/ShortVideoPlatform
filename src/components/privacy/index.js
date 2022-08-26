@@ -60,7 +60,7 @@ function Privacy() {
 
 			<p>If You do not agree with the terms contained herein, please do not view, browse or download Hipi. By mere browsing or use of Hipi platform or its application, You consent to the terms of this Privacy Policy and agree to the Processing of Your Personal Information in the manner as provided under this Privacy Policy.</p>
 
-			<p>This Privacy Policy is a part of, and should be read together with the Terms of Use available <span className='cursor-pointer font-medium text-gray-800' onClick={()=>router?.push('/terms-conditions.html')}>here</span>. All capitalized terms that have not been specifically defined herein shall have the same meaning as provided under the Terms of Use. </p>
+			<p>This Privacy Policy is a part of, and should be read together with the Terms of Use available <span className='cursor-pointer font-medium text-gray-800' onClick={()=> router && router?.push('/terms-conditions.html')}>here</span>. All capitalized terms that have not been specifically defined herein shall have the same meaning as provided under the Terms of Use. </p>
 			 
 			 <h3> I.	Collection and Purpose of Use of Personal Information</h3>
 			 <p>We collect the information directly provided by you, as well as from your usage and log data, data collected through cookies and similar technologies, as elaborated below:</p>

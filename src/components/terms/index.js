@@ -18,7 +18,7 @@ function Terms() {
 		<div className='mt-12  md:mt-24'>
 	        <h1>Terms of Use</h1>
 			</div>
-	        <p>Welcome to Hipi. We provide you with access to a free to use, interactive platform Hipi (“Hipi”) which can be downloaded through your app store.   You can use Hipi  to create, share and view content and connect with other users (“Service”). These terms of use along with the Community Guidelines (together referred to as “Hipi Terms of Use”), and the Privacy Policy accessible <span className='cursor-pointer font-medium text-gray-800' onClick={()=>router?.push('/privacy-policy.html')}>here</span> govern your use of the Service. 
+	        <p>Welcome to Hipi. We provide you with access to a free to use, interactive platform Hipi (“Hipi”) which can be downloaded through your app store.   You can use Hipi  to create, share and view content and connect with other users (“Service”). These terms of use along with the Community Guidelines (together referred to as “Hipi Terms of Use”), and the Privacy Policy accessible <span className='cursor-pointer font-medium text-gray-800' onClick={()=> router && router?.push('/privacy-policy.html')}>here</span> govern your use of the Service. 
 	        </p>
 	        <p>This document is an electronic record in terms of Information Technology Act, 2000 and rules thereunder pertaining to electronic records in various statutes as amended by the Information Technology Act, 2000 and rules made thereunder. </p>
 
@@ -30,7 +30,7 @@ function Terms() {
 	        <span className='flex'><span className='pr-1'>1.</span> 'Content' includes all Templates, text, graphics, images, music, software, audio, video, information,  or any other materials available on Hipi  and/or the Service as well as the look and feel of Hipi.</span> 
 	        <span className='flex'><span className='pr-1'>2.</span> 'Devices' means any and all internet enabled devices like smart phones, tablets, laptops, desktops, etc. which are compatible with and have access to the Internet.</span> 
 			<span className='flex'><span className='pr-1'>3.</span> 'Internet' shall mean the system making use of the TCP/IP software protocols known as the internet or the worldwide web whatever the communications links may be which connects the user (including by way of fixed, mobile, DSL, ISDN, UMTS WiMax or other broadband links) including any developments in such protocols or any other protocols which may be developed which give equivalent, reduced or enhanced functionality compared with such protocols. </span> 
-			<span className='flex'><span className='pr-1'>4.</span> “Community Guidelines” means Hipi’s community guidelines available <span className='cursor-pointer font-medium text-gray-800' onClick={()=>router?.push('/community-guidelines.html')}>here.</span></span> 
+			<span className='flex'><span className='pr-1'>4.</span> “Community Guidelines” means Hipi’s community guidelines available <span className='cursor-pointer font-medium text-gray-800' onClick={()=> router && router?.push('/community-guidelines.html')}>here.</span></span> 
 
 	        </p>
 	        <h3 className='text-gray-800 font-medium'>REGISTRATION</h3>
@@ -122,7 +122,7 @@ function Terms() {
 		<p>UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT, CONTRACT, OR OTHERWISE, SHALL ZEEL BE LIABLE TO YOU OR TO ANY OTHER PERSON OR ENTITY FOR ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, REMOTE OR CONSEQUENTIAL DAMAGES OR ANY OTHER DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF GOODWILL, LOSS OF CONFIDENTIAL OR OTHER INFORMATION, BUSINESS INTERRUPTION, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, PERSONAL INJURY, LOSS OF PRIVACY, FAILURE TO MEET ANY DUTY INCLUDING A DUTY OF GOOD FAITH OR OF REASONABLE CARE, NEGLIGENCE (WHETHER ACTIVE OR PASSIVE), AND ANY OTHER PECUNIARY OR OTHER LOSS WHATSOEVER) ARISING OUT OF OR IN ANY WAY RELATED TO THE USE OR INABILITY TO USE HIPI , LOSS OF DATA OR OTHERWISE UNDER OR IN CONNECTION WITH ANY PROVISION OF THESE TERMS, EVEN IN THE EVENT OF FAULT, TORT (INCLUDING NEGLIGENCE, AND GROSS NEGLIGENCE), STRICT LIABILITY, BREACH OF CONTRACT, OR BREACH OF WARRANTY BY ZEEL, AND EVEN IF ZEEL HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THIS LIMITATION OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY TO THE EXTENT THAT APPLICABLE LAW PROHIBITS SUCH LIMITATION. THE FOREGOING PROVISIONS SHALL BE ENFORCEABLE TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW.</p>
 
 		<h3 className='text-gray-800 font-medium'>PRIVACY POLICY</h3>
-		<p>All information or data provided by You or collected by us shall be governed in accordance with the Privacy Policy available <span className='cursor-pointer font-medium text-gray-800' onClick={()=>router?.push('/privacy-policy.html')}>here</span></p>
+		<p>All information or data provided by You or collected by us shall be governed in accordance with the Privacy Policy available <span className='cursor-pointer font-medium text-gray-800' onClick={()=> router && router?.push('/privacy-policy.html')}>here</span></p>
 
 		<h3 className='text-gray-800 font-medium'>RELATIONSHIP</h3>
 		<p>The relationship between ZEEL and You is on a principal-to-principal basis. You are in no way ZEEL’s legal representative, partner or agent for any reason whatsoever.</p>
@@ -147,7 +147,7 @@ function Terms() {
 
 		<h3 className='text-gray-800 font-medium'>NOTICE</h3>
 		<p>You hereby expressly agree that ZEEL shall under no circumstance shall be liable to You for any damages whatsoever. Further, You hereby expressly agree that ZEEL makes no representations under these Hipi Terms of Use that any complaint raised by You will be resolved to Your satisfaction. All steps to be taken by ZEEL in this regard shall be at the sole discretion of ZEEL.</p>
-		<p>If You have any claims with respect to the ownership of Content and/or Posts transmitted through Hipi, please follow the “Ownership Claims and Dispute Resolution Mechanism” available <span className='cursor-pointer font-medium text-gray-800' onClick={()=>router?.push('/privacy-policy.html')}>here</span>.</p>
+		<p>If You have any claims with respect to the ownership of Content and/or Posts transmitted through Hipi, please follow the “Ownership Claims and Dispute Resolution Mechanism” available <span className='cursor-pointer font-medium text-gray-800' onClick={()=> router && router?.push('/privacy-policy.html')}>here</span>.</p>
 
 		<h3 className='text-gray-800 font-medium'>LAW & DISPUTES</h3>
 		<p>These Hipi Terms of Use and all matters arising from it are governed by and construed in accordance with the laws of India and courts of Mumbai, India shall have exclusive jurisdiction over all disputes arising in connection with these Hipi Terms of Use.</p>

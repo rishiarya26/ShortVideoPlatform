@@ -15,16 +15,16 @@ let router = useRouter();
 //   if(device){
 //     try{ 
 //         device = getItem('device-info');
-//         router?.push(stores[device])
-//         // router && router.push(stores[device])
+//          router && router?.push(stores[device])
+//         // router && router && router.push(stores[device])
     
 //     }catch(e){
-//         // router && router.push(stores[device])
+//         // router && router && router.push(stores[device])
     
 //     }
 //   }    
 if(device){
-    router?.push(ONE_TAP_DOWNLOAD);
+     router && router?.push(ONE_TAP_DOWNLOAD);
 }
     
     return null;

@@ -24,7 +24,7 @@ export default function Login({ toggle, loading, setAuth, pageName, tabName=null
     mobile :   
        <div onClick={()=>{
         toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
-         router.push('/login/phone?option=password')}}>
+         router && router.push('/login/phone?option=password')}}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">

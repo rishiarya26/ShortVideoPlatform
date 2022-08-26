@@ -61,7 +61,7 @@ const router = useRouter();
     <div className={`right-0 text-white ${info[props.type]}`}>
       <div
         onClick={() => {
-          router?.push(`/@${props?.userName}`);
+           router && router?.push(`/@${props?.userName}`);
         }}
         className="relative py-2 px-3 text-center flex justify-center"
       >

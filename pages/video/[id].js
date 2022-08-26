@@ -17,7 +17,7 @@ export default function Hipi() {
         updateCampaignId(queryStrings);
         // console.log(queryStrings)
         const {id} = router?.query;
-        id && router?.push(`/feed/for-you?videoId=${id}`);
+        id &&  router && router?.push(`/feed/for-you?videoId=${id}`);
       }
 
   },[])

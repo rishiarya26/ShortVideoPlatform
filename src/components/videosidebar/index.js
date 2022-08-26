@@ -83,7 +83,7 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
-    router?.push(`/@${userName}`);
+     router && router?.push(`/@${userName}`);
   };
 
   const onEmbedCopy = () => {

@@ -30,7 +30,7 @@ function GoatHipi() {
 <div className="flex justify-center items-center flex-col section_1 relative">
   <img alt="" src={withBasePath('images/goat/mobile/1_1.jpg')} />
   {/* <div className="absolute top-8 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-leaderboard')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">Round 1 winner</div>
+  <div onClick={()=>router && router.push('/goat-leaderboard')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">Round 1 winner</div>
   </div> */}
       {/* <p className="-mt-12 font-semibold text-green-400 text-center">Want to learn more ? Check out our webinar from October <a className=" font-semibold text-green-400 underline"> here </a> !</p>
   <button className="flex px-12 py-3 my-6 bg-hipired rounded-full text-white font-semibold">Apply Now</button> */}
@@ -41,28 +41,28 @@ function GoatHipi() {
 <div className="flex w-full flex-col section_2">
     <img alt=""  src={withBasePath('images/goat/mobile/round1.png')}/>
     <div className="flex w-full justify-center py-4 pb-8">
-    <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+    <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Round 1 Winner
   </div>
     </div>
     <div className='w-10/12 mar-lef mb-2'><img alt=""  src={withBasePath('images/goat/mobile/round2Mob.png')}/></div>
     <div className="flex w-full justify-center py-4 pb-8 flex-col items-center">
-        <div onClick={()=>router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        <div onClick={()=>router && router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 2 Details
       </div>
-      <div onClick={()=>router.push(`/round-2-winner?type=${'in-app'}`)} className="w-44 mt-4 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push(`/round-2-winner?type=${'in-app'}`)} className="w-44 mt-4 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 2 Winner
       </div>
     </div>
     <div className='w-8/12 mar-lef'><img alt=""  src={withBasePath('images/goat/mobile/round3mob.png')}/> </div>
     <div className="flex w-full justify-center py-4 pb-8 flex-col items-center">
-        <div onClick={()=>router.push('/goat-round-3')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        <div onClick={()=>router && router.push('/goat-round-3')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Details
       </div>
-      <div onClick={()=>router.push(`/round-3-participants?type=${'in-app'}`)} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push(`/round-3-participants?type=${'in-app'}`)} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Participants
       </div>
-      <div onClick={()=>router.push(`/cash-price-winner?type=${'in-app'}`)} className=" cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push(`/cash-price-winner?type=${'in-app'}`)} className=" cursor-pointer bg-hipired rounded-sm shadow-md mt-8 px-4 py-2 text-white flex justify-center font-semibold">
       Round 3 Weekly Cash Prize Winners
       </div>
     </div>
@@ -98,13 +98,13 @@ function GoatHipi() {
   <div className="relative">
   <img alt="" src={withBasePath('images/goat/mobile/10_1.jpg')}/>
   <div className="absolute -bottom-12 w-full flex justify-center">
-  {/* {<div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold"> Leaderboard</div> */}
+  {/* {<div onClick={()=>router && router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold"> Leaderboard</div> */}
   </div> 
   </div>
   <div className="relative">
   <img alt="" src={withBasePath('images/goat/mobile/round-2.jpg')}/>
   <div className="absolute bottom-4 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-round-2')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  <div onClick={()=>router && router.push('/goat-round-2')} className="min-w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Round 2 Details
   </div>
   </div>

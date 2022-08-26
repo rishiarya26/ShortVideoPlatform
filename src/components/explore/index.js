@@ -145,32 +145,32 @@ function Explore() {
 
   const toUserList = (value)=>{
     const hashTag = trimHash(value);
-    router?.push(`/user-list?ref=${hashTag}`);
+     router && router?.push(`/user-list?ref=${hashTag}`);
   }
 
   const toSearchFeed = (e, videoId)=>{
     let hashTag = e.currentTarget.id;   
     hashTag = trimHash  (hashTag);
-    router?.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
+     router && router?.push(`/search-feed/${videoId}?ref=${hashTag}&type=withHash`);
   }
 
   const toHashtagDetails = (hashTag)=>{
     console.log("R-hashtag",hashTag)
     let tHashtag = trimHash(hashTag);
     tHashtag = toLower(tHashtag);
-    router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
+    router && router.push({pathname: '/hashtag/[pid]',query: { pid: tHashtag }})
   }
 
   const toUserDetail = (userHandle)=>{
-    router.push(`/@${userHandle}`);
+    router && router.push(`/@${userHandle}`);
   }
 
   const toVideoDetail = (id)=>{
-    router.push(`/single-video/${id}`);
+    router && router.push(`/single-video/${id}`);
   }
 
   const redirectToUrl = (url) =>{
-    router.push(url);
+    router && router.push(url);
   }
 
   const toRedirect = {
@@ -202,7 +202,7 @@ function Explore() {
     const item = crousalItems?.length>0 && crousalItems?.[index];
     toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
     toRedirect?.[contentType](id);
-    // (data?.redirectUrl && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
+    // (data?.redirectUrl && router && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
   }
 
   return (
@@ -352,7 +352,7 @@ function Explore() {
                           <div key={id} 
                           onClick={()=>{
                             toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetId,carousalName:content?.widgetName,carousalType:'Creator Profile', creatorId:d?.id, creatorName:`${d?.firstName || ''} ${d?.lastName || ''}`})
-                            router?.push(`/@${d?.user?.userName}`)
+                             router && router?.push(`/@${d?.user?.userName}`)
                           }} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
                                  <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>

@@ -80,7 +80,7 @@ const SearchItems = ({router,type})=>{
         localStorage.set('search-suggestions-history',searchHis);
         setSearchHistory(searchHis);
         // window.sessionStorage.setItem('searchTerm',searchTerm)
-        searchTerm?.indexOf('#') === 0 ? router?.push(`/search?term=%23${trimHash(searchTerm)}`) : router?.push(`/search?term=${searchTerm}`)
+        searchTerm?.indexOf('#') === 0 ?  router && router?.push(`/search?term=%23${trimHash(searchTerm)}`) :  router && router?.push(`/search?term=${searchTerm}`)
      }catch(e){
          console.error('search btn clicked',e)
      }
@@ -103,7 +103,7 @@ const SearchItems = ({router,type})=>{
         window.sessionStorage.setItem('searchExecuted','true');
         // window.sessionStorage.setItem('searchTerm',searchTerm)
         toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "autocomplete_search_query_response", "position": "0", "queryID": "autocomplete_search_query_response"})
-        router?.push(`/search?term=${value}`);
+         router && router?.push(`/search?term=${value}`);
     }
 
 //     const onSearchHistoryDelete =(e) =>{

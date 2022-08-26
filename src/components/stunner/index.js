@@ -136,8 +136,8 @@ useEffect(()=>{
           }
            return <div  key={id} ref={ref} className='w-full flex mx-2 relative'>
             <div onClick={()=>{
-             device === 'mobile' ? router.push(`/hashtag-feed/hipistunner?videoId=${item?.content_id}`) : 
-             device === 'desktop' && router.push(`/hashtag/hipistunner`) }} className='w-full shadow-md sliderSwipe  rounded-lg overflow-hidden  border border-gray-200 '>
+             device === 'mobile' ? router && router.push(`/hashtag-feed/hipistunner?videoId=${item?.content_id}`) : 
+             device === 'desktop' && router && router.push(`/hashtag/hipistunner`) }} className='w-full shadow-md sliderSwipe  rounded-lg overflow-hidden  border border-gray-200 '>
             <video
               src={item?.video_url} 
               controlsList="nodownload"
@@ -172,7 +172,7 @@ useEffect(()=>{
        }
        {stunnerVideos?.length > 0 &&
        <SwiperSlide className="h-250c">
-       <div onClick={()=>router?.push('/hashtag/hipistunner')} className='cursor-pointer w-full h-full flex mx-2 justify-center items-center'>
+       <div onClick={()=> router && router?.push('/hashtag/hipistunner')} className='cursor-pointer w-full h-full flex mx-2 justify-center items-center'>
           <div className='w-full flex shadow-md h-full rounded-lg overflow-hidden  border border-gray-200 justify-center items-center'>
           <div className='font-md font-light text-gray-600 '> See All
            </div>

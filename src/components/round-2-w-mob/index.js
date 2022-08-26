@@ -118,7 +118,7 @@ function Round2WinnerM({round}) {
         }
         {/* normal count */}
       {data?.week6?.all?.length > 0 && data?.week6?.all?.[0] &&
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week6?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week6?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={data?.week6?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
@@ -139,7 +139,7 @@ function Round2WinnerM({round}) {
         }
         {/* normal count */}
       {data?.week5?.all?.[0] &&
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week5?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week5?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={data?.week5?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
@@ -161,7 +161,7 @@ function Round2WinnerM({round}) {
         }
         {/* normal count */}
       {data?.week4?.all?.[0] &&
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week4?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week4?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={data?.week4?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
@@ -182,7 +182,7 @@ function Round2WinnerM({round}) {
         }
         {/* normal count */}
       {data?.week3?.all?.[0] &&
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week3?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week3?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={data?.week3?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
@@ -204,7 +204,7 @@ function Round2WinnerM({round}) {
         </div>
         {/* normal count */}
       {data?.week2?.all?.[0] &&
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week2?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week2?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={data?.week2?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>
@@ -223,7 +223,7 @@ function Round2WinnerM({round}) {
             <p className="font-bold">{`Judge's Pick`}</p>
         </div>
         {data?.week2?.judges?.map((item, key)=>(
-          <div onClick={()=>(type === 'notInApp') && router?.push(`/@${item?.username}`)} key={key} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+          <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${item?.username}`)} key={key} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
           <div className="flex items-center"  >
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
@@ -239,7 +239,7 @@ function Round2WinnerM({round}) {
             <p className="font-bold">{`Week 1 (${dates?.week1 || ''})`}</p>
         </div>
   {data && data?.week1?.all?.[0] && 
-        <div onClick={()=>(type === 'notInApp') && router?.push(`/@${data?.week1?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
+        <div onClick={()=>(type === 'notInApp') &&  router && router?.push(`/@${data?.week1?.all?.[0]?.username}`)} className="w-full border-b-2 border-gray-300 relative flex justify-between py-4 px-4 items-center">
               <div className="flex items-center"  >
                 <div className="w-12 h-12 rounded-full overflow-hidden">
                   <Img data={data?.week1?.all?.[0]?.profilepic} fallback={fallbackUsers?.src}/>

@@ -17,7 +17,7 @@ export default function Hipi() {
 
   const device = getItem('device-type');
   if(device === 'desktop'){
-    router.push('/feed/for-you');
+    router && router.push('/feed/for-you');
   }
   return (
   <>

@@ -14,7 +14,7 @@ export default function Card({post={}}) {
     const router = useRouter();
     const created_at = `${monthNames[newDate.getMonth()]} ${newDate.getDate()}, ${newDate.getFullYear()}`
   return (
-    <div className={styles.card} onClick={()=>router.push(`/newsroom/${full_slug}`)}>
+    <div className={styles.card} onClick={()=>router && router.push(`/newsroom/${full_slug}`)}>
         <div className={styles.card_desc}>
             <div className="flex items-center mb-3">
                 <div className={`flex items-center px-4 h-8 border mr-2 ${styles[type.toLowerCase()]}`}>

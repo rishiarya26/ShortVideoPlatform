@@ -25,7 +25,7 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
     mobile :   
       <div onClick={()=>{
         toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Signup',ctaName:'Phone or Email',elemant:'Phone or Email'})
-        router.push('/signup/phone')}}>
+        router && router.push('/signup/phone')}}>
       <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center w-full font-semibold">
@@ -85,9 +85,9 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
       <div className="my-2 flex flex-col items-center">
         <p className="text-sm text-center mb-4 text-xs">
           By continuing, you agree to Hipi's
-          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
+          <span onClick={()=>router && router.push('/terms-conditions.html')} className="font-semibold"> Term of Use </span>
           and confirm that you have read Hipi's
-          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
+          <span onClick={()=>router && router.push('/privacy-policy.html')} className="font-semibold"> Privacy Policy </span>
         </p>
         <p>
           Already have an account?

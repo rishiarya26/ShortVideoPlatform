@@ -32,7 +32,7 @@ const Header = ({ blok={}, date}) => {
       />
       <div className="flex flex-col max-full" {...storyblokEditable(blok)}>
         <div className="flex items-center mb-3">
-          <div onClick={()=>router.push(`/newsroom/${type.toLowerCase()}`)} className={`flex items-center px-4 h-8 border mr-2 cursor-pointer ${styles[type.toLowerCase()]}`}>
+          <div onClick={()=>router && router.push(`/newsroom/${type.toLowerCase()}`)} className={`flex items-center px-4 h-8 border mr-2 cursor-pointer ${styles[type.toLowerCase()]}`}>
             {type}
           </div>
           <div className=" text-gray-400 font-light text-sm">

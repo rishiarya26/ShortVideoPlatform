@@ -40,7 +40,7 @@ function About() {
       />
     <div className="h-screen  w-screen flex flex-col justify-between">
       {/* <div className="w-full h-24 head-shadow flex items-center justify-center lg:justify-start lg:px-10 py-4">
-        <div className="w-12 cursor-pointer" onClick={()=>router.push('/feed/for-you')} >
+        <div className="w-12 cursor-pointer" onClick={()=>router && router.push('/feed/for-you')} >
         <img  src={withBasePath('icons/Logo_hipi.png')} alt="hipi logo" /> 
         </div>  
       </div> */}

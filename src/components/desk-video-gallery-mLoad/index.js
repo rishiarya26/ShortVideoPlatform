@@ -62,12 +62,12 @@ const validItemsLength = items?.length > 0;
 // const toProfileFeed = (userId, videoId, type)=>{
 //   const index = items.findIndex((data)=>data.content_id === videoId);
 //   index !== -1 && localStorage.set('selected-profile-video',items[index]);
-//   router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
+//    router && router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
 // }
 // const toHashTagFeed =(hashTag, videoId, type)=>{
 //   const index = items.findIndex((data)=>data?.content_id === videoId);
 //   index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
-//   router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
+//    router && router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
 // }
 const redirect = (item) =>{
    
@@ -75,12 +75,12 @@ const redirect = (item) =>{
    try{  if(item?.indexOf('#')!==-1){
        const trimmedHashtag = trimHash(item);
        console.log("item",trimmedHashtag);
-       router?.push(`/hashtag/${trimmedHashtag}`)
+        router && router?.push(`/hashtag/${trimmedHashtag}`)
      }else
      if(item?.indexOf('@')!==-1){
        const userHandle = (item);
        // console.log("item",trimmedHashtag);
-       router?.push(`/${userHandle}`);
+        router && router?.push(`/${userHandle}`);
      }
     
     }catch(e){
@@ -88,7 +88,7 @@ const redirect = (item) =>{
      }
      // }else{
      //   if(item?.indexOf('@')){
-     //     router?.push(`/@${item}`)
+     //      router && router?.push(`/@${item}`)
      //   }
      // }
        }
@@ -135,7 +135,7 @@ return (
             ))}
                 </div>
          {/* <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div> */}
-         <div className='cursor-pointer flex w-full mb-3 justify-start items-center' onClick={()=>router?.push(`/@${item?.videoOwners?.userName}`)}>
+         <div className='cursor-pointer flex w-full mb-3 justify-start items-center' onClick={()=> router && router?.push(`/@${item?.videoOwners?.userName}`)}>
             <div className='flex w-6 min-w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={fallbackUsers?.src}/></div>
             <p className='pl-1 text-base truncate text-gray-700'>{item?.videoOwners?.userName}</p>
          </div>

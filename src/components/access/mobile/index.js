@@ -62,7 +62,7 @@ export default function Mobile({
         }catch(e){
           console.log('error in fb or mixpanel event')
         }
-        device === 'mobile' && router?.push({
+        device === 'mobile' &&  router && router?.push({
             pathname: '/feed/for-you'
           });
           if(device === 'desktop'){
@@ -85,7 +85,7 @@ export default function Mobile({
           setSeconds(59);
           fbq.defEvent('CompleteRegistration');
            if(device === 'mobile'){ 
-             router?.push({
+              router && router?.push({
               pathname: '/verify-otp',
               query: { ref: 'login', mobile: `${data?.countryCode}-${data?.mobile}` }
             });}
@@ -112,7 +112,7 @@ export default function Mobile({
           if(resp.data.code === 0){
             showMessage({ message: t('SUCCESS_OTP') });
             if(device==='mobile') {
-              router?.push({
+               router && router?.push({
               pathname: '/verify-otp',
               query: { ref: 'signup', mobile: `${data?.countryCode}-${data?.mobile}` }
             });
@@ -147,7 +147,7 @@ export default function Mobile({
 
   const handleForgotPassword = ()=>{
     if(device === 'mobile'){
-      router.push('/forgot-password?type=mobile')
+      router && router.push('/forgot-password?type=mobile')
     }else if(device === 'desktop'){
       toggleShowForgotPassComp({show : true, type : 'mobile'});
     }
@@ -231,9 +231,9 @@ export default function Mobile({
         <p className="text-gray-400 text-xs">
           <p className="text-xs">
               By continuing, you agree to Hipi's
-              <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
+              <span onClick={()=>router && router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
               and confirm that you have read Hipi's
-              <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
+              <span onClick={()=>router && router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
               .if you sign up with SMS, SMS fee may apply.
             </p>
         </p>
@@ -260,9 +260,9 @@ export default function Mobile({
         <p className="text-gray-400 text-xs">
           <p className="text-xs">
               By continuing, you agree to Hipi's
-              <span onClick={()=>router.push('/terms-conditions.html')} className="cursor-pointer font-semibold"> Term of Use </span>
+              <span onClick={()=>router && router.push('/terms-conditions.html')} className="cursor-pointer font-semibold"> Term of Use </span>
               and confirm that you have read Hipi's
-              <span onClick={()=>router.push('/privacy-policy.html')} className="cursor-pointer font-semibold"> Privacy Policy </span>
+              <span onClick={()=>router && router.push('/privacy-policy.html')} className="cursor-pointer font-semibold"> Privacy Policy </span>
               .if you sign up with SMS, SMS fee may apply.
             </p>
         </p>

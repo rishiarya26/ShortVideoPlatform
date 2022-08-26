@@ -39,7 +39,7 @@ const onStoreRedirect =(device)=>{
 <div className="flex justify-center items-center flex-col section_1 relative">
   <img alt="" src={withBasePath('images/goat/desktop/unlu_desktop.jpg')} />
   {/* <div className="absolute top-6 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Round 1 winner
   </div>
   </div> */}
@@ -54,30 +54,30 @@ const onStoreRedirect =(device)=>{
     <div className="absolute w-1/3 flex flex-col top-14 left-24 ">
     <img alt="" src={withBasePath('images/goat/desktop/round1.png')}/>
     <div className="flex w-full justify-center py-4 pb-8">
-    <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+    <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Round 1 Winner
   </div>
     </div>
     <img alt="" src={withBasePath('images/goat/desktop/round2Desk.png')}/>
     <div className="flex w-full justify-center py-4 pb-8  items-center">
-        <div onClick={()=>router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        <div onClick={()=>router && router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 2 Details
       </div>
-      <div onClick={()=>router.push('/round-2-winner')} className="w-44 ml-4 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push('/round-2-winner')} className="w-44 ml-4 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 2 Winner
       </div>
     </div>
     <img alt="" src={withBasePath('images/goat/desktop/round3desk.png')}/>
     <div className="flex w-full flex-col justify-center py-4 pb-8  items-center">
       <div className='flex w-full justify-center items-center'>
-        <div onClick={()=>router.push('/goat-round-3')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+        <div onClick={()=>router && router.push('/goat-round-3')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Details
       </div>
-      <div onClick={()=>router.push('/round-3-participants')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md ml-4 px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push('/round-3-participants')} className="w-56 cursor-pointer bg-hipired rounded-sm shadow-md ml-4 px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Participants
       </div>
       </div>
-      <div onClick={()=>router.push('/cash-price-winner')} className=" cursor-pointer bg-hipired rounded-sm shadow-md mt-4 px-4 py-2 text-white flex justify-center font-semibold">
+      <div onClick={()=>router && router.push('/cash-price-winner')} className=" cursor-pointer bg-hipired rounded-sm shadow-md mt-4 px-4 py-2 text-white flex justify-center font-semibold">
         Round 3 Weekly Cash Prize Winners
       </div>
     </div>
@@ -111,14 +111,14 @@ const onStoreRedirect =(device)=>{
   <div className="relative">
   <img alt="" src={withBasePath('images/goat/desktop/9_1.jpg')}/>
   <div className="absolute -bottom-10 w-full flex justify-center">
-  {/* <div onClick={()=>router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  {/* <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
   </div> */}
   </div>
   </div>
   <div className="relative">
     <div className="absolute bottom-1/3 right-0 w-1/2 w-full flex justify-center">
-    <div onClick={()=>router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+    <div onClick={()=>router && router.push('/goat-round-2')} className="w-44 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
 Round 2 Details
   </div>
     </div>

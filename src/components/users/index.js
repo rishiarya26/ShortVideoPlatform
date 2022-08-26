@@ -230,7 +230,7 @@ console.log("onClick follow btn issue ",e);
       >
       <ShareComp type={'profile'}/>
       </div>, 
-        self: <div onClick={()=>router?.push('/profile-settings')}>
+        self: <div onClick={()=> router && router?.push('/profile-settings')}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>
         <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#161722"/>
@@ -323,8 +323,8 @@ const notNowClick=()=>{
   //   liked : videoData?.items?.filter((data)=>(data?.shoppable === true))
   // }
 
-  const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=>router?.push(`/profile-detail/${id}?type=following`))
-  const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=>router?.push(`/profile-detail/${id}?type=followers`))
+  const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=> router && router?.push(`/profile-detail/${id}?type=following`))
+  const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=> router && router?.push(`/profile-detail/${id}?type=followers`))
 
   return (
     <>

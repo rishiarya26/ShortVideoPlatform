@@ -87,7 +87,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
           if(device === 'desktop'){
              close();
           }else if(device === 'mobile'){
-            router?.push(types[ref]);
+             router && router?.push(types[ref]);
             close();
           }
         }
@@ -107,7 +107,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
           if(device === 'desktop'){
             toggleRegistration({show: true, toRegType : 'mobile', toRegValue:phoneNo});
          }else if(device === 'mobile'){
-           router?.push(types[ref]);
+            router && router?.push(types[ref]);
          }
           showMessage({ message: t('SUCCESS_LOGIN') });
         }
@@ -119,7 +119,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
       // try {
       //   const response = await resetPasswordMobile(mobile);
       //   if (response.data.status === 200) {
-          router?.push(types[ref]);
+           router && router?.push(types[ref]);
           // showMessage({ message: t('SUCCESS_LOGIN') });
       //   }
       // } catch (error) {
@@ -179,7 +179,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   //   try {
   //     const response = await verifyOTP(payload);
   //     if (response.data.status === 200) {
-  //       router?.push(types[ref]);
+  //        router && router?.push(types[ref]);
   //       showMessage({ message: t('SUCCESS_LOGIN') });
   //     }
   //   } catch (error) {
@@ -210,7 +210,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
    </>,
    mobile : 
    <div className="flex flex-col px-4 pt-10">
-   <BackButton back={() => router?.push({
+   <BackButton back={() =>  router && router?.push({
      pathname: `/${ref}/phone`,
      query: { option: 'otp', mobile }
    })}
