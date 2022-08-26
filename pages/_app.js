@@ -321,7 +321,8 @@ function Hipi({
 
     useEffect(() => {
       // This pageview only triggers the first time (it's important for Pixel to have real information)
-      if(window?.fbq){
+      try{
+        if(window?.fbq){
         fbq.pageview()
       }
       
@@ -333,8 +334,15 @@ function Hipi({
       }
   
       router.events.on('routeChangeComplete', handleRouteChange)
+    }catch(e){
+      console.error("fbq event",e)
+    }
       return () => {
-        router.events.off('routeChangeComplete', handleRouteChange)
+       try{ 
+         router.events.off('routeChangeComplete', handleRouteChange)
+      }catch(e){
+        console.error(e)
+      }
       }
     }, [router.events])
 
