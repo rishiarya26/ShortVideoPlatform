@@ -7,8 +7,16 @@ import { withBasePath } from '../../src/config'
 import StaticFooter from "../../src/components/static-footer";
 import { toTrackMixpanel } from "../../src/analytics/mixpanel/events";
 import { toTrackFirebase } from "../../src/analytics/firebase/events";
+import { ToTrackFbEvents } from "../../src/analytics/fb-pixel/events";
+import { useEffect } from "react";
 
 export default function Hipi() {
+  useEffect(()=>{
+    window.onunload = function () {
+      window?.scrollTo(0, 0);
+    }
+  },[])
+
   return (
   <>
    <SeoMeta
@@ -26,11 +34,12 @@ export default function Hipi() {
 
       <StaticFooter/>
       <div className="flex md:hidden w-full p-4 bg-white sticky bottom-0 z-20 shadow-inner items-center justify-between">
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center">
             <img className="w-12 h-12 mr-2" src={withBasePath('icons/Hipi-Logo-RGB.png')} alt="hipi logo" /> 
             <div className="flex flex-col justify-center ">
               <p className="text-sm font-semibold">Download Hipi App</p>
-              <p className="text-xs ">Participate in Stunner</p>
+              <p className="text-xs ">Participate in #HipiStunner</p>
+              <p className="text-xs ">Win Rs 1 Lac</p>
             </div>
         </div>
         <div>
@@ -39,6 +48,7 @@ export default function Hipi() {
             <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" onClick={()=>{
               toTrackMixpanel('stunnerInstallClick',{pageName:'Hipi Stunner'})
               toTrackFirebase('stunnerInstallClick',{page:'Hipi Stunner'})
+              ToTrackFbEvents('stunnerInstallClick',{page:'Hipi Stunner'})
               window?.open('https://hipi.onelink.me/tMco/HSTest')
             }} >Install</div>
         </div>

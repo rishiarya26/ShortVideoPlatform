@@ -39,7 +39,7 @@ const onStoreRedirect =(device)=>{
 {/* <div className="flex justify-center items-center flex-col section_1 relative">
   <img src={withBasePath('images/goat/round-2/desktop/land.jpg')} />
   <div className="absolute bottom-8 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
   </div>
   </div>
@@ -84,7 +84,7 @@ const onStoreRedirect =(device)=>{
   <div className="relative">
   <img src={withBasePath('images/goat/round-2/desktop/10.jpg')}/>
   <div className="absolute -bottom-12 w-full flex justify-center">
-  <div onClick={()=>router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
+  <div onClick={()=>router && router.push('/goat-leaderboard')} className="w-1/3 cursor-pointer bg-hipired rounded-sm shadow-md px-4 py-2 text-white flex justify-center font-semibold">
   Leaderboard
   </div> 
   </div>

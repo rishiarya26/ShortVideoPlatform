@@ -71,7 +71,7 @@ const Users = ({item, type = 'normal', router}) =>{
                        }catch(e){
                          console.error('search result click',e)
                        }
-                    router?.push(`/@${item?.userHandle}`)}} key={id} className="flex p-2 min-w-3/5 mr-2">
+                     router && router?.push(`/@${item?.userHandle}`)}} key={id} className="flex p-2 min-w-3/5 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                           <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                           </div>

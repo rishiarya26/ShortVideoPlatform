@@ -21,13 +21,13 @@ export default function MainPage({cards,heading="", children, featureCard={}}) {
     }
     const currentPage = pathnameExtract(router.pathname);
     const onChange = (page) => {
-        router.push(`/newsroom/${page}`)
+        router && router.push(`/newsroom/${page}`)
     }
   return (
     <div>
         <div className="w-full px-6 h-16 head-shadow flex items-center justify-center sticky top-0 bg-white z-20">
             <div className={styles.headerWrapper}>
-                <div className="w-14 cursor-pointer" onClick={()=>router.push('/feed/for-you')}>
+                <div className="w-14 cursor-pointer" onClick={()=>router && router.push('/feed/for-you')}>
                     <img alt="hipi logo"  src={withBasePath('icons/Logo_hipi.png')} />
                 </div>
             </div>

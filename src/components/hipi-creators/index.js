@@ -37,13 +37,15 @@ const iFrameReward = {
 'desktop' : <iframe width="560" height="315" src="https://www.youtube.com/embed/MG-AP1Kt8qg?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> ,
 'mobile': <iframe width="280" height="158" src="https://www.youtube.com/embed/MG-AP1Kt8qg?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> 
 }
+
 return (
 <>
 <SeoMeta
 data={{
-title: 'Join Hipi - Short Video App | Get Cash Rewards & Gifts with Hipi',
+    
+title: 'Join Hipi for Creators | Get Cash Rewards & Gifts with Hipi',
 // image: item?.thumbnail,
-description: "Hipi is india's fastest growing short video app. Join Hipi & kick start your career as an influencer to get cash rewards & gifts.",
+description: "Hipi is india's fastest growing short video app for talented creators. Join Hipi & kick start your career as an influencer to get cash rewards & gifts.",
 canonical: url && getCanonicalUrl(url),
 }}
 />

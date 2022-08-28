@@ -1,7 +1,8 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
+/*eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import faq from '../../../public/stunner-FAQ.json';
 import stunner from '../../../public/stunnerData.json';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
@@ -12,10 +13,28 @@ import Header from '../desk-header';
 import StaticFooter from '../static-footer';
 import Form from './form';
 
-function Stunner() {
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+import 'swiper/components/navigation/navigation.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+import SwiperCore, {
+Autoplay,Pagination,Navigation
+} from 'swiper';
+import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
+import Mute, { MutedColor } from '../commons/svgicons/mute';
+import { getItem } from '../../utils/cookie';
+// install Swiper modules
+SwiperCore.use([Autoplay,Pagination,Navigation]);
+
+function Stunner({type= 'stunner'}) {
  const [items, setItems] = useState(faq?.faq);
  const [stunnerData, setStunnerData] = useState(stunner.stunner);
+ const [stunnerVideos, setStunnerVideos] = useState([])
+ const [muted, setMuted] = useState(true);
  const router = useRouter()
+ const challenge1Ref = useRef();
+ const device = getItem('device-type')
+ const deviceType = getItem('device-info')
 
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
@@ -44,6 +63,15 @@ const onStoreRedirect =(device)=>{
 }
 
 useEffect(()=>{
+( async function(){
+  try{ 
+    const response = await getHashTagVideos({ keyword: 'hipistunner' , offset: "1" });
+    console.log("fetchedMore",response);
+    if(response?.data?.length >= 7){
+      setStunnerVideos(response?.data?.splice(2,7));
+    }}catch(e){
+      console.error("Error - hashtag video for stunner",e)
+    }})()
   toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
 },[])
   return (
@@ -70,8 +98,122 @@ useEffect(()=>{
   </div>
 </div>
 
+<div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
+<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> August Challenge 2 is now <span className='animate-pulse'>Live</span></h1>
+    <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
+    Showcase your style & creativity with 5 <b>monsoon trends</b>. Check out these uber-cool entries for inspiration
+</p>
+
+{type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
+        <Swiper
+        modules={[Navigation, Pagination]}
+        draggable="true"
+        spaceBetween={10}
+        slidesPerView={2}
+        centeredSlides={true} 
+        className='h-full'
+        navigation
+        // autoplay={{
+        // // "delay": 2500,
+        // // "disableOnInteraction": false
+        // }} 
+        // navigation={{enabled : (device === 'desktop') ?  true : false}}
+        pagination={{"clickable": true}} 
+        >
+   
+       {stunnerVideos?.length > 0 ? stunnerVideos?.map((item,id)=>(
+       <>
+        <SwiperSlide>
+          {({ isActive }) => {
+          const ref = useRef();
+          if(isActive){
+            ref?.current?.children[0]?.children[0]?.play && ref?.current?.children[0]?.children[0]?.play();
+          }else{
+            // ref?.current?.children[0]?.children[0]?.pause()
+            ref?.current?.children[0]?.children[0]?.pause && ref?.current?.children[0]?.children[0]?.pause();
+            ref?.current?.children[0]?.children[0]?.currentTime && 
+            (ref.current.children[0].children[0].currentTime = 0);
+          }
+           return <div  key={id} ref={ref} className='w-full flex mx-2 relative'>
+            <div onClick={()=>{
+             device === 'mobile' ? router && router.push(`/hashtag-feed/hipistunner?videoId=${item?.content_id}`) : 
+             device === 'desktop' && router && router.push(`/hashtag/hipistunner`) }} className='w-full shadow-md sliderSwipe  rounded-lg overflow-hidden  border border-gray-200 '>
+            <video
+              src={item?.video_url} 
+              controlsList="nodownload"
+              playsInline
+              muted={muted}
+              // autoPlay
+              preload="auto"
+              webkit-playsinline = "true"
+              // onTimeUpdate={handleUpdateSeekbar}
+              loop
+              navigation
+              // onClick={handleVideoPress}
+              poster={item?.firstFrame}
+              objectfit="cover"
+              key={item?.video_url}
+              ></video>
+            </div>
+            {muted && <div onClick={()=>setMuted(false)} className="absolute right-0 top-0 p-3 cursor-pointer"><MutedColor/></div>}
+           </div>
+          }}
+        </SwiperSlide>
+     </>
+       )) : 
+       [0,1].map((data,id)=>(
+         <SwiperSlide key={id} className="h-250c">
+         <div className=' cursor-pointer w-full h-full flex mx-2 justify-center items-center'>
+            <div className='loader-stunner w-full flex shadow-md h-full rounded-lg overflow-hidden  border border-gray-200 justify-center items-center'>
+             </div>
+         </div>
+     </SwiperSlide>
+      ))
+       }
+       {stunnerVideos?.length > 0 &&
+       <SwiperSlide className="h-250c">
+       <div onClick={()=> router && router?.push('/hashtag/hipistunner')} className='cursor-pointer w-full h-full flex mx-2 justify-center items-center'>
+          <div className='w-full flex shadow-md h-full rounded-lg overflow-hidden  border border-gray-200 justify-center items-center'>
+          <div className='font-md font-light text-gray-600 '> See All
+           </div>
+           </div>
+       </div>
+       </SwiperSlide>
+       }
+         {/* <SwiperSlide>
+            <div className='w-full flex mx-2 '>
+            <div className='w-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
+                <video src="https://z5shorts.akamaized.net/2022/5/5/6d842bea-0abe-4a25-95db-3f67a31c1295/6d842bea-0abe-4a25-95db-3f67a31c1295_1536.mp4?hdnea=st=1661228720~exp=1661243120~acl=/*~hmac=ec9ab718da079f377a2e4738b5cdfe4f484903499406cdbbe24c9c6d9099cf1c" />
+                </div>
+            </div>
+        </SwiperSlide>
+        <SwiperSlide>
+            <div className='w-full flex mx-2 '>
+            <div className='w-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
+                <video src="https://z5shorts.akamaized.net/2022/5/5/6d842bea-0abe-4a25-95db-3f67a31c1295/6d842bea-0abe-4a25-95db-3f67a31c1295_1536.mp4?hdnea=st=1661228720~exp=1661243120~acl=/*~hmac=ec9ab718da079f377a2e4738b5cdfe4f484903499406cdbbe24c9c6d9099cf1c" />
+                </div>
+            </div>
+        </SwiperSlide>
+        <SwiperSlide>
+            <div className='w-full flex mx-2 '>
+            <div className='w-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
+                <video src="https://z5shorts.akamaized.net/2022/6/27/035783e8-c916-4528-99e7-cea723b61899/035783e8-c916-4528-99e7-cea723b61899_1536.mp4?hdnea=st=1661164610~exp=1661179010~acl=/*~hmac=bf0372a87f6e92942860317666339a0ef72551279d3e4910b88093357fd80213" />
+                </div>
+            </div>
+        </SwiperSlide> */}
+        </Swiper>
+        {/* <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> */}
+    </div>}
 
 
+    <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
+    Participate in two challenges to win cash prize of INR 1,00,000 and much more.
+    Missed August Challenge 1? Not a problem. Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    </p>
+
+
+    </div>
 
 <div className='w-full flex flex-col md:flex-row py-4 md:pb-8 items-center justify-center bg_1 relative'>
             <div className='absolute left-0 top-0 h-full flex items-center'>
@@ -131,7 +273,7 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center'>
            {stunnerData.map((item,id)=>(
-           <div key={id} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
@@ -179,10 +321,6 @@ useEffect(()=>{
             <img alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/stunner/hipistunner_thehost.jpg')} /> 
         </div>
     </div>
-
-
-
-
 
 <div className="flex w-full justify-center bg_pastel_blue">
   <div className='flex flex-col p-8 md:px-4 max_800'>

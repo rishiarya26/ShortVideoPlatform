@@ -47,7 +47,7 @@ export default function Email({
         }
            /* Mixpanel */        
          if(device === 'mobile'){
-            router?.push({
+             router && router?.push({
             pathname: '/feed/for-you'
           });
           }
@@ -76,7 +76,7 @@ export default function Email({
 
     }
     }catch(e){
-     if(device === 'mobile'){ router?.push({
+     if(device === 'mobile'){  router && router?.push({
         pathname: '/registration',
         query: { email: data?.email }
       });
@@ -111,7 +111,7 @@ export default function Email({
     <div onClick={
       device === 'desktop' ? ()=>toggleShowForgotPassComp({show : true, type : 'email'})
       :
-      ()=>router.push(
+      ()=>router && router.push(
       {pathname: '/forgot-password',
        query : {type : 'email'}
     }
@@ -125,9 +125,9 @@ export default function Email({
     <p className="text-gray-400 text-xs">
         <p className="text-xs">
           By continuing, you agree to Hipi's
-          <span onClick={()=>router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
+          <span onClick={()=>router && router.push('/terms-conditions.html')} className="font-semibold cursor-pointer"> Term of Use </span>
           and confirm that you have read Hipi's
-          <span onClick={()=>router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
+          <span onClick={()=>router && router.push('/privacy-policy.html')} className="font-semibold cursor-pointer"> Privacy Policy </span>
           .if you sign up with SMS, SMS fee may apply.
         </p>
     </p>

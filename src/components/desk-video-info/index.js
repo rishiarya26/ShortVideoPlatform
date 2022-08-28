@@ -21,7 +21,7 @@ const [show, setShow] = useState(false);
     //       hashtag = trimSpace(hashtag)
     //       finalValue = trimHash(hashtag)
     //     }
-    //     // router?.push(`/hashtag/${finalValue}`)
+    //     //  router && router?.push(`/hashtag/${finalValue}`)
     //   }
      
       // const toUser =(username)=>{
@@ -29,7 +29,7 @@ const [show, setShow] = useState(false);
       //   // if(hashtag?.includes('#')){
       //   //   finalValue = trimHash(hashtag)
       //   // }
-      //   // router?.push(`/${username}`)
+      //   //  router && router?.push(`/${username}`)
       // }
 
       const redirect = (item) =>{
@@ -37,12 +37,12 @@ const [show, setShow] = useState(false);
           if(item?.indexOf('#')!==-1){
             const trimmedHashtag = trimHash(item);
             console.log("item",trimmedHashtag);
-            router?.push(`/hashtag/${trimmedHashtag}`);
+             router && router?.push(`/hashtag/${trimmedHashtag}`);
           }else
           if(item?.indexOf('@')!==-1){
             const userHandle = (item);
             // console.log("item",trimmedHashtag);
-            router?.push(`/${userHandle}`);
+             router && router?.push(`/${userHandle}`);
           }
         }catch(e){
             console.log("error in hashtag redirect",e)
@@ -54,7 +54,7 @@ const [show, setShow] = useState(false);
         <div className='text-sm text-gray-500 flex items-center'> 
          <span 
          className="usrhvr  relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-           <span className='mr-1' onClick={()=>router?.push(`/@${userName}`)}> {`${userName}`} 
+           <span className='mr-1' onClick={()=> router && router?.push(`/@${userName}`)}> {`${userName}`} 
            </span>
          <div className='usrdeck absolute z-10 top-4 -left-16'>
          <DeskHoverInfo id={userName}/>

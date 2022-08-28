@@ -61,7 +61,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
 const redirectToFeed = ()=>{
    // window.location.href = '/feed/for-you'
-   router.push('/feed/for-you');
+   router && router.push('/feed/for-you');
 }
  
    return(

@@ -38,7 +38,7 @@ function HashTags({item}) {
 
      const toHashtag =(value)=>{
       const trimmedHash = trimHash(value)
-      router?.push(`/hashtag/${trimmedHash}`)
+       router && router?.push(`/hashtag/${trimmedHash}`)
     }
 
     const fetchMoreItems = async() =>{

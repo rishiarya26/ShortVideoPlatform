@@ -47,7 +47,7 @@ const TopItems = ({item, redirectTab}) =>{
 
     const toHashtag =(value)=>{
       const trimmedHash = trimHash(value)
-      router?.push(`/hashtag/${trimmedHash}`)
+       router && router?.push(`/hashtag/${trimmedHash}`)
     }
 
      setRetry = retry && retry;
@@ -80,7 +80,7 @@ const TopItems = ({item, redirectTab}) =>{
                     }catch(e){
                       console.error('search result click',e)
                     }
-                    router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
+                     router && router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
@@ -154,7 +154,7 @@ const TopItems = ({item, redirectTab}) =>{
                        }catch(e){
                          console.error('search result click',e)
                        }
-                      router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                       router && router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

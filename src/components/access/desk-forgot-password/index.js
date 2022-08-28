@@ -67,7 +67,7 @@ import ResetPassword from "../reset-password";
                           showMessage({ message: 'Otp send successfully' }); 
                        
                       //      if(device=== 'mobile'){  
-                      //       router?.push({
+                      //        router && router?.push({
                       //       pathname: '/verify-otp',
                       //       query: { ref: 'forgot-password', mobile: `${phoneData?.countryCode}-${phoneData?.mobile}`}
                       //     });
@@ -91,7 +91,7 @@ import ResetPassword from "../reset-password";
                 if (response.data.code === 1) {        
                 showMessage({ message: "Reset Password link sent to your mail. Please reset it & sign in" });
               //  if(device=== 'mobile'){ 
-              //      router?.push({
+              //       router && router?.push({
               //      pathname: '/login/email',
               //   });
                if(device==='desktop'){

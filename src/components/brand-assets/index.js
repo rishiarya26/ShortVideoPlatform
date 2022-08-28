@@ -28,7 +28,7 @@ function Home() {
   return (
     <div className="h-screen  w-screen flex flex-col justify-between">
       <div className=" header_landing w-full md:hidden h-22 bg-red-600 flex items-center justify-center lg:justify-start lg:px-10 py-2">
-        <img className="w-14 cursor-pointer" onClick={()=>router.push('/feed/for-you')}  src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
+        <img className="w-14 cursor-pointer" onClick={()=>router && router.push('/feed/for-you')}  src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div>
       <div className='hidden md:flex'><Header/></div>
       <div className="p-8 md:pt-16 h-full flex-col justify-start">

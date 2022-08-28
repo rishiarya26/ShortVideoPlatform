@@ -52,7 +52,7 @@ const submit = async() => {
     if(resp.status ==='success'){
       showMessage({ message: "Password Changed Successfully"});
       if(device === 'mobile'){
-      router?.push('/feed/for-you')
+       router && router?.push('/feed/for-you')
       }else if (device === 'desktop'){
         close();
       }

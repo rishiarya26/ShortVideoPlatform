@@ -150,7 +150,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
        }
         /* Mixpanel */
         if(device === 'mobile'){
-          router?.push('/feed/for-you');
+           router && router?.push('/feed/for-you');
         }else if (device === 'desktop'){
           close();
         }

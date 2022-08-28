@@ -100,7 +100,7 @@ const Users = ({item, type = 'normal', router}) =>{
            {heading[type]}
                  {items?.length > 0 ? items.map((item, id)=>(
                <span key={item?.id}>
-                  <div onClick={()=>router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-b cursor-pointer border-gray-300 hover:bg-gray-100 py-4 pl-2 pr-4 mr-2">
+                  <div onClick={()=> router && router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-b cursor-pointer border-gray-300 hover:bg-gray-100 py-4 pl-2 pr-4 mr-2">
                   <div className=" w-16 flex h-16 bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>

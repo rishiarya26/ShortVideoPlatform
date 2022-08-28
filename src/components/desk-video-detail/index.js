@@ -48,7 +48,7 @@ comp = 'normal'}) {
         hashtag = trimSpace(hashtag)
         finalValue = trimHash(hashtag)
       }
-      // router?.push(`/hashtag/${finalValue}`)
+      //  router && router?.push(`/hashtag/${finalValue}`)
     }
    
     const toUser =(username)=>{
@@ -56,7 +56,7 @@ comp = 'normal'}) {
       // if(hashtag?.includes('#')){
       //   finalValue = trimHash(hashtag)
       // }
-      // router?.push(`/${username}`)
+      //  router && router?.push(`/${username}`)
     }
 
    
@@ -98,12 +98,12 @@ domain = domain?.origin;
 //      if(item?.indexOf('#')!==-1){
 //        const trimmedHashtag = trimHash(item);
 //        console.log("item",trimmedHashtag);
-//        router?.push(`/hashtag/${trimmedHashtag}`);
+//         router && router?.push(`/hashtag/${trimmedHashtag}`);
 //      }else
 //      if(item?.indexOf('@')!==-1){
 //        const userHandle = (item);
 //        // console.log("item",trimmedHashtag);
-//        router?.push(`/${userHandle}`);
+//         router && router?.push(`/${userHandle}`);
 //      }
 //    }catch(e){
 //        console.log("error in hashtag redirect",e)

@@ -75,13 +75,13 @@ export default function DeskVideoGallery({
   // const toProfileFeed = (userId, videoId, type)=>{
   //   const index = items.findIndex((data)=>data.content_id === videoId);
   //   index !== -1 && localStorage.set('selected-profile-video',items[index]);
-  //   router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
+  //    router && router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
   // }
 
   // const toHashTagFeed =(hashTag, videoId, type)=>{
   //   const index = items.findIndex((data)=>data?.content_id === videoId);
   //   index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
-  //   router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
+  //    router && router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
   // }
   const redirect = (item) =>{
    
@@ -103,7 +103,7 @@ export default function DeskVideoGallery({
     }
     // }else{
     //   if(item?.indexOf('@')){
-    //     router?.push(`/@${item}`)
+    //      router && router?.push(`/@${item}`)
     //   }
     // }
       }

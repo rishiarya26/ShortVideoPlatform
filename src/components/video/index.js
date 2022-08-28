@@ -45,28 +45,30 @@ function Video(props) {
    useEffect(()=>{console.log("$$",props?.adData)},[])
 
    useEffect(()=>{
-      const videoElement = rootRef?.current?.children[0];
+      let videoElement;
       try{
-         if(device === 'ios'){   
-            videoElement.addEventListener('suspend', () => {
-               props?.suspendLoader && props?.suspendLoader(true);
-            });
-         }
+         videoElement = rootRef?.current?.children[0];
+      if(device === 'ios') 
+      {    
+          videoElement?.addEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+      }
       }catch(e){
-         console.error(e);
+         console.error('issue in video elemant',e);
       }
 
-      return ()=>{
-        try{
-            if(device === 'ios'){
-               videoElement.removeEventListener('suspend', () => {
-               props?.suspendLoader && props?.suspendLoader(true);
-            });
-            }
-        }catch(e){
-            console.log(e);
-        }
-       }
+      // return ()=>{
+      //    try{
+      //   if(device === 'ios'){
+      //       videoElement.removeEventListener('suspend', () => {
+      //       props?.suspendLoader && props?.suspendLoader(true);
+      //     });
+      //    }
+      // }catch(e){
+      //    console.error("error- listner in video for ios",e)
+      // }
+      //  }
    },[])
    // useEffect(()=>{
    //    if(props?.comp === 'feed'){

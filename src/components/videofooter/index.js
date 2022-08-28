@@ -62,7 +62,7 @@ function VideoFooter({
       console.log(hashtag)
       finalValue = trimHash(hashtag)
     }
-    router?.push(`/hashtag/${finalValue}`)
+     router && router?.push(`/hashtag/${finalValue}`)
   }
 
   const toUser =(username)=>{
@@ -71,7 +71,7 @@ function VideoFooter({
     // if(hashtag?.includes('#')){
     //   finalValue = trimHash(hashtag)
     // }
-    router?.push(`/${username}`)
+     router && router?.push(`/${username}`)
   }
 
 
@@ -85,7 +85,7 @@ function VideoFooter({
           </div>
         )} */}
 
-        <h3 onClick={()=>router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+        <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
         <div className=" text-xs  mb-3 mt-2">

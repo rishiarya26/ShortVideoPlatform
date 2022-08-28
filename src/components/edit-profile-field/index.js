@@ -66,7 +66,7 @@ const EditProfileField = ({ router }) => {
       response = await updateUserProfile(payload);
       if (response.status === 'success') {
         //    router.back();
-        router?.push(`/edit-profile/${response?.data?.id}`);
+         router && router?.push(`/edit-profile/${response?.data?.id}`);
       }
     } catch (e) {
       showSnackbar({ message: 'Something went wrong' });

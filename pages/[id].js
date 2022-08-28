@@ -63,6 +63,7 @@ export default function Hipi(params) {
   }
 
   useEffect(()=>{
+    console.log("logout page load *")
     try{ 
       setUrl(document?.location?.href);
       //if api fails at server side for special characters - retry call
@@ -94,6 +95,7 @@ export default function Hipi(params) {
         const queryStrings = router?.query;
         updateUtmData(queryStrings);
         updateCampaignId(queryStrings);
+        console.log("logout page load **")
     }catch(e){
       console.log('something went wrong with id')
     }
@@ -135,6 +137,7 @@ export default function Hipi(params) {
     //   return null;
     // }
   if (status === 'fail') {
+    console.error("logout profile page failed *",message,errorCode)
     return <Error message={message} statusCode={errorCode} />;
   }
 

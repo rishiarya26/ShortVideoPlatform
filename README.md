@@ -24,7 +24,7 @@ hipi PWA is based on [next.js](https://nextjs.org/) at its core which is minimal
 - uses css modules and [tailwind](https://tailwindcss.com/) as a styling solution.
 - uses [lhci](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/getting-started.md) for page  perf analysis. (WIP)
 - has [budget.json](https://github.com/GoogleChrome/budget.json) and lighthouse config to run performance checks locally.
-- has ability to push state via routes while using the router.pushState - refer Notes for more
+- has ability to push state via routes while using the router && router.pushState - refer Notes for more
 - [error boundaries](https://github.com/bvaughn/react-error-boundary) for functional components
 - vscode suggested extensions.
 

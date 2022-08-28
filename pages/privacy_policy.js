@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 export default function Hipi() {
   const router = useRouter();
   useEffect(()=>{
-    router.push('https://protect-eu.mimecast.com/s/qxxcCPz2qUmlnPLSrOvgJ?domain=hipihelpcenter.zee5.com');
+    router && router.push('https://protect-eu.mimecast.com/s/qxxcCPz2qUmlnPLSrOvgJ?domain=hipihelpcenter.zee5.com');
   },[])
   return (
     <></>

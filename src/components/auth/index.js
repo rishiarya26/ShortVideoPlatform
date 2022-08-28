@@ -83,7 +83,7 @@ const Auth = ({ router, authType }) => {
       <div>
         <div className="w-full flex h-16  bg-white items-center">
           <div className="p-4 h-full flex items-center justify-center">
-            <BackButton back={() => router?.push('/feed/for-you')} />
+            <BackButton back={() =>  router && router?.push('/feed/for-you')} />
           </div>
           <div className="font-bold flex justify-center align-center w-9/12">{t(heading[authType])}</div>
         </div>

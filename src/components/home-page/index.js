@@ -10,10 +10,10 @@ const id = type && (router?.query?.id || router?.query?.contentId);
 
 if(device){
     if(id?.length >0){
-      router?.push({pathname : `/feed/for-you?videoId=${id}`});
+       router && router?.push({pathname : `/feed/for-you?videoId=${id}`});
       return null;
     }
-    router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})
+     router && router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})
     return null;
 }
 

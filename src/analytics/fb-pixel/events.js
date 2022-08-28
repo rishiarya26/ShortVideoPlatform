@@ -60,7 +60,8 @@ export const ToTrackFbEvents = (type, commonInfo = {}, value) => {
       },
       'videosCompleted5' : ()=>fbq.event('ugc_view_5'),
       'videosCompleted10' : ()=>fbq.event('ugc_view_10'),
-      'videosCompleted15' : ()=>fbq.event('ugc_view_15')
+      'videosCompleted15' : ()=>fbq.event('ugc_view_15'),
+      'stunnerInstallClick' : ()=>fbq.event('app_install_stunner_footer_click',fbEvents)
     }
     type && toTrack?.[type] && toTrack?.[type]();
 }

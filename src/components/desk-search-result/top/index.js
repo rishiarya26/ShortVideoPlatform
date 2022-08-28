@@ -37,7 +37,7 @@ const TopItems = ({item, redirectTab}) =>{
 
     const toHashtag =(value)=>{
       const trimmedHash = trimHash(value)
-      router?.push(`/hashtag/${trimmedHash}`)
+       router && router?.push(`/hashtag/${trimmedHash}`)
     }
 
      setRetry = retry && retry;
@@ -63,7 +63,7 @@ const TopItems = ({item, redirectTab}) =>{
            
                   <div className="card_list flex flex-col flex min-w-full overflow-x-auto no_bar">
                   {data?.items?.users?.map((item, id)=>(
-                  <div onClick={()=>router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-b cursor-pointer border-gray-300 hover:bg-gray-100 py-4 pl-2 pr-4 mr-2">
+                  <div onClick={()=> router && router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-b cursor-pointer border-gray-300 hover:bg-gray-100 py-4 pl-2 pr-4 mr-2">
                       <div className=" w-16 flex h-16 bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
@@ -140,7 +140,7 @@ const TopItems = ({item, redirectTab}) =>{
                 </div>
                 <div className="flex min-w-full overflow-x-auto min-h-38 no_bar">
                    {data?.items?.videos?.map((item, id)=>(
-                    <div onClick={()=>router?.push(`/single-video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                    <div onClick={()=> router && router?.push(`/single-video/${item?.id}`)} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

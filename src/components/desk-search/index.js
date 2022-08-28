@@ -99,7 +99,7 @@ const SearchItems = ({router,type})=>{
                 term = trimHash(term);
                 term = `%23${term}`
             }
-            router?.push(`/search?term=${term}`)
+             router && router?.push(`/search?term=${term}`)
             // setSearchTerm(`#${term}`);
             // inputRef?.blur();
         }else{
@@ -107,7 +107,7 @@ const SearchItems = ({router,type})=>{
                 searchTerm = trimHash(searchTerm);
                 searchTerm = `%23${searchTerm}`
             }
-            searchTerm && router?.push(`/search?term=${searchTerm}`);
+            searchTerm &&  router && router?.push(`/search?term=${searchTerm}`);
         }
         setSuggestionListIndex(0);
       }catch(e){
@@ -128,7 +128,7 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
-        router?.push(`/search?term=${value}`);
+         router && router?.push(`/search?term=${value}`);
     }
    
     const onKeyboardEnter =(e, suggestionsSelectedIndex) =>{
@@ -203,7 +203,7 @@ const SearchItems = ({router,type})=>{
             {suggestion?.first && <div className="text-sm font-semibold p-3 text-gray-500">Accounts</div>}
             <div 
             ref={(el)=>(myRefs.current[id] = el)} 
-            onClick={()=>router.push(`/@${suggestion?.users?.userHandle}`)}
+            onClick={()=>router && router.push(`/@${suggestion?.users?.userHandle}`)}
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex text-sm  w-full p-3 bg-white cursor-pointer`}>
                 <div className='w-8 h-8 overflow-hidden rounded-full'>
                     <Img data={suggestion?.users?.userIcon} fallback={fallbackUsers?.src}/>
@@ -233,7 +233,7 @@ const SearchItems = ({router,type})=>{
         ))}
         {/* {suggestions?.hashtags?.map((suggestion,id)=>(
             <div ref={(el)=>(myRefs.current[id] = el)}
-            key={id} onClick={()=>router.push(`/hashtag/${suggestion?.hashtag}`)} 
+            key={id} onClick={()=>router && router.push(`/hashtag/${suggestion?.hashtag}`)} 
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">
@@ -246,7 +246,7 @@ const SearchItems = ({router,type})=>{
         ))}
         {suggestions?.userNames?.map((suggestion,id)=>(
             <div ref={(el)=>(myRefs.current[id] = el)}
-            key={id} onClick={()=>router?.push(`/@${suggestion?.userHandle}`)} 
+            key={id} onClick={()=> router && router?.push(`/@${suggestion?.userHandle}`)} 
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex flex-col w-full p-3 bg-white cursor-pointer`}>
                 <div className="flex justify-between w-full">
                     <div  className="flex items-center ">

@@ -312,21 +312,30 @@ function Hipi({
     // },[loadingGS])
 
     useEffect(() => {
+      let handleRouteChange
       // This pageview only triggers the first time (it's important for Pixel to have real information)
-      if(window?.fbq){
+      try{
+        if(window?.fbq){
         fbq.pageview()
       }
       
   
-      const handleRouteChange = () => {
+      handleRouteChange = () => {
         if(window?.fbq){
           fbq.pageview()
         }
       }
   
-      router.events.on('routeChangeComplete', handleRouteChange)
+      router?.events.on('routeChangeComplete', handleRouteChange)
+    }catch(e){
+      console.error("fbq event",e)
+    }
       return () => {
-        router.events.off('routeChangeComplete', handleRouteChange)
+       try{ 
+         router?.events.off('routeChangeComplete', handleRouteChange)
+      }catch(e){
+        console.error(e)
+      }
       }
     }, [router.events])
 

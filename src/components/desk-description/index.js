@@ -10,7 +10,7 @@ const Description = ({description}) =>{
             window.location.href = `/hashtag/${trimmedHashtag}`;
           }else if(item?.indexOf('@')!==-1){
             const userHandle = (item);
-            router?.push(`/${userHandle}`);
+             router && router?.push(`/${userHandle}`);
           }else if(item?.indexOf('https')!==-1){
             window?.open(item)
           }

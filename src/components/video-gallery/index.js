@@ -67,13 +67,13 @@ export default function VideoGallery({
   const toProfileFeed = (userId, videoId, type)=>{
     const index = items.findIndex((data)=>data.content_id === videoId);
     index !== -1 && localStorage.set('selected-profile-video',items[index]);
-    router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
+     router && router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
   }
 
   const toHashTagFeed =(hashTag, videoId, type)=>{
     const index = items.findIndex((data)=>data?.content_id === videoId);
     index !== -1 && localStorage.set('selected-hashtag-video',items[index]);
-    router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
+     router && router?.push(`/hashtag-feed/${hashTag}?videoId=${videoId}&type=${type}`)
   }
 
   return (
@@ -97,7 +97,7 @@ export default function VideoGallery({
                  }catch(e){
                    console.error('search result click',e)
                  } 
-                router?.push(`/search-feed/${item?.id}?type=normal`)}  
+                 router && router?.push(`/search-feed/${item?.id}?type=normal`)}  
                : page === 'profile' 
                   ? ()=>toProfileFeed(userId,item?.content_id,type)
                   : ()=>toHashTagFeed(hashTag,item?.content_id,type)}>
