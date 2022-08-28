@@ -8,7 +8,7 @@ import { getItem } from '../../utils/cookie';
 export let videoAnalytics = null;
 let kNA = "N/A";
 let convivaConfigs = {};
-let customer_key = process?.env?.APP_ENV === 'production' ? CONVIVA_PROD_CUSTOMER_KEY : TEST_CUSTOMER_KEY
+let customer_key = (process?.env?.APP_ENV?.toLocaleLowerCase() === 'production' || process?.env?.NODE_ENV?.toLocaleLowerCase() === 'production') ? CONVIVA_PROD_CUSTOMER_KEY : TEST_CUSTOMER_KEY
 
 console.log(process?.env?.APP_ENV,"process?.env?.APP_ENV");
 console.log(process?.env?.NODE_ENV,"process?.env?.NODE_ENV");
@@ -23,7 +23,7 @@ export const initConvivaa = async() => {
     }else{
       /** prod pulse URL */
       convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
-      convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
+      //convivaConfigs[Constants.LOG_LEVEL] = Constants.LogLevel.DEBUG;
     }
     Analytics.init(customer_key, null, convivaConfigs);
     Analytics.setDeviceMetadata(getDeviceMetadata());
