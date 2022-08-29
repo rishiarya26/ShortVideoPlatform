@@ -40,14 +40,13 @@ export const toTrackFirebase = (type, commonInfo = {}, value) => {
       'screenView':()=>{
         track('Screen_View', events);
       },
-      'creatorFormSubmitted' : ()=>{
-        commonWithIds();
-        track('Creator Form Submitted');
-      },
+      'creatorFormSubmitted' : ()=> track('Creator Form Submitted',events),
       'videosCompleted5' : ()=>track('ugc_view_5'),
       'videosCompleted10' : ()=>track('ugc_view_10'),
       'videosCompleted15' : ()=>track('ugc_view_15'),
-      'stunnerInstallClick' : ()=>track('app_install_stunner_footer_click',events)
+      'stunnerInstallClick' : ()=>track('app_install_stunner_footer_click',events),
+      'bussinessFormSubmitted' :()=>track('Business_page_form_submission',events)
+    
     }
     type && toTrack?.[type] && toTrack?.[type]();
 }

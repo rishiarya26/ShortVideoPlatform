@@ -370,6 +370,10 @@ export const toTrackMixpanel = (type, value, item) => {
         'stunnerInstallClick' : ()=>{
           addPageTabName();
           track('app_install_stunner_footer_click',globalCommonEvents)
+        },
+        'bussinessFormSubmitted' :()=>{
+          commonWithIds();
+          track('Business_page_form_submission',globalCommonEvents);
         }
 
         

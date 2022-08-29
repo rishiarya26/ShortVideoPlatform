@@ -26,26 +26,38 @@ const HamburgerMenu = ()=>{
     </div>
       <div className="flex flex-col p-4">
         <div className="flex flex-col">
+        <div onClick={()=> router && router?.push('/about')} className="flex items-center py-3">
+            <p className="text-base px-3 text-gray-900 ">About</p>
+          </div>
+          <div onClick={()=> router && router?.push('/newsroom')} className="flex items-center py-3">
+            {/* <NewsroomIcon height="20px" width="20px"/> */}
+            <p className="text-base px-3 text-gray-900 ">Newsroom</p>
+          </div>
+          <div onClick={()=> router && router?.push('/ads')} className="flex items-center py-3">
+            <p className="text-base px-3 text-gray-900 ">Ads</p>
+          </div>
           <div onClick={()=> router && router?.push('/community-guidelines.html')} className="flex items-center py-3">
-            <List/>
-            <p className="text-base px-3">Community Guidelines</p>
+            {/* <List/> */}
+            <p className="text-base px-3 text-gray-900 ">Community Guidelines</p>
           </div>
           <div onClick={()=> router && router?.push('/privacy-policy.html')} className="flex items-center py-3">
-            <PrivacyIco/>
-            <p className="text-base px-3">Privacy Policy</p>
+            {/* <PrivacyIco/> */}
+            <p className="text-base px-3 text-gray-900 ">Privacy Policy</p>
           </div>
         
           <div onClick={()=> router && router?.push('/terms-conditions.html')} className="flex items-center py-3">
-            <Terms/>
-            <p className="text-base px-3">Terms of Use</p>
+            {/* <Terms/> */}
+            <p className="text-base px-3 text-gray-900 ">Terms of Use</p>
           </div>
-          <div onClick={()=> router && router?.push('/newsroom')} className="flex items-center py-3">
-            <NewsroomIcon height="20px" width="20px"/>
-            <p className="text-base px-3">Newsroom</p>
+          <div onClick={()=> router && router?.push('/grievance')} className="flex items-center py-3">
+            <p className="text-base px-3 text-gray-900 ">Grievance</p>
+          </div>
+          <div onClick={()=> router && router?.push('/contact-us')} className="flex items-center py-3">
+            <p className="text-base px-3 text-gray-900 ">Contact us</p>
           </div>
           {/* <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
             <Logout/>
-            <p className="text-base px-3">Logout</p>
+            <p className="text-base px-3 text-gray-900 ">Logout</p>
           </div> */}
         </div>
     </div>

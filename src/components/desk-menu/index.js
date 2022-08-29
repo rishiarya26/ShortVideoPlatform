@@ -88,6 +88,7 @@ useEffect(()=>{
         <div className="flex text-xs text-gray-400 pt-4 pr-8 flex-wrap static_links sm-menu"> 
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/about')}>About</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/newsroom')}>Newsroom</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/ads')}>Ads</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/terms-conditions.html')}>Terms of Use</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/community-guidelines.html')} >Community Guidelines</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/privacy-policy.html')}>Privacy Policy</div>
