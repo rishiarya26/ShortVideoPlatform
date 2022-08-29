@@ -14,7 +14,6 @@ export default function Post({ story }) {
 
   const getNewPost = async () => {
     let postToShow = [];
-    console.log("debug 4", page.current);
     // setLoading(true);
     try {
       const resp = await getStoryblokData({
@@ -54,13 +53,7 @@ export default function Post({ story }) {
 
   function infiniteLoading(entries) {
     const lastChildEntry = entries[0];
-    console.log(
-      "debug 2",
-      lastChildEntry.target,
-      lastChildEntry.isIntersecting
-    );
     if (lastChildEntry.isIntersecting) {
-      console.log("debug 3", entries, page.current);
       appendPost();
       observer.current.unobserve(lastChildEntry.target);
     }
@@ -77,7 +70,6 @@ export default function Post({ story }) {
       ?.querySelector(`.${postArray[postArray.length - 1].slug}`)
       ?.querySelector(".swiper-container");
     if (lastChildTarget && observer.current) {
-      console.log("debug curr", postArray[postArray.length - 1].slug);
       observer.current.observe(lastChildTarget);
     }
     return () => {
@@ -91,14 +83,14 @@ export default function Post({ story }) {
     <MainPage blogType="theedit">
       <div className={styles.parentContainer}>
         {postArray && postArray.length > 0 ? (
-          postArray.map((item, idx) => {
+          postArray.map((item) => {
             return (
               <div key={item.uuid} className={item.slug}>
                 <div>
                   <StoryblokComponent
                     blok={item.content}
                     date={item?.created_at}
-                    slug={item?.slug}
+                    blogType="theedit"
                   />
                 </div>
               </div>

@@ -2,7 +2,7 @@ import styles from "./carousel.module.css";
 import { useEffect, useRef } from "react";
 import VisualContent from "../newsroom/visualContent";
 
-export default function Carousel({ videoURL = [], slug: type }) {
+export default function Carousel({ videoURL = [] }) {
   const observer = useRef(null);
 
   useEffect(() => {

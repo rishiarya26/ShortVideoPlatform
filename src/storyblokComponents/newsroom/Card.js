@@ -19,7 +19,6 @@ const monthNames = [
 ];
 export default function Card({ post = {} }) {
   const { full_slug = null, content: { body = {} } = {} } = post;
-  console.log("debug", post);
   const [
     {
       heading = null,

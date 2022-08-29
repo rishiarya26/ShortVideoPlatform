@@ -53,7 +53,6 @@ export default function Hipi({ id, type = "posterImage" }) {
       uri: respData?.uri,
     });
   }, []);
-  //   console.log("debug resp", item);
 
   const canShop = item?.canShop?.status || "fail";
   const shopCards = item?.canShop?.data;
