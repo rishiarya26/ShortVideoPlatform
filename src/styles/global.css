@@ -914,6 +914,82 @@ title:first-letter {
     }
   }
 
+
+/* Business */
+.top-right{
+  top: 10%;
+  right: 0%;
+}
+.bottom-right{
+  bottom:-10%;
+  right: 10%;
+}
+.top-left{
+  top: 14%;
+    left: 3%;
+}
+.bottom-left{
+  bottom: -14%;
+  left: 8%;
+}
+.bottom-m {
+  bottom: -20%;
+  left: 35%;
+}
+.top-m{
+  top: -12%;
+  right: 38%;
+}
+@media only screen and (max-width: 767px) {
+  .top-right{
+    top: 3%;
+    right: 0%;
+  }
+  .bottom-right{
+    bottom: -5%;
+    right: -5%;
+  }
+  .top-left{
+    top: -3%;
+    left: 0%;
+  }
+  .bottom-left{
+    bottom: 1%;
+    left: -10%;
+  }
+}
+.bg_ocean_pastel{
+ background-color: #d7e8eb;
+}
+.moveup {
+  animation: moveup 3s;
+  animation-direction: alternate;
+}
+.movedown {
+  animation: movedown 3s;
+  animation-direction: alternate;
+}
+
+@keyframes moveup {
+  0% {
+    transform: translate(20px, 50px);
+  }
+  100% {
+    
+    transform: translate(0, 0); 
+  }
+}
+@keyframes movedown {
+  0% {
+    transform: translate(-20px, -50px);
+  }
+  100% {
+    
+    transform: translate(0, 0); 
+  }
+}
+
+/* Stunner */
   .h-250c {
     height: 447px!important;
   }
