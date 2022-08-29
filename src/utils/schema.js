@@ -52,19 +52,19 @@
     return payload;
     }
  
- const videoSchema = ({name,userThumnail,desc, videoId,view})=>{
-     const payload = {
+ const videoSchema = ({name='video',userThumnail='video',desc='video', videoId='video',view, createdOn='video'})=>{
+      const payload = {
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": `${name} on Hipi | ${name} Short Videos on Hipi`,
         "description": desc,
         "thumbnailUrl": userThumnail,
-        // "uploadDate": "",  
-        "contentUrl": `https://www.hipi.co.in/video/${videoId}`,
+        "uploadDate": createdOn,  
+        "contentUrl": `https://www.hipi.co.in/single-video/${videoId}`,
         "potentialAction": {
           "@type": "SeekToAction",
-          "target": `https://www.hipi.co.in/video/${videoId}={seek_to_second_number}`,
-          "startOffset-input": "required name=seek_to_second_number"
+          "target": `https://www.hipi.co.in/single-video/${videoId}`,
+          "startOffset-input": "required name"
         }
       }
       return payload;

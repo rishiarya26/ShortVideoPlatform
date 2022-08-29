@@ -254,7 +254,7 @@ useEffect(()=>{
          <p className='text-gray-500 font-light text-lg pt-4'>At the end of each month, the very best content creator amongst the best performing videos is chosen by Nikita Anand for the title of the Hipi Stunner in a memorable and a very special coronation ceremony.</p>
          <p className='text-gray-500 font-light text-lg pt-4'>Hipi Stunner gets a cash prize of Rs 1,00,000, and a blue ticked verified account on Hipi App.</p>
          <p className='text-gray-500 font-light text-lg pt-4'>At the end of six months, the six Hipi Stunners get a taste of life in the limelight that many only dream of as they walk the red carpet of the Zee Cine Awards, telecasted worldwide on TV.</p>
-         <p className='text-gray-500 text-right w-full font-light text-xs pt-8 '>* Winners Terms and conditions apply</p>
+         {/* <p className='text-gray-500 text-right w-full font-light text-xs pt-8 '>* Winners Terms and conditions apply</p> */}
          
         </div>
     </div>
