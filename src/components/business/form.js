@@ -137,7 +137,7 @@ const Form = ()=>{
           type="submit"
           disabled={loader ? true : false}
          >
-           Submit{loader ? ` ${<LoadMoresvg/>}` : '' }
+           Submit{loader ? <>{` `}<LoadMoresvg/></> : '' }
          </button>
         </div>
         </form>
