@@ -32,7 +32,6 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import UserExperience from  "../commons/user-experience";
-import { playerStates, reportPlaybackEnded, reportPlaybackRequested, setPlayer, videoAnalytics } from '../../conviva';
 import { incrementCountVideoView } from '../../utils/events';
 
 SwiperCore?.use([Mousewheel]);
