@@ -262,7 +262,7 @@ function Hipi({
       localStorage.set('network-strength',effectiveType);
 
       if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-        console.log('tokens are there in _app.js')
+        console.log('one tap not initiated - tokens already there in _app.js ')
         setTimeout(()=>{
           init();
           initFirebase();
@@ -270,6 +270,7 @@ function Hipi({
       }
     }
     catch(e){
+      console.error("one tap issue ")
     }
 
     /** unmount */

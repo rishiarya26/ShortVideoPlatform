@@ -22,7 +22,7 @@ return(
                   
                           </div>
          <div className="flex items-center">
-                          {actualPrice > 0  && <p className='text-gray-400 pl-2 pr-2 text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+                          {actualPrice > 0 && <p className='text-gray-400 pl-2 pr-2 text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
                           {salePrice > 0 && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
             <div onClick={()=>
                window?.open(shopLink)} className="flex pl-4 py-2 ">
