@@ -418,20 +418,6 @@ function Feed({ router }) {
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
-
-              //   if(videoAnalytics !== null){
-              //     console.log('end getting called');
-              //     reportPlaybackEnded();
-              //     //playerStates('buffer');
-              //  }
-              //  //console.log(props.id , props.activeVideoId,"props.activeVideoId", props.index);
-              // //  if(props.id === props.activeVideoId){
-              //   console.log(slides[activeIndex], "slide", currentActiveFeedItem);
-              //     reportPlaybackRequested({
-              //       id: currentActiveFeedItem.id, url: currentActiveFeedItem.video_url, ref: slides[activeIndex]?.firstChild?.firstChild
-              //     });
-                 
-              //  }
               }}
             >
               {
