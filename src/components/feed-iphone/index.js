@@ -372,6 +372,20 @@ console.log('errorrr',e)
     setSaveLook(value);
   };
 
+  const convivaItemInfo = (item = {}) => {
+    let obj = {};
+  
+    let {content_id, music_title, video_url, language,
+          content_description, userName, videoOwnersId, creatorTag,
+            createdOn, videoDuration}  = item;
+  
+    obj = {content_id, music_title, video_url, language,
+      content_description, userName, videoOwnersId, creatorTag,
+        createdOn, videoDuration}
+  
+          return obj;
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -494,7 +508,7 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
-                      itemObject={item}
+                      convivaItemInfo={()=>convivaItemInfo(item)}
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       // showBanner={showBanner}

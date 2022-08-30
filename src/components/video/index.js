@@ -132,12 +132,23 @@ function Video(props) {
    threshold: [0.30, 0.75]
    });
 
+    // useEffect(()=>{
+   //    if(props?.comp === 'feed'){
+   //    if(props.initialPlayStarted && play === true){
+   //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
+   //    }else{
+   //    prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
+   //    }
+   //    }
+   // },[play])
+
+
    useEffect(()=>{
       let currentRef = rootRef?.current?.children[0];
 
       if(props.id === props.activeVideoId){
          if(videoAnalytics !== null) reportPlaybackEnded();
-         reportPlaybackRequested({ref: currentRef, itemObject:props.itemObject });
+         reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
       }
    },[props.activeVideoId])
 
@@ -167,7 +178,7 @@ function Video(props) {
    const convivaReplaySession = () =>{
       let currentRef = rootRef?.current?.children[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
-      reportPlaybackRequested({ ref: currentRef, itemObject:props.itemObject  });
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
    }
 
    const handleSeeked = () => {

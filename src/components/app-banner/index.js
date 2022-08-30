@@ -5,11 +5,9 @@ import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
-import * as fbq from '../../analytics/fb-pixel'
-import { trackEvent } from '../../analytics/firebase';
-import { playerEvents } from '../../analytics/conviva/events.js';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { playerEvents } from '../../analytics/conviva/events.js';
 
 function AppBanner({notNowClick, videoId}) {
 
@@ -17,17 +15,16 @@ function AppBanner({notNowClick, videoId}) {
     useEffect(()=>{
       console.log("callinggggg")
         toTrackMixpanel('launch');
-        fbq.event('App Download Popup')
-        trackEvent('App_Download_Popup');
-        playerEvents('waitStarted');
         // fbq.event('App Download Popup')
         //trackEvent('App_Download_Popup');
-        ToTrackFbEvents('appDownloadPopup');
-        toTrackFirebase('appDownloadPopup');
-        
-        () =>{
+        playerEvents('waitStarted');
+        ToTrackFbEvents('appDownloadPopup')
+        toTrackFirebase('appDownloadPopup')
+
+        return () =>{
           playerEvents('waitEnded');
         }
+        
       },[])
 
       const toTrackMixpanel = (type) =>{
@@ -115,7 +112,7 @@ function AppBanner({notNowClick, videoId}) {
             </div>
             <div onClick={()=>
                 {toTrackMixpanel('notNow')
-                 playerEvents('waitEnded')
+                playerEvents('waitEnded')
                  notNowClick()}} className="my-2 text-xs md:text-base text-gray-800" >
                 <p>Not now</p>
             </div>
@@ -126,4 +123,3 @@ function AppBanner({notNowClick, videoId}) {
   );
   }
 export default AppBanner;
-

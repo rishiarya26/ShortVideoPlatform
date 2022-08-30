@@ -6,7 +6,7 @@ import useWindowSize from "../../hooks/use-window-size";
 import CircularProgress from '../commons/circular-loader'
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame, comp, videoId, itemObject})=>{
+const Video = ({url, firstFrame, comp, videoId, convivaItemInfo})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
@@ -19,7 +19,7 @@ const Video = ({url, firstFrame, comp, videoId, itemObject})=>{
     useEffect(()=>{
       let currentRef = rootRef?.current?.children?.[0];
       if(videoAnalytics !== null) reportPlaybackEnded()
-      reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
     },[url])
 
     

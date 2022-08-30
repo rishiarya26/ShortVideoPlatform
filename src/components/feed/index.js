@@ -328,6 +328,20 @@ function Feed({ router }) {
     setSaveLook(value);
   };
 
+  const convivaItemInfo = (item = {}) => {
+    let obj = {};
+  
+    let {content_id, music_title, video_url, language,
+          content_description, userName, videoOwnersId, creatorTag,
+            createdOn, videoDuration}  = item;
+  
+    obj = {content_id, music_title, video_url, language,
+      content_description, userName, videoOwnersId, creatorTag,
+        createdOn, videoDuration}
+  
+          return obj;
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -472,7 +486,7 @@ function Feed({ router }) {
                       adData={shop?.adData}
                       showBanner={showBanner}
                       index={id}
-                      itemObject={item}
+                      convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}

@@ -18,7 +18,7 @@ import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAn
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
-userVerified, itemObject}) {
+userVerified, convivaItemInfo}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -54,7 +54,7 @@ useEffect(()=>{
    if(!!currentRef?.getAttribute('src') && active === true){
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
-      reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
    }
 },[active]);
 
@@ -78,7 +78,7 @@ useEffect(() => {
 const convivaReplaySession = (e) =>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(videoAnalytics !== null) reportPlaybackEnded();
-   reportPlaybackRequested({ ref: currentRef, itemObject:itemObject });
+   reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
 }
 
 const handleSeeked = () => {
