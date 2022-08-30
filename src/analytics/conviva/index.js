@@ -37,7 +37,6 @@ export const getDeviceMetadata = () =>  {
 };
 
 export const setContentInfo = (content ={}) =>{
-  debugger;
   console.log(localStorage.get('user-id'), 'localstroage');
   let itemObject = content?.convivaItemInfo && content?.convivaItemInfo();
 
