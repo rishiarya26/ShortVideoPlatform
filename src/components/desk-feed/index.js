@@ -271,7 +271,7 @@ const info ={
          socialId={videoDetailData?.getSocialId}
          commentCount={videoDetailData?.commentCount}
          userVerified = {videoDetailData?.verified}
-         convivaItemInfo={videoDetailData}
+         convivaItemInfo={()=>convivaItemInfo(videoDetailData)}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>
