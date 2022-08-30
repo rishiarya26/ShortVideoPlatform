@@ -196,7 +196,7 @@ const convivaItemInfo = (item = {}) => {
     content_description, userName, videoOwnersId, creatorTag,
       createdOn, videoDuration}
 
-        return obj;
+      return obj;
 }
 
 const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
