@@ -14,7 +14,7 @@ console.log(process?.env?.APP_ENV,"process?.env?.APP_ENV");
 console.log(process?.env?.NODE_ENV,"process?.env?.NODE_ENV");
 
 
-export const initConvivaa = async() => {
+export const initConviva = async() => {
   //debugger
   try{
     if(process.env.APP_ENV === 'development'){
@@ -128,7 +128,7 @@ export const reportPlaybackRequested = (content = {}) => {
     videoAnalytics?.setPlayer(content.ref, options);
     videoAnalytics?.reportPlaybackRequested(contentMetadata);
   }catch(e){
-    initConvivaa()
+    initConviva()
     videoAnalytics?.setPlayer(content.ref, options);
     videoAnalytics?.reportPlaybackRequested(contentMetadata);
   }

@@ -16,7 +16,7 @@ import { localStorage, sessionStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import { init } from '../src/get-social';
 // import { initConviva } from '../src/conviva';
-import { initConvivaa } from '../src/analytics/conviva';
+import { initConviva } from '../src/analytics/conviva';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
@@ -245,7 +245,7 @@ function Hipi({
       // },0);
 
       updatingGoogleCookies();
-      initConvivaa()
+      initConviva()
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();
@@ -262,7 +262,7 @@ function Hipi({
       localStorage.set('network-strength',effectiveType);
 
       if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-        console.log('one tap not initiated - tokens already there in _app.js ')
+        console.log('tokens are there in _app.js')
         setTimeout(()=>{
           init();
           initFirebase();
@@ -284,7 +284,7 @@ function Hipi({
         // tokens = tokens && JSON.parse(tokens);
       
         if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
-          console.log('tokens there in _app.js')
+          console.log('one tap not initiated - tokens already there in _app.js ')
           setTimeout(()=>{
             // init();
             initFirebase();
@@ -294,7 +294,7 @@ function Hipi({
             oneTapGoogle();
         }
       }}catch(e){
-
+        console.error("one tap issue ")
       }
     },[loading])
 
