@@ -10,7 +10,7 @@ import PrivacyIco from "../commons/svgicons/privacy"
 import Terms from "../commons/svgicons/terms"
 import NewsroomIcon from "../commons/svgicons/newsroom"
 import Contact from "../commons/svgicons/contact"
-import GrievanceIcon from "../commons/svgicons/Grievance"
+import GrievanceIcon from "../commons/svgicons/grievance"
 import AdsIcon from "../commons/svgicons/ads"
 import AboutIcon from "../commons/svgicons/about"
 
