@@ -8,9 +8,9 @@ import Close from "../commons/svgicons/close-white"
 import List from "../commons/svgicons/list"
 import PrivacyIco from "../commons/svgicons/privacy"
 import Terms from "../commons/svgicons/terms"
-import NewsroomIcon from "../commons/svgicons/newsroom";
+import NewsroomIcon from "../commons/svgicons/newsroom"
 import Contact from "../commons/svgicons/contact"
-import Grievance from "../commons/svgicons/Grievance"
+import GrievanceIcon from "../commons/svgicons/Grievance"
 import AdsIcon from "../commons/svgicons/ads"
 import AboutIcon from "../commons/svgicons/about"
 
@@ -56,7 +56,7 @@ const HamburgerMenu = ()=>{
             <p className="text-base px-3 text-gray-900 ">Terms of Use</p>
           </div>
           <div onClick={()=> router && router?.push('/grievance')} className="flex items-center py-3">
-            <Grievance/>
+            <GrievanceIcon/>
             <p className="text-base px-3 text-gray-900 ">Grievance</p>
           </div>
           <div onClick={()=> router && router?.push('/contact-us')} className="flex items-center py-3">
