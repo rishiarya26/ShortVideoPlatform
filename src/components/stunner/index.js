@@ -77,7 +77,7 @@ useEffect(()=>{
   return (
     <>
        {/* <div className=" headerbar w-full h-18 flex items-center fixed top-0 lg:px-10 px-4 py-2 justify-between">
-        <img className="w-16" src={withBasePath('images/stunner/stunner-logo.png')} alt="" /> 
+        <img loading="lazy"  className="w-16" src={withBasePath('images/stunner/stunner-logo.png')} alt="" /> 
         <div className='flex text-white font-medium'>
           <a className='px-4'>Challangers</a>
           <a className='px-4'>Winners</a>
@@ -144,7 +144,7 @@ useEffect(()=>{
               playsInline
               muted={muted}
               // autoPlay
-              preload="auto"
+              preload="none"
               webkit-playsinline = "true"
               // onTimeUpdate={handleUpdateSeekbar}
               loop
@@ -217,10 +217,10 @@ useEffect(()=>{
 
 <div className='w-full flex flex-col md:flex-row py-4 md:pb-8 items-center justify-center bg_1 relative'>
             <div className='absolute left-0 top-0 h-full flex items-center'>
-            <img alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
+            <img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
             </div>
             <div className='hidden md:flex absolute right-0 top-0 h-full items-center'>
-            <img alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
+            <img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
             </div>
         <div className='w-full flex-col flex py-8 md:p-8 px-8  max_800'>        
             <div className='w-full justify-center flex'><h2 className='text-3xl font-bold purple_font'>Who is a Hipi Stunner?</h2></div>
@@ -239,7 +239,7 @@ useEffect(()=>{
 
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:pb-8 bg_pastel_blue '>
         {/* <div className='md:w-1/2 w-full  md:pl-32 md:p-8 px-8 '>
-            <img alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
+            <img loading="lazy"  alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div> */}
       
         <div className='max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center'>
@@ -262,20 +262,20 @@ useEffect(()=>{
 
     <div className='w-full flex flex-col md:flex-row py-4 md:pb-8 items-center justify-center bg_1 relative'>
         <div className='absolute hidden md:flex  left-0 top-0 h-full flex items-center w-1/5'>
-            <img alt="" className="object-contain"  src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
+            <img loading="lazy"  alt="" className="object-contain"  src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
             </div>
             <div className='absolute hidden md:flex  right-0 top-0 h-full flex items-center w-1/5'>
-            <img alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
+            <img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
             </div>
-        <div className='w-full flex flex-col py-8 md:p-8 px-8  max_800'>  
+        <div className='w-full flex flex-col py-8 md:p-8 px-8 w-feed'>  
           
         <h3 className='text-3xl text-center font-bold purple_font pb-4'>Challenges</h3>
         
-          <div className='flex  w-full flex-col md:flex-row justify-center'>
+          <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/2 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/3 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
-              <img className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
+              <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
               <h4 className="font-medium text-gray-600  bg-white border border-gray-300 -mt-12 px-4 w-40 text-gray-600 text-center">{item?.tag}</h4>
@@ -297,7 +297,7 @@ useEffect(()=>{
 
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_pastel_blue relative'>
         {/* <div className='md:w-1/2 w-full  md:pl-32 md:p-8 px-8 '>
-            <img alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
+            <img loading="lazy"  alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div> */}
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
             <h3 className='text-3xl text-center font-bold purple_font pb-4'>How To Participate</h3>
@@ -318,7 +318,7 @@ useEffect(()=>{
             <p className='text-gray-500 font-light text-lg pt-4'>Nikita won the title of Miss India Universe in 2003. Since then, she has been seen on numerous magazine covers, fashion weeks, designer shoots, ad campaigns, and Bollywood films. She rubs shoulders with the top industry experts in the fashion and lifestyle circuit and has been a muse for top fashion designers like Ritu Kumar, JJ Vallaya, and Mona Pali.</p>
         </div>
         <div className='w-full md:w-1/2 flex justify-center md:justify-end items-center py-4 md:py-20 bg-host br_40'>
-            <img alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/stunner/hipistunner_thehost.jpg')} /> 
+            <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/stunner/hipistunner_thehost.jpg')} /> 
         </div>
     </div>
 
@@ -340,10 +340,10 @@ useEffect(()=>{
 
 <div className='w-full flex py-8 px-4 md:px-2 md:py-16 justify-center relative bg_1'>
 <div className='absolute hidden md:flex  left-0 top-0 h-full flex items-center'>
-        <img alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
+        <img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_left.png')} />
         </div>
         <div className='absolute hidden md:flex  right-0 top-0 h-full flex items-center'>
-        <img alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
+        <img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/stunner/hipistunner_bg_right.png')} />
         </div>
         <Form/>
     </div>

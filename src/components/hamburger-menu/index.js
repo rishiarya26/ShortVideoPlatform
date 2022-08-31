@@ -9,6 +9,10 @@ import List from "../commons/svgicons/list"
 import PrivacyIco from "../commons/svgicons/privacy"
 import Terms from "../commons/svgicons/terms"
 import NewsroomIcon from "../commons/svgicons/newsroom";
+import Contact from "../commons/svgicons/contact"
+import Grievance from "../commons/svgicons/Grievance"
+import AdsIcon from "../commons/svgicons/ads"
+import AboutIcon from "../commons/svgicons/about"
 
 const HamburgerMenu = ()=>{
    const [open, setOpen]= useState(false);
@@ -27,32 +31,36 @@ const HamburgerMenu = ()=>{
       <div className="flex flex-col p-4">
         <div className="flex flex-col">
         <div onClick={()=> router && router?.push('/about')} className="flex items-center py-3">
+          <AboutIcon/>
             <p className="text-base px-3 text-gray-900 ">About</p>
           </div>
           <div onClick={()=> router && router?.push('/newsroom')} className="flex items-center py-3">
-            {/* <NewsroomIcon height="20px" width="20px"/> */}
+            <NewsroomIcon height="24px" width="24px"/>
             <p className="text-base px-3 text-gray-900 ">Newsroom</p>
           </div>
           <div onClick={()=> router && router?.push('/ads')} className="flex items-center py-3">
+            <AdsIcon/>
             <p className="text-base px-3 text-gray-900 ">Ads</p>
           </div>
           <div onClick={()=> router && router?.push('/community-guidelines.html')} className="flex items-center py-3">
-            {/* <List/> */}
+            <List/>
             <p className="text-base px-3 text-gray-900 ">Community Guidelines</p>
           </div>
           <div onClick={()=> router && router?.push('/privacy-policy.html')} className="flex items-center py-3">
-            {/* <PrivacyIco/> */}
+            <PrivacyIco/>
             <p className="text-base px-3 text-gray-900 ">Privacy Policy</p>
           </div>
         
           <div onClick={()=> router && router?.push('/terms-conditions.html')} className="flex items-center py-3">
-            {/* <Terms/> */}
+            <Terms/>
             <p className="text-base px-3 text-gray-900 ">Terms of Use</p>
           </div>
           <div onClick={()=> router && router?.push('/grievance')} className="flex items-center py-3">
+            <Grievance/>
             <p className="text-base px-3 text-gray-900 ">Grievance</p>
           </div>
           <div onClick={()=> router && router?.push('/contact-us')} className="flex items-center py-3">
+          <Contact/>
             <p className="text-base px-3 text-gray-900 ">Contact us</p>
           </div>
           {/* <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
