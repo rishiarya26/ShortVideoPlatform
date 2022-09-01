@@ -28,6 +28,7 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
+import OpenAppStrip from '../commons/user-experience';
 
 SwiperCore.use([Mousewheel]);
 
@@ -258,19 +259,11 @@ function HashTagFeed({ router }) {
      />
         <div className="overflow-hidden relative " style={{ height: `${videoHeight}px` }}>
 
-        <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={()=>{
-                toTrackMixpanel('cta',{pageName:pageName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-                toTrackFirebase('appOpenCTA');
-                ToTrackFbEvents('appOpenCTA');
-                onStoreRedirect({videoId:activeVideoId})
-               }} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
+        <OpenAppStrip
+        pageName={pageName}
+        item={items?.[videoActiveIndex]}
+        activeVideoId={activeVideoId}
+        />
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
