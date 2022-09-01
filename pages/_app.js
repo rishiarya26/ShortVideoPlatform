@@ -15,6 +15,8 @@ import { getItem, removeItem, setItem } from '../src/utils/cookie';
 import { localStorage, sessionStorage } from '../src/utils/storage';
 import { detectCountry } from '../src/sources/detect-country';
 import { init } from '../src/get-social';
+// import { initConviva } from '../src/conviva';
+import { initConviva } from '../src/analytics/conviva';
 import { useRouter } from 'next/router';
 import * as fbq from '../src/analytics/fb-pixel'
 import Script from 'next/script'
@@ -175,15 +177,6 @@ function Hipi({
     setLoading(false)
   }
 
-  // const loadedGS=()=>{
-  //   setLoadingGS(false);
-  //   if(typeof window !== "undefined"){
-  //     if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) && window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) === 'false'){
-  //       window?.sessionStorage?.setItem(GET_SOCIAL_LOADED, true);
-  //     }
-  //   }
-  // }
-
   const getCountry = async()=>{
     try{ 
       const resp = await detectCountry();
@@ -234,7 +227,7 @@ function Hipi({
     }
   }
 
-  useEffect(()=>{
+  useEffect(()=>{    
     //let timer;
     try{ 
       window.sessionStorage.setItem('searchExecuted', undefined)
@@ -252,7 +245,7 @@ function Hipi({
       // },0);
 
       updatingGoogleCookies();
-
+      initConviva()
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();
@@ -277,6 +270,7 @@ function Hipi({
       }
     }
     catch(e){
+      console.error("one tap issue ")
     }
 
     /** unmount */
@@ -296,7 +290,6 @@ function Hipi({
             initFirebase();
           },[1000])
         }else{
-          console.log("one tap initated ")
           if(loading === false){
             oneTapGoogle();
         }

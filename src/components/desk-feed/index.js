@@ -185,6 +185,20 @@ useEffect(()=>{
   }
 },[retry])
 
+const convivaItemInfo = (item = {}) => {
+  let obj = {};
+
+  let {content_id, music_title, video_url, language,
+        content_description, userName, videoOwnersId, creatorTag,
+          createdOn, videoDuration}  = item;
+
+  obj = {content_id, music_title, video_url, language,
+    content_description, userName, videoOwnersId, creatorTag,
+      createdOn, videoDuration}
+
+      return obj;
+}
+
 const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
 {items && items?.length > 0 ? <InfiniteScroll 
  dataLength={items?.length} 
@@ -215,6 +229,7 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
          videoId={item?.content_id}
          socialId={item?.getSocialId}
          userVerified = {item?.verified}
+         convivaItemInfo={()=>convivaItemInfo(item)}
          />
     </span>
      )}
@@ -256,6 +271,7 @@ const info ={
          socialId={videoDetailData?.getSocialId}
          commentCount={videoDetailData?.commentCount}
          userVerified = {videoDetailData?.verified}
+         convivaItemInfo={()=>convivaItemInfo(videoDetailData)}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>

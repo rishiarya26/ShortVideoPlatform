@@ -92,8 +92,8 @@ function FeedIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
-  // const [showAppBanner, setShowAppBanner] = useState(false);
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
+  // const [showAppBanner, setShowAppBanner] = useState(false);
 
   const { t } = useTranslation();
   const { id } = router?.query;
@@ -201,8 +201,6 @@ function FeedIphone({ router }) {
     //fbq.event('Screen View')
     toTrackMixpanel('tabView',{pageName:pageName, tabName:tabName});
   },[id])
-
-  
 
   if (id === 'for-you') {
     const status = fetchState === 'success';
@@ -374,6 +372,20 @@ console.log('errorrr',e)
     setSaveLook(value);
   };
 
+  const convivaItemInfo = (item = {}) => {
+    let obj = {};
+  
+    let {content_id, music_title, video_url, language,
+          content_description, userName, videoOwnersId, creatorTag,
+            createdOn, videoDuration}  = item;
+  
+    obj = {content_id, music_title, video_url, language,
+      content_description, userName, videoOwnersId, creatorTag,
+        createdOn, videoDuration}
+  
+          return obj;
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -496,7 +508,8 @@ console.log('errorrr',e)
                       adData={shop?.adData}
                       pageName={pageName}
                       tabName={tabName}
-                      suspendLoader={setToSuspendLoaderCb && setToSuspendLoaderCb}
+                      convivaItemInfo={()=>convivaItemInfo(item)}
+                      suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
@@ -510,7 +523,7 @@ console.log('errorrr',e)
               }
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
-                style={{ display: (toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
+                style={{ display: ( toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
                 <CircularProgress/>
               </div>}

@@ -76,6 +76,11 @@ function transformSuccess(resp) {
       payloadObject.commentCount=d?.cCount || '';
       payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
       payloadObject.shoppable = d?.shoppable || false;
+      payloadObject.language = d?.language?.name || '';
+      payloadObject.createdOn = d?.createdOn || '';
+      payloadObject.videoDuration = d?.videoDuration || '';
+
+
       
       payloadData.push(payloadObject);
     });

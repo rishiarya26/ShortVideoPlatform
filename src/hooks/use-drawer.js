@@ -7,6 +7,7 @@ import useMedia, { breakpoints } from './use-media';
 import Drawer from '../components/commons/drawer';
 import Dialog from '../components/commons/dialog';
 import { getItem } from '../utils/cookie';
+import { playerEvents } from '../analytics/conviva/events';
 
 let DrawerContent = null;
 
@@ -45,6 +46,7 @@ export const DrawerProvider = ({ children }) => {
     setState({
       visible: false
     });
+    playerEvents('waitEnded')
   };
 
   return (

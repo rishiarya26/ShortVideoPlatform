@@ -53,7 +53,7 @@
     }
  
  const videoSchema = ({name='video',userThumnail='video',desc='video', videoId='video',view, createdOn='video'})=>{
-     const payload = {
+      const payload = {
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": `${name} on Hipi | ${name} Short Videos on Hipi`,

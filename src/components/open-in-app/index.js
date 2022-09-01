@@ -9,6 +9,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { getOneLink } from '../../sources/social';
 import Close from '../commons/svgicons/close-black';
+import { playerEvents } from '../../analytics/conviva/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 
@@ -20,10 +21,15 @@ export default function DownloadAppWidget({videoId}) {
 
   useEffect(()=>{
     toTrackMixpanel('launch');
+    playerEvents('waitStarted');
     // fbq.event('App Download Popup')
     // trackEvent('App_Download_Popup');
     toTrackFirebase('appDownloadPopup');
     ToTrackFbEvents('appDownloadPopup');
+    ()=> {
+      console.log('unmounted');
+      playerEvents('waitEnded');
+    }
   },[])
 
   const {close} = useDrawer();

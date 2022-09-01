@@ -39,7 +39,7 @@ const getToken = async(response)=>{
   }
  } catch (error) {
    if(error.code === 2){  
-     console.log("one tap - register user")
+    console.log("one tap - register user")
      await registerUser(response?.credential);
    }
    console.log(error)

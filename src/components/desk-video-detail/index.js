@@ -30,11 +30,12 @@ import VerifiedLg from "../commons/svgicons/verified-lg";
 import Description from "../desk-description";
 import Header from "../desk-header";
 import DeskMenu from "../desk-menu";
+import { analyticsCleanup, reportPlaybackEnded, videoAnalytics } from "../../analytics/conviva";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
-hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,
+hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,convivaItemInfo,
 comp = 'normal'}) {
 
    const {show:showDialog} = useDialog();
@@ -58,11 +59,27 @@ comp = 'normal'}) {
       //  router && router?.push(`/${username}`)
     }
 
+   
+
 useEffect(()=>{
 //  window.history.replaceState('video detail page','detail',`/@${userName}/video/${videoId}`
  comp !== 'deskSingleVideo' && window.history.replaceState('video detail page','detail',`/video/${videoId}`
  )
 },[videoId])
+
+useEffect(() => {
+   if(typeof window !== undefined){
+      window?.addEventListener("beforeunload", ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      })
+   }
+   return () => {
+      window.removeEventListener('beforeunload', ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      });
+      analyticsCleanup();
+   }
+}, [])
 
 const onEmbedCopy =()=>{
    showSnackbar({ message: 'Copied to Clipboard' });
@@ -121,7 +138,7 @@ domain = domain?.origin;
 return (
 <div className={`flex ${parentWidth[comp]}`}>
    <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
-      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp}/>
+      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId} convivaItemInfo={convivaItemInfo}/>
       {NavigationBtns[comp]}
    </div>
    <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>
@@ -137,9 +154,9 @@ return (
                   <div className='flex items-center'>
                   <span  
                      className="usrhvr relative hover:border-b border-black font-semibold text-base text-gray-700 cursor-pointer">
-                      <h1 onClick={pushToProfile} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
+                      <div onClick={pushToProfile} className="font-bold flex items-center text-md text-gray-700 cursor-pointer">
                        {userName} 
-                      </h1>
+                      </div>
                      <div className='usrdeck absolute z-50 top-4 -left-16'>
                      <DeskHoverInfo id={userName}/>
                      </div>  

@@ -14,17 +14,18 @@ import Img from '../commons/image';
 import fallbackUser from '../../../public/images/users.png' 
 import EmbedSeekbar from '../emded-seekbar';
 import UnMute from '../commons/svgicons/unmute';
-
+import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from '../../analytics/conviva';
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
-userVerified}) {
+userVerified, convivaItemInfo}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
 const [pause, setPause] = useState(true);
 const [active, setActive] = useState(false);
 const [seekedPercentage, setSeekedPercentage] = useState(0);
+const [change, setChange] = useState(false);
 // const [videoDuration, setVDuration] = useState();
 
 const prePlayState = usePreviousValue({play});
@@ -34,20 +35,55 @@ const videoHeight = `${size.height}`;
 const router = useRouter();
 
 const handleVideoPress = () => {
-if (playing) {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
-setPlaying(false);
-setPlay(true);
-setPause(false);
-setClicked(false);
-} else {
-  rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
-setPlaying(true);
-setClicked(true);
-setPlay(false);
-setPause(true);
-}
+   if (playing) {
+      rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
+      setPlaying(false);
+      setPlay(true);
+      setPause(false);
+      setClicked(false);
+   } else {
+      rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
+      setPlaying(true);
+      setClicked(true);
+      setPlay(false);
+      setPause(true);
+   }
 };
+useEffect(()=>{
+   let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
+   if(!!currentRef?.getAttribute('src') && active === true){
+      videoAnalytics?.setPlayer(null);
+      if(videoAnalytics !== null) reportPlaybackEnded();
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+   }
+},[active]);
+
+
+useEffect(() => {
+   if(typeof window !== undefined){
+      window?.addEventListener("beforeunload", ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      })
+   }
+   return () => {
+      window.removeEventListener('beforeunload', ()=>{
+         if(videoAnalytics !== null) reportPlaybackEnded();
+      });
+      analyticsCleanup();
+   }
+}, [])
+
+
+
+const convivaReplaySession = (e) =>{
+   let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
+   if(videoAnalytics !== null) reportPlaybackEnded();
+   reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+}
+
+const handleSeeked = () => {
+   convivaReplaySession();
+}
 const handlePlay = entry => {
 if (clicked) {
 if (entry?.isIntersecting) {
@@ -182,6 +218,7 @@ return (
          objectfit="contain"
          key={url}
          src={active ? url : ''}
+         onSeeked={handleSeeked}
          >
          {/* <source
             src={url}

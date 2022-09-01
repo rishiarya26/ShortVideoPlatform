@@ -10,6 +10,7 @@ import Play from '../commons/svgicons/play';
 import usePreviousValue from '../../hooks/use-previous';
 import dynamic from 'next/dynamic';
 import { getItem } from '../../utils/cookie';
+import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
@@ -21,20 +22,19 @@ import {incrementCountVideoView} from '../../utils/events';
    // eslint-disable-next-line react/display-name
    loading: () => <div />,
    ssr: false,
- });
+});
 
- const ProductCards= dynamic(() => import("../product-cards"), {
+const ProductCards= dynamic(() => import("../product-cards"), {
    // eslint-disable-next-line react/display-name
    loading: () => <div />,
    ssr: false,
- });
+});
 
 function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
-   const [audioError, setAudioError] = useState('');
-
+   
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
    const rootRef = useRef(null);
@@ -71,22 +71,14 @@ function Video(props) {
       //  }
    },[])
    // useEffect(()=>{
-   //    const player = rootRef.current.children[0];
-   //    if(player){
-   //       console.log(player, rootRef)
-   //    setTimeout(()=>{
-   //       const promise = player?.play();
-   //       if (promise.then) {
-   //          promise
-   //            .then(() => {})
-   //            .catch(() => {
-   //              // if promise fails, hide the video and fallback to <img> tag
-   //            });
-   //        }
-   //       console.log(promise);
-   //    },0)
-   //   }
-   // },[props?.videoActiveIndex])
+   //    if(props?.comp === 'feed'){
+   //    if(props.initialPlayStarted && play === true){
+   //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
+   //    }else{
+   //    prePlayState?.play === true && play === false && props?.toTrackMixpanel(props.videoActiveIndex,'resume')
+   //    }
+   //    }
+   // },[play])
 
 
    const handleVideoPress = () => {
@@ -99,6 +91,7 @@ function Video(props) {
       // setTimeout(() => {
       //   setPlay(false);
       // }, 2000);
+
       } else {
       rootRef.current.children[0].play();
       setPlaying(true);
@@ -139,9 +132,7 @@ function Video(props) {
    threshold: [0.30, 0.75]
    });
 
-   
-
-   // useEffect(()=>{
+    // useEffect(()=>{
    //    if(props?.comp === 'feed'){
    //    if(props.initialPlayStarted && play === true){
    //    props?.toTrackMixpanel(props.videoActiveIndex,'pause');
@@ -151,27 +142,65 @@ function Video(props) {
    //    }
    // },[play])
 
+
+   useEffect(()=>{
+      let currentRef = rootRef?.current?.children[0];
+
+      if(props.id === props.activeVideoId){
+         if(videoAnalytics !== null) reportPlaybackEnded();
+         reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
+      }
+   },[props.activeVideoId])
+
+   useEffect(() => {
+      if(typeof window !== undefined){
+         window?.addEventListener("beforeunload", ()=>{
+            if(videoAnalytics !== null) reportPlaybackEnded();
+         })
+      }
+      return () => {
+         window.removeEventListener('beforeunload', ()=>{
+            if(videoAnalytics !== null) reportPlaybackEnded();
+         });
+         analyticsCleanup();
+      }
+   }, [])
+   
+   
    const handleUpdateSeekbar = e => {
-   const percentage = (e.target.currentTime / e.target.duration) * 100;
-   percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
+      const percentage = (e.target.currentTime / e.target.duration) * 100;
+      // if(e.target.currentTime >= e.target.duration-0.4){
+      //    handleSeeked();
+      // }
+      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
    };
+   
+   const convivaReplaySession = () =>{
+      let currentRef = rootRef?.current?.children[0];
+      if(videoAnalytics !== null) reportPlaybackEnded();
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
+   }
+
+   const handleSeeked = () => {
+      convivaReplaySession();
+   }
    
    const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
-
+   
    const selectVideoPlayer = {
-    'multi-player-muted' : <video
-    onContextMenu={(e)=>{
-      e.preventDefault();
-      return false}}
-      controlsList="nodownload"
-      playsInline
-      muted={props?.muted ? true : false}
-      autoPlay
-      preload="auto"
-      webkit-playsinline = "true"
-      // onLoadCapture ={resetCurrentTime}
-      onTimeUpdate={handleUpdateSeekbar}
+      'multi-player-muted' : <video
+      onContextMenu={(e)=>{
+         e.preventDefault();
+         return false}}
+         controlsList="nodownload"
+         playsInline
+         muted={props?.muted ? true : false}
+         autoPlay
+         preload="auto"
+         webkit-playsinline = "true"
+         // onLoadCapture ={resetCurrentTime}
+         onTimeUpdate={handleUpdateSeekbar}
       loop
       ref={ref}
       onClick={handleVideoPress}
@@ -183,14 +212,15 @@ function Video(props) {
       poster={firstFrame}
       objectfit="cover"
       key={props.url}
+      onSeeked={handleSeeked}
       onEnded={()=>{
          console.log("MIX&&- ended")
          window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
-         <source
-            src={props.url}
-            type="video/mp4"
-         /> 
+      <source
+         src={props.url}
+         type="video/mp4"
+      /> 
       </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
@@ -271,6 +301,11 @@ function Video(props) {
         onTimeUpdate={handleUpdateSeekbar}
         loop
         ref={ref}
+
+      //   onWaiting={handleWait}
+      //   onPlaying={handlePlaying}
+      //   onSeeked={handleEnded}
+
         onClick={handleVideoPress}
         className="vdo_player"
         // onEnded={(e)=> onReplay(e)}
@@ -280,8 +315,9 @@ function Video(props) {
         poster={firstFrame}
         objectfit="cover"
         key={props.url}
-        onSeeked={()=>{
+        onSeeked={(e)=>{
          incrementCountVideoView(props?.id);
+         handleSeeked(e);
          // try{
          //    /* mixpanel - view event tracker (videos completed) */
          //    const videosCompleted = JSON.parse(window.sessionStorage.getItem('videos-completed')) ||{ ids:[], value: 0};
