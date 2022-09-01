@@ -24,17 +24,15 @@ import { canShop } from '../../sources/can-shop';
 import { viewEventsCall } from '../../analytics/view-events';
 import { localStorage } from '../../utils/storage';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { getItem } from '../../utils/cookie';
-import UserExperience from '../commons/user-experience';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import SwipeUp from "../commons/svgicons/swipe-up";
 import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
+import OpenAppStrip from '../commons/user-experience';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -99,7 +97,8 @@ function FeedIphone({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
+  // campaign_id = campaign_id ? campaign_id : (localStorage?.get('campaign_id') || null);
+  campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
 
   const {show} = useDrawer();
 
@@ -584,34 +583,6 @@ console.log('errorrr',e)
     hostname = window?.location?.hostname;
  }
 
-
- const onStoreRedirect = async ()=>{
-
-  // fbq.event('App Open CTA');
-  // trackEvent('App_Open_CTA')
-  toTrackFirebase('appOpenCTA');
-  ToTrackFbEvents('appOpenCTA');
-   toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open', type: 'Button'},items?.[videoActiveIndex]);
-  let link = ONE_TAP_DOWNLOAD;
-  const device = getItem('device-info');
-  console.log(device)
-try{  
- if(activeVideoId){ 
-   try{ const resp = await getOneLink({videoId : activeVideoId});
-    link = resp?.data;
-    console.log("one link resp",resp);}
-    catch(e){
-      console.log('error android onelink',e)
-    }
-  }
- }
-  catch(e){
-  }
-  console.log("final onelink",link);
-  window?.open(link);
-}
-
-
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -620,12 +591,12 @@ try{
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         <UserExperience
+         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
-          items={items}
-          videoActiveIndex={videoActiveIndex}
+          item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          type='aboveBottom'
         />
         <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">

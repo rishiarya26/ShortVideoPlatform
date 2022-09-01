@@ -8,6 +8,7 @@ import { getOneLink } from '../../sources/social';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { playerEvents } from '../../analytics/conviva/events.js';
+import { onStoreRedirect } from '../../utils/web';
 
 function AppBanner({notNowClick, videoId}) {
 
@@ -51,32 +52,32 @@ function AppBanner({notNowClick, videoId}) {
         type && toTrack?.[type] && toTrack?.[type]();
       }
 
-    const onStoreRedirect = async ()=>{
-        toTrackMixpanel('downloadClick');
-        ToTrackFbEvents('appDownloadCTA')
-        toTrackFirebase('appDownloadCTA')
-        // fbq.event('App Download CTA');
-        // trackEvent('App_Download_CTA')
-        let link = ONE_TAP_DOWNLOAD;
-        const device = getItem('device-info');
-        console.log(device)
-      try{  
-        if(videoId){ 
-          const resp = await getOneLink({videoId : videoId});
-          link = resp?.data;
-          console.log("one link resp",resp);
-        }
-      //  if(device === 'android' && videoId){ 
-      //     const resp = await getOneLink({videoId : videoId});
-      //     link = resp?.data;
-      //     console.log("one link resp",resp);
-      //   }
-       }
-        catch(e){
-        }
-        console.log("final onelink",link);
-        window?.open(link);
-     }
+    // const onStoreRedirect = async ()=>{
+    //     toTrackMixpanel('downloadClick');
+    //     ToTrackFbEvents('appDownloadCTA')
+    //     toTrackFirebase('appDownloadCTA')
+    //     // fbq.event('App Download CTA');
+    //     // trackEvent('App_Download_CTA')
+    //     let link = ONE_TAP_DOWNLOAD;
+    //     const device = getItem('device-info');
+    //     console.log(device)
+    //   try{  
+    //     if(videoId){ 
+    //       const resp = await getOneLink({videoId : videoId});
+    //       link = resp?.data;
+    //       console.log("one link resp",resp);
+    //     }
+    //   //  if(device === 'android' && videoId){ 
+    //   //     const resp = await getOneLink({videoId : videoId});
+    //   //     link = resp?.data;
+    //   //     console.log("one link resp",resp);
+    //   //   }
+    //    }
+    //     catch(e){
+    //     }
+    //     console.log("final onelink",link);
+    //     window?.open(link);
+    //  }
 
 
   return (
@@ -104,7 +105,12 @@ function AppBanner({notNowClick, videoId}) {
                 <p className="text-center text-gray-400 mt-2 text-xs text-gray-700">Follow your favourite accounts,explore new trends and make your own videos</p>
             </div>
             <div className="flex mt-2 flex-col w-full">
-                <div onClick={onStoreRedirect}  className="flex bg-hipired py-3 mx-2 px-4 my-2 text-white"  >
+                <div onClick={()=>{
+                     toTrackMixpanel('downloadClick');
+                     ToTrackFbEvents('appDownloadCTA')
+                     toTrackFirebase('appDownloadCTA')
+                     onStoreRedirect({videoId : videoId, afChannel: 'pop_up'})
+                }}  className="flex bg-hipired py-3 mx-2 px-4 my-2 text-white"  >
                     <div className="flex justify-center items-center text-sm md:text-base w-full font-semibold" >
                         <p>Open Hipi</p>
                     </div>

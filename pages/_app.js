@@ -28,6 +28,7 @@ import { clearTimeouts,resetTimeout } from '../src/utils/session-track';
 import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
+import * as platform from 'platform';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -227,7 +228,16 @@ function Hipi({
     }
   }
 
-  useEffect(()=>{    
+  const updateDeviceData = () =>{
+    try{
+      localStorage.set('plaformData',platform);
+      console.log("platform-data*",platform,window?.platform);
+    }catch(e){
+      console.error('error-platform',e);
+    }
+  }
+
+  useEffect(()=>{
     //let timer;
     try{ 
       window.sessionStorage.setItem('searchExecuted', undefined)
@@ -268,6 +278,7 @@ function Hipi({
           initFirebase();
         },[500])
       }
+      updateDeviceData();
     }
     catch(e){
       console.error("one tap issue ")

@@ -21,9 +21,9 @@ const stores = {
   ios: 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008'
 };
 
-const onStoreRedirect =(device)=>{
-  device && (window.location.href = `${stores[device]}`);
-}
+// const onStoreRedirect =(device)=>{
+//   device && (window.location.href = `${stores[device]}`);
+// }
 
  const handleClick = (id) =>{
    let updateItem = [...items];

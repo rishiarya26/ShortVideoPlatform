@@ -1,6 +1,7 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { detectGeoLocationByZee } from '../geo-location';
 import { transformSuccess, transformError } from '../transform/feed';
@@ -8,6 +9,10 @@ import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
 let geoData = localStorage?.get('geo-info') || null;
+const device = getItem('device-type');
+const userAgent =localStorage.get('plaformData')?.ua;
+const os = localStorage.get('plaformData')?.os?.family;
+const browser = localStorage.get('plaformData')?.name;
 
 /* Feed API with login */
 async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall, campaign_id='' }) {
@@ -29,7 +34,9 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
         'X-GEO-PINCODE':geoData?.pin || '',
-        'campaign_id':campaign_id || ''
+        'campaign_id':campaign_id || '',
+        'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+        'X-DEVICE-MODEL': userAgent
       })
     }else{
       const respGeoInfo = await detectGeoLocationByZee();
@@ -42,6 +49,8 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
               'X-GEO-CITY':geoLocationInfo?.city || '',
               'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
               'X-GEO-PINCODE':geoLocationInfo?.pin || '',
+              'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+              'X-DEVICE-MODEL': userAgent
           })
       }}
 
@@ -78,7 +87,9 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         'X-GEO-CITY':geoData?.city || '',
         'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
         'X-GEO-PINCODE':geoData?.pin || '',
-        'campaign_id':campaign_id || ''
+        'campaign_id':campaign_id || '',
+        'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+        'X-DEVICE-MODEL': userAgent
     })
   }else{
     const respGeoInfo = await detectGeoLocationByZee();
@@ -91,7 +102,9 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
           'X-GEO-CITY':geoLocationInfo?.city || '',
           'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
           'X-GEO-PINCODE':geoLocationInfo?.pin || '',
-          'campaign_id':campaign_id || ''
+          'campaign_id':campaign_id || '',
+          'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+          'X-DEVICE-MODEL': userAgent
       })
   }}
    console.timeEnd("concatenation");

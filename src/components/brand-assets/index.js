@@ -21,9 +21,9 @@ function Home() {
 	const router = useRouter();
   // const {close} = useDrawer();
 
-  const onStoreRedirect =(device)=>{
-    device && (window.location.href = `${stores[device]}`);
-  }
+  // const onStoreRedirect =(device)=>{
+  //   device && (window.location.href = `${stores[device]}`);
+  // }
 
   return (
     <div className="h-screen  w-screen flex flex-col justify-between">

@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 import { ONE_TAP_DOWNLOAD } from '../../constants';
 import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
-import { getOneLink } from '../../sources/social';
 import Close from '../commons/svgicons/close-black';
 import { playerEvents } from '../../analytics/conviva/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { onStoreRedirect } from '../../utils/web';
 
 export default function DownloadAppWidget({videoId}) {
   // const stores = {
@@ -66,31 +66,11 @@ export default function DownloadAppWidget({videoId}) {
   // }
 
 // 
-  const onStoreRedirect = async ()=>{
+  const toStoreRedirect = async ()=>{
     toTrackMixpanel('downloadClick');
     ToTrackFbEvents('appDownloadCTA');
     toTrackFirebase('appDownloadCTA');
-    //fbq.event('App Download CTA');
-    // trackEvent('App_Download_CTA')
-    let link = ONE_TAP_DOWNLOAD;
-    const device = getItem('device-info');
-    console.log(device)
-  try{  
-    if(videoId){ 
-      const resp = await getOneLink({videoId : videoId});
-      link = resp?.data;
-      console.log("one link resp",resp);
-    }
-  //  if(device === 'android' && videoId){ 
-  //     const resp = await getOneLink({videoId : videoId});
-  //     link = resp?.data;
-  //     console.log("one link resp",resp);
-  //   }
-   }
-    catch(e){
-    }
-    console.log("final onelink",link);
-    window?.open(link);
+    onStoreRedirect({videoId: videoId})
  }
   /***************************/
 
@@ -141,7 +121,7 @@ export default function DownloadAppWidget({videoId}) {
             <p className="text-xs text-gray-400">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
-        <button onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white rounded-sm">Open the Hipi app</button>
+        <button onClick={toStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white rounded-sm">Open the Hipi app</button>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
             <p onClick={()=>close()} className="text-sm font-semibold text-gray-500">Not now</p>

@@ -64,5 +64,6 @@ export const ToTrackFbEvents = (type, commonInfo = {}, value) => {
       'stunnerInstallClick' : ()=>fbq.event('app_install_stunner_footer_click',fbEvents),
       'bussinessFormSubmitted' :()=>fbq.event('Business_page_form_submission',fbEvents)
     }
+    
     type && toTrack?.[type] && toTrack?.[type]();
 }

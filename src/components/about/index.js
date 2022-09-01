@@ -22,11 +22,11 @@ function About() {
  
   // const {close} = useDrawer();
 
-  const onStoreRedirect =(device)=>{
-    device && (window.location.href = `${stores[device]}`);
-  }
+  // const onStoreRedirect =(device)=>{
+  //   device && (window.location.href = `${stores[device]}`);
+  // }
 
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>

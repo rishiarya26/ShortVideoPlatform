@@ -232,7 +232,7 @@ function Explore() {
               slidesPerView={1}
               centeredSlides={true} 
               autoplay={{
-                "delay": 2500,
+                // "delay": 2500,
                 "disableOnInteraction": false
               }} 
               pagination={{"clickable": true}} 

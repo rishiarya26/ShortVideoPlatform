@@ -1,3 +1,5 @@
+import { ONE_TAP_DOWNLOAD } from "../constants";
+import { getOneLink } from "../sources/social";
 import { localStorage } from "./storage";
 
 function CopyToClipBoard(value) {
@@ -28,9 +30,11 @@ function updateUtmData(queryStrings){
 }
 
 function updateCampaignId(queryStrings){
-  const oldCampaignId = localStorage?.get('campaign_id') || ''
+  const oldCampaignId = JSON.parse(window.sessionStorage.getItem('campaign_id')) || ''
+  // const oldCampaignId = localStorage?.get('campaign_id') || ''
     let campaign_id = queryStrings?.campaign_id || oldCampaignId;
-    (campaign_id !== oldCampaignId) && localStorage.set('campaign_id',campaign_id);
+    // (campaign_id !== oldCampaignId) && localStorage.set('campaign_id',campaign_id);
+    (campaign_id !== oldCampaignId) && window.sessionStorage.setItem('campaign_id',JSON.stringify(campaign_id));
 }
 
 function getHostname(){
@@ -82,6 +86,26 @@ const getReffererPage = (reffereUrl) =>{
   }
   console.log("reff-pagename",pageName)
 }
+
+const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
+
+  let link = ONE_TAP_DOWNLOAD;
+  try{  
+    if(videoId){ 
+      try{ const resp = await getOneLink({videoId : videoId, afChannel:afChannel});
+      link = resp?.data;
+
+      console.log("one link resp",resp);
+      }
+      catch(e){
+        console.log('error android onelink',e)
+      }
+    }
+  }
+  catch(e){
+  }
+  window?.open(link);
+}
            
 export {
   CopyToClipBoard,
@@ -91,6 +115,7 @@ export {
   getHostname,
   getUrl,
   getCanonicalUrl,
-  getReffererPage
+  getReffererPage,
+  onStoreRedirect
 };
 

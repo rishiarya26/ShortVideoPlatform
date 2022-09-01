@@ -31,8 +31,8 @@ import SwipeUp from '../commons/svgicons/swipe-up';
 import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import AppBanner from '../app-banner';
-import UserExperience from  "../commons/user-experience";
 import { incrementCountVideoView } from '../../utils/events';
+import OpenAppStrip from '../commons/user-experience';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -88,7 +88,8 @@ function Feed({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
+  // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
+  campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
 
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
@@ -542,42 +543,17 @@ function Feed({ router }) {
 //     hostname = window?.location?.hostname;
 //  }
 
- 
-const onStoreRedirect = async ()=>{
-  toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-  // fbq.event('App Open CTA')
-  // trackEvent('App_Open_CTA')
-  ToTrackFbEvents('appOpenCTA');
-  toTrackFirebase('appOpenCTA');
-  let link = ONE_TAP_DOWNLOAD;
-try{  
- if(activeVideoId){ 
-   try{ const resp = await getOneLink({videoId : activeVideoId});
-    link = resp?.data;
-    console.log("one link resp",resp);
-  }
-    catch(e){
-      console.log('error android onelink',e)
-    }
-  }
- }
-  catch(e){
-  }
-  console.log("final onelink",link);
-  window?.open(link);
-}
-
   return (
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        <UserExperience
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
-          items={items}
-          videoActiveIndex={videoActiveIndex}
+          item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          type='aboveBottom'
         />
         {/* hamburger */}
         <HamburgerMenu/>

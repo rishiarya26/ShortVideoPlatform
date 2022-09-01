@@ -13,11 +13,9 @@ import { canShop } from '../../sources/can-shop';
 import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
-import { getOneLink } from '../../sources/social';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
@@ -32,6 +30,7 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
+import OpenAppStrip from '../commons/user-experience';
 
 SwiperCore.use([Mousewheel]);
 
@@ -202,31 +201,6 @@ function ProfileFeedIphone({ router }) {
 
   }, []);
 
-  const onStoreRedirect = async ()=>{
-    toTrackMixpanel('cta',{pageName:pageName, name: 'Open App', type: 'Button'},items?.[videoActiveIndex]);
-    // fbq.event('App Open CTA')
-    // trackEvent('App_Open_CTA')
-
-    let link = ONE_TAP_DOWNLOAD;
-    const device = getItem('device-info');
-    console.log(device)
-  try{  
-   if(activeVideoId){ 
-     try{ const resp = await getOneLink({videoId : activeVideoId});
-      link = resp?.data;
-      console.log("one link resp",resp);}
-      catch(e){
-        console.log('error android onelink',e)
-      }
-    }
-   }
-    catch(e){
-    }
-    console.log("final onelink",link);
-    window?.open(link);
-  }
-
-
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
@@ -371,14 +345,11 @@ function ProfileFeedIphone({ router }) {
 
        
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-        <div className="bottom-0 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center flex items-center ">
-            <p className="text-sm">
-            Get the full experience on the Hipi app
-            </p>
-            <div onClick={onStoreRedirect} className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-               Open
-            </div>
-         </div>
+        <OpenAppStrip
+        pageName={pageName}
+        item={items?.[videoActiveIndex]}
+        activeVideoId={activeVideoId}
+        />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>

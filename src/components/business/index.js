@@ -43,10 +43,10 @@ return (
             <img alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/gym.gif')} />
       </div>
       <div className="hidden md:flex absolute bottom-m rounded-lg overflow-hidden moveup">
-            <img alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/sport.gif')} />
+            <img  alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/sport.gif')} />
       </div>
       <div className="absolute  bottom-left rounded-lg overflow-hidden moveup">
-            <img alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/fashion.gif')} />
+            <img  alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/fashion.gif')} />
       </div>
    </div>
    <div className="w-full justify-center flex bg_ocean_pastel py-6 md:py-12  ">
@@ -55,24 +55,24 @@ return (
        
          <div className="flex flex-col md:flex-row w-full justify-between p-12">
             <div className="w-full md:w-1/3 md:px-4 overflow-hidden flex flex-col items-center">
-            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1 ">
-            {/* <img alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/travel.gif')} /> */}
-            <img alt='Hipi Advertisement' src={withBasePath('business/RRR.gif')} />
+            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1 min-h-58v md:min-h-38 bg-white">
+            {/* <img loading="lazy" alt='Hipi Advertisement' src={withBasePath('images/advertisement/gif/travel.gif')} /> */}
+            <img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/RRR.gif')} />
             </div>
             <h3 className="text-gray-600 py-4 text-2xl font-semibold">#RRR</h3>
             {/* <button className="mx-2 my-2 font-semibold  border border-hipired rounded py-2 px-4 bg-hipired text-white cursor-pointer">Learn more</button> */}
             </div>
             <div className="w-full md:w-1/3 md:px-4 overflow-hidden flex flex-col items-center">
-            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1 ">
-            <img alt='Hipi Advertisement' src={withBasePath('business/SPH.gif')} />
+            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1 min-h-58v md:min-h-38 bg-white">
+            <img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/SPH.gif')} />
             </div>
             <h3 className="text-gray-600 py-4 text-2xl font-semibold">#SahiPakdeHain</h3>
             {/* <button className="mx-2 my-2 font-semibold  border border-hipired rounded py-2 px-4 bg-hipired text-white cursor-pointer">Learn more</button> */}
            
             </div>
             <div className="w-full md:w-1/3 md:px-4 overflow-hidden flex flex-col items-center">
-            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1">
-            <img alt='Hipi Advertisement' src={withBasePath('business/SuperMom.gif')} />
+            <div className="w-full rounded-2xl overflow-hidden  box_shadow_1 min-h-58v md:min-h-38 bg-white">
+            <img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/SuperMom.gif')} />
             </div>
             <h3 className="text-gray-600 py-4 text-2xl font-semibold">#SuperMomIndia</h3>
             {/* <button className="mx-2 my-2 font-semibold  border border-hipired rounded py-2 px-4 bg-hipired text-white cursor-pointer">Learn more</button> */}
@@ -91,15 +91,15 @@ return (
 </div>
 <div className="flex flex-col md:flex-row items-center justify-center py-8">
                <div className="flex flex-col items-center my-4 md:my-0 p-8 md:mx-8 box_shadow_1 cursor-pointer w-max" onClick={()=>router.push('/ads/solutions#advertise_sec')}>
-                  <div className='w-40 h-40'><img alt='Hipi Advertisement' src={withBasePath('business/IconsAdvertise.png')}/></div>
+                  <div className='w-40 h-40'><img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/IconsAdvertise.png')}/></div>
                   <p className='text-lg text-gray-500 font-semibold pt-2'>Advertise</p>
                </div>
                <div className="flex flex-col items-center my-4 md:my-0 p-8 md:mx-8 box_shadow_1 cursor-pointer w-max" onClick={()=>router.push('/ads/solutions#commerce_sec')}>
-               <div className='w-40 h-40'><img alt='Hipi Advertisement' src={withBasePath('business/IconsCommerce.png')}/></div>
+               <div className='w-40 h-40'><img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/IconsCommerce.png')}/></div>
                   <p className='text-lg text-gray-500 font-semibold pt-2'>Commerce</p>
                </div>
                <div className="flex flex-col items-center my-4 md:my-0 p-8 md:mx-8 box_shadow_1 cursor-pointer w-max" onClick={()=>router.push('/ads/solutions#engage_sec')}>
-               <div className='w-40 h-40'><img alt='Hipi Advertisement' src={withBasePath('business/IconsEngage.png')}/></div>
+               <div className='w-40 h-40'><img loading="lazy" alt='Hipi Advertisement' src={withBasePath('business/IconsEngage.png')}/></div>
                   <p className='text-lg text-gray-500 font-semibold pt-2'>Engage</p>
                </div>
       </div>
@@ -115,31 +115,31 @@ return (
       </div>
       <div className="flex justify-around md:justify-between w-feed flex-wrap p-4 md:py-12 md:px-32">
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/amazon.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/amazon.png')} />
             </div>
             <div className="w-1/3 md:w-1/4  md:p-4 m-4">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/loreal.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/loreal.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/bigbasket.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/bigbasket.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/fabindia.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/fabindia.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/marico.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/marico.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/paragon.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/paragon.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/tanishq.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/tanishq.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/yash.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" src={withBasePath('images/advertisement/logo/yash.png')} />
             </div>
             <div className="w-1/3 md:w-1/4 md:p-4 m-4 ">
-               <img alt='Hipi Advertisement' className="object-contain" id="ad_form"  src={withBasePath('images/advertisement/logo/flipkart.png')} />
+               <img loading="lazy" alt='Hipi Advertisement' className="object-contain" id="ad_form"  src={withBasePath('images/advertisement/logo/flipkart.png')} />
             </div>
       </div>
       </div>

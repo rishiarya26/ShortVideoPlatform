@@ -5,10 +5,8 @@ import Like from '../commons/svgicons/like';
 import Follow from '../commons/svgicons/follow';
 import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
-import { getOneLink } from '../../sources/social';
-import { getItem } from '../../utils/cookie';
 import { useRouter } from 'next/router';
+import { onStoreRedirect } from '../../utils/web';
 
 function EmbedVideoSidebar(props) {
 const router = useRouter();
@@ -36,20 +34,8 @@ const router = useRouter();
     //    window?.open(ONE_TAP_DOWNLOAD);
     //  }
 
-     const onStoreRedirect =async ()=>{
-       let link = ONE_TAP_DOWNLOAD;
-       const device = getItem('device-info');
-     try{  
-      if(device === 'android' && props?.videoId){ 
-       const resp = await getOneLink({videoId : props?.videoId});
-       link = resp?.data;
-       console.log("one link resp",resp);
-      }
-      }
-       catch(e){
-       }
-       console.log("final link",link)
-       window?.open(link);
+     const toStoreRedirect = async ()=>{
+      onStoreRedirect({videoId : props?.videoId})
     }
 
   const info = {
@@ -71,28 +57,28 @@ const router = useRouter();
           src={props.profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
         />
         <div
-          onClick={onStoreRedirect}
+          onClick={toStoreRedirect}
           className="absolute bottom-0 left-1/3"
         >
           <Follow />
         </div>
       </div>
       <div
-        onClick={onStoreRedirect}
+        onClick={toStoreRedirect}
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Like />
         <p className="text-sm">{props.likes}</p>
       </div>
       <div
-        onClick={onStoreRedirect}
+        onClick={toStoreRedirect}
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Comment />
         {/* <p className="text-sm">{props.likes}</p> */}
       </div>
       <div
-        onClick={onStoreRedirect}
+        onClick={toStoreRedirect}
         className="relative py-2 px-3 text-center flex flex-col items-center"
       >
         <Share />

@@ -1,14 +1,15 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
+/*eslint-disable react/display-name */
 import { SeoMeta } from "../../src/components/commons/head-meta/seo-meta";
 import Stunner from "../../src/components/stunner";
 import {faqStunner} from "../../src/utils/schema";
 import { withBasePath } from '../../src/config'
-import StaticFooter from "../../src/components/static-footer";
 import { toTrackMixpanel } from "../../src/analytics/mixpanel/events";
 import { toTrackFirebase } from "../../src/analytics/firebase/events";
 import { ToTrackFbEvents } from "../../src/analytics/fb-pixel/events";
 import { useEffect } from "react";
+import dynamic from "next/dynamic";
 
 export default function Hipi() {
   useEffect(()=>{
@@ -16,6 +17,11 @@ export default function Hipi() {
       window?.scrollTo(0, 0);
     }
   },[])
+
+  const StaticFooter = dynamic(() => import('../../src/components/static-footer'),{
+    loading: () => <div />,
+    ssr: false
+  });
 
   return (
   <>

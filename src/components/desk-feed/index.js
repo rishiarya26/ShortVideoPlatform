@@ -39,8 +39,9 @@ const LoadComp = () => (<Loading />);
   let { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
-
+  // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
+  campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
+ 
   // selecting home feed api based on before/after login
   const dataFetcher = () => getHomeFeed({ type: id, videoId: videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});
   const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId:videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});

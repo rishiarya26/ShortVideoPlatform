@@ -58,17 +58,16 @@ function Video(props) {
          console.error('issue in video elemant',e);
       }
 
-      // return ()=>{
-      //    try{
-      //   if(device === 'ios'){
-      //       videoElement.removeEventListener('suspend', () => {
-      //       props?.suspendLoader && props?.suspendLoader(true);
-      //     });
-      //    }
-      // }catch(e){
-      //    console.error("error- listner in video for ios",e)
-      // }
-      //  }
+      return ()=>{
+       try{ 
+          if(device === 'ios'){
+            videoElement.removeEventListener('suspend', () => {
+            props?.suspendLoader && props?.suspendLoader(true);
+          });
+         }}catch(e){
+            console.error(e);
+         }
+       }
    },[])
    // useEffect(()=>{
    //    if(props?.comp === 'feed'){

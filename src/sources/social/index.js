@@ -8,6 +8,7 @@ import { trimSpace } from '../../utils/string';
 import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformErrorOneLink, transformSuccessOneLink } from '../transform/social/get-one-link';
+import { ONE_TAP_DOWNLOAD } from '../../constants';
 
 const apiKey = '4dbc881836c2a0130cda9cfcec0f3383';
 const appId = 'YInJ8G70y098';
@@ -121,6 +122,11 @@ const deleteLike = async ({ socialId }) => {
 const viewCountUpdate = async ({headers, payloads, id, event = 'user_video_start', duration='', timeSpent=''}) => {
   let response = {};
   let payload;
+  const device = getItem('device-type');
+const userAgent =localStorage.get('plaformData')?.ua;
+const os = localStorage.get('plaformData')?.os?.family;
+const browser = localStorage.get('plaformData')?.name;
+
   try {
     payload =  (event === 'user_video_end') ?
      {
@@ -137,18 +143,21 @@ const viewCountUpdate = async ({headers, payloads, id, event = 'user_video_start
   payloads ? (payload = payloads) : ''
   console.log("api called", payload)
    const userId = localStorage.get('user-id') || null;
-  //  const geoData = localStorage.get('geo-info') || null;
+   let geoData = localStorage?.get('geo-info') || null;
    const guestToken =  getItem('guest-token') || null;
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
-      ...headers
-      // 'X-GEO-IPADDR' : geoData?.ip,
-      // 'X-GEO-COUNTRY-CODE':geoData?.country,
-      // 'X-GEO-REGION-CODE':geoData?.state_code,
-      // 'X-GEO-CITY':geoData?.city,
-      // 'X-GEO-LATLONG':`${geoData?.lat},${geoData?.long}` ,
-      // 'X-GEO-PINCODE':geoData?.pin
+      ...headers,
+      'X-GEO-IPADDR' : geoData?.ip || '',
+      'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
+      'X-GEO-REGION-CODE':geoData?.state_code || '',
+      'X-GEO-CITY':geoData?.city || '',
+      'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+      'X-GEO-PINCODE':geoData?.pin || '',
+      'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+      'X-DEVICE-MODEL': userAgent
+
     });
     response.data.status = 'success';
     response.data.message = '';
@@ -159,7 +168,7 @@ const viewCountUpdate = async ({headers, payloads, id, event = 'user_video_start
   }
 };
 
-const getDynamicOneLink = async({videoId}) => {
+const getDynamicOneLink = async({videoId, afChannel}) => {
   let response = {};
   try {
   console.log('videoId',videoId)
@@ -171,10 +180,14 @@ const getDynamicOneLink = async({videoId}) => {
       pid:"install",
       af_dp:"zee5hipi://"
     }
-    console.log("api called", payload)
+    console.log("api called", payload);
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/appsflyer`;
     response = await post(apiPath, {data: payload}, {
     });
+    // console.log("link",response)
+    // const link = getSmartOneLink({oneLink : response?.data?.responseData || ONE_TAP_DOWNLOAD, afChannel:afChannel});
+    // console.log("link-smart",link);
+    // response.data.smartLink = link;
     response.data.status = 'success';
     response.data.message = '';
     return Promise.resolve(response);
@@ -182,6 +195,48 @@ const getDynamicOneLink = async({videoId}) => {
     console.log(err)
     return Promise.reject(err);
   }
+}
+
+const getSmartOneLink = ({oneLink, afChannel})=>{
+  let result_url = "No output from script"
+  try{  
+  // console.log("SMART",window)
+  //Initializing Smart Script arguments
+  const oneLinkURL = oneLink;
+  // If a media source key is NOT FOUND on the link and NO default value is found, the script will return a null string 
+  const mediaSource = {keys: ["utm_source"], defaultValue: "webOrganic"};
+  const campaign = {keys: ["utm_campaign"]};
+  const ad = {key:["utm_term"]};
+  const adSet = {key:["utm_content"]}
+  const afchannel= afChannel
+  
+  // pop_up
+
+// af_channel=bottom_strip
+
+  // const deepLinkValue = {keys: ["dp_dest"], defaultValue: "peaches"};
+  // const afSub3 = {keys: ["promo"]};
+
+  //Calling the function after embedding the code will be through a global parameter on the window object called window.AF_SMART_SCRIPT
+  //Onelink URL is generated
+  let result = window?.AF_SMART_SCRIPT?.generateOneLinkURL({
+    oneLinkURL,
+    afParameters:{
+      mediaSource: mediaSource,
+      campaign: campaign,
+      ad: ad,
+      adSet: adSet,
+      af_channel: afchannel
+    }
+  })
+  
+  if (result) {
+        result_url = result?.clickURL;            
+  }  
+}catch(e){
+  console.error("apps-smart-error",e)
+}    
+  return result_url;
 }
 
 
@@ -199,5 +254,6 @@ export {
   viewEvents,
   clearViewEvents,
   getOneLink,
-  clearOneLink
+  clearOneLink,
+  getSmartOneLink
 };

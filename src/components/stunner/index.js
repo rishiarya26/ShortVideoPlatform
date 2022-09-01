@@ -87,8 +87,8 @@ useEffect(()=>{
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
 <div className='w-full'>
-		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Mob-Hipi-Stunner.jpeg')} />
-		<img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Desk-Hipi-Stunner.jpeg')} />
+		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Mob-Hipi-Stunner.webp')} />
+		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Desk-Hipi-Stunner.webp')} />}
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_pastel_blue'>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
@@ -272,8 +272,8 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/3 flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
-              <div className='overflow-hidden cursor-pointer' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
+           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+              <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
@@ -316,7 +316,7 @@ useEffect(()=>{
             <p>Miss India Universe 2003</p>
             <p className='text-gray-500 font-light text-lg pt-4'>Nikita won the title of Miss India Universe in 2003. Since then, she has been seen on numerous magazine covers, fashion weeks, designer shoots, ad campaigns, and Bollywood films. She rubs shoulders with the top industry experts in the fashion and lifestyle circuit and has been a muse for top fashion designers like Ritu Kumar, JJ Vallaya, and Mona Pali.</p>
         </div>
-        <div className='w-full md:w-1/2 flex justify-center md:justify-end items-center py-4 md:py-20 bg-host br_40'>
+        <div className='w-full md:w-1/2 min-h-32v md:min-h-44  flex justify-center md:justify-end items-center py-4 md:py-20 bg-host br_40'>
             <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/stunner/hipistunner_thehost.jpg')} /> 
         </div>
     </div>
