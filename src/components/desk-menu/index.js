@@ -18,6 +18,7 @@ import Instagram from "../commons/svgicons/instagram-gray";
 import TwitterW from "../commons/svgicons/twitter-white";
 import Youtube from "../commons/svgicons/youtube-gray";
 import TwitterG from "../commons/svgicons/twitter-gray";
+import Wiki from "../commons/svgicons/wikipedia";
 
 const login = dynamic(
   () => import('../auth-options'),
@@ -31,7 +32,8 @@ const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
   twitter : 'https://twitter.com/HiPiOfficialApp',
   instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
-  youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ'
+  youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ',
+  wiki : 'https://en.m.wikipedia.org/wiki/HiPi_(App)'
 }
 
 const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
@@ -108,6 +110,9 @@ useEffect(()=>{
             </a>
               <a target="_blank" href={links.youtube} className="pr-4" rel="noreferrer">
                 <Youtube/>
+              </a>
+              <a target="_blank" href={links.wiki} className="pr-4" rel="noreferrer">
+              <Wiki/>
               </a>
         </div>
         {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
