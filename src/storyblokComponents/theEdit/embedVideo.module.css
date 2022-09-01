@@ -1,0 +1,17 @@
+.videoWrapper {
+  position: relative;
+  margin: 0 auto;
+  height: 800px;
+  width: 350px;
+  overflow: hidden;
+}
+
+.playButton {
+  @apply w-6 h-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer;
+}
+
+.posterWrapper {
+  width: 100%;
+  height: auto;
+  position: relative;
+}

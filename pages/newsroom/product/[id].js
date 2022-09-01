@@ -1,6 +1,6 @@
 import { useStoryblokState } from "@storyblok/react"
 import { getStoryblokData, getStoryblokPage } from "../../../src/sources/storyblok";
-import Post from "../../../src/storyblokComponents/Post";
+import Post from "../../../src/storyblokComponents/newsroom/Post";
  
 export default function ProductPost(props) {
   const story = useStoryblokState(props.story);
@@ -16,7 +16,7 @@ export async function getStaticProps({ params }) {
    
     let resp;
     try{
-      resp = await getStoryblokData({params: sbParams, parentSlug: "product", slug});
+      resp = await getStoryblokData({params: sbParams, parentSlug: "newsroom/product", slug});
     } catch(e) {
       console.error(e);
     }
@@ -32,7 +32,7 @@ export async function getStaticProps({ params }) {
   export async function getStaticPaths() {
     let paths = [];
     try{
-      const resp = await getStoryblokPage({params: {"version": "draft"}, category: "product"})
+      const resp = await getStoryblokPage({params: {"version": "draft"}, category: "product", blogType: "newsroom"})
       paths = resp.data;
     }catch(e) {
       console.error(e);

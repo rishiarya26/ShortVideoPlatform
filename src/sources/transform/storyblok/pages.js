@@ -30,9 +30,16 @@ function transformSuccess(resp) {
           if(slug.length < 1){
             return;
           }
-          let [categoryType, slugType] = slug.split("/");
-          if(categoryType === resp.category){
-              paths.push({ params: { id: slugType } });
+          if(resp.blogType === "newsroom"){
+            let [blogType, categoryType, slugType] = slug.split("/");
+            if(blogType === resp.blogType && categoryType === resp.category){
+                paths.push({ params: { id: slugType } });
+            }
+          } else {
+            let [blogType, slugType] = slug.split("/");
+            if(blogType === resp.blogType){
+                paths.push({ params: { id: slugType } });
+            }
           }
       });
     payload.status = 'success';
