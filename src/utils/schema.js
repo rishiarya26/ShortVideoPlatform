@@ -79,11 +79,39 @@
     //     {"@type":"InteractionCounter",
     //     "interactionType":{"@type":"http://schema.org/FollowAction"},
     //     "userInteractionCount":}]},"width":,"height":,"interactionStatistic":[{"@type":"InteractionCounter","interactionType":{"@type":"http://schema.org/WatchAction"},"userInteractionCount":},{"@type":"InteractionCounter","interactionType":{"@type":"http://schema.org/LikeAction"},"userInteractionCount":},{"@type":"InteractionCounter","interactionType":{"@type":"http://schema.org/ShareAction"},"userInteractionCount":}],"comment":{"@type":"Comment","comment":[]}}
-      
+    
+    const newsroomArticleSchemma = ({url, headline, datePublished, description}) => {
+      return {
+        "@context": "https://schema.org/",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": url
+        },
+        "headline": headline,
+        "description": description,
+        "author": {
+          "@type": "Organization",
+          "name": "Hipi"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Hipi",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.hipi.co.in/icons/Logo_hipi.png",
+            
+          }
+        },
+        "datePublished": datePublished
+      }
+    }
+
   export  {
       websiteSchema,
       organisationSchema,
       videoSchema,
       breadcrumbSchema,
-      personSchema
+      personSchema,
+      newsroomArticleSchemma
   }
