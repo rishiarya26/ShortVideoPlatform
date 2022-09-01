@@ -28,7 +28,7 @@ export default function Card({ post = {} }) {
     },
   ] = body;
   const image = body?.[0]?.cardImage?.filename || null;
-  const newDate = new Date(post?.created_at);
+  const newDate = new Date(post?.first_published_at);
   const router = useRouter();
   const created_at = `${
     monthNames[newDate.getMonth()]
@@ -36,7 +36,7 @@ export default function Card({ post = {} }) {
   return (
     <div
       className={styles.card}
-      onClick={() => router && router.push(`/newsroom/${full_slug}`)}
+      onClick={() => router && router.push(`/${full_slug}`)}
     >
       <div className={styles.card_desc}>
         <div className="flex items-center mb-3">
