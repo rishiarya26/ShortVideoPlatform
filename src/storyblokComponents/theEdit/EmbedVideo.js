@@ -64,7 +64,7 @@ export default function Hipi({ id, type = "posterImage" }) {
   useEffect(() => {
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
-  }, []);
+  }, [item]);
 
   if (resp.status === "fail") {
     return <Error message={resp.message} statusCode={resp.errorCode} />;
