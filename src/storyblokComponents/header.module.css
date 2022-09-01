@@ -1,9 +1,0 @@
-.heading{
-    @apply font-semibold text-5xl py-5;
-}
-
-@media screen and (max-width: 990px) {
-    .heading{
-        @apply text-lg
-    }
-}

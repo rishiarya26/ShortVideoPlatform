@@ -1,11 +1,11 @@
-import Card from "../../src/storyblokComponents/Card";
-import MainPage from "./MainPage";
+import Card from "./Card";
 import styles from "./card.module.css";
+import MainPage from "../newsroom/MainPage";
 
 export default function CardSummary({ stories, heading }) {
   return (
-    <MainPage heading={heading} cards={true} featureCard={stories[0]}>
-      <div className={styles.cardsContainer}>
+    <MainPage blogType="theEdit">
+      <div className={styles.cardContainer}>
         {stories.length > 0 ? (
           stories?.map((post) => <Card key={post.uuid} post={post} />)
         ) : (

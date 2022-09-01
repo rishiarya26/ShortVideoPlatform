@@ -1,0 +1,23 @@
+.heading {
+  @apply font-semibold text-5xl py-5;
+}
+
+.chips {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+  color: #b2b2b2;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 990px) {
+  .heading {
+    @apply text-lg;
+  }
+}

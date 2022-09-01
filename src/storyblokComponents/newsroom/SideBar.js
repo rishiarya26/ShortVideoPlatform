@@ -1,5 +1,5 @@
 import styles from './sideBar.module.css';
-import { generateUUID } from '../utils/app';
+import { generateUUID } from '../../utils/app';
 
 export default function SideBar({sideBarArray, currentPage, onChange}){
     return(

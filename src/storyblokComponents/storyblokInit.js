@@ -1,22 +1,24 @@
 import { storyblokInit, apiPlugin } from '@storyblok/react';
 import { STORYBLOK_TOKEN } from '../constants';
-import Header from "./Header";
-import VisualContent from "./visualContent";
-import Page from "./Page";
-import Description from "./Description";
-import ContentContainer from "./ContentContainer";
-import Heading from './Heading';
+import Header from "./newsroom/Header";
+import VisualContent from "./newsroom/visualContent";
+import Page from "./newsroom/Page";
+import Description from "./newsroom/Description";
+import ContentContainer from "./newsroom/ContentContainer";
+import Heading from './newsroom/Heading';
+import VideoCarousel from "./theEdit/VideoCarousel";
 
 const components = {
-    header: Header,
-    visualContent: VisualContent,
-    description: Description,
-    contentContainer: ContentContainer,
-    page: Page,
-    heading: Heading,
-  };
-export const init =  () => storyblokInit({
-    accessToken: STORYBLOK_TOKEN,
+  header: Header,
+  visualContent: VisualContent,
+  description: Description,
+  contentContainer: ContentContainer,
+  page: Page,
+  heading: Heading,
+  videoCarousel: VideoCarousel
+};
+  export const init =  () => storyblokInit({
+    accessToken: "bKQtVS1rA2boGgJl29ZwMAtt",
     use: [apiPlugin],
     components
   });
