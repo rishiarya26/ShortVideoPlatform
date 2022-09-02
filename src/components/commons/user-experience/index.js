@@ -19,7 +19,7 @@ const router = useRouter();
         #HipiStunner is Live. Win Rs 1 Lac
       </p>
       <div 
-        onClick={()=>router?.push('/stunner')}
+        onClick={()=>router?.push('/stunner?utm_source=PWA&utm_medium=Bottom_strip&utm_campaign=Stunner_PWAFeed_1sept22')}
       //  onClick={()=>{
       //     ToTrackFbEvents('appOpenCTA');
       //     toTrackFirebase('appOpenCTA');

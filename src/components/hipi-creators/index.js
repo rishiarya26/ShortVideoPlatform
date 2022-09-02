@@ -16,6 +16,9 @@ import 'swiper/components/pagination/pagination.min.css'
 import SwiperCore, {
 Autoplay,Pagination,Navigation
 } from 'swiper';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { toTrackFirebase } from '../../analytics/firebase/events';
+import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 function HipiCreators() {
@@ -37,6 +40,12 @@ const iFrameReward = {
 'desktop' : <iframe width="560" height="315" src="https://www.youtube.com/embed/MG-AP1Kt8qg?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> ,
 'mobile': <iframe width="280" height="158" src="https://www.youtube.com/embed/MG-AP1Kt8qg?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> 
 }
+
+useEffect(()=>{
+    toTrackMixpanel('screenView',{pageName : 'hipi_creators'})
+    toTrackFirebase('screenView',{page : 'hipi_creators'})
+    ToTrackFbEvents('screenView',{page : 'hipi_creators'})
+},[])
 
 return (
 <>
