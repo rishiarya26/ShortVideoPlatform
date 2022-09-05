@@ -2,31 +2,14 @@ import { StoryblokComponent } from "@storyblok/react";
 import { newsroomArticleSchemma } from "../../utils/schema";
 import { useState, useEffect } from "react";
 import MainPage from "./MainPage";
-
-function richTextRenderer(description){
-  const { content = [] } = description;
-  let result = "";
-  if(content.length > 0) {
-    content.forEach((item) => {
-      const childContent = item?.content || [];
-      if(childContent.length > 1) {
-        childContent.forEach((childItem) => {
-          result += childItem.text;
-        })
-      } else if(childContent.length > 0){
-        result += childContent[0].text;
-      }
-    })
-    return result;
-  }
-}
+import { richTextRenderer } from "../../utils/storyblokUtils";
 
 function getSchemaObject({story, url}) {
   const body = story?.content?.body || [];
   const header = body?.[0];
   const contentContainer = body?.[1];
   const headline = header?.heading;
-  const description = richTextRenderer(contentContainer?.content?.[0]?.text);
+  const description = richTextRenderer(contentContainer);
   return {
     datePublished: new Date(story?.first_published_at).toISOString().split('T')[0],
     url,

@@ -21,14 +21,6 @@ const monthNames = [
   "December",
 ];
 
-const applyEllipsis = (content = "") => {
-  const newContent = "";
-  if (content.length > 140) {
-    content = content.slice(0, 140) + " ...";
-  }
-  console.log("debug", newContent);
-};
-
 const Header = ({ blok = {}, date, blogType = "newsroom" }) => {
   const router = useRouter();
   const [url, setUrl] = useState("");

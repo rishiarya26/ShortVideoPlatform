@@ -11,7 +11,7 @@ async function storyblokData({ params, parentSlug, slug }) {
   let response = {};
   try {
     response = await storyblokApi.get(
-      `cdn/stories/${parentSlug && slug ? parentSlug + "/" + slug : ""}`,
+      `cdn/stories/${parentSlug && slug ? `${parentSlug}/${slug}` : ""}`,
       params
     );
     return Promise.resolve(response);
