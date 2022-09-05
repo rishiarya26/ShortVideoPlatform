@@ -13,6 +13,7 @@ const placement = {
   aboveBottom : 'bottom-16'
 }  
 const router = useRouter();
+ appsflyer && appsflyer();
     return (
     <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
       <p className="text-sm">
