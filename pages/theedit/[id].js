@@ -30,7 +30,7 @@ export async function getStaticProps({ params }) {
   }
   return {
     props: {
-      story: resp ? resp.data : false,
+      story: resp ? {...resp.data, primary: true} : false,
     },
     revalidate: 10, // revalidate every hour
   };

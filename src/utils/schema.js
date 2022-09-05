@@ -107,11 +107,80 @@
       }
     }
 
+    const theEditArticleSchema = ({url, headline, description, author, datePublished}) =>  ({
+      "@context": "https://schema.org/",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": url
+      },
+      "headline": headline,
+      "description": description,
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1659024507/hipi/videos/244c5c18-f508-4abc-9fa2-74a437623051/244c5c18-f508-4abc-9fa2-74a437623051_00.webp",
+        "width": "",
+        "height": ""
+      },
+      "author": {
+        "@type": "Person",
+        "name": author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hipi",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.hipi.co.in/icons/Logo_hipi.png",
+          "width": "",
+          "height": ""
+        }
+      },
+      "datePublished": datePublished
+    });
+
+    const theEditVideoSchema = ({nameSchema, description, uploadDate, contentUrl, embedUrl, thumbnailUrl}) => ({
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": nameSchema,
+      "description": description,
+      "thumbnailUrl": thumbnailUrl,
+      "uploadDate": uploadDate,
+      "contentUrl": contentUrl,
+      "embedUrl": embedUrl,
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": { "@type": "WatchAction" },
+        "userInteractionCount": 2000
+      }
+      
+    })
+
+    const theEditOrganizationalSchema = {
+      "@context": "https://schema.org",
+      "@type": "NewsMediaOrganization",
+      name: "Hipi",
+      url: "https://www.hipi.co.in/",
+      logo: "https://www.hipi.co.in/icons/Logo_hipi.png",
+      sameAs: [
+        "https://en.m.wikipedia.org/wiki/HiPi_(App)",
+        "https://www.instagram.com/hipiofficialapp/?hl=en",
+        "https://www.facebook.com/HiPiOfficialApp",
+        "https://www.hipi.co.in/",
+        "https://twitter.com/HiPiOfficialApp",
+        "https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ",
+      ],
+    };
+    
+
   export  {
       websiteSchema,
       organisationSchema,
       videoSchema,
       breadcrumbSchema,
       personSchema,
-      newsroomArticleSchemma
+      newsroomArticleSchemma,
+      theEditArticleSchema,
+      theEditVideoSchema,
+      theEditOrganizationalSchema
   }

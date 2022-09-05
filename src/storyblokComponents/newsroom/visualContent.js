@@ -2,7 +2,7 @@ import { storyblokEditable } from "@storyblok/react";
 import Image from "next/image";
 import Embedvideo from "../../storyblokComponents/theEdit/EmbedVideo";
 
-const VisualContent = ({ blok = {} }) => {
+const VisualContent = ({ blok = {}, primary=false }) => {
   const {
     type = "image",
     alt = "image",
@@ -14,7 +14,7 @@ const VisualContent = ({ blok = {} }) => {
       {type === "image" && src && (
         <Image layout="fill" objectFit="contain" src={src} alt={alt} />
       )}
-      {type === "video" && src && <Embedvideo id={src} type={videoType} />}
+      {type === "video" && src && <Embedvideo primary={primary} id={src} type={videoType} />}
     </div>
   );
 };

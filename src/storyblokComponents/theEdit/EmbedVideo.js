@@ -3,15 +3,11 @@ import { useState, useEffect } from "react";
 import Error from "next/error";
 import EmbedVideo from "../../components/embed-video";
 import { getSingleFeed } from "../../sources/feed/embed";
-import { supportedLanguages } from "../../hooks/use-translation";
 import { getEffectiveVideoUrl } from "../../utils/content";
 import { withBasePath } from "../../config";
 import { useRouter } from "next/router";
 import styles from "./embedVideo.module.css";
-
-const languageCodes = Object.keys(supportedLanguages).map(
-  (keyName) => supportedLanguages[keyName].code
-);
+import { theEditVideoSchema, videoSchema } from "../../utils/schema";
 
 const fetchVideoData = async (id) => {
   let data = {};
@@ -30,8 +26,32 @@ const fetchVideoData = async (id) => {
   return { ...data };
 };
 
+function getSchemaObj({videoDetails, url, id}){
+  const description = videoDetails?.content_description;
+  const uploadDate = new Date(videoDetails?.createdOn).toISOString();
+  const nameSchema = videoSchema({
+    name: `${videoDetails?.videoOwnersDetail?.firstName || ""} ${
+      videoDetails?.videoOwnersDetail?.lastName || ""
+    }`,
+    videoId: videoDetails?.content_id,
+    userThumnail: videoDetails?.firstFrame,
+    desc: videoDetails?.content_description,
+    createdOn: videoDetails?.createdOn,
+  });
+  const thumbnailUrl = videoDetails?.thumbnail;
+  
+  return{
+    description,
+    uploadDate,
+    contentUrl: url,
+    nameSchema,
+    thumbnailUrl,
+    embedUrl: `${location.origin}/embed/${id}`
+  }
+}
+
 // TODO enable mock mode here
-export default function Hipi({ id, type = "posterImage" }) {
+export default function Hipi({ id, type = "posterImage", primary }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [videoUrl, setVideoUrl] = useState(null);
   const [item, setItem] = useState({});
@@ -42,6 +62,7 @@ export default function Hipi({ id, type = "posterImage" }) {
     uri: "",
   });
   const router = useRouter();
+  const [schemaObj, setSchemaObj] = useState({});
 
   useEffect(async () => {
     const respData = await fetchVideoData(id);
@@ -52,6 +73,12 @@ export default function Hipi({ id, type = "posterImage" }) {
       message: respData?.message,
       uri: respData?.uri,
     });
+    const videoUrl = getEffectiveVideoUrl(respData?.data?.video_urls);
+    setVideoUrl(videoUrl);
+    if(type !== "posterImage"){
+      const resp = getSchemaObj({videoDetails: respData?.data, url: videoUrl, id});
+      setSchemaObj({...resp})
+    }
   }, []);
 
   const canShop = item?.canShop?.status || "fail";
@@ -60,11 +87,6 @@ export default function Hipi({ id, type = "posterImage" }) {
   const updateSeekbar = (percentage) => {
     setSeekedPercentage(percentage);
   };
-
-  useEffect(() => {
-    const videoUrl = getEffectiveVideoUrl(item.video_urls);
-    setVideoUrl(videoUrl);
-  }, [item]);
 
   if (resp.status === "fail") {
     return <Error message={resp.message} statusCode={resp.errorCode} />;
@@ -87,27 +109,39 @@ export default function Hipi({ id, type = "posterImage" }) {
           />
         </div>
       ) : (
-        <div id="embed-hipi" className={styles.videoWrapper}>
-          <EmbedVideo
-            updateSeekbar={updateSeekbar}
-            socialId={item.getSocialId}
-            url={videoUrl}
-            id={item.content_id}
-            comments={item.commentsCount}
-            likes={item.likesCount}
-            music={item.musicCoverTitle}
-            musicTitle={item.music_title}
-            profilePic={item.userProfilePicUrl}
-            userName={item.userName}
-            musicCoverTitle={item.musicCoverTitle}
-            hashTags={item.hashTags}
-            canShop={canShop}
-            shopCards={shopCards}
-            videoId={videoId}
-            poster={item.thumbnail}
-            seekedPercentage={seekedPercentage}
-          />
-        </div>
+        <>
+          {
+            Object.values(schemaObj).length > 0 && primary && (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(theEditVideoSchema(schemaObj)),
+                }}
+              />
+            )
+          }
+          <div id={`embed-hipi-${id}`} className={styles.videoWrapper}>
+            <EmbedVideo
+              updateSeekbar={updateSeekbar}
+              socialId={item.getSocialId}
+              url={videoUrl}
+              id={item.content_id}
+              comments={item.commentsCount}
+              likes={item.likesCount}
+              music={item.musicCoverTitle}
+              musicTitle={item.music_title}
+              profilePic={item.userProfilePicUrl}
+              userName={item.userName}
+              musicCoverTitle={item.musicCoverTitle}
+              hashTags={item.hashTags}
+              canShop={canShop}
+              shopCards={shopCards}
+              videoId={videoId}
+              poster={item.thumbnail}
+              seekedPercentage={seekedPercentage}
+            />
+          </div>
+        </>
       )}
     </>
   );
