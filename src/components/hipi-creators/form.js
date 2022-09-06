@@ -37,7 +37,7 @@ const Form = ()=>{
           console.error('mixpanel issue - submit form')
         }
         showSnackbar({message : 'Submitted Successfully'});
-        setData({name:'',genre:'',hipiHandle:'',mobile:'',email:''});
+        setData({name:'',genre:'',hipiHandle:'',mobile:'',email:'',instaHandle:''});
         setLoader(false);
         setShowMessage(true);
        }else{
@@ -109,6 +109,13 @@ const Form = ()=>{
          placeholder="Instagram handle *" 
          onChange={updateData}
          value={data.instaHandle}
+         minLength={4}
+         onKeyPress={(e)=>{  
+          let key = e?.which;
+           if (key === 32) {
+             e.preventDefault();
+           }
+       }}
          required
          />
         </div>
