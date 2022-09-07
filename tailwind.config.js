@@ -109,6 +109,7 @@ module.exports = {
         '62v':'62vh',
         '72': '18rem',
         '70v':'70vh',
+        '149':'149vw',
         '85v':'85vh'
        },
       spacing:{
