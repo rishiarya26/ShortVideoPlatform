@@ -41,8 +41,8 @@ thing users see when they open the app.</p>
    <div className="w-full justify-center flex flex-col w-feed items-center py-6 md:my-6 md:pt-0 md:mt-0">
       <div className="flex flex-col-reverse md:flex-row justify-between">
          <div className="md:w-1/2 font-bold text-gray-600 p-4 flex justify-center">
-         <div className="rounded-2xl overflow-hidden  box_shadow_1 w-96">
-            <img alt='Hipi Advertisement' src={withBasePath('business/Top View Video.gif')} /> 
+         <div className="rounded-2xl overflow-hidden  box_shadow_1  w-11/12 md:w-8/12 min-h-149 md:min-h-44">
+            <video  autoPlay="true" muted loop src={withBasePath('business/Top_view.mp4')} type="video/mp4"/> 
             </div>
          </div>
          <div className="w-full md:w-1/2 text-base font-medium text-gray-600 px-8 md:px-12 flex justify-center flex-col items-start">
@@ -60,8 +60,8 @@ thing users see when they open the app.</p>
             <h3 className="text-gray-800 py-4 text-2xlCfont-bold md:text-4xl font-bold ">Infeed Video</h3>
             <p>Let your Brand narrate the story native to Hipi content. It is sharable and can drive users to click through to an external/internal destination. </p></div>
             <div className="md:w-1/2 font-bold text-gray-600 p-4 flex justify-center">
-         <div className="rounded-2xl overflow-hidden  box_shadow_1 w-96">
-            <img alt='Hipi Advertisement' src={withBasePath('business/Infeed Video.gif')}/> 
+         <div className="rounded-2xl overflow-hidden  box_shadow_1  w-11/12 md:w-8/12 min-h-149 md:min-h-44">
+            <video  autoPlay="true" muted loop src={withBasePath('business/Infeed_video.mp4')} type="video/mp4"/> 
             </div>
          </div>
       </div>
@@ -81,8 +81,8 @@ thing users see when they open the app.</p>
    <div className="w-full justify-center flex flex-col w-feed items-center pt-6 mt-6 md:pt-12 md:mt-12">
       <div className="flex flex-col-reverse md:flex-row justify-between">
          <div className="md:w-1/2 font-bold text-gray-600 p-4 flex justify-center">
-         <div className="rounded-2xl overflow-hidden  box_shadow_1 box_shadow_1 w-96">
-            <video autoPlay="true" muted loop src={withBasePath('business/Product Discovery.mp4')} type="video/mp4"/> 
+         <div className="rounded-2xl overflow-hidden  box_shadow_1 box_shadow_1  w-11/12 md:w-8/12 min-h-149 md:min-h-44">
+            <video autoPlay="true" muted loop src={withBasePath('business/Product_discovery.mp4')} type="video/mp4"/> 
             </div>
          </div>
          <div className="w-full md:w-1/2 text-base font-medium text-gray-600 px-8 md:px-12 flex justify-center flex-col items-start">
@@ -141,7 +141,7 @@ Their baked-in virality features have high potential to increase brand awareness
       <div className="flex flex-col md:flex-row justify-between">
          <div className="md:w-1/2 font-bold text-gray-600 p-4 flex justify-center">
          <div className="rounded-2xl overflow-hidden  box_shadow_1 box_shadow_1">
-            <video width="320" height="240" autoPlay="true" muted loop src={withBasePath('videos/advertisement/Sahi_Pakde_hai.mp4')} type="video/mp4"/> 
+            <video  autoPlay="true" muted loop src={withBasePath('videos/advertisement/Sahi_Pakde_hai.mp4')} type="video/mp4"/> 
             </div>
          </div>
          <div className="w-full md:w-1/2 text-base font-medium text-gray-600 px-8 md:px-12 flex justify-center flex-col items-start">
@@ -157,8 +157,8 @@ Their baked-in virality features have high potential to increase brand awareness
             <h3 className="text-gray-800 py-4 text-2xlCfont-bold md:text-4xl font-bold ">Hashtag Challenge</h3>
             <p>Encourage the Hipi users to create content for you organically. Initiate a Hashtag custom to your brand, your need.</p></div>
             <div className="md:w-1/2 font-bold text-gray-600 p-4 flex justify-center">
-         <div className="rounded-2xl overflow-hidden  box_shadow_1 ">
-            <video width="320" height="240" autoPlay="true" muted loop src={withBasePath('business/Hashtag Challenge.mp4')} type="video/mp4"/> 
+         <div className="rounded-2xl overflow-hidden  box_shadow_1  w-11/12 md:w-8/12 min-h-149 md:min-h-44">
+            <video  autoPlay="true" muted loop src={withBasePath('business/Hashtag_challenge.mp4')} type="video/mp4"/> 
             </div>
          </div>
       </div>
