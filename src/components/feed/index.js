@@ -91,6 +91,7 @@ function Feed({ router }) {
   // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
   campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
 
+  const utmData = localStorage?.get('utm-data') || '';
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
 
@@ -567,7 +568,7 @@ function Feed({ router }) {
         </div>
       </div>
        <Landscape/> 
-      {showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+      {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
     </>
     </ComponentStateHandler>
   );

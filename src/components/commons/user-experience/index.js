@@ -13,41 +13,41 @@ const placement = {
   aboveBottom : 'bottom-16'
 }  
 const router = useRouter();
-    return (
-    <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
-      <p className="text-sm">
-        #HipiStunner is Live. Win Rs 1 Lac
-      </p>
-      <div 
-        onClick={()=>router?.push('/stunner?utm_source=PWA&utm_medium=Bottom_strip&utm_campaign=Stunner_PWAFeed_1sept22')}
-      //  onClick={()=>{
-      //     ToTrackFbEvents('appOpenCTA');
-      //     toTrackFirebase('appOpenCTA');
-      //     toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
-      //     onStoreRedirect({videoId : activeVideoId})}} 
-         className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-          {/* Open */}
-          Know More
-      </div>
-    </div>
-  )
-
-  // appsflyer && appsflyer();
-  // return (
-  //   <div className="bottom-16 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center">
+  //   return (
+  //   <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
   //     <p className="text-sm">
-  //     {FULL_EXPERIENCE}
+  //       #HipiStunner is Live. Win Rs 1 Lac
   //     </p>
-  //     <div onClick={()=>{
-  //         ToTrackFbEvents('appOpenCTA');
-  //         toTrackFirebase('appOpenCTA');
-  //         toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
-  //         onStoreRedirect({videoId : activeVideoId})}} 
+  //     <div 
+  //       onClick={()=>router?.push('/stunner?utm_source=PWA&utm_medium=Bottom_strip&utm_campaign=Stunner_PWAFeed_1sept22')}
+  //     //  onClick={()=>{
+  //     //     ToTrackFbEvents('appOpenCTA');
+  //     //     toTrackFirebase('appOpenCTA');
+  //     //     toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
+  //     //     onStoreRedirect({videoId : activeVideoId})}} 
   //        className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-  //         Open
+  //         {/* Open */}
+  //         Know More
   //     </div>
   //   </div>
   // )
+
+  // appsflyer && appsflyer();
+  return (
+    <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
+      <p className="text-sm">
+      {FULL_EXPERIENCE}
+      </p>
+      <div onClick={()=>{
+          ToTrackFbEvents('appOpenCTA');
+          toTrackFirebase('appOpenCTA');
+          toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
+          onStoreRedirect({videoId : activeVideoId})}} 
+         className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
+          Open
+      </div>
+    </div>
+  )
 
   /*******************************/  
 }
