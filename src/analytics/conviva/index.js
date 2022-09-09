@@ -128,9 +128,13 @@ export const reportPlaybackRequested = (content = {}) => {
     videoAnalytics?.setPlayer(content.ref, options);
     videoAnalytics?.reportPlaybackRequested(contentMetadata);
   }catch(e){
-    initConviva()
-    videoAnalytics?.setPlayer(content.ref, options);
-    videoAnalytics?.reportPlaybackRequested(contentMetadata);
+    try{
+      initConviva()
+      videoAnalytics?.setPlayer(content.ref, options);
+      videoAnalytics?.reportPlaybackRequested(contentMetadata);
+    }catch(e){
+      console.error(e);
+    }
   }
 }
 
