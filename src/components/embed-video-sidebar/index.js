@@ -7,6 +7,7 @@ import Comment from '../commons/svgicons/comment';
 import Share from '../commons/svgicons/share';
 import { useRouter } from 'next/router';
 import { onStoreRedirect } from '../../utils/web';
+import AdCards from '../ad-cards';
 
 function EmbedVideoSidebar(props) {
 const router = useRouter();
@@ -83,6 +84,16 @@ const router = useRouter();
       >
         <Share />
         <p className="text-sm text-center">Share</p>
+      {props.adData?.monitisation &&
+        <AdCards
+        videoId={props.videoId}
+        adCards={props?.adData?.monitisationCardArray}
+        profileFeed={false}
+        comp={"feed"}
+        pageName={props.pageName}
+        tabName={""}
+        /> 
+      }
       </div>
     </div>
   );

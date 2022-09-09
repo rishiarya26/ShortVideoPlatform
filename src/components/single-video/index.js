@@ -261,9 +261,11 @@ export default function SingleVideo(props){
         comment={props.comments}
         share={777}
         type="single"
+        pageName="single-feed"
+        adData={props.adData}
       />
     {/* </div> */}
-      {props.canShop === 'success'
+      {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'
          && ( 
            <ProductCards
              shopCards={props.shopCards}

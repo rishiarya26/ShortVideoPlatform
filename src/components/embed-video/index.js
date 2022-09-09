@@ -120,9 +120,11 @@ function Embedvideo(props) {
         comment={props.comments}
         share={777}
         type="embed"
+        pageName="embed"
+        adData={props.adData}
       />
       
-      {props.canShop === 'success'
+      {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'
          && ( 
            <ProductCards
              shopCards={props.shopCards}

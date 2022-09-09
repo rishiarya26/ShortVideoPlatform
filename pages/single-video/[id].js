@@ -133,6 +133,7 @@ export default function Hipi(params={}) {
     userId={item?.userId}
     genre={item?.genre}
     status={status}
+    adData={item?.adData}
     videoSound={item?.videoSound}
     campaignId={item?.canShop?.campaignId}
   />
