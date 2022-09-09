@@ -16,6 +16,7 @@ import LoginFollowing from '../desk-login-following';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import CircularLoaderSearch from '../commons/circular-loader-search';
 import usePreviousValue from '../../hooks/use-previous';
+import Unavailable from '../unavailable';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
@@ -280,6 +281,7 @@ const info ={
           <div className='w-feed-menu menu-sm '>
           <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
+          <Unavailable/>
             { fetchState === 'success' ?
              info?.[id]
             :
