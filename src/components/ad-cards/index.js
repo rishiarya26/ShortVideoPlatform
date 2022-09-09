@@ -5,6 +5,7 @@ import Img from '../commons/image';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { getBrand } from '../../utils/web';
 
 function AdCards({
   adCards, videoId, comp, loading, pageName, tabName
@@ -48,10 +49,10 @@ function AdCards({
               // eslint-disable-next-line no-undef
               onClick={comp === 'feed' ? 
               ()=>{
-                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})
+                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url)})
                 window.open(data?.product_url)} :
               () => {
-                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})
+                toTrackMixpanel('monetisationProductClick',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url)})
                 show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id})}
             }
             >

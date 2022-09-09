@@ -13,6 +13,7 @@ import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { getBrand } from "../../../utils/web";
 
 const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
    deleteFilteredSavedItem, idToScroll, pageName, tabName}) =>{
@@ -250,23 +251,6 @@ const onProductChange = (id)=>{
                    <Delete/>
                    {/* <p className='text-xs'>Delete</p> */}
                  </div>
-    }
-
-    const getBrand =(url)=>{
-       if(!url){
-         return ''
-       }else{
-        const origin = url.split('//')[1];
-        let finalOrigin = ''
-        if(origin?.includes('www')){
-          finalOrigin = origin.split('.')[1]
-        }else{
-          finalOrigin = origin.split('.')[0]
-        }
-        if(finalOrigin){
-          return finalOrigin 
-        }
-       }
     }
 
     return(

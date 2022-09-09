@@ -226,9 +226,8 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
-        globalCommonEvents['Product Name'] = item?.productName || 'NA';
+        globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-        globalCommonEvents['Brand URL'] = item?.brandUrl || 'NA';
 
         track('Monetisation Product Impression', globalCommonEvents)
        },
@@ -236,9 +235,8 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
-        globalCommonEvents['Product Name'] = item?.productName || 'NA';
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-        globalCommonEvents['Brand URL'] = item?.brandUrl || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      
