@@ -32,6 +32,7 @@ const LoadComp = () => (<Loading />);
   const [retry, setRetry] = useState(false);
   const [reload, setReload] = useState(false);
   const [tokens, setTokens] = useState(localStorage.get('tokens') || false);
+  const [loadFeed, setLoadFeed] = useState(true);
 
   const preTokensValue = usePreviousValue({tokens});
   const tokensPresent = localStorage.get('tokens') || null;
@@ -95,7 +96,9 @@ const LoadComp = () => (<Loading />);
     let updateItems = [];
      try{
        const data = await fetchData({ type: id });
-       console.log('GOT Inital ITEMS *****', data?.data)
+       console.log("data",data)
+       if(data?.status !== 'notFound'){
+         console.log('GOT Inital ITEMS *****', data?.data)
        if(data?.data?.length > 0){
         updateItems = updateItems.concat(data?.data);
          console.log('appended Inital',updateItems);
@@ -105,6 +108,10 @@ const LoadComp = () => (<Loading />);
        }else{
          setFetchState('success');
          setItems([]);
+       }}else{
+         console.log("in else")
+         setFetchState('notFound')
+        //  setLoadFeed(false);
        }
       }
      catch(err){
@@ -280,14 +287,20 @@ const info ={
           <div className='w-feed-menu menu-sm '>
           <DeskMenu width={'w-feed-menu menu-sm-w'}/>
           </div>
-            { fetchState === 'success' ?
-             info?.[id]
+          
+           { fetchState === 'success' ?
+            info?.[id]
             :
             fetchState === 'pending' ?
             <LoadComp /> :
-            fetchState === 'fail' &&
+            fetchState === 'fail' ?
             <ErrorComp retry={doRetry}/>
+            : fetchState === 'notFound' &&
+            <div className='flex justify-center items-center notFound'>Not Found
+            <div onClick={()=>{window.location.href = '/feed/for-you'}}></div>
+            </div>
             }
+           
         </div>
        <DeskDownloadAppGoTop/>
     </div>

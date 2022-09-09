@@ -196,7 +196,12 @@ export default function SingleVideo(props){
     >
     
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video
+      <>{ props?.status === 'fail' ? 
+      <div className='notFound'>
+      Not Found
+      <div onClick={()=>window.location.href = '/feed/for-you'}></div>
+      </div>
+      :<><video
         // autoPlay
         onContextMenu={(e)=>{
           e.preventDefault();
@@ -234,7 +239,7 @@ export default function SingleVideo(props){
       </div>}
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
-      </div>
+      </div> 
          {/* <div className="flex relative flex-col p-3"> */}
     <VideoFooter
         musicTitle={props.musicTitle}
@@ -264,7 +269,9 @@ export default function SingleVideo(props){
              comp="single"
            />
          )} 
+         </> }</>
     </div>
+    
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}

@@ -31,7 +31,7 @@ function transformSuccess(resp) {
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     console.log("rrrr",responseData)
-    if (videos?.length) {
+    if (videos?.length > 0) {
       const payloadObject = {};
       videos.forEach(d => {
         payloadObject.data_id = d?.objectID || null;

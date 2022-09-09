@@ -25,7 +25,12 @@ function transformSuccess(resp) {
     if (!isSuccess(resp)) {
       return transformError(data);
     }
-    payload.status = 'success';
+    if(data.loadFeed){
+      payload.status = 'success';
+    }else{
+      payload.status = 'notFound'
+    }
+   
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
 
@@ -84,7 +89,8 @@ function transformSuccess(resp) {
       
       payloadData.push(payloadObject);
     });
-    if(data?.firstVideo){
+    console.log("FV",data)
+    if(data?.loadFeed && data?.firstVideo){
       // data.firstVideo.video_url = data?.firstVideo?.video_urls[networkConnection];
       payloadData?.splice(0,0,data?.firstVideo);
     }

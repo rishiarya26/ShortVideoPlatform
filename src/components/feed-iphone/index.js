@@ -91,6 +91,7 @@ function FeedIphone({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
+  const [loadFeed, setLoadFeed] = useState(true);
   // const [showAppBanner, setShowAppBanner] = useState(false);
 
   const { t } = useTranslation();
@@ -136,6 +137,7 @@ function FeedIphone({ router }) {
   const preShopData = usePreviousValue({shop});
 
   const onDataFetched = data => {
+    if(data.status !== 'notFound'){
     if(data){  
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
@@ -149,6 +151,9 @@ function FeedIphone({ router }) {
         setInitialLoadComplete(true);
         setFirstApiCall(false);
     }
+  }else{
+    setLoadFeed(false);
+  }
   }
 
   /* mixpanel - monetization cards impression */
@@ -458,6 +463,9 @@ console.log('errorrr',e)
                 activeId && setActiveVideoId(activeId);
               }}
             >
+              {loadFeed ? 
+              <>
+              
               {
                 (validItemsLength ? toShowItems.map((
                   item, id
@@ -555,6 +563,10 @@ console.log('errorrr',e)
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
+              </> : <div className='bg-gray-400 justify-center items-center'>Not Found
+              <div className='pl-10' onClick={()=>{window.location.href = '/feed/for-you'}}>reload</div>
+              </div>
+              }
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
