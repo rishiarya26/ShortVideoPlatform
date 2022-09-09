@@ -33,6 +33,7 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import Unavailable from '../unavailable';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -571,6 +572,7 @@ function Feed({ router }) {
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
+        <Unavailable/>
         {info?.[id]}
         
         <div id="cb_tg_d_wrapper">

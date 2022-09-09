@@ -133,7 +133,7 @@ export const reportPlaybackRequested = (content = {}) => {
       videoAnalytics?.setPlayer(content.ref, options);
       videoAnalytics?.reportPlaybackRequested(contentMetadata);
     }catch(e){
-      console.error(e);
+      console.error(e,"setplayer error");
     }
   }
 }

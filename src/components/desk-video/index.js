@@ -54,7 +54,12 @@ useEffect(()=>{
    if(!!currentRef?.getAttribute('src') && active === true){
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
-      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+      try{
+         reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+      }catch(e){
+         console.error(e,"setplayer error");
+      }
+      
    }
 },[active]);
 
@@ -78,7 +83,12 @@ useEffect(() => {
 const convivaReplaySession = (e) =>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(videoAnalytics !== null) reportPlaybackEnded();
-   reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+   try{
+      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+   }catch(e){
+      console.error(e,"setplayer error");
+   }
+   
 }
 
 const handleSeeked = () => {
