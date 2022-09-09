@@ -523,9 +523,7 @@ function Feed({ router }) {
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> : <div className='bg-gray-400 justify-center items-center'>Not Found
-              <div className='pl-10' onClick={()=>{window.location.href = '/feed/for-you'}}>reload</div>
-              </div>}
+              </> : <Unavailable/>}
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
@@ -572,7 +570,6 @@ function Feed({ router }) {
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>
-        <Unavailable/>
         {info?.[id]}
         
         <div id="cb_tg_d_wrapper">

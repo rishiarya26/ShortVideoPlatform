@@ -12,6 +12,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
+import Unavailable from '../unavailable';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -197,10 +198,7 @@ export default function SingleVideo(props){
     
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <>{ props?.status === 'fail' ? 
-      <div className='notFound'>
-      Not Found
-      <div onClick={()=>window.location.href = '/feed/for-you'}></div>
-      </div>
+      <Unavailable/>
       :<><video
         // autoPlay
         onContextMenu={(e)=>{

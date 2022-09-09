@@ -33,6 +33,7 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import Unavailable from '../unavailable';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -563,9 +564,7 @@ console.log('errorrr',e)
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> : <div className='bg-gray-400 justify-center items-center'>Not Found
-              <div className='pl-10' onClick={()=>{window.location.href = '/feed/for-you'}}>reload</div>
-              </div>
+              </> :<Unavailable/>
               }
               <FooterMenu 
               videoId={activeVideoId}

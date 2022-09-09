@@ -297,9 +297,7 @@ const info ={
             fetchState === 'fail' ?
             <ErrorComp retry={doRetry}/>
             : fetchState === 'notFound' &&
-            <div className='flex justify-center items-center notFound'>Not Found
-            <div onClick={()=>{window.location.href = '/feed/for-you'}}></div>
-            </div>
+            <Unavailable/>
             }
            
         </div>
