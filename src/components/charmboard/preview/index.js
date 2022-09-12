@@ -154,15 +154,15 @@ const onProductChange = (id)=>{
     const onTabChange=(selected)=>{
       try{
         selected === 0 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId, campaignId: items?.campaignId || 'NA'}) :
         selected === 1 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId}):
+        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId, campaignId: items?.campaignId || 'NA'}):
         selected === 2 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId, campaignId: items?.campaignId || 'NA'}) :
         selected === 3 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId, campaignId: items?.campaignId || 'NA'}) :
         selected === 4 &&
-        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId})
+        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId, campaignId: items?.campaignId || 'NA'})
      }catch(e){
         console.error('mixpanel issue in tab change on shop')
      }
@@ -316,6 +316,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={items?.campaignId}
          />
          </div>
         })}
@@ -346,6 +347,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={items?.campaignId}
          />
          </div>
          ))}
@@ -399,6 +401,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             campaignId={items?.campaignId}
          />
          </div>
           ))}
@@ -454,6 +457,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={items?.campaignId}
            />
            </div>
           ))}
@@ -489,6 +493,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
+             campaignId={items?.campaignId}
            />
            </div>
           ))}

@@ -19,7 +19,8 @@ function transformSuccess(resp) {
       accessories : [],
       beauty : [],
       hair : [],
-      recipe : []
+      recipe : [],
+      campaignId: "",
     }
     data?.cards.forEach((item, id)=>{
         item?.category === 'outfit' && details.outfit.push(item);
@@ -30,6 +31,7 @@ function transformSuccess(resp) {
 
     })
     payload.data = details;
+    payload.data.campaignId = data?.cardCampMap?.[0]?.ad_campaign_id || "";
 
     return payload;
   } catch (err) {

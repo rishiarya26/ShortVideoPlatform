@@ -7,11 +7,11 @@ import Img from "../../commons/image"
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange}) =>{
+   onProductChange, campaignId}) =>{
 
   
       useEffect(()=>{
-         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})
+         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
       },[productIdChange])
 
       const onProductInView =(entry)=>{
@@ -26,7 +26,7 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
            });  
 
         const onProductClick= ()=>{
-         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})  
+         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
          window?.open(shopLink)
         }  
  
