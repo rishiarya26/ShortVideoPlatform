@@ -33,7 +33,7 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
-import Unavailable from '../unavailable';
+import VideoUnavailable from '../video-unavailable';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -564,7 +564,7 @@ console.log('errorrr',e)
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> :<Unavailable/>
+              </> :<VideoUnavailable/>
               }
               <FooterMenu 
               videoId={activeVideoId}

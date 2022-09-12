@@ -17,7 +17,7 @@ import DeskMenu from '../../src/components/desk-menu';
 import Header from '../../src/components/desk-header';
 import { videoSchema } from '../../src/utils/schema';
 import { getCanonicalUrl } from '../../src/utils/web';
-import Unavailable from '../../src/components/unavailable';
+import VideoUnavailable from '../../src/components/video-unavailable';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -102,7 +102,7 @@ export default function Hipi(params={}) {
     comp = 'deskSingleVideo'
     />
     </div> : 
-   <Unavailable/>
+   <VideoUnavailable/>
     }
     </div>
     </div>,

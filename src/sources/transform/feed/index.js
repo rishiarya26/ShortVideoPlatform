@@ -85,8 +85,6 @@ function transformSuccess(resp) {
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
 
-
-      
       payloadData.push(payloadObject);
     });
     console.log("FV",data)

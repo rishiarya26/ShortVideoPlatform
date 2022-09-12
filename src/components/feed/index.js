@@ -33,7 +33,7 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
-import Unavailable from '../unavailable';
+import VideoUnavailable from '../video-unavailable';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -523,7 +523,7 @@ function Feed({ router }) {
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> : <Unavailable/>}
+              </> : <VideoUnavailable/>}
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}

@@ -16,7 +16,7 @@ import LoginFollowing from '../desk-login-following';
 import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import CircularLoaderSearch from '../commons/circular-loader-search';
 import usePreviousValue from '../../hooks/use-previous';
-import Unavailable from '../unavailable';
+import VideoUnavailable from '../video-unavailable';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
@@ -297,7 +297,7 @@ const info ={
             fetchState === 'fail' ?
             <ErrorComp retry={doRetry}/>
             : fetchState === 'notFound' &&
-            <Unavailable/>
+            <VideoUnavailable/>
             }
            
         </div>
