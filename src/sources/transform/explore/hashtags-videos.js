@@ -58,6 +58,7 @@ function transformSuccess(resp) {
         payloadObject.firstFrame= d?.firstFrame || null;
         payloadObject.tag = d?.tag?.name || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
+        payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
 
         payloadData.push(payloadObject);
       });

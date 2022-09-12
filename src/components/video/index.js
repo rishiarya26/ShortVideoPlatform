@@ -378,6 +378,7 @@ function Video(props) {
          showBanner={props?.showBanner}
          videoId={props.id}
          userVerified = {props?.userVerified}
+         videoSoundAvailable={props?.videoSound}
          />
       {/* TO-DO  comdition acc to comp */}
       <VideoSidebar

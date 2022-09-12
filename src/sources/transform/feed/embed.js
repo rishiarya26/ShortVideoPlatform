@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { isObjectEmpty } from '../../../network/utils';
 
 const msgMap = {
   200: 'ok'
@@ -55,6 +56,7 @@ function transformSuccess(resp) {
         payloadObject.videoOwnersDetail = d?.videoOwners || null;
         payloadObject.firstFrame = d?.firstFrame || null;
         payloadObject.createdOn = d?.createdOn || null
+        payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
       });
       payload.data = payloadObject;
     } else {

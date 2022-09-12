@@ -15,10 +15,13 @@ import fallbackUser from '../../../public/images/users.png'
 import EmbedSeekbar from '../emded-seekbar';
 import UnMute from '../commons/svgicons/unmute';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from '../../analytics/conviva';
+import SnackCenter from '../commons/snack-bar-center';
 function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
-userVerified, convivaItemInfo}) {
+userVerified, convivaItemInfo, videoSound,checkNoSound,
+ noSound, activeIndex, fetchState
+}) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
 const [play, setPlay] = useState(false);
@@ -56,6 +59,7 @@ useEffect(()=>{
       if(videoAnalytics !== null) reportPlaybackEnded();
       reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
    }
+   checkNoSound();
 },[active]);
 
 
@@ -192,6 +196,7 @@ return (
       description={description}
       music_title={music_title}
       userVerified={userVerified}
+      videoSound={videoSound}
      />
       <div className="Video flex items-end">
       <div className="desk-feed rounded-lg overflow-hidden relative cursor-pointer" >
@@ -239,13 +244,12 @@ return (
          >
         <Pause/>
       </div>
-   
-      {muted ? <div onClick={()=>toggleMute(false)} className="cursor-pointer absolute bottom-8 opacity-0 right-4">
+      {videoSound ? muted ? <div onClick={()=>toggleMute(false)} className="cursor-pointer absolute bottom-8 opacity-0 right-4">
        <Mute/>
       </div> : 
       <div onClick={()=>toggleMute(true)} className=" cursor-pointer absolute bottom-8 opacity-0 right-4">
         <UnMute/>
-      </div>}
+      </div> : ''}
       <div className='opacity-0'>
       <EmbedSeekbar type='desk' seekedPercentage={seekedPercentage} />
       </div>
@@ -262,6 +266,8 @@ return (
    </div>
   
   </div> */}
+   {!videoSound  && seekedPercentage > 0 ? <SnackCenter showSnackbar={noSound}/> : ''}
+
 </div>
    <VideoSidebar
       likesCount={likesCount}

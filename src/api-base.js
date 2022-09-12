@@ -20,7 +20,7 @@ export const apiBaseEndPoints = {
   },
   development: {
     test: 'https://api.github.com',
-    hipi: 'https://hipigwapi.zee5.com/api',
+    hipi: 'http://3.6.36.112:8000/api',
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
     charmboard:

@@ -86,6 +86,7 @@ export default function Hipi(params={}) {
     commentCount={item?.commentCount}
     userVerified = {item?.verified}
     comp = 'deskSingleVideo'
+    videoSound={item?.videoSound}
     />
     </div>
     </div>
@@ -111,6 +112,7 @@ export default function Hipi(params={}) {
     description={item?.content_description}
     userId={item?.userId}
     genre={item?.genre}
+    videoSound={item?.videoSound}
   />
   }
 

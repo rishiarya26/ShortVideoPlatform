@@ -26,6 +26,9 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import { isObjectEmpty } from '../../network/utils';
+import SnackBar from '../commons/snackbar';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore.use([Mousewheel]);
 
@@ -44,6 +47,15 @@ function SearchFeed({ router }) {
   const [muted, setMuted] = useState(true)
   const [initialPlayStarted, setInitialPlayStarted] = useState(false)
   const [videoDurationDetails, setVideoDurationDetails] = useState({totalDuration: null, currentT:0})
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
+  
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
@@ -102,6 +114,7 @@ function SearchFeed({ router }) {
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -122,6 +135,7 @@ function SearchFeed({ router }) {
       console.log('data',info[type])
       data && setItems(info?.[type]);
       data && setActiveVideoId(videoId);
+      // checkNoSound();
   };
 
     /* mixpanel - monetization cards impression */
@@ -192,6 +206,9 @@ function SearchFeed({ router }) {
     setShop(shopContent);
   };
 
+  useEffect(()=>{
+    checkNoSound();
+  },[videoActiveIndex])
   useEffect(() => {
     setShop({});
     items?.[videoActiveIndex]?.shoppable && getCanShop();
@@ -366,10 +383,11 @@ function SearchFeed({ router }) {
              comp="profile"
              profileFeed
              loading={loading}
-             muted={muted}
+             muted={(items?.[videoActiveIndex]?.sound && (!isObjectEmpty(items[videoActiveIndex].sound) === false)) ? true : muted}
              player={'multi-player-muted'}
              description={item?.description}
              adData={shop?.adData}
+             videoSound={(item?.sound && (!isObjectEmpty(item.sound) === false)) ? false : true}
           />
           </SwiperSlide>
           )})}
@@ -379,11 +397,12 @@ function SearchFeed({ router }) {
               >
              <CircularProgress/>
               </div>
+              {items?.[videoActiveIndex]?.sound && isObjectEmpty(items[videoActiveIndex].sound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
-              >
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.sound && !isObjectEmpty(items[videoActiveIndex].sound) && muted) ? 'flex' : 'none' }}
+              > 
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>
                 <Mute/>

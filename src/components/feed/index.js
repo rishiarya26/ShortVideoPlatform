@@ -33,6 +33,7 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -81,6 +82,8 @@ function Feed({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('');
   const [showAppBanner, setShowAppBanner] = useState(false);
+  const [noSound, setNoSound] = useState(false);
+  
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
 
@@ -147,6 +150,7 @@ function Feed({ router }) {
         setInitialLoadComplete(true);
         setFirstApiCall(false);
         setActiveVideoId(videoIdInitialItem);
+        // checkNoSound();
         // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
     }else{
@@ -170,6 +174,7 @@ function Feed({ router }) {
       ToTrackFbEvents('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       toTrackFirebase('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -315,6 +320,8 @@ function Feed({ router }) {
       toShowItems.length > 0 && decrementingShowItems();
     }
     if(videoActiveIndex === 6) showAppBanner===false && setShowAppBanner(true);
+
+   checkNoSound();
   },[videoActiveIndex])
 
   useEffect(() => {
@@ -329,6 +336,13 @@ function Feed({ router }) {
     /*****************************/
     setSaveLook(value);
   };
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
 
   const convivaItemInfo = (item = {}) => {
     let obj = {};
@@ -419,6 +433,7 @@ function Feed({ router }) {
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
+
                 activeId && setActiveVideoId(activeId);
               }}
             >
@@ -459,7 +474,7 @@ function Feed({ router }) {
                       comp="feed"
                       ProfileFeed
                       initialPlayButton={initialPlayButton}
-                      muted={muted}
+                      muted={item?.videoSound === false ? true : muted}
                       loading={loading}
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
@@ -476,6 +491,7 @@ function Feed({ router }) {
                       index={id}
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
+                      videoSound={item?.videoSound}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
@@ -492,7 +508,7 @@ function Feed({ router }) {
               >
              <CircularProgress/>
               </div>}
-
+                {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
             {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -504,7 +520,7 @@ function Feed({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>

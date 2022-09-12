@@ -2,6 +2,7 @@ import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 import { getNetworkConnection } from '../../../utils/device-details';
+import { isObjectEmpty } from '../../../network/utils';
 
 const msgMap = {
   200: 'ok'
@@ -79,8 +80,8 @@ function transformSuccess(resp) {
       payloadObject.language = d?.language?.name || '';
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
-
-
+      payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
+    //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);
     });

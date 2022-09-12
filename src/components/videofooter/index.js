@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
+import useSnackbar from '../../hooks/use-snackbar';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -31,9 +32,11 @@ function VideoFooter({
   adCards,
   showBanner,
   videoId,
-  userVerified
+  userVerified,
+  videoSoundAvailable=true
 }) {
   const [loaded, setLoaded] = useState(false);
+  const {showSnackbar} = useSnackbar();
   // TO-DO common classes
   const type = {
     profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
@@ -84,7 +87,6 @@ function VideoFooter({
             Shoppable
           </div>
         )} */}
-
         <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
@@ -107,14 +109,21 @@ function VideoFooter({
             ))} */}
         </div>
         {/* {musicCoverTitle}</p> */}
-       {musicTitle && <div className="w-8/12 my-1 text-sm">
-          {music[comp]}
+       {videoSoundAvailable ? musicTitle && 
+        <div className="w-8/12 my-1 text-sm">
           <span onClick={()=>{
             device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})
             device === 'android' &&  showBanner && showBanner()}} className=" my-1 text-sm w-4/12">
             <Marquee text={musicTitle} />
           </span>
-        </div>}
+        </div>
+        : 
+        <div className="w-8/12 my-1 text-sm">
+          <span className=" my-1 text-sm w-4/12 text-gray-300">
+            Audio unavailable
+          </span>
+        </div>
+       }
       </div>
     </div>
   );
