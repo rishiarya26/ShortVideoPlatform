@@ -189,7 +189,6 @@ export default function SingleVideo(props){
     }
     /******************************/
   };
-console.log("subbu", props);
   return (
     <div className="flex flex-col overflow-hidden">
     <div

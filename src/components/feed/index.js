@@ -38,8 +38,6 @@ import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
-import SnackCenter from '../commons/snack-bar-center';
-import { getBrand } from '../../utils/web';
 
 SwiperCore?.use([Mousewheel]);
 
