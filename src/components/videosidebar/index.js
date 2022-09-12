@@ -38,7 +38,7 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA"
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -353,6 +353,7 @@ const handleSaveMoments = () =>{
    comp={comp}
    pageName={pageName}
    tabName={tabName}
+   campaignId={campaignId}
    /> 
 }
       {!isAdShowVisible && canShop && (!profileFeed
@@ -365,6 +366,7 @@ const handleSaveMoments = () =>{
           comp={comp}
           pageName={pageName}
           tabName={tabName}
+          campaignId={campaignId}
           />
           :
           <div

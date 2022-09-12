@@ -128,6 +128,7 @@ function Embedvideo(props) {
              shopCards={props.shopCards}
              videoId={props.videoId}
              comp="embed"
+             campaignId={props?.campaignId || 'NA'}
            />
          )}
     </div>

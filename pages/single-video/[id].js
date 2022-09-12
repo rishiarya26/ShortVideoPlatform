@@ -134,6 +134,7 @@ export default function Hipi(params={}) {
     genre={item?.genre}
     status={status}
     videoSound={item?.videoSound}
+    campaignId={item?.canShop?.campaignId}
   />
   }
 

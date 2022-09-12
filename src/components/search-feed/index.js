@@ -388,6 +388,7 @@ function SearchFeed({ router }) {
              description={item?.description}
              adData={shop?.adData}
              videoSound={(item?.sound && (!isObjectEmpty(item.sound) === false)) ? false : true}
+             campaignId={shop?.campaignId}
           />
           </SwiperSlide>
           )})}

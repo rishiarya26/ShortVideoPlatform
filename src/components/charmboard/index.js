@@ -11,7 +11,7 @@ import Loader from './loader';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import LoaderSavedItems from './loader-saved-items';
 
-function Charmboard({videoId, setClose, idToScroll,pageName, tabName }) {
+function Charmboard({videoId, setClose, idToScroll,pageName, tabName, campaignId="NA" }) {
 const [charms, setCharms] = useState(null)   
 const [selectedIndex, setSelectedIndex] = useState(0);
 const [savedItems, setSavedItems] = useState([])
@@ -43,7 +43,7 @@ const getTopCharms = async() =>{
 useEffect(()=>{getSavedMoments()
    // console.log('ading',idToScroll)
  try{
-      toTrackMixpanel('shopPageImp',{pageName:pageName,tabName:tabName},{content_id:videoId})
+      toTrackMixpanel('shopPageImp',{pageName:pageName,tabName:tabName},{content_id:videoId, campaignId})
    }catch(e){
       console.error('mixpanel issue in shop page impression',e);
    }

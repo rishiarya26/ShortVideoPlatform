@@ -190,6 +190,7 @@ export const toTrackMixpanel = (type, value, item) => {
       'shopPageImp' :  ()=>{
         addUgcId();
         addPageTabName();
+        globalCommonEvents['Campaign ID'] = item?.campaignId || 'NA';
         track('Shopping Page Impression', globalCommonEvents)
        },
       'shoppingPopUp' :  ()=>{
@@ -230,7 +231,7 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
         globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-
+        globalCommonEvents['Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
        },
        'monetisationProductClick' :  ()=>{
@@ -239,6 +240,7 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
+        globalCommonEvents['Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      

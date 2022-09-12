@@ -180,7 +180,7 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url)})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
   },[shop])
  /************************ */ 
 
@@ -317,6 +317,7 @@ function Feed({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId= response?.campaignId;
     } catch (e) {
       // isShoppable = false;
     }
@@ -551,6 +552,7 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
+                      campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
                     />}
@@ -605,6 +607,7 @@ function Feed({ router }) {
               showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
+              campaignId={shop?.campaignId}
               />
             </Swiper>
             

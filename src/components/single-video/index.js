@@ -189,7 +189,7 @@ export default function SingleVideo(props){
     }
     /******************************/
   };
-
+console.log("subbu", props);
   return (
     <div className="flex flex-col overflow-hidden">
     <div
@@ -270,6 +270,7 @@ export default function SingleVideo(props){
              shopCards={props.shopCards}
              videoId={props.videoId}
              comp="single"
+             campaignId={props?.campaignId || 'NA'}
            />
          )} 
          </> }</>
@@ -278,8 +279,9 @@ export default function SingleVideo(props){
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
-              type=""
+              type={props.canShop === "success" ? "shop" : "noShop"}
               selectedTab=""
+              campaignId={props?.campaignId || 'NA'}
             />
     </div>
   );

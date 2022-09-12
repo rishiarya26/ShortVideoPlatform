@@ -242,7 +242,7 @@ function HashTagFeedIphone({ router }) {
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
-      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url)})});
+      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
     },[shop])
    /************************ */ 
   
@@ -307,6 +307,7 @@ function HashTagFeedIphone({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -452,6 +453,7 @@ function HashTagFeedIphone({ router }) {
                       pageName={pageName}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                     />
 
                   </SwiperSlide>
