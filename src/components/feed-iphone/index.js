@@ -34,6 +34,7 @@ import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import VideoUnavailable from '../video-unavailable';
+import { isReffererGoogle } from '../../utils/web';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -153,6 +154,9 @@ function FeedIphone({ router }) {
         setFirstApiCall(false);
     }
   }else{
+    if(isReffererGoogle){
+      window.location.href = '/feed/for-you';
+    }
     setLoadFeed(false);
   }
   }

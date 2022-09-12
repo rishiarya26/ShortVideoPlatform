@@ -16,7 +16,7 @@ import VideoDetail from '../../src/components/desk-video-detail';
 import DeskMenu from '../../src/components/desk-menu';
 import Header from '../../src/components/desk-header';
 import { videoSchema } from '../../src/utils/schema';
-import { getCanonicalUrl } from '../../src/utils/web';
+import { getCanonicalUrl, isReffererGoogle } from '../../src/utils/web';
 import VideoUnavailable from '../../src/components/video-unavailable';
 
 const languageCodes = Object.keys(supportedLanguages).map(
@@ -51,8 +51,12 @@ export default function Hipi(params={}) {
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
     console.log('created-on',item);
+    if(status === 'fail' && isReffererGoogle()){
+      window.location.href='/feed/for-you'
+   }
   }, []);
   const device = getItem('device-type')
+
 
   // if (status === 'fail') {
   //   if(device === 'desktop'){

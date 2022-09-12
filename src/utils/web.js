@@ -106,6 +106,11 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   }
   window?.open(link);
 }
+
+ const isReffererGoogle = ()=>{
+  const refferer = localStorage.get('refferer') || '';
+  return refferer?.includes(refferer);
+}
            
 export {
   CopyToClipBoard,
@@ -116,6 +121,7 @@ export {
   getUrl,
   getCanonicalUrl,
   getReffererPage,
-  onStoreRedirect
+  onStoreRedirect,
+  isReffererGoogle
 };
 
