@@ -183,11 +183,17 @@ return (
                      <span className="pl-100 inline-block animate-marquee">{music_title}</span>
                   </p>
                </span></>:
+               <>
+               <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
+                  <path className="st0" fill="#000" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z"></path>
+               </svg>
               <span className=" my-1 text-sm w-4/12">
                   <p className="m-0 m-auto whitespace-nowrap overflow-hidden">
                      <span className="inline-block text-gray-400">Audio Unavailable</span>
                   </p>
-               </span>}
+               </span>
+               </>
+               }
                {/* {!videoSound && <div className='text-red-600 text-xs'>Sound for this video is not available</div>} */}
             </div>
          </div>

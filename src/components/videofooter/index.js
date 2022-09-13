@@ -111,6 +111,7 @@ function VideoFooter({
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 
         <div className="w-8/12 my-1 text-sm">
+          {music[comp]}
           <span onClick={()=>{
             device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId})
             device === 'android' &&  showBanner && showBanner()}} className=" my-1 text-sm w-4/12">
@@ -119,6 +120,7 @@ function VideoFooter({
         </div>
         : 
         <div className="w-8/12 my-1 text-sm">
+          {music[comp]}
           <span className=" my-1 text-sm w-4/12 text-gray-300">
             Audio unavailable
           </span>
