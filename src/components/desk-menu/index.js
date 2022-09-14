@@ -33,7 +33,7 @@ const links={
   twitter : 'https://twitter.com/HiPiOfficialApp',
   instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
   youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ',
-  wiki : 'https://en.m.wikipedia.org/wiki/HiPi_(App)'
+  wiki : 'https://en.wikipedia.org/wiki/HiPi_(App)'
 }
 
 const DeskMenu = ({handleUpClick, handleDownClick, width='w-full'}) =>{
