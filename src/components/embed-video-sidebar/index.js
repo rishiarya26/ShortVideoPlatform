@@ -45,7 +45,7 @@ const router = useRouter();
   }
 
   return (
-    <div className={`right-0 text-white ${info[props.type]}`}>
+    <div className={`right-0 text-white flex flex-col items-end ${info[props.type]}`}>
       <div
         onClick={() => {
            router && router?.push(`/@${props?.userName}`);
@@ -84,16 +84,18 @@ const router = useRouter();
       >
         <Share />
         <p className="text-sm text-center">Share</p>
-      {props.adData?.monitisation &&
-        <AdCards
-        videoId={props.videoId}
-        adCards={props?.adData?.monitisationCardArray}
-        profileFeed={false}
-        comp={"feed"}
-        pageName={props.pageName}
-        tabName={""}
-        /> 
-      }
+      </div>
+      <div style={{width: "136px", height: "90px"}}>
+          {props.adData?.monitisation &&
+            <AdCards
+            videoId={props.videoId}
+            adCards={props?.adData?.monitisationCardArray}
+            profileFeed={false}
+            comp={"feed"}
+            pageName={props.pageName}
+            tabName={""}
+            /> 
+          }
       </div>
     </div>
   );

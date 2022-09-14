@@ -1,0 +1,47 @@
+/*eslint-disable @next/next/no-img-element*/
+import { useRef } from 'react';
+import { withBasePath } from '../../../config';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+import 'swiper/components/navigation/navigation.min.css'
+import SwiperCore, { Navigation } from 'swiper';
+SwiperCore.use([Navigation]);
+
+export default function Carousel({slideData, Children}){
+  const nextButtonRef = useRef(null);
+  const prevButtonRef = useRef(null);
+  return(
+    <div className="relative" style={{ width: "120px"}}>
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={2}
+              modules={[Navigation]}
+              navigation={{
+                nextEl: nextButtonRef.current,
+                prevEl: prevButtonRef.current,
+                disabledClass: "hidden",
+              }}
+              className="w-full h-full relative"
+            >
+              {slideData.length > 0 &&
+                slideData.map((data, id) => (
+                  <SwiperSlide key={id}>
+                    <Children data={data} />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+            <div
+              className="w-6 h-6 absolute -left-4 top-1/2 transform -translate-y-1/2 z-10"
+              ref={prevButtonRef}
+            >
+              <img src={withBasePath("icons/backarrow.svg")} />
+            </div>
+            <div
+              className="w-6 h-6 absolute -right-4 top-1/2 transform -translate-y-1/2 z-10"
+              ref={nextButtonRef}
+            >
+              <img src={withBasePath("icons/frontarrow.svg")} />
+            </div>
+          </div>
+  )
+}
