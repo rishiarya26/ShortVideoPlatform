@@ -10,6 +10,7 @@
  import FbW from '../commons/svgicons/facebook-white';
  import InstagramW from '../commons/svgicons/instagram-white';
  import TwitterW from '../commons/svgicons/twitter-white';
+import WikiWhite from '../commons/svgicons/wikipedia-white';
  
  const DeskQr = dynamic(
      () => import('../desk-qr-code'),
@@ -28,7 +29,8 @@
      facebook : 'https://www.facebook.com/HiPiOfficialApp',
      twitter : 'https://twitter.com/HiPiOfficialApp',
      instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en',
-     youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ'
+     youtube : 'https://www.youtube.com/channel/UCXEcEOyCcXzEU4UCLtBL6SQ',
+     wiki:'https://en.wikipedia.org/wiki/HiPi_(App)'
    }
      //Desktop links
      const stores = {
@@ -96,6 +98,9 @@
              </a>
              <a target="_blank" href={links.youtube} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
                  <Youtube/>
+             </a>
+             <a target="_blank" href={links.wiki} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
+                 <WikiWhite/>
              </a>
              {/* <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
                <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
