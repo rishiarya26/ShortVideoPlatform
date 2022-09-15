@@ -11,7 +11,7 @@ export default function Carousel({slideData, Children}){
   const nextButtonRef = useRef(null);
   const prevButtonRef = useRef(null);
   return(
-    <div className="relative" style={{ width: "120px"}}>
+    <div className="relative" style={{ width: "122px"}}>
             <Swiper
               spaceBetween={10}
               slidesPerView={2}
@@ -22,6 +22,7 @@ export default function Carousel({slideData, Children}){
                 disabledClass: "hidden",
               }}
               className="w-full h-full relative"
+              draggable
             >
               {slideData.length > 0 &&
                 slideData.map((data, id) => (
