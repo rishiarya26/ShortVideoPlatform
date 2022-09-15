@@ -22,7 +22,7 @@ export default function Carousel({slideData, Children}){
                 disabledClass: "hidden",
               }}
               className="w-full h-full relative"
-              draggable
+              draggable="true"
             >
               {slideData.length > 0 &&
                 slideData.map((data, id) => (
