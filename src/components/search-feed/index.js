@@ -373,7 +373,7 @@ function SearchFeed({ router }) {
              hashTags={item?.hashtags}
              videoOwnersId={item?.videoOwnersId}
              thumbnail={item?.thumbnailUrl}
-             canShop={shop?.isShoppable}
+             canShop={shop?.isShoppable === "success" || false}
              shopCards={shop?.data}
              shopType={shop?.type}
              handleSaveLook={handleSaveLook}

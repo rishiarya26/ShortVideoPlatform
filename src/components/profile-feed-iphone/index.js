@@ -444,7 +444,7 @@ function ProfileFeedIphone({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}

@@ -550,7 +550,7 @@ console.log('errorrr',e)
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
                       // thumbnail={item.poster_image_url}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
