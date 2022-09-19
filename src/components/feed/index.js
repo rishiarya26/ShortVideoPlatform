@@ -165,11 +165,12 @@ function Feed({ router }) {
       setFirstApiCall(false);
     }
   }else{
-    if(isReffererGoogle){
+    if(isReffererGoogle && isReffererGoogle()){
+      console.log("REFF",isReffererGoogle())
       window.location.href = '/feed/for-you';
-    }else{
-    setLoadFeed(false);
     }
+    setLoadFeed(false);
+    // }
   }
 }
 
@@ -451,8 +452,7 @@ function Feed({ router }) {
             >
               {loadFeed ? 
               <>
-              {
-                (validItemsLength ? toShowItems.map((
+              {validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -514,7 +514,7 @@ function Feed({ router }) {
                   <div className="h-screen bg-black flex justify-center items-center">
                     <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
                   </div>
-                ))
+                )
               }
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"

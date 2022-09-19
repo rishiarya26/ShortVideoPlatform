@@ -127,9 +127,11 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         console.log("l",data)
         response.data.firstVideo = video;
         response.data.firstVideoPresent = true;
+        response.data.loadFeed = true;
         console.log('first',video)
       }else{
         response.data.firstVideoPresent = false;
+        response.data.loadFeed = false;
       }
       // console.log("resppp", response, data)
     }else{

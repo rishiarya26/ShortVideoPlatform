@@ -164,7 +164,8 @@ function FeedIphone({ router }) {
         // checkNoSound();
     }
   }else{
-    if(isReffererGoogle){
+    if(isReffererGoogle && isReffererGoogle()){
+      console.log("REFF",isReffererGoogle())
       window.location.href = '/feed/for-you';
     }
     setLoadFeed(false);

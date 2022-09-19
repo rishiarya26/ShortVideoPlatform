@@ -109,6 +109,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
 
  const isReffererGoogle = ()=>{
   const refferer = localStorage.get('refferer') || '';
+  console.log("REFF *",refferer,refferer?.includes('google'))
   return refferer?.includes('google');
 }
            
