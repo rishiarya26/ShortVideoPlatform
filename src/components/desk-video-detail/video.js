@@ -4,9 +4,10 @@ import { reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from "..
 import { withBasePath } from "../../config";
 import useWindowSize from "../../hooks/use-window-size";
 import CircularProgress from '../commons/circular-loader'
+import SnackCenter from "../commons/snack-bar-center";
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame, comp, videoId, convivaItemInfo})=>{
+const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, checkSound, nosound, videoSound})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
@@ -24,7 +25,7 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo})=>{
       }catch(e){
         console.error(e,"setplayer error");
       }
-      
+        checkSound && checkSound();
     },[url])
 
     
@@ -102,9 +103,11 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo})=>{
           width={size.width}
           height={size.height}
           objectfit="cover"
+          muted={muted}
         >
           <source src={url} type="video/mp4" />
         </video>
+        {!videoSound && initialPlayStarted ? <SnackCenter showSnackbar={nosound}/> : ''}
         {comp!=='deskSingleVideo' && seekedPercentage === 0 && <div
                 className="absolute top-1/2 justify-center w-full flex"
                 style={{ display: 'flex text-white' }}

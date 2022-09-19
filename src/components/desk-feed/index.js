@@ -17,6 +17,7 @@ import DeskDownloadAppGoTop from '../commons/desk-download-go-top';
 import CircularLoaderSearch from '../commons/circular-loader-search';
 import usePreviousValue from '../../hooks/use-previous';
 import VideoUnavailable from '../video-unavailable';
+import SnackCenter from '../commons/snack-bar-center';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
@@ -34,6 +35,14 @@ const LoadComp = () => (<Loading />);
   const [reload, setReload] = useState(false);
   const [tokens, setTokens] = useState(localStorage.get('tokens') || false);
   const [loadFeed, setLoadFeed] = useState(true);
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[activeIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},3000)
+    }
+  }
 
   const preTokensValue = usePreviousValue({tokens});
   const tokensPresent = localStorage.get('tokens') || null;
@@ -106,6 +115,7 @@ const LoadComp = () => (<Loading />);
          setItems(updateItems);
          setFetchState('success');
          setFirstApiCall(false);
+         checkNoSound();
        }else{
          setFetchState('success');
          setItems([]);
@@ -152,6 +162,7 @@ const handleUpClick=()=>{
  if(activeIndex+1 < items.length-1){
   updateActiveIndex(activeIndex+1);
   handleAutoScroll(activeIndex+1)
+  checkNoSound();
  } 
 }
 
@@ -159,6 +170,7 @@ const handleDownClick=()=>{
   if(activeIndex-1 >= 0){
   updateActiveIndex(activeIndex-1);
   handleAutoScroll(activeIndex-1)
+  checkNoSound();
  }
 }  
 
@@ -183,7 +195,9 @@ const doRetry = (value) =>{
   setRetry(value);
 }
 
-useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex)},[activeIndex])
+useEffect(()=>{console.log("ActiveIndex changed - ",activeIndex, noSound)
+checkNoSound();
+},[activeIndex])
 
 useEffect(()=>{
   if(retry){
@@ -226,7 +240,7 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
          userProfilePicUrl={item?.userProfilePicUrl} 
          url={item?.video_url} 
          firstFrame={item?.firstFrame} 
-         muted={muted} 
+         muted={item?.videoSound === false ? true : muted}
          toggleMute={toggleMute} 
          firstName={item?.firstName} 
          lastName={item?.lastName} 
@@ -239,11 +253,17 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
          socialId={item?.getSocialId}
          userVerified = {item?.verified}
          convivaItemInfo={()=>convivaItemInfo(item)}
+         videoSound={item?.videoSound}
+         noSound={noSound}
+         activeIndex={activeIndex}
+         checkNoSound={checkNoSound}
+         fetchState={fetchState}
          />
     </span>
      )}
 </InfiniteScroll>
 : <div className=' w-full flex justify-center p-28 text-gray-600 items-center'>No Videos Found</div>}
+
 </div>
 
 const showLoginFollowing = <LoginFollowing/>;
@@ -281,6 +301,9 @@ const info ={
          commentCount={videoDetailData?.commentCount}
          userVerified = {videoDetailData?.verified}
          convivaItemInfo={()=>convivaItemInfo(videoDetailData)}
+         videoSound={videoDetailData?.videoSound}
+         noSound={noSound}
+         checkNoSound={checkNoSound}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>

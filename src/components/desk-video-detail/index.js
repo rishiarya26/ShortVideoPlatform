@@ -36,7 +36,7 @@ function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
 hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,convivaItemInfo,
-comp = 'normal'}) {
+comp = 'normal',videoSound=true, noSound, checkNoSound}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -50,6 +50,8 @@ comp = 'normal'}) {
       }
       //  router && router?.push(`/hashtag/${finalValue}`)
     }
+
+    useEffect(()=>{checkNoSound()},[activeIndex])
    
     const toUser =(username)=>{
       // let finalValue = username;
@@ -138,7 +140,7 @@ domain = domain?.origin;
 return (
 <div className={`flex ${parentWidth[comp]}`}>
    <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
-      <Video url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId} convivaItemInfo={convivaItemInfo}/>
+      <Video muted={!videoSound} url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId} convivaItemInfo={convivaItemInfo} noSound={noSound} videoSound={videoSound} checkNoSound={checkNoSound}/>
       {NavigationBtns[comp]}
    </div>
    <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>
@@ -173,14 +175,26 @@ return (
             <Description description={description} />
            </div>
             <div className="w-8/12 my-1 text-sm">
-               <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
+            {videoSound ? <> <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
                   <path className="st0" fill="#000" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z"></path>
                </svg>
-               <span className=" my-1 text-sm w-4/12">
+                <span className=" my-1 text-sm w-4/12">
                   <p className="m-0 m-auto whitespace-nowrap overflow-hidden">
                      <span className="pl-100 inline-block animate-marquee">{music_title}</span>
                   </p>
+               </span></>:
+               <>
+               <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
+                  <path className="st0" fill="#000" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z"></path>
+               </svg>
+              <span className=" my-1 text-sm w-4/12">
+                  <p className="m-0 m-auto whitespace-nowrap overflow-hidden">
+                     <span className="inline-block text-gray-400">Audio Unavailable</span>
+                  </p>
                </span>
+               </>
+               }
+               {/* {!videoSound && <div className='text-red-600 text-xs'>Sound for this video is not available</div>} */}
             </div>
          </div>
          </div>

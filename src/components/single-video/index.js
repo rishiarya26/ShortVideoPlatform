@@ -13,6 +13,7 @@ import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
 import VideoUnavailable from '../video-unavailable';
+import SnackCenter from '../commons/snack-bar-center';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -219,6 +220,7 @@ export default function SingleVideo(props){
         onSeeked={()=>{
           incrementCountVideoView(props?.id);
         }}
+        muted={!props.videoSound}
       >
         <source src={props.url} type="video/mp4" />
       </video>
@@ -237,7 +239,9 @@ export default function SingleVideo(props){
       </div>}
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
-      </div> 
+      </div>
+      {!props?.videoSound && <SnackCenter showSnackbar={true}/>}
+
          {/* <div className="flex relative flex-col p-3"> */}
     <VideoFooter
         musicTitle={props.musicTitle}
@@ -247,6 +251,7 @@ export default function SingleVideo(props){
         canShop={props.canShop}
         comp="single"
         description={props?.description}
+        videoSoundAvailable={props.videoSound}
       />
        <EmbedVideoSidebar
        userName={props?.userName}

@@ -13,6 +13,7 @@ import Contact from "../commons/svgicons/contact"
 import GrievanceIcon from "../commons/svgicons/grievance"
 import AdsIcon from "../commons/svgicons/ads"
 import AboutIcon from "../commons/svgicons/about"
+import Wiki from "../commons/svgicons/wikipedia"
 
 const HamburgerMenu = ()=>{
    const [open, setOpen]= useState(false);
@@ -63,6 +64,10 @@ const HamburgerMenu = ()=>{
           <Contact/>
             <p className="text-base px-3 text-gray-900 ">Contact us</p>
           </div>
+          <a href="https://en.wikipedia.org/wiki/HiPi_(App)" className="flex items-center py-3">
+          <div className="pl-1"><Wiki/></div>
+            <p className="text-base px-3 text-gray-900 ">Wikipedia</p>
+          </a>
           {/* <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
             <Logout/>
             <p className="text-base px-3 text-gray-900 ">Logout</p>

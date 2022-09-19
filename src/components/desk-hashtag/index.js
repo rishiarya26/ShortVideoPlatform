@@ -65,6 +65,14 @@ function DeskHashtag({
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
   const [details, setDetails] = useState({});
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!videoData?.[vDetailActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},3000)
+    }
+  }
 
   const {item = ''} = router?.query;
 
@@ -407,6 +415,9 @@ if(item?.indexOf('#')){
         activeIndex={vDetailActiveIndex}
         socialId={videoDetailData?.getSocialId}
         userVerified={userVerified === 'Verified' ? 'verified' : ''}
+        videoSound={videoDetailData?.videoSound}
+         noSound={noSound}
+         checkNoSound={checkNoSound}
         />
       </div>
       }

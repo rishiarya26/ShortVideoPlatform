@@ -22,7 +22,14 @@ const Videos = ({item}) =>{
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+  const [noSound, setNoSound] = useState(false);
 
+  const checkNoSound =()=>{
+    if(!items?.[vDetailActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},3000)
+    }
+  }
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
     setShowVideoDetail(true);
@@ -150,6 +157,9 @@ const Videos = ({item}) =>{
          socialId={videoDetailData?.getSocialId}
          commentCount={videoDetailData?.commentCount || ''}
          userVerified = {videoDetailData?.verified || ''}
+         videoSound={videoDetailData?.videoSound}
+         noSound={noSound}
+         checkNoSound={checkNoSound}
          />
        </div>}
        {items?.length > 0 ? 

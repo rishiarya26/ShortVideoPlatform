@@ -70,8 +70,15 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
-  const [videoSchemaItems, setVideoSchemaItems] = useState([])
+  const [videoSchemaItems, setVideoSchemaItems] = useState([]);
+  const [noSound, setNoSound] = useState(false);
 
+  const checkNoSound =()=>{
+    if(!videoData?.[vDetailActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},3000)
+    }
+  }
   const getVideoSchemaItems = async() =>{
     const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
     if(response?.data?.length > 0){
@@ -398,6 +405,9 @@ function DeskUsers({
          activeIndex={vDetailActiveIndex}
          socialId={videoDetailData?.getSocialId}
          userVerified={userVerified === 'Verified' ? 'verified' : ''}
+         videoSound={videoDetailData?.videoSound}
+         noSound={noSound}
+         checkNoSound={checkNoSound}
          />
        </div>}
     <Header/>

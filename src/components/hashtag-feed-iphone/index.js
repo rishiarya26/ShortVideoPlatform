@@ -28,6 +28,8 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import SnackBar from '../commons/snackbar';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore.use([Mousewheel]);
 
@@ -76,6 +78,14 @@ function HashTagFeedIphone({ router }) {
   //   setShowAppBanner(true)
   // }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -175,6 +185,7 @@ function HashTagFeedIphone({ router }) {
           decrementingShowItems();
          }
        }
+       checkNoSound();
      },[videoActiveIndex])
 
      useEffect(()=>{
@@ -203,6 +214,7 @@ function HashTagFeedIphone({ router }) {
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -224,6 +236,7 @@ function HashTagFeedIphone({ router }) {
     console.log("before",activeVideoId)
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
+    // checkNoSound();
   };
 
     /* mixpanel - monetization cards impression */
@@ -429,7 +442,7 @@ function HashTagFeedIphone({ router }) {
                       comp="profile"
                       profileFeed
                       loading={loading}
-                      muted={muted}
+                      muted={item?.[videoActiveIndex]?.videoSound === false ? true : muted}
                       initialPlayStarted={initialPlayStarted}
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
@@ -438,6 +451,7 @@ function HashTagFeedIphone({ router }) {
                       // showBanner={showBanner}
                       pageName={pageName}
                       userVerified = {item?.verified}
+                      videoSound={item?.videoSound}
                     />
 
                   </SwiperSlide>
@@ -450,6 +464,7 @@ function HashTagFeedIphone({ router }) {
               >
              <CircularProgress/>
               </div>
+              {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
 
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
@@ -463,7 +478,7 @@ function HashTagFeedIphone({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>

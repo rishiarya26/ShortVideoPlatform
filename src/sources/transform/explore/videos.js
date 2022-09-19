@@ -37,7 +37,8 @@ function transformSuccess(resp) {
         const videoUrl =  videoUrls[networkConnection];
         d.selected_video_url = videoUrl;
         d.shoppable = d?.shoppable || false;
-        d.likesCount = d?.likeCount
+        d.likesCount = d?.likeCount;
+        d.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
       })
     }else{
        responseData.videos = [];

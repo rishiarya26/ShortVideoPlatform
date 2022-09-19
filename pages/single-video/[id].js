@@ -104,6 +104,7 @@ export default function Hipi(params={}) {
     commentCount={item?.commentCount}
     userVerified = {item?.verified}
     comp = 'deskSingleVideo'
+    videoSound={item?.videoSound}
     />
     </div> : 
    <VideoUnavailable/>
@@ -132,6 +133,7 @@ export default function Hipi(params={}) {
     userId={item?.userId}
     genre={item?.genre}
     status={status}
+    videoSound={item?.videoSound}
   />
   }
 

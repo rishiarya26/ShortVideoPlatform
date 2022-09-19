@@ -132,6 +132,8 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         response.data.firstVideoPresent = false;
       }
       // console.log("resppp", response, data)
+    }else{
+      response.data.loadFeed = true;
     }
       // const index = items.findIndex((data)=>(data?.id === videoId))
       // if(index !== -1){
