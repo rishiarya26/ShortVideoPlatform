@@ -450,9 +450,9 @@ function Feed({ router }) {
                 activeId && setActiveVideoId(activeId);
               }}
             >
-              {loadFeed ? 
-              <>
-              {validItemsLength ? toShowItems.map((
+              {!loadFeed && <VideoUnavailable/>}
+             
+              {loadFeed && validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -516,6 +516,8 @@ function Feed({ router }) {
                   </div>
                 )
               }
+              {loadFeed &&
+              <>
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
@@ -545,7 +547,8 @@ function Feed({ router }) {
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> : <VideoUnavailable/>}
+              </>
+              }
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
