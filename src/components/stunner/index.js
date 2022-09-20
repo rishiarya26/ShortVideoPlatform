@@ -34,6 +34,7 @@ function Stunner({type= 'stunner'}) {
  const [muted, setMuted] = useState(true);
  const router = useRouter()
  const challenge1Ref = useRef();
+ const challenge2Ref = useRef();
  const device = getItem('device-type')
  const deviceType = getItem('device-info')
 
@@ -212,7 +213,8 @@ useEffect(()=>{
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
-    {/* Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out the details */}
+    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out the Sept Challenge 2 details <span onClick={()=>challenge2Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    </p> <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Missed Sept Challenge 1? Not a problem! Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
     </p>
 
@@ -277,7 +279,7 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 0 ? challenge1Ref : id == 1 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
