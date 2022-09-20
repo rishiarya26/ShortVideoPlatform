@@ -11,6 +11,7 @@ export default function SwipeEnabler ({ id, feed=false, adData }) {
         const touchSurface = document.querySelector("#touchsurface");
         if (!touchSurface && !swiper) return;
         function checkDirection() {
+            index = swiper.activeIndex;
             if (touchendX < touchstartX && adData.length-1 > index + 1) {
                 swiper.slideNext();
                 index += 1;
@@ -51,9 +52,9 @@ export default function SwipeEnabler ({ id, feed=false, adData }) {
         style={{
             position: "absolute",
             height: "70px",
-            width: "136px",
+            width: "105px",
             bottom: feed ? "115px" : "80px",
-            right: "10px",
+            right: "24px",
             zIndex: 10,
             display: "flex"
         }}
