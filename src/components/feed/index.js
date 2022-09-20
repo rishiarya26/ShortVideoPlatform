@@ -86,6 +86,7 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -396,6 +397,11 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+                if(!!items?.[activeIndex]?.adId){
+                  setShowOpenAppStrip(false);
+                }else{
+                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                }
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
@@ -448,6 +454,12 @@ function Feed({ router }) {
                 }
 
                 activeId && setActiveVideoId(activeId);
+
+                if(!!items?.[activeIndex]?.adId){
+                  setShowOpenAppStrip(false);
+                }else{
+                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                }
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -506,6 +518,7 @@ function Feed({ router }) {
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      feedAd={item?.adId}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
@@ -583,13 +596,13 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        <OpenAppStrip
+        {showOpenAppStrip && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />
+        />}
         {/* hamburger */}
         <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">

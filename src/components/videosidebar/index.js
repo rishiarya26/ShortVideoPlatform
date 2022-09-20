@@ -38,7 +38,7 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -168,7 +168,7 @@ const checkSaveLook =()=>{
 
     const options = {
       profile: `${saveLook ? 'bottom-20 ' : 'bottom-48 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
-      feed: `${saveLook ? 'bottom-28 ' : 'bottom-56 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : 'bottom-28 ' : 'bottom-56 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
       embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
       single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
     };
@@ -238,13 +238,13 @@ const handleSaveMoments = () =>{
     >
       <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
-          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+          {!isAdShowVisible && <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
           <Img
             title="Hipi"
             data={optProfilePic}
             fallback={fallbackUser?.src}
           />
-          </div>
+          </div>}
           {/* <div
           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})}
             className={`${

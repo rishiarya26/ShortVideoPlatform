@@ -86,6 +86,7 @@ function transformSuccess(resp) {
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
+      payloadObject.adId = d?.adId || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);

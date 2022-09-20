@@ -6,11 +6,13 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
+import fallbackUser from "../../../public/images/users.png"
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
 import useSnackbar from '../../hooks/use-snackbar';
+import Img from '../commons/image';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -33,14 +35,16 @@ function VideoFooter({
   showBanner,
   videoId,
   userVerified,
-  videoSoundAvailable=true
+  videoSoundAvailable=true,
+  isAdShowVisible,
+  profilePic
 }) {
   const [loaded, setLoaded] = useState(false);
   const {showSnackbar} = useSnackbar();
   // TO-DO common classes
   const type = {
     profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
-    feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+    feed: `${saveLook ? 'bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
     embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
     single: `${canShop  ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
   };
@@ -77,6 +81,13 @@ function VideoFooter({
      router && router?.push(`/${username}`)
   }
 
+  let optProfilePic = profilePic;
+    if(optProfilePic?.match('upload/w_300')){
+      optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
+    }else{
+      optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
+    }
+
 
   return (
     <div className={type[comp]} >
@@ -87,9 +98,27 @@ function VideoFooter({
             Shoppable
           </div>
         )} */}
-        <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+        {/* <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
-        </h3>
+        </h3> */}
+
+        {isAdShowVisible ? (<div className="flex items-end">
+          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+            <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
+          </div>
+          
+          <div className="font-medium dark:text-white ml-2">
+              <div className=" text-white dark:text-gray-400">
+                <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+                  @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+                </h3>
+              </div>
+              <div className="text-xs text-white dark:text-gray-400">Sponsored</div>
+          </div>
+        </div>) : (<h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+          @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+        </h3>)}
+
         <div className=" text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
@@ -109,7 +138,7 @@ function VideoFooter({
             ))} */}
         </div>
         {/* {musicCoverTitle}</p> */}
-       {videoSoundAvailable ? musicTitle && 
+       {videoSoundAvailable ? musicTitle && !isAdShowVisible &&
         <div className="w-8/12 my-1 text-sm">
           {music[comp]}
           <span onClick={()=>{

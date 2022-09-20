@@ -12,6 +12,8 @@ import dynamic from 'next/dynamic';
 import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
+import { pushAdService } from '../../sources/ad-service';
+import RightArrow from '../commons/svgicons/right-arrow';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -34,6 +36,8 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
+   const [isFeedAdAvailable, setIsFeedAdAvailable] = useState(false);
+   const [ctaInfo, setCtaInfo] = useState({});
    
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
@@ -42,7 +46,15 @@ function Video(props) {
    const videoHeight = `${size.height}`;
    const device = getItem('device-info')
 
-   useEffect(()=>{console.log("$$",props?.adData)},[])
+   useEffect(async ()=>{;
+      if(!!props?.feedAd){
+         console.log("coming inside feedAd")
+         setIsFeedAdAvailable(true);
+         let formattedCTAInfo = JSON.parse(props?.feedAd);
+         setCtaInfo(formattedCTAInfo);
+      }
+      console.log("$$",props?.adData)
+   },[])
 
    useEffect(()=>{
       let videoElement;
@@ -168,16 +180,27 @@ function Video(props) {
          analyticsCleanup();
       }
    }, [])
-   
-   
-   const handleUpdateSeekbar = e => {
+
+   const handleUpdateSeekbar = async(e) => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
       // if(e.target.currentTime >= e.target.duration-0.4){
       //    handleSeeked();
       // }
       percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
+     
+      /** Ad Calls */
+      if(props?.feedAd){
+         if(percentage > 0 && percentage <= 1){
+            await pushAdService({url: ctaInfo.click_url, value:"Impression"});
+            await pushAdService({url: ctaInfo.click_url, value: "start"});
+         }
+         if(percentage > 24 && percentage <= 25 ) await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+         if(percentage > 49 && percentage <= 50 ) await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+         if(percentage > 74 && percentage <= 75 ) await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+         if(percentage > 99 && percentage <= 100) await pushAdService({url: ctaInfo.click_url, value: "complete"});
+      }
    };
-   
+
    const convivaReplaySession = () =>{
       let currentRef = rootRef?.current?.children[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
@@ -188,6 +211,7 @@ function Video(props) {
       }
       
    }
+
 
    const handleSeeked = () => {
       convivaReplaySession();
@@ -388,8 +412,15 @@ function Video(props) {
          videoId={props.id}
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
+         isAdShowVisible={isFeedAdAvailable}
+         profilePic={props.profilePic}
          />
       {/* TO-DO  comdition acc to comp */}
+
+      {isFeedAdAvailable &&<div className='p-2 absolute bottom-16 w-full'>
+         <a href={ctaInfo?.click_url} target="_blank" rel="noreferrer"><div style={{backgroundColor:"#63ABFF"}} className='px-2 py-2 text-white rounded-md flex items-center justify-between text-lg font-semibold'>{ctaInfo?.cta_text} <span style={{transform: "scale(1.5)"}}><RightArrow value="#fff" /></span></div></a>
+      </div> }
+
       <VideoSidebar
          userName={props.userName}
          videoOwnersId={props.videoOwnersId}
@@ -416,6 +447,7 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          showBanner={props?.showBanner}
+         isAdShowVisible={isFeedAdAvailable}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

@@ -97,6 +97,7 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
 
   const checkNoSound =()=>{
     if(!items?.[videoActiveIndex]?.videoSound){
@@ -430,6 +431,11 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
+                if(!!items?.[activeIndex]?.adId){
+                  setShowOpenAppStrip(false);
+                }else{
+                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                }
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
@@ -479,6 +485,12 @@ console.log('errorrr',e)
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
+
+                if(!!items?.[activeIndex]?.adId){
+                  setShowOpenAppStrip(false);
+                }else{
+                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                }
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -535,6 +547,7 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      feedAd={item?.adId}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}
@@ -621,13 +634,13 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         <OpenAppStrip
+         {showOpenAppStrip && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />
+        />}
         <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
