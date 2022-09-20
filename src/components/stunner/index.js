@@ -105,7 +105,7 @@ useEffect(()=>{
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
 <h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> September Challenge 2 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    Style yourself as your favourite actor and make a fun video. Check out these uber-cool entries for inspiration
+    Create 3 different unique looks with 3 outfits.
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
