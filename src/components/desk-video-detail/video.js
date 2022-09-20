@@ -20,8 +20,12 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, ch
     useEffect(()=>{
       let currentRef = rootRef?.current?.children?.[0];
       if(videoAnalytics !== null) reportPlaybackEnded()
-      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
-      checkSound && checkSound();
+      try{
+        reportPlaybackRequested({ ref: currentRef, convivaItemInfo:convivaItemInfo });
+      }catch(e){
+        console.error(e,"setplayer error");
+      }
+        checkSound && checkSound();
     },[url])
 
     

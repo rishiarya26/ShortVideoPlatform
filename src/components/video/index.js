@@ -147,7 +147,11 @@ function Video(props) {
 
       if(props.id === props.activeVideoId){
          if(videoAnalytics !== null) reportPlaybackEnded();
-         reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
+         try{
+            reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
+         }catch(e){
+            console.error(e,"setplayer error");
+         }
       }
    },[props.activeVideoId])
 
@@ -177,7 +181,12 @@ function Video(props) {
    const convivaReplaySession = () =>{
       let currentRef = rootRef?.current?.children[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
-      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
+      try{
+         reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
+      }catch(e){
+         console.error(e,"setplayer error");
+      }
+      
    }
 
    const handleSeeked = () => {
