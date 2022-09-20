@@ -12,6 +12,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
+import VideoUnavailable from '../video-unavailable';
 import SnackCenter from '../commons/snack-bar-center';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
@@ -197,7 +198,9 @@ export default function SingleVideo(props){
     >
     
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video
+      <>{ props?.status === 'fail' ? 
+      <VideoUnavailable/>
+      :<><video
         // autoPlay
         onContextMenu={(e)=>{
           e.preventDefault();
@@ -269,7 +272,9 @@ export default function SingleVideo(props){
              comp="single"
            />
          )} 
+         </> }</>
     </div>
+    
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}

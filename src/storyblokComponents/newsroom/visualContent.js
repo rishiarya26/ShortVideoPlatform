@@ -9,12 +9,16 @@ const VisualContent = ({ blok = {}, primary=false }) => {
     alt = "newsroom image",
     src = null,
     videoType = "video",
-    imageSrc = {}
+    imageSrc = {},
+    mobileImageSrc = {},
   } = blok;
   return (
     <div className="relative w-auto" {...storyblokEditable(blok)}>
-      {type === "image" && imageSrc?.filename && (
-        <img  className="h-full w-full object-cover" src={imageSrc.filename} alt={alt} />
+      {type === "image" && imageSrc?.filename && mobileImageSrc?.filename  && (
+          <>
+            <img  className="hidden md:flex h-full w-full object-cover" src={imageSrc.filename} alt={alt} />
+            <img className="flex md:hidden h-full w-full object-cover" src={mobileImageSrc.filename} alt={alt}/>
+          </>
       )}
       {type === "video" && src && <Embedvideo primary={primary} id={src} type={videoType} />}
     </div>

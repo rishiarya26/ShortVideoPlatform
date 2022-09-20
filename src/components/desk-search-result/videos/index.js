@@ -25,7 +25,7 @@ const Videos = ({item}) =>{
   const [noSound, setNoSound] = useState(false);
 
   const checkNoSound =()=>{
-    if(!videoData?.[vDetailActiveIndex]?.videoSound){
+    if(!items?.[vDetailActiveIndex]?.videoSound){
       setNoSound(true);
       setTimeout(()=>{setNoSound(false)},3000)
     }

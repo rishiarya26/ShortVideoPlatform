@@ -33,6 +33,8 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import VideoUnavailable from '../video-unavailable';
+import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore?.use([Mousewheel]);
@@ -82,6 +84,7 @@ function Feed({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('');
   const [showAppBanner, setShowAppBanner] = useState(false);
+  const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
   
   // const [isSaved, setIsSaved] = useState(false);
@@ -138,6 +141,8 @@ function Feed({ router }) {
   const preShopData = usePreviousValue({shop});
 
   const onDataFetched = data => {
+    // console.error('LOadFeeD',data,data.status)
+    if(data.status !== 'notFound'){
     if(data?.data?.length > 0){
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
@@ -159,7 +164,15 @@ function Feed({ router }) {
       setActiveVideoId(null);
       setFirstApiCall(false);
     }
+  }else{
+    if(isReffererGoogle && isReffererGoogle()){
+      console.log("REFF",isReffererGoogle())
+      window.location.href = '/feed/for-you';
+    }
+    setLoadFeed(false);
+    // }
   }
+}
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
@@ -437,8 +450,9 @@ function Feed({ router }) {
                 activeId && setActiveVideoId(activeId);
               }}
             >
-              {
-                (validItemsLength ? toShowItems.map((
+              {loadFeed ? 
+              <>
+              {validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -500,7 +514,7 @@ function Feed({ router }) {
                   <div className="h-screen bg-black flex justify-center items-center">
                     <span className="mt-10 text-white">{t('NO_VIDEOS')}</span>
                   </div>
-                ))
+                )
               }
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
@@ -531,6 +545,7 @@ function Feed({ router }) {
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
+              </> : <VideoUnavailable/>}
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}

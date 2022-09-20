@@ -33,6 +33,8 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import VideoUnavailable from '../video-unavailable';
+import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
 
@@ -93,6 +95,7 @@ function FeedIphone({ router }) {
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [onCloseChamboard, setOnCloseChamboard] = useState('')
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
+  const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
 
   const checkNoSound =()=>{
@@ -145,6 +148,7 @@ function FeedIphone({ router }) {
   const preShopData = usePreviousValue({shop});
 
   const onDataFetched = data => {
+    if(data.status !== 'notFound'){
     if(data){  
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
@@ -159,6 +163,13 @@ function FeedIphone({ router }) {
         setFirstApiCall(false);
         // checkNoSound();
     }
+  }else{
+    if(isReffererGoogle && isReffererGoogle()){
+      console.log("REFF",isReffererGoogle())
+      window.location.href = '/feed/for-you';
+    }
+    setLoadFeed(false);
+  }
   }
 
   /* mixpanel - monetization cards impression */
@@ -470,6 +481,9 @@ console.log('errorrr',e)
                 activeId && setActiveVideoId(activeId);
               }}
             >
+              {loadFeed ? 
+              <>
+              
               {
                 (validItemsLength ? toShowItems.map((
                   item, id
@@ -569,6 +583,8 @@ console.log('errorrr',e)
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
+              </> :<VideoUnavailable/>
+              }
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}

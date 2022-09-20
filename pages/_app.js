@@ -422,9 +422,17 @@ function Hipi({
     };
   });
 
+  const setRefferer = ()=>{
+    try{
+      console.log("Refferer**",document?.referrer);
+      localStorage.set('refferer',document?.referrer);
+    }catch(e){
+      console.error('refferer error',e)
+    }
+  }
  /*************************** */
     useEffect(()=>{
-      console.log("Router**",document.referrer)
+      setRefferer();
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
       if(typeof document != "undefined"){

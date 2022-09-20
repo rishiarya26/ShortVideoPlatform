@@ -1,7 +1,8 @@
 import { get } from 'network';
 import { getApiBasePath } from '../../config';
-import { apiMiddleWare } from '../../network/utils';
+import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
+import isEmptyObject from '../../utils/is-object-empty';
 import { localStorage } from '../../utils/storage';
 import { detectGeoLocationByZee } from '../geo-location';
 import { transformSuccess, transformError } from '../transform/feed';
@@ -58,11 +59,18 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         const data = await getSingleVideo({id : videoId});
         console.log("l",data)
         const video = data?.data;
-        console.log("l",data)
-        response.data.firstVideo = video;
-        console.log('first',video)
+        if(!isEmptyObject(video)){
+          console.log("l",data)
+          response.data.firstVideo = video;
+          response.data.loadFeed = true;
+          console.log('first',video)
+        }else{
+          response.data.loadFeed = false;
+        }
+      }else{
+        response.data.loadFeed = true;
       }
-
+    
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
@@ -115,10 +123,19 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       const data = await getSingleVideo({id : videoId});
       console.log("l",data)
       const video = data?.data;
-      console.log("l",data)
-      response.data.firstVideo = video;
-      console.log('first',video)
+      if(!isEmptyObject(video)){
+        console.log("l",data)
+        response.data.firstVideo = video;
+        response.data.firstVideoPresent = true;
+        response.data.loadFeed = true;
+        console.log('first',video)
+      }else{
+        response.data.firstVideoPresent = false;
+        response.data.loadFeed = false;
+      }
       // console.log("resppp", response, data)
+    }else{
+      response.data.loadFeed = true;
     }
       // const index = items.findIndex((data)=>(data?.id === videoId))
       // if(index !== -1){
