@@ -29,6 +29,7 @@ import OpenAppStrip from '../commons/user-experience';
 import { isObjectEmpty } from '../../network/utils';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import SwiperEnabler from "../../utils/swipeEnabler";
 
 SwiperCore.use([Mousewheel]);
 
@@ -410,7 +411,7 @@ function SearchFeed({ router }) {
                 </div>
               </div>}
          </Swiper>
-
+          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray}/>}
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>

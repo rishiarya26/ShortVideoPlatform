@@ -324,7 +324,7 @@ const handleSaveMoments = () =>{
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
+      } "relative py-2  px-3 text-center items-end flex-col`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-xs mt-1 text-center">Embed</p>
         </div>
@@ -386,6 +386,7 @@ const handleSaveMoments = () =>{
           </div>
         )
       )}
+      </div>
     {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
     </div>
   );

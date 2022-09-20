@@ -33,6 +33,7 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import SwiperEnabler from "../../utils/swipeEnabler";
 
 SwiperCore.use([Mousewheel]);
 
@@ -496,6 +497,7 @@ function ProfileFeedIphone({ router }) {
                 </div>
               </div>}
           </Swiper>
+          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray}/>}
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>

@@ -122,6 +122,7 @@ function Embedvideo(props) {
         type="embed"
         pageName="embed"
         adData={props.adData}
+        canShop={props.canShop === "success" || false}
       />
       
       {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'
@@ -140,7 +141,7 @@ function Embedvideo(props) {
         userName={`${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
-        canShop={props.canShop}
+        canShop={props.canShop === "success" || false}
         comp="embed"
       />
       <div className="flex w-full py-4 justify-center border-t-2 border-gray-200 mt-2">

@@ -247,10 +247,11 @@ export default function SingleVideo(props){
         userName={`${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
-        canShop={props.canShop}
+        canShop={props.canShop === "success" || false}
         comp="single"
         description={props?.description}
         videoSoundAvailable={props.videoSound}
+        adCards={props.adData}
       />
        <EmbedVideoSidebar
        userName={props?.userName}
@@ -263,6 +264,7 @@ export default function SingleVideo(props){
         type="single"
         pageName="single-feed"
         adData={props.adData}
+        canShop={props.canShop === "success" || false}
       />
     {/* </div> */}
       {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'

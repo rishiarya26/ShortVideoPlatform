@@ -99,7 +99,7 @@ function AdCards({
     >
       {
         adCardsLength > 0 && adCardsLength > 1 ? (
-          <Carousel slideData={adCards} Children={CardElement}/>
+          <Carousel id={videoId} slideData={adCards} Children={CardElement}/>
         ) : (
           <CardElement data={adCards[0]} />
         )

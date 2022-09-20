@@ -40,8 +40,8 @@ const router = useRouter();
     }
 
   const info = {
-    single : 'bottom-28 fixed',
-    embed : 'bottom-20 absolute'
+    single : props?.canShop && props.adData?.monitisation ? 'bottom-20 fixed' : 'bottom-28 fixed',
+    embed : props?.canShop && props?.adData?.monitisation ? 'bottom-0 absolute' : 'bottom-20 absolute'
   }
 
   return (

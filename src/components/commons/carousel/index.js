@@ -1,5 +1,5 @@
 /*eslint-disable @next/next/no-img-element*/
-import { useRef } from 'react';
+import {useRef } from 'react';
 import { withBasePath } from '../../../config';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
@@ -7,7 +7,7 @@ import 'swiper/components/navigation/navigation.min.css'
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
-export default function Carousel({slideData, Children}){
+export default function Carousel({id, slideData, Children}){
   const nextButtonRef = useRef(null);
   const prevButtonRef = useRef(null);
   return(
@@ -21,8 +21,9 @@ export default function Carousel({slideData, Children}){
                 prevEl: prevButtonRef.current,
                 disabledClass: "hidden",
               }}
-              className="w-full h-full relative"
+              className={`w-full h-full relative swiper-mini-${id}`}
               draggable="true"
+              direction="horizontal"
             >
               {slideData.length > 0 &&
                 slideData.map((data, id) => (
