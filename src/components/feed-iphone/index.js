@@ -481,11 +481,9 @@ console.log('errorrr',e)
                 activeId && setActiveVideoId(activeId);
               }}
             >
-              {loadFeed ? 
-              <>
-              
+              {!loadFeed && <VideoUnavailable/> }
               {
-                (validItemsLength ? toShowItems.map((
+                (loadFeed && validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -547,6 +545,8 @@ console.log('errorrr',e)
                   </div>
                 ))
               }
+              { loadFeed &&
+               <> 
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: ( toSuspendLoader || seekedPercentage > 0) ? 'none' : 'flex text-white' }}
@@ -583,7 +583,7 @@ console.log('errorrr',e)
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> :<VideoUnavailable/>
+              </>
               }
               <FooterMenu 
               videoId={activeVideoId}
