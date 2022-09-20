@@ -75,7 +75,9 @@ function HeadMeta() {
       {/* <link rel="preload" href="https://websdk.getsocial.im/getsocial.min.js" as="script" />
       <link rel="dns-prefetch" href="https://websdk.getsocial.im/getsocial.min.js" as="script" /> */}
 
-      <script async src="https://websdk.getsocial.im/getsocial.min.js"></script>  
+      <script async src="https://websdk.getsocial.im/getsocial.min.js"></script> 
+
+      <script async src="https://vmax.charmboard.com/web-sdk/stg/1.3.0/ad.js"></script>
       
       {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />

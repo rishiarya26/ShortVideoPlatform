@@ -29,6 +29,7 @@ import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 import * as platform from 'platform';
+import { initVmax } from '../src/analytics/vmax';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -37,6 +38,7 @@ import * as platform from 'platform';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
 
 
 (function storyBlokInitSelfFunction(){
@@ -241,6 +243,7 @@ function Hipi({
     //let timer;
     try{ 
       window.sessionStorage.setItem('searchExecuted', undefined)
+      initVmax();
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);

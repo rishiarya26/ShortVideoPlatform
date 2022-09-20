@@ -1,4 +1,5 @@
 import { get } from 'network';
+import { cacheAd } from '../../analytics/vmax';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
@@ -6,6 +7,7 @@ import isEmptyObject from '../../utils/is-object-empty';
 import { localStorage } from '../../utils/storage';
 import { detectGeoLocationByZee } from '../geo-location';
 import { transformSuccess, transformError } from '../transform/feed';
+import { getAdPositions } from '../vmax/ads-position';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
@@ -14,6 +16,7 @@ const device = getItem('device-type');
 const userAgent =localStorage.get('plaformData')?.ua;
 const os = localStorage.get('plaformData')?.os?.family;
 const browser = localStorage.get('plaformData')?.name;
+
 
 /* Feed API with login */
 async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall, campaign_id='' }) {
@@ -136,6 +139,28 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       // console.log("resppp", response, data)
     }else{
       response.data.loadFeed = true;
+    }
+
+    if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
+      try{
+        debugger;
+        const response = await getAdPositions({limit : 5});
+        let { responseData = {} } = await response;
+        let { ad_position = [] } = responseData;
+        console.log("adResponse", ad_position[0]);
+        let postId = await cacheAd();
+        const data = await getSingleVideo({id : postId});
+        const video = data?.data;
+        if(!isEmptyObject(video)){
+          debugger;
+          response.data.firstVideo = video;
+          response.data.firstVideoPresent = true;
+          response.data.loadFeed = true;
+        }
+      }catch(e){
+        console.log(e);
+      }
+     
     }
       // const index = items.findIndex((data)=>(data?.id === videoId))
       // if(index !== -1){
