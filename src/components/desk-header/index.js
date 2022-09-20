@@ -19,6 +19,11 @@ import { useRouter } from "next/router";
 import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 
+const UploadSvg = ({color = "#000000"}) => (
+   <svg height="24px" viewBox="0 0 24 24" width="24px" fill={color}><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+ );
+ 
+
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
@@ -59,10 +64,15 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
     console.log('isLoggedIn',isLoggedIn);
 
-const redirectToFeed = ()=>{
-   // window.location.href = '/feed/for-you'
-   router && router.push('/feed/for-you');
-}
+   const redirectToFeed = ()=>{
+      // window.location.href = '/feed/for-you'
+      router && router.push('/feed/for-you');
+   }
+
+   const naviagteToUploadPage = () => {
+      let {id} = router.query;
+      if(id !== 'upload') router && router.push('/upload');
+   }
  
    return(
     <div className="w-full fixed top-0 z-10 flex bg-white head-shadow items-center justify-center">
@@ -90,6 +100,14 @@ const redirectToFeed = ()=>{
             </div> 
          </div>
       </div> */}
+
+      <div id="uploadButton" className="border border-gray-500 px-3 py-1 flex justify-between items-center rounded-sm w-28 cursor-pointer shadow-lg hover:bg-hipired hover:text-white text-black hover:border-transparent"
+      onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
+         <UploadSvg />
+         <span className="text-base font-semibold">
+            Upload
+         </span>
+      </div>
       <div>
            {isLoggedIn === 'true'?
            <div className="relative">

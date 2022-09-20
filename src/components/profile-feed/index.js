@@ -12,7 +12,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
+import { getProfileVideos, getUserProfile, getOwnProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import Mute from '../commons/svgicons/mute';
@@ -84,6 +84,7 @@ function ProfileFeed({ router }) {
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
+  const { userType = '' }  = router?.query;
 
   const pageName = 'Profile Feed';
 
@@ -155,7 +156,13 @@ function ProfileFeed({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  const dataFetcher = () => {
+    if(userType === 'self'){
+      return getOwnProfileVideos({ type: type, videoId: videoId && videoId });
+    }else{
+      return getProfileVideos({ id, type: type, videoId: videoId && videoId });
+    }
+  }
   const onDataFetched = data => {
     let videos = data?.data;
     data && setItems(videos);

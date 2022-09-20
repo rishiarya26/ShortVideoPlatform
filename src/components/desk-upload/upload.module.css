@@ -1,0 +1,90 @@
+.styledCheckbox {
+  position: absolute;
+  opacity: 0;
+}
+.styledCheckbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+.styledCheckbox + label:before {
+  content: "";
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 3px;
+  outline: 1px solid #d9d2d2;
+}
+.styledCheckbox:hover + label:before {
+  outline: 2px solid #f35429;
+}
+.styledCheckbox:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styledCheckbox:checked + label:before {
+  @apply bg-hipired;
+}
+.styledCheckbox:disabled + label {
+  color: #b8b8b8;
+  cursor: auto;
+}
+.styledCheckbox:disabled + label:before {
+  box-shadow: none;
+  background: #ddd;
+}
+.styledCheckbox:checked + label:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
+    4px -6px 0 white, 4px -8px 0 white;
+  transform: rotate(45deg);
+}
+
+/* PROGRESS BAR 1 */
+
+.progressBarClass {
+  width: 90%;
+  height: 20px;
+  background-color: rgb(228, 228, 228);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 30px;
+}
+.loading {
+  width: max-content;
+  height: max-content;
+  font-size: 30px;
+  position: absolute;
+  top: 60;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.progress {
+  width: 0px;
+  height: 100%;
+  background-color: limegreen;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+
+.boxShadow {
+  box-shadow: 0px 1px 20px 12px #888;
+}
+
+.top60 {
+  top: 54%;
+}

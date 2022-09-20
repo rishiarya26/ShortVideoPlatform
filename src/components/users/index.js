@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
-import { getProfileVideos, toFollow } from '../../sources/users/profile';
+import { getProfileVideos, getOwnProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
@@ -59,16 +59,28 @@ function Users({
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
   const [videoSchemaItems, setVideoSchemaItems] = useState([])
+  
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
+
+  const userId = localStorage?.get('user-id');
 
   useEffect(()=>{
     setIsFollowing(isFollow);
   },[isFollow])
 
   const getVideoSchemaItems = async() =>{
+    console.log('calling 1');
     const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+    if(response?.data?.length > 0){
+      setVideoSchemaItems(response.data);
+    }
+  }
+
+  const getVideoSchemaItemsAfterLogin = async() =>{
+    console.log('calling 2');
+    const response = await getOwnProfileVideos({ type: 'all', offset: '1', limit : '10', sortType:'view' });
     if(response?.data?.length > 0){
       setVideoSchemaItems(response.data);
     }
@@ -77,7 +89,12 @@ function Users({
   useEffect(()=>{
   let timer;
    timer = setTimeout(()=>{
-    getVideoSchemaItems();
+    ;
+    if(type === 'self' || userId === id) {
+      getVideoSchemaItemsAfterLogin();
+    }else{
+      getVideoSchemaItems();
+    }
    },1000)
 
    return ()=>{clearTimeout(timer);}
@@ -94,7 +111,12 @@ function Users({
 
   async function fetchMoreListItems() {
    try{
-    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
+    let response;
+    if(type === 'self' || userId === id) {
+      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
+    }else{
+      response = await getOwnProfileVideos({ type: selectedTab, offset: `${offset}` });
+    }
     console.log(response)
     if(response?.data?.length > 0){
       let data = {...videoData};
@@ -156,7 +178,14 @@ function Users({
     // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+
+  const dataFetcher = () => {
+    if(type === 'self' || userId === id) {
+      return getOwnProfileVideos({id, type: selectedTab});
+    } else{
+      return getProfileVideos({ id, type: selectedTab });
+    }
+  }
   // eslint-disable-next-line no-unused-vars
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
@@ -188,7 +217,7 @@ console.log("onClick follow btn issue ",e);
 }
   }
 
-  const userId = localStorage?.get('user-id');
+ 
   const followFunc = !isFollowing;
 
   const onFollowClick = ()=>{
@@ -390,6 +419,7 @@ const notNowClick=()=>{
         retry={retry && retry}
         userId={id}
         type={selectedTab}
+        userType={type}
         page='profile'
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}

@@ -15,7 +15,7 @@ console.log(process?.env?.NODE_ENV,"process?.env?.NODE_ENV");
 
 
 export const initConviva = async() => {
-  //debugger
+  //
   try{
     if(process.env.APP_ENV === 'development'){
       convivaConfigs[Constants.GATEWAY_URL] = TOUCHSTONE_SERVICE_URL;
