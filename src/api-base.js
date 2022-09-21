@@ -37,7 +37,7 @@ export const apiBaseEndPoints = {
   },
   staging: {
     test: 'https://api.github.com',
-    hipi: 'http://13.232.78.174:7000/api',
+    hipi: 'http://hipitest.charmd.me/api',
     app: 'https://preprod.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
