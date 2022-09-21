@@ -32,17 +32,19 @@ export default function Carousel({id, slideData, Children}){
                   </SwiperSlide>
                 ))}
             </Swiper>
-            <div
-              className="w-6 h-6 absolute -left-4 top-1/2 transform -translate-y-1/2 z-10"
-              ref={prevButtonRef}
-            >
-              <img src={withBasePath("icons/backarrow.svg")} />
-            </div>
-            <div
-              className="w-6 h-6 absolute -right-4 top-1/2 transform -translate-y-1/2 z-10"
-              ref={nextButtonRef}
-            >
-              <img src={withBasePath("icons/frontarrow.svg")} />
+            <div style={{position: 'absolute', height: '56px', top: '0px', width: "100%"}}>
+              <div
+                className="w-6 h-6 absolute -left-4 top-1/2 transform -translate-y-1/2 z-10"
+                ref={prevButtonRef}
+              >
+                <img src={withBasePath("icons/backarrow.svg")} />
+              </div>
+              <div
+                className="w-6 h-6 absolute -right-4 top-1/2 transform -translate-y-1/2 z-10"
+                ref={nextButtonRef}
+              >
+                <img src={withBasePath("icons/frontarrow.svg")} />
+              </div>
             </div>
           </div>
   )

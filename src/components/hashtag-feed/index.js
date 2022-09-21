@@ -416,7 +416,7 @@ function HashTagFeed({ router }) {
                 </div>
               </div>}
           </Swiper>
-          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={"NA"}/>}
+          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && shop.adData.monitisationCardArray.length > 1 && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={"NA"}/>}
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>
