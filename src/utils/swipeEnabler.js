@@ -1,7 +1,20 @@
+/*eslint-disable react/display-name */
 import { useEffect, useState } from "react";
+import useDrawer from "../hooks/use-drawer";
+import { getBrand } from "./web";
+import { toTrackMixpanel } from "../analytics/mixpanel/events";
+import dynamic from "next/dynamic";
+const charmboardDrawer = dynamic (
+  () => import('../components/charmboard'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 
-export default function SwipeEnabler ({ id, feed=false, adData }) {
+export default function SwipeEnabler ({ id, feed=false, adData, campaignId, pageName, tabName }) {
     const [idx, setIdx] = useState(0);
+    const { show } = useDrawer();
 
     const touchEnable = () => {
         let touchstartX = 0;
@@ -35,9 +48,37 @@ export default function SwipeEnabler ({ id, feed=false, adData }) {
 
     const onClickHandler = (dir) => {
         if(dir === "left") {
-            window.open(adData[idx].product_url)
+            toTrackMixpanel(
+                "monetisationProductClick",
+                { pageName: pageName, tabName: tabName },
+                {
+                  content_id: id,
+                  productId: adData[idx]?.card_id,
+                  productUrl: adData[idx]?.product_url,
+                  brandName: getBrand(adData[idx]?.product_url),
+                  campaignId
+                }
+              );
+              feed ? window.open(adData[idx]?.product_url) :  show("", charmboardDrawer, "big", {
+                videoId: id,
+                idToScroll: adData[idx],
+              });
         } else {
-            window.open(adData[idx+1].product_url)
+            toTrackMixpanel(
+                "monetisationProductClick",
+                { pageName: pageName, tabName: tabName },
+                {
+                  content_id: id,
+                  productId: adData[idx+1]?.card_id,
+                  productUrl: adData[idx+1]?.product_url,
+                  brandName: getBrand(adData[idx+1]?.product_url),
+                  campaignId
+                }
+              );
+            feed ? window.open(adData[idx+1].product_url) : show("", charmboardDrawer, "big", {
+                videoId: id,
+                idToScroll: adData[idx+1],
+              });;
         }
     }
 

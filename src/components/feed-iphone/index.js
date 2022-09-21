@@ -680,7 +680,7 @@ console.log('errorrr',e)
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
-        {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} feed adData={shop.adData.monitisationCardArray}/>}
+        {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} feed adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={tabName}/>}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

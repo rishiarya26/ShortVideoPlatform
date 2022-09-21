@@ -497,7 +497,7 @@ function ProfileFeedIphone({ router }) {
                 </div>
               </div>}
           </Swiper>
-          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray}/>}
+          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={"NA"}/>}
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>
