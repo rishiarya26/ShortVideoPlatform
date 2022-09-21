@@ -1070,3 +1070,10 @@ title:first-letter {
   .carousel .swiper-container {
    position: unset!important;
   }
+ /* rewards */
+ .orange_font{
+color: #fd8952;
+ }
+ .bg_orange{
+background-color:rgb(255 237 223);
+ }
