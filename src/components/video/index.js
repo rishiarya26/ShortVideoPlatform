@@ -187,7 +187,6 @@ function Video(props) {
       //    handleSeeked();
       // }
       percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration, ctaInfo);
-     
       /** Ad Calls */
       // if(props?.feedAd){
       //    if(percentage > 0 && percentage <= 1){
@@ -215,6 +214,9 @@ function Video(props) {
 
    const handleSeeked = () => {
       convivaReplaySession();
+      if(!!props?.feedAd){
+         props?.swiperRef?.current?.swiper?.slideNext && props?.swiperRef?.current?.swiper?.slideNext();
+      }
    }
    
    const thumanilWidth = props?.thumbnail?.replaceAll('upload','upload/w_300');

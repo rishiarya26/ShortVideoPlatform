@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -97,6 +97,7 @@ function Feed({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
+  const swiperRef = useRef(null)
   // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
   campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
 
@@ -240,28 +241,27 @@ function Feed({ router }) {
       currentT : currentTime,
       totalDuration : duration
     }
-    // console.log("percentageComing", percentage)
-    if(items[videoActiveIndex]?.adId){
-      if(percentage > 0 && percentage <= 1){
-        // console.log("coming inside videoAdStarted", percentage);
+    if(items[videoActiveIndex]?.adId ){
+      if(percentage > 0){
+        //console.log("coming inside videoAdStarted", percentage, duration, currentTime);
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
          await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
          await pushAdService({url: ctaInfo.click_url, value: "start"});
       }
-      if(percentage > 24 && percentage <= 25 ) {
-        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+      if(percentage > 25) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
       }
-      if(percentage > 49 && percentage <= 50 ) {
-        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+      if(percentage > 50) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
       }
-      if(percentage > 74 && percentage <= 75 ) {
-        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+      if(percentage > 75) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
       }
-      if(percentage > 99 && percentage <= 100) {
-        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "complete"});
       }
    }
@@ -411,6 +411,7 @@ function Feed({ router }) {
   const videoHeight = `${size.height}`;
 
   const swiper = <Swiper
+              ref={swiperRef}
               className="max-h-full"
               direction="vertical"
               draggable="true"
@@ -560,6 +561,7 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
+                      swiperRef={swiperRef}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
