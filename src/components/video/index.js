@@ -418,7 +418,7 @@ function Video(props) {
       {/* TO-DO  comdition acc to comp */}
 
       {isFeedAdAvailable &&<div className='p-2 absolute bottom-16 w-full'>
-         <a href={ctaInfo?.click_url} target="_blank" rel="noreferrer"><div style={{backgroundColor:"#63ABFF"}} className='px-2 py-2 text-white rounded-md flex items-center justify-between text-lg font-semibold'>{ctaInfo?.cta_text} <span style={{transform: "scale(1.5)"}}><RightArrow value="#fff" /></span></div></a>
+         <a href={ctaInfo?.click_url} style={{backgroundColor:"#63ABFF"}} target="_blank" rel="noreferrer" className='px-2 py-2 text-white rounded-md flex items-center justify-between text-lg font-semibold'>{ctaInfo?.cta_text}<span style={{transform: "scale(1.5)"}}><RightArrow value="#fff" /></span></a>
       </div> }
 
       <VideoSidebar
