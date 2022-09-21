@@ -89,6 +89,7 @@ function Feed({ router }) {
   const [noSound, setNoSound] = useState(false);
   const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
   const [showShopCta, setShowShopCta] = useState(true);
+  const [my_swiper, set_my_swiper] = useState({});
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -97,7 +98,6 @@ function Feed({ router }) {
   const { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
-  const swiperRef = useRef(null)
   // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
   campaign_id = campaign_id ? campaign_id :  ( JSON.parse(window.sessionStorage.getItem('campaign_id')) || null);
 
@@ -241,9 +241,8 @@ function Feed({ router }) {
       currentT : currentTime,
       totalDuration : duration
     }
-    if(items[videoActiveIndex]?.adId ){
+    if(items[videoActiveIndex]?.adId){
       if(percentage > 0){
-        //console.log("coming inside videoAdStarted", percentage, duration, currentTime);
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
          await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
          await pushAdService({url: ctaInfo.click_url, value: "start"});
@@ -263,6 +262,7 @@ function Feed({ router }) {
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "complete"});
+        my_swiper?.slideNext();
       }
    }
 
@@ -411,7 +411,6 @@ function Feed({ router }) {
   const videoHeight = `${size.height}`;
 
   const swiper = <Swiper
-              ref={swiperRef}
               className="max-h-full"
               direction="vertical"
               draggable="true"
@@ -426,6 +425,10 @@ function Feed({ router }) {
               //     // delay: 5000,
               //     disableOnInteraction: false
               // }}
+              onInit={(ev)=>{
+                console.log(ev, "swiper init");
+                set_my_swiper(ev)
+              }}
               onSwiper={swiper => {
                 const {
                   activeIndex, slides
@@ -445,6 +448,8 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -561,9 +566,8 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
-                      swiperRef={swiperRef}
                       // toggleIsSaved={toggleIsSaved}
-                      // setMuted={setMuted}
+                      setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (

@@ -99,8 +99,8 @@ function FeedIphone({ router }) {
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
   const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
+  const [my_swiper, set_my_swiper] = useState({});
 
-  const swiperRef = useRef(null)
 
   const checkNoSound =()=>{
     if(!items?.[videoActiveIndex]?.videoSound){
@@ -268,6 +268,7 @@ function FeedIphone({ router }) {
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "complete"});
+        my_swiper?.slideNext();
       }
    }
 
@@ -449,7 +450,6 @@ console.log('errorrr',e)
   const videoHeight = `${size.height}`;
 
   const swiper = <Swiper
-              ref={swiperRef}
               className="max-h-full"
               direction="vertical"
               draggable="true"
@@ -458,6 +458,10 @@ console.log('errorrr',e)
               slidesPerView={1}
               mousewheel
               scrollbar={{ draggable: true }}
+              onInit={(ev)=>{
+                console.log(ev, "swiper init");
+                set_my_swiper(ev)
+              }}
               // autoplay= {{
               //     disableOnInteraction: false
               // }}
@@ -480,6 +484,8 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
                 setShowSwipeUp({count : 1, value:false});
 
@@ -583,9 +589,8 @@ console.log('errorrr',e)
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
-                      swiperRef={swiperRef}
                       // showBanner={showBanner}
-                      // setMuted={setMuted}
+                      setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (

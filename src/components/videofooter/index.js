@@ -103,7 +103,7 @@ function VideoFooter({
         </h3> */}
 
         {isAdShowVisible ? (<div className="flex items-center">
-          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+          <div className="usrimg w-10 h-10 overflow-hidden rounded-full" onClick={()=> router && router?.push(`/@${userName}`)}>
             <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
           </div>
           

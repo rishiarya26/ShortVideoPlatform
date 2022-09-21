@@ -6,6 +6,8 @@ import { localStorage } from "../../utils/storage";
 import { getReffererPage } from "../../utils/web";
 
 
+let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd']
+
   const getIsMobile = ()=>{
     // let device = 'desktop';
     let isMobile;
@@ -77,9 +79,22 @@ export const commonEvents = ()=>{
     return payload;
 }
 
+
 /* Func to send mixpanel event - 
 type(event name), value(additional Info keys), item(obj containing info/Ids) */
 export const toTrackMixpanel = (type, value, item) => {
+  let adArr = localStorage.get('adArrMixPanel');
+  if(adEvents.includes(type)){
+    if(!adArr?.includes(type)){
+      let arr = localStorage.get("adArrMixPanel");
+      arr.push(type);
+      localStorage.set("adArrMixPanel",arr);
+    }else{
+      return false;
+    }
+  }
+
+    
     let globalCommonEvents = commonEvents(); 
     let adCommonEvents = commonEventsforAds();
 
@@ -429,6 +444,7 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdEnd': () => track('Video Ad End',eventsForAds),
         'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds)
 
+      
         
         
  //   'pause' : () => track('Pause', commonWithIds()),
