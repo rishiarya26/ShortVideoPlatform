@@ -5,20 +5,48 @@ import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
 import { getReffererPage } from "../../utils/web";
 
+
+  const getIsMobile = ()=>{
+    // let device = 'desktop';
+    let isMobile;
+  try{ 
+    const device = getItem('device-type') || 'desktop'
+    isMobile = (device === 'mobile') ?  true :  false
+    }catch(e){
+        console.log(e);
+    }
+    return isMobile;
+  }
+
+export const commonEventsforAds = () => {
+
+    let utmData = localStorage?.get('utm-data') || {}
+    const device = getItem('device-type');
+    const guestId = getItem('guest-token');
+    const loggedInId = localStorage?.get('user-id') || null;
+    const loggedInUserDetails = localStorage?.get('user-details') || null;
+
+    let payload = {}
+    payload['unique ID'] = loggedInId || guestId;
+    payload['isPWA'] = getIsMobile();
+    payload['Device'] = device;
+    payload['User Type'] = loggedInId ? 'member' : 'guest';
+    payload['User Handle'] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
+    payload['Age'] = loggedInUserDetails?.age ? loggedInUserDetails?.age : 'NA';
+    payload['Gender'] = loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA';
+    // payload['New App Language'] = LANGUAGE;
+    payload['Platform Section'] = APP_NAME;
+    utmData?.utm_campaign && (payload['App UTM Campaign'] = utmData?.utm_campaign);
+    utmData?.utm_medium && (payload['App UTM Medium'] = utmData?.utm_medium);
+    utmData?.utm_term && (payload['App UTM Term'] = utmData?.utm_term);
+    utmData?.utm_content && (payload['App UTM Content'] = utmData?.utm_content);
+    utmData?.utm_source && (payload['App UTM Source'] = utmData?.utm_source);
+
+    return payload;
+}
+
 export const commonEvents = ()=>{
    
-    const getIsMobile = ()=>{
-        // let device = 'desktop';
-        let isMobile;
-       try{ 
-         const device = getItem('device-type') || 'desktop'
-         isMobile = (device === 'mobile') ?  true :  false
-        }catch(e){
-            console.log(e);
-        }
-        return isMobile;
-    }
-
     let utmData = localStorage?.get('utm-data') || {}
     const deviceModal = localStorage?.get('device-modal');
     const device = getItem('device-type');
@@ -53,6 +81,8 @@ export const commonEvents = ()=>{
 type(event name), value(additional Info keys), item(obj containing info/Ids) */
 export const toTrackMixpanel = (type, value, item) => {
     let globalCommonEvents = commonEvents(); 
+    let adCommonEvents = commonEventsforAds();
+
     const addPageTabName = () =>{
         addTabName();
         globalCommonEvents['Page Name'] = value?.pageName || 'NA';
@@ -71,6 +101,11 @@ export const toTrackMixpanel = (type, value, item) => {
     //   globalCommonEvents['Is Monetization']= value?.isMonetization || false;
     // }
 
+    const isShopMonetizeAd = ()=>{
+      adCommonEvents['Is Shoppable'] = value?.isShoppable || false;
+      adCommonEvents['Is Monetization']= value?.isMonetization || false;
+    }
+
     const commonWithIds = () =>{
        const userName = item?.userName?.replace('@','')
         globalCommonEvents['Creator ID'] = item?.userId;
@@ -81,6 +116,18 @@ export const toTrackMixpanel = (type, value, item) => {
         // isShopMonetize()
         return globalCommonEvents;
     }
+
+    const eventsForAds = () => {
+      const userName = item?.userName?.replace('@','')
+      adCommonEvents['Creator ID'] = item?.userId;
+      adCommonEvents['Creator Handle'] = userName;
+      adCommonEvents['UGC ID'] = item?.content_id;
+      adCommonEvents['Tab Name'] = value?.tabName || 'NA';
+      adCommonEvents['Page Name'] = value?.pageName || 'NA';
+      isShopMonetizeAd()
+      return adCommonEvents
+    }
+
 
     const bannerType = {
       Hashtag: 'Hashtag',
@@ -374,7 +421,13 @@ export const toTrackMixpanel = (type, value, item) => {
         'bussinessFormSubmitted' :()=>{
           commonWithIds();
           track('Business_page_form_submission',globalCommonEvents);
-        }
+        },
+        'videoAdStarted': () => track('Video Ad Start',eventsForAds),
+        'videoAdFirstQuartile': () => track('Video Ad First Quartile',eventsForAds),
+        'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds),
+        'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds),
+        'videoAdEnd': () => track('Video Ad End',eventsForAds),
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds)
 
         
         

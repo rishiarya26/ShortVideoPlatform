@@ -36,6 +36,7 @@ import OpenAppStrip from '../commons/user-experience';
 import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
+import { pushAdService } from '../../sources/ad-service';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -87,6 +88,7 @@ function Feed({ router }) {
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
   const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
+  const [showShopCta, setShowShopCta] = useState(true);
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -231,13 +233,39 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
-  const updateSeekbar = (percentage, currentTime, duration) => {
+  const updateSeekbar = async (percentage, currentTime, duration, ctaInfo={}) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
+    console.log("percentageComing", percentage)
+    if(items[videoActiveIndex]?.adId){
+      if(percentage > 0 && percentage <= 1){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+         await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
+         await pushAdService({url: ctaInfo.click_url, value: "start"});
+
+      }
+      if(percentage > 24 && percentage <= 25 ) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+      }
+      if(percentage > 49 && percentage <= 50 ) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+      }
+      if(percentage > 74 && percentage <= 75 ) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+      }
+      if(percentage > 99 && percentage <= 100) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "complete"});
+      }
+   }
+
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
     }
@@ -270,6 +298,10 @@ function Feed({ router }) {
       if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
   };
+
+  const adBtnClickCb = () => {
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+  }
 
   const getCanShop = async () => {
     let isShoppable;
@@ -398,9 +430,13 @@ function Feed({ router }) {
                   activeIndex, slides
                 } = swiper;
                 if(!!items?.[activeIndex]?.adId){
+                  setShowShopCta(false);
                   setShowOpenAppStrip(false);
                 }else{
-                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                  if(showOpenAppStrip === false) {
+                    setShowShopCta(true);
+                    setShowOpenAppStrip(true);
+                  } 
                 }
                 setInitialPlayStarted(false);
               }}
@@ -456,9 +492,13 @@ function Feed({ router }) {
                 activeId && setActiveVideoId(activeId);
 
                 if(!!items?.[activeIndex]?.adId){
+                  setShowShopCta(false);
                   setShowOpenAppStrip(false);
                 }else{
-                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
+                  if(showOpenAppStrip === false){
+                    setShowShopCta(true);
+                    setShowOpenAppStrip(true);
+                  } 
                 }
               }}
             >
@@ -519,6 +559,7 @@ function Feed({ router }) {
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
+                      adBtnClickCb={adBtnClickCb}
                       // toggleIsSaved={toggleIsSaved}
                       // setMuted={setMuted}
                     />}
@@ -573,6 +614,7 @@ function Feed({ router }) {
               showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
+              showShopCta={showShopCta}
               />
             </Swiper>
             

@@ -37,6 +37,7 @@ import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { pushAdService } from '../../sources/ad-service';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -235,13 +236,39 @@ function FeedIphone({ router }) {
   const validItemsLength = toShowItems?.length > 0;
   // setRetry = retry && retry;
 
-  const updateSeekbar = (percentage, currentTime, duration) => {
+  const updateSeekbar = async (percentage, currentTime, duration, ctaInfo={}) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
+
+    if(!!items[videoActiveIndex]?.adId){
+      if(percentage > 0 && percentage <= 1){
+         await pushAdService({url: ctaInfo.click_url, value:"Impression"});
+         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+         await pushAdService({url: ctaInfo.click_url, value: "start"});
+
+      }
+      if(percentage > 24 && percentage <= 25 ) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+      }
+      if(percentage > 49 && percentage <= 50 ) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+      }
+      if(percentage > 74 && percentage <= 75 ) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+        await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+      }
+      if(percentage > 99 && percentage <= 100) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: ctaInfo.click_url, value: "complete"});
+      }
+   }
+
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
     }
@@ -279,6 +306,10 @@ function FeedIphone({ router }) {
    }
     /******************************/
   };
+
+  const adBtnClickCb = () => {
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+  }
 
   const getCanShop = async () => {
     let isShoppable = false;
@@ -548,6 +579,7 @@ console.log('errorrr',e)
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
+                      adBtnClickCb={adBtnClickCb}
                       // showBanner={showBanner}
                       // setMuted={setMuted}
                     />}

@@ -44,7 +44,7 @@ function VideoFooter({
   // TO-DO common classes
   const type = {
     profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
-    feed: `${saveLook ? 'bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+    feed: `${saveLook ? videoSoundAvailable ? 'bottom-32': 'bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
     embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
     single: `${canShop  ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
   };
@@ -102,14 +102,14 @@ function VideoFooter({
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3> */}
 
-        {isAdShowVisible ? (<div className="flex items-end">
+        {isAdShowVisible ? (<div className="flex items-center">
           <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
             <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
           </div>
           
-          <div className="font-medium dark:text-white ml-2">
+          <div className="font-medium dark:text-white ml-1">
               <div className=" text-white dark:text-gray-400">
-                <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+                <h3 onClick={()=> router && router?.push(`/@${userName}`)} style={{lineHeight: "1rem"}} className="font-semibold text-sm flex ">
                   @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
                 </h3>
               </div>
@@ -119,7 +119,7 @@ function VideoFooter({
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>)}
 
-        <div className=" text-xs  mb-3 mt-2">
+        {!isAdShowVisible && <div className=" text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
              item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded)}>{item}{' '}
@@ -136,7 +136,7 @@ function VideoFooter({
             && hashTags.map((data, id) => (
               <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))} */}
-        </div>
+        </div>}
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && !isAdShowVisible &&
         <div className="w-8/12 my-1 text-sm">

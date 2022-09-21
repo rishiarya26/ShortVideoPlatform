@@ -34,7 +34,7 @@ const AppBanner = dynamic(
 //   }
 // );
 
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop, showShopCta,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();
@@ -86,9 +86,9 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
        {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xxs mt-1.5 select-none">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xxs mt-1.5 select-none">Explore</p></> } 
        
      </div>
-        <div>
+        {!showShopCta && <div>
           {info[type]}
-        </div> 
+        </div> }
             <div
               onClick={() =>{
                 console.log(device);

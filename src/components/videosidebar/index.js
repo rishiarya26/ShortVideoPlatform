@@ -344,7 +344,7 @@ const handleSaveMoments = () =>{
         shareCount={props.share}
       />
       </div> */}
-{canShop && profileFeed &&
+{!isAdShowVisible && canShop && profileFeed &&
    adCards?.monitisation &&
    <AdCards
    adCards={adCards?.monitisationCardArray}
@@ -355,7 +355,7 @@ const handleSaveMoments = () =>{
    tabName={tabName}
    /> 
 }
-      {canShop && (!profileFeed
+      {!isAdShowVisible && canShop && (!profileFeed
         &&(
           adCards?.monitisation ?
           <AdCards

@@ -181,24 +181,24 @@ function Video(props) {
       }
    }, [])
 
-   const handleUpdateSeekbar = async(e) => {
+   const handleUpdateSeekbar = (e) => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
       // if(e.target.currentTime >= e.target.duration-0.4){
       //    handleSeeked();
       // }
-      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
+      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration, ctaInfo);
      
       /** Ad Calls */
-      if(props?.feedAd){
-         if(percentage > 0 && percentage <= 1){
-            await pushAdService({url: ctaInfo.click_url, value:"Impression"});
-            await pushAdService({url: ctaInfo.click_url, value: "start"});
-         }
-         if(percentage > 24 && percentage <= 25 ) await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
-         if(percentage > 49 && percentage <= 50 ) await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
-         if(percentage > 74 && percentage <= 75 ) await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
-         if(percentage > 99 && percentage <= 100) await pushAdService({url: ctaInfo.click_url, value: "complete"});
-      }
+      // if(props?.feedAd){
+      //    if(percentage > 0 && percentage <= 1){
+      //       await pushAdService({url: ctaInfo.click_url, value:"Impression"});
+      //       await pushAdService({url: ctaInfo.click_url, value: "start"});
+      //    }
+      //    if(percentage > 24 && percentage <= 25 ) await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+      //    if(percentage > 49 && percentage <= 50 ) await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+      //    if(percentage > 74 && percentage <= 75 ) await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+      //    if(percentage > 99 && percentage <= 100) await pushAdService({url: ctaInfo.click_url, value: "complete"});
+      // }
    };
 
    const convivaReplaySession = () =>{
@@ -417,8 +417,17 @@ function Video(props) {
          />
       {/* TO-DO  comdition acc to comp */}
 
-      {isFeedAdAvailable &&<div className='p-2 absolute bottom-16 w-full'>
-         <a href={ctaInfo?.click_url} style={{backgroundColor:"#63ABFF"}} target="_blank" rel="noreferrer" className='px-2 py-2 text-white rounded-md flex items-center justify-between text-lg font-semibold'>{ctaInfo?.cta_text}<span style={{transform: "scale(1.5)"}}><RightArrow value="#fff" /></span></a>
+      {isFeedAdAvailable &&<div className='px-2 py-4 absolute bottom-16 w-full' onClick={()=> props?.adBtnClickCb && props?.adBtnClickCb()}>
+         <a href={ctaInfo?.click_url}
+            style={{backgroundColor:"#63ABFF"}}
+            target="_blank"
+            rel="noreferrer"
+            className='px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold'>
+               {ctaInfo?.cta_text}
+               <span>
+                  <RightArrow value="#fff" />
+               </span>
+         </a>
       </div> }
 
       <VideoSidebar
