@@ -240,13 +240,13 @@ function Feed({ router }) {
       currentT : currentTime,
       totalDuration : duration
     }
-    console.log("percentageComing", percentage)
+    // console.log("percentageComing", percentage)
     if(items[videoActiveIndex]?.adId){
       if(percentage > 0 && percentage <= 1){
+        // console.log("coming inside videoAdStarted", percentage);
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
          await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
          await pushAdService({url: ctaInfo.click_url, value: "start"});
-
       }
       if(percentage > 24 && percentage <= 25 ) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
