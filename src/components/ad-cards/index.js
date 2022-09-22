@@ -38,6 +38,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId}) => {
                 campaignId
               }
             );
+            window.open(data?.product_url);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",
@@ -50,6 +51,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId}) => {
                 campaignId
               }
             );
+            show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id});
         }
         }
       }
