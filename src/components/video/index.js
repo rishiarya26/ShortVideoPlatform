@@ -388,7 +388,7 @@ function Video(props) {
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
          isAdShowVisible={props?.feedAd}
-         profilePic={props.profilePic}
+         profilePic={props?.profilePic}
          />
       {/* TO-DO  comdition acc to comp */}
 
