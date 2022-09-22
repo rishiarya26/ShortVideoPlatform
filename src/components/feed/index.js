@@ -123,6 +123,8 @@ function Feed({ router }) {
       ToTrackFbEvents('screenView');
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
+      localStorage.set("adArr",[]);
+      localStorage.set("adArrMixPanel",[]);
     }
   },1500);
   }, [initialLoadComplete]);
@@ -410,7 +412,7 @@ function Feed({ router }) {
   const videoHeight = `${size.height}`;
 
   const swiper = <Swiper
-              className="max-h-full swiperClass"
+              className="max-h-full"
               direction="vertical"
               draggable="true"
               spaceBetween={5}

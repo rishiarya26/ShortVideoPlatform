@@ -34,7 +34,7 @@ const AppBanner = dynamic(
 //   }
 // );
 
-function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop, showShopCta,
+function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
  setClose,pageName, tabName=null} ){
   const router = useRouter();
   const { show } = useDrawer();

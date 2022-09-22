@@ -98,8 +98,6 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
-  // const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
-  // const [my_swiper, set_my_swiper] = useState({});
 
 
   const checkNoSound =()=>{
@@ -140,6 +138,8 @@ function FeedIphone({ router }) {
         // trackEvent('Screen_View',{'Page Name' :'Feed'})
         toTrackFirebase('screenView',{'page' :'Feed'});
         setLoading(false);
+        localStorage.set("adArr",[]);
+        localStorage.set("adArrMixPanel",[]);
       }
     },1500);
   }, [initialLoadComplete]);
