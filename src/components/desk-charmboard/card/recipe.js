@@ -35,8 +35,8 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                        
                         {shopNameImg  ? <div className="max-h-12 ad_logo"> <Img data={shopNameImg}/> </div> :
                         <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>}                                               
-                             {actualPrice && <p className='text-gray-500 pl-2 pr-2'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
-                          {salePrice && <p>{`${' '} ₹${salePrice || ''}`}</p>}
+                             {actualPrice > 0 && <p className='text-gray-500 pl-2 pr-2'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+                          {salePrice > 0 && <p>{`${' '} ₹${salePrice || ''}`}</p>}
                         </div>
                         <div onClick={()=>
                         window?.open(shopLink)} className="flex pl-4 py-2 cursor-pointer">

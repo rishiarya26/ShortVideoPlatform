@@ -128,6 +128,10 @@ const SearchItems = ({router,type})=>{
                setSearchHistory(searchHis);
             }  
         }   
+        if(value.indexOf('#') === 0){
+            value = trimHash(value);
+            value = `%23${value}`
+        }
          router && router?.push(`/search?term=${value}`);
     }
    

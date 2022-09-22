@@ -289,7 +289,8 @@ useEffect(()=>{
               <p className='text-gray-700 font-light text-sm'>{item?.date}</p>
               {item.show&& <p className='text-sm px-4 text-gray-500 font-light text-lg py-4' id={id}>{item?.content}</p>}
               
-              {item?.winUrl&& <div className="text-lg font-semibold p-2 purple_font cursor-pointer" onClick={()=>window.open(item.winUrl)}>The winner</div>}
+              {item?.winUrl&& <div className="text-lg font-semibold p-2 purple_light hover:purple_font cursor-pointer" onClick={()=>window.open(item.winUrl)}>The Winner</div>}
+              {item?.Coronation&& <div className="text-lg font-semibold p-2 purple_light hover:purple_font cursor-pointer" onClick={()=>window.open(item.Coronation)}>The Coronation</div>}
               {item?.promoUrl&& <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open(item.promoUrl)}>Watch challenge video</div>}
               <div id={id} className="cursor-pointer flex items-center w-full px-4" onClick={()=>handleClickStunner(id)}>
               <span className=" text-sm pr-2 font-light flex w-full justify-center text-gray-600 py-2" >{item.show ? "- Read less": "+ Read more"}</span>
