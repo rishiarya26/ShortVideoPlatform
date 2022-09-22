@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -37,6 +37,7 @@ import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { pushAdService } from '../../sources/ad-service';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -97,6 +98,7 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+
 
   const checkNoSound =()=>{
     if(!items?.[videoActiveIndex]?.videoSound){
@@ -234,13 +236,42 @@ function FeedIphone({ router }) {
   const validItemsLength = toShowItems?.length > 0;
   // setRetry = retry && retry;
 
-  const updateSeekbar = (percentage, currentTime, duration) => {
+  const updateSeekbar = async (percentage, currentTime, duration, ctaInfo={}) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
+
+    if(items[videoActiveIndex]?.adId){
+      let adInfo = items?.[videoActiveIndex]?.adId;
+      if(percentage > 0){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+         await pushAdService({url: adInfo.click_url, value:"Impression"}); 
+         await pushAdService({url: adInfo.click_url, value: "start"});
+      }
+      if(percentage > 25) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "firstQuartile"});
+      }
+      if(percentage > 50) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "midpoint"});
+      }
+      if(percentage > 75) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "thirdQuartile"});
+      }
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "complete"});
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
+      }
+   }
+
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
     }
@@ -278,6 +309,10 @@ function FeedIphone({ router }) {
    }
     /******************************/
   };
+
+  const adBtnClickCb = () => {
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+  }
 
   const getCanShop = async () => {
     let isShoppable = false;
@@ -430,6 +465,8 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
@@ -440,6 +477,8 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
                 setShowSwipeUp({count : 1, value:false});
 
@@ -479,6 +518,7 @@ console.log('errorrr',e)
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
+
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -535,8 +575,10 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      feedAd={item?.adId}
+                      adBtnClickCb={adBtnClickCb}
                       // showBanner={showBanner}
-                      // setMuted={setMuted}
+                      setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -588,7 +630,7 @@ console.log('errorrr',e)
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type="shop"
+              type={!items[videoActiveIndex]?.adId && 'shop'}
               selectedTab="home"
               shopType = {shop?.type}
               setClose={setClose}
@@ -621,13 +663,13 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         <OpenAppStrip
+      {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />
+        />}
         <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
