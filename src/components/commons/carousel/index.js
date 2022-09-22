@@ -7,7 +7,7 @@ import 'swiper/components/navigation/navigation.min.css'
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
-export default function Carousel({id, slideData, Children}){
+export default function Carousel({id, slideData, Children, ...restProps}){
   const nextButtonRef = useRef(null);
   const prevButtonRef = useRef(null);
   return(
@@ -28,7 +28,7 @@ export default function Carousel({id, slideData, Children}){
               {slideData.length > 0 &&
                 slideData.map((data, id) => (
                   <SwiperSlide key={id}>
-                    <Children data={data} />
+                    <Children data={data} {...restProps}/>
                   </SwiperSlide>
                 ))}
             </Swiper>

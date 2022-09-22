@@ -19,7 +19,7 @@ function VideoSidebar() {
           </div> */}
         </div>
       </div>
-      <div className="flex relative py-2 px-3 text-center justify-end flex-col">
+      <div className="flex relative py-2 px-3 text-center justify-end items-end flex-col">
         <div role="presentation">
           <Like />
         </div>

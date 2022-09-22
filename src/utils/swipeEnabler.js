@@ -15,6 +15,8 @@ const charmboardDrawer = dynamic (
 export default function SwipeEnabler ({ id, feed=false, adData, campaignId, pageName, tabName }) {
     const [idx, setIdx] = useState(0);
     const { show } = useDrawer();
+    const labelThereOrNot = adData?.filter((data) => data?.card_labels).length > 0 ? true : false;
+
 
     const touchEnable = () => {
         let touchstartX = 0;
@@ -94,10 +96,10 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
             position: "absolute",
             height: "70px",
             width: "105px",
-            bottom: feed ? "115px" : "80px",
+            bottom: feed ? labelThereOrNot ? "130px" : "115px" : labelThereOrNot ? "65px" : "50px",
             right: "24px",
             zIndex: 10,
-            display: "flex"
+            display: "flex",
         }}
         >
             <div onClick={()=>onClickHandler("left")} style={{height: "100%", width: "50%"}}></div>
