@@ -144,18 +144,20 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
     if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
       try{
         debugger;
-        const response = await getAdPositions({limit : 5});
-        let { responseData = {} } = await response;
+        const positionResponse = await getAdPositions({limit : 5});
+        let { responseData = {} } = await positionResponse;
         let { ad_position = [] } = responseData;
         console.log("adResponse", ad_position[0]);
         let postId = await cacheAd();
         const data = await getSingleVideo({id : postId});
         const video = data?.data;
         if(!isEmptyObject(video)){
-          debugger;
-          response.data.firstVideo = video;
-          response.data.firstVideoPresent = true;
-          response.data.loadFeed = true;
+          // debugger;
+          // response.data.firstVideo = video;
+          // response.data.firstVideoPresent = true;
+          // response.data.loadFeed = true;
+          video.vmaxAd = true;
+          
         }
       }catch(e){
         console.log(e);

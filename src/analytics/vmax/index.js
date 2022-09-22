@@ -15,8 +15,7 @@ export const initVmax = () => {
     debugger;
     window.VMAXSDK.App.setSource("hipi.co.in");
     adView = VMAXSDK.CreateVmaxAdView();
-    adView.setAdspotKey('d86c7d32');
-    // adView.source('hipi.co.in');
+    adView.setAdspotKey('ffb8745f');
     const eventTypes = VMAXSDK.Event.Type;
     for (const event in eventTypes) {
       const eventType = eventTypes[event];
