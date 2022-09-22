@@ -30,7 +30,6 @@ import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackCenter from '../commons/snack-bar-center';
-import SwiperEnabler from "../../utils/swipeEnabler"
 
 SwiperCore.use([Mousewheel]);
 
@@ -416,7 +415,6 @@ function HashTagFeed({ router }) {
                 </div>
               </div>}
           </Swiper>
-          {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && shop.adData.monitisationCardArray.length > 1 && <SwiperEnabler id={activeVideoId} adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={"NA"}/>}
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>

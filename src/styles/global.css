@@ -132,6 +132,15 @@ img{
 
   .swiper-wrapper{
     max-height: 100vh;
+    z-index: 0 !important;
+  }
+
+  .swiper-container{
+    z-index: unset !important;
+  }
+
+  .customCarousel > .swiper-container{
+    z-index: 1 !important;
   }
   
   .video-card{

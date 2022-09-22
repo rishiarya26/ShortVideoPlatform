@@ -39,7 +39,6 @@ import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
-import SwiperEnabler from "../../utils/swipeEnabler";
 
 
 SwiperCore?.use([Mousewheel]);
@@ -680,7 +679,6 @@ console.log('errorrr',e)
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
-        {shop?.isShoppable && shop?.adData && shop.adData?.monitisation && shop.adData.monitisationCardArray.length > 1 && <SwiperEnabler id={activeVideoId} feed adData={shop.adData.monitisationCardArray} campaignId={shop?.campaignId} pageName={pageName} tabName={tabName}/>}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

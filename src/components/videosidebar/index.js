@@ -236,6 +236,7 @@ const handleSaveMoments = () =>{
     <div
     className={options[comp]}
     >
+      <div>
       <div onClick={handleProfileClick} className="relative my-2 mx-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
           {!isAdShowVisible && <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
@@ -258,7 +259,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } relative my-2 mx-3 text-center justify-end w-min self-end`}
+        } relative my-2 mx-3 text-center justify-end  self-end`}
       >
         {isLiked?.like ? (
           <div>
@@ -296,7 +297,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } relative my-2 mx-3 text-center items-end flex-col w-min self-end`}
+        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
       >
         <div 
            id="comment"
@@ -317,14 +318,14 @@ const handleSaveMoments = () =>{
         }
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } relative my-2 mx-3 text-center items-end flex-col w-min self-end`}
+        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
       >
       <ShareComp />
       </div>
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } relative my-2 mx-3 text-center items-end flex-col w-min self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
+      } relative my-2 mx-3 text-center items-end flex-col  self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-xs mt-1 text-center">Embed</p>
         </div>
@@ -344,7 +345,10 @@ const handleSaveMoments = () =>{
         shareCount={props.share}
       />
       </div> */}
-      {canShop && profileFeed &&
+    {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
+    </div>
+  <div style={{height: "90px"}}>
+    {canShop && profileFeed &&
         adCards?.monitisation &&
         <div  style={{height: "90px", width: "136px"}}>
           <AdCards
@@ -392,7 +396,7 @@ const handleSaveMoments = () =>{
         </div>
         )
       )}
-    {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
+    </div>
     </div>
   );
 }

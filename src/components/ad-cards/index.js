@@ -20,7 +20,7 @@ function LabelHolder({label}){
   return <div className='bg-hipired text-10 rounded-2xl px-1 py-0.5 w-max relative bottom-2 left-1/2 transform -translate-x-1/2'>{label}</div>
 }
 
-const CardElement = ({data, pageName, tabName, videoId, comp, campaignId}) => {
+const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show}) => {
   return(
     <div className="relative flex flex-col">
       <div
@@ -95,9 +95,9 @@ function AdCards({
     >
       {
         adCardsLength > 0 ? adCardsLength > 1 ? (
-          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId}/>
+          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show}/>
         ) : (
-          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId}/>
+          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show}/>
         ):''
       }
     </div>

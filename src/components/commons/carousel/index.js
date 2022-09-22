@@ -11,7 +11,7 @@ export default function Carousel({id, slideData, Children, ...restProps}){
   const nextButtonRef = useRef(null);
   const prevButtonRef = useRef(null);
   return(
-    <div className="relative" style={{ width: "122px"}}>
+    <div className="relative customCarousel" style={{ width: "122px"}}>
             <Swiper
               spaceBetween={10}
               slidesPerView={2}
