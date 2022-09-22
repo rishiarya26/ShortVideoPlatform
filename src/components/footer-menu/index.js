@@ -86,9 +86,9 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
        {selectedTab === 'search' ? <><SearchActive/><p className="text-white text-xxs mt-1.5 select-none">Explore</p></>  :<> <Search/><p className="text-gray-400 text-xxs mt-1.5 select-none">Explore</p></> } 
        
      </div>
-        {!showShopCta && <div>
+        <div>
           {info[type]}
-        </div> }
+        </div> 
             <div
               onClick={() =>{
                 console.log(device);

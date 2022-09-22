@@ -12,7 +12,6 @@ import dynamic from 'next/dynamic';
 import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
-import { pushAdService } from '../../sources/ad-service';
 import RightArrow from '../commons/svgicons/right-arrow';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
@@ -36,7 +35,7 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
-   const [isFeedAdAvailable, setIsFeedAdAvailable] = useState(false);
+   // const [isFeedAdAvailable, setIsFeedAdAvailable] = useState(false);
    const [ctaInfo, setCtaInfo] = useState({});
    
    const prePlayState = usePreviousValue({play});
@@ -46,10 +45,8 @@ function Video(props) {
    const videoHeight = `${size.height}`;
    const device = getItem('device-info')
 
-   useEffect(async ()=>{;
+   useEffect(async ()=>{
       if(!!props?.feedAd){
-         console.log("coming inside feedAd")
-         setIsFeedAdAvailable(true);
          let formattedCTAInfo = JSON.parse(props?.feedAd);
          setCtaInfo(formattedCTAInfo);
       }
@@ -187,17 +184,6 @@ function Video(props) {
       //    handleSeeked();
       // }
       percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration, ctaInfo);
-      /** Ad Calls */
-      // if(props?.feedAd){
-      //    if(percentage > 0 && percentage <= 1){
-      //       await pushAdService({url: ctaInfo.click_url, value:"Impression"});
-      //       await pushAdService({url: ctaInfo.click_url, value: "start"});
-      //    }
-      //    if(percentage > 24 && percentage <= 25 ) await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
-      //    if(percentage > 49 && percentage <= 50 ) await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
-      //    if(percentage > 74 && percentage <= 75 ) await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
-      //    if(percentage > 99 && percentage <= 100) await pushAdService({url: ctaInfo.click_url, value: "complete"});
-      // }
    };
 
    const convivaReplaySession = () =>{
@@ -411,12 +397,12 @@ function Video(props) {
          videoId={props.id}
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
-         isAdShowVisible={isFeedAdAvailable}
+         isAdShowVisible={props?.feedAd}
          profilePic={props.profilePic}
          />
       {/* TO-DO  comdition acc to comp */}
 
-      {isFeedAdAvailable &&<button className='px-2 py-4 absolute bottom-16 w-full z-50' onClick={()=> {
+      {!!props?.feedAd &&<button className='px-2 py-4 absolute bottom-16 w-full z-50' onClick={()=> {
          props?.setMuted && props?.setMuted(true);
          props?.adBtnClickCb && props?.adBtnClickCb();
          }}>
@@ -458,7 +444,7 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          showBanner={props?.showBanner}
-         isAdShowVisible={isFeedAdAvailable}
+         isAdShowVisible={props?.feedAd}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

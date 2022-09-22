@@ -20,33 +20,6 @@ let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile
     return isMobile;
   }
 
-export const commonEventsforAds = () => {
-
-    let utmData = localStorage?.get('utm-data') || {}
-    const device = getItem('device-type');
-    const guestId = getItem('guest-token');
-    const loggedInId = localStorage?.get('user-id') || null;
-    const loggedInUserDetails = localStorage?.get('user-details') || null;
-
-    let payload = {}
-    payload['unique ID'] = loggedInId || guestId;
-    payload['isPWA'] = getIsMobile();
-    payload['Device'] = device;
-    payload['User Type'] = loggedInId ? 'member' : 'guest';
-    payload['User Handle'] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
-    payload['Age'] = loggedInUserDetails?.age ? loggedInUserDetails?.age : 'NA';
-    payload['Gender'] = loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA';
-    // payload['New App Language'] = LANGUAGE;
-    payload['Platform Section'] = APP_NAME;
-    utmData?.utm_campaign && (payload['App UTM Campaign'] = utmData?.utm_campaign);
-    utmData?.utm_medium && (payload['App UTM Medium'] = utmData?.utm_medium);
-    utmData?.utm_term && (payload['App UTM Term'] = utmData?.utm_term);
-    utmData?.utm_content && (payload['App UTM Content'] = utmData?.utm_content);
-    utmData?.utm_source && (payload['App UTM Source'] = utmData?.utm_source);
-
-    return payload;
-}
-
 export const commonEvents = ()=>{
    
     let utmData = localStorage?.get('utm-data') || {}
@@ -96,7 +69,6 @@ export const toTrackMixpanel = (type, value, item) => {
 
     
     let globalCommonEvents = commonEvents(); 
-    let adCommonEvents = commonEventsforAds();
 
     const addPageTabName = () =>{
         addTabName();
@@ -117,8 +89,8 @@ export const toTrackMixpanel = (type, value, item) => {
     // }
 
     const isShopMonetizeAd = ()=>{
-      adCommonEvents['Is Shoppable'] = value?.isShoppable || false;
-      adCommonEvents['Is Monetization']= value?.isMonetization || false;
+      globalCommonEvents['Is Shoppable'] = value?.isShoppable || false;
+      globalCommonEvents['Is Monetization']= value?.isMonetization || false;
     }
 
     const commonWithIds = () =>{
@@ -134,13 +106,15 @@ export const toTrackMixpanel = (type, value, item) => {
 
     const eventsForAds = () => {
       const userName = item?.userName?.replace('@','')
-      adCommonEvents['Creator ID'] = item?.userId;
-      adCommonEvents['Creator Handle'] = userName;
-      adCommonEvents['UGC ID'] = item?.content_id;
-      adCommonEvents['Tab Name'] = value?.tabName || 'NA';
-      adCommonEvents['Page Name'] = value?.pageName || 'NA';
+      globalCommonEvents['Creator ID'] = item?.userId;
+      globalCommonEvents['Creator Handle'] = userName;
+      globalCommonEvents['UGC ID'] = item?.content_id;
+      globalCommonEvents['Tab Name'] = value?.tabName || 'NA';
+      globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+      globalCommonEvents['Device Modal'] = 'NA';
+      globalCommonEvents['Network Strength'] = 'NA';
       isShopMonetizeAd()
-      return adCommonEvents
+      return globalCommonEvents
     }
 
 

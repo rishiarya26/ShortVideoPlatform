@@ -87,9 +87,6 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
-  const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
-  const [showShopCta, setShowShopCta] = useState(true);
-  const [my_swiper, set_my_swiper] = useState({});
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -262,7 +259,9 @@ function Feed({ router }) {
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "complete"});
-        my_swiper?.slideNext();
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
       }
    }
 
@@ -411,7 +410,7 @@ function Feed({ router }) {
   const videoHeight = `${size.height}`;
 
   const swiper = <Swiper
-              className="max-h-full"
+              className="max-h-full swiperClass"
               direction="vertical"
               draggable="true"
               spaceBetween={5}
@@ -425,23 +424,10 @@ function Feed({ router }) {
               //     // delay: 5000,
               //     disableOnInteraction: false
               // }}
-              onInit={(ev)=>{
-                console.log(ev, "swiper init");
-                set_my_swiper(ev)
-              }}
               onSwiper={swiper => {
                 const {
                   activeIndex, slides
                 } = swiper;
-                if(!!items?.[activeIndex]?.adId){
-                  setShowShopCta(false);
-                  setShowOpenAppStrip(false);
-                }else{
-                  if(showOpenAppStrip === false) {
-                    setShowShopCta(true);
-                    setShowOpenAppStrip(true);
-                  } 
-                }
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
@@ -497,15 +483,7 @@ function Feed({ router }) {
 
                 activeId && setActiveVideoId(activeId);
 
-                if(!!items?.[activeIndex]?.adId){
-                  setShowShopCta(false);
-                  setShowOpenAppStrip(false);
-                }else{
-                  if(showOpenAppStrip === false){
-                    setShowShopCta(true);
-                    setShowOpenAppStrip(true);
-                  } 
-                }
+              
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -612,7 +590,7 @@ function Feed({ router }) {
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type="shop"
+              type={!items[videoActiveIndex]?.adId && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -620,7 +598,6 @@ function Feed({ router }) {
               showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
-              showShopCta={showShopCta}
               />
             </Swiper>
             
@@ -644,7 +621,7 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {showOpenAppStrip && <OpenAppStrip
+        {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

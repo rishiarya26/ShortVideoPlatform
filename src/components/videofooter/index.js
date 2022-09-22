@@ -44,7 +44,7 @@ function VideoFooter({
   // TO-DO common classes
   const type = {
     profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
-    feed: `${saveLook ? videoSoundAvailable ? 'bottom-32': 'bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+    feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
     embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
     single: `${canShop  ? 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
   };
@@ -81,28 +81,18 @@ function VideoFooter({
      router && router?.push(`/${username}`)
   }
 
-  let optProfilePic = profilePic;
+  if(!!isAdShowVisible) {
+
+    let optProfilePic = profilePic;
     if(optProfilePic?.match('upload/w_300')){
       optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
     }else{
       optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
     }
-
-
-  return (
-    <div className={type[comp]} >
-      <div className="videoFooter__text w-full break-words">
-        {/*
-        {canShop === 'success' && (
-          <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 text-sm ">
-            Shoppable
-          </div>
-        )} */}
-        {/* <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
-          @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
-        </h3> */}
-
-        {isAdShowVisible ? (<div className="flex items-center">
+    
+    return (
+      <div className='bottom-32 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4'>
+        <div className="flex items-center">
           <div className="usrimg w-10 h-10 overflow-hidden rounded-full" onClick={()=> router && router?.push(`/@${userName}`)}>
             <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
           </div>
@@ -115,11 +105,25 @@ function VideoFooter({
               </div>
               <div className="text-xs text-white dark:text-gray-400">Sponsored</div>
           </div>
-        </div>) : (<h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
-          @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
-        </h3>)}
+        </div>
+      </div>
+    )
+  }
 
-        {!isAdShowVisible && <div className=" text-xs  mb-3 mt-2">
+
+  return (
+    <div className={type[comp]} >
+      <div className="videoFooter__text w-full break-words">
+        {/*
+        {canShop === 'success' && (
+          <div className="bg-opacity-50 bg-white py-1 px-2 text-black font-semibold max-w-max rounded-lg my-1 text-sm ">
+            Shoppable
+          </div>
+        )} */}
+        <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+          @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+        </h3>
+        <div className=" text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
              item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded)}>{item}{' '}
@@ -136,9 +140,9 @@ function VideoFooter({
             && hashTags.map((data, id) => (
               <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))} */}
-        </div>}
+        </div>
         {/* {musicCoverTitle}</p> */}
-       {videoSoundAvailable ? musicTitle && !isAdShowVisible &&
+       {videoSoundAvailable ? musicTitle && 
         <div className="w-8/12 my-1 text-sm">
           {music[comp]}
           <span onClick={()=>{

@@ -98,8 +98,8 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
-  const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
-  const [my_swiper, set_my_swiper] = useState({});
+  // const [showOpenAppStrip, setShowOpenAppStrip] = useState(true);
+  // const [my_swiper, set_my_swiper] = useState({});
 
 
   const checkNoSound =()=>{
@@ -268,7 +268,9 @@ function FeedIphone({ router }) {
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         await pushAdService({url: ctaInfo.click_url, value: "complete"});
-        my_swiper?.slideNext();
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
       }
    }
 
@@ -458,10 +460,6 @@ console.log('errorrr',e)
               slidesPerView={1}
               mousewheel
               scrollbar={{ draggable: true }}
-              onInit={(ev)=>{
-                console.log(ev, "swiper init");
-                set_my_swiper(ev)
-              }}
               // autoplay= {{
               //     disableOnInteraction: false
               // }}
@@ -469,11 +467,6 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
-                if(!!items?.[activeIndex]?.adId){
-                  setShowOpenAppStrip(false);
-                }else{
-                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
-                }
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
@@ -526,11 +519,6 @@ console.log('errorrr',e)
                 }
                 activeId && setActiveVideoId(activeId);
 
-                if(!!items?.[activeIndex]?.adId){
-                  setShowOpenAppStrip(false);
-                }else{
-                  if(showOpenAppStrip === false) setShowOpenAppStrip(true);
-                }
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -642,7 +630,7 @@ console.log('errorrr',e)
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type="shop"
+              type={!items[videoActiveIndex]?.adId && 'shop'}
               selectedTab="home"
               shopType = {shop?.type}
               setClose={setClose}
@@ -675,7 +663,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         {showOpenAppStrip && <OpenAppStrip
+      {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
