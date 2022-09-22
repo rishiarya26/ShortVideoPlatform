@@ -35,9 +35,6 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
-   // const [isFeedAdAvailable, setIsFeedAdAvailable] = useState(false);
-   const [ctaInfo, setCtaInfo] = useState({});
-   
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
    const rootRef = useRef(null);
@@ -45,13 +42,6 @@ function Video(props) {
    const videoHeight = `${size.height}`;
    const device = getItem('device-info')
 
-   useEffect(async ()=>{
-      if(!!props?.feedAd){
-         let formattedCTAInfo = JSON.parse(props?.feedAd);
-         setCtaInfo(formattedCTAInfo);
-      }
-      console.log("$$",props?.adData)
-   },[])
 
    useEffect(()=>{
       let videoElement;
@@ -183,7 +173,7 @@ function Video(props) {
       // if(e.target.currentTime >= e.target.duration-0.4){
       //    handleSeeked();
       // }
-      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration, ctaInfo);
+      percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
    };
 
    const convivaReplaySession = () =>{
@@ -406,12 +396,12 @@ function Video(props) {
          props?.setMuted && props?.setMuted(true);
          props?.adBtnClickCb && props?.adBtnClickCb();
          }}>
-         <a href={ctaInfo?.click_url}
+         <a href={props?.feedAd?.click_url}
             style={{backgroundColor:"#63ABFF"}}
             target="_blank"
             rel="noreferrer"
             className='px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold'>
-               {ctaInfo?.cta_text}
+               {props?.feedAd?.cta_text}
                <span>
                   <RightArrow value="#fff" />
                </span>

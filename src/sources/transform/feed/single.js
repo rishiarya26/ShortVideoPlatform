@@ -64,7 +64,7 @@ function transformSuccess(resp) {
         payloadObject.shoppable = d?.shoppable || false;
         payloadObject.createdOn = d?.createdOn || null;
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
-        payloadObject.adId = d?.adId || null;
+        payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
       });
       payload.data = payloadObject;
     } else {

@@ -138,8 +138,6 @@ function FeedIphone({ router }) {
         // trackEvent('Screen_View',{'Page Name' :'Feed'})
         toTrackFirebase('screenView',{'page' :'Feed'});
         setLoading(false);
-        localStorage.set("adArr",[]);
-        localStorage.set("adArrMixPanel",[]);
       }
     },1500);
   }, [initialLoadComplete]);
@@ -246,28 +244,28 @@ function FeedIphone({ router }) {
       totalDuration : duration
     }
 
-    if(items[videoActiveIndex]?.adId ){
+    if(items[videoActiveIndex]?.adId){
+      let adInfo = items?.[videoActiveIndex]?.adId;
       if(percentage > 0){
-        //console.log("coming inside videoAdStarted", percentage, duration, currentTime);
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
-         await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
-         await pushAdService({url: ctaInfo.click_url, value: "start"});
+         await pushAdService({url: adInfo.click_url, value:"Impression"}); 
+         await pushAdService({url: adInfo.click_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+        await pushAdService({url: adInfo.click_url, value: "firstQuartile"});
       }
       if(percentage > 50) {
         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+        await pushAdService({url: adInfo.click_url, value: "midpoint"});
       }
       if(percentage > 75) {
         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+        await pushAdService({url: adInfo.click_url, value: "thirdQuartile"});
       }
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "complete"});
+        await pushAdService({url: adInfo.click_url, value: "complete"});
         if(document.querySelector(".swiper-container").swiper){
           document.querySelector(".swiper-container").swiper?.slideNext();
         }
@@ -467,6 +465,8 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);

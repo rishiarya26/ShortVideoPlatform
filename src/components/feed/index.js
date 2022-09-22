@@ -123,8 +123,6 @@ function Feed({ router }) {
       ToTrackFbEvents('screenView');
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
-      localStorage.set("adArr",[]);
-      localStorage.set("adArrMixPanel",[]);
     }
   },1500);
   }, [initialLoadComplete]);
@@ -233,34 +231,36 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
-  const updateSeekbar = async (percentage, currentTime, duration, ctaInfo={}) => {
+  const updateSeekbar = async (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
+    //TODO Renaming the adID to adInfo
     if(items[videoActiveIndex]?.adId){
+      let adInfo = items?.[videoActiveIndex]?.adId;
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
-         await pushAdService({url: ctaInfo.click_url, value:"Impression"}); 
-         await pushAdService({url: ctaInfo.click_url, value: "start"});
+         await pushAdService({url: adInfo.click_url, value:"Impression"}); 
+         await pushAdService({url: adInfo.click_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "firstQuartile"});
+        await pushAdService({url: adInfo.click_url, value: "firstQuartile"});
       }
       if(percentage > 50) {
         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "midpoint"});
+        await pushAdService({url: adInfo.click_url, value: "midpoint"});
       }
       if(percentage > 75) {
         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "thirdQuartile"});
+        await pushAdService({url: adInfo.click_url, value: "thirdQuartile"});
       }
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: ctaInfo.click_url, value: "complete"});
+        await pushAdService({url: adInfo.click_url, value: "complete"});
         if(document.querySelector(".swiper-container").swiper){
           document.querySelector(".swiper-container").swiper?.slideNext();
         }
@@ -430,6 +430,8 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+                localStorage.set("adArr",[]);
+                 localStorage.set("adArrMixPanel",[]);
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
