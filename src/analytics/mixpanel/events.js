@@ -5,20 +5,23 @@ import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
 import { getReffererPage } from "../../utils/web";
 
+
+let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd']
+
+  const getIsMobile = ()=>{
+    // let device = 'desktop';
+    let isMobile;
+  try{ 
+    const device = getItem('device-type') || 'desktop'
+    isMobile = (device === 'mobile') ?  true :  false
+    }catch(e){
+        console.log(e);
+    }
+    return isMobile;
+  }
+
 export const commonEvents = ()=>{
    
-    const getIsMobile = ()=>{
-        // let device = 'desktop';
-        let isMobile;
-       try{ 
-         const device = getItem('device-type') || 'desktop'
-         isMobile = (device === 'mobile') ?  true :  false
-        }catch(e){
-            console.log(e);
-        }
-        return isMobile;
-    }
-
     let utmData = localStorage?.get('utm-data') || {}
     const deviceModal = localStorage?.get('device-modal');
     const device = getItem('device-type');
@@ -49,10 +52,24 @@ export const commonEvents = ()=>{
     return payload;
 }
 
+
 /* Func to send mixpanel event - 
 type(event name), value(additional Info keys), item(obj containing info/Ids) */
 export const toTrackMixpanel = (type, value, item) => {
+  let adArr = localStorage.get('adArrMixPanel');
+  if(adEvents.includes(type)){
+    if(!adArr?.includes(type)){
+      let arr = localStorage.get("adArrMixPanel");
+      arr.push(type);
+      localStorage.set("adArrMixPanel",arr);
+    }else{
+      return false;
+    }
+  }
+
+    
     let globalCommonEvents = commonEvents(); 
+
     const addPageTabName = () =>{
         addTabName();
         globalCommonEvents['Page Name'] = value?.pageName || 'NA';
@@ -71,6 +88,11 @@ export const toTrackMixpanel = (type, value, item) => {
     //   globalCommonEvents['Is Monetization']= value?.isMonetization || false;
     // }
 
+    const isShopMonetizeAd = ()=>{
+      globalCommonEvents['Is Shoppable'] = value?.isShoppable || false;
+      globalCommonEvents['Is Monetization']= value?.isMonetization || false;
+    }
+
     const commonWithIds = () =>{
        const userName = item?.userName?.replace('@','')
         globalCommonEvents['Creator ID'] = item?.userId;
@@ -81,6 +103,20 @@ export const toTrackMixpanel = (type, value, item) => {
         // isShopMonetize()
         return globalCommonEvents;
     }
+
+    const eventsForAds = () => {
+      const userName = item?.userName?.replace('@','')
+      globalCommonEvents['Creator ID'] = item?.userId;
+      globalCommonEvents['Creator Handle'] = userName;
+      globalCommonEvents['UGC ID'] = item?.content_id;
+      globalCommonEvents['Tab Name'] = value?.tabName || 'NA';
+      globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+      globalCommonEvents['Device Modal'] = 'NA';
+      globalCommonEvents['Network Strength'] = 'NA';
+      isShopMonetizeAd()
+      return globalCommonEvents
+    }
+
 
     const bannerType = {
       Hashtag: 'Hashtag',
@@ -374,8 +410,15 @@ export const toTrackMixpanel = (type, value, item) => {
         'bussinessFormSubmitted' :()=>{
           commonWithIds();
           track('Business_page_form_submission',globalCommonEvents);
-        }
+        },
+        'videoAdStarted': () => track('Video Ad Start',eventsForAds),
+        'videoAdFirstQuartile': () => track('Video Ad First Quartile',eventsForAds),
+        'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds),
+        'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds),
+        'videoAdEnd': () => track('Video Ad End',eventsForAds),
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds)
 
+      
         
         
  //   'pause' : () => track('Pause', commonWithIds()),

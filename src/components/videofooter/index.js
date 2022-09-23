@@ -6,11 +6,13 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
+import fallbackUser from "../../../public/images/users.png"
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
 import useSnackbar from '../../hooks/use-snackbar';
+import Img from '../commons/image';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -33,7 +35,9 @@ function VideoFooter({
   showBanner,
   videoId,
   userVerified,
-  videoSoundAvailable=true
+  videoSoundAvailable=true,
+  isAdShowVisible,
+  profilePic
 }) {
   const [loaded, setLoaded] = useState(false);
   const {showSnackbar} = useSnackbar();
@@ -75,6 +79,35 @@ function VideoFooter({
     //   finalValue = trimHash(hashtag)
     // }
      router && router?.push(`/${username}`)
+  }
+
+  if(!!isAdShowVisible) {
+
+    let optProfilePic = profilePic;
+    if(optProfilePic?.match('upload/w_300')){
+      optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
+    }else{
+      optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
+    }
+    
+    return (
+      <div className='bottom-32 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4'>
+        <div className="flex items-center">
+          <div className="usrimg w-10 h-10 overflow-hidden rounded-full" onClick={()=> router && router?.push(`/@${userName}`)}>
+            <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
+          </div>
+          
+          <div className="font-medium dark:text-white ml-1">
+              <div className=" text-white dark:text-gray-400">
+                <h3 onClick={()=> router && router?.push(`/@${userName}`)} style={{lineHeight: "1rem"}} className="font-semibold text-sm flex ">
+                  @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+                </h3>
+              </div>
+              <div className="text-xs text-white dark:text-gray-400">Sponsored</div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
 

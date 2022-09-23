@@ -893,6 +893,9 @@ title:first-letter {
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
+  .purple_light{
+    color: #9c21aa;
+  }
   .purple_font{
     color: #6e057a;
   }
@@ -1070,3 +1073,10 @@ title:first-letter {
   .carousel .swiper-container {
    position: unset!important;
   }
+ /* rewards */
+ .orange_font{
+color: #fd8952;
+ }
+ .bg_orange{
+background-color:rgb(255 237 223);
+ }

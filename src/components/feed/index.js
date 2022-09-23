@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -36,6 +36,7 @@ import OpenAppStrip from '../commons/user-experience';
 import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
+import { pushAdService } from '../../sources/ad-service';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -230,13 +231,42 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
-  const updateSeekbar = (percentage, currentTime, duration) => {
+  const updateSeekbar = async (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
+    //TODO Renaming the adID to adInfo
+    if(items[videoActiveIndex]?.adId){
+      let adInfo = items?.[videoActiveIndex]?.adId;
+      if(percentage > 0){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+         await pushAdService({url: adInfo.click_url, value:"Impression"}); 
+         await pushAdService({url: adInfo.click_url, value: "start"});
+      }
+      if(percentage > 25) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "firstQuartile"});
+      }
+      if(percentage > 50) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "midpoint"});
+      }
+      if(percentage > 75) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "thirdQuartile"});
+      }
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        await pushAdService({url: adInfo.click_url, value: "complete"});
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
+      }
+   }
+
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
     }
@@ -269,6 +299,10 @@ function Feed({ router }) {
       if(showSwipeUp.count === 0 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
     }
   };
+
+  const adBtnClickCb = () => {
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+  }
 
   const getCanShop = async () => {
     let isShoppable;
@@ -396,12 +430,16 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+                localStorage.set("adArr",[]);
+                 localStorage.set("adArrMixPanel",[]);
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -448,11 +486,13 @@ function Feed({ router }) {
                 }
 
                 activeId && setActiveVideoId(activeId);
+
+              
               }}
             >
-              {loadFeed ? 
-              <>
-              {validItemsLength ? toShowItems.map((
+              {!loadFeed && <VideoUnavailable/>}
+             
+              {loadFeed && validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -506,8 +546,10 @@ function Feed({ router }) {
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      feedAd={item?.adId}
+                      adBtnClickCb={adBtnClickCb}
                       // toggleIsSaved={toggleIsSaved}
-                      // setMuted={setMuted}
+                      setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -516,6 +558,8 @@ function Feed({ router }) {
                   </div>
                 )
               }
+              {loadFeed &&
+              <>
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
@@ -545,11 +589,12 @@ function Feed({ router }) {
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
-              </> : <VideoUnavailable/>}
+              </>
+              }
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type="shop"
+              type={!items[videoActiveIndex]?.adId && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -580,13 +625,13 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        <OpenAppStrip
+        {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />
+        />}
         {/* hamburger */}
         <HamburgerMenu/>
         <div className="fixed mt-10 z-10 w-full">
