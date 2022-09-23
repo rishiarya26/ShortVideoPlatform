@@ -411,12 +411,12 @@ export const toTrackMixpanel = (type, value, item) => {
           commonWithIds();
           track('Business_page_form_submission',globalCommonEvents);
         },
-        'videoAdStarted': () => track('Video Ad Start',eventsForAds),
-        'videoAdFirstQuartile': () => track('Video Ad First Quartile',eventsForAds),
-        'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds),
-        'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds),
-        'videoAdEnd': () => track('Video Ad End',eventsForAds),
-        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds)
+        'videoAdStarted': () => track('Video Ad Start',eventsForAds()),
+        'videoAdFirstQuartile': () => track('Video Ad First Quartile',eventsForAds()),
+        'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds()),
+        'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds()),
+        'videoAdEnd': () => track('Video Ad End',eventsForAds()),
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds())
 
       
         
