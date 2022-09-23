@@ -1090,7 +1090,7 @@ color: #fd8952;
 background-color:rgb(255 237 223);
  }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 420px) {
   .videoFooter{
     width: 50%;
   }
