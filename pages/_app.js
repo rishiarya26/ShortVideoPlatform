@@ -243,7 +243,6 @@ function Hipi({
     //let timer;
     try{ 
       window.sessionStorage.setItem('searchExecuted', undefined)
-      initVmax();
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
       //     window?.sessionStorage?.removeItem(GET_SOCIAL_LOADED);
@@ -259,6 +258,7 @@ function Hipi({
 
       updatingGoogleCookies();
       initConviva()
+      initVmax();
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();

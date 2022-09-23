@@ -33,6 +33,8 @@ export const cacheAd = async () => {
     vmaxTracker = adView?.getVmaxAd()?.getEventTracker();
     return adId;
   } catch (err) {
+    initVmax()
+    cacheAd();
     console.error(err)
   }
 };
@@ -50,10 +52,9 @@ export const showAd = async () => {
 
 export const destroyAd = async () => {
   try {
-    adView.current.destroy();
     const adDestroy = await adView.destroy();
   } catch (err) {
-    setError(err);
+    console.erroer(err);
   }
 };
 

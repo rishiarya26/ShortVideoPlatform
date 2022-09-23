@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { cacheAd } from '../../analytics/vmax';
+import { cacheAd, destroyAd } from '../../analytics/vmax';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
@@ -149,18 +149,24 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         let { ad_position = [] } = responseData;
         console.log("adResponse", ad_position[0]);
         let postId = await cacheAd();
-        const data = await getSingleVideo({id : postId});
-        const video = data?.data;
+        const singleVideoData = await getSingleVideo({id : postId});
+        const video = singleVideoData?.data;
         if(!isEmptyObject(video)){
-          // debugger;
-          // response.data.firstVideo = video;
-          // response.data.firstVideoPresent = true;
-          // response.data.loadFeed = true;
+          ad_position = ad_position[0]
           video.vmaxAd = true;
-          
+          response?.data?.responseData?.videos?.splice(ad_position,0,video);
         }
       }catch(e){
         console.log(e);
+      }
+    }else{
+      destroyAd();
+      let postId = await cacheAd();
+      const singleVideoData = await getSingleVideo({id : postId});
+      const video = singleVideoData?.data;
+      if(!isEmptyObject(video)){
+        video.vmaxAd = true;
+        response?.data?.responseData?.videos?.splice(response?.data?.responseData?.videos?.length - 2,0,video);
       }
      
     }
