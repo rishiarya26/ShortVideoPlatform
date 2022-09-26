@@ -1095,3 +1095,7 @@ background-color:rgb(255 237 223);
     width: 50%;
   }
 }
+
+.explore_carousel > .swiper-container > .swiper-pagination {
+  z-index: 1!important;
+}
