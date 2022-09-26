@@ -175,6 +175,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName(); 
         globalCommonEvents['Element'] = value?.name
         globalCommonEvents['Button Type'] = value?.type
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('CTAs', globalCommonEvents)
       },
       'saveLook' : ()=>{
@@ -189,6 +190,7 @@ export const toTrackMixpanel = (type, value, item) => {
       'shopPageImp' :  ()=>{
         addUgcId();
         addPageTabName();
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Shopping Page Impression', globalCommonEvents)
        },
       'shoppingPopUp' :  ()=>{
@@ -211,6 +213,7 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Shopping Product Impression', globalCommonEvents)
        },
        'shoppableProductClicked' :  ()=>{
@@ -219,26 +222,25 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
-
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Shoppable Product Clicked', globalCommonEvents)
        },
        'monetisationProductImp' :  ()=>{
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
-        globalCommonEvents['Product Name'] = item?.productName || 'NA';
+        globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-        globalCommonEvents['Brand URL'] = item?.brandUrl || 'NA';
-
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
        },
        'monetisationProductClick' :  ()=>{
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
-        globalCommonEvents['Product Name'] = item?.productName || 'NA';
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-        globalCommonEvents['Brand URL'] = item?.brandUrl || 'NA';
+        globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      

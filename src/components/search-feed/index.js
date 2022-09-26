@@ -373,7 +373,7 @@ function SearchFeed({ router }) {
              hashTags={item?.hashtags}
              videoOwnersId={item?.videoOwnersId}
              thumbnail={item?.thumbnailUrl}
-             canShop={shop?.isShoppable}
+             canShop={shop?.isShoppable === "success" || false}
              shopCards={shop?.data}
              shopType={shop?.type}
              handleSaveLook={handleSaveLook}
@@ -388,6 +388,7 @@ function SearchFeed({ router }) {
              description={item?.description}
              adData={shop?.adData}
              videoSound={(item?.sound && (!isObjectEmpty(item.sound) === false)) ? false : true}
+             campaignId={shop?.campaignId}
           />
           </SwiperSlide>
           )})}
@@ -409,7 +410,6 @@ function SearchFeed({ router }) {
                 </div>
               </div>}
          </Swiper>
-
           {validItemsLength ? seekedPercentage
             ? <Seekbar seekedPercentage={seekedPercentage} type={'onBottom'}/>
             : <SeekbarLoading type={'onBottom'}/>

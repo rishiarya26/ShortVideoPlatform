@@ -35,7 +35,7 @@ const AppBanner = dynamic(
 // );
 
 function FooterMenu( { videoId,canShop, type="noShop", selectedTab,  shopType, shop,
- setClose,pageName, tabName=null} ){
+ setClose,pageName, tabName=null, campaignId="NA"} ){
   const router = useRouter();
   const { show } = useDrawer();
   const device = getItem('device-info')
@@ -48,6 +48,7 @@ const info ={
   setClose={setClose}
   pageName={pageName}
   tabName={tabName}
+  campaignId={campaignId}
 />,
  noShop: null
 }

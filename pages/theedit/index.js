@@ -30,7 +30,7 @@ export default function All({ stories }) {
 export async function getStaticProps() {
   // load the draft version
   let sbParams = {
-    version: "draft", // or 'published'
+    version: "published", // or 'draft'
     starts_with: "theedit/",
   };
   let resp;
