@@ -232,14 +232,7 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
-  const updateSeekbar = async (percentage, currentTime, duration) => {
-    setInitialPlayButton(false)
-    setSeekedPercentage(percentage);
-    const videoDurationDetail = {
-      currentT : currentTime,
-      totalDuration : duration
-    }
-    //TODO Renaming the adID to adInfo
+  const videoAdSessionsCalls = async (percentage) => {
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
@@ -267,7 +260,19 @@ function Feed({ router }) {
           document.querySelector(".swiper-container").swiper?.slideNext();
         }
       }
-   }
+    }
+  }
+
+  const updateSeekbar = (percentage, currentTime, duration) => {
+    setInitialPlayButton(false)
+    setSeekedPercentage(percentage);
+    const videoDurationDetail = {
+      currentT : currentTime,
+      totalDuration : duration
+    }
+   
+    // 👆🏻 video ad calls for feed videos
+    videoAdSessionsCalls(percentage)
 
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
