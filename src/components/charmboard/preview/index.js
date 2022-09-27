@@ -13,6 +13,7 @@ import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { getBrand } from "../../../utils/web";
 
 const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
    deleteFilteredSavedItem, idToScroll, pageName, tabName}) =>{
@@ -23,6 +24,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const [selectedIndex, setSelectedIndex] = useState(null);
  const [firstScroll, setFirstScroll] = useState(true);
  const [productIdChange, setProductIdChange] = useState();
+ const [campaignIdResp, serCampaignIdResp] = useState("NA");
 
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
   items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
@@ -68,6 +70,7 @@ const onProductChange = (id)=>{
       const response =  await getCharms({charmId});
       if(response?.data){
          setItems(response.data);
+         serCampaignIdResp(response.campaignId);
          const initalTabIndex = response?.data &&
           response.data?.outfit?.length > 0 ? 0 :
           response.data?.accessories?.length > 0 ? 1 :
@@ -153,15 +156,15 @@ const onProductChange = (id)=>{
     const onTabChange=(selected)=>{
       try{
         selected === 0 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
         selected === 1 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId}):
+        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}):
         selected === 2 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
         selected === 3 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
         selected === 4 &&
-        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId})
+        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId, campaignId: campaignIdResp || 'NA'})
      }catch(e){
         console.error('mixpanel issue in tab change on shop')
      }
@@ -252,23 +255,6 @@ const onProductChange = (id)=>{
                  </div>
     }
 
-    const getBrand =(url)=>{
-       if(!url){
-         return ''
-       }else{
-        const origin = url.split('//')[1];
-        let finalOrigin = ''
-        if(origin?.includes('www')){
-          finalOrigin = origin.split('.')[1]
-        }else{
-          finalOrigin = origin.split('.')[0]
-        }
-        if(finalOrigin){
-          return finalOrigin 
-        }
-       }
-    }
-
     return(
     <>
   {!loading ? itemsPresent ?  <div onScroll={onScroll} className={expand ? `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2 overflow-y-auto` : `charmpre flex flex-col relative shadow-md w-full px-2 items-center justify-between my-3 py-2`}>
@@ -332,6 +318,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
          />
          </div>
         })}
@@ -362,6 +349,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
          />
          </div>
          ))}
@@ -415,6 +403,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             campaignId={campaignIdResp}
          />
          </div>
           ))}
@@ -470,6 +459,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
            />
            </div>
           ))}
@@ -505,6 +495,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
+             campaignId={campaignIdResp}
            />
            </div>
           ))}

@@ -445,6 +445,7 @@ function Video(props) {
          adCards={props?.adData}
          showBanner={props?.showBanner}
          isAdShowVisible={props?.feedAd}
+         campaignId={props?.campaignId || "NA"}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed
@@ -459,6 +460,7 @@ function Video(props) {
          setClose={props?.setClose}
          pageName={props?.pageName}
          tabName={props?.tabName}
+         campaignId={props?.campaignId || "NA"}
          />
       )
       ) : (
@@ -470,6 +472,7 @@ function Video(props) {
          loading={props?.loading}
          pageName={props?.pageName}
          tabName={props?.tabName}
+         campaignId={props?.campaignId || "NA"}
          />
       )
       )}

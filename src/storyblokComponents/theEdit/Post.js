@@ -37,7 +37,7 @@ export default function Post({ story }) {
     try {
       const resp = await getStoryblokData({
         params: {
-          version: "draft",
+          version: "published",
           page: page.current,
           per_page: 1,
           starts_with: "theedit",

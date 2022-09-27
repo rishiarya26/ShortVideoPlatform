@@ -214,6 +214,7 @@ function Feed({ router }) {
       const response = await canShop({ videoId: activeVideoId });
       isShoppable = response?.isShoppable;
       shopContent.data = response?.data;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       isShoppable = false;
     }
@@ -505,6 +506,7 @@ function Feed({ router }) {
               canShop={shop.isShoppable}
               type="shop"
               selectedTab="home"
+              campaignId={shop?.campaignId}
               />
             </Swiper>
             

@@ -189,7 +189,6 @@ export default function SingleVideo(props){
     }
     /******************************/
   };
-
   return (
     <div className="flex flex-col overflow-hidden">
     <div
@@ -248,10 +247,11 @@ export default function SingleVideo(props){
         userName={`${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
-        canShop={props.canShop}
+        canShop={props.canShop === "success" || false}
         comp="single"
         description={props?.description}
         videoSoundAvailable={props.videoSound}
+        adCards={props.adData}
       />
        <EmbedVideoSidebar
        userName={props?.userName}
@@ -262,14 +262,18 @@ export default function SingleVideo(props){
         comment={props.comments}
         share={777}
         type="single"
+        pageName="single-feed"
+        adData={props.adData}
+        canShop={props.canShop === "success" || false}
       />
     {/* </div> */}
-      {props.canShop === 'success'
+      {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'
          && ( 
            <ProductCards
              shopCards={props.shopCards}
              videoId={props.videoId}
              comp="single"
+             campaignId={props?.campaignId || 'NA'}
            />
          )} 
          </> }</>
@@ -278,8 +282,9 @@ export default function SingleVideo(props){
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
-              type=""
+              type={props.canShop === "success" ? "shop" : "noShop"}
               selectedTab=""
+              campaignId={props?.campaignId || 'NA'}
             />
     </div>
   );

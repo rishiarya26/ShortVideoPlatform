@@ -11,7 +11,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 function ProductWidget({
-  shopCards, handleSaveLook, videoId, loading, shopType, setClose, pageName, tabName
+  shopCards, handleSaveLook, videoId, loading, shopType, setClose, pageName, tabName, campaignId='NA'
 }) {
 
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ function ProductWidget({
               // eslint-disable-next-line no-undef
               onClick={() => {
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName && tabName || ''},{productId:id || null}) 
-                show('',charmboardDrawer , 'big', { videoId : videoId, setClose : setClose})
+                show('',charmboardDrawer , 'big', { videoId : videoId, setClose : setClose, campaignId})
                 setClose('open');             
               }}
             >

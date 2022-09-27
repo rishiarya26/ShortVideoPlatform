@@ -3,7 +3,6 @@ import { storyblokEditable } from "@storyblok/react";
 import Embedvideo from "../../storyblokComponents/theEdit/EmbedVideo";
 
 const VisualContent = ({ blok = {}, primary=false }) => {
-  console.log("debug", blok);
   const {
     type = "image",
     alt = "newsroom image",

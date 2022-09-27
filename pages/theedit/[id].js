@@ -15,7 +15,7 @@ export async function getStaticProps({ params }) {
   let slug = params.id;
 
   let sbParams = {
-    version: "draft", // or 'published'
+    version: "published", // or 'draft'
   };
 
   let resp;
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
   let paths = [];
   try {
     const resp = await getStoryblokPage({
-      params: { version: "draft" },
+      params: { version: "published" },
       blogType: "theedit",
     });
     paths = resp.data;
