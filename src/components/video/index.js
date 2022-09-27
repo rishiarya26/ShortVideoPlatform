@@ -392,21 +392,30 @@ function Video(props) {
          />
       {/* TO-DO  comdition acc to comp */}
 
-      {!!props?.feedAd &&<button className='px-2 py-4 absolute bottom-16 w-full z-50' onClick={()=> {
-         props?.setMuted && props?.setMuted(true);
-         props?.adBtnClickCb && props?.adBtnClickCb();
-         }}>
-         <a href={props?.feedAd?.click_url}
-            style={{backgroundColor:"#63ABFF"}}
-            target="_blank"
-            rel="noreferrer"
-            className='px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold'>
+      {
+         !!props?.feedAd && (
+            <button
+               className="px-2 py-4 absolute bottom-16 w-full z-50 box-border"
+               onClick={() => {
+               props?.setMuted && props?.setMuted(true);
+               props?.adBtnClickCb && props?.adBtnClickCb();
+               }}
+            >
+               <a
+               href={props?.feedAd?.click_url}
+               style={{ backgroundColor: "#63ABFF" }}
+               target="_blank"
+               rel="noreferrer"
+               className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
+               >
                {props?.feedAd?.cta_text}
                <span>
                   <RightArrow value="#fff" />
                </span>
-         </a>
-      </button> }
+               </a>
+            </button>
+         )
+      }
 
       <VideoSidebar
          userName={props.userName}
