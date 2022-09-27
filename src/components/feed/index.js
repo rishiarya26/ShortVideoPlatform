@@ -242,26 +242,27 @@ function Feed({ router }) {
     //TODO Renaming the adID to adInfo
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId;
+      let {impression_url = null, event_url = null } = adInfo;
       if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
-         await pushAdService({url: adInfo.impression_url, value:"Impression"}); 
-         await pushAdService({url: adInfo.event_url, value: "start"});
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        impression_url && await pushAdService({url: impression_url, value:"Impression"}); 
+        event_url && await pushAdService({url: event_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "firstQuartile"});
+        event_url && await pushAdService({url: event_url, value: "firstQuartile"});
       }
       if(percentage > 50) {
         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "midpoint"});
+        event_url && await pushAdService({url: event_url, value: "midpoint"});
       }
       if(percentage > 75) {
         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "thirdQuartile"});
+        event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
       }
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "complete"});
+        event_url && await pushAdService({url: event_url, value: "complete"});
         if(document.querySelector(".swiper-container").swiper){
           document.querySelector(".swiper-container").swiper?.slideNext();
         }
