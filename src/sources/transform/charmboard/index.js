@@ -30,6 +30,7 @@ function transformSuccess(resp) {
 
     })
     payload.data = details;
+    payload.campaignId = data?.cardCampMap?.[0]?.ad_campaign_id || "";
 
     return payload;
   } catch (err) {

@@ -68,6 +68,8 @@ function transformSuccess(resp) {
     if (isShoppable) {
       shop.status = 'success';
       shop.data = canShop?.data;
+      payload.data.adData = canShop?.adData?.monitisation ?  canShop?.adData : null;
+      shop.campaignId = canShop?.campaignId;
     } else {
       shop.status = 'fail';
     }

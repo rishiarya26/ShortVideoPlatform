@@ -29,6 +29,7 @@ function transformSuccess(resp) {
       payload.charmData = data?.data?.[0]?.topCharms;
       payload.charmIds = data?.data?.[0]?.topCharms?.[0]
       payload.adData = {monitisation : data?.data?.[0]?.monitisation, monitisationCardArray:data?.data?.[0]?.monitisationCardArray}
+      payload.campaignId = data?.data?.[0]?.monitisationCardArray?.[0]?.campaign_id || 'NA' ;
     }
 
     console.log("can-shop",payload);

@@ -37,6 +37,7 @@ import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
+import { getBrand } from '../../utils/web';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -177,7 +178,7 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
   },[shop])
  /************************ */ 
 
@@ -243,24 +244,24 @@ function Feed({ router }) {
       let adInfo = items?.[videoActiveIndex]?.adId;
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
-         await pushAdService({url: adInfo.click_url, value:"Impression"}); 
-         await pushAdService({url: adInfo.click_url, value: "start"});
+         await pushAdService({url: adInfo.impression_url, value:"Impression"}); 
+         await pushAdService({url: adInfo.event_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.click_url, value: "firstQuartile"});
+        await pushAdService({url: adInfo.event_url, value: "firstQuartile"});
       }
       if(percentage > 50) {
         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.click_url, value: "midpoint"});
+        await pushAdService({url: adInfo.event_url, value: "midpoint"});
       }
       if(percentage > 75) {
         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.click_url, value: "thirdQuartile"});
+        await pushAdService({url: adInfo.event_url, value: "thirdQuartile"});
       }
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.click_url, value: "complete"});
+        await pushAdService({url: adInfo.event_url, value: "complete"});
         if(document.querySelector(".swiper-container").swiper){
           document.querySelector(".swiper-container").swiper?.slideNext();
         }
@@ -314,6 +315,7 @@ function Feed({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId= response?.campaignId;
     } catch (e) {
       // isShoppable = false;
     }
@@ -515,7 +517,7 @@ function Feed({ router }) {
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
@@ -548,6 +550,7 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
+                      campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
                     />}
@@ -602,6 +605,7 @@ function Feed({ router }) {
               showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
+              campaignId={shop?.campaignId}
               />
             </Swiper>
             
@@ -638,7 +642,6 @@ function Feed({ router }) {
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
-        
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

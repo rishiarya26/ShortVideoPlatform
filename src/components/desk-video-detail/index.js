@@ -51,7 +51,7 @@ comp = 'normal',videoSound=true, noSound, checkNoSound}) {
       //  router && router?.push(`/hashtag/${finalValue}`)
     }
 
-    useEffect(()=>{checkNoSound()},[activeIndex])
+    useEffect(()=>{checkNoSound && checkNoSound()},[activeIndex])
    
     const toUser =(username)=>{
       // let finalValue = username;

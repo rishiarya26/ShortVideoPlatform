@@ -112,6 +112,8 @@ export default function Hipi(params) {
         videoId={videoId}
         poster={item.thumbnail}
         seekedPercentage={seekedPercentage}
+        adData={item.adData}
+        campaignId={item?.canShop?.campaignId}
       />
       {/* <div className="w-full fixed bottom-0 py-2 flex justify-around items-center">
         <Shop videoId={videoId} canShop={canShop} />

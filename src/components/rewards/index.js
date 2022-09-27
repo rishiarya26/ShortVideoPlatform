@@ -67,7 +67,7 @@ const router = useRouter();
 	<div className="mt-6" data-align="center">
 		<h1 className='text-2xl font-bold font-gray-700 pb-2 mt-4 mb-2'>Earn Rewards with Hipi</h1>
 	</div>
-	<p>You can earn Hipi rewards through Hipi Rewards Program when you use Hipi app to watch videos, follow creators, create videos and share them with your friends. </p>
+	<p>You can earn Hipi rewards through Hipi Rewards Program when you use Hipi app to watch videos, follow creators, create videos and share them with your friends and family!</p>
 	
 	<h3 className='mt-4 font-medium text-gray-600 text-lg pb-1'>Earn rewards when you watch videos</h3>
 	<p>When you watch videos on the app, you will achieve the following levels:</p>

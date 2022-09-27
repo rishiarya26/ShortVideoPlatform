@@ -32,7 +32,7 @@ export async function getStaticProps({ params }) {
   export async function getStaticPaths() {
     let paths = [];
     try{
-      const resp = await getStoryblokPage({params: {"version": "draft"}, category: "creator", blogType: "newsroom"})
+      const resp = await getStoryblokPage({params: {"version": "published"}, category: "creator", blogType: "newsroom"})
       paths = resp.data;
     }catch(e) {
       console.error(e);

@@ -11,7 +11,12 @@ async function adService({url, value}) {
     arr.push(value);
     localStorage.set("adArr",arr);
     try {
-      const apiPath = `${url}&vast_event=${value}`;
+      let apiPath = "";
+      if(value === 'Impression'){
+        apiPath = `${url}${Date.now()}`;
+      }else{
+        apiPath = `${url}&vast_event=${value}`;
+      }
       response = await get(apiPath,null,{'content-type':'noHeaders'});
       return Promise.resolve(response);
     } catch (err) {

@@ -132,6 +132,15 @@ img{
 
   .swiper-wrapper{
     max-height: 100vh;
+    z-index: 0 !important;
+  }
+
+  .swiper-container{
+    z-index: unset !important;
+  }
+
+  .customCarousel > .swiper-container{
+    z-index: 1 !important;
   }
   
   .video-card{
@@ -893,6 +902,9 @@ title:first-letter {
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
+  .purple_light{
+    color: #9c21aa;
+  }
   .purple_font{
     color: #6e057a;
   }
@@ -1077,3 +1089,13 @@ color: #fd8952;
  .bg_orange{
 background-color:rgb(255 237 223);
  }
+
+@media only screen and (max-width: 420px) {
+  .videoFooter{
+    width: 50%;
+  }
+}
+
+.explore_carousel > .swiper-container > .swiper-pagination {
+  z-index: 1!important;
+}

@@ -6,9 +6,9 @@ import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg}) =>{
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId}) =>{
     useEffect(()=>{
-        productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})
+        productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
      },[productIdChange])
 
      const onProductInView =(entry)=>{
@@ -23,7 +23,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
           });  
 
        const onProductClick= ()=>{
-        toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId})  
+        toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
         window?.open(shopLink)
        }   
     return(
@@ -58,11 +58,10 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                         <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>}  
                          
                           <div className="flex items-center">
-                          {actualPrice && <p className='text-gray-400 pl-2 pr-2  text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
-                          {salePrice && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}                                             
+                          {actualPrice > 0 && <p className='text-gray-400 pl-2 pr-2  text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
+                          {salePrice > 0 && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}                                             
                           </div>
-                        <div onClick={()=>
-                        window?.open(shopLink)} className="flex px-4 py-2 ">
+                        <div onClick={onProductClick} className="flex px-4 py-2 ">
                         <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                         </div>
