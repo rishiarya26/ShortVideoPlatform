@@ -246,7 +246,7 @@ function FeedIphone({ router }) {
     }
 
     if(items[videoActiveIndex]?.adId){
-      let adInfo = items?.[videoActiveIndex]?.adId;
+      let adInfo = items?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
