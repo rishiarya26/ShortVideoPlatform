@@ -1,5 +1,5 @@
 import { get } from 'network';
-import { cacheAd, destroyAd } from '../../analytics/vmax';
+import { cacheAd, destroyAd, initAdView } from '../../analytics/vmax';
 import { getApiBasePath } from '../../config';
 import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
@@ -11,6 +11,7 @@ import { getAdPositions } from '../vmax/ads-position';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
+let totalNumberOfCalls = 0;
 let geoData = localStorage?.get('geo-info') || null;
 const device = getItem('device-type');
 const userAgent =localStorage.get('plaformData')?.ua;
@@ -143,11 +144,11 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 
     if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
       try{
-        debugger;
         const positionResponse = await getAdPositions({limit : 5});
         let { responseData = {} } = await positionResponse;
         let { ad_position = [] } = responseData;
         console.log("adResponse", ad_position[0]);
+        initAdView();
         let postId = await cacheAd();
         const singleVideoData = await getSingleVideo({id : postId});
         const video = singleVideoData?.data;
@@ -160,14 +161,14 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         console.log(e);
       }
     }else{
-      destroyAd();
-      let postId = await cacheAd();
-      const singleVideoData = await getSingleVideo({id : postId});
-      const video = singleVideoData?.data;
-      if(!isEmptyObject(video)){
-        video.vmaxAd = true;
-        response?.data?.responseData?.videos?.splice(response?.data?.responseData?.videos?.length - 2,0,video);
-      }
+      // destroyAd();
+      // let postId = await cacheAd();
+      // const singleVideoData = await getSingleVideo({id : postId});
+      // const video = singleVideoData?.data;
+      // if(!isEmptyObject(video)){
+      //   video.vmaxAd = true;
+      //   response?.data?.responseData?.videos?.splice(response?.data?.responseData?.videos?.length - 2,0,video);
+      // }
      
     }
       // const index = items.findIndex((data)=>(data?.id === videoId))
@@ -182,6 +183,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       // }
       console.log('resp-video',response)
       firstTimeCall = false;
+      totalNumberOfCalls++;
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {

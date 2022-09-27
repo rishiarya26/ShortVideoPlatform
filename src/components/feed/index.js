@@ -548,6 +548,7 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
+                      vmaxAd={item?.vmaxAd}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
                     />}

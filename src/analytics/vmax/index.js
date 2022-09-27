@@ -1,5 +1,5 @@
 
-let adView = '';
+let adView;
 let vmaxTracker = '';
 
 function eventListener(response){
@@ -12,8 +12,16 @@ export const initVmax = () => {
     window.VMAXSDK &&
     window.VMAXSDK.Events
   ) {
-    debugger;
     window.VMAXSDK.App.setSource("hipi.co.in");
+  }
+}
+
+export const initAdView = (id=0) => {
+  if (
+    typeof window !== 'undefined' &&
+    window.VMAXSDK &&
+    window.VMAXSDK.Events
+  ) {
     adView = VMAXSDK.CreateVmaxAdView();
     adView.setAdspotKey('ffb8745f');
     const eventTypes = VMAXSDK.Event.Type;
@@ -24,17 +32,18 @@ export const initVmax = () => {
   }
 }
 
-export const cacheAd = async () => {
+export const cacheAd = async (id=0) => {
   let cacheAdResponse = "";
   try {
     debugger;
     cacheAdResponse = await adView.cacheAd();
     let adId = adView?.getVmaxAd()?.getPostId();
+    //let adData = adView?.getVmaxAd();
     vmaxTracker = adView?.getVmaxAd()?.getEventTracker();
     return adId;
   } catch (err) {
     initVmax()
-    cacheAd();
+    cacheAd(id);
     console.error(err)
   }
 };
@@ -42,8 +51,10 @@ export const cacheAd = async () => {
 export const showAd = async () => {
   try {
     const showAdResponse = await adView.showAd({
-      container: '.ad-container',
+      container: '#hello',
     });
+    debugger;
+    console.log(showAdResponse);
     // setShowAdResponse(showAdResponse);
   } catch (err) {
     console.error(err)

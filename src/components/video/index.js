@@ -13,6 +13,7 @@ import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
 import RightArrow from '../commons/svgicons/right-arrow';
+import { showAd } from '../../analytics/vmax';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -40,8 +41,14 @@ function Video(props) {
    const rootRef = useRef(null);
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
-   const device = getItem('device-info')
+   const device = getItem('device-info');
 
+  
+   useEffect(()=>{
+      if(props?.vmaxAd){
+         showAd();
+      }
+   },[])
 
    useEffect(()=>{
       let videoElement;
@@ -407,6 +414,9 @@ function Video(props) {
                </span>
          </a>
       </button> }
+
+      {!!props?.vmaxAd && <div id="hello"></div>}
+      
 
       <VideoSidebar
          userName={props.userName}
