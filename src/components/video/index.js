@@ -392,7 +392,7 @@ function Video(props) {
          />
       {/* TO-DO  comdition acc to comp */}
 
-      {!!props?.feedAd &&<button className='px-2 py-4 absolute bottom-16 w-full z-50' onClick={()=> {
+      {!!props?.feedAd &&<button className='px-2 py-4 absolute bottom-16 w-full z-50 box-border' onClick={()=> {
          props?.setMuted && props?.setMuted(true);
          props?.adBtnClickCb && props?.adBtnClickCb();
          }}>
