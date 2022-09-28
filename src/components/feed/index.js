@@ -232,41 +232,47 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
-  const updateSeekbar = async (percentage, currentTime, duration) => {
+  const videoAdSessionsCalls = async (percentage) => {
+    if(items[videoActiveIndex]?.adId){
+      let adInfo = items?.[videoActiveIndex]?.adId || {};
+      let {impression_url = null, event_url = null } = adInfo;
+      if(percentage > 0){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        impression_url && await pushAdService({url: impression_url, value:"Impression"}); 
+        event_url && await pushAdService({url: event_url, value: "start"});
+      }
+      if(percentage > 25) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        event_url && await pushAdService({url: event_url, value: "firstQuartile"});
+      }
+      if(percentage > 50) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        event_url && await pushAdService({url: event_url, value: "midpoint"});
+      }
+      if(percentage > 75) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
+      }
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        event_url && await pushAdService({url: event_url, value: "complete"});
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
+      }
+    }
+  }
+
+  const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
     const videoDurationDetail = {
       currentT : currentTime,
       totalDuration : duration
     }
-    //TODO Renaming the adID to adInfo
-    if(items[videoActiveIndex]?.adId){
-      let adInfo = items?.[videoActiveIndex]?.adId;
-      if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
-         await pushAdService({url: adInfo.impression_url, value:"Impression"}); 
-         await pushAdService({url: adInfo.event_url, value: "start"});
-      }
-      if(percentage > 25) {
-        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "firstQuartile"});
-      }
-      if(percentage > 50) {
-        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "midpoint"});
-      }
-      if(percentage > 75) {
-        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "thirdQuartile"});
-      }
-      if(percentage > 98) {
-        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        await pushAdService({url: adInfo.event_url, value: "complete"});
-        if(document.querySelector(".swiper-container").swiper){
-          document.querySelector(".swiper-container").swiper?.slideNext();
-        }
-      }
-   }
+   
+    // 👆🏻 video ad calls for feed videos
+    videoAdSessionsCalls(percentage)
 
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
