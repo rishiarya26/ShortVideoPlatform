@@ -588,6 +588,7 @@ console.log('errorrr',e)
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
+                      vmaxAd={item?.feedVmaxAd || null}
                     />}
                   </SwiperSlide>
                 )) : (

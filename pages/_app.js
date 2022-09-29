@@ -273,6 +273,7 @@ function Hipi({
 
       localStorage.set("adArr",[]);
       localStorage.set("adArrMixPanel",[]);
+      localStorage.set("vmaxEvents",[]);
       
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;

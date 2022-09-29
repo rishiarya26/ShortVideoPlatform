@@ -38,6 +38,7 @@ import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
+import { vmaxTrackerEvents } from '../../analytics/vmax';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -233,6 +234,28 @@ function Feed({ router }) {
   const validItemsLength = toShowItems?.length > 0;
 
   const videoAdSessionsCalls = async (percentage) => {
+    
+    if(items[videoActiveIndex]?.feedVmaxAd){
+      debugger
+      let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+      if(percentage > 0 && percentage < 25){
+        vmaxTrackerEvents(tracker,'impression')
+        vmaxTrackerEvents(tracker,'videoAdStarted')
+      }
+      if(percentage > 25 && percentage < 50) {
+        vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
+      }
+      if(percentage > 50 && percentage < 75) {
+        vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
+      }
+      if(percentage > 75 && percentage < 90) {
+        vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
+      }
+      if(percentage > 98) {
+        vmaxTrackerEvents(tracker,'videoAdEnd')
+      }
+    }
+
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
@@ -438,8 +461,11 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+
                 localStorage.set("adArr",[]);
-                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
+
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
@@ -448,6 +474,7 @@ function Feed({ router }) {
                 } = swiperCore;
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -494,8 +521,6 @@ function Feed({ router }) {
                 }
 
                 activeId && setActiveVideoId(activeId);
-
-              
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -556,10 +581,10 @@ function Feed({ router }) {
                       videoSound={item?.videoSound}
                       feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
-                      vmaxAd={item?.vmaxAd}
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
+                      vmaxAd={item?.feedVmaxAd || null}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -604,7 +629,7 @@ function Feed({ router }) {
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={!items[videoActiveIndex]?.adId && 'shop'}
+              type={(!items[videoActiveIndex]?.adId || !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -636,7 +661,7 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
+        {(!items?.[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

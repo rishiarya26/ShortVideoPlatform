@@ -87,7 +87,8 @@ function transformSuccess(resp) {
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
       payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
-      payloadObject.vmaxAd = d?.vmaxAd || null;
+      // payloadObject.vmaxAd = d?.vmaxAd || null;
+      // payloadObject.feedVmaxAd = d?.feedVmaxAd || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);
@@ -97,6 +98,12 @@ function transformSuccess(resp) {
       // data.firstVideo.video_url = data?.firstVideo?.video_urls[networkConnection];
       payloadData?.splice(0,0,data?.firstVideo);
     }
+
+    if(data?.vmaxAdVideo){
+      debugger;
+      payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
+    }
+
     /*for stagging api */
     // const { response = [] } = data;
     // const tResponse = [...response];

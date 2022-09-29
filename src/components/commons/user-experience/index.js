@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { memo } from 'react'
 import { ToTrackFbEvents } from '../../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../../analytics/firebase/events';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
@@ -7,12 +7,14 @@ import { FULL_EXPERIENCE } from '../../../constants';
 import { onStoreRedirect } from '../../../utils/web';
 import {appsflyer} from '../../../scripts/appsflyer-smart'
 
-export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom'}) {
+ const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', noShow=false}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
 }  
 const router = useRouter();
+
+if(noShow) return false;
   //   return (
   //   <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
   //     <p className="text-sm">
@@ -51,3 +53,5 @@ const router = useRouter();
 
   /*******************************/  
 }
+
+export default memo(OpenAppStrip);

@@ -13,7 +13,7 @@ import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
 import RightArrow from '../commons/svgicons/right-arrow';
-import { showAd } from '../../analytics/vmax';
+import AdButton from '../commons/button/ad';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -42,13 +42,6 @@ function Video(props) {
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
    const device = getItem('device-info');
-
-  
-   useEffect(()=>{
-      if(props?.vmaxAd){
-         showAd();
-      }
-   },[])
 
    useEffect(()=>{
       let videoElement;
@@ -394,37 +387,27 @@ function Video(props) {
          videoId={props.id}
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
-         isAdShowVisible={props?.feedAd}
+         isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          profilePic={props?.profilePic}
          />
       {/* TO-DO  comdition acc to comp */}
 
-      {
-         !!props?.feedAd && (
-            <button
-               className="px-2 py-4 absolute bottom-16 w-full z-50 box-border"
-               onClick={() => {
-               props?.setMuted && props?.setMuted(true);
-               props?.adBtnClickCb && props?.adBtnClickCb();
-               }}
-            >
-               <a
-               href={props?.feedAd?.click_url}
-               style={{ backgroundColor: "#63ABFF" }}
-               target="_blank"
-               rel="noreferrer"
-               className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
-               >
-               {props?.feedAd?.cta_text}
-               <span>
-                  <RightArrow value="#fff" />
-               </span>
-               </a>
-            </button>
-         )
-      }
-
-      {!!props?.vmaxAd && <div id="hello"></div>}
+      <AdButton 
+         noShow={!!props?.feedAd}
+         setMuted = {props?.setMuted}
+         adBtnClickCb = {props?.adBtnClickCb}
+         CtaText = {props?.feedAd?.cta_text}
+         CtaColor ="#63ABFF"
+         ctaPath = {props?.feedAd?.click_url}
+      />
+      <AdButton 
+         noShow={!!props?.vmaxAd}
+         setMuted = {props?.setMuted}
+         adBtnClickCb = {props?.adBtnClickCb}
+         CtaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
+         CtaColor = {props?.vmaxAd?.ctaColor ? props.vmaxAd.ctaColor: "#63ABFF"}
+         ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath}
+      />
       
 
       <VideoSidebar
@@ -453,7 +436,7 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          showBanner={props?.showBanner}
-         isAdShowVisible={props?.feedAd}
+         isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          campaignId={props?.campaignId || "NA"}
          />
       {/* TO-DO  condition acc to comp */}

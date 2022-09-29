@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/jsx-no-duplicate-props*/
+import React, { memo } from 'react';
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { withBasePath } from "../../config"
@@ -79,4 +80,4 @@ const HamburgerMenu = ()=>{
     )
 }
 
-export default HamburgerMenu;
+export default memo(HamburgerMenu);

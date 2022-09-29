@@ -11,7 +11,6 @@ import { getAdPositions } from '../vmax/ads-position';
 import { getSingleVideo } from './single';
 
 let firstTimeCall = true;
-let totalNumberOfCalls = 0;
 let geoData = localStorage?.get('geo-info') || null;
 const device = getItem('device-type');
 const userAgent =localStorage.get('plaformData')?.ua;
@@ -75,6 +74,30 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         response.data.loadFeed = true;
       }
     
+      // ? As of now no difference between firstCall and secondCall keeping this for reference
+
+      if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
+        try{
+          let {adPosition ="", cachedVideo ={}} = await cacheAdResponse();
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            response.data.vmaxAdVideo = cachedVideo;
+            response.data.vmaxVideoIndex = adPosition;
+          }
+        }catch(e){
+          console.error(e);
+        }
+      }else{
+        try{
+          let {adPosition ="", cachedVideo={}} = await cacheAdResponse();
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            response.data.vmaxAdVideo = cachedVideo;
+            response.data.vmaxVideoIndex = adPosition;
+          }
+        }catch(e){
+          console.error(e);
+        }
+      }
+
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
@@ -142,34 +165,36 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       response.data.loadFeed = true;
     }
 
+    // ? As of now no difference between firstCall and secondCall keeping this for reference
+
     if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
       try{
-        const positionResponse = await getAdPositions({limit : 5});
-        let { responseData = {} } = await positionResponse;
-        let { ad_position = [] } = responseData;
-        console.log("adResponse", ad_position[0]);
-        initAdView();
-        let postId = await cacheAd();
-        const singleVideoData = await getSingleVideo({id : postId});
-        const video = singleVideoData?.data;
-        if(!isEmptyObject(video)){
-          ad_position = ad_position[0]
-          video.vmaxAd = true;
-          response?.data?.responseData?.videos?.splice(ad_position,0,video);
+        // let {adPosition = "", cachedVideo = {}} = await cacheAdResponse();
+        let resp = await cacheAdResponse();
+        let adPosition = resp?.adPosition || null;
+        let cachedVideo =  resp?.cachedVideo ?? {};
+
+        if(!isEmptyObject(cachedVideo) && adPosition){
+          response.data.vmaxAdVideo = cachedVideo;
+          response.data.vmaxVideoIndex = adPosition;
         }
-      }catch(e){
-        console.log(e);
+      }catch(error){
+        console.error(error);
       }
     }else{
-      // destroyAd();
-      // let postId = await cacheAd();
-      // const singleVideoData = await getSingleVideo({id : postId});
-      // const video = singleVideoData?.data;
-      // if(!isEmptyObject(video)){
-      //   video.vmaxAd = true;
-      //   response?.data?.responseData?.videos?.splice(response?.data?.responseData?.videos?.length - 2,0,video);
-      // }
-     
+      try{
+        // let {adPosition= "", cachedVideo = {}} = await cacheAdResponse();
+        let resp = await cacheAdResponse();
+        let adPosition = resp?.adPosition || null;
+        let cachedVideo =  resp?.cachedVideo ?? {};
+
+        if(!isEmptyObject(cachedVideo) && adPosition){
+          response.data.vmaxAdVideo = cachedVideo;
+          response.data.vmaxVideoIndex = adPosition;
+        }
+      }catch(error){
+        console.error(error);
+      } 
     }
       // const index = items.findIndex((data)=>(data?.id === videoId))
       // if(index !== -1){
@@ -181,14 +206,45 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       //   const video = localStorage.get('selected-profile-video')
       //     video && (response.data.firstVideo = video);
       // }
-      console.log('resp-video',response)
-      firstTimeCall = false;
-      totalNumberOfCalls++;
+    console.log('resp-video',response)
+    firstTimeCall = false;
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {
     firstTimeCall = false;
     return Promise.reject(err);
+  }
+}
+
+const cacheAdResponse = async () => {
+  try{
+    const positionResponse = await getAdPositions({limit : 5});
+    let { responseData = {} } = await positionResponse;
+
+    let adShow = await initAdView(); // 👈 creating new instance for vmaxsDK
+
+    const {adData = {}, ctaInfo = {}, adView = {}} = await cacheAd() || {};
+    
+    let {postid = "", ctaButtonColor = "", ctatext ="", ctaPath = "", ctaLinkUrl =""} = ctaInfo;
+    
+    const singleVideoData = await getSingleVideo({id : postid});
+
+    const video = await singleVideoData?.data || {};
+    
+    let adPosition = responseData?.ad_position?.[0] || null;
+
+    if(!isEmptyObject(video) && adData){
+      let cacheAdData = {...adData, ctaColor: ctaButtonColor, ctaText: ctatext, ctaPath, ctaLinkUrl, vmaxAd: true, adView};
+      let cachedVideo = {...video, feedVmaxAd: cacheAdData };
+      console.log("spliced video position",cachedVideo, cacheAdData, adPosition);
+      return {adPosition, cachedVideo};
+    }else{
+      throw new Error(`No video found for id ${postid}`)
+    }
+
+  }catch (err) {
+    console.error("Error getting video position",err);
+    return {};
   }
 }
 

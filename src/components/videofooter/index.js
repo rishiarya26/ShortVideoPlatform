@@ -99,8 +99,8 @@ function VideoFooter({
           
           <div className="font-medium dark:text-white ml-1">
               <div className=" text-white dark:text-gray-400">
-                <h3 onClick={()=> router && router?.push(`/@${userName}`)} style={{lineHeight: "1rem"}} className="font-semibold text-sm flex ">
-                  @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
+                <h3 onClick={()=> router && router?.push(`/@${userName}`)} style={{lineHeight: "1rem"}} className="font-semibold text-sm flex items-center">
+                  @{userName} {userVerified === 'verified' ? <div className="ml-2"><Verified/></div>:''}
                 </h3>
               </div>
               <div className="text-xs text-white dark:text-gray-400">Sponsored</div>
