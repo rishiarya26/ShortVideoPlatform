@@ -15,7 +15,7 @@ async function adService({url, value}) {
       if(value === 'Impression'){
         apiPath = `${url}${Date.now()}`;
       }else{
-        apiPath = `${url}&vast_event=${value}`;
+        apiPath = `${url}${value}`;
       }
       response = await get(apiPath,null,{'content-type':'noHeaders'});
       return Promise.resolve(response);
