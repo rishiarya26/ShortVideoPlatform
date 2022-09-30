@@ -1,4 +1,10 @@
 {"stunner" :  [
+    {"name":"Festivities with a twist" ,"tag":"October Challenge 1", "content":"We all love dressing up for festivals, don’t we? Showcase your festive swag this season! Don your ethnic attire with your unique twist in it, show us how you get ready and reveal the look at the end! Be the trendsetter you are and get a step closer to walking the red carpet of Zee Cine Awards! Participate NOW! ",
+    "state":"live", "imageURL":"hipistunner_challenge-Oct-1.jpg", "date":"Oct 1-14","promoUrl":"https://www.hipi.co.in/feed/for-you?videoId=0132b276-39f0-4f2c-93d2-2135793488fa","show":false },
+
+    {"name":"Celebrate like a Celeb" ,"tag":"October Challenge 2", "content":"To be released on 15 October",
+    "state":"coming", "imageURL":"hipistunner_challenge-Oct-2.jpg", "date":"Oct 15-30","promoUrl":"","show":false },
+
     {"name":"To the Star in you" ,"tag":"September Challenge 1", "content":"We’re feeling nostalgic! For the first challenge of Hipi Stunner September, make a fun video taking inspiration from the style of your favourite childhood actor or actress. Use their songs, signature step or act like them to make your video entertaining. Upload your video on the Hipi app before the 14th of September. Participate NOW!",
     "state":"live", "imageURL":"hipistunner_challenge-Sept-1.jpg", "date":"Sept 1-14","promoUrl":"https://www.hipi.co.in/feed/for-you?videoId=07ccdfe2-d19d-48e9-a72b-0e091ba3033c","show":false },
 
