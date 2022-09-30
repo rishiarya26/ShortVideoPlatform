@@ -102,6 +102,7 @@ function transformSuccess(resp) {
     if(data?.vmaxAdVideo){
       debugger;
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
+      console.log("adding data in payload", payloadData);
     }
 
     /*for stagging api */

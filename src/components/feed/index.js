@@ -204,7 +204,9 @@ function Feed({ router }) {
     let updateItems = [...items];
      try{
        const data =  await fetchData({ type: id });
+       console.log("data before", data?.data, "=>" , updateItems);
        updateItems = updateItems.concat(data?.data);
+       console.log("data after", updateItems);
        setItems(updateItems);
       }
      catch(err){
@@ -519,6 +521,7 @@ function Feed({ router }) {
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
+                console.log("active index: " + activeIndex, items?.[activeIndex].feedVmaxAd);
 
                 activeId && setActiveVideoId(activeId);
               }}
@@ -629,7 +632,7 @@ function Feed({ router }) {
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={(!items[videoActiveIndex]?.adId || !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
+              type={(!items[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}

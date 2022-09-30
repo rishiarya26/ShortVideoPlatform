@@ -674,7 +674,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {!items?.[videoActiveIndex]?.adId && <OpenAppStrip
+      {(!items?.[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
