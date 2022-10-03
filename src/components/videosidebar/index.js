@@ -168,9 +168,10 @@ const checkSaveLook =()=>{
 
     const options = {
       profile: `${saveLook ? 'bottom-12 ' : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
-      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : 'bottom-28 ' : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ?  'bottom-28 ' : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
       embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
       single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      cacheAd: `bottom-56 absolute right-0 flex-col  flex text-white ml-2`,
     };
 
 
@@ -231,6 +232,136 @@ const handleSaveMoments = () =>{
     }
     handleSaveLook(false);
 }
+
+
+  if (!!isAdShowVisible) {
+    return (
+      <div className={options["cacheAd"]}>
+        <div>
+          <div
+            className={`${
+              type === "feed" ? "flex" : "hidden"
+            } relative my-2 mx-3 text-center justify-end  self-end`}
+          >
+            {isLiked?.like ? (
+              <div>
+                <div
+                  role="presentation"
+                  onClick={() => {
+                    deleteReaction("like", socialId);
+                    setIsLiked({ like: false, reactionTime: "now" });
+                    getVideoReactions(socialId, "now", "delete");
+                    /* mixpanel - dislike */
+                    toTrackMixpanel(
+                      "cta",
+                      {
+                        pageName: compName,
+                        tabName: (tabName && tabName) || null,
+                        name: "like",
+                        type: "Button",
+                      },
+                      {
+                        userId: videoOwnersId,
+                        content_id: videoId,
+                        userName: userName,
+                      }
+                    );
+                    toTrackMixpanel(
+                      "unLike",
+                      {
+                        pageName: compName,
+                        tabName: (tabName && tabName) || null,
+                      },
+                      {
+                        userId: videoOwnersId,
+                        content_id: videoId,
+                        userName: userName,
+                      }
+                    );
+                    /******************** */
+                  }}
+                >
+                  <Liked />
+                </div>
+
+                <p className="text-xs mt-1 text-center">
+                  {isLiked?.reactionTime === "past"
+                    ? numberFormatter(reactionCount.likes)
+                    : numberFormatter(reactionCount.likes)}
+                </p>
+              </div>
+            ) : (
+              <div>
+                <div id="like" role="presentation" onClick={() => selectedLike()}>
+                  <Like />
+                </div>
+                <p className="text-xs mt-1 text-center">
+                  {isLiked?.reactionTime === "past"
+                    ? numberFormatter(reactionCount.likes)
+                    : numberFormatter(reactionCount.likes)}
+                </p>
+              </div>
+            )}
+          </div>
+          <div
+            className={`${
+              type === "feed" ? "flex" : "hidden"
+            } relative my-2 mx-3 text-center items-end flex-col  self-end`}
+          >
+            <div
+              id="comment"
+              role="presentation"
+              onClick={() => {
+                device === "ios" &&
+                  show("", detectDeviceModal, "extraSmall", {
+                    videoId: videoId && videoId,
+                  });
+                device === "android" && showBanner && showBanner();
+              }}
+            >
+              <Comment />
+              {/* <p className="text-sm text-center">0</p> */}
+            </div>
+          </div>
+          <div
+            onClick={
+              // (value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
+              () =>
+                share({
+                  id: videoId,
+                  creatorId: videoOwnersId,
+                  userName: userName,
+                  pageName: pageName,
+                  tabName: tabName,
+                  type: "video",
+                })
+              // )
+            }
+            className={`${
+              type === "feed" ? "flex" : "hidden"
+            } relative my-2 mx-3 text-center items-end flex-col  self-end`}
+          >
+            <ShareComp />
+          </div>
+
+          <div
+            className={`${
+              type === "feed" ? "flex" : "hidden"
+            } relative my-2 mx-3 text-center items-end flex-col  self-end`}
+            onClick={() =>
+              showDialog("Embed Code", CopyEmbedCode, "medium", {
+                videoId,
+                onEmbedCopy,
+              })
+            }
+          >
+            <EmbedIcon />
+            <p className="text-xs mt-1 text-center">Embed</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

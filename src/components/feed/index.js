@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -12,7 +12,7 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
-import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import { cacheAdResponse, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
@@ -39,6 +39,7 @@ import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { vmaxTrackerEvents } from '../../analytics/vmax';
+import { CacheAdContext } from '../../hooks/use-cacheAd';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -89,6 +90,8 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+
+  const cacheAd = useContext(CacheAdContext);
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -204,9 +207,20 @@ function Feed({ router }) {
     let updateItems = [...items];
      try{
        const data =  await fetchData({ type: id });
+
        console.log("data before", data?.data, "=>" , updateItems);
+       
+       let adPosition = localStorage.get('vmaxAdPosition') || null;
+       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
+
+       if(Object.keys(cacheAdVideo).length > 0 && adPosition !== null) {
+          data?.data.splice(adPosition, 0, cacheAdVideo);
+          cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+       } 
        updateItems = updateItems.concat(data?.data);
-       console.log("data after", updateItems);
+      
+       console.log("data after", data?.data, "=>" ,updateItems);
+
        setItems(updateItems);
       }
      catch(err){
@@ -238,7 +252,7 @@ function Feed({ router }) {
   const videoAdSessionsCalls = async (percentage) => {
     
     if(items[videoActiveIndex]?.feedVmaxAd){
-      debugger
+     console.log("adView", items[videoActiveIndex]?.feedVmaxAd, "=>" , items[videoActiveIndex]?.feedVmaxAd?.adView);
       let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
       if(percentage > 0 && percentage < 25){
         vmaxTrackerEvents(tracker,'impression')
@@ -470,7 +484,7 @@ function Feed({ router }) {
 
                 setInitialPlayStarted(false);
               }}
-              onSlideChange={swiperCore => {
+              onSlideChange={async swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
@@ -524,6 +538,18 @@ function Feed({ router }) {
                 console.log("active index: " + activeIndex, items?.[activeIndex].feedVmaxAd);
 
                 activeId && setActiveVideoId(activeId);
+
+                if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+                  localStorage.set("vmaxAdPosition", "");
+                  localStorage.set("cacheAd", {});
+                  let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+                  debugger;
+                  adPosition && localStorage.set("vmaxAdPosition", adPosition);
+                  console.log(cacheAd,"cacheAd");
+                  cacheAd && cacheAd?.feedCacheAd(cachedVideo);
+                  Object.keys(cachedVideo).length > 0 && localStorage.set("cacheAd", cachedVideo);
+                }
+
               }}
             >
               {!loadFeed && <VideoUnavailable/>}

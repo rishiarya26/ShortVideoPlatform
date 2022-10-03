@@ -30,7 +30,6 @@ export const initAdView = async() => {
     }catch(err){
       console.log("getting error while getting geoInfo",err);
     }
-   
     const guestId = getItem('guest-token');
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
@@ -47,12 +46,12 @@ export const initAdView = async() => {
     adView = new VMAXSDK.CreateVmaxAdView();
     adView.setAdspotKey('ffb8745f').setCustomData({...customData});
     console.log("vmax setting custom data: " + JSON.stringify(customData), adView);
+    return "success";
   }
 }
 
 export const cacheAd = async () => {
   try {
-    debugger;
     if(adView){
       let cacheAdResponse = await adView?.cacheAd();
       let adData = await adView?.getVmaxAd();

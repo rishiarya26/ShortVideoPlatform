@@ -74,6 +74,11 @@ const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(mo
   return OverLayProvider;
 }));
 
+const CacheAdProvider = dynamic(() => import('../src/hooks/use-cacheAd').then(module => {
+  const { CacheAdProvider } = module;
+  return CacheAdProvider;
+}));
+
 export function reportWebVitals() {
   // console.log(metric);
   // const body = JSON.stringify(metric);
@@ -554,7 +559,9 @@ function Hipi({
           `,
         }}
       />
-                      <Component {...pageProps} />
+                      <CacheAdProvider>
+                        <Component {...pageProps} />
+                      </CacheAdProvider>
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>
                   </RouteStateProvider>

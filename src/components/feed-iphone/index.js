@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { withRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -19,7 +19,7 @@ import useAuth from '../../hooks/use-auth';
 import useDrawer from '../../hooks/use-drawer';
 import CircularProgress from '../commons/circular-loader'
 import HamburgerMenu from '../hamburger-menu';
-import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import {  cacheAdResponse, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import { viewEventsCall } from '../../analytics/view-events';
 import { localStorage } from '../../utils/storage';
@@ -39,6 +39,8 @@ import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
+import { CacheAdContext } from '../../hooks/use-cacheAd';
+import { vmaxTrackerEvents } from '../../analytics/vmax';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -99,6 +101,8 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+
+  const cacheAd = useContext(CacheAdContext);
 
 
   const checkNoSound =()=>{
@@ -204,7 +208,19 @@ function FeedIphone({ router }) {
     let data = []
      try{
        data =  await fetchData({ type: id });
+
+       console.log("data before", data?.data, "=>" , updateItems);
+       
+       let adPosition = localStorage.get('vmaxAdPosition') || null;
+       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
+       if(Object.keys(cacheAdVideo).length > 0 && adPosition !== null) {
+          data?.data.splice(adPosition, 0, cacheAdVideo);
+          cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+       } 
+
        updateItems = updateItems.concat(data?.data);
+
+       console.log("data after", data?.data, "=>" ,updateItems);
       //  setOffset(offset+1)
        setItems(updateItems);
       }
@@ -238,6 +254,28 @@ function FeedIphone({ router }) {
   // setRetry = retry && retry;
 
   const videoAdSessionsCalls = async(percentage) => {
+
+    if(items[videoActiveIndex]?.feedVmaxAd){
+      console.log("adView", items[videoActiveIndex]?.feedVmaxAd, "=>" , items[videoActiveIndex]?.feedVmaxAd?.adView);
+       let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+       if(percentage > 0 && percentage < 25){
+         vmaxTrackerEvents(tracker,'impression')
+         vmaxTrackerEvents(tracker,'videoAdStarted')
+       }
+       if(percentage > 25 && percentage < 50) {
+         vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
+       }
+       if(percentage > 50 && percentage < 75) {
+         vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
+       }
+       if(percentage > 75 && percentage < 90) {
+         vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
+       }
+       if(percentage > 98) {
+         vmaxTrackerEvents(tracker,'videoAdEnd')
+       }
+     }
+
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
@@ -349,8 +387,8 @@ function FeedIphone({ router }) {
   arr && (dataItem = dataItem?.concat(arr));
   //add
   for(let i=0;i<=5;i++){
-    if(dataItem?.[videoActiveIndex+i+2]){ 
-      updateShowItems.push(dataItem[videoActiveIndex+i+2])
+    if(dataItem?.[videoActiveIndex+i+3]){ 
+      updateShowItems.push(dataItem[videoActiveIndex+i+3])
     }
     // else{
 
@@ -481,7 +519,7 @@ console.log('errorrr',e)
                 // router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
-              onSlideChange={swiperCore => {
+              onSlideChange={async swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
@@ -527,6 +565,19 @@ console.log('errorrr',e)
                 }
                 activeId && setActiveVideoId(activeId);
 
+
+                console.log("active index: " + activeIndex, items?.[activeIndex]?.feedVmaxAd);
+
+                if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+                  localStorage.set("vmaxAdPosition", "");
+                  localStorage.set("cacheAd", {});
+                  let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+                  adPosition && localStorage.set("vmaxAdPosition", adPosition);
+                  console.log(cacheAd,"cacheAd");
+                  cacheAd && cacheAd?.feedCacheAd(cachedVideo);
+                  Object.keys(cachedVideo).length > 0 && localStorage.set("cacheAd", cachedVideo);
+                }
+                
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -640,7 +691,7 @@ console.log('errorrr',e)
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={!items[videoActiveIndex]?.adId && 'shop'}
+              type={(!items[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType = {shop?.type}
               setClose={setClose}

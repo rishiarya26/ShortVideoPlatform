@@ -181,21 +181,22 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       }catch(error){
         console.error(error);
       }
-    }else{
-      try{
-        // let {adPosition= "", cachedVideo = {}} = await cacheAdResponse();
-        let resp = await cacheAdResponse();
-        let adPosition = resp?.adPosition || null;
-        let cachedVideo =  resp?.cachedVideo ?? {};
-
-        if(!isEmptyObject(cachedVideo) && adPosition){
-          response.data.vmaxAdVideo = cachedVideo;
-          response.data.vmaxVideoIndex = adPosition;
-        }
-      }catch(error){
-        console.error(error);
-      } 
     }
+    // else{
+    //   try{
+    //     // let {adPosition= "", cachedVideo = {}} = await cacheAdResponse();
+    //     let resp = await cacheAdResponse();
+    //     let adPosition = resp?.adPosition || null;
+    //     let cachedVideo =  resp?.cachedVideo ?? {};
+
+    //     if(!isEmptyObject(cachedVideo) && adPosition){
+    //       response.data.vmaxAdVideo = cachedVideo;
+    //       response.data.vmaxVideoIndex = adPosition;
+    //     }
+    //   }catch(error){
+    //     console.error(error);
+    //   } 
+    // }
       // const index = items.findIndex((data)=>(data?.id === videoId))
       // if(index !== -1){
       //   const video = items[index]
@@ -206,6 +207,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       //   const video = localStorage.get('selected-profile-video')
       //     video && (response.data.firstVideo = video);
       // }
+      
     console.log('resp-video',response)
     firstTimeCall = false;
     response.data.requestedWith = { page, total };
@@ -218,10 +220,13 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 
 const cacheAdResponse = async () => {
   try{
+    debugger;
     const positionResponse = await getAdPositions({limit : 5});
     let { responseData = {} } = await positionResponse;
 
-    let adShow = await initAdView(); // 👈 creating new instance for vmaxsDK
+    let adShow = await initAdView().then((response)=>{
+      console.log(response,"responseData");
+    }); // 👈 creating new instance for vmaxsDK
 
     const {adData = {}, ctaInfo = {}, adView = {}} = await cacheAd() || {};
     
@@ -255,3 +260,4 @@ const [getHomeFeedWLogin, clearHomeFeedWLogin] = apiMiddleWare(fetchHomeFeedWith
 
 export { getHomeFeed, clearHomeFeed };
 export { getHomeFeedWLogin, clearHomeFeedWLogin };
+export { cacheAdResponse };
