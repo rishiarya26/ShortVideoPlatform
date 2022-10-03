@@ -203,26 +203,37 @@ function FeedIphone({ router }) {
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
+  const feedingVmaxAdToUpdatedItems = () => {
+
+  }
+
   const getFeedData = async() =>{
     let updateItems = [...items];
     let data = []
      try{
-       data =  await fetchData({ type: id });
+      data =  await fetchData({ type: id });
+      console.log("data before", data?.data, "=>" , updateItems);
 
-       console.log("data before", data?.data, "=>" , updateItems);
-       
-       let adPosition = localStorage.get('vmaxAdPosition') || null;
-       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
-       if(Object.keys(cacheAdVideo).length > 0 && adPosition !== null) {
-          data?.data.splice(adPosition, 0, cacheAdVideo);
-          cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
-       } 
+      let adPosition = localStorage.get('vmaxAdPosition') || null;
+      let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
+      if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
+        data?.data.splice(adPosition, 0, cacheAdVideo);
+        cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+      }else{
+        try{
+          let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            data?.data?.splice(adPosition, 0, cachedVideo);
+          }
+        }catch(error){
+          console.error(error);
+        }
+      }
 
-       updateItems = updateItems.concat(data?.data);
-
-       console.log("data after", data?.data, "=>" ,updateItems);
+      updateItems = updateItems.concat(data?.data);
+      console.log("data after", data?.data, "=>" ,updateItems);
       //  setOffset(offset+1)
-       setItems(updateItems);
+      setItems(updateItems);
       }
      catch(err){
      }
@@ -489,6 +500,20 @@ console.log('errorrr',e)
           return obj;
   }
 
+  const getNextVmaxAd = async(activeIndex) => {
+    //? condition to fetch ad for next feed chunk
+    try{
+      if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+        localStorage.set("vmaxAdPosition", "");
+        let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+        !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
+        !isObjectEmpty(cacheAd) && cacheAd?.feedCacheAd(cachedVideo);
+      }
+    }catch(error){ 
+      console.log(error);
+    }
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -519,7 +544,7 @@ console.log('errorrr',e)
                 // router?.replace(`/feed/${id}`);
                 // toTrackMixpanel(0, 'impression');
               }}
-              onSlideChange={async swiperCore => {
+              onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
@@ -568,15 +593,8 @@ console.log('errorrr',e)
 
                 console.log("active index: " + activeIndex, items?.[activeIndex]?.feedVmaxAd);
 
-                if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
-                  localStorage.set("vmaxAdPosition", "");
-                  localStorage.set("cacheAd", {});
-                  let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
-                  adPosition && localStorage.set("vmaxAdPosition", adPosition);
-                  console.log(cacheAd,"cacheAd");
-                  cacheAd && cacheAd?.feedCacheAd(cachedVideo);
-                  Object.keys(cachedVideo).length > 0 && localStorage.set("cacheAd", cachedVideo);
-                }
+                //? next vmax ad video (position & details)
+                getNextVmaxAd(activeIndex);
                 
               }}
             >

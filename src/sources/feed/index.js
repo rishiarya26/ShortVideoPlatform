@@ -220,24 +220,19 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 
 const cacheAdResponse = async () => {
   try{
+    const { adPosition = "" } = await getAdPositions({limit : 5});
     debugger;
-    const positionResponse = await getAdPositions({limit : 5});
-    let { responseData = {} } = await positionResponse;
 
-    let adShow = await initAdView().then((response)=>{
-      console.log(response,"responseData");
-    }); // 👈 creating new instance for vmaxsDK
+    let adShow = await initAdView() // 👈 creating new instance for vmaxsDK
 
     const {adData = {}, ctaInfo = {}, adView = {}} = await cacheAd() || {};
-    
-    let {postid = "", ctaButtonColor = "", ctatext ="", ctaPath = "", ctaLinkUrl =""} = ctaInfo;
-    
+
+    let {postid = "", ctaButtonColor = "", ctatext ="", ctaPath = "", ctaLinkUrl =""} = ctaInfo ?? {};
+
     const singleVideoData = await getSingleVideo({id : postid});
 
     const video = await singleVideoData?.data || {};
     
-    let adPosition = responseData?.ad_position?.[0] || null;
-
     if(!isEmptyObject(video) && adData){
       let cacheAdData = {...adData, ctaColor: ctaButtonColor, ctaText: ctatext, ctaPath, ctaLinkUrl, vmaxAd: true, adView};
       let cachedVideo = {...video, feedVmaxAd: cacheAdData };

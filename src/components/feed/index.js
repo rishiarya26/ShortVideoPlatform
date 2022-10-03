@@ -40,6 +40,8 @@ import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { vmaxTrackerEvents } from '../../analytics/vmax';
 import { CacheAdContext } from '../../hooks/use-cacheAd';
+import isEmptyObject from '../../utils/is-object-empty';
+import { isObjectEmpty } from '../../network/utils';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -209,14 +211,23 @@ function Feed({ router }) {
        const data =  await fetchData({ type: id });
 
        console.log("data before", data?.data, "=>" , updateItems);
-       
+      
        let adPosition = localStorage.get('vmaxAdPosition') || null;
        let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
 
-       if(Object.keys(cacheAdVideo).length > 0 && adPosition !== null) {
+       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
           data?.data.splice(adPosition, 0, cacheAdVideo);
           cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
-       } 
+       }else{
+        try{
+          let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            data?.data.splice(adPosition, 0, cachedVideo);
+          }
+        }catch(e){
+          console.error(error);
+        }
+       }
        updateItems = updateItems.concat(data?.data);
       
        console.log("data after", data?.data, "=>" ,updateItems);
@@ -255,20 +266,28 @@ function Feed({ router }) {
      console.log("adView", items[videoActiveIndex]?.feedVmaxAd, "=>" , items[videoActiveIndex]?.feedVmaxAd?.adView);
       let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
       if(percentage > 0 && percentage < 25){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         vmaxTrackerEvents(tracker,'impression')
         vmaxTrackerEvents(tracker,'videoAdStarted')
       }
       if(percentage > 25 && percentage < 50) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
       }
       if(percentage > 50 && percentage < 75) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
       }
       if(percentage > 75 && percentage < 90) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
       }
       if(percentage > 98) {
-        vmaxTrackerEvents(tracker,'videoAdEnd')
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        vmaxTrackerEvents(tracker,'videoAdEnd');
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
       }
     }
 
@@ -452,6 +471,20 @@ function Feed({ router }) {
           return obj;
   }
 
+  const getNextVmaxAd = async(activeIndex) => {
+    //? condition to fetch ad for next feed chunk
+    try{
+      if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+        localStorage.set("vmaxAdPosition", "");
+        let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+        !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
+        !isObjectEmpty(cacheAd) && cacheAd?.feedCacheAd(cachedVideo);
+      }
+    }catch(error){ 
+      console.log(error);
+    }
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -484,7 +517,7 @@ function Feed({ router }) {
 
                 setInitialPlayStarted(false);
               }}
-              onSlideChange={async swiperCore => {
+              onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
@@ -535,20 +568,13 @@ function Feed({ router }) {
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
-                console.log("active index: " + activeIndex, items?.[activeIndex].feedVmaxAd);
-
+      
                 activeId && setActiveVideoId(activeId);
 
-                if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
-                  localStorage.set("vmaxAdPosition", "");
-                  localStorage.set("cacheAd", {});
-                  let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
-                  debugger;
-                  adPosition && localStorage.set("vmaxAdPosition", adPosition);
-                  console.log(cacheAd,"cacheAd");
-                  cacheAd && cacheAd?.feedCacheAd(cachedVideo);
-                  Object.keys(cachedVideo).length > 0 && localStorage.set("cacheAd", cachedVideo);
-                }
+                console.log("active index: " + activeIndex, items?.[activeIndex]?.feedVmaxAd);
+
+                //? next vmax ad video position and  details.
+                getNextVmaxAd(activeIndex);
 
               }}
             >
