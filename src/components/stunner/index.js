@@ -106,7 +106,7 @@ useEffect(()=>{
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
 <h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> October Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    Create 3 different unique looks with 3 outfits.
+    Show us how would you dress up for Diwali at home
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
@@ -214,9 +214,10 @@ useEffect(()=>{
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out the October Challenge 1 details <span onClick={()=>challenge2Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
-    </p> <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
+    </p> 
+    {/* <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Missed Sept Challenge 2? Not a problem! Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
-    </p>
+    </p> */}
 
 
     </div>
