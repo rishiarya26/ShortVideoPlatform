@@ -41,6 +41,8 @@ import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { CacheAdContext } from '../../hooks/use-cacheAd';
 import { vmaxTrackerEvents } from '../../analytics/vmax';
+import isEmptyObject from '../../utils/is-object-empty';
+import { isObjectEmpty } from '../../network/utils';
 
 
 SwiperCore?.use([Mousewheel]);
