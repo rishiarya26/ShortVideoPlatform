@@ -8,6 +8,12 @@ import { hipiLogin } from './login';
 const register = async ({
   type, value, firstName, lastName, password, birthday, gender
 }) => {
+  let signupData = {
+    firstName:firstName,
+    lastName:lastName,
+    birthday:birthday,
+    gender:gender
+  }
   let response = {};
   // TO-DO take care of aid, guestoken & verison_number
   try {
@@ -36,7 +42,7 @@ const register = async ({
     resp.data.message = 'success';
     const accessToken = resp?.data?.token;
     const refreshToken = resp?.data?.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken });
+    response = await hipiLogin({ accessToken, refreshToken, signupData});
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

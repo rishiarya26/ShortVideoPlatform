@@ -31,7 +31,7 @@ function HeadMeta() {
       <link rel="preconnect" href="https://hipigwapi.zee5.com"/>
       <link rel="preconnect" href="https://mapi.charmboard.com"/>
       <link rel="preconnect" href="https://xtra.zee5.com"/>
-      <link rel="preconnect" href="https://ipapi.co"/>
+      {/* <link rel="preconnect" href="https://ipapi.co"/> */}
       <link rel="preconnect" href="https://websdk.getsocial.im"/>
       <link rel="preconnect" href="https://akamaividz2.zee5.com"/>
       <link rel="preconnect" href="https://preprod.hipi.co.in"/>
@@ -60,7 +60,7 @@ function HeadMeta() {
       <link rel="dns-prefetch" href="https://hipigwapi.zee5.com"/>
       <link rel="dns-prefetch" href="https://mapi.charmboard.com"/>
       <link rel="dns-prefetch" href="https://xtra.zee5.com"/>
-      <link rel="dns-prefetch" href="https://ipapi.co"/>
+      {/* <link rel="dns-prefetch" href="https://ipapi.co"/> */}
       <link rel="dns-prefetch" href="https://websdk.getsocial.im"/>
       <link rel="dns-prefetch" href="https://akamaividz2.zee5.com"/>
       <link rel="dns-prefetch" href="https://preprod.hipi.co.in"/>

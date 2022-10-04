@@ -153,6 +153,11 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
            router && router?.push('/feed/for-you');
         }else if (device === 'desktop'){
           close();
+          try{
+            router?.asPath && (window.location.href = router?.asPath)
+          }catch(e){
+            console.error('error in redirection',e)
+          }
         }
         showMessage({ message: t('SIGNUP_SUCCESS') });
       }

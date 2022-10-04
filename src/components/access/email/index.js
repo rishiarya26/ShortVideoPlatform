@@ -53,6 +53,11 @@ export default function Email({
           }
           if(device === 'desktop'){
             close();
+            try{
+              router?.asPath && (window.location.href = router?.asPath)
+            }catch(e){
+              console.error('error in redirection',e)
+            }
           }
           showMessage({ message: t('SUCCESS_LOGIN') });
           setPending(false);

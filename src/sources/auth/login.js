@@ -7,7 +7,7 @@ import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 
-const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
+const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null }) => {
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
@@ -21,6 +21,12 @@ const login = async ({ accessToken, refreshToken='',getSocialToken }) => {
     console.log("cookie set domain",domain);
     const urlencoded = new URLSearchParams();
     urlencoded.append('zee5Token', accessToken);
+    if(signupData){
+      urlencoded.append('lastName', signupData?.lastName);
+      urlencoded.append('firstName', signupData?.firstName);
+      urlencoded.append('gender', signupData?.gender);
+      urlencoded.append('dateOfBirth',signupData?.birthday);
+    }
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'

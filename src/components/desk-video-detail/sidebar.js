@@ -69,7 +69,8 @@ const Sidebar = ({
     //    track('UGC Liked',mixpanelEvents)
   };
 
-  const selectedLike = useAuth(showLoginOptions, like);
+  // const selectedLike = useAuth(showLoginOptions, like);
+  const selectedLike = like;
 
   const getVideoReactions = async (socialId, time, action) => {
     console.log("likes Count**",socialId,time,action)
@@ -107,8 +108,8 @@ const Sidebar = ({
 
   setIsLiked({like : false, reactionTime: 'past'});
      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-       if (tokens?.shortsAuthToken && tokens?.accessToken )
-     {  
+    //    if (tokens?.shortsAuthToken && tokens?.accessToken )
+    //  {  
         setReactionCount({likes : null});
        
         { const getLikeReaction = async()=>{  
@@ -121,9 +122,9 @@ const Sidebar = ({
             comp === 'deskSingleVideo' &&  setTimeout(()=>{getLikeReaction()},2000)
             comp === 'normal' && setTimeout(()=>{getLikeReaction()},1000)
       }
-     }else{
-         comp === 'normal' && setReactionCount({likes : likes});
-     }
+    //  }else{
+        //  comp === 'normal' && setReactionCount({likes : likes});
+    //  }
   }, [videoId]);
 
   useEffect(()=>{

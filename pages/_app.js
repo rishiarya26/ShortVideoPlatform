@@ -180,11 +180,13 @@ function Hipi({
 
   const getCountry = async()=>{
     try{ 
-      const resp = await detectCountry();
-      // console.log(resp?.data?.country_name)
-      setCountry(resp?.data?.country_name || 'India');
-      if(resp?.data?.country_name === 'India'){
+      const resp = await detectGeoLocationByZee();
+      console.log("RESP",resp)
+      if(resp?.data?.country === 'INDIA'){
+        setCountry('India');
         setItem('cookie-agreed','yes');
+      }else{
+       resp?.data?.country && setCountry(resp?.data?.country);
       }
     }
      catch(e){
@@ -274,11 +276,15 @@ function Hipi({
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
       localStorage.set('network-strength',effectiveType);
-
+      guestGetSocialToken();
+      setTimeout(()=>{
+        init();
+        // initFirebase();
+      },[1500])
       if (tokens && tokens?.shortsAuthToken && tokens?.accessToken) {
         console.log('tokens are there in _app.js')
         setTimeout(()=>{
-          init();
+          // init();
           initFirebase();
         },[500])
       }
@@ -470,7 +476,6 @@ function Hipi({
       // videosCompleted =  window.sessionStorage.getItem('videos-completed');
     // }
     // sessionStorage.set('videos-completed',0);
-    // guestGetSocialToken();
 
       const events = [
         'load',
@@ -497,6 +502,7 @@ function Hipi({
    let response;
    try{ 
      response =  await toGetSocialToken();
+     console.log("RESP",response);
     }
    catch(e){
      console.error("guest get social error",e)

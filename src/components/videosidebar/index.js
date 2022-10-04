@@ -70,7 +70,7 @@ function VideoSidebar({
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () =>showBanner && showBanner();
   
-  const selectedLike = useAuth(showLoginOptions, like);
+  const selectedLike = like;
   const selectedComment = useAuth(showLoginOptions, comment);
 
   const handleOperation = (e) => {
@@ -149,14 +149,14 @@ const checkSaveLook =()=>{
   useEffect(()=>{  
     checkSaveLook();
     setIsLiked({like : false, reactionTime: 'past'});
-      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-        if (tokens?.shortsAuthToken && tokens?.accessToken){
+      // let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+      //   if (tokens?.shortsAuthToken && tokens?.accessToken){
         const getLikeReaction = async()=>{  
           const isLiked =  await getVideoReactions(socialId, 'past');
           setIsLiked({like : isLiked, reactionTime: 'past'});
         }
         getLikeReaction();
-      }
+      // }
   },[activeVideoId])
 
     let optProfilePic = profilePic;
