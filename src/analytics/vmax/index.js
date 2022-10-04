@@ -22,6 +22,7 @@ export const initAdView = async() => {
     window.VMAXSDK &&
     window.VMAXSDK.Events
   ) {
+    window.VMAXSDK.App.setSource("hipi.co.in");
     let respGeoInfo = {};
     let geoLocationInfo = {};
     try{
