@@ -241,26 +241,52 @@ function FeedIphone({ router }) {
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
+      let timeStamp = Date.now();
       if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        impression_url && await pushAdService({url: impression_url, value:"Impression"}); 
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        try{
+          impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp}); 
+        }catch(e){
+          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        }
+       
         event_url && await pushAdService({url: event_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        event_url && await pushAdService({url: event_url, value: "firstQuartile"});
+        try{
+          event_url && await pushAdService({url: event_url, value: "firstQuartile"});
+        }catch(e){
+          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
       }
       if(percentage > 50) {
         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        event_url && await pushAdService({url: event_url, value: "midpoint"});
+        try{
+          event_url && await pushAdService({url: event_url, value: "midpoint"});
+        }catch(e){
+          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+       
       }
       if(percentage > 75) {
         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
+        try{
+          event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
+        }catch(e){
+          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
       }
       if(percentage > 98) {
         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-        event_url && await pushAdService({url: event_url, value: "complete"});
+        try{
+          event_url && await pushAdService({url: event_url, value: "complete"});
+        }catch(e){
+          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
         if(document.querySelector(".swiper-container").swiper){
           document.querySelector(".swiper-container").swiper?.slideNext();
         }

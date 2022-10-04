@@ -3,7 +3,7 @@ import { apiMiddleWare } from '../../network/utils';
 import { localStorage } from '../../utils/storage';
 
 
-async function adService({url, value}) {
+async function adService({url, value, timeStamp}) {
   let adArr = localStorage.get('adArr');
   let response = {};
   if(!adArr?.includes(value)){
@@ -13,7 +13,7 @@ async function adService({url, value}) {
     try {
       let apiPath = "";
       if(value === 'Impression'){
-        apiPath = `${url}${Date.now()}`;
+        apiPath = `${url}${timeStamp}`;
       }else{
         apiPath = `${url}${value}`;
       }
