@@ -92,6 +92,7 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [openAppStrip, setAppStrip] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
   
@@ -524,6 +525,13 @@ function Feed({ router }) {
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
                 localStorage.set('vmaxEvents',[]);
+
+                if(items?.[activeIndex].feedVmaxAd){
+                  setAppStrip(false)
+                }else{
+                  if(openAppStrip === false) setAppStrip(true)
+                }
+
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -571,10 +579,12 @@ function Feed({ router }) {
       
                 activeId && setActiveVideoId(activeId);
 
-                console.log("active index: " + activeIndex, items?.[activeIndex]?.feedVmaxAd);
+                console.log("active index: " + activeIndex, "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
 
                 //? next vmax ad video position and  details.
                 getNextVmaxAd(activeIndex);
+
+              
 
               }}
             >
@@ -716,7 +726,7 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {(!items?.[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && <OpenAppStrip
+        {!items?.[videoActiveIndex]?.adId && openAppStrip && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

@@ -103,6 +103,7 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [openAppStrip, setAppStrip] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
 
@@ -550,6 +551,13 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiperCore;
+
+                if(items?.[activeIndex].feedVmaxAd){
+                  setAppStrip(false)
+                }else{
+                  if(openAppStrip === false) setAppStrip(true)
+                }
+
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
@@ -593,10 +601,14 @@ console.log('errorrr',e)
                 activeId && setActiveVideoId(activeId);
 
 
-                console.log("active index: " + activeIndex, items?.[activeIndex]?.feedVmaxAd);
+                console.log("active index: " + activeIndex, "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
+
+                
 
                 //? next vmax ad video (position & details)
                 getNextVmaxAd(activeIndex);
+
+               
                 
               }}
             >
@@ -745,7 +757,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {(!items?.[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && <OpenAppStrip
+      {!items?.[videoActiveIndex]?.adId && openAppStrip && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
