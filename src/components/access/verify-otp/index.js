@@ -86,6 +86,11 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
           showMessage({ message: t('SUCCESS_LOGIN') });
           if(device === 'desktop'){
              close();
+             try{
+              router?.asPath && (window.location.href = router?.asPath)
+            }catch(e){
+              console.error('error in redirection',e)
+            }
           }else if(device === 'mobile'){
              router && router?.push(types[ref]);
             close();

@@ -14,7 +14,7 @@ function transformSuccess(resp) {
       return transformError(data);
     }
     payload.status = 'success';
-    // data.getSocialToken = resp?.data?.shortsAuthToken
+    payload.data = {getSocialToken : resp?.data?.shortsAuthToken}
     return payload;
   } catch (err) {
     data.appError = err.message;

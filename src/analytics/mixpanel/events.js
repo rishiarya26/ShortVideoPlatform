@@ -6,7 +6,7 @@ import { localStorage } from "../../utils/storage";
 import { getReffererPage } from "../../utils/web";
 
 
-let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd']
+let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
 
   const getIsMobile = ()=>{
     // let device = 'desktop';
@@ -113,6 +113,7 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Page Name'] = value?.pageName || 'NA';
       globalCommonEvents['Device Modal'] = 'NA';
       globalCommonEvents['Network Strength'] = 'NA';
+      globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
       isShopMonetizeAd()
       return globalCommonEvents
     }
@@ -418,6 +419,11 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds()),
         'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds()),
         'videoAdEnd': () => track('Video Ad End',eventsForAds()),
+        'videoAdStartedFailure': () => track('Video Ad Start Failure',eventsForAds()),
+        'videoAdFirstQuartileFailure': () => track('Video Ad First Quartile Failure',eventsForAds()),
+        'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),
+        'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
+        'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
         'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds())
 
       
