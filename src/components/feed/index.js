@@ -415,51 +415,55 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
- const incrementShowItems = async() =>{
-  let updateShowItems = [...toShowItems];
-  const dataItem = [...items]
-  /* Increment */
-    const incrementGap = 2;
-    let insertItemIndex = videoActiveIndex+incrementGap;
-    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+  // ! increment and decrement functionality
+
+//  const incrementShowItems = async() =>{
+//   let updateShowItems = [...toShowItems];
+//   const dataItem = [...items]
+//   /* Increment */
+//   debugger;
+//     const incrementGap = 2;
+//     let insertItemIndex = videoActiveIndex+incrementGap;
+//     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     
-    arr && updateShowItems?.push(arr[insertItemIndex]);
-  /* Delete */
-    const decrementGap = 3;
-    let deleteItemIndex = videoActiveIndex-decrementGap;
-    if(deleteItemIndex >=0 && videoActiveIndex >=3){
-      updateShowItems[deleteItemIndex] = null;
-    }
-  setToShowItems(updateShowItems);
- }
+//     arr && updateShowItems?.push(arr[insertItemIndex]);
+//   /* Delete */
+//     const decrementGap = 3;
+//     let deleteItemIndex = videoActiveIndex-decrementGap;
+//     if(deleteItemIndex >=0 && videoActiveIndex >=3){
+//       updateShowItems[deleteItemIndex] = null;
+//     }
+//   setToShowItems(updateShowItems);
+//  }
 
- const decrementingShowItems = async() =>{
-  let updateShowItems = [...toShowItems];
-  const dataItem = [...items]
-  /* Add */
-  const  incrementGap = 2;
-  let insertItemIndex = videoActiveIndex-incrementGap;
-  if(insertItemIndex >=0 && videoActiveIndex >=2){
-    updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-  }
-  /* Delete */
-    const  decrementGap=  3;
-    let deleteItemIndex = videoActiveIndex+decrementGap;
-     deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+//  const decrementingShowItems = async() =>{
+//   let updateShowItems = [...toShowItems];
+//   const dataItem = [...items]
+//   /* Add */
+//   debugger;
+//   const  incrementGap = 2;
+//   let insertItemIndex = videoActiveIndex-incrementGap;
+//   if(insertItemIndex >=0 && videoActiveIndex >=2){
+//     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
+//   }
+//   /* Delete */
+//     const  decrementGap=  3;
+//     let deleteItemIndex = videoActiveIndex+decrementGap;
+//      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
 
-    setToShowItems(updateShowItems);
- }
+//     setToShowItems(updateShowItems);
+//  }
 
   useEffect(()=>{
-    if(preVideoActiveIndex?.videoActiveIndex){
-    }
-    if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
-      //swipe-down
-      toShowItems.length > 0 && incrementShowItems();
-    }else{
-      //swipe-up
-      toShowItems.length > 0 && decrementingShowItems();
-    }
+    // if(preVideoActiveIndex?.videoActiveIndex){
+    // }
+    // if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
+    //   //swipe-down
+    //   toShowItems.length > 0 && incrementShowItems();
+    // }else{
+    //   //swipe-up
+    //   toShowItems.length > 0 && decrementingShowItems();
+    // }
     if(videoActiveIndex === 6) showAppBanner===false && setShowAppBanner(true);
 
    checkNoSound();
@@ -609,7 +613,7 @@ function Feed({ router }) {
       
                 activeId && setActiveVideoId(activeId);
 
-                console.log("active index: " + activeIndex, "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
+                console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
 
                 //? next vmax ad video position and  details.
                 getNextVmaxAd(activeIndex);
@@ -620,7 +624,7 @@ function Feed({ router }) {
             >
               {!loadFeed && <VideoUnavailable/>}
              
-              {loadFeed && validItemsLength ? toShowItems.map((
+              {loadFeed && validItemsLength ? items.map((
                   item, id
                 ) => (
                   <SwiperSlide

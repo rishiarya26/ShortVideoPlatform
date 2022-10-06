@@ -634,7 +634,7 @@ console.log('errorrr',e)
                 activeId && setActiveVideoId(activeId);
 
 
-                console.log("active index: " + activeIndex, "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
+                console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
 
                 
 
