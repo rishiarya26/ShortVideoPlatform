@@ -86,16 +86,6 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         }catch(e){
           console.error(e);
         }
-      }else{
-        try{
-          let {adPosition ="", cachedVideo={}} = await cacheAdResponse();
-          if(!isEmptyObject(cachedVideo) && adPosition){
-            response.data.vmaxAdVideo = cachedVideo;
-            response.data.vmaxVideoIndex = adPosition;
-          }
-        }catch(e){
-          console.error(e);
-        }
       }
 
     response.data.requestedWith = { page, total };
@@ -173,6 +163,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         let resp = await cacheAdResponse();
         let adPosition = resp?.adPosition || null;
         let cachedVideo =  resp?.cachedVideo ?? {};
+        // debugger;
 
         if(!isEmptyObject(cachedVideo) && adPosition){
           response.data.vmaxAdVideo = cachedVideo;
@@ -221,7 +212,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 const cacheAdResponse = async () => {
   try{
     const { adPosition = "" } = await getAdPositions({limit : 5});
-    debugger;
+    // debugger;
 
     let adShow = await initAdView() // 👈 creating new instance for vmaxsDK
 

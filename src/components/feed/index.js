@@ -221,6 +221,7 @@ function Feed({ router }) {
           cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
        }else{
         try{
+          // debugger;
           let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
             data?.data.splice(adPosition, 0, cachedVideo);
@@ -479,7 +480,10 @@ function Feed({ router }) {
         localStorage.set("vmaxAdPosition", "");
         let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
         !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
-        !isObjectEmpty(cacheAd) && cacheAd?.feedCacheAd(cachedVideo);
+        if(!isObjectEmpty(cachedVideo)) {
+          //debugger
+          cacheAd?.feedCacheAd(cachedVideo);
+        }
       }
     }catch(error){ 
       console.log(error);

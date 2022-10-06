@@ -28,8 +28,3 @@ export const CacheAdProvider = ({ children }) => {
 };
 
 
-<CacheAdProvider>
-    
-</CacheAdProvider>
-
-

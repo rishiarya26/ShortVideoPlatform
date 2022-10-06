@@ -163,6 +163,7 @@ function FeedIphone({ router }) {
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         const videos = data?.data;
+        console.log("initial data", videos)
         /* show pop up & call api for next items after specified index */
         const insertItemsIndex = videoId ? 5 : 4
         setItems(videos);
@@ -216,13 +217,15 @@ function FeedIphone({ router }) {
      try{
       data =  await fetchData({ type: id });
       console.log("data before", data?.data, "=>" , updateItems);
-
       let adPosition = localStorage.get('vmaxAdPosition') || null;
       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
+        console.log("not called inner function");
         data?.data.splice(adPosition, 0, cacheAdVideo);
         cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
       }else{
+        console.log("called inner function");
+        // debugger;
         try{
           let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
@@ -509,8 +512,12 @@ console.log('errorrr',e)
       if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
         localStorage.set("vmaxAdPosition", "");
         let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+        // debugger;
         !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
-        !isObjectEmpty(cacheAd) && cacheAd?.feedCacheAd(cachedVideo);
+        if(!isObjectEmpty(cachedVideo)) {
+          //debugger
+          cacheAd?.feedCacheAd(cachedVideo);
+        }
       }
     }catch(error){ 
       console.log(error);
