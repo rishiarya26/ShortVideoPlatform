@@ -415,55 +415,51 @@ function Feed({ router }) {
     setShop(shopContent);
   };
 
-  // ! increment and decrement functionality
-
-//  const incrementShowItems = async() =>{
-//   let updateShowItems = [...toShowItems];
-//   const dataItem = [...items]
-//   /* Increment */
-//   debugger;
-//     const incrementGap = 2;
-//     let insertItemIndex = videoActiveIndex+incrementGap;
-//     const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
+ const incrementShowItems = async() =>{
+  let updateShowItems = [...toShowItems];
+  const dataItem = [...items]
+  /* Increment */
+    const incrementGap = 2;
+    let insertItemIndex = videoActiveIndex+incrementGap;
+    const arr = dataItem?.length-1 >= insertItemIndex ? dataItem : await getFeedData();
     
-//     arr && updateShowItems?.push(arr[insertItemIndex]);
-//   /* Delete */
-//     const decrementGap = 3;
-//     let deleteItemIndex = videoActiveIndex-decrementGap;
-//     if(deleteItemIndex >=0 && videoActiveIndex >=3){
-//       updateShowItems[deleteItemIndex] = null;
-//     }
-//   setToShowItems(updateShowItems);
-//  }
+    arr && updateShowItems?.push(arr[insertItemIndex]);
+  /* Delete */
+    const decrementGap = 3;
+    let deleteItemIndex = videoActiveIndex-decrementGap;
+    if(deleteItemIndex >=0 && videoActiveIndex >=3){
+      updateShowItems[deleteItemIndex] = null;
+    }
+  setToShowItems(updateShowItems);
+ }
 
-//  const decrementingShowItems = async() =>{
-//   let updateShowItems = [...toShowItems];
-//   const dataItem = [...items]
-//   /* Add */
-//   debugger;
-//   const  incrementGap = 2;
-//   let insertItemIndex = videoActiveIndex-incrementGap;
-//   if(insertItemIndex >=0 && videoActiveIndex >=2){
-//     updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
-//   }
-//   /* Delete */
-//     const  decrementGap=  3;
-//     let deleteItemIndex = videoActiveIndex+decrementGap;
-//      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
+ const decrementingShowItems = async() =>{
+  let updateShowItems = [...toShowItems];
+  const dataItem = [...items]
+  /* Add */
+  const  incrementGap = 2;
+  let insertItemIndex = videoActiveIndex-incrementGap;
+  if(insertItemIndex >=0 && videoActiveIndex >=2){
+    updateShowItems[insertItemIndex] = dataItem?.[insertItemIndex];
+  }
+  /* Delete */
+    const  decrementGap=  3;
+    let deleteItemIndex = videoActiveIndex+decrementGap;
+     deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
 
-//     setToShowItems(updateShowItems);
-//  }
+    setToShowItems(updateShowItems);
+ }
 
   useEffect(()=>{
-    // if(preVideoActiveIndex?.videoActiveIndex){
-    // }
-    // if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
-    //   //swipe-down
-    //   toShowItems.length > 0 && incrementShowItems();
-    // }else{
-    //   //swipe-up
-    //   toShowItems.length > 0 && decrementingShowItems();
-    // }
+    if(preVideoActiveIndex?.videoActiveIndex){
+    }
+    if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
+      //swipe-down
+      toShowItems.length > 0 && incrementShowItems();
+    }else{
+      //swipe-up
+      toShowItems.length > 0 && decrementingShowItems();
+    }
     if(videoActiveIndex === 6) showAppBanner===false && setShowAppBanner(true);
 
    checkNoSound();
