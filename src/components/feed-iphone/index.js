@@ -576,9 +576,10 @@ console.log('errorrr',e)
                     id={item?.watchId}
                     itemID={item?.content_id}
                   >
-                  { item !==null && !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
-                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
-                  :
+                  { item !==null && 
+                  // !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
+                  //  <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                  // :
                    <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
