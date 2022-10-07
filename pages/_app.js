@@ -273,6 +273,8 @@ function Hipi({
       const userAgent = window?.navigator.userAgent;
       const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
       localStorage.set('device-modal',deviceModel);
+      localStorage.set("adArr",[]);
+      localStorage.set("adArrMixPanel",[]);
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
       localStorage.set('network-strength',effectiveType);
