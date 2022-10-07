@@ -18,6 +18,8 @@ const device = getItem('device-type')
     toTrackMixpanel('logoutInitiated')
       localStorage.remove('tokens');
       localStorage.remove('user-id');
+      const langSelectedInfo = localStorage.get('lang-codes-selected') || null;
+      langSelectedInfo?.type === 'profile' && localStorage.remove('lang-codes-selected')
       toTrackMixpanel('logoutSuccess')
       // if(device === 'desktop'){
       //   closePopUp();

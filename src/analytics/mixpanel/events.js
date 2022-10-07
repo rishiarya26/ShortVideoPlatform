@@ -419,6 +419,12 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds()),
         'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds()),
         'videoAdEnd': () => track('Video Ad End',eventsForAds()),
+        'contentLanguagesImpression':()=>track('Content Languages Impression',globalCommonEvents),
+        'contentLanguagesSubmitted':()=>{
+          globalCommonEvents['Method'] = value?.method;  
+          track('Content Languages Submitted',globalCommonEvents)
+        },
+
         'videoAdStartedFailure': () => track('Video Ad Start Failure',eventsForAds()),
         'videoAdFirstQuartileFailure': () => track('Video Ad First Quartile Failure',eventsForAds()),
         'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),

@@ -23,13 +23,14 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const [firstScroll, setFirstScroll] = useState(1);
 
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
-  items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
+  items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0 || items?.devices?.length > 0)
 
  const outfitRef = useRef(null);
  const accRef = useRef(null);
  const beautyRef = useRef(null);
  const hairRef = useRef(null);
  const recipeRef = useRef(null);
+ const deviceRef = useRef(null);
 
    const [outfit, inViewOutfit] = useInView({
      threshold: 0.1
@@ -44,6 +45,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
       threshold: 0.1
     });
     const [recipe, inViewRecipe] = useInView({
+      threshold: 0.1
+    });
+    const [devices, inViewDevices] = useInView({
       threshold: 0.1
     });
     
@@ -64,7 +68,8 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           response.data?.accessories?.length > 0 ? 1 :
           response.data?.beauty?.length > 0 ? 2 :
           response.data?.hair?.length > 0 ? 3 : 
-          response.data?.recipe?.length > 0 && 4;
+          response.data?.recipe?.length > 0 ? 4 :
+          response.data?.devices?.length > 0 && 5
           console.log("intial",initalTabIndex);
           setSelectedIndex(initalTabIndex);
       }
@@ -107,6 +112,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
        if(items?.recipe?.length > 0){
          result[4] = 'Recipe';
        }
+       if(items?.devices?.length > 0){
+        result[5] = 'Devices'
+      }
       return result;
     }
 
@@ -119,28 +127,32 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
            1 : accRef,
            2 : beautyRef,
            3 : hairRef,
-           4 : recipeRef
+           4 : recipeRef,
+           5 : deviceRef
         }
        executeScroll(scrollToElemant?.[selected],selected);
     }
 
     const onScroll = () => {
       console.log(inViewOutfit, inViewAcc, inViewBeauty, inViewHair, inViewRecipe)
-       if(!inViewAcc && !inViewBeauty && !inViewHair && !inViewRecipe && inViewOutfit){
+       if(!inViewAcc && !inViewBeauty && !inViewHair && !inViewRecipe && !inViewDevices && inViewOutfit){
           setSelectedIndex(0);
        }
-       else if( !inViewBeauty && !inViewHair && !inViewOutfit && !inViewRecipe && inViewAcc){
+       else if( !inViewBeauty && !inViewHair && !inViewOutfit && !inViewRecipe && !inViewDevices && inViewAcc){
          setSelectedIndex(1);
        }
-       else if(  !inViewHair && !inViewOutfit && !inViewAcc && !inViewRecipe && inViewBeauty){
+       else if(  !inViewHair && !inViewOutfit && !inViewAcc && !inViewRecipe && !inViewDevices && inViewBeauty){
          setSelectedIndex(2);
        }
-       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewRecipe && inViewHair){
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewRecipe && !inViewDevices && inViewHair){
          setSelectedIndex(3);
        }
-       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && inViewRecipe){
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && !inViewDevices && inViewRecipe){
          setSelectedIndex(4);
        }
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && !inViewRecipe && inViewDevices){
+        setSelectedIndex(5);
+       } 
     };
 
     const deleteSavedItems =()=>{
@@ -251,7 +263,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             </div>
             
          </div>
-         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2 cursor-pointer'> <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>}
+         {expand && <div className='sticky  w-full -top-4 py-2 bg-gray-100 z-20 text-sm text-gray-200 border-gragit y-100 border-b-2 cursor-pointer'> 
+          <Tabs items={tabItems} onTabChange={onTabChange} selectedIndex={selectedIndex}/> </div>
+         }
          {expand && 
          <div className="w-full" ref={outfitRef}>
          <div ref={outfit} id='outfit'>
@@ -377,6 +391,28 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
         </div>
         </div>
         }
+      {expand && 
+         <div className="w-full" ref={deviceRef}>
+         <div ref={devices} id='devices'>
+        {(items?.devices?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">DEVICE INSPIRATION FROM THIS LOOK</div>} 
+            {items && items?.devices?.map((item,id) =>{
+              console.log("debug-ad",item)
+         return <CharmCard 
+              key = {id}
+              thumbnail = {item?.product_img_url}
+              title = {item?.title}
+              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
+              shopLink = {item?.product_url}
+              category = {item?.category}
+              shopNameImg={item?.camp_img_url || null}
+              ribbonData={item?.card_labels || []}
+              actualPrice = {item?.actual_price}
+              salePrice={item?.sale_price}
+         />
+        })}
+         </div>
+         </div>
+      }
 
       {expand &&  
         <div className="w-full" ref={recipeRef}>
@@ -402,6 +438,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
         </div>
         </div>
         }
+
          {/* Head charm end*/}
        
       </div>: 

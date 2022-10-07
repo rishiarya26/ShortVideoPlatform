@@ -16,6 +16,10 @@ const device = getItem('device-type');
 const userAgent =localStorage.get('plaformData')?.ua;
 const os = localStorage.get('plaformData')?.os?.family;
 const browser = localStorage.get('plaformData')?.name;
+const flush = localStorage.get('lang-flush');
+const languageCodesSelected = localStorage.get('lang-codes-selected')?.lang || [];
+
+console.log("LC",languageCodesSelected, localStorage.get('lang-codes-selected'));
 
 
 /* Feed API with login */
@@ -24,7 +28,8 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    flush === 'true' && localStorage.set('lang-flush','false');
      let tokens = localStorage.get('tokens');
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
@@ -40,7 +45,11 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
         'X-GEO-PINCODE':geoData?.pin || '',
         'campaign_id':campaign_id || '',
         'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-        'X-DEVICE-MODEL': userAgent
+        'X-DEVICE-MODEL': userAgent,
+        'X-HIPI-APPPLATFORM' : 'pwa',
+        'X-USER-TYPE' : `pwa-member`,
+        'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+        languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
       })
     }else{
       const respGeoInfo = await detectGeoLocationByZee();
@@ -54,7 +63,11 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
               'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
               'X-GEO-PINCODE':geoLocationInfo?.pin || '',
               'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-              'X-DEVICE-MODEL': userAgent
+              'X-DEVICE-MODEL': userAgent,
+              'X-HIPI-APPPLATFORM' : 'pwa',
+              'X-USER-TYPE' : `pwa-member`,
+              'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+              languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
           })
       }}
 
@@ -102,8 +115,8 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
-   
+    const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    flush === 'true' && localStorage.set('lang-flush','false');
     if(geoData){
       response = await get(apiPath,null,{
         'X-GEO-IPADDR' : geoData?.ip || '',
@@ -114,7 +127,11 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         'X-GEO-PINCODE':geoData?.pin || '',
         'campaign_id':campaign_id || '',
         'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-        'X-DEVICE-MODEL': userAgent
+        'X-DEVICE-MODEL': userAgent,
+        'X-HIPI-APPPLATFORM' : 'pwa',
+        'X-USER-TYPE' : `pwa-guest`,
+        'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+        languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
     })
   }else{
     const respGeoInfo = await detectGeoLocationByZee();
@@ -129,7 +146,11 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
           'X-GEO-PINCODE':geoLocationInfo?.pin || '',
           'campaign_id':campaign_id || '',
           'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-          'X-DEVICE-MODEL': userAgent
+          'X-DEVICE-MODEL': userAgent,
+          'X-HIPI-APPPLATFORM' : 'pwa',
+          'X-USER-TYPE' : `pwa-guest`,
+          'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+          languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
       })
   }}
    console.timeEnd("concatenation");
@@ -199,8 +220,9 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
       //     video && (response.data.firstVideo = video);
       // }
       
-    console.log('resp-video',response)
-    firstTimeCall = false;
+      console.log('resp-video',response)
+      response.data.firstApiCall = firstApiCall;
+      firstTimeCall = false;
     response.data.requestedWith = { page, total };
     return Promise.resolve(response);
   } catch (err) {

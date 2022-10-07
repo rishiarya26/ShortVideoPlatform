@@ -23,3 +23,7 @@ export const trimHashag = (hashTag) =>{
   trimmedHashtag = hashTag?.replace('#', '');
   return trimmedHashtag;
 }
+
+export const compareArrays = (a,b)=>{
+    return a.join() == b.join();
+}

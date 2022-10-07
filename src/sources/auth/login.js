@@ -6,6 +6,61 @@ import { apiMiddleWare } from '../../network/utils';
 import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
+import { updateUserProfile } from '../users';
+import { getUserProfile } from '../users/profile';
+
+const delay = (ms = 1000) => new Promise((r) => setTimeout(r, ms));
+
+const checkLanguageSelection = async(userId) =>{
+  const languageCodes = localStorage.get('lang-codes-selected')?.lang || null;
+  console.log('inside - before profile call to get user detials',userId)
+  try{
+    const userProfileDetails = await getUserProfile(userId);
+    console.log("inside - after profile call got user details",userProfileDetails)
+    userProfileDetails?.data && localStorage.set('user-details',userProfileDetails?.data);
+    // localStorage.set('lang-24-hr','true');
+    if(languageCodes){
+      updateLanguageOnLogin(userProfileDetails?.data);
+    }else{
+      if(userProfileDetails?.data?.languages !== null){
+        const languageCodes = userProfileDetails?.data?.languages?.reduce((acc,data)=>{
+          acc.push(data?.code)
+          return acc;       
+         },[]);
+        localStorage.set('lang-codes-selected',{lang: languageCodes, type : 'profile'});  
+      }
+    }
+    console.log("UA",userProfileDetails)
+  }catch(e){
+    console.error("extracting user-details issue after login",e)
+  }
+}
+
+const updateLanguageOnLogin = async(data) =>{
+  const languageCodes = localStorage.get('lang-codes-selected')?.lang || null;
+  let response;
+  const payload = {
+    id: data?.id,
+    profilePic: data?.profilePic,
+    firstName: data?.firstName,
+    lastName: data?.lastName,
+    dateOfBirth: data?.dateOfBirth,
+    userHandle: data?.userHandle,
+    onboarding: null,
+    profileType: null,
+    bio: data?.bio,
+    languages:languageCodes
+  };
+  try {
+    response = await updateUserProfile(payload);
+    if (response.status === 'success') {
+      console.log('insdie - languages updated successfully edit profile after login/signup');
+    }
+  } catch (e) {
+    console.error('inside - languages updation failed',e);
+    // showSnackbar({ message: 'Something went wrong' });
+  }
+}
 
 const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null }) => {
   let response = {};
@@ -39,10 +94,22 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     };
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
+    console.log("LOGIN__",response)
     const userId = response?.data?.userDetails?.id;
-    const userDetails = response?.data?.userDetails;
+
+    /* languages selected check */
+    if(signupData){
+      await delay();
+      checkLanguageSelection(userId);
+    }else{
+      checkLanguageSelection(userId);
+    }
+    /* ************************ */
+
+    // const userDetails = response?.data?.userDetails;
     localStorage.set('user-id', userId);
-    localStorage.set('user-details',userDetails);
+    // localStorage.set('user-details',userDetails);
+   
     setTimeout(()=>{
       init();
     },200)

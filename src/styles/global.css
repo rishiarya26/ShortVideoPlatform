@@ -243,6 +243,14 @@ img{
   border-top-color: #888;
   border-radius: 22px;
 }
+.Circle_loader_button{
+  padding: 7px;
+    border: 2px solid rgb(230 230 230 / 72%);
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    border-top-color: #fff;
+    border-radius: 22px;
+}
 .head-shadow{
   box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
 }
@@ -1082,6 +1090,29 @@ title:first-letter {
   .carousel .swiper-container {
    position: unset!important;
   }
+/* language iphone 6 */
+@media only screen 
+    and (max-device-width : 376px) {
+      .lang-sm{
+        max-width: 15vh!important;
+        min-height: 8vh;
+        margin: 10px 4%;
+      }
+      .done_btn{
+        width: 55vh;
+      }
+    }
+    @media only screen 
+    and (min-device-width : 376px) {
+      .lang-sm{
+        max-width: 17vh!important;
+        min-height: 7.5vh;
+        margin: 10px 4%;
+      }
+      .done_btn{
+        width: 38vh;
+      }
+    }
  /* rewards */
  .orange_font{
 color: #fd8952;

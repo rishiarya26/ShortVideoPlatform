@@ -33,10 +33,12 @@ import Mute from '../commons/svgicons/mute';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import LanguageSelection from '../lang-selection';
 import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { CacheAdContext } from '../../hooks/use-cacheAd';
@@ -103,9 +105,9 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
-  const [openAppStrip, setAppStrip] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
+  const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
 
 
   const checkNoSound =()=>{
@@ -114,6 +116,7 @@ function FeedIphone({ router }) {
       setTimeout(()=>{setNoSound(false)},2000)
     }
   }
+
   // const [showAppBanner, setShowAppBanner] = useState(false);
 
   const { t } = useTranslation();
@@ -127,6 +130,7 @@ function FeedIphone({ router }) {
 
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+  const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
 
   const setClose = (value)=>{
     setOnCloseChamboard(value)
@@ -172,6 +176,8 @@ function FeedIphone({ router }) {
         setToInsertElements(insertItemsIndex);
         setInitialLoadComplete(true);
         setFirstApiCall(false);
+        const lang24Show = localStorage.get('lang-24-hr') || 'true';
+        setLang24ShowOnce(lang24Show);
         // checkNoSound();
     }
   }else{
@@ -182,6 +188,10 @@ function FeedIphone({ router }) {
     setLoadFeed(false);
   }
   }
+
+  useEffect(()=>{
+    console.log('LS',lang24ShowOnce);
+  },[lang24ShowOnce])
 
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
@@ -661,7 +671,10 @@ console.log('errorrr',e)
                     id={item?.watchId}
                     itemID={item?.content_id}
                   >
-                  {item !==null &&  <Video
+                  { item !==null && !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
+                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                  :
+                   <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
                       url={item?.video_url}
@@ -727,7 +740,7 @@ console.log('errorrr',e)
               >
                 <CircularProgress/>
               </div>}
-              {!(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : !(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -743,7 +756,7 @@ console.log('errorrr',e)
               >
                 <Play/>
               </div> */}
-              {validItemsLength && <div
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength && <div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
@@ -753,7 +766,7 @@ console.log('errorrr',e)
                 <Mute/>
                 </div>
               </div>}
-              {validItemsLength ? seekedPercentage > 0
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
@@ -796,17 +809,18 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {!items?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd && <OpenAppStrip
+         {((!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) || items?.[videoActiveIndex]?.adId) &&
+          !items?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd ? '' : <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
-        <HamburgerMenu/>
-        <div className="fixed mt-10 z-10 w-full">
+        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
-        </div>
+        </div>}
         {info?.[id]}
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />

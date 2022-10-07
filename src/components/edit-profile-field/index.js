@@ -7,6 +7,7 @@ import Loader from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import { getUserProfile } from '../../sources/users/profile';
 import Cancel from '../commons/svgicons/cancel';
+import { localStorage } from '../../utils/storage';
 
 const ErrorComp = () => (<Error />);
 const LoadComp = () => (<Loader />);
@@ -48,7 +49,7 @@ const EditProfileField = ({ router }) => {
 
   const dataFetcher = () => getUserProfile(userId);
   const [fetchState] = useFetcher(dataFetcher, onDataFetched);
-
+  const languages = localStorage.get('lang-codes-selected')?.lang || [];
   const toUpdateValue = async () => {
     let response;
     const payload = {
@@ -60,13 +61,13 @@ const EditProfileField = ({ router }) => {
       userHandle: data?.userHandle,
       onboarding: null,
       profileType: null,
-      bio: data?.bio
+      bio: data?.bio,
+      languages:languages
     };
     try {
       response = await updateUserProfile(payload);
       if (response.status === 'success') {
-        //    router.back();
-         router && router?.push(`/edit-profile/${response?.data?.id}`);
+        console.log("inside- langauges updated succesfully");
       }
     } catch (e) {
       showSnackbar({ message: 'Something went wrong' });

@@ -126,7 +126,7 @@ const viewCountUpdate = async ({headers, payloads, id, event = 'user_video_start
 const userAgent =localStorage.get('plaformData')?.ua;
 const os = localStorage.get('plaformData')?.os?.family;
 const browser = localStorage.get('plaformData')?.name;
-
+const isLoggedIn = localStorage?.get('user-id') || null;
   try {
     payload =  (event === 'user_video_end') ?
      {
@@ -145,6 +145,8 @@ const browser = localStorage.get('plaformData')?.name;
    const userId = localStorage.get('user-id') || null;
    let geoData = localStorage?.get('geo-info') || null;
    const guestToken =  getItem('guest-token') || null;
+  //  const languageCodesSelected = localStorage.get('lang-codes-selected')?.lang || [];
+// console.log('la',languageCodesSelected, typeof languageCodesSelected === 'array', languageCodesSelected?.reduce((item,acc)=>{acc = `${acc},${item}`}))
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
@@ -157,13 +159,16 @@ const browser = localStorage.get('plaformData')?.name;
       'X-GEO-PINCODE':geoData?.pin || '',
       'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
       'X-DEVICE-MODEL': userAgent
-
-    });
+      // 'X-HIPI-APPPLATFORM' : 'pwa',
+      // 'X-USER-TYPE' : `pwa-${isLoggedIn ? 'member' : 'guest'}`,
+      // 'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+      // languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
+      });
     response.data.status = 'success';
     response.data.message = '';
     return Promise.resolve(response);
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return Promise.reject(err);
   }
 };

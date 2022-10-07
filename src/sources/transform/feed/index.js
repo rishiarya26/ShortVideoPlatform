@@ -1,8 +1,10 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
-import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { DEFAULT_ERROR_CODE, INDEX_TO_SHOW_LANG } from '../../../constants';
 import { getNetworkConnection } from '../../../utils/device-details';
+import { localStorage } from '../../../utils/storage';
 import { isObjectEmpty } from '../../../network/utils';
+import { getItem } from '../../../utils/cookie';
 
 const msgMap = {
   200: 'ok'
@@ -31,6 +33,8 @@ function transformSuccess(resp) {
     }else{
       payload.status = 'notFound'
     }
+
+    const device = getItem('device-type');
    
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
@@ -99,12 +103,23 @@ function transformSuccess(resp) {
       payloadData?.splice(0,0,data?.firstVideo);
     }
 
-    if(data?.vmaxAdVideo){
+    if(!isObjectEmpty(data?.vmaxAdVideo)){
       // debugger;
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
       console.log("adding data in payload", payloadData);
     }
 
+    if(device === 'mobile'){
+    try{
+    const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
+    const lang24ShowOnce = localStorage.get('lang-24-hr');
+
+    if(!languagesSelected && data?.firstApiCall && lang24ShowOnce === 'false'){
+    payloadData?.splice(INDEX_TO_SHOW_LANG,0,{'data':'languageSlide'})
+    }}catch(e){
+      console.error('issue in lang-select slide adding in transform')
+    }
+   }
     /*for stagging api */
     // const { response = [] } = data;
     // const tResponse = [...response];

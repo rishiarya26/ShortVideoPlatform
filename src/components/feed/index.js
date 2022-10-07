@@ -33,9 +33,11 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import LanguageSelection from '../lang-selection';
 import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
+import { INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { vmaxTrackerEvents } from '../../analytics/vmax';
@@ -57,6 +59,7 @@ const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
   ssr: false
 });
+
 
 // const UserExperience = dynamic(()=> import('../commons/user-experience'),{
 //   loading: () => <div />,
@@ -94,6 +97,7 @@ function Feed({ router }) {
   const [noSound, setNoSound] = useState(false);
 
   const cacheAd = useContext(CacheAdContext);
+  const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -108,6 +112,7 @@ function Feed({ router }) {
   const utmData = localStorage?.get('utm-data') || '';
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+  const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
 
   const showBanner =()=>{
     setShowAppBanner(true);
@@ -163,6 +168,8 @@ function Feed({ router }) {
         setInitialLoadComplete(true);
         setFirstApiCall(false);
         setActiveVideoId(videoIdInitialItem);
+        const lang24Show = localStorage.get('lang-24-hr') || 'true';
+        setLang24ShowOnce(lang24Show);
         // checkNoSound();
         // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
@@ -429,6 +436,8 @@ function Feed({ router }) {
     if(deleteItemIndex >=0 && videoActiveIndex >=3){
       updateShowItems[deleteItemIndex] = null;
     }
+    console.log("*inc",updateShowItems)
+
   setToShowItems(updateShowItems);
  }
 
@@ -445,7 +454,7 @@ function Feed({ router }) {
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-
+    console.log("*dec",updateShowItems)
     setToShowItems(updateShowItems);
  }
 
@@ -525,7 +534,7 @@ function Feed({ router }) {
               className="max-h-full"
               direction="vertical"
               draggable="true"
-              spaceBetween={5}
+              spaceBetween={0}
               calculateheight="true"
               // slidesPerView={}
               mousewheel
@@ -607,8 +616,6 @@ function Feed({ router }) {
                 //? next vmax ad video position and  details.
                 getNextVmaxAd(activeIndex);
 
-              
-
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -620,8 +627,11 @@ function Feed({ router }) {
                     key={id}
                     id={item?.watchId}
                     itemID={item?.content_id}
-                  >
-                  {item !==null &&  <Video
+                  >  
+                  {item !==null && !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
+                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                  :
+                  <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
                       url={item?.video_url}
@@ -689,7 +699,7 @@ function Feed({ router }) {
               >
              <CircularProgress/>
               </div>}
-                {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
+                {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : !(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
             {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -700,18 +710,18 @@ function Feed({ router }) {
               </div>}
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
+                className={`absolute top-0 right-4  mt-4 items-center justify-center p-4`}
+                style={{ display: (!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? 'hidden' : (initialPlayStarted && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>
                 <Mute/>
                 </div>
               </div>}
-              {validItemsLength ? seekedPercentage > 0
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : (validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
-              : ''}
+              : '')}
               </>
               }
               <FooterMenu 
@@ -749,7 +759,8 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {!toShowItems?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd && <OpenAppStrip
+        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) && !toShowItems?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd ? '' : 
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
@@ -757,8 +768,9 @@ function Feed({ router }) {
           type='aboveBottom'
         />}
         {/* hamburger */}
-        <HamburgerMenu/>
-        <div className="fixed mt-10 z-10 w-full">
+       {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+       {/* <HamburgerMenu/> */}
+        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null ? 'hidden' : ''}`}>
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}

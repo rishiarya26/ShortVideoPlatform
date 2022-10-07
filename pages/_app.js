@@ -30,6 +30,10 @@ import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 import * as platform from 'platform';
 import { initVmax } from '../src/analytics/vmax';
+import { getFullDate } from '../src/utils/date';
+import useAuth from '../src/hooks/use-auth';
+import { getUserProfile } from '../src/sources/users/profile';
+import { compareArrays } from '../src/utils/string';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -277,7 +281,6 @@ function Hipi({
       const userAgent = window?.navigator.userAgent;
       const deviceModel = userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[2] || userAgent?.substring(userAgent?.indexOf("(") + 1, userAgent?.indexOf(")"))?.split(';')?.[0] 
       localStorage.set('device-modal',deviceModel);
-
       localStorage.set("adArr",[]);
       localStorage.set("adArrMixPanel",[]);
       localStorage.set("vmaxEvents",[]);
@@ -441,6 +444,56 @@ function Hipi({
     };
   });
 
+  const updateDate = ()=>{
+    try{
+    const prevDate = localStorage.get('prev-date');
+    const langSelected = localStorage.get('lang-codes-selected')?.lang;
+    let todayDate = getFullDate && getFullDate();
+    if(!langSelected){
+    if(!prevDate){
+      localStorage.set('prev-date',todayDate);
+      localStorage.set('lang-24-hr','false');
+      }else{
+        if(prevDate !== todayDate){
+          localStorage.set('prev-date',todayDate);
+          localStorage.set('lang-24-hr','false')
+        };
+      }
+    }
+    }catch(e){
+      console.error('error in updating date for 24 hr timer in _app.js',e);
+    }
+  }
+
+  const checkLanguagesUpdatedInProfile = async() =>{
+    console.log("checking lang...")
+   try{ 
+    let tokens = localStorage.get('tokens') || null;
+    const isLoggedIn = (tokens && tokens?.shortsAuthToken && tokens?.accessToken) || false;
+    if(isLoggedIn){
+    const userId = localStorage.get('user-id');
+    console.log("USER",userId)
+    const userProfileDetails = await getUserProfile(userId);
+    const languages = userProfileDetails?.data?.languages || '';
+    const languageCodes = languages?.reduce((acc,data)=>{
+      acc.push(data?.code)
+      return acc;       
+     },[]);
+    const currentLangSelected = localStorage.get('lang-codes-selected')?.lang || [];
+    console.log("inside - PROFILE__",userProfileDetails)
+    if(currentLangSelected && !compareArrays(languageCodes,currentLangSelected) ){
+      userProfileDetails?.data && localStorage.set('user-details',userProfileDetails?.data);
+      const languageCodes = languages?.reduce((acc,data)=>{
+        acc.push(data?.code)
+        return acc;       
+       },[]);
+      localStorage.set('lang-codes-selected',{lang : languageCodes, type : 'profile'});
+    }
+  }}catch(e){
+    console.error('issue in updating lang for logged in user on refresh',e);
+  }
+  }
+
   const setRefferer = ()=>{
     try{
       console.log("Refferer**",document?.referrer);
@@ -481,6 +534,8 @@ function Hipi({
       window.sessionStorage.setItem('videos-completed', JSON.stringify({ids:[],value: 0}));
       // videosCompleted = 0
     } 
+    updateDate();
+    let timeout = setTimeout(()=>{checkLanguagesUpdatedInProfile();},[2500])
     // else{
       // videosCompleted =  window.sessionStorage.getItem('videos-completed');
     // }
@@ -504,6 +559,7 @@ function Hipi({
         window.addEventListener(data,resetTimeout);
         clearTimeouts();
       })
+      timeout && clearTimeouts(timeout);
     }
   },[])
 
