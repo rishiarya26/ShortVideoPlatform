@@ -207,10 +207,6 @@ function FeedIphone({ router }) {
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
-  const feedingVmaxAdToUpdatedItems = () => {
-
-  }
-
   const getFeedData = async() =>{
     let updateItems = [...items];
     let data = []
@@ -220,16 +216,18 @@ function FeedIphone({ router }) {
       let adPosition = localStorage.get('vmaxAdPosition') || null;
       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
-        console.log("not called inner function");
+       
         data?.data.splice(adPosition, 0, cacheAdVideo);
         cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+        console.log(`added cachead successfully from cache! ${ data?.data}`)
       }else{
-        console.log("called inner function");
+       
         // debugger;
         try{
           let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
             data?.data?.splice(adPosition, 0, cachedVideo);
+            console.log(`added cachead successfully not from cache! ${ data?.data}`)
           }
         }catch(error){
           console.error(error);
@@ -276,20 +274,28 @@ function FeedIphone({ router }) {
       console.log("adView", items[videoActiveIndex]?.feedVmaxAd, "=>" , items[videoActiveIndex]?.feedVmaxAd?.adView);
        let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
        if(percentage > 0 && percentage < 25){
+         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'impression')
          vmaxTrackerEvents(tracker,'videoAdStarted')
        }
        if(percentage > 25 && percentage < 50) {
+         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
        }
        if(percentage > 50 && percentage < 75) {
+         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
        }
        if(percentage > 75 && percentage < 90) {
+         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
        }
        if(percentage > 98) {
-         vmaxTrackerEvents(tracker,'videoAdEnd')
+         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         vmaxTrackerEvents(tracker,'videoAdEnd');
+         if(document.querySelector(".swiper-container").swiper){
+           document.querySelector(".swiper-container").swiper?.slideNext();
+         }
        }
      }
 
@@ -585,11 +591,11 @@ console.log('errorrr',e)
                   activeIndex, slides
                 } = swiperCore;
 
-                if(items?.[activeIndex].feedVmaxAd){
-                  setAppStrip(false)
-                }else{
-                  if(openAppStrip === false) setAppStrip(true)
-                }
+                // if(items?.[activeIndex].feedVmaxAd){
+                //   setAppStrip(false)
+                // }else{
+                //   if(openAppStrip === false) setAppStrip(true)
+                // }
 
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
@@ -790,7 +796,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {!items?.[videoActiveIndex]?.adId && openAppStrip && <OpenAppStrip
+      {!items?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

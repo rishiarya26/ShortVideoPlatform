@@ -92,7 +92,6 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
-  const [openAppStrip, setAppStrip] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
   
@@ -556,12 +555,6 @@ function Feed({ router }) {
                 localStorage.set("adArrMixPanel",[]);
                 localStorage.set('vmaxEvents',[]);
 
-                if(items?.[activeIndex].feedVmaxAd){
-                  setAppStrip(false)
-                }else{
-                  if(openAppStrip === false) setAppStrip(true)
-                }
-
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -620,7 +613,7 @@ function Feed({ router }) {
             >
               {!loadFeed && <VideoUnavailable/>}
              
-              {loadFeed && validItemsLength ? items.map((
+              {loadFeed && validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
@@ -724,7 +717,7 @@ function Feed({ router }) {
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={(!items[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
+              type={(!items[videoActiveIndex]?.adId && !toShowItems[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -756,7 +749,7 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {!items?.[videoActiveIndex]?.adId && openAppStrip && <OpenAppStrip
+        {!toShowItems?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
