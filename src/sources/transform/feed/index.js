@@ -35,6 +35,7 @@ function transformSuccess(resp) {
     }
 
     const device = getItem('device-type');
+    const deviceType = getItem('device-info');
    
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
@@ -109,7 +110,7 @@ function transformSuccess(resp) {
       console.log("adding data in payload", payloadData);
     }
 
-    if(device === 'mobile'){
+    if(device === 'mobile' && deviceType !== 'ios'){
     try{
     const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
     const lang24ShowOnce = localStorage.get('lang-24-hr');
