@@ -810,8 +810,8 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         {((!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) || items?.[videoActiveIndex]?.adId) &&
-          !items?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd ? '' : <OpenAppStrip
+      {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

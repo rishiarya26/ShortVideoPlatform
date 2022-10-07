@@ -104,11 +104,7 @@ function transformSuccess(resp) {
       payloadData?.splice(0,0,data?.firstVideo);
     }
 
-    if(!isObjectEmpty(data?.vmaxAdVideo)){
-      // debugger;
-      payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
-      console.log("adding data in payload", payloadData);
-    }
+   
 
     if(device === 'mobile' && deviceType !== 'ios'){
     try{
@@ -121,6 +117,17 @@ function transformSuccess(resp) {
       console.error('issue in lang-select slide adding in transform')
     }
    }
+
+   if(!isObjectEmpty(data?.vmaxAdVideo) && data?.vmaxVideoIndex){
+    
+    let VmaxAdIndex = data?.vmaxVideoIndex;
+    if(payloadData?.[3]?.data === 'languageSlide'){
+      VmaxAdIndex = data?.vmaxVideoIndex === 3 ? 4 : data?.vmaxVideoIndex;
+    }
+    
+    payloadData?.splice(VmaxAdIndex,0,data?.vmaxAdVideo);
+    console.log("adding data in payload", payloadData);
+  }
     /*for stagging api */
     // const { response = [] } = data;
     // const tResponse = [...response];
@@ -130,6 +137,7 @@ function transformSuccess(resp) {
     // payload.data = tResponse;
  
     payload.data = payloadData;
+    console.log(payload.data,"payload.data")
     // payload.requestedWith = data.requestedWith;
     return payload;
   } catch (err) {

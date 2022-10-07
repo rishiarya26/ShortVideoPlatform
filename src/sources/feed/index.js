@@ -185,6 +185,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
         let adPosition = resp?.adPosition || null;
         let cachedVideo =  resp?.cachedVideo ?? {};
         // debugger;
+        console.log("initial position: " + adPosition)
 
         if(!isEmptyObject(cachedVideo) && adPosition){
           response.data.vmaxAdVideo = cachedVideo;

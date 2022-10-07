@@ -232,7 +232,7 @@ function Feed({ router }) {
           if(!isEmptyObject(cachedVideo) && adPosition){
             data?.data.splice(adPosition, 0, cachedVideo);
           }
-        }catch(e){
+        }catch(error){
           console.error(error);
         }
        }
@@ -578,8 +578,8 @@ function Feed({ router }) {
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
-                ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-                toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem?.['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+                toTrackFirebase('watchTime',{userId: currentActiveFeedItem?.['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
                 /** Mixpanel - increment view count **/
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && 
@@ -759,7 +759,7 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) && !toShowItems?.[videoActiveIndex]?.adId && !toShowItems?.[videoActiveIndex]?.feedVmaxAd ? '' : 
+        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
