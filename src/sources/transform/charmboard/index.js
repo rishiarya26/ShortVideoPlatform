@@ -19,7 +19,8 @@ function transformSuccess(resp) {
       accessories : [],
       beauty : [],
       hair : [],
-      recipe : []
+      recipe : [],
+      devices: []
     }
     data?.cards.forEach((item, id)=>{
         item?.category === 'outfit' && details.outfit.push(item);
@@ -27,7 +28,7 @@ function transformSuccess(resp) {
         item?.category === 'beauty' && details.beauty.push(item);
         item?.category === 'hair' && details.hair.push(item);
         item?.category === 'recipe' && details.recipe.push(item);
-
+        item?.category === 'devices' && details.devices.push(item);
     })
     payload.data = details;
     payload.campaignId = data?.cardCampMap?.[0]?.ad_campaign_id || "";

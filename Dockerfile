@@ -9,7 +9,7 @@ COPY . ./
 
 # APP_ENV value needs to be dynamic
 RUN npm i
-RUN APP_ENV=staging npm run build
+RUN APP_ENV=production npm run build
 
 
 FROM fholzer/nginx-brotli:v1.19.1

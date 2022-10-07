@@ -42,7 +42,9 @@ const register = async ({
     resp.data.message = 'success';
     const accessToken = resp?.data?.token;
     const refreshToken = resp?.data?.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken, signupData});
+    // setTimeout(async()=>{
+      response = await hipiLogin({ accessToken, refreshToken, signupData});
+    // },[2000]);
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
