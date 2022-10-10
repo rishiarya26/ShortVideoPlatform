@@ -11,7 +11,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { Back } from '../commons/svgicons/back';
+import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import CircularProgress from '../commons/circular-loader'
@@ -22,7 +22,7 @@ import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getItem } from '../../utils/cookie';
 import { toTrackReco, viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl, onStoreRedirect } from '../../utils/web';
+import { getBrand, getCanonicalUrl, onStoreRedirect } from '../../utils/web';
 import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
@@ -165,7 +165,7 @@ function HashTagFeed({ router }) {
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
     // console.log("aAAAADDD",shop?.adData)
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
   },[shop])
  /************************ */ 
 
@@ -230,6 +230,7 @@ function HashTagFeed({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -360,7 +361,7 @@ function HashTagFeed({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
@@ -380,6 +381,7 @@ function HashTagFeed({ router }) {
                       pageName={pageName}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                     />
 
                   </SwiperSlide>

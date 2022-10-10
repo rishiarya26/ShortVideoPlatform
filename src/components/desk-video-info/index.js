@@ -72,11 +72,14 @@ const [show, setShow] = useState(false);
          ))} */}
      </div>
         <p className="font-medium text-sm mb-4 text-gray-700">
-          {videoSound ?  <><MusicBlack/>
-           {music_title}
+          {videoSound ?  <>
+            <MusicBlack/>
+           <p className="ml-6">{music_title}</p>
            </> :<span className=" my-1 text-sm w-4/12 text-gray-400">
-            Audio unavailable
+           <MusicBlack/>
+           <p className="ml-6">Audio unavailable</p>
           </span>}
+        
         </p>
     
 

@@ -5,7 +5,7 @@ import useDrawer from '../../../../hooks/use-drawer';
 import useTranslation from '../../../../hooks/use-translation';
 
 export const Shop = ({
-  videoId, canShop, shopType, setClose,pageName, tabName
+  videoId, canShop, shopType, setClose,pageName, tabName, campaignId="NA"
 }) => {
   const { t } = useTranslation();
   const {show} = useDrawer();
@@ -19,8 +19,8 @@ export const Shop = ({
   );
 
   const handleShop = ()=>{
-    toTrackMixpanel('cta',{pageName:pageName, tabName:tabName, name:'Shop',type:'Button'},{content_id:videoId});
-    show('',charmboardDrawer , 'big', { videoId : videoId, setClose: setClose, pageName:pageName, tabName:tabName});
+    toTrackMixpanel('cta',{pageName:pageName, tabName:tabName, name:'Shop',type:'Button'},{content_id:videoId, campaignId});
+    show('',charmboardDrawer , 'big', { videoId : videoId, setClose: setClose, pageName:pageName, tabName:tabName, campaignId});
     setClose && setClose('open');
   }
 

@@ -96,3 +96,14 @@ export const getStatusSince = (statusDate, t) => {
 };
 
 export const getDateDiffSeconds = (d1, d2) => differenceInSeconds(d1, d2);
+
+export const getFullDate = () =>{
+  let dateObj = new Date();
+  let month = dateObj.getMonth();
+  let day = dateObj.getDate();
+  let year = dateObj.getFullYear();
+  
+  const fullDate = year + "/" + month + "/" + day;
+  return fullDate
+
+}

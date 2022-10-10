@@ -103,7 +103,8 @@ const SearchItems = ({router,type})=>{
         window.sessionStorage.setItem('searchExecuted','true');
         // window.sessionStorage.setItem('searchTerm',searchTerm)
         toTrackReco(SEARCH_EVENT,{"message": searchTerm, "objectID": "autocomplete_search_query_response", "position": "0", "queryID": "autocomplete_search_query_response"})
-         router && router?.push(`/search?term=${value}`);
+        value?.indexOf('#') === 0 ?  router && router?.push(`/search?term=%23${trimHash(value)}`) :  router && router?.push(`/search?term=${value}`)
+        //  router && router?.push(`/search?term=${value}`);
     }
 
 //     const onSearchHistoryDelete =(e) =>{

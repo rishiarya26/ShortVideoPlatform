@@ -13,6 +13,7 @@ import { getItem } from "../../../utils/cookie";
 import { localStorage } from "../../../utils/storage";
 import Less from "../../commons/svgicons/less";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { getBrand } from "../../../utils/web";
 
 const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems = null, comp, videoId, getSavedMoments,onExpandToggle,id, expands,
    deleteFilteredSavedItem, idToScroll, pageName, tabName}) =>{
@@ -23,15 +24,18 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const [selectedIndex, setSelectedIndex] = useState(null);
  const [firstScroll, setFirstScroll] = useState(true);
  const [productIdChange, setProductIdChange] = useState();
+ const [campaignIdResp, serCampaignIdResp] = useState("NA");
 
+ console.log('debug',items);
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
-  items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0)
+  items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0 || items?.devices?.length > 0)
 
  const outfitRef = useRef(null);
  const accRef = useRef(null);
  const beautyRef = useRef(null);
  const hairRef = useRef(null);
  const recipeRef = useRef(null);
+ const deviceRef = useRef(null);
 
  let scrollRefs = useRef(null);
 
@@ -48,6 +52,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
       threshold: 0.1
     });
     const [recipe, inViewRecipe] = useInView({
+      threshold: 0.1
+    });
+    const [devices, inViewDevices] = useInView({
       threshold: 0.1
     });
     
@@ -68,12 +75,14 @@ const onProductChange = (id)=>{
       const response =  await getCharms({charmId});
       if(response?.data){
          setItems(response.data);
+         serCampaignIdResp(response.campaignId);
          const initalTabIndex = response?.data &&
           response.data?.outfit?.length > 0 ? 0 :
           response.data?.accessories?.length > 0 ? 1 :
           response.data?.beauty?.length > 0 ? 2 :
           response.data?.hair?.length > 0 ? 3 : 
-          response.data?.recipe?.length > 0 && 4;
+          response.data?.recipe?.length > 0 ? 4 :
+          response.data?.devices?.length > 0 && 5
           console.log("intial",initalTabIndex);
           setSelectedIndex(initalTabIndex);
       }
@@ -144,6 +153,9 @@ const onProductChange = (id)=>{
        if(items?.recipe?.length > 0){
          result[4] = 'Recipe';
        }
+       if(items?.devices?.length > 0){
+        result[5] = 'Devices'
+      }
       return result;
     }
 
@@ -153,15 +165,18 @@ const onProductChange = (id)=>{
     const onTabChange=(selected)=>{
       try{
         selected === 0 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Outfit'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
         selected === 1 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId}):
+        toTrackMixpanel('cta',{pageName:pageName,name:'Accessories'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}):
         selected === 2 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId}) :
+        toTrackMixpanel('cta',{pageName:pageName,name:'Beauty'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
         selected === 3 ?
-        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId}) :
-        selected === 4 &&
-        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId})
+        toTrackMixpanel('cta',{pageName:pageName,name:'Hair'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
+        selected === 4 ?
+        toTrackMixpanel('cta',{pageName:pageName,name:'Recipe'},{content_id:videoId, campaignId: campaignIdResp || 'NA'}) :
+        selected === 5 &&
+        toTrackMixpanel('cta',{pageName:pageName,name:'Devices'},{content_id:videoId, campaignId: campaignIdResp || 'NA'})
+
      }catch(e){
         console.error('mixpanel issue in tab change on shop')
      }
@@ -170,28 +185,32 @@ const onProductChange = (id)=>{
            1 : accRef,
            2 : beautyRef,
            3 : hairRef,
-           4 : recipeRef
+           4 : recipeRef,
+           5 : deviceRef
         }
        executeScroll(scrollToElemant?.[selected],selected);
     }
 
     const onScroll = () => {
       // console.log(inViewOutfit, inViewAcc, inViewBeauty, inViewHair, inViewRecipe)
-       if(!inViewAcc && !inViewBeauty && !inViewHair && !inViewRecipe && inViewOutfit){
+       if(!inViewAcc && !inViewBeauty && !inViewHair && !inViewRecipe && !inViewDevices && inViewOutfit){
           setSelectedIndex(0);
        }
-       else if( !inViewBeauty && !inViewHair && !inViewOutfit && !inViewRecipe && inViewAcc){
+       else if( !inViewBeauty && !inViewHair && !inViewOutfit && !inViewRecipe && !inViewDevices && inViewAcc){
          setSelectedIndex(1);
        }
-       else if(  !inViewHair && !inViewOutfit && !inViewAcc && !inViewRecipe && inViewBeauty){
+       else if(  !inViewHair && !inViewOutfit && !inViewAcc && !inViewRecipe && !inViewDevices && inViewBeauty){
          setSelectedIndex(2);
        }
-       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewRecipe && inViewHair){
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewRecipe && !inViewDevices && inViewHair){
          setSelectedIndex(3);
        }
-       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && inViewRecipe){
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && !inViewDevices && inViewRecipe){
          setSelectedIndex(4);
        }
+       else if( !inViewBeauty  && !inViewOutfit && !inViewAcc && !inViewHair && !inViewRecipe && inViewDevices){
+        setSelectedIndex(5);
+      }
     };
 
     const deleteSavedItems =()=>{
@@ -250,23 +269,6 @@ const onProductChange = (id)=>{
                    <Delete/>
                    {/* <p className='text-xs'>Delete</p> */}
                  </div>
-    }
-
-    const getBrand =(url)=>{
-       if(!url){
-         return ''
-       }else{
-        const origin = url.split('//')[1];
-        let finalOrigin = ''
-        if(origin?.includes('www')){
-          finalOrigin = origin.split('.')[1]
-        }else{
-          finalOrigin = origin.split('.')[0]
-        }
-        if(finalOrigin){
-          return finalOrigin 
-        }
-       }
     }
 
     return(
@@ -332,6 +334,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
          />
          </div>
         })}
@@ -362,6 +365,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
          />
          </div>
          ))}
@@ -415,6 +419,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
+             campaignId={campaignIdResp}
          />
          </div>
           ))}
@@ -470,12 +475,46 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
            />
            </div>
           ))}
         </div>
         </div>
         }
+        {expand && 
+         <div className="w-full" ref={deviceRef}>
+         <div ref={devices} id='devices'>
+        {(items?.devices?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">DEVICE INSPIRATION FROM THIS LOOK</div>} 
+            {items && items?.devices?.map((item,id) =>{
+              console.log("debug-ad",item)
+         return <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
+           <CharmCard 
+             key = {id}
+             id={item?.card_id}
+             thumbnail = {item?.product_img_url}
+             title = {item?.title}
+             shopName = {item?.product_url ? getBrand(item?.product_url): ''}
+             shopLink = {item?.product_url}
+             shopNameImg={item?.camp_img_url || null}
+             ribbonData={item?.card_labels || []}
+             category = {item?.category}
+             actualPrice = {item?.actual_price}
+             salePrice={item?.sale_price}
+             productName={item?.subsub_category}  
+             videoId={videoId}
+             productIdChange={productIdChange}
+             onProductChange={onProductChange}
+             pageName={pageName}
+             tabName={tabName}
+             dominantColor={item?.dominant_color}
+             campaignId={campaignIdResp}
+         />
+         </div>
+        })}
+         </div>
+         </div>
+         }
 
       {expand &&  
         <div className="w-full" ref={recipeRef}>
@@ -505,12 +544,14 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
+             campaignId={campaignIdResp}
            />
            </div>
           ))}
         </div>
         </div>
         }
+        
          {/* Head charm end*/}
        
       </div>: 

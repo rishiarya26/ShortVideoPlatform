@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -33,9 +33,13 @@ import Landscape from '../landscape';
 import AppBanner from '../app-banner';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import LanguageSelection from '../lang-selection';
 import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackCenter from '../commons/snack-bar-center';
+import { INDEX_TO_SHOW_LANG } from '../../constants';
+import { pushAdService } from '../../sources/ad-service';
+import { getBrand } from '../../utils/web';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -51,6 +55,7 @@ const LoginFollowing = dynamic(()=> import('../login-following'),{
   loading: () => <div />,
   ssr: false
 });
+
 
 // const UserExperience = dynamic(()=> import('../commons/user-experience'),{
 //   loading: () => <div />,
@@ -86,6 +91,7 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -100,6 +106,7 @@ function Feed({ router }) {
   const utmData = localStorage?.get('utm-data') || '';
   const pageName = 'Feed';
   const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+  const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
 
   const showBanner =()=>{
     setShowAppBanner(true);
@@ -155,6 +162,8 @@ function Feed({ router }) {
         setInitialLoadComplete(true);
         setFirstApiCall(false);
         setActiveVideoId(videoIdInitialItem);
+        const lang24Show = localStorage.get('lang-24-hr') || 'true';
+        setLang24ShowOnce(lang24Show);
         // checkNoSound();
         // setFirstItemLoaded(true);
         // setSeoItem(data?.data[0]);
@@ -176,7 +185,7 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
   },[shop])
  /************************ */ 
 
@@ -230,6 +239,63 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
+  const videoAdSessionsCalls = async (percentage) => {
+    if(items[videoActiveIndex]?.adId && window !== undefined){
+      let adInfo = items?.[videoActiveIndex]?.adId || {};
+      let {impression_url = null, event_url = null } = adInfo;
+      let timeStamp = Date.now();
+      console.log(timeStamp, "timeStamp");
+      if(percentage > 0){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        try{
+         impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+         event_url && await pushAdService({url: event_url, value: "start"}); 
+        }catch(e){
+          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        }
+      }
+      if(percentage > 25) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        try{
+          event_url && await pushAdService({url: event_url, value: "firstQuartile"});
+        }catch(e){
+          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
+      }
+      if(percentage > 50) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        try{
+          event_url && await pushAdService({url: event_url, value: "midpoint"});
+        }catch(e){
+          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+       
+      }
+      if(percentage > 75) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        try{
+          event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
+        }catch(e){
+          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
+      }
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        try{
+          event_url && await pushAdService({url: event_url, value: "complete"});
+        }catch(e){
+          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        }
+        
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
+      }
+    }
+  }
+
   const updateSeekbar = (percentage, currentTime, duration) => {
     setInitialPlayButton(false)
     setSeekedPercentage(percentage);
@@ -237,6 +303,10 @@ function Feed({ router }) {
       currentT : currentTime,
       totalDuration : duration
     }
+   
+    // 👆🏻 video ad calls for feed videos
+    videoAdSessionsCalls(percentage)
+
     if(currentTime > 6.8 && currentTime < 7.1){
       viewEventsCall(activeVideoId,'view')
     }
@@ -270,6 +340,10 @@ function Feed({ router }) {
     }
   };
 
+  const adBtnClickCb = () => {
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+  }
+
   const getCanShop = async () => {
     let isShoppable;
     const shopContent = { ...shop };
@@ -280,6 +354,7 @@ function Feed({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId= response?.campaignId;
     } catch (e) {
       // isShoppable = false;
     }
@@ -302,6 +377,8 @@ function Feed({ router }) {
     if(deleteItemIndex >=0 && videoActiveIndex >=3){
       updateShowItems[deleteItemIndex] = null;
     }
+    console.log("*inc",updateShowItems)
+
   setToShowItems(updateShowItems);
  }
 
@@ -318,7 +395,7 @@ function Feed({ router }) {
     const  decrementGap=  3;
     let deleteItemIndex = videoActiveIndex+decrementGap;
      deleteItemIndex >= 3 && updateShowItems?.splice(deleteItemIndex,1);
-
+    console.log("*dec",updateShowItems)
     setToShowItems(updateShowItems);
  }
 
@@ -381,7 +458,7 @@ function Feed({ router }) {
               className="max-h-full"
               direction="vertical"
               draggable="true"
-              spaceBetween={5}
+              spaceBetween={0}
               calculateheight="true"
               // slidesPerView={}
               mousewheel
@@ -396,12 +473,16 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+                localStorage.set("adArr",[]);
+                 localStorage.set("adArrMixPanel",[]);
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
+                localStorage.set("adArr",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -446,21 +527,23 @@ function Feed({ router }) {
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
-
-                activeId && setActiveVideoId(activeId);
+                activeId && setActiveVideoId(activeId); 
               }}
             >
-              {loadFeed ? 
-              <>
-              {validItemsLength ? toShowItems.map((
+              {!loadFeed && <VideoUnavailable/>}
+             
+              {loadFeed && validItemsLength ? toShowItems.map((
                   item, id
                 ) => (
                   <SwiperSlide
                     key={id}
                     id={item?.watchId}
                     itemID={item?.content_id}
-                  >
-                  {item !==null &&  <Video
+                  >  
+                  {item !==null && !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
+                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                  :
+                  <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
                       url={item?.video_url}
@@ -475,7 +558,7 @@ function Feed({ router }) {
                       hashTags={item?.hashtags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       charmData = {shop?.charmData}
                       shopCards={shop?.data}
                       shopType={shop?.type}
@@ -506,8 +589,11 @@ function Feed({ router }) {
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      feedAd={item?.adId}
+                      adBtnClickCb={adBtnClickCb}
+                      campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
-                      // setMuted={setMuted}
+                      setMuted={setMuted}
                     />}
                   </SwiperSlide>
                 )) : (
@@ -516,13 +602,15 @@ function Feed({ router }) {
                   </div>
                 )
               }
+              {loadFeed &&
+              <>
               {validItemsLength && <div
                 className="absolute top-1/2 justify-center w-screen flex"
                 style={{ display: (seekedPercentage > 0) ? 'none' : 'flex text-white' }}
               >
              <CircularProgress/>
               </div>}
-                {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
+                {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : !(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
             {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -533,23 +621,24 @@ function Feed({ router }) {
               </div>}
               {<div
                 onClick={()=>setMuted(false)}
-                className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
+                className={`absolute top-0 right-4  mt-4 items-center justify-center p-4`}
+                style={{ display: (!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? 'hidden' : (initialPlayStarted && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>
                 <Mute/>
                 </div>
               </div>}
-              {validItemsLength ? seekedPercentage > 0
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : (validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : <SeekbarLoading type={'aboveFooterMenu'}/>
-              : ''}
-              </> : <VideoUnavailable/>}
+              : '')}
+              </>
+              }
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type="shop"
+              type={!items[videoActiveIndex]?.adId && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -557,6 +646,7 @@ function Feed({ router }) {
               showBanner={showBanner}
               pageName={pageName}
               tabName={tabName}
+              campaignId={shop?.campaignId}
               />
             </Swiper>
             
@@ -580,20 +670,21 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
+        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />
+        />}
         {/* hamburger */}
-        <HamburgerMenu/>
-        <div className="fixed mt-10 z-10 w-full">
+       {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+       {/* <HamburgerMenu/> */}
+        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null ? 'hidden' : ''}`}>
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
-        
         <div id="cb_tg_d_wrapper">
           <div className="playkit-player" />
         </div>

@@ -7,6 +7,7 @@ import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 import { transformSuccess, transformError } from '../transform/users/send-otp';
+import { transformSuccess as transformSuccessEdit, transformError as transformErrorEdit } from '../transform/users/profile-edit';
 
 async function sendOtp({ lang }) {
   let response = {};
@@ -44,38 +45,49 @@ async function forgotPassword({ lang }) {
   }
 }
 async function updateProfile({
-  id = null, profilePic, firstName, lastName = '', dateOfBirth, userHandle, onboarding, profileType, bio
+  id = null, profilePic, firstName, lastName = '', dateOfBirth, userHandle, onboarding, profileType, bio, languages
 }) {
   let response = {};
   try {
+    console.log("inside")
     let tokens = localStorage.get('tokens');
     // tokens = tokens && JSON.parse(tokens);
     const { shortsAuthToken = '' } = tokens;
     const { accessToken = '' } = tokens;
     const payload = {
-      id,
-      profilePic,
-      firstName,
-      lastName,
-      dateOfBirth,
-      userHandle,
+      "id":id,
+      "profilePic":profilePic,
+      "firstName":firstName,
+      "lastName":lastName,
+      "dateOfBirth":dateOfBirth,
+      "userHandle":userHandle,
       onboarding: null,
       profileType: null,
-      bio
+      "bio":bio,
+      "languages":languages && languages?.map((data)=>{
+        return {code : data};     
+      })
     };
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile`;
     /* eslint-disable no-restricted-syntax */
     const formData = new FormData();
     console.log(formData);
 
-    formData.append('request', '{"id":"f999f4de-5c13-4b9f-8467-dfc417548169", "profilePic":null, "firstName":"Rishi", "lastName":"arya", "dateOfBirth":"10/11/2020", "userHandle":"rishi_arya", "onboarding":null, "profileType":null, "bio":"awesome"}');
-    for (const p of formData.entries()) {
-      console.log(`${p[0]}, ${p[1]}`);
-    }
-    console.log(formData);
+    // formData.append("request", "{"id":"f999f4de-5c13-4b9f-8467-dfc417548169", "profilePic":null, "firstName":"Rishi", "lastName":"arya", "dateOfBirth":"10/11/2020", "userHandle":"rishi_arya", "onboarding":null, "profileType":null, "bio":"awesome"}");
+    // formData.append("request", "{\"id\":\"f999f4de-5c13-4b9f-8467-dfc417548169\", \"profilePic\":null, \"firstName\":\"IIII\", \"lastName\":\"aaaa\", \"dateOfBirth\":\"10/11/2020\", \"userHandle\":\"kkkkkkllllll\", \"onboarding\":null, \"profileType\":null, \"bio\":\"awesome\"}");
+    formData.append("request", JSON.stringify(payload));
+
+    // for (const p of formData.entries()) {
+
+    //   console.log(`${p[0]}, ${p[1]}`);
+    // }
+    // console.log(formData);
     response = await put(apiPath, formData, {
       Authorization: `Bearer ${shortsAuthToken}`,
-      'content-type': 'multipart/form-data',
+      'content-type': 'form-data',
+      'access-token': accessToken
+    },{
+      Authorization: `Bearer ${shortsAuthToken}`,
       'access-token': accessToken
     });
     console.log('Update-Profile', response);
@@ -129,7 +141,7 @@ async function getComments() {
 const [srSendOtp] = apiMiddleWare(sendOtp, transformSuccess, transformError);
 const [srVerifyOtpPassword] = apiMiddleWare(verifyOtpPassword, transformSuccess, transformError);
 const [srForgotPassword] = apiMiddleWare(forgotPassword, transformSuccess, transformError);
-const [updateUserProfile] = apiMiddleWare(updateProfile, transformSuccess, transformError, { requiresAuth: true });
+const [updateUserProfile] = apiMiddleWare(updateProfile, transformSuccessEdit, transformErrorEdit, { requiresAuth: true });
 const [srReportProfile] = apiMiddleWare(reportProfile, transformSuccess, transformError);
 
 export {

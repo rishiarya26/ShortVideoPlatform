@@ -4,8 +4,7 @@ import { localStorage } from "../utils/storage";
 let initiated = false;
 
 export const init = async() => {
-    localStorage.set('get-social','pending');
-    console.log("*********** CALLED **********")
+
 //    initGetSocial();
 //    setTimeout(()=>{ 
     //    if(initiated){
@@ -13,6 +12,9 @@ export const init = async() => {
 
     // console.log('r',r)
     try{
+        localStorage.set('get-social','pending');
+        // const guestGetSocialToken = localStorage?.get('guest-get-social');
+        console.log("user *********** CALLED **********")
         GetSocialSDK?.GetSocial?.init({
             appId: 'YInJ8G70y098',
             appName: 'Hipi'
@@ -20,9 +22,11 @@ export const init = async() => {
     let tokens = localStorage.get('tokens');
     if (tokens && tokens?.shortsAuthToken && tokens?.accessToken && tokens?.getSocialToken) {
         auth();
+    }else{
+        asGuest();
     }
     }catch(e){
-       console.log('no tokens present during getSocial Auth');
+       console.log('user no tokens present during getSocial Auth',e);
     }    
         // setTimeout(()=>{
         //     getActivityDetails('661518306464375287');
@@ -48,17 +52,70 @@ export const auth = (identityType='my_app')=>{
         localStorage.set('get-social','success');
     })
     .catch((e)=>{
-       console.log('errorrrr',e);
+       console.error('errorrrr getSocail',e);
     });
   }
   catch(e){
-      console.log('error in getting getsocial token form localstorage')
+      console.error('error in getting getsocial token form localstorage',e)
   }
 }
 
-const retry = ()=>{
-
+export const asGuest = (identityType='my_app')=>{
+    console.log("user **")
+    try{
+    // const tokens = localStorage?.get('tokens');
+    // const getSocialToken = tokens?.getSocialToken;
+    const guestGetSocialToken = localStorage?.get('guest-get-social');
+    console.log('user token',guestGetSocialToken)
+    const params = {
+        "identity_type": 'anonymous',
+        "token" : guestGetSocialToken
+        // "token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyaXNoaTAxIiwiZXhwIjoxNjY4NTkxNDkxNzMxLCJpYXQiOjE2NjMzMjEwOTF9.Umoip73O2imhhr_IQlOmgNbzkcvDI5rPlFgE8M0ZUSM',
+    };
+    GetSocialSDK.Auth.authenticate(params)
+    .then((response) => {
+        console.log("user auth getsocial success",response)
+        localStorage.set('get-social','success');
+    })
+    .catch((e)=>{
+       console.error('user errorrrr guest getScoial',e);
+    });
+  }
+  catch(e){
+      console.error('error in getting getsocial token form localstorage in guest ',e)
+  }
 }
+
+// const addIdentity = ()=>{
+//     try{
+//         const tokens = localStorage?.get('tokens');
+//         const getSocialToken = tokens?.getSocialToken;
+
+//     const user = GetSocialSDK.GetSocial.getCurrentUser();
+//     const identity = GetSocialSDK.Identity.createTrustedIdentity('my_auth_method', getSocialToken);
+
+//     user.addIdentity(identity)
+//     .then(() => console.log('identity added for signup user'))
+//     .catch((error) => {
+//     // Make sure to take the first error if there are multiple ones (unlikely)
+//     // if (Array?.isArray(error)) {
+//     //   error = error?.pop();
+//     // }
+ 
+//     if (error instanceof GetSocialSDK.ConflictUser) {
+//       console.error(`Conflict User: ${error?.displayName}`);
+//     } else {
+//       console.error(error);
+//     }
+//   });
+// }catch(e){
+//     console.error('issue in mapping identittes in getSocial after signup')
+// }
+// }
+
+// const retry = ()=>{
+
+// }
 
 export const getActivityDetails = async(id)=> {
     let response;

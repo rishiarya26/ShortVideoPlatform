@@ -25,7 +25,7 @@ import dynamic from 'next/dynamic';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getItem } from '../../utils/cookie';
 import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl } from '../../utils/web';
+import { getBrand, getCanonicalUrl } from '../../utils/web';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
@@ -251,7 +251,7 @@ function ProfileFeedIphone({ router }) {
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
-      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
     },[shop])
    /************************ */ 
 
@@ -316,6 +316,7 @@ function ProfileFeedIphone({ router }) {
       shopContent.data = response?.data;
       shopContent.type= response?.type;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -443,7 +444,7 @@ function ProfileFeedIphone({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
@@ -461,6 +462,7 @@ function ProfileFeedIphone({ router }) {
                       adData={shop?.adData}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                     />
 

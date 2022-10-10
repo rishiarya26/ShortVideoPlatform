@@ -11,6 +11,7 @@ import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 import { breadcrumbSchema, personSchema, videoSchema } from '../src/utils/schema';
 import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
 import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
+import { customTitleSeo } from '../src/utils/seo';
 // import DeskUsers from '../src/components/desk-profile';
 // import Users from '../src/components/users';
 
@@ -157,7 +158,7 @@ export default function Hipi(params) {
       </>}
     <SeoMeta
       data={{
-        title: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,
+        title: item?.userHandle === 'Sneha_pundir_' ?  customTitleSeo(item?.userHandle) : `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,
         // image: item?.thumbnail,
         description: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi. ${item?.followers || ''} followers, Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
         additionalMetaTags:[{

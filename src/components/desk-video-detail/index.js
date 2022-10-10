@@ -31,6 +31,7 @@ import Description from "../desk-description";
 import Header from "../desk-header";
 import DeskMenu from "../desk-menu";
 import { analyticsCleanup, reportPlaybackEnded, videoAnalytics } from "../../analytics/conviva";
+import MusicBlack from "../commons/svgicons/music-black";
 
 function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
@@ -51,7 +52,7 @@ comp = 'normal',videoSound=true, noSound, checkNoSound}) {
       //  router && router?.push(`/hashtag/${finalValue}`)
     }
 
-    useEffect(()=>{checkNoSound()},[activeIndex])
+    useEffect(()=>{checkNoSound && checkNoSound()},[activeIndex])
    
     const toUser =(username)=>{
       // let finalValue = username;
@@ -175,11 +176,10 @@ return (
             <Description description={description} />
            </div>
             <div className="w-8/12 my-1 text-sm">
-            {videoSound ? <> <svg className="float-left" width="20" height="20" viewBox="6 0 24 24" fill="none">
-                  <path className="st0" fill="#000" d="M12,3v10.6c-0.6-0.3-1.3-0.6-2-0.6c-2.2,0-4,1.8-4,4s1.8,4,4,4s4-1.8,4-4V7h4V3H12z"></path>
-               </svg>
-                <span className=" my-1 text-sm w-4/12">
-                  <p className="m-0 m-auto whitespace-nowrap overflow-hidden">
+            {videoSound ? <> 
+               <MusicBlack/>
+               <span className=" my-1 text-sm w-4/12">
+                  <p className="m-0 ml-6 m-auto whitespace-nowrap overflow-hidden">
                      <span className="pl-100 inline-block animate-marquee">{music_title}</span>
                   </p>
                </span></>:
