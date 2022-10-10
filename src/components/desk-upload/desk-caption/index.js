@@ -526,9 +526,9 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
                       <div className=" text-sm font-extralight text-red-500">
                         {item.hashtag}
                       </div>
-                      <div className="text-sm font-normal text-gray-500">
+                      {/* <div className="text-sm font-normal text-gray-500">
                         {item.hashtagLikeCount} views
-                      </div>
+                      </div> */}
                     </div>
                   </span>
                 </div>

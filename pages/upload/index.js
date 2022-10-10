@@ -9,14 +9,12 @@ export default function Upload() {
   let isLoggedIn = useAuth("false", "true");
 
   useEffect(() => {
-    debugger;
     if (tokens) {
       isLoggedIn = "true";
     }
   }, [tokens]);
 
   useEffect(() => {
-    debugger;
     if (isLoggedIn === "false") {
       router.push("/");
     }
