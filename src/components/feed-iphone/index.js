@@ -280,28 +280,28 @@ function FeedIphone({ router }) {
 
   const videoAdSessionsCalls = async(percentage) => {
 
-    if(items[videoActiveIndex]?.feedVmaxAd){
-      console.log("adView", items[videoActiveIndex]?.feedVmaxAd, "=>" , items[videoActiveIndex]?.feedVmaxAd?.adView);
-       let tracker = items[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+    if(toShowItems[videoActiveIndex]?.feedVmaxAd){
+      console.log("adView", toShowItems[videoActiveIndex]?.feedVmaxAd, "=>" , toShowItems[videoActiveIndex]?.feedVmaxAd?.adView);
+       let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
        if(percentage > 0 && percentage < 25){
-         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'impression')
          vmaxTrackerEvents(tracker,'videoAdStarted')
        }
        if(percentage > 25 && percentage < 50) {
-         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
        }
        if(percentage > 50 && percentage < 75) {
-         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
        }
        if(percentage > 75 && percentage < 90) {
-         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
        }
        if(percentage > 98) {
-         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
          vmaxTrackerEvents(tracker,'videoAdEnd');
          if(document.querySelector(".swiper-container").swiper){
            document.querySelector(".swiper-container").swiper?.slideNext();
@@ -309,53 +309,53 @@ function FeedIphone({ router }) {
        }
      }
 
-    if(items[videoActiveIndex]?.adId){
-      let adInfo = items?.[videoActiveIndex]?.adId || {};
+    if(toShowItems[videoActiveIndex]?.adId){
+      let adInfo = toShowItems?.[videoActiveIndex]?.adId || {};
       let {impression_url = null, event_url = null } = adInfo;
       let timeStamp = Date.now();
       if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         try{
           impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp}); 
         }catch(e){
-          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         }
        
         event_url && await pushAdService({url: event_url, value: "start"});
       }
       if(percentage > 25) {
-        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "firstQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
       if(percentage > 50) {
-        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "midpoint"});
         }catch(e){
-          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
        
       }
       if(percentage > 75) {
-        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
       if(percentage > 98) {
-        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "complete"});
         }catch(e){
-          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
         if(document.querySelector(".swiper-container").swiper){
@@ -551,7 +551,7 @@ console.log('errorrr',e)
   const getNextVmaxAd = async(activeIndex) => {
     //? condition to fetch ad for next feed chunk
     try{
-      if(items?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+      if(toShowItems?.[activeIndex]?.feedVmaxAd && !firstApiCall){
         localStorage.set("vmaxAdPosition", "");
         let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
         // debugger;
@@ -590,6 +590,7 @@ console.log('errorrr',e)
                 } = swiper;
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
@@ -609,6 +610,7 @@ console.log('errorrr',e)
 
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
                 setShowSwipeUp({count : 1, value:false});
 

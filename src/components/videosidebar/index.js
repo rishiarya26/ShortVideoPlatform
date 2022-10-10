@@ -38,7 +38,7 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA"
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA",vmaxAd
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -65,6 +65,17 @@ function VideoSidebar({
      /* mixpanel - like */
      toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
      toTrackMixpanel('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+     if(typeof window !== 'undefined' && window.VMAXSDK){
+      let customData = {};
+      const userN = userName?.replace('@','')
+      customData["Creator ID"] = videoOwnersId || null;
+      customData["Creator Handle"] = userN || null;
+      customData["Event Type"] = "like";
+      customData["Page Name"] = compName || null;
+      customData["Tab Name"] = tabName || null;
+      customData["UGC ID"] = videoId || null;
+      vmaxAd && window.VMAXSDK.App.setCustomData({...customData});
+    }
      /********* */
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
@@ -278,6 +289,17 @@ const handleSaveMoments = () =>{
                         userName: userName,
                       }
                     );
+                    if(typeof window !== 'undefined' && window.VMAXSDK){
+                      let customData = {};
+                      const userN = userName?.replace('@','')
+                      customData["Creator ID"] = videoOwnersId || null;
+                      customData["Creator Handle"] = userN || null;
+                      customData["Event Type"] = "unlike";
+                      customData["Page Name"] = compName || null;
+                      customData["Tab Name"] = tabName || null;
+                      customData["UGC ID"] = videoId || null;
+                      vmaxAd && window.VMAXSDK.App.setCustomData({...customData});
+                    }
                     /******************** */
                   }}
                 >
@@ -403,6 +425,17 @@ const handleSaveMoments = () =>{
                 /* mixpanel - dislike */
                 toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
                 toTrackMixpanel('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+                if(typeof window !== 'undefined' && window.VMAXSDK){
+                  vmaxAd && window.VMAXSDK.App.setCustomData({
+                    eventType: 'unlike',
+                    pageName:compName,
+                    tabName:(tabName && tabName) || null,
+                    userId:videoOwnersId,
+                    content_id:videoId,
+                    userName:userName
+                  })
+                }
+                
                 /******************** */
               }}
             >

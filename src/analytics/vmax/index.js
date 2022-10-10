@@ -41,7 +41,8 @@ export const initAdView = async() => {
     customData["gender"] =  loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA';
     customData["city"] = geoLocationInfo?.city || ''
     customData["state"] = geoLocationInfo?.state || ''
-    customData["stateCode"] = geoLocationInfo?.state_code || ''
+    customData["stateCode"] = geoLocationInfo?.state_code || '';
+    
 
     adView = null;
     adView = new VMAXSDK.CreateVmaxAdView();

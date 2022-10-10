@@ -402,12 +402,15 @@ function Video(props) {
          ctaPath = {props?.feedAd?.click_url}
       />
       <AdButton 
+         vmaxAd
          noShow={!!props?.vmaxAd}
          setMuted = {props?.setMuted}
          adBtnClickCb = {props?.adBtnClickCb}
          CtaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
-         CtaColor = {props?.vmaxAd?.ctaColor ? props.vmaxAd.ctaColor: "#63ABFF"}
+         CtaColor = {props?.vmaxAd?.ctaColor}
          ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath}
+         id={props?.id}
+         activeVideoId={props?.activeVideoId}
       />
       
 
@@ -439,6 +442,7 @@ function Video(props) {
          showBanner={props?.showBanner}
          isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          campaignId={props?.campaignId || "NA"}
+         vmaxAd={!!props?.vmaxAd}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed
