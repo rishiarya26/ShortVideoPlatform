@@ -422,7 +422,7 @@ export const toTrackMixpanel = (type, value, item) => {
         'contentLanguagesSubmitted':()=>{
           const languages = localStorage?.get('lang-codes-selected')?.lang
           globalCommonEvents['Method'] = value?.method;  
-          globalCommonEvents['Languages'] = languages?.length > 0 ? languages?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
+          globalCommonEvents['Languages'] = item?.lang;
   
           track('Content Languages Submitted',globalCommonEvents)
         },
