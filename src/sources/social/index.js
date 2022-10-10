@@ -191,6 +191,7 @@ const getDynamicOneLink = async({videoId, afChannel}) => {
     // response.data.message = '';
     // return Promise.resolve(response);
     const link = getSmartOneLink({oneLink : BASIC_ONE_LINK_SKELETON, afChannel:afChannel, videoId});
+    console.log('smart-script-link',link)
     return (link || ONE_TAP_DOWNLOAD);
 
   } catch (err) {
