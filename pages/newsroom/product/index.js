@@ -28,7 +28,7 @@ export default function Product({ stories }) {
 export async function getStaticProps() {
   // load the draft version
   let sbParams = {
-    version: "draft", // or 'published'
+    version: "published", // or 'draft'
     starts_with: "newsroom/product",
     sort_by: "position:desc",
   };
@@ -44,6 +44,6 @@ export async function getStaticProps() {
     props: {
       stories: resp ? resp.data : false,
     },
-    revalidate: 10, // revalidate every hour
+    revalidate: 10, // revalidate every 10s
   };
 }

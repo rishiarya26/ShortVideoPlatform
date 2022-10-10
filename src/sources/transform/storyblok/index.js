@@ -2,6 +2,19 @@ import { transformModel, getMessage, isSuccess } from "../index";
 import { getNewObjectCopy } from "../../../utils/app";
 import { DEFAULT_ERROR_CODE } from "../../../constants";
 
+function sort(stories){
+  let sortedData = stories.sort((a, b) => {
+    const aDate = new Date(a?.sort_by_date);
+    const bDate = new Date(b?.sort_by_date);
+    if(aDate > bDate){
+      return -1;
+    } else {
+      return 1;
+    }
+  })
+  return sortedData;
+}
+
 function transformError(error = {}) {
   console.log("error", error);
 
@@ -28,7 +41,7 @@ function transformSuccess(resp) {
     }
     payload.status = "success";
     payload["http-status"] = 200;
-    payload.data = data?.stories || data?.story;
+    payload.data = data?.stories ? sort(data.stories) : data?.story;
     payload.total = headers?.total || 0;
     return payload;
   } catch (err) {

@@ -1,6 +1,7 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
+import { isObjectEmpty } from '../../../network/utils';
 
 const msgMap = {
   200: 'ok'
@@ -29,7 +30,7 @@ function transformSuccess(resp) {
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     console.log("rrrr",responseData)
-    if (videos?.length) {
+    if (videos?.length > 0) {
       const payloadObject = {};
       videos.forEach(d => {
         payloadObject.data_id = d?.objectID || null;
@@ -55,6 +56,7 @@ function transformSuccess(resp) {
         payloadObject.videoOwnersDetail = d?.videoOwners || null;
         payloadObject.firstFrame = d?.firstFrame || null;
         payloadObject.createdOn = d?.createdOn || null
+        payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
       });
       payload.data = payloadObject;
     } else {
@@ -66,6 +68,8 @@ function transformSuccess(resp) {
     if (isShoppable) {
       shop.status = 'success';
       shop.data = canShop?.data;
+      payload.data.adData = canShop?.adData?.monitisation ?  canShop?.adData : null;
+      shop.campaignId = canShop?.campaignId;
     } else {
       shop.status = 'fail';
     }

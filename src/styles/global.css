@@ -132,6 +132,15 @@ img{
 
   .swiper-wrapper{
     max-height: 100vh;
+    z-index: 0 !important;
+  }
+
+  .swiper-container{
+    z-index: unset !important;
+  }
+
+  .customCarousel > .swiper-container{
+    z-index: 1 !important;
   }
   
   .video-card{
@@ -233,6 +242,14 @@ img{
   border-bottom-color: #888;
   border-top-color: #888;
   border-radius: 22px;
+}
+.Circle_loader_button{
+  padding: 7px;
+    border: 2px solid rgb(230 230 230 / 72%);
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    border-top-color: #fff;
+    border-radius: 22px;
 }
 .head-shadow{
   box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
@@ -893,6 +910,9 @@ title:first-letter {
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
+  .purple_light{
+    color: #9c21aa;
+  }
   .purple_font{
     color: #6e057a;
   }
@@ -1070,3 +1090,43 @@ title:first-letter {
   .carousel .swiper-container {
    position: unset!important;
   }
+/* language iphone 6 */
+@media only screen 
+    and (max-device-width : 376px) {
+      .lang-sm{
+        max-width: 15vh!important;
+        min-height: 8vh;
+        margin: 10px 4%;
+      }
+      .done_btn{
+        width: 55vh;
+      }
+    }
+    @media only screen 
+    and (min-device-width : 376px) {
+      .lang-sm{
+        max-width: 17vh!important;
+        min-height: 7.5vh;
+        margin: 10px 4%;
+      }
+      .done_btn{
+        width: 38vh;
+      }
+    }
+ /* rewards */
+ .orange_font{
+color: #fd8952;
+ }
+ .bg_orange{
+background-color:rgb(255 237 223);
+ }
+
+@media only screen and (max-width: 420px) {
+  .videoFooter{
+    width: 50%;
+  }
+}
+
+.explore_carousel > .swiper-container > .swiper-pagination {
+  z-index: 1!important;
+}

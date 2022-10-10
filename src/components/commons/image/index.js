@@ -22,6 +22,10 @@ const Img = ({
         object-fit="cover"
         onClick={onClick}
         onKeyPress={() => true}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = fallback;
+        } }
         // role="presentation"
         // loading="eager"
       // placeholder="blur"

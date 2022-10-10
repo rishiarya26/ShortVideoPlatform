@@ -75,8 +75,11 @@ const disLike = () => {
 } 
 
 
-const selectedLike = useAuth(showLoginOptions, like);
-const selectDisLike = useAuth(showLoginOptions, disLike);
+// const selectedLike = useAuth(showLoginOptions, like);
+// const selectDisLike = useAuth(showLoginOptions, disLike);
+
+const selectedLike = like
+const selectDisLike = disLike
 
 const getVideoReactions = async(socialId,time,action)=>{
    let isLiked;
@@ -120,17 +123,20 @@ useEffect(()=>{
   if(showVideoDetail === false){ 
       setIsLiked({like : false, reactionTime: 'past'});
       let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-        if (tokens?.shortsAuthToken && tokens?.accessToken )
-      {
+      //   if (tokens?.shortsAuthToken && tokens?.accessToken )
+      // {
         const getLikeReaction = async()=>{  
            const isLiked =  await getVideoReactions(socialId, 'past');
            setIsLiked({like : isLiked, reactionTime: 'past'});
           }
           getLikeReaction();
-      }}
+      }
+    // }
+      /*** not usable  */
       // else{
       //    setReactionCount({likes : likes});
       // }
+      /*** */
 },[showVideoDetail])
 
 /*************** LIKE  ********************/

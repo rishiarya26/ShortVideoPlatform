@@ -11,7 +11,7 @@ export async function getStaticProps({ params }) {
     let slug = params.id
    
     let sbParams = {
-      version: "draft", // or 'published'
+      version: "published", // or 'draft'
     };
    
     let resp;
@@ -25,14 +25,14 @@ export async function getStaticProps({ params }) {
     props: {
       story: resp ? resp.data : false,
     },
-    revalidate: 10, // revalidate every hour
+    revalidate: 10, // revalidate every 10s
     };
   }
    
   export async function getStaticPaths() {
     let paths = [];
     try{
-      const resp = await getStoryblokPage({params: {"version": "draft"}, category: "news", blogType: "newsroom"})
+      const resp = await getStoryblokPage({params: {"version": "published"}, category: "news", blogType: "newsroom"})
       paths = resp.data;
     }catch(e) {
       console.error(e);

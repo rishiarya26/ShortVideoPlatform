@@ -41,10 +41,13 @@ export default function Email({
            /* Mixpanel */
            try{
             toTrackMixpanel('loginSuccess',{method:'email', pageName:'login'})
-          fbq.defEvent('CompleteRegistration');
+            fbq.defEvent('CompleteRegistration');
         }catch(e){
           console.log('error in fb or mixpanel event')
         }
+        showMessage({ message: t('SUCCESS_LOGIN') });
+        setPending(false);
+        
            /* Mixpanel */        
          if(device === 'mobile'){
              router && router?.push({
@@ -53,9 +56,12 @@ export default function Email({
           }
           if(device === 'desktop'){
             close();
+            try{
+              router?.asPath && (window.location.href = router?.asPath)
+            }catch(e){
+              console.error('error in redirection',e)
+            }
           }
-          showMessage({ message: t('SUCCESS_LOGIN') });
-          setPending(false);
 
         }
       } catch (e) {

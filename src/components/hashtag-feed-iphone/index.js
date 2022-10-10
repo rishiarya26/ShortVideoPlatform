@@ -10,7 +10,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { Back } from '../commons/svgicons/back';
+import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import CircularProgress from '../commons/circular-loader'
@@ -21,13 +21,15 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getOneLink, viewEvents } from '../../sources/social';
-import { getCanonicalUrl } from '../../utils/web';
+import { getBrand, getCanonicalUrl } from '../../utils/web';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import SnackBar from '../commons/snackbar';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore.use([Mousewheel]);
 
@@ -76,6 +78,14 @@ function HashTagFeedIphone({ router }) {
   //   setShowAppBanner(true)
   // }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -175,6 +185,7 @@ function HashTagFeedIphone({ router }) {
           decrementingShowItems();
          }
        }
+       checkNoSound();
      },[videoActiveIndex])
 
      useEffect(()=>{
@@ -203,6 +214,7 @@ function HashTagFeedIphone({ router }) {
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -224,12 +236,13 @@ function HashTagFeedIphone({ router }) {
     console.log("before",activeVideoId)
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
+    // checkNoSound();
   };
 
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
-      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
     },[shop])
    /************************ */ 
   
@@ -294,6 +307,7 @@ function HashTagFeedIphone({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -419,7 +433,7 @@ function HashTagFeedIphone({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
@@ -429,7 +443,7 @@ function HashTagFeedIphone({ router }) {
                       comp="profile"
                       profileFeed
                       loading={loading}
-                      muted={muted}
+                      muted={item?.[videoActiveIndex]?.videoSound === false ? true : muted}
                       initialPlayStarted={initialPlayStarted}
                       firstFrame={item?.firstFrame}
                       player={'multi-player-muted'}
@@ -438,6 +452,8 @@ function HashTagFeedIphone({ router }) {
                       // showBanner={showBanner}
                       pageName={pageName}
                       userVerified = {item?.verified}
+                      videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                     />
 
                   </SwiperSlide>
@@ -450,6 +466,7 @@ function HashTagFeedIphone({ router }) {
               >
              <CircularProgress/>
               </div>
+              {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
 
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
@@ -463,7 +480,7 @@ function HashTagFeedIphone({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>

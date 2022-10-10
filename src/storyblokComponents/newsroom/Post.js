@@ -3,6 +3,8 @@ import { newsroomArticleSchemma } from "../../utils/schema";
 import { useState, useEffect } from "react";
 import MainPage from "./MainPage";
 import { richTextRenderer } from "../../utils/storyblokUtils";
+import { useRouter } from "next/router";
+import styles from "./description.module.css"
 
 function getSchemaObject({story, url}) {
   const body = story?.content?.body || [];
@@ -20,6 +22,7 @@ function getSchemaObject({story, url}) {
 
 export default function Post({ story }) {
   const [schemaObj, setSchemaObj] = useState({});
+  const router = useRouter();
   
   useEffect(() => {
     if (document && document?.location) {
@@ -40,6 +43,7 @@ export default function Post({ story }) {
             blok={story.content}
             date={story?.first_published_at}
           />
+          {router.route === "/newsroom/business/[id]" && <div className={`cursor-pointer ${styles.link}`}><a onClick={()=>router.push("/ads")}>Get started with Hipi Ads today.</a></div>}
         </>
       ) : (
         <div>Data not available</div>

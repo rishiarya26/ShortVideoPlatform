@@ -6,7 +6,7 @@ import Verified from "../commons/svgicons/verified";
 import Description from "../desk-description";
 import DeskHoverInfo from "../desk-hover-info";
 
-const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed',userVerified})=>{
+const VideoInfo = ({userName, firstName, lastName, description,music_title, pageType='feed',userVerified, videoSound})=>{
 const [show, setShow] = useState(false);
 
    const router = useRouter();
@@ -72,8 +72,14 @@ const [show, setShow] = useState(false);
          ))} */}
      </div>
         <p className="font-medium text-sm mb-4 text-gray-700">
+          {videoSound ?  <>
+            <MusicBlack/>
+           <p className="ml-6">{music_title}</p>
+           </> :<span className=" my-1 text-sm w-4/12 text-gray-400">
            <MusicBlack/>
-           {music_title}
+           <p className="ml-6">Audio unavailable</p>
+          </span>}
+        
         </p>
     
 

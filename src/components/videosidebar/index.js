@@ -38,7 +38,7 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA"
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -70,7 +70,7 @@ function VideoSidebar({
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
   const comment = () =>showBanner && showBanner();
   
-  const selectedLike = useAuth(showLoginOptions, like);
+  const selectedLike = like;
   const selectedComment = useAuth(showLoginOptions, comment);
 
   const handleOperation = (e) => {
@@ -149,14 +149,14 @@ const checkSaveLook =()=>{
   useEffect(()=>{  
     checkSaveLook();
     setIsLiked({like : false, reactionTime: 'past'});
-      let tokens = typeof window !== "undefined" && localStorage.get('tokens');
-        if (tokens?.shortsAuthToken && tokens?.accessToken){
+      // let tokens = typeof window !== "undefined" && localStorage.get('tokens');
+      //   if (tokens?.shortsAuthToken && tokens?.accessToken){
         const getLikeReaction = async()=>{  
           const isLiked =  await getVideoReactions(socialId, 'past');
           setIsLiked({like : isLiked, reactionTime: 'past'});
         }
         getLikeReaction();
-      }
+      // }
   },[activeVideoId])
 
     let optProfilePic = profilePic;
@@ -167,10 +167,10 @@ const checkSaveLook =()=>{
     }
 
     const options = {
-      profile: `${saveLook ? 'bottom-20 ' : 'bottom-48 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
-      feed: `${saveLook ? 'bottom-28 ' : 'bottom-56 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
-      embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
-      single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '} videoFooter absolute right-0 flex-col  flex text-white ml-2`,
+      profile: `${saveLook ? 'bottom-12 ' : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : 'bottom-28 ' : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
     };
 
 
@@ -236,15 +236,16 @@ const handleSaveMoments = () =>{
     <div
     className={options[comp]}
     >
-      <div onClick={handleProfileClick} className="relative py-2 px-3 text-center justify-end flex">
+      <div>
+      <div onClick={handleProfileClick} className="relative my-2 mx-3 text-center justify-end flex">
         <div className="flex flex-col items-center">
-          <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
+          {!isAdShowVisible && <div className="usrimg w-10 h-10 overflow-hidden rounded-full">
           <Img
             title="Hipi"
             data={optProfilePic}
             fallback={fallbackUser?.src}
           />
-          </div>
+          </div>}
           {/* <div
           onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "profile"})}
             className={`${
@@ -258,7 +259,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-2  px-3 text-center justify-end`}
+        } relative my-2 mx-3 text-center justify-end  self-end`}
       >
         {isLiked?.like ? (
           <div>
@@ -296,7 +297,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-2  px-3 text-center items-end flex-col`}
+        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
       >
         <div 
            id="comment"
@@ -317,14 +318,14 @@ const handleSaveMoments = () =>{
         }
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } "relative py-2  px-3 text-center items-end flex-col `}
+        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
       >
       <ShareComp />
       </div>
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } "relative py-2  px-3 text-center items-end flex-col mb-28`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
+      } relative my-2 mx-3 text-center items-end flex-col  self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-xs mt-1 text-center">Embed</p>
         </div>
@@ -344,20 +345,12 @@ const handleSaveMoments = () =>{
         shareCount={props.share}
       />
       </div> */}
-{canShop && profileFeed &&
-   adCards?.monitisation &&
-   <AdCards
-   adCards={adCards?.monitisationCardArray}
-   videoId={activeVideoId}
-   profileFeed={profileFeed}
-   comp={comp}
-   pageName={pageName}
-   tabName={tabName}
-   /> 
-}
-      {canShop && (!profileFeed
-        &&(
-          adCards?.monitisation ?
+    {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
+    </div>
+  <div style={{height: "90px"}}>
+    {canShop && profileFeed &&
+        adCards?.monitisation &&
+        <div  style={{height: "90px", width: "136px"}}>
           <AdCards
           adCards={adCards?.monitisationCardArray}
           videoId={activeVideoId}
@@ -365,26 +358,45 @@ const handleSaveMoments = () =>{
           comp={comp}
           pageName={pageName}
           tabName={tabName}
-          />
-          :
-          <div
-            className={`${
-              type === 'feed' && saveLook ? 'block' : 'hidden'
-            } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
-            onClick={()=>{handleSaveMoments();
-              try{
-                toTrackMixpanel('saveLook',{pageName:compName,tabName:(tabName && tabName) || null},{content_id:videoId})
-                toTrackMixpanel('shoppingPopUp',{pageName:compName, tabName:tabName && tabName|| null},{content_id:videoId})
-             }catch{
-              console.error('mixpanel issue - discover look click')
-             }
-            }}
-          >
-            <Shop text={shopType === 'recipe' ? (!isSaved ? 'LIST THE INGREDIENTS' : 'LIST THE INGREDIENTS ') : (!isSaved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK ')}  saved={isSaved}/>
+          campaignId={campaignId}
+            /> 
+        </div>
+      }
+      {canShop && (!profileFeed
+        &&(
+          adCards?.monitisation ?
+          <div  style={{height: "90px", width: "136px"}}>
+            <AdCards
+            adCards={adCards?.monitisationCardArray}
+            videoId={activeVideoId}
+            profileFeed={profileFeed}
+            comp={comp}
+            pageName={pageName}
+            tabName={tabName}
+            campaignId={campaignId}
+            />
           </div>
+          :
+          <div  style={{height: "90px", width: "max-content"}}>
+            <div
+              className={`${
+                type === 'feed' && saveLook ? 'block' : 'hidden'
+              } absolute bottom-0 right-0 py-2 px-0 text-center flex flex-col items-center`}
+              onClick={()=>{handleSaveMoments();
+                try{
+                  toTrackMixpanel('saveLook',{pageName:compName,tabName:(tabName && tabName) || null},{content_id:videoId})
+                  toTrackMixpanel('shoppingPopUp',{pageName:compName, tabName:tabName && tabName|| null},{content_id:videoId})
+              }catch{
+                console.error('mixpanel issue - discover look click')
+              }
+              }}
+            >
+              <Shop text={shopType === 'recipe' ? (!isSaved ? 'LIST THE INGREDIENTS' : 'LIST THE INGREDIENTS ') : (!isSaved ? 'DISCOVER THE LOOK' : 'DISCOVER THE LOOK ')}  saved={isSaved}/>
+          </div>
+        </div>
         )
       )}
-    {/* {showAppBanner ? <AppBanner notNowClick={notNowClick}/> :''} */}
+    </div>
     </div>
   );
 }

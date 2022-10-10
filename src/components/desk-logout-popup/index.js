@@ -5,7 +5,7 @@ import useSnackbar from '../../hooks/use-snackbar';
 import { getItem, removeItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 
-const LogoutPopup = () => {
+const LogoutPopup = ({page}) => {
 const router = useRouter();
 const {close} = useDialog();
 const {close:closePopUp} = useDrawer();
@@ -16,9 +16,8 @@ const device = getItem('device-type')
   try{
       localStorage.remove('tokens');
       localStorage.remove('user-id');
-     
         closePopUp();
-
+        router?.asPath && (window.location.href=router.asPath);
     }
     catch(e){
         showSnackbar({ message: 'Something went wrong' });

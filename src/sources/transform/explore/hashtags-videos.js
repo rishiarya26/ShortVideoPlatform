@@ -2,6 +2,7 @@ import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 import { getNetworkConnection } from '../../../utils/device-details';
+import { isObjectEmpty } from '../../../network/utils';
 
 function transformError(error = {}) {
     console.log(error)
@@ -58,6 +59,7 @@ function transformSuccess(resp) {
         payloadObject.firstFrame= d?.firstFrame || null;
         payloadObject.tag = d?.tag?.name || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
+        payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
 
         payloadData.push(payloadObject);
       });

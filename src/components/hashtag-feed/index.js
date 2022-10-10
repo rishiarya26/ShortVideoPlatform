@@ -11,7 +11,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { Back } from '../commons/svgicons/back';
+import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import CircularProgress from '../commons/circular-loader'
@@ -22,13 +22,14 @@ import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { getItem } from '../../utils/cookie';
 import { toTrackReco, viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl, onStoreRedirect } from '../../utils/web';
+import { getBrand, getCanonicalUrl, onStoreRedirect } from '../../utils/web';
 import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore.use([Mousewheel]);
 
@@ -60,6 +61,14 @@ function HashTagFeed({ router }) {
   const [loadMore, setLoadMore] = useState(true);
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [showAppBanner, setShowAppBanner]=useState(false);
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
   const showBanner=()=>{
     setShowAppBanner(true);
   }
@@ -110,6 +119,7 @@ function HashTagFeed({ router }) {
      videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
    }
    loadItems();
+   checkNoSound();
   },[videoActiveIndex])
 
   useEffect(()=>{
@@ -139,6 +149,7 @@ function HashTagFeed({ router }) {
       ToTrackFbEvents(videoActiveIndex,'play')
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -148,12 +159,13 @@ function HashTagFeed({ router }) {
     data && setItems(videos);
     setInitialLoadComplete(true);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+    // checkNoSound();
   };
 
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
     // console.log("aAAAADDD",shop?.adData)
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
   },[shop])
  /************************ */ 
 
@@ -218,6 +230,7 @@ function HashTagFeed({ router }) {
       shopContent.type = response?.type;
       shopContent.charmData = response?.charmData;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -348,7 +361,7 @@ function HashTagFeed({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
@@ -358,7 +371,7 @@ function HashTagFeed({ router }) {
                       comp="profile"
                       profileFeed
                       loading={loading}
-                      muted={muted}
+                      muted={item?.[videoActiveIndex]?.videoSound === false ? true : muted}
                       initialPlayStarted={initialPlayStarted}
                       firstFrame={item?.firstFrame}
                       player={'single-player-muted'}
@@ -367,6 +380,8 @@ function HashTagFeed({ router }) {
                       showBanner={showBanner}
                       pageName={pageName}
                       userVerified = {item?.verified}
+                      videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                     />
 
                   </SwiperSlide>
@@ -379,7 +394,7 @@ function HashTagFeed({ router }) {
               >
              <CircularProgress/>
               </div>
-
+              {!(items?.[videoActiveIndex]?.videoSound)  &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -392,7 +407,7 @@ function HashTagFeed({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>

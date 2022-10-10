@@ -22,13 +22,15 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up'; 
 import { viewEventsCall } from '../../analytics/view-events';
-import { getCanonicalUrl } from '../../utils/web';
+import { getBrand, getCanonicalUrl } from '../../utils/web';
 import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
+import SnackBar from '../commons/snackbar';
+import SnackCenter from '../commons/snack-bar-center';
 
 SwiperCore.use([Mousewheel]);
 
@@ -68,6 +70,14 @@ function ProfileFeed({ router }) {
     setShowAppBanner(true);
   }
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [noSound, setNoSound] = useState(false);
+
+  const checkNoSound =()=>{
+    if(!items?.[videoActiveIndex]?.videoSound && initialPlayStarted){
+      setNoSound(true);
+      setTimeout(()=>{setNoSound(false)},2000)
+    }
+  }
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
 
@@ -112,6 +122,7 @@ function ProfileFeed({ router }) {
      videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
    }
    loadItems();
+   checkNoSound();
   },[videoActiveIndex])
 
   useEffect(()=>{
@@ -140,6 +151,7 @@ function ProfileFeed({ router }) {
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
+      checkNoSound();
     }
   },[initialPlayStarted])
 
@@ -149,12 +161,13 @@ function ProfileFeed({ router }) {
     data && setItems(videos);
     setInitialLoadComplete(true);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+    // checkNoSound();
   };
 
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
-      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})});
+      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
     },[shop])
    /************************ */ 
 
@@ -231,6 +244,7 @@ function ProfileFeed({ router }) {
       shopContent.data = response?.data;
       shopContent.type = response?.type;
       shopContent.adData = response?.adData;
+      shopContent.campaignId = response?.campaignId;
     } catch (e) {
       console.log('error in canShop');
     }
@@ -357,7 +371,7 @@ function ProfileFeed({ router }) {
                       hashTags={item?.hashTags}
                       videoOwnersId={item?.videoOwnersId}
                       thumbnail={item?.firstFrame}
-                      canShop={item?.shoppable}
+                      canShop={shop?.isShoppable === "success" || false}
                       shopCards={shop?.data}
                       shopType={shop?.type}
                       handleSaveLook={handleSaveLook}
@@ -367,7 +381,7 @@ function ProfileFeed({ router }) {
                       comp="profile"
                       profileFeed
                       loading={loading}
-                      muted={muted}
+                      muted={item?.[videoActiveIndex]?.videoSound === false ? true : muted}
                       firstFrame={item?.firstFrame}
                       player={'single-player-muted'}
                       description={item?.content_description}
@@ -375,6 +389,8 @@ function ProfileFeed({ router }) {
                       adData={shop?.adData}
                       showBanner={showBanner}
                       userVerified = {item?.verified}
+                      videoSound={item?.videoSound}
+                      campaignId={shop?.campaignId}
                     />
 
                   </SwiperSlide>
@@ -387,6 +403,7 @@ function ProfileFeed({ router }) {
               >
              <CircularProgress/>
               </div>
+              {!(items?.[videoActiveIndex]?.videoSound) && initialPlayStarted && <SnackCenter showSnackbar={noSound}/>}
               {items?.length > 1 &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -398,7 +415,7 @@ function ProfileFeed({ router }) {
               {<div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
-                style={{ display: initialPlayStarted && muted ? 'flex' : 'none' }}
+                style={{ display: initialPlayStarted && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
               >
                <div className="stretch-y"><div className="stretch-z"></div></div>
                <div className='z-9'>

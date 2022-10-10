@@ -12,6 +12,8 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
+import VideoUnavailable from '../video-unavailable';
+import SnackCenter from '../commons/snack-bar-center';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -187,7 +189,6 @@ export default function SingleVideo(props){
     }
     /******************************/
   };
-
   return (
     <div className="flex flex-col overflow-hidden">
     <div
@@ -196,7 +197,9 @@ export default function SingleVideo(props){
     >
     
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video
+      <>{ props?.status === 'fail' ? 
+      <VideoUnavailable/>
+      :<><video
         // autoPlay
         onContextMenu={(e)=>{
           e.preventDefault();
@@ -216,6 +219,7 @@ export default function SingleVideo(props){
         onSeeked={()=>{
           incrementCountVideoView(props?.id);
         }}
+        muted={!props.videoSound}
       >
         <source src={props.url} type="video/mp4" />
       </video>
@@ -235,15 +239,19 @@ export default function SingleVideo(props){
       <div id="cb_tg_d_wrapper">
         <div className="playkit-player" />
       </div>
+      {!props?.videoSound && <SnackCenter showSnackbar={true}/>}
+
          {/* <div className="flex relative flex-col p-3"> */}
     <VideoFooter
         musicTitle={props.musicTitle}
         userName={`${props.userName}`}
         musicCoverTitle={props.musicCoverTitle}
         hashTags={props.hashTags}
-        canShop={props.canShop}
+        canShop={props.canShop === "success" || false}
         comp="single"
         description={props?.description}
+        videoSoundAvailable={props.videoSound}
+        adCards={props.adData}
       />
        <EmbedVideoSidebar
        userName={props?.userName}
@@ -254,22 +262,29 @@ export default function SingleVideo(props){
         comment={props.comments}
         share={777}
         type="single"
+        pageName="single-feed"
+        adData={props.adData}
+        canShop={props.canShop === "success" || false}
       />
     {/* </div> */}
-      {props.canShop === 'success'
+      {(!props?.adData || (props?.adData && !props?.adData?.monitisation)) && props.canShop === 'success'
          && ( 
            <ProductCards
              shopCards={props.shopCards}
              videoId={props.videoId}
              comp="single"
+             campaignId={props?.campaignId || 'NA'}
            />
          )} 
+         </> }</>
     </div>
+    
            <FooterMenu 
               videoId={props.videoId}
               canShop={props.canShop}
-              type=""
+              type={props.canShop === "success" ? "shop" : "noShop"}
               selectedTab=""
+              campaignId={props?.campaignId || 'NA'}
             />
     </div>
   );

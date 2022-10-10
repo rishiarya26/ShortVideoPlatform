@@ -16,7 +16,8 @@ import VideoDetail from '../../src/components/desk-video-detail';
 import DeskMenu from '../../src/components/desk-menu';
 import Header from '../../src/components/desk-header';
 import { videoSchema } from '../../src/utils/schema';
-import { getCanonicalUrl } from '../../src/utils/web';
+import { getCanonicalUrl, isReffererGoogle } from '../../src/utils/web';
+import VideoUnavailable from '../../src/components/video-unavailable';
 
 const languageCodes = Object.keys(supportedLanguages).map(
   keyName => supportedLanguages[keyName].code
@@ -27,6 +28,7 @@ export default function Hipi(params={}) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [videoUrl, setVideoUrl] = useState(null);
   const [url, setUrl] = useState('');
+
 
   const router = useRouter();
   const {
@@ -49,13 +51,29 @@ export default function Hipi(params={}) {
     const videoUrl = getEffectiveVideoUrl(item.video_urls);
     setVideoUrl(videoUrl);
     console.log('created-on',item);
+    if(status === 'fail' && isReffererGoogle()){
+      window.location.href='/feed/for-you'
+   }
   }, []);
-
-  if (status === 'fail') {
-    return <Error/> ;
-  }
-
   const device = getItem('device-type')
+
+
+  // if (status === 'fail') {
+  //   if(device === 'desktop'){
+  //     return <div>
+  //       Not Found
+  //       <div onClick={()=>window.location.href = '/feed/for-you'}></div>
+  //     </div>
+  //   }else if(device === 'mobile'){
+  //     return <div>
+  //       Not Found
+  //       <div onClick={()=>window.location.href = '/feed/for-you'}></div>
+  //     </div>
+  //   }
+  //   // return <Error/> ;
+  // }
+
+
 
   const comp = {
     desktop :  
@@ -65,7 +83,7 @@ export default function Hipi(params={}) {
     <div className='w-2/12 w-prof-menu -mt-24 menu-sm'>
     <DeskMenu width={'w-prof-menu menu-sm-w'}/>
     </div>
-    <div className="w-10/12 flex flex-col pl-4">
+   {status !== 'fail' ? <div className="w-10/12 flex flex-col pl-4">
     <div onClick={()=>router && router && router.push('/feed/for-you')} className='flex py-6  items-center cursor-pointer'>
       <svg  width="20" height="20" viewBox="0 0 48 48" fill="currentColor" ><path fillRule="evenodd" clipRule="evenodd" d="M4.58579 22.5858L20.8787 6.29289C21.2692 5.90237 21.9024 5.90237 22.2929 6.29289L23.7071 7.70711C24.0976 8.09763 24.0976 8.7308 23.7071 9.12132L8.82843 24L23.7071 38.8787C24.0976 39.2692 24.0976 39.9024 23.7071 40.2929L22.2929 41.7071C21.9024 42.0976 21.2692 42.0976 20.8787 41.7071L4.58579 25.4142C3.80474 24.6332 3.80474 23.3668 4.58579 22.5858Z"></path></svg>
       <p className="text-gray-600 font-medium">Back to For You</p>
@@ -86,8 +104,11 @@ export default function Hipi(params={}) {
     commentCount={item?.commentCount}
     userVerified = {item?.verified}
     comp = 'deskSingleVideo'
+    videoSound={item?.videoSound}
     />
-    </div>
+    </div> : 
+   <VideoUnavailable/>
+    }
     </div>
     </div>,
     mobile : <SingleVideo
@@ -111,6 +132,10 @@ export default function Hipi(params={}) {
     description={item?.content_description}
     userId={item?.userId}
     genre={item?.genre}
+    status={status}
+    adData={item?.adData}
+    videoSound={item?.videoSound}
+    campaignId={item?.canShop?.campaignId}
   />
   }
 
@@ -120,13 +145,13 @@ export default function Hipi(params={}) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description, createdOn:item?.createdOn}))}}
         />
-      <SeoMeta
+     { <SeoMeta
         data={{
-          title: `${item?.content_description} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
+          title: `${item?.content_description || ''} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
           description: `${item?.likesCount} likes Watch trending Hipi videos from ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''} (@${item?.userName || ''}). Download the App Now!`,        
           canonical : url && getCanonicalUrl(url),
         }}
-     />
+     />}
       {item && comp?.[device]}
     </>
   );

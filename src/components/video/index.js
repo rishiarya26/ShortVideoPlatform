@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
+import RightArrow from '../commons/svgicons/right-arrow';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -34,7 +35,6 @@ function Video(props) {
    const [playing, setPlaying] = useState(true);
    const [clicked, setClicked] = useState(true);
    const [play, setPlay] = useState(false);
-   
    const prePlayState = usePreviousValue({play});
    // const [pause, setPause] = useState(false);
    const rootRef = useRef(null);
@@ -42,7 +42,6 @@ function Video(props) {
    const videoHeight = `${size.height}`;
    const device = getItem('device-info')
 
-   useEffect(()=>{console.log("$$",props?.adData)},[])
 
    useEffect(()=>{
       let videoElement;
@@ -147,7 +146,11 @@ function Video(props) {
 
       if(props.id === props.activeVideoId){
          if(videoAnalytics !== null) reportPlaybackEnded();
-         reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
+         try{
+            reportPlaybackRequested({ref: currentRef, convivaItemInfo:props.convivaItemInfo });
+         }catch(e){
+            console.error(e,"setplayer error");
+         }
       }
    },[props.activeVideoId])
 
@@ -164,21 +167,26 @@ function Video(props) {
          analyticsCleanup();
       }
    }, [])
-   
-   
-   const handleUpdateSeekbar = e => {
+
+   const handleUpdateSeekbar = (e) => {
       const percentage = (e.target.currentTime / e.target.duration) * 100;
       // if(e.target.currentTime >= e.target.duration-0.4){
       //    handleSeeked();
       // }
       percentage && props.updateSeekbar(percentage, e.target.currentTime, e?.target?.duration);
    };
-   
+
    const convivaReplaySession = () =>{
       let currentRef = rootRef?.current?.children[0];
       if(videoAnalytics !== null) reportPlaybackEnded();
-      reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
+      try{
+         reportPlaybackRequested({ ref: currentRef, convivaItemInfo:props.convivaItemInfo  });
+      }catch(e){
+         console.error(e,"setplayer error");
+      }
+      
    }
+
 
    const handleSeeked = () => {
       convivaReplaySession();
@@ -378,8 +386,37 @@ function Video(props) {
          showBanner={props?.showBanner}
          videoId={props.id}
          userVerified = {props?.userVerified}
+         videoSoundAvailable={props?.videoSound}
+         isAdShowVisible={props?.feedAd}
+         profilePic={props?.profilePic}
          />
       {/* TO-DO  comdition acc to comp */}
+
+      {
+         !!props?.feedAd && (
+            <button
+               className="px-2 py-4 absolute bottom-16 w-full z-50 box-border"
+               onClick={() => {
+               props?.setMuted && props?.setMuted(true);
+               props?.adBtnClickCb && props?.adBtnClickCb();
+               }}
+            >
+               <a
+               href={props?.feedAd?.click_url}
+               style={{ backgroundColor: "#63ABFF" }}
+               target="_blank"
+               rel="noreferrer"
+               className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
+               >
+               {props?.feedAd?.cta_text}
+               <span>
+                  <RightArrow value="#fff" />
+               </span>
+               </a>
+            </button>
+         )
+      }
+
       <VideoSidebar
          userName={props.userName}
          videoOwnersId={props.videoOwnersId}
@@ -406,6 +443,8 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          showBanner={props?.showBanner}
+         isAdShowVisible={props?.feedAd}
+         campaignId={props?.campaignId || "NA"}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed
@@ -420,6 +459,7 @@ function Video(props) {
          setClose={props?.setClose}
          pageName={props?.pageName}
          tabName={props?.tabName}
+         campaignId={props?.campaignId || "NA"}
          />
       )
       ) : (
@@ -431,6 +471,7 @@ function Video(props) {
          loading={props?.loading}
          pageName={props?.pageName}
          tabName={props?.tabName}
+         campaignId={props?.campaignId || "NA"}
          />
       )
       )}

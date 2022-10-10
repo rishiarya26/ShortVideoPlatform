@@ -10,7 +10,6 @@ import { withBasePath } from '../../config';
 import CloseFaq from '../commons/svgicons/close-faq';
 import OpenFaq from '../commons/svgicons/open-faq';
 import Header from '../desk-header';
-import StaticFooter from '../static-footer';
 import Form from './form';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -35,6 +34,7 @@ function Stunner({type= 'stunner'}) {
  const [muted, setMuted] = useState(true);
  const router = useRouter()
  const challenge1Ref = useRef();
+ const challenge2Ref = useRef();
  const device = getItem('device-type')
  const deviceType = getItem('device-info')
 
@@ -104,9 +104,9 @@ useEffect(()=>{
 </div>
 
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
-<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> September Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
+<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> October Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    Style yourself as your favourite actor and make a fun video. Check out these uber-cool entries for inspiration
+    Show us how would you dress up for Diwali at home
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
@@ -213,8 +213,11 @@ useEffect(()=>{
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
-    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
-    </p>
+    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out the October Challenge 1 details <span onClick={()=>challenge2Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    </p> 
+    {/* <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
+    Missed Sept Challenge 2? Not a problem! Check out the details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    </p> */}
 
 
     </div>
@@ -277,7 +280,7 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 0 ? challenge1Ref : id == 2 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
@@ -286,6 +289,9 @@ useEffect(()=>{
               <h4 className="font-medium text-gray-600 p-4 pb-0 bg-white purple_font">{item?.name}</h4>
               <p className='text-gray-700 font-light text-sm'>{item?.date}</p>
               {item.show&& <p className='text-sm px-4 text-gray-500 font-light text-lg py-4' id={id}>{item?.content}</p>}
+              
+              {item?.winUrl&& <div className="text-lg font-semibold p-2 purple_light hover:purple_font cursor-pointer" onClick={()=>window.open(item.winUrl)}>The Winner</div>}
+              {item?.Coronation&& <div className="text-lg font-semibold p-2 purple_light hover:purple_font cursor-pointer" onClick={()=>window.open(item.Coronation)}>The Coronation</div>}
               {item?.promoUrl&& <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open(item.promoUrl)}>Watch challenge video</div>}
               <div id={id} className="cursor-pointer flex items-center w-full px-4" onClick={()=>handleClickStunner(id)}>
               <span className=" text-sm pr-2 font-light flex w-full justify-center text-gray-600 py-2" >{item.show ? "- Read less": "+ Read more"}</span>
@@ -321,7 +327,7 @@ useEffect(()=>{
             <p>Miss India Universe 2003</p>
             <p className='text-gray-500 font-light text-lg pt-4'>Nikita won the title of Miss India Universe in 2003. Since then, she has been seen on numerous magazine covers, fashion weeks, designer shoots, ad campaigns, and Bollywood films. She rubs shoulders with the top industry experts in the fashion and lifestyle circuit and has been a muse for top fashion designers like Ritu Kumar, JJ Vallaya, and Mona Pali.</p>
         </div>
-        <div className='w-full md:w-1/2 min-h-32v md:min-h-44  flex justify-center md:justify-end items-center py-4 md:py-20 bg-host br_40'>
+        <div className='w-full md:w-1/2 min-h-32v md:min-h-42  flex justify-center md:justify-end items-center py-4 md:py-20 bg-host br_40'>
             <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/stunner/hipistunner_thehost.jpg')} /> 
         </div>
     </div>

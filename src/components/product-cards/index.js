@@ -11,7 +11,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 function ProductCards({
-  shopCards, videoId, comp, loading,pageName,tabName
+  shopCards, videoId, comp, loading,pageName,tabName, campaignId='NA'
 }) {
   const charmboardDrawer = dynamic (
     () => import('../charmboard'),
@@ -51,7 +51,7 @@ function ProductCards({
               // eslint-disable-next-line no-undef
               onClick={() =>   {
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
-                show('',charmboardDrawer , 'big', { videoId : videoId})}}
+                show('',charmboardDrawer , 'big', { videoId : videoId, campaignId})}}
             >
               <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
             </div>

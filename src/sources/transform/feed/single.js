@@ -2,6 +2,7 @@ import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
 import { DEFAULT_ERROR_CODE } from '../../../constants';
 import { getNetworkConnection } from '../../../utils/device-details';
+import { isObjectEmpty } from '../../../network/utils';
 
 const msgMap = {
   200: 'ok'
@@ -31,7 +32,7 @@ function transformSuccess(resp) {
     const { responseData = {} } = data;
     const { videos = [] } = responseData;
     console.log("rrrr",responseData)
-    if (videos?.length) {
+    if (videos?.length > 0) {
       const payloadObject = {};
       videos.forEach(d => {
         payloadObject.data_id = d?.objectID || null;
@@ -62,7 +63,8 @@ function transformSuccess(resp) {
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
         payloadObject.shoppable = d?.shoppable || false;
         payloadObject.createdOn = d?.createdOn || null;
-
+        payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
+        payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
       });
       payload.data = payloadObject;
     } else {

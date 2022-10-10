@@ -1,18 +1,23 @@
+/*eslint-disable @next/next/no-img-element */
 import { storyblokEditable } from "@storyblok/react";
-import Image from "next/image";
 import Embedvideo from "../../storyblokComponents/theEdit/EmbedVideo";
 
 const VisualContent = ({ blok = {}, primary=false }) => {
   const {
     type = "image",
-    alt = "image",
+    alt = "newsroom image",
     src = null,
     videoType = "video",
+    imageSrc = {},
+    mobileImageSrc = {},
   } = blok;
   return (
     <div className="relative w-auto" {...storyblokEditable(blok)}>
-      {type === "image" && src && (
-        <Image layout="fill" objectFit="contain" src={src} alt={alt} />
+      {type === "image" && imageSrc?.filename && mobileImageSrc?.filename  && (
+          <>
+            <img  className="hidden md:flex h-full w-full object-cover" src={imageSrc.filename} alt={alt} />
+            <img className="flex md:hidden h-full w-full object-cover" src={mobileImageSrc.filename} alt={alt}/>
+          </>
       )}
       {type === "video" && src && <Embedvideo primary={primary} id={src} type={videoType} />}
     </div>

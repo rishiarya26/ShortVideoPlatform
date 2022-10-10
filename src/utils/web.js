@@ -106,6 +106,29 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   }
   window?.open(link);
 }
+
+ const isReffererGoogle = ()=>{
+  const refferer = localStorage.get('refferer') || '';
+  console.log("REFF *",refferer,refferer?.includes('google'))
+  return refferer?.includes('google');
+}
+
+const getBrand =(url)=>{
+  if(!url){
+    return ''
+  }else{
+   const origin = url.split('//')[1];
+   let finalOrigin = ''
+   if(origin?.includes('www')){
+     finalOrigin = origin.split('.')[1]
+   }else{
+     finalOrigin = origin.split('.')[0]
+   }
+   if(finalOrigin){
+     return finalOrigin 
+   }
+  }
+}
            
 export {
   CopyToClipBoard,
@@ -116,6 +139,8 @@ export {
   getUrl,
   getCanonicalUrl,
   getReffererPage,
-  onStoreRedirect
+  onStoreRedirect,
+  isReffererGoogle,
+  getBrand,
 };
 

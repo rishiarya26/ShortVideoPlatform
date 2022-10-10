@@ -1,6 +1,6 @@
-export const specialHashtagSeo = (hashtag)=>{
+export const customTitleSeo = (type)=>{
     console.log("hashtag **",hashtag)
-switch (hashtag) {
+switch (type) {
     case 'gay': return 'Indian Gay Video on Hipi | #Gay Videos Hashtag | Hipi'
     
     case 'hd': return'Indian HD Video On Hipi | #HD Videos Hashtag | Hipi'
@@ -18,7 +18,9 @@ switch (hashtag) {
     case 'shaadi':return'Shaadi Video On Hipi | #Shaadi Videos Hashtag | Hipi'
     
     case 'sab':return'Sab Video On Hipi | #Sab Videos Hashtag | Hipi'
-    
+     
+    case 'Sneha_pundir_':return'Hipi Stunner Winner - Sneha Pundir(@Sneha_pundir_) on Hipi'
+
 
     default:`Videos on Hipi | Hashtag | Hipi`     
 }

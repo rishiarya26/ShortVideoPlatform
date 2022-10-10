@@ -21,14 +21,14 @@ function transformSuccess(resp) {
     }
     payload.status = 'success';
     payload.message = getMessage(data, {});
-    payload['http-status'] = data.status;
+    payload['http-status'] = data?.status;
     if (data?.responseData) {
       payload.data = { ...data.responseData };
     }
-    payload.requestedWith = { ...data.requestedWith };
+    payload.requestedWith = { ...data?.requestedWith };
     return payload;
   } catch (err) {
-    data.appError = err.message;
+    data.appError = err?.message;
     return transformError(data);
   }
 }
