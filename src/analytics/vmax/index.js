@@ -75,7 +75,7 @@ export const cacheAd = async () => {
       let ctaInfo = adData?.getAdAssets();
       let ctaPath = adData?.getClickThrough();
       let ctaLinkUrl = adData?.getLinkurl();
-      ctaInfo = {...ctaInfo, ctaPath, ctaLinkUrl}
+      ctaInfo = {...ctaInfo, ctaPath, ctaLinkUrl, clicktrackers: adData?.clicktrackers}
       return { adData, ctaInfo, adView };
     }
   } catch (err) {

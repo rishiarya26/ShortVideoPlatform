@@ -411,6 +411,7 @@ function Video(props) {
          ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath}
          id={props?.id}
          activeVideoId={props?.activeVideoId}
+         ctaTrackers={props?.vmaxAd?.clicktrackers}
       />
       
 

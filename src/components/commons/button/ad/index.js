@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useState } from 'react'
+import { pushAdService } from '../../../../sources/ad-service';
 import RightArrow from '../../svgicons/right-arrow';
 
-function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaColor, ctaPath, id, activeVideoId}) {
+function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaColor, ctaPath, id, activeVideoId, ctaTrackers}) {
 
   const [btnColor, setBtnColor] = useState("#63ABFF");
 
@@ -14,6 +15,16 @@ function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaC
   if(!noShow){
     return false;
   }
+
+  const callTrackers = async() => {
+    if(ctaTrackers?.length > 0){
+      try{
+        ctaTrackers.map(async url => await pushAdService({url}).then(res => res));
+      }catch(err){ 
+        console.log(err,"pushAdService error");
+      }
+    }
+  }
   
   return (
     <div
@@ -21,6 +32,7 @@ function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaC
       onClick={() => {
         setMuted && setMuted(true);
         adBtnClickCb && adBtnClickCb?.();
+        callTrackers();
         window.open(ctaPath);
       }}
     >
