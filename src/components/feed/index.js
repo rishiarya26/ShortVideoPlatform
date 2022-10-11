@@ -225,6 +225,8 @@ function Feed({ router }) {
        if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
           data?.data.splice(adPosition, 0, cacheAdVideo);
           cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+          updateItems = updateItems.concat(data?.data);
+          setItems(updateItems);
        }else{
         try{
           // debugger;
@@ -235,12 +237,14 @@ function Feed({ router }) {
         }catch(error){
           console.error(error);
         }
+        updateItems = updateItems.concat(data?.data);
+        setItems(updateItems);
        }
-       updateItems = updateItems.concat(data?.data);
+      
       
        console.log("data after", data?.data, "=>" ,updateItems);
 
-       setItems(updateItems);
+       
       }
      catch(err){
      }
