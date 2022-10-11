@@ -16,13 +16,13 @@ export default function Upload() {
 
   useEffect(() => {
     if (isLoggedIn === "false") {
-      router.push("/");
+      router.push("/feed/for-you");
     }
   }, [isLoggedIn]);
 
   return (
     <div>
-      <DeskUplaod />
+      {isLoggedIn === "true" ? <DeskUplaod /> : ""}
     </div>
   );
 }

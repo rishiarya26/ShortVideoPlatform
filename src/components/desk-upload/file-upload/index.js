@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { uploadImage2 } from "../../../analytics/s3Client";
 import { S3_BUCKET_PROD, S3_BUCKET_STAGE } from "../../../constants";
 import useSnackbar from "../../../hooks/use-snackbar";
@@ -71,6 +71,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef }) {
       showMessage({ message: "video successfully uploaded.", type: "success" });
       const url = URL.createObjectURL(file);
       setVideoLoader(false);
+      setPorgressBar(0);
       let s3Url = createS3Url(fileName);
       if (s3Url) sets3Url(s3Url);
       setSource({ ...source, url, name: fileName });
@@ -187,14 +188,14 @@ function FileUpload({ source, setSource, sets3Url, inputRef }) {
           </>
         ) : !videoLoader || progressBar === 100 ? (
           <>
-            <div className="w-64 flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer">
+            <div style={{height: "464px"}} className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full">
               <video
                 onContextMenu={(e) => {
                   e.preventDefault();
                   return false;
                 }}
                 controlsList="nodownload"
-                className="VideoInput_video rounded-lg shadow-xl"
+                className="VideoInput_video rounded-lg shadow-xl w-full h-full object-fill"
                 width="100%"
                 height="100vh"
                 controls={false}

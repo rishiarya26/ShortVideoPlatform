@@ -53,14 +53,15 @@
 .progressBarClass {
   width: 90%;
   height: 20px;
-  background-color: rgb(228, 228, 228);
+  background: repeating-linear-gradient(-45deg, #666, #666 10px, #5c5c5c 10px, #5c5c5c 20px, #666 20px) top left;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  border-radius: 30px;
+  border-radius: 5px;
+  animation: width 0.2s ease;
 }
 .loading {
   width: max-content;
@@ -76,9 +77,10 @@
 .progress {
   width: 0px;
   height: 100%;
-  background-color: limegreen;
-  border-radius: 30px;
+  background: repeating-linear-gradient(-45deg, #465298, #465298 10px, #3f4a89 10px, #3f4a89 20px, #465298 20px) top left;
+  border-radius: 5px;
   transition: all 0.2s ease;
+  animation: width 0.2s ease;
 }
 
 .boxShadow {
