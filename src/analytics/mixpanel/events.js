@@ -139,7 +139,6 @@ export const toTrackMixpanel = (type, value, item) => {
     const addHashtagName = ()=>{
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
-
     const toTrack = {
       'impression' : ()=> track('UGC Impression', commonWithIds()),
       'screenView' : ()=> {
@@ -421,7 +420,10 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdEnd': () => track('Video Ad End',eventsForAds()),
         'contentLanguagesImpression':()=>track('Content Languages Impression',globalCommonEvents),
         'contentLanguagesSubmitted':()=>{
+          const languages = localStorage?.get('lang-codes-selected')?.lang
           globalCommonEvents['Method'] = value?.method;  
+          globalCommonEvents['Languages'] = item?.lang;
+  
           track('Content Languages Submitted',globalCommonEvents)
         },
 

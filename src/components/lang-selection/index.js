@@ -122,7 +122,7 @@ const LanguageSelection = ({activeVideoIndex})=>{
            onClick={()=>{
             if(selectedLang.length > 0){
                localStorage.set('lang-flush','true');
-               toTrackMixpanel('contentLanguagesSubmitted',{method:'Feed'});
+               toTrackMixpanel('contentLanguagesSubmitted',{method:'Feed'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
                onSubmit();
             }else{
                showSnackbar({message: 'Please select atleast 1 language'});
