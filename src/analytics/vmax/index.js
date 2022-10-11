@@ -61,7 +61,7 @@ export const initAdView = async() => {
     
     adView = null;
     adView = new VMAXSDK.CreateVmaxAdView();
-    adView.setAdspotKey('ffb8745f').setCustomData({...customData});
+    adView.setAdspotKey('2a363bda').setCustomData({...customData});
     console.log("vmax setting custom data: " + JSON.stringify(customData), adView);
     return "success";
   }

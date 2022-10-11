@@ -3,11 +3,12 @@ import RightArrow from '../../svgicons/right-arrow';
 
 function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaColor, ctaPath, id, activeVideoId}) {
 
-  const [btnColor, setBtnColor] = useState(!vmaxAd ? "#63ABFF" : "#8e8e97");
+  const [btnColor, setBtnColor] = useState("#63ABFF");
 
   useEffect(()=>{
     if(!vmaxAd) return; //safe check from vmaxAd condition
     if(noShow && id === activeVideoId) setTimeout(()=>setBtnColor(CtaColor),3000);
+    else setBtnColor("#8e8e97");
   },[activeVideoId])
 
   if(!noShow){
