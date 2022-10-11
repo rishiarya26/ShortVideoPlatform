@@ -29,5 +29,5 @@ export const CONVIVA_PROD_CUSTOMER_KEY = '28bbf0a3decf6d1165032bfd835d6e1844c5d4
 export const TOUCHSTONE_SERVICE_URL = 'https://zee-test.testonly.conviva.com';
 export const STORYBLOK_TOKEN = 'quNBuDdvpWQyR7qL35OGjwtt'
 export const STATIC_PAGE_CREATOR_KEY = '1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84';
-export const INDEX_TO_SHOW_LANG = 3;
+export const INDEX_TO_SHOW_LANG = 5;
  

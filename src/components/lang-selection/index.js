@@ -9,6 +9,7 @@ import CircularLoader from "../commons/circular-loader-button-small";
 import useSnackbar from "../../hooks/use-snackbar";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import {contentLang} from "../../../public/content-lang.json"
+import { INDEX_TO_SHOW_LANG } from "../../constants";
 
 const LanguageSelection = ({activeVideoIndex})=>{
     const [selectedLang, setSelectedLang] = useState([]);
@@ -25,8 +26,8 @@ const LanguageSelection = ({activeVideoIndex})=>{
 
     useEffect(()=>{
         console.log("PP",activeVideoIndex,isShowed);
-        activeVideoIndex === 3 && toTrackMixpanel('contentLanguagesImpression');
-        activeVideoIndex === 3 && isShowed === 'false' && localStorage.set('lang-24-hr','true');
+        activeVideoIndex === INDEX_TO_SHOW_LANG && toTrackMixpanel('contentLanguagesImpression');
+        activeVideoIndex === INDEX_TO_SHOW_LANG && isShowed === 'false' && localStorage.set('lang-24-hr','true');
     },[activeVideoIndex])
 
     const updateLanguageWLogin = async() =>{

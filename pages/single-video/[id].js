@@ -15,7 +15,7 @@ import Error from '../../src/components/404';
 import VideoDetail from '../../src/components/desk-video-detail';
 import DeskMenu from '../../src/components/desk-menu';
 import Header from '../../src/components/desk-header';
-import { videoSchema } from '../../src/utils/schema';
+import { singleVideoSchema } from '../../src/utils/schema';
 import { getCanonicalUrl, isReffererGoogle } from '../../src/utils/web';
 import VideoUnavailable from '../../src/components/video-unavailable';
 
@@ -143,7 +143,7 @@ export default function Hipi(params={}) {
     <>
      <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description, createdOn:item?.createdOn}))}}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(singleVideoSchema({name:`${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`, videoId:item?.content_id, userThumnail:item?.firstFrame, desc:item?.content_description, createdOn:item?.createdOn}))}}
         />
      { <SeoMeta
         data={{

@@ -57,8 +57,10 @@ function transformSuccess(resp) {
         payloadObject.firstName = d?.videoOwners?.firstName || null;
         payloadObject.lastName = d?.videoOwners?.lastName || null;
         payloadObject.createdOn = d?.createdOn || null
+        payloadObject.createdTimestamp = d?.createdTimeStamp || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
+        payloadObject.duration = d?.videoDuration || null;
 
         payloadData.push(payloadObject);
       });
