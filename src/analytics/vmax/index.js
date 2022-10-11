@@ -36,14 +36,29 @@ export const initAdView = async() => {
     const loggedInUserDetails = localStorage?.get('user-details') || null;
 
     let customData = {};
-    customData['userId'] = loggedInId ? loggedInId : guestId;
-    customData["userHandle"] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
-    customData["gender"] =  loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA';
-    customData["city"] = geoLocationInfo?.city || ''
-    customData["state"] = geoLocationInfo?.state || ''
-    customData["stateCode"] = geoLocationInfo?.state_code || '';
-    
+    // customData['userId'] = loggedInId ? loggedInId : guestId;
+    // customData["userHandle"] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
+    // customData["gender"] =  loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA';
+    // customData["city"] = geoLocationInfo?.city || ''
+    // customData["state"] = geoLocationInfo?.state || ''
+    // customData["stateCode"] = geoLocationInfo?.state_code || '';
+   
+    customData["userHandle"] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA';
+    customData["platformSection"] = "PWA";
 
+    // ? User and geo location details
+    try{
+      VMAXSDK?.User?.setAge(loggedInUserDetails?.age ? loggedInUserDetails?.age : 'NA'); 
+      VMAXSDK?.User?.setLoginId(loggedInId ? loggedInId : guestId);
+      VMAXSDK?.User?.setZipCode(geoLocationInfo?.state_code || '');
+      VMAXSDK?.User?.setCity(geoLocationInfo?.city || '');
+      VMAXSDK?.User?.setGender(loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA')
+      VMAXSDK?.User?.setRegion(geoLocationInfo?.state || '');
+      VMAXSDK?.User?.setIdentifier(loggedInId ? loggedInId : guestId);
+    }catch (e) {
+      console.log("getting error while setting user and geo location info", e);
+    }
+    
     adView = null;
     adView = new VMAXSDK.CreateVmaxAdView();
     adView.setAdspotKey('ffb8745f').setCustomData({...customData});
