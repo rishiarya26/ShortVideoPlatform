@@ -754,12 +754,13 @@ function Feed({ router }) {
 //     hostname = window?.location?.hostname;
 //  }
 
+  // console.log('&&&',!languagesSelected,langViewed === 'false',videoActiveIndex === INDEX_TO_SHOW_LANG)
   return (
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
@@ -768,9 +769,9 @@ function Feed({ router }) {
           type='aboveBottom'
         />}
         {/* hamburger */}
-       {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+       {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
        {/* <HamburgerMenu/> */}
-        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null ? 'hidden' : ''}`}>
+        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null && lang24ShowOnce === 'false' ? 'hidden' : ''}`}>
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
@@ -779,7 +780,7 @@ function Feed({ router }) {
         </div>
       </div>
        <Landscape/> 
-      {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+      {/* {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
     </>
     </ComponentStateHandler>
   );

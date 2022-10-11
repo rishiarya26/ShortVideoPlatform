@@ -803,6 +803,7 @@ console.log('errorrr',e)
   if (typeof window !== 'undefined') {
     hostname = window?.location?.hostname;
  }
+ const langViewed = localStorage?.get('lang-24-hr');
 
   return (
     <ComponentStateHandler
@@ -812,7 +813,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-      {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
+      {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
@@ -820,8 +821,8 @@ console.log('errorrr',e)
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <div className="fixed mt-10 z-10 w-full">
+        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>}
         {info?.[id]}

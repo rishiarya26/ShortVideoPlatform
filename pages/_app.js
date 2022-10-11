@@ -456,7 +456,7 @@ function Hipi({
       }else{
         if(prevDate !== todayDate){
           localStorage.set('prev-date',todayDate);
-          localStorage.set('lang-24-hr','false')
+          localStorage.set('lang-24-hr','false');
         };
       }
     }
