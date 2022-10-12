@@ -37,17 +37,22 @@ function VideoFooter({
   userVerified,
   videoSoundAvailable=true,
   isAdShowVisible,
-  profilePic
+  profilePic,
+  activeVideoId
 }) {
   const [loaded, setLoaded] = useState(false);
   const {showSnackbar} = useSnackbar();
+  const [ctaShowed, setCtaShowed] = useState('bottom')
   // TO-DO common classes
   const type = {
     profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
     feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
     embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
     single: `${canShop  ? adCards?.monitisation ? 'bottom-20' : 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`,
+    bottom:`bottom-20 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4 animateBottom`,
+    up: `bottom-32 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4 animateBottom`
   };
+
   const { show } = useDrawer();
   const router = useRouter();
 
@@ -81,17 +86,25 @@ function VideoFooter({
      router && router?.push(`/${username}`)
   }
 
-  if(!!isAdShowVisible) {
 
+  useEffect(()=>{
+    if(isAdShowVisible && videoId === activeVideoId){
+      setTimeout(()=>{
+        setCtaShowed('up')
+      },2000)
+    }
+  },[activeVideoId])
+
+  if(!!isAdShowVisible) {
     let optProfilePic = profilePic;
     if(optProfilePic?.match('upload/w_300')){
       optProfilePic = optProfilePic?.replaceAll('upload/w_300','upload/w_100');
     }else{
       optProfilePic = optProfilePic?.replaceAll('upload','upload/w_100');
     }
-    
+
     return (
-      <div className='bottom-32 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4'>
+      <div className={type[ctaShowed]}>
         <div className="flex items-center">
           <div className="usrimg w-10 h-10 overflow-hidden rounded-full" onClick={()=> router && router?.push(`/@${userName}`)}>
             <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />

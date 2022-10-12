@@ -385,11 +385,12 @@ function Video(props) {
          adCards={props?.adData}
          showBanner={props?.showBanner}
          videoId={props.id}
+         activeVideoId={props?.activeVideoId}
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
          isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          profilePic={props?.profilePic}
-         />
+      />
       {/* TO-DO  comdition acc to comp */}
 
 
@@ -401,6 +402,7 @@ function Video(props) {
          CtaColor ="#63ABFF"
          ctaPath = {props?.feedAd?.click_url}
       />
+      
       <AdButton 
          vmaxAd
          noShow={!!props?.vmaxAd}
@@ -414,7 +416,6 @@ function Video(props) {
          ctaTrackers={props?.vmaxAd?.clicktrackers}
       />
       
-
       <VideoSidebar
          userName={props.userName}
          videoOwnersId={props.videoOwnersId}

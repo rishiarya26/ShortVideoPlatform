@@ -5,10 +5,14 @@ import RightArrow from '../../svgicons/right-arrow';
 function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaColor, ctaPath, id, activeVideoId, ctaTrackers}) {
 
   const [btnColor, setBtnColor] = useState("#63ABFF");
+  const [show, setShow] = useState(false)
 
   useEffect(()=>{
     if(!vmaxAd) return; //safe check from vmaxAd condition
-    if(noShow && id === activeVideoId) setTimeout(()=>setBtnColor(CtaColor),3000);
+    if(noShow && id === activeVideoId) setTimeout(()=> {
+      setShow(true);
+      setTimeout(()=>{ setBtnColor(CtaColor)},2000)
+    },2000);
     else setBtnColor("#8e8e97");
   },[activeVideoId])
 
@@ -27,8 +31,9 @@ function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaC
   }
   
   return (
-    <div
-      className="px-2 py-4 absolute bottom-16 w-full z-50 box-border"
+    <>
+    {show && <div
+      className="px-2 py-4 absolute bottom-16 w-full z-50 box-border animateBottom"
       onClick={() => {
         setMuted && setMuted(true);
         adBtnClickCb && adBtnClickCb?.();
@@ -48,7 +53,8 @@ function AdButton({vmaxAd, noShow = false, setMuted, adBtnClickCb, CtaText, CtaC
           <RightArrow value="#fff" />
         </span>
       </a>
-    </div>
+    </div>}
+    </>
   )
 }
 

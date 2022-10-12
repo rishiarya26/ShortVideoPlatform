@@ -1130,3 +1130,7 @@ background-color:rgb(255 237 223);
 .explore_carousel > .swiper-container > .swiper-pagination {
   z-index: 1!important;
 }
+
+.animateBottom {
+  transition: bottom 0.1s ease-out;
+}
