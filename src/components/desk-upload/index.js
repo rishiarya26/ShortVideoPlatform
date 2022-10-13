@@ -8,37 +8,18 @@ import FileUpload from "./file-upload";
 import { languageCodes } from "../../../public/languages.json";
 
 import styles from "./upload.module.css";
-
-const DownArrowBlack = () => (
-  <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#888888">
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-  </svg>
-);
-
-const UpArrowBlack = () => (
-  <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#888888">
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
-  </svg>
-);
-
-const Check = () => (
-  <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
-  </svg>
-);
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
+import UpArrowBlack from "../commons/svgicons/up-arrow-black";
+import DownArrowBlack from "../commons/svgicons/down-arrow-black";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
 
 const DeskUplaod = () => {
-  // const [copyRightCheck, setCopyRightCheck] = useState(false);
 
   //Refs
-  const InputRefCaption = useRef();
-  const inputRef = React.useRef();
+  const CaptionInputRef = useRef();
+  const videoInputRef = useRef();
 
   const { showSnackbar } = useSnackbar();
   const [s3Url, setS3Url] = useState("");
@@ -64,8 +45,8 @@ const DeskUplaod = () => {
   };
 
   const clearState = () => {
-    InputRefCaption.current.innerHTML = "";
-    inputRef.current.value = "";
+    CaptionInputRef.current.innerHTML = ""; // removing caption data
+    videoInputRef.current.value = ""; // removing data from fileUpLOAD element
     setShowSuggestions(false);
     setUserViewPermission("Public");
     setShowPermissionList(false);
@@ -80,7 +61,6 @@ const DeskUplaod = () => {
   };
 
   const setS3UrlCb = (url) => {
-    console.log("setting s3url", url);
     setS3Url(url);
   };
 
@@ -139,8 +119,7 @@ const DeskUplaod = () => {
     postData.hashtags = null;
     postData.videoOwners = JSON.stringify(videoOwnerObject) ?? null; // {id, name, profileImaheUrl}
     postData.sound = null;
-    postData.description =
-      InputRefCaption?.current?.innerText.toString() ?? null; //caption
+    postData.description = CaptionInputRef?.current?.innerText.toString() ?? null; //caption
     postData.videoTitle = "Post the video";
     postData.privacySettings = userViewPermission ?? null;
     postData.users = null;
@@ -166,16 +145,26 @@ const DeskUplaod = () => {
     postData.genre = null;
 
     console.log(postData, postVideoData, videoOwnerObject, "postVideoData");
-    debugger;
+    let startTime = localStorage.get("UPLOAD_API_TIMESTAMP_START");
+    let endTime = localStorage.get("UPLOAD_API_TIMESTAMP_END");
+    let totleTime = Math.floor(endTime - startTime)
     try {
       let response = await uploadDeskVideo({ postData });
-      clearState();
+      console.log("vidoe uploaded response: " + JSON.stringify(response));
+      
+      if(response.status === "success") {
+        let {responseData} = response?.data || {};
+        let {id ="", language=""} = responseData || {};
+        toTrackMixpanel('shortPostResult',{type:"success", post_time_seconds: totleTime}, {content_id:id, ugc_language:language?.name});
+      }
+      clearState(); // ?discarding the values from the component
       showMessage({
         message: "Video has been successfully posted.",
         type: "success",
       });
       console.log(response);
     } catch (e) {
+      toTrackMixpanel('shortPostResult',{type:"failure", post_time_seconds: totleTime, failure_reason:e});
       showMessage({
         message: "facing issues while uploading video",
         type: "error",
@@ -194,18 +183,23 @@ const DeskUplaod = () => {
             Post a video to your account
           </p>
           <div className="flex items-start">
+
+            {/* left section  */}
             <div className="flex w-1/3 my-8 bg-white py-8 px-10">
               <FileUpload
-                inputRef={inputRef}
+                inputRef={videoInputRef}
                 sets3Url={setS3UrlCb}
                 source={source}
                 setSource={setSource}
               />
             </div>
+
+             {/* right section  */}
             <div className="flex w-2/3 my-8 bg-white py-8 px-10">
               <div className="flex w-full flex-col px-8 flex-1">
+
                 <DeskCaption
-                  InputRefCaption={InputRefCaption}
+                  InputRefCaption={CaptionInputRef}
                   closePopup={closePopup}
                   showSuggestions={showSuggestions}
                   setShowSuggestions={setShowSuggestions}

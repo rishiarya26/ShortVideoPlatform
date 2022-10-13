@@ -9,6 +9,7 @@ import {
   S3_POOL_ID,
   S3_REGION,
 } from "../../constants";
+import { localStorage } from "../../utils/storage";
 
 const BucketName =
   process.env.NODE_ENV === "production" || process.env.APP_ENV === "production"
@@ -21,6 +22,7 @@ export const uploadImage2 = async (
   fileName,
   cbProgressBar
 ) => {
+  localStorage.set("UPLOAD_API_TIMESTAMP_START", new Date()?.getTime() / 1000);
   const albumPhotosKey = `${encodeURIComponent(albumName)}`;
   const photoKey = `${albumPhotosKey}/${fileName}`;
   const contentType = file.type;

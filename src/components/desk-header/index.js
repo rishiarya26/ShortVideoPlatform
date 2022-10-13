@@ -101,7 +101,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
          </div>
       </div> */}
 
-      <div id="uploadButton" className="border border-gray-500 px-3 py-1 flex justify-between items-center rounded-sm w-28 cursor-pointer shadow-lg hover:bg-hipired hover:text-white text-black hover:border-transparent"
+      <div id="uploadButton" className="border border-gray-500 px-3 py-1 flex justify-evenly items-center rounded-sm w-28 cursor-pointer shadow-lg hover:bg-hipired hover:text-white text-black hover:border-transparent"
       onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
          <UploadSvg />
          <span className="text-base font-semibold">
