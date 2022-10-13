@@ -93,7 +93,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   try{  
     if(videoId){ 
       try{ const resp = await getOneLink({videoId : videoId, afChannel:afChannel});
-      link = resp?.data;
+      link = resp;
 
       console.log("one link resp",resp);
       }
@@ -104,6 +104,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   }
   catch(e){
   }
+  console.log('same',link)
   window?.open(link);
 }
 
