@@ -17,12 +17,11 @@ const browser = localStorage.get('plaformData')?.name;
 const flush = localStorage.get('lang-flush');
 const languageCodesSelected = localStorage.get('lang-codes-selected')?.lang || [];
 
-console.log("LC",languageCodesSelected, localStorage.get('lang-codes-selected'));
-
 /* Feed API with login */
 async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, videoId, firstApiCall, campaign_id='' }) {
 
   let response = {};
+  // let payload = {}
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
     const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
@@ -30,44 +29,42 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
      let tokens = localStorage.get('tokens');
       const { shortsAuthToken = '' } = tokens;
       const { accessToken = '' } = tokens;
-   if(geoData){     
-        response = await get(apiPath,null,{
+      const payload = {
         Authorization: `Bearer ${shortsAuthToken}`,
         'access-token': accessToken,
-        'X-GEO-IPADDR' : geoData?.ip || '',
-        'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
-        'X-GEO-REGION-CODE':geoData?.state_code || '',
-        'X-GEO-CITY':geoData?.city || '',
-        'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
-        'X-GEO-PINCODE':geoData?.pin || '',
         'campaign_id':campaign_id || '',
         'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
         'X-DEVICE-MODEL': userAgent,
         'X-HIPI-APPPLATFORM' : 'pwa',
         'X-USER-TYPE' : `pwa-member`,
-        'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
-        languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
-      })
-    }else{
-      const respGeoInfo = await detectGeoLocationByZee();
+      }
+       if(geoData){     
+          payload['X-GEO-IPADDR']= geoData?.ip || '',
+          payload['X-GEO-COUNTRY-CODE']=geoData?.country_code || 'IN',
+          payload['X-GEO-REGION-CODE']=geoData?.state_code || '',
+          payload['X-GEO-CITY']=geoData?.city || '',
+          payload['X-GEO-LATLONG']=`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+          payload['X-GEO-PINCODE']=geoData?.pin || ''
+       }else{
+        const respGeoInfo = await detectGeoLocationByZee();
         const geoLocationInfo = respGeoInfo?.data;
-          if(geoLocationInfo){
-            console.log("No GEO_DATA*****",geoLocationInfo );
-            response = await get(apiPath,null,{
-              'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || 'IN',
-              'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
-              'X-GEO-CITY':geoLocationInfo?.city || '',
-              'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
-              'X-GEO-PINCODE':geoLocationInfo?.pin || '',
-              'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-              'X-DEVICE-MODEL': userAgent,
-              'X-HIPI-APPPLATFORM' : 'pwa',
-              'X-USER-TYPE' : `pwa-member`,
-              'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
-              languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
-          })
-      }}
+        if(geoLocationInfo){
+            payload['X-GEO-COUNTRY-CODE']=geoLocationInfo?.country_code || 'IN',
+            payload['X-GEO-REGION-CODE']=geoLocationInfo?.state_code || '',
+            payload['X-GEO-CITY']=geoLocationInfo?.city || '',
+            payload['X-GEO-LATLONG']=`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
+            payload['X-GEO-PINCODE']=geoLocationInfo?.pin || ''
+          }
+       }
+      
+      if(languageCodesSelected && languageCodesSelected.length > 0){
+        const languages = languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'')
+        payload['X-USER-LANGUAGE-CODES'] = languages;
+      }
 
+      response = await get(apiPath,null,payload);
+
+      /* video apppend on top of feed */
       if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
         const data = await getSingleVideo({id : videoId});
         console.log("l",data)
@@ -100,45 +97,43 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
     const condition = type === 'for-you' ? 'forYou' : 'following';
     const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     flush === 'true' && localStorage.set('lang-flush','false');
-    if(geoData){
-      response = await get(apiPath,null,{
-        'X-GEO-IPADDR' : geoData?.ip || '',
-        'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
-        'X-GEO-REGION-CODE':geoData?.state_code || '',
-        'X-GEO-CITY':geoData?.city || '',
-        'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
-        'X-GEO-PINCODE':geoData?.pin || '',
-        'campaign_id':campaign_id || '',
-        'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-        'X-DEVICE-MODEL': userAgent,
-        'X-HIPI-APPPLATFORM' : 'pwa',
-        'X-USER-TYPE' : `pwa-guest`,
-        'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
-        languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
-    })
-  }else{
-    const respGeoInfo = await detectGeoLocationByZee();
-    const geoLocationInfo = respGeoInfo?.data;
-      if(geoLocationInfo){
-        console.log("No GEO_DATA*****",geoLocationInfo );
-        response = await get(apiPath,null,{
-          'X-GEO-COUNTRY-CODE':geoLocationInfo?.country_code || 'IN',
-          'X-GEO-REGION-CODE':geoLocationInfo?.state_code || '',
-          'X-GEO-CITY':geoLocationInfo?.city || '',
-          'X-GEO-LATLONG':`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
-          'X-GEO-PINCODE':geoLocationInfo?.pin || '',
-          'campaign_id':campaign_id || '',
-          'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-          'X-DEVICE-MODEL': userAgent,
-          'X-HIPI-APPPLATFORM' : 'pwa',
-          'X-USER-TYPE' : `pwa-guest`,
-          'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
-          languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
-      })
-  }}
-   console.timeEnd("concatenation");
+    const payload = {
+      'campaign_id':campaign_id || '',
+      'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+      'X-DEVICE-MODEL': userAgent,
+      'X-HIPI-APPPLATFORM' : 'pwa',
+      'X-USER-TYPE' : `pwa-guest`,
+    }
+      if(geoData){
+          payload['X-GEO-IPADDR' ]= geoData?.ip || '',
+          payload['X-GEO-COUNTRY-CODE']=geoData?.country_code || 'IN',
+          payload['X-GEO-REGION-CODE']=geoData?.state_code || '',
+          payload['X-GEO-CITY']=geoData?.city || '',
+          payload['X-GEO-LATLONG']=`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+          payload['X-GEO-PINCODE']=geoData?.pin || ''
+      }else{
+          const respGeoInfo = await detectGeoLocationByZee();
+          const geoLocationInfo = respGeoInfo?.data;
+          if(geoLocationInfo){
+          console.log("No GEO_DATA*****",geoLocationInfo );
+            payload['X-GEO-COUNTRY-CODE']=geoLocationInfo?.country_code || 'IN',
+            payload['X-GEO-REGION-CODE']=geoLocationInfo?.state_code || '',
+            payload['X-GEO-CITY']=geoLocationInfo?.city || '',
+            payload['X-GEO-LATLONG']=`${geoLocationInfo?.lat || ''}${(geoLocationInfo?.lat && geoLocationInfo?.long) ? ',' : ''}${geoLocationInfo?.long || ''}`,
+            payload['X-GEO-PINCODE']=geoLocationInfo?.pin || '' 
+          }
+        }
+
+    if(languageCodesSelected && languageCodesSelected.length > 0){
+      const languages = languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'')
+      payload['X-USER-LANGUAGE-CODES'] = languages;
+    }
+
+    response = await get(apiPath,null,payload);
+
+    console.timeEnd("concatenation");
+    console.log('v-id',videoId);
     
-    console.log('v-id',videoId)
     if(firstApiCall && videoId && response?.data?.responseData?.videos?.length > 0){
       // const items = response.data.responseData;
       const data = await getSingleVideo({id : videoId});

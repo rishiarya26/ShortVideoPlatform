@@ -60,6 +60,7 @@ function Users({
   const [isFollowing,setIsFollowing] = useState();
   const [videoSchemaItems, setVideoSchemaItems] = useState([])
   
+  // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
@@ -70,35 +71,21 @@ function Users({
     setIsFollowing(isFollow);
   },[isFollow])
 
-  const getVideoSchemaItems = async() =>{
-    console.log('calling 1');
-    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
-    if(response?.data?.length > 0){
-      setVideoSchemaItems(response.data);
-    }
-  }
+  // const getVideoSchemaItems = async() =>{
+  //   const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+  //   if(response?.data?.length > 0){
+  //     setVideoSchemaItems(response.data);
+  //   }
+  // }
 
-  const getVideoSchemaItemsAfterLogin = async() =>{
-    console.log('calling 2');
-    const response = await getOwnProfileVideos({ type: 'all', offset: '1', limit : '10', sortType:'view' });
-    if(response?.data?.length > 0){
-      setVideoSchemaItems(response.data);
-    }
-  }
+  // useEffect(()=>{
+  // let timer;
+  //  timer = setTimeout(()=>{
+  //   getVideoSchemaItems();
+  //  },1000)
 
-  useEffect(()=>{
-  let timer;
-   timer = setTimeout(()=>{
-    ;
-    if(type === 'self' || userId === id) {
-      getVideoSchemaItemsAfterLogin();
-    }else{
-      getVideoSchemaItems();
-    }
-   },1000)
-
-   return ()=>{clearTimeout(timer);}
-  },[])
+  //  return ()=>{clearTimeout(timer);}
+  // },[])
 
 
   // async function showPopUp(){
@@ -357,13 +344,14 @@ const notNowClick=()=>{
 
   return (
     <>
-    {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
-      /* eslint-disable-next-line react/jsx-key */      
+    {/* {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
+       eslint-disable-next-line react/jsx-key    
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, createdOn:item?.createdOn,desc:item?.content_description}))}}
         />
-    ))}
+    ))} 
+    */}
     <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">

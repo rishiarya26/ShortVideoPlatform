@@ -70,7 +70,8 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
-  const [videoSchemaItems, setVideoSchemaItems] = useState([]);
+  // const [videoSchemaItems, setVideoSchemaItems] = useState([]);
+
   const [noSound, setNoSound] = useState(false);
 
   const checkNoSound =()=>{
@@ -79,12 +80,12 @@ function DeskUsers({
       setTimeout(()=>{setNoSound(false)},3000)
     }
   }
-  const getVideoSchemaItems = async() =>{
-    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
-    if(response?.data?.length > 0){
-      setVideoSchemaItems(response.data);
-    }
-  }
+  // const getVideoSchemaItems = async() =>{
+  //   const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+  //   if(response?.data?.length > 0){
+  //     setVideoSchemaItems(response.data);
+  //   }
+  // }
 
   const updateActiveIndex = (value)=>{
     console.log("clicked on video - detail : -", value);
@@ -160,20 +161,20 @@ function DeskUsers({
    }
   }
 
-  useEffect(()=>{
-      let timer;
-       timer = setTimeout(()=>{
-        getVideoSchemaItems();
-       },500)
+  // useEffect(()=>{
+  //     let timer;
+  //      timer = setTimeout(()=>{
+  //       getVideoSchemaItems();
+  //      },500)
     
-       console.log("typo", type);
+  //      console.log("typo", type);
     
     
-    window.onunload = function () {
-      window?.scrollTo(0, 0);
-    }
-    return ()=>{clearTimeout(timer);}
-  },[])
+  //   window.onunload = function () {
+  //     window?.scrollTo(0, 0);
+  //   }
+  //   return ()=>{clearTimeout(timer);}
+  // },[])
 
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
