@@ -214,8 +214,8 @@ const getSmartOneLink = ({oneLink, afChannel, videoId})=>{
   // If a media source key is NOT FOUND on the link and NO default value is found, the script will return a null string 
   const mediaSource = {keys: ["utm_source"], defaultValue: "webOrganic"};
   const campaign = {keys: ["utm_campaign"]};
-  const content = {paramKey:"content",key:["utm_content"]};
-  const term = {paramKey:"term", key:["utm_term"]}
+  const content = {paramKey:"content",keys:["utm_content"]};
+  const term = {paramKey:"term", keys:["utm_term"]}
   const afchannel= afChannel
   const deepLinkValue = {defaultValue:`https://www.hipi.co.in/video/${videoId}`};
   const af_dp = { paramKey: "af_dp" , defaultValue:"zee5hipi://"}
@@ -228,10 +228,12 @@ const getSmartOneLink = ({oneLink, afChannel, videoId})=>{
       campaign: campaign,
       af_channel: afchannel,
       deepLinkValue: deepLinkValue,
-      af_dp: af_dp,
-      is_retargeting: is_retargeting,
-      term,
-      content
+      afCustom : [ 
+        af_dp,
+        is_retargeting,
+        term,
+        content
+      ]
     }
   })
 
