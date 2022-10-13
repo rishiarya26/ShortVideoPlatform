@@ -60,7 +60,6 @@ export const uploadImage2 = async (
       status: "success"
     }
   } catch (e) {
-    debugger;
     if (!file.size) {
       return alert("Choose a file to upload first.");
     }
