@@ -13,8 +13,8 @@ import { localStorage } from "../../utils/storage";
 
 const BucketName =
   process.env.NODE_ENV === "production" || process.env.APP_ENV === "production"
-    ? S3_BUCKET_PROD
-    : S3_BUCKET_STAGE; //BUCKET_NAME
+    ? S3_BUCKET_STAGE
+    : S3_BUCKET_STAGE; //BUCKET_NAME need to be change to prod
 
 export const uploadImage2 = async (
   albumName = "src",
@@ -54,11 +54,21 @@ export const uploadImage2 = async (
     });
 
     await parallelUploads3.done();
+
+    return {
+      message: "file added successfully",
+      status: "success"
+    }
   } catch (e) {
-    if (!file.length) {
+    debugger;
+    if (!file.size) {
       return alert("Choose a file to upload first.");
     }
-    console.log(e);
+    return {
+      message: e.message,
+      status: "failure"
+
+    }
   }
 };
 

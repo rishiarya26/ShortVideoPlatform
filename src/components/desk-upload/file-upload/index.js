@@ -61,7 +61,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
       ) {
         url = `https://${S3_BUCKET_STAGE}.s3.ap-south-1.amazonaws.com/src/${filename}`;
       } else {
-        url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`;
+        url = `https://${S3_BUCKET_STAGE}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
       }
       return url;
     } catch (e) {
@@ -82,18 +82,30 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
     setPorgressBar(value);
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     try {
       const file = event?.target?.files[0];
       const { name } = file;
       setPorgressBar(0);
+
       localStorage.set("UPLOAD_API_TIMESTAMP_START","")
       localStorage.set("UPLOAD_API_TIMESTAMP_END","")
       toTrackMixpanel('uploadCTAClicked');
+
       const fileName = `${name.replace(".mp4", "")}${Date.now()}.mp4`;
+
       setVideoLoader(true);
+
       try{
-        uploadImage2("src", file, fileName, updateProgressBar);
+      let res =  await uploadImage2("src", file, fileName, updateProgressBar);
+      
+      if(res.status === 'failure'){
+        setVideoLoader(false);
+        showMessage({
+          message: res?.message,
+          type: "error",
+        });
+      }
       }catch(e){
         setVideoLoader(false);
         showMessage({
