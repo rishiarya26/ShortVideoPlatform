@@ -414,8 +414,8 @@ const DeskUplaod = () => {
 
                 <div className="flex items-center mt-4">
                   <button
-                    className="rounded-md text-sm font-semibold px-8 py-3 text-black mt-4 border border-gray-300 min-w-32"
-                    onClick={()=> showDialog('', ClearDataPopup,'medium', { clearData:resetFields })}
+                    className="rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32"
+                    onClick={()=> showDialog('', ClearDataPopup,'extraSmall', { clearData:resetFields })}
                   >
                     Discard
                   </button>

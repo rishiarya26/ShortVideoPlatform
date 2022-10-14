@@ -130,7 +130,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
           <div className="relative">
             <div
               onClick={handleChoose}
-              className={`${videoLoader && "bg-gray-300 opacity-70"}
+              className={`${(videoLoader) ? "bg-gray-300 opacity-70" : null}
           ${
             (videoLoader || source.url) &&
             "pointer-events-none cursor-not-allowed"
@@ -140,11 +140,11 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
               ? "hover:bg-gray-100 hover:border-red-400 cursor-pointer"
               : null
           } 
-           relative w-72 py-16 flex flex-col justify-center items-center border-2
+           relative w-72 py-20 flex flex-col justify-center items-center border-2
             rounded-md border-gray-300 border-dashed`}
             >
               <UploadSvg />
-              <p className="text-lg font-semibold text-gray-600 mt-4">
+              <p className="text-lg font-medium text-gray-600 mt-4">
                 Select video to upload
               </p>
               <p className="text-base font-normal text-gray-400 mt-2">
@@ -200,7 +200,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
         ) : !videoLoader || progressBar === 100 ? (
           <>
             <div
-              style={{ height: "464px" }}
+              
               className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full"
             >
               <video
@@ -223,7 +223,8 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
                 <source src={`${source.url}`} type="video/mp4" />
               </video>
             </div>
-            <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs z-10 cursor-pointer" onClick={() => showDialog('', ClearDataPopup,'small', { clearData: resetVideoData })}>
+            <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs z-10 cursor-pointer"
+             onClick={() => showDialog('', ClearDataPopup,'extraSmall', { clearData: resetVideoData, videoPopup: true })}>
               <div className="flex items-center justify-between cursor-pointer">
                 <span className="flex items-center">
                   <CheckRoundBlack />
