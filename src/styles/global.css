@@ -1156,9 +1156,9 @@ title:first-letter {
   }
 
   /* styled checkbox*/
-#uploadButton:hover svg{
+/* #uploadButton:hover svg{
   fill: #f4def2
-}
+} */
 /* language iphone 6 */
 @media only screen 
     and (max-device-width : 376px) {

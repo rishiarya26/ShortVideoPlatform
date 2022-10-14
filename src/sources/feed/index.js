@@ -32,7 +32,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
       const payload = {
         Authorization: `Bearer ${shortsAuthToken}`,
         'access-token': accessToken,
-        'campaign_id':campaign_id || '',
+        'x-campaign-id':campaign_id || '',
         'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
         'X-DEVICE-MODEL': userAgent,
         'X-HIPI-APPPLATFORM' : 'pwa',
@@ -98,7 +98,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
     const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     flush === 'true' && localStorage.set('lang-flush','false');
     const payload = {
-      'campaign_id':campaign_id || '',
+      'x-campaign-id':campaign_id || '',
       'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
       'X-DEVICE-MODEL': userAgent,
       'X-HIPI-APPPLATFORM' : 'pwa',

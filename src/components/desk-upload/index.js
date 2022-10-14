@@ -11,12 +11,12 @@ import styles from "./upload.module.css";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UpArrowBlack from "../commons/svgicons/up-arrow-black";
 import DownArrowBlack from "../commons/svgicons/down-arrow-black";
+import StaticFooter from "../static-footer";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
 
 const DeskUplaod = () => {
-
   //Refs
   const CaptionInputRef = useRef();
   const videoInputRef = useRef();
@@ -33,7 +33,7 @@ const DeskUplaod = () => {
     Comment: false,
     Like: false,
     Duet: false,
-    saveToDevice: false
+    saveToDevice: false,
   });
 
   let userInfo = localStorage.get("user-details") ?? {};
@@ -51,7 +51,13 @@ const DeskUplaod = () => {
     setUserViewPermission("Public");
     setShowPermissionList(false);
     setSource({ ...source, url: "", name: "" });
-    setAllowUser({ ...allowUser, Comment: false, Like: false, Duet: false, saveToDevice:false });
+    setAllowUser({
+      ...allowUser,
+      Comment: false,
+      Like: false,
+      Duet: false,
+      saveToDevice: false,
+    });
     setLanguage({ name: "", code: "" });
     // setCopyRightCheck(false);
   };
@@ -119,7 +125,8 @@ const DeskUplaod = () => {
     postData.hashtags = null;
     postData.videoOwners = JSON.stringify(videoOwnerObject) ?? null; // {id, name, profileImaheUrl}
     postData.sound = null;
-    postData.description = CaptionInputRef?.current?.innerText.toString() ?? null; //caption
+    postData.description =
+      CaptionInputRef?.current?.innerText.toString() ?? null; //caption
     postData.videoTitle = "Post the video";
     postData.privacySettings = userViewPermission ?? null;
     postData.users = null;
@@ -147,15 +154,19 @@ const DeskUplaod = () => {
     console.log(postData, postVideoData, videoOwnerObject, "postVideoData");
     let startTime = localStorage.get("UPLOAD_API_TIMESTAMP_START");
     let endTime = localStorage.get("UPLOAD_API_TIMESTAMP_END");
-    let totleTime = Math.floor(endTime - startTime)
+    let totleTime = Math.floor(endTime - startTime);
     try {
       let response = await uploadDeskVideo({ postData });
       console.log("vidoe uploaded response: " + JSON.stringify(response));
-      
-      if(response.status === "success") {
-        let {responseData} = response?.data || {};
-        let {id ="", language=""} = responseData || {};
-        toTrackMixpanel('shortPostResult',{type:"success", post_time_seconds: totleTime}, {content_id:id, ugc_language:language?.name});
+
+      if (response.status === "success") {
+        let { responseData } = response?.data || {};
+        let { id = "", language = "" } = responseData || {};
+        toTrackMixpanel(
+          "shortPostResult",
+          { type: "success", post_time_seconds: totleTime },
+          { content_id: id, ugc_language: language?.name }
+        );
       }
       clearState(); // ?discarding the values from the component
       showMessage({
@@ -164,7 +175,11 @@ const DeskUplaod = () => {
       });
       console.log(response);
     } catch (e) {
-      toTrackMixpanel('shortPostResult',{type:"failure", post_time_seconds: totleTime, failure_reason:e});
+      toTrackMixpanel("shortPostResult", {
+        type: "failure",
+        post_time_seconds: totleTime,
+        failure_reason: e,
+      });
       showMessage({
         message: "facing issues while uploading video",
         type: "error",
@@ -177,15 +192,14 @@ const DeskUplaod = () => {
     <div className="h-screen  w-screen flex flex-col justify-between">
       <Header />
       <div className="w-full flex justify-center items-center md:mt-16">
-        <div className="flex w-feed box_shadow_1 my-8 bg-white py-8 px-10 flex-col">
+        <div className="flex w-feed box_shadow_1 my-8 bg-white py-8 pb-12 px-12 flex-col">
           <h1 className="text-2xl font-semibold text-gray-800">Upload video</h1>
           <p className="text-md font-base text-gray-400 pt-2">
             Post a video to your account
           </p>
-          <div className="flex items-start">
-
+          <div className="flex items-start mt-4">
             {/* left section  */}
-            <div className="flex w-1/3 my-8 bg-white py-8 px-10">
+            <div className="flex w-3/12 mt-8 bg-white">
               <FileUpload
                 inputRef={videoInputRef}
                 sets3Url={setS3UrlCb}
@@ -194,10 +208,9 @@ const DeskUplaod = () => {
               />
             </div>
 
-             {/* right section  */}
-            <div className="flex w-2/3 my-8 bg-white py-8 px-10">
+            {/* right section  */}
+            <div className="flex w-9/12  bg-white  pl-4">
               <div className="flex w-full flex-col px-8 flex-1">
-
                 <DeskCaption
                   InputRefCaption={CaptionInputRef}
                   closePopup={closePopup}
@@ -206,7 +219,7 @@ const DeskUplaod = () => {
                 />
 
                 <div className="flex flex-col max-w-xs relative transition duration-500 ease-in-out mb-4">
-                  <p className="text-sm font-bold text-gray-600 py-2">
+                  <p className="text-base font-medium text-gray-700 pb-2 pl-1">
                     Languages
                   </p>
                   <div
@@ -221,7 +234,7 @@ const DeskUplaod = () => {
                       type="text"
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       value={language.name}
-                      placeholder="select language..."
+                      placeholder="Select language..."
                     ></input>
                     <span className="absolute right-3 top-2">
                       {showLanguageList ? <UpArrowBlack /> : <DownArrowBlack />}
@@ -231,7 +244,7 @@ const DeskUplaod = () => {
                   {showLanguageList && (
                     <div
                       id="hastagList"
-                      className="bg-white absolute left-0 top-20 min-w-full shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
+                      className="bg-white absolute left-0 top-20 min-w-full text-normal text-gray-600 shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
                     >
                       {languageCodes.map((item, idx) => {
                         return (
@@ -254,7 +267,7 @@ const DeskUplaod = () => {
                 </div>
 
                 <div className="flex flex-col max-w-xs relative transition duration-500 ease-in-out mb-4">
-                  <p className="text-sm font-bold text-gray-600 py-2">
+                  <p className="text-base font-medium text-gray-700 pb-2 pl-1">
                     Who can view this video
                   </p>
                   <div
@@ -266,7 +279,7 @@ const DeskUplaod = () => {
                   >
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="w-full border border-gray-300 text-gray-600 text-normal rounded-md px-3 py-2"
                       value={userViewPermission}
                     ></input>
                     <span className="absolute right-3 top-2">
@@ -281,7 +294,7 @@ const DeskUplaod = () => {
                   {showPermissionList && (
                     <div
                       id="hastagList"
-                      className="bg-white absolute left-0 top-20 min-w-full shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
+                      className="bg-white absolute left-0 top-20 text-normal text-gray-600 min-w-full shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
                     >
                       {AllowedUserList.map((item, idx) => {
                         return (
@@ -304,7 +317,7 @@ const DeskUplaod = () => {
                 </div>
 
                 <div className="flex flex-col w-full relative mb-4">
-                  <p className="text-sm font-bold text-gray-600 py-2 mb-2">
+                  <p className="text-base font-medium text-gray-700 pb-2 pl-1 mb-2">
                     Allow users to:
                   </p>
                   <div className="relative cursor-pointer flex justify-start items-center">
@@ -325,10 +338,12 @@ const DeskUplaod = () => {
                           />
 
                           <label
-                            className="mr-12 font-normal text-sm"
+                            className="mr-8 font-normal text-sm flex items-center"
                             htmlFor={`${item}-checkbox`}
                           >
-                            {item.toLowerCase() === 'savetodevice' ? 'Save To Device' : item}
+                            {item.toLowerCase() === "savetodevice"
+                              ? "Save to device"
+                              : item}
                           </label>
                         </div>
                       );
@@ -338,7 +353,7 @@ const DeskUplaod = () => {
 
                 {/* <div className="flex flex-col w-full relative mb-4">
                   <div className="flex items-center">
-                    <p className="text-sm font-bold text-gray-600 pt-2 mb-2">
+                    <p className="text-base font-semibold text-gray-600 pt-2 mb-2">
                       Run a copyright check
                     </p>
                     <label className="switch ml-4">
@@ -384,9 +399,9 @@ const DeskUplaod = () => {
                   )}
                 </div> */}
 
-                <div className="flex items-center">
+                <div className="flex items-center mt-4">
                   <button
-                    className="rounded-md text-sm font-semibold px-8 py-3 text-black mt-4 border border-gray-300 min-w-32"
+                    className="rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32"
                     onClick={clearState}
                   >
                     Discard
@@ -397,7 +412,7 @@ const DeskUplaod = () => {
                       source.url === ""
                         ? "bg-gray-200 border-gray-200 text-gray-500 cursor-not-allowed"
                         : "text-white"
-                    } rounded-md text-sm font-semibold px-8 py-3 bg-hipired  mt-4 ml-4 border min-w-32`}
+                    } rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32 ml-4`}
                     disabled={!source.url}
                     onClick={(e) => submitVideoPost(e)}
                   >
@@ -409,6 +424,7 @@ const DeskUplaod = () => {
           </div>
         </div>
       </div>
+      <StaticFooter/>
     </div>
   );
 };

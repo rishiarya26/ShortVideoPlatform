@@ -84,8 +84,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
 
   useEffect(() => {
     const closeDrop = (e) => {
-      console.log(e.path[0]);
-      // console.log("777",e.path[0], btnContent.current, btnRef.current, searchInput.current)
+      console.log(e?.path?.[0]);
       if (
         e.path[0] !== inputRef?.current &&
         e.path[0] !== searchSuggRef?.current &&
@@ -98,10 +97,6 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
     document.body.addEventListener("click", closeDrop);
     return () => document.body.removeEventListener("click", closeDrop);
   }, []);
-
-  useEffect(() => {
-    console.log(InputRefCaption.current);
-  },[])
 
   function closeDropdown() {
     setShowSuggestions(false);
@@ -392,7 +387,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
   return (
     <div className="flex flex-col w-full relative mb-4">
       <div className="flex justify-between items-center">
-        <p className="text-sm font-bold text-gray-600">
+        <p className="text-base font-medium text-gray-700 pb-2 pl-1">
           {!showUserField ? "Caption" : null}
         </p>
         {/* {!showUserField && (

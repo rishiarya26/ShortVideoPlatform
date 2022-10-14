@@ -6,8 +6,6 @@ import { withBasePath } from "../../config";
 import useAuth from "../../hooks/use-auth";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
-import CloseSolid from "../commons/svgicons/close-solid";
-import Search from "../commons/svgicons/search";
 import {getUserProfile} from "../../sources/users/profile"
 import { localStorage } from "../../utils/storage";
 import { useEffect, useState } from "react";
@@ -18,11 +16,8 @@ import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
 import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
+import UploadPlusSvg from "../commons/svgicons/upload-plus";
 
-const UploadSvg = ({color = "#000000"}) => (
-   <svg height="24px" viewBox="0 0 24 24" width="24px" fill={color}><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
- );
- 
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
@@ -103,9 +98,9 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
       
       <div className="flex">
-      <div id="uploadButton" className="border border-gray-300 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-8"
+      <div id="uploadButton" className="border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4"
       onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
-         <UploadSvg />
+         <UploadPlusSvg />
          <span className="text-sm font-semibold pl-2">
             Upload
          </span>

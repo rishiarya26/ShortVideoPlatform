@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { uploadImage2 } from "../../../analytics/s3Client";
 import { S3_BUCKET_PROD, S3_BUCKET_STAGE } from "../../../constants";
 import useSnackbar from "../../../hooks/use-snackbar";
 import { localStorage } from "../../../utils/storage";
 import UploadSvg from "../../commons/svgicons/upload";
-
 import styles from "../upload.module.css";
-
-// const UploadSvg = () => (
-//   <svg
-//     width="40"
-//     height="29"
-//     viewBox="0 0 40 29"
-//     fill="none"
-//     xmlns="http://www.w3.org/2000/svg"
-//   >
-//     <path
-//       fillRule="evenodd"
-//       clipRule="evenodd"
-//       d="M21.5001 29H30.5C35.7467 29 40 24.7467 40 19.5C40 14.7115 36.4571 10.7504 31.8497 10.0951C30.937 4.37297 25.9792 0 20 0C13.3726 0 8 5.37258 8 12L8.00001 12.0145C3.53831 12.2733 0 15.9734 0 20.5C0 25.1944 3.80558 29 8.5 29H18.5001V17.1213L15.9143 19.7071C15.7191 19.9024 15.4025 19.9024 15.2072 19.7071L13.793 18.2929C13.5977 18.0976 13.5977 17.781 13.793 17.5858L18.9395 12.4393C19.5252 11.8536 20.475 11.8536 21.0608 12.4393L26.2072 17.5858C26.4025 17.781 26.4025 18.0976 26.2072 18.2929L24.793 19.7071C24.5977 19.9024 24.2812 19.9024 24.0859 19.7071L21.5001 17.1213V29Z"
-//       fill="#161823"
-//       fillOpacity="0.34"
-//     />
-//   </svg>
-// );
 
 // const CheckRoundBlack = () => (
 //   <svg
@@ -46,10 +27,9 @@ import styles from "../upload.module.css";
 
 // export default UploadSvg;
 
-function FileUpload({ source, setSource, sets3Url, inputRef}) {
+function FileUpload({ source, setSource, sets3Url, inputRef }) {
   const { showSnackbar } = useSnackbar();
   const [videoLoader, setVideoLoader] = useState(false);
-
   const [progressBar, setPorgressBar] = useState(0);
 
   let createS3Url = (filename = "") => {
@@ -61,7 +41,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
       ) {
         url = `https://${S3_BUCKET_STAGE}.s3.ap-south-1.amazonaws.com/src/${filename}`;
       } else {
-        url = `https://${S3_BUCKET_STAGE}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
+        url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
       }
       return url;
     } catch (e) {
@@ -71,12 +51,21 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
 
   const updateProgressBar = (value, file, fileName) => {
     if (value === 100) {
-      localStorage.set("UPLOAD_API_TIMESTAMP_END", new Date()?.getTime() / 1000);
-      showMessage({ message: "video successfully uploaded.", type: "success" });
-      const url = URL.createObjectURL(file);
       setVideoLoader(false);
+      localStorage.set(
+        "UPLOAD_API_TIMESTAMP_END",
+        new Date()?.getTime() / 1000
+      );
+
+      showMessage({
+        message: "video successfully uploaded.",
+        type: "success",
+      });
+
       let s3Url = createS3Url(fileName);
       if (s3Url) sets3Url(s3Url);
+
+      const url = URL.createObjectURL(file);
       setSource({ ...source, url, name: fileName });
     }
     setPorgressBar(value);
@@ -84,36 +73,44 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
 
   const handleFileChange = async (event) => {
     try {
-      const file = event?.target?.files[0];
-      const { name } = file;
-      setPorgressBar(0);
+      const file = event?.target?.files[0] || {};
 
-      localStorage.set("UPLOAD_API_TIMESTAMP_START","")
-      localStorage.set("UPLOAD_API_TIMESTAMP_END","")
-      toTrackMixpanel('uploadCTAClicked');
-
-      const fileName = `${name.replace(".mp4", "")}${Date.now()}.mp4`;
-
-      setVideoLoader(true);
-
-      try{
-      let res =  await uploadImage2("src", file, fileName, updateProgressBar);
-      
-      if(res.status === 'failure'){
-        setVideoLoader(false);
+      //base condition
+      if (!file.size) {
         showMessage({
-          message: res?.message,
+          message: "Choose a file to upload first.",
           type: "error",
         });
+        return false;
       }
-      }catch(e){
+
+      const { name } = file;
+      setPorgressBar(0); //reset the progressbar
+
+      localStorage.set("UPLOAD_API_TIMESTAMP_START", "");
+      localStorage.set("UPLOAD_API_TIMESTAMP_END", "");
+
+      toTrackMixpanel("uploadCTAClicked");
+      const fileName = `${name.replace(".mp4", "")}${Date.now()}.mp4`;
+
+      try {
+        setVideoLoader(true);
+        let res = await uploadImage2("src", file, fileName, updateProgressBar);
+
+        if (res?.status === "failure") {
+          setVideoLoader(false);
+          showMessage({
+            message: res?.message,
+            type: "error",
+          });
+        }
+      } catch (e) {
         setVideoLoader(false);
         showMessage({
           message: "facing issues while uploading video",
           type: "error",
         });
       }
-      
     } catch (e) {
       setVideoLoader(false);
       showMessage({
@@ -138,6 +135,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
       <div className="VideoInput">
         <input
           ref={inputRef}
+          id="uploadVideo"
           className="hidden"
           type="file"
           onChange={handleFileChange}
@@ -147,17 +145,18 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
           <div className="relative">
             <div
               onClick={handleChoose}
-              className={`${
-                videoLoader && "bg-gray-300 opacity-70"
-              }
+              className={`${videoLoader && "bg-gray-300 opacity-70"}
           ${
             (videoLoader || source.url) &&
             "pointer-events-none cursor-not-allowed"
-          } relative ${
-                !videoLoader
-                  ? "hover:bg-gray-100 hover:border-red-400 cursor-pointer"
-                  : null
-              } w-72 py-16 flex flex-col justify-center items-center border-2 rounded-md border-gray-300 border-dashed`}
+          }
+          ${
+            !videoLoader
+              ? "hover:bg-gray-100 hover:border-red-400 cursor-pointer"
+              : null
+          } 
+           relative w-72 py-16 flex flex-col justify-center items-center border-2
+            rounded-md border-gray-300 border-dashed`}
             >
               <UploadSvg />
               <p className="text-lg font-semibold text-gray-600 mt-4">
@@ -184,31 +183,41 @@ function FileUpload({ source, setSource, sets3Url, inputRef}) {
               </div>
             </div>
             {videoLoader && (
+              <div
+                className={`${
+                  (videoLoader || source.url) &&
+                  "pointer-events-none cursor-not-allowed"
+                } 
+                  ${
+                    !videoLoader
+                      ? "hover:bg-gray-100 hover:border-red-400 cursor-pointer"
+                      : null
+                  } 
+                  absolute w-72 flex flex-col justify-center items-center z-10 ${
+                    styles.top60
+                  }`}
+              >
                 <div
-                  className={`${(videoLoader || source.url) && "pointer-events-none cursor-not-allowed"} 
-                  ${!videoLoader ? "hover:bg-gray-100 hover:border-red-400 cursor-pointer" : null} 
-                  absolute w-72 flex flex-col justify-center items-center z-10 ${styles.top60}`}
+                  className={`${styles.progressBarClass} ${styles.boxShadow}`}
                 >
                   <div
-                    className={`${styles.progressBarClass} ${styles.boxShadow}`}
+                    style={{ width: `${progressBar}%` }}
+                    className={`${styles.progress} transition-width duration-700 ease-in flex justify-center items-center relative`}
                   >
-                    <div
-                      style={{ width: `${progressBar}%` }}
-                      className={`${styles.progress} transition-width duration-700 ease-in flex justify-center items-center relative`}
-                    >
-                      {progressBar > 0 && (
-                        <span className="text-xs text-white">
-                          {progressBar}%
-                        </span>
-                      )}
-                    </div>
+                    {progressBar > 0 && (
+                      <span className="text-xs text-white">{progressBar}%</span>
+                    )}
                   </div>
                 </div>
-              )}
+              </div>
+            )}
           </div>
         ) : !videoLoader || progressBar === 100 ? (
           <>
-            <div style={{height: "464px"}} className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full">
+            <div
+              style={{ height: "464px" }}
+              className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full"
+            >
               <video
                 onContextMenu={(e) => {
                   e.preventDefault();
