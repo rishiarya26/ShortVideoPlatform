@@ -223,7 +223,8 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
                 <source src={`${source.url}`} type="video/mp4" />
               </video>
             </div>
-            <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs z-10 cursor-pointer" onClick={() => showDialog('', ClearDataPopup,'small', { clearData: resetVideoData })}>
+            <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs z-10 cursor-pointer"
+             onClick={() => showDialog('', ClearDataPopup,'extraSmall', { clearData: resetVideoData, videoPopup: true })}>
               <div className="flex items-center justify-between cursor-pointer">
                 <span className="flex items-center">
                   <CheckRoundBlack />
