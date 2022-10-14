@@ -14,7 +14,7 @@ async function search(
   setShowSuggestions
 ) {
   // optimisedSearch.cancel();
-  // setSuggestions([]);
+ 
   /* eslint-disable no-param-reassign */
   setLoading(true);
   try {
@@ -371,7 +371,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
     currentChild.classList.add("valid");
     currentChild.classList.remove("current");
     //currentChild.setAttribute("contentEditable", false);
-    InputRefCaption?.current?.innerHTML = `${InputRefCaption?.current?.innerHTML}&#160`;
+    InputRefCaption.current.innerHTML = `${InputRefCaption?.current?.innerHTML}&#160`;
     setShowUserField(false);
     setShowSuggestions(false);
     setTimeout(() => {
