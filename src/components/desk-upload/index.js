@@ -6,12 +6,13 @@ import Header from "../desk-header";
 import DeskCaption from "./desk-caption";
 import FileUpload from "./file-upload";
 import { languageCodes } from "../../../public/languages.json";
-
 import styles from "./upload.module.css";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UpArrowBlack from "../commons/svgicons/up-arrow-black";
 import DownArrowBlack from "../commons/svgicons/down-arrow-black";
 import StaticFooter from "../static-footer";
+import ClearDataPopup from "./data-clear-popup";
+import useDialog from "../../hooks/use-dialog";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
@@ -38,13 +39,15 @@ const DeskUplaod = () => {
 
   let userInfo = localStorage.get("user-details") ?? {};
 
+  const {show:showDialog} = useDialog();
+
   const handleCheckBox = (e, item) => {
     let { checked } = e.target;
     if (checked) setAllowUser({ ...allowUser, [item]: true });
     else setAllowUser({ ...allowUser, [item]: false });
   };
 
-  const clearState = () => {
+  const resetFields = () => {
     CaptionInputRef.current.innerHTML = ""; // removing caption data
     videoInputRef.current.value = ""; // removing data from fileUpLOAD element
     setShowSuggestions(false);
@@ -61,6 +64,15 @@ const DeskUplaod = () => {
     setLanguage({ name: "", code: "" });
     // setCopyRightCheck(false);
   };
+
+  const resetVideoData = () => {
+    videoInputRef.current.value = "";
+    setSource({ ...source, url: "", name: "" });
+    showMessage({
+      message: "video has been removed successfully",
+      type: "success",
+    });
+  }
 
   const closePopup = () => {
     setShowPermissionList(false);
@@ -168,7 +180,7 @@ const DeskUplaod = () => {
           { content_id: id, ugc_language: language?.name }
         );
       }
-      clearState(); // ?discarding the values from the component
+      resetFields(); // ?discarding the values from the component
       showMessage({
         message: "Video has been successfully posted.",
         type: "success",
@@ -205,6 +217,7 @@ const DeskUplaod = () => {
                 sets3Url={setS3UrlCb}
                 source={source}
                 setSource={setSource}
+                resetVideoData={resetVideoData}
               />
             </div>
 
@@ -401,8 +414,8 @@ const DeskUplaod = () => {
 
                 <div className="flex items-center mt-4">
                   <button
-                    className="rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32"
-                    onClick={clearState}
+                    className="rounded-md text-sm font-semibold px-8 py-3 text-black mt-4 border border-gray-300 min-w-32"
+                    onClick={()=> showDialog('', ClearDataPopup,'medium', { clearData:resetFields })}
                   >
                     Discard
                   </button>

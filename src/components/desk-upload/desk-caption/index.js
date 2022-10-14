@@ -447,13 +447,13 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
             />
           </div>
         ) : null}
-
-        {!showUserField && (
+ 
+        {/* {!showUserField && (
           <div className="absolute right-4 top-3 font-semibold text-lg">
             {" "}
             @ #
           </div>
-        )}
+        )} */}
         <div ref={searchSuggRef}>
           {showUserField && showSuggestions && userList.length > 0 && (
             <div
