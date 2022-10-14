@@ -2,35 +2,20 @@ import React, { useState } from "react";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { uploadImage2 } from "../../../analytics/s3Client";
 import { S3_BUCKET_PROD, S3_BUCKET_STAGE } from "../../../constants";
+import useDialog from "../../../hooks/use-dialog";
 import useSnackbar from "../../../hooks/use-snackbar";
 import { localStorage } from "../../../utils/storage";
+import CheckRoundBlack from "../../commons/svgicons/check-round-black";
 import UploadSvg from "../../commons/svgicons/upload";
+import ClearDataPopup from "../data-clear-popup";
 import styles from "../upload.module.css";
 
-// const CheckRoundBlack = () => (
-//   <svg
-//     width="16"
-//     height="16"
-//     viewBox="0 0 16 16"
-//     fill="none"
-//     xmlns="http://www.w3.org/2000/svg"
-//   >
-//     <path
-//       fillRule="evenodd"
-//       clipRule="evenodd"
-//       d="M7.99935 0.666626C5.97449 0.666626 4.14024 1.48817 2.8139 2.81451C1.48756 4.14085 0.666016 5.9751 0.666016 7.99996C0.666016 10.0248 1.48756 11.8591 2.8139 13.1854C4.14024 14.5118 5.97449 15.3333 7.99935 15.3333C10.0242 15.3333 11.8585 14.5118 13.1848 13.1854C14.5111 11.8591 15.3327 10.0248 15.3327 7.99996C15.3327 5.9751 14.5111 4.14085 13.1848 2.81451C11.8585 1.48817 10.0242 0.666626 7.99935 0.666626ZM3.75671 3.75732C4.84322 2.6708 6.34231 1.99996 7.99935 1.99996C9.65639 1.99996 11.1555 2.6708 12.242 3.75732C13.3285 4.84383 13.9993 6.34292 13.9993 7.99996C13.9993 9.657 13.3285 11.1561 12.242 12.2426C11.1555 13.3291 9.65639 14 7.99935 14C6.34231 14 4.84322 13.3291 3.75671 12.2426C2.67019 11.1561 1.99935 9.657 1.99935 7.99996C1.99935 6.34292 2.67019 4.84383 3.75671 3.75732ZM10.9484 6.71496C11.0163 6.64615 11.0163 6.53459 10.9484 6.46578L10.2102 5.71823C10.1423 5.64942 10.0321 5.64942 9.96417 5.71823L7.3034 8.41282L6.03453 7.12782C5.96658 7.05901 5.85642 7.05901 5.78847 7.12782L5.05031 7.87537C4.98236 7.94418 4.98236 8.05574 5.05031 8.12455L7.18037 10.2817C7.24832 10.3505 7.35848 10.3505 7.42643 10.2817L10.9484 6.71496Z"
-//       fill="#161823"
-//       fillOpacity="0.75"
-//     />
-//   </svg>
-// );
-
-// export default UploadSvg;
-
-function FileUpload({ source, setSource, sets3Url, inputRef }) {
+function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
   const { showSnackbar } = useSnackbar();
   const [videoLoader, setVideoLoader] = useState(false);
   const [progressBar, setPorgressBar] = useState(0);
+
+  const {show:showDialog} = useDialog();
 
   let createS3Url = (filename = "") => {
     let url = "";
@@ -238,8 +223,8 @@ function FileUpload({ source, setSource, sets3Url, inputRef }) {
                 <source src={`${source.url}`} type="video/mp4" />
               </video>
             </div>
-            {/* <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs">
-              <div className="flex items-center justify-between">
+            <div className="mt-3 border border-gray-200 p-3 rounded-lg max-w-xs z-10 cursor-pointer" onClick={() => showDialog('', ClearDataPopup,'small', { clearData: resetVideoData })}>
+              <div className="flex items-center justify-between cursor-pointer">
                 <span className="flex items-center">
                   <CheckRoundBlack />
                   <span className="truncate ml-1 w-28 text-10 text-gray-500 font-normal items-center inline-block">
@@ -251,7 +236,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef }) {
                   Change Video
                 </div>
               </div>
-            </div> */}
+            </div>
           </>
         ) : null}
       </div>
