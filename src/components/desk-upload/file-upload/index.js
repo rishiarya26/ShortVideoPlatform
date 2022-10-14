@@ -30,7 +30,6 @@ import styles from "../upload.module.css";
 function FileUpload({ source, setSource, sets3Url, inputRef }) {
   const { showSnackbar } = useSnackbar();
   const [videoLoader, setVideoLoader] = useState(false);
-
   const [progressBar, setPorgressBar] = useState(0);
 
   let createS3Url = (filename = "") => {
