@@ -313,8 +313,8 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
       }
     }
     // toFocus();
-    event.target.querySelectorAll("span.highlight").forEach((el) => {
-      el.classList.remove("highlight");
+    event?.target?.querySelectorAll("span.highlight").forEach((el) => {
+      el?.classList?.remove("highlight");
     });
   };
 
@@ -336,7 +336,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
     let windowSelection = window.getSelection();
     //remove any previously created ranges
     windowSelection.removeAllRanges();
-    let theNodes = InputRefCaption.current.childNodes;
+    let theNodes = InputRefCaption?.current?.childNodes;
     let firstNode = theNodes?.[0];
     // let lastNode = theNodes?.[theNodes.length - 1];
     // let start = theNodes?.[0];
@@ -351,12 +351,12 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
   }
 
   const handleUserList = (item) => {
-    var currentChild = InputRefCaption.current.querySelector(".current");
+    var currentChild = InputRefCaption?.current?.querySelector(".current");
     currentChild.innerHTML = `@${item}`;
     currentChild.classList.remove("current");
     currentChild.classList.add("valid");
     //currentChild.setAttribute("contentEditable", false);
-    InputRefCaption.current.innerHTML = `${InputRefCaption.current.innerHTML}&#160`;
+    InputRefCaption.current.innerHTML = `${InputRefCaption?.current?.innerHTML}&#160`;
     setShowUserField(false);
     setTimeout(() => {
       toFocus();
@@ -365,13 +365,13 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
 
   const handleHashtagList = (item) => {
     
-    var currentChild = InputRefCaption.current.querySelector(".current");
+    var currentChild = InputRefCaption?.current?.querySelector(".current");
     currentChild.innerHTML = ``;
     currentChild.innerHTML = `${item}`;
     currentChild.classList.add("valid");
     currentChild.classList.remove("current");
     //currentChild.setAttribute("contentEditable", false);
-    InputRefCaption.current.innerHTML = `${InputRefCaption.current.innerHTML}&#160`;
+    InputRefCaption?.current?.innerHTML = `${InputRefCaption?.current?.innerHTML}&#160`;
     setShowUserField(false);
     setShowSuggestions(false);
     setTimeout(() => {
@@ -407,7 +407,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
             !showUserField ? "block" : "hidden"
           } w-full border-none py-1 focus:outline-none`}
           onClick={(e) => {
-            console.log('coming inside clickable field', e.currentTarget, showUserField , showSuggestions, hastagList);
+            console.log('coming inside clickable field', e?.currentTarget, showUserField , showSuggestions, hastagList);
             
             //setShowSuggestions(true);
           }}

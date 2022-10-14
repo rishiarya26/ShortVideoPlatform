@@ -2,17 +2,19 @@ import React, { useRef, useState } from "react";
 import useSnackbar from "../../hooks/use-snackbar";
 import { uploadDeskVideo } from "../../sources/desk-upload";
 import { localStorage } from "../../utils/storage";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
+import { languageCodes } from "../../../public/languages.json";
 import Header from "../desk-header";
 import DeskCaption from "./desk-caption";
 import FileUpload from "./file-upload";
-import { languageCodes } from "../../../public/languages.json";
-import styles from "./upload.module.css";
-import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UpArrowBlack from "../commons/svgicons/up-arrow-black";
 import DownArrowBlack from "../commons/svgicons/down-arrow-black";
 import StaticFooter from "../static-footer";
 import ClearDataPopup from "./data-clear-popup";
 import useDialog from "../../hooks/use-dialog";
+
+
+import styles from "./upload.module.css";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];

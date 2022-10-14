@@ -19,7 +19,7 @@ const uploadVideo = async ({ postData }) => {
 
   let response = {};
   try {
-    const apiPath = `${getApiBasePath("staggingHipi")}/v1/shorts/video`;
+    const apiPath = `${getApiBasePath("hipi")}/v1/shorts/video`;
     response = await post(apiPath, payload, {
       Authorization: `Bearer ${shortsAuthTokenn}`,
       "content-type": "application/json",
