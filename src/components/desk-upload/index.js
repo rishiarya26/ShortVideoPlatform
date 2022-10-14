@@ -16,7 +16,6 @@ const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
 
 const DeskUplaod = () => {
-
   //Refs
   const CaptionInputRef = useRef();
   const videoInputRef = useRef();
@@ -33,7 +32,7 @@ const DeskUplaod = () => {
     Comment: false,
     Like: false,
     Duet: false,
-    saveToDevice: false
+    saveToDevice: false,
   });
 
   let userInfo = localStorage.get("user-details") ?? {};
@@ -51,7 +50,13 @@ const DeskUplaod = () => {
     setUserViewPermission("Public");
     setShowPermissionList(false);
     setSource({ ...source, url: "", name: "" });
-    setAllowUser({ ...allowUser, Comment: false, Like: false, Duet: false, saveToDevice:false });
+    setAllowUser({
+      ...allowUser,
+      Comment: false,
+      Like: false,
+      Duet: false,
+      saveToDevice: false,
+    });
     setLanguage({ name: "", code: "" });
     // setCopyRightCheck(false);
   };
@@ -119,7 +124,8 @@ const DeskUplaod = () => {
     postData.hashtags = null;
     postData.videoOwners = JSON.stringify(videoOwnerObject) ?? null; // {id, name, profileImaheUrl}
     postData.sound = null;
-    postData.description = CaptionInputRef?.current?.innerText.toString() ?? null; //caption
+    postData.description =
+      CaptionInputRef?.current?.innerText.toString() ?? null; //caption
     postData.videoTitle = "Post the video";
     postData.privacySettings = userViewPermission ?? null;
     postData.users = null;
@@ -147,15 +153,19 @@ const DeskUplaod = () => {
     console.log(postData, postVideoData, videoOwnerObject, "postVideoData");
     let startTime = localStorage.get("UPLOAD_API_TIMESTAMP_START");
     let endTime = localStorage.get("UPLOAD_API_TIMESTAMP_END");
-    let totleTime = Math.floor(endTime - startTime)
+    let totleTime = Math.floor(endTime - startTime);
     try {
       let response = await uploadDeskVideo({ postData });
       console.log("vidoe uploaded response: " + JSON.stringify(response));
-      
-      if(response.status === "success") {
-        let {responseData} = response?.data || {};
-        let {id ="", language=""} = responseData || {};
-        toTrackMixpanel('shortPostResult',{type:"success", post_time_seconds: totleTime}, {content_id:id, ugc_language:language?.name});
+
+      if (response.status === "success") {
+        let { responseData } = response?.data || {};
+        let { id = "", language = "" } = responseData || {};
+        toTrackMixpanel(
+          "shortPostResult",
+          { type: "success", post_time_seconds: totleTime },
+          { content_id: id, ugc_language: language?.name }
+        );
       }
       clearState(); // ?discarding the values from the component
       showMessage({
@@ -164,7 +174,11 @@ const DeskUplaod = () => {
       });
       console.log(response);
     } catch (e) {
-      toTrackMixpanel('shortPostResult',{type:"failure", post_time_seconds: totleTime, failure_reason:e});
+      toTrackMixpanel("shortPostResult", {
+        type: "failure",
+        post_time_seconds: totleTime,
+        failure_reason: e,
+      });
       showMessage({
         message: "facing issues while uploading video",
         type: "error",
@@ -183,7 +197,6 @@ const DeskUplaod = () => {
             Post a video to your account
           </p>
           <div className="flex items-start">
-
             {/* left section  */}
             <div className="flex w-1/3 my-8 bg-white py-8 px-10">
               <FileUpload
@@ -194,10 +207,9 @@ const DeskUplaod = () => {
               />
             </div>
 
-             {/* right section  */}
+            {/* right section  */}
             <div className="flex w-2/3 my-8 bg-white py-8 px-10">
               <div className="flex w-full flex-col px-8 flex-1">
-
                 <DeskCaption
                   InputRefCaption={CaptionInputRef}
                   closePopup={closePopup}
@@ -328,7 +340,9 @@ const DeskUplaod = () => {
                             className="mr-12 font-normal text-sm"
                             htmlFor={`${item}-checkbox`}
                           >
-                            {item.toLowerCase() === 'savetodevice' ? 'Save To Device' : item}
+                            {item.toLowerCase() === "savetodevice"
+                              ? "Save To Device"
+                              : item}
                           </label>
                         </div>
                       );
