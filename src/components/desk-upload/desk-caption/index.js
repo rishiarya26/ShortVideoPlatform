@@ -388,7 +388,7 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
     <div className="flex flex-col w-full relative mb-4">
       <div className="flex justify-between items-center">
         <p className="text-base font-medium text-gray-700 pb-2 pl-1">
-          {!showUserField ? "Caption" : null}
+            Caption
         </p>
         {/* {!showUserField && (
           <p className="text-base font-thin text-gray-400 pt-2">{textLengthRef.current}/150</p>

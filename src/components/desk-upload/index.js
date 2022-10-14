@@ -18,11 +18,16 @@ const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
 
 const DeskUplaod = () => {
+
+  const { showSnackbar } = useSnackbar();
+  const {show:showDialog} = useDialog();
+
+  let userInfo = localStorage.get("user-details") ?? {};
+
   //Refs
   const CaptionInputRef = useRef();
   const videoInputRef = useRef();
-
-  const { showSnackbar } = useSnackbar();
+  //states
   const [s3Url, setS3Url] = useState("");
   const [userViewPermission, setUserViewPermission] = useState("Public");
   const [language, setLanguage] = useState({ name: "", code: "" });
@@ -36,10 +41,6 @@ const DeskUplaod = () => {
     Duet: false,
     saveToDevice: false,
   });
-
-  let userInfo = localStorage.get("user-details") ?? {};
-
-  const {show:showDialog} = useDialog();
 
   const handleCheckBox = (e, item) => {
     let { checked } = e.target;
@@ -62,7 +63,6 @@ const DeskUplaod = () => {
       saveToDevice: false,
     });
     setLanguage({ name: "", code: "" });
-    // setCopyRightCheck(false);
   };
 
   const resetVideoData = () => {
@@ -79,18 +79,12 @@ const DeskUplaod = () => {
   };
 
   const setS3UrlCb = (url) => {
-    setS3Url(url);
+    !!url && setS3Url(url);
   };
 
   const showMessage = ({ message, type }) => {
     showSnackbar({ message: message, type: type });
   };
-
-  // const handleSwitch = (e) => {
-  //   let { checked } = e.target;
-  //   if (checked) setCopyRightCheck(true);
-  //   else setCopyRightCheck(false);
-  // };
 
   const submitVideoPost = async (e) => {
     e.preventDefault();
@@ -256,7 +250,7 @@ const DeskUplaod = () => {
 
                   {showLanguageList && (
                     <div
-                      id="hastagList"
+                      id="LanguageList"
                       className="bg-white absolute left-0 top-20 min-w-full text-normal text-gray-600 shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
                     >
                       {languageCodes.map((item, idx) => {
@@ -306,7 +300,7 @@ const DeskUplaod = () => {
 
                   {showPermissionList && (
                     <div
-                      id="hastagList"
+                      id="permissionList"
                       className="bg-white absolute left-0 top-20 text-normal text-gray-600 min-w-full shadow-md rounded-lg overflow-y-scroll thin_bar flex flex-col max-h-72 z-1"
                     >
                       {AllowedUserList.map((item, idx) => {
@@ -424,8 +418,8 @@ const DeskUplaod = () => {
                     className={`${
                       source.url === ""
                         ? "bg-gray-200 border-gray-200 text-gray-500 cursor-not-allowed"
-                        : "text-white"
-                    } rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32 ml-4`}
+                        : " text-white bg-hipired"
+                    } rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4`}
                     disabled={!source.url}
                     onClick={(e) => submitVideoPost(e)}
                   >
