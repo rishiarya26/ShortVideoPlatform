@@ -101,14 +101,16 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
          </div>
       </div> */}
 
-      <div id="uploadButton" className="border border-gray-500 px-3 py-1 flex justify-evenly items-center rounded-sm w-28 cursor-pointer shadow-lg hover:bg-hipired hover:text-white text-black hover:border-transparent"
+      
+      <div className="flex">
+      <div id="uploadButton" className="border border-gray-300 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-8"
       onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
          <UploadSvg />
-         <span className="text-base font-semibold">
+         <span className="text-sm font-semibold pl-2">
             Upload
          </span>
       </div>
-      <div>
+
            {isLoggedIn === 'true'?
            <div className="relative">
            <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
