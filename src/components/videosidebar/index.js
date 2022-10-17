@@ -297,7 +297,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
+        } relative my-2 mx-3 text-center items-end flex-col iphone_small self-end`}
       >
         <div 
            id="comment"
@@ -325,7 +325,7 @@ const handleSaveMoments = () =>{
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } relative my-2 mx-3 text-center items-end flex-col  self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
+      } relative my-2 mx-3 text-center items-end flex-col iphone_small self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-xs mt-1 text-center">Embed</p>
         </div>

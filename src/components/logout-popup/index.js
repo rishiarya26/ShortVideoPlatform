@@ -2,15 +2,13 @@ import { useRouter } from 'next/router';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import useDialog from '../../hooks/use-dialog';
 import useDrawer from '../../hooks/use-drawer';
-import useSnackbar from '../../hooks/use-snackbar';
 import { getItem, removeItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 
-const LogoutPopup = () => {
+const LogoutPopup = ({showMessage}) => {
 const router = useRouter();
 const {close} = useDialog();
 const {close:closePopUp} = useDrawer();
-const {showSnackbar} = useSnackbar();
 const device = getItem('device-type')
 
   const logout = () => {
@@ -25,13 +23,14 @@ const device = getItem('device-type')
       //   closePopUp();
       // }else if(device === 'mobile'){
         close();
+        showMessage({ message: 'Logged Out Successfully' });
         window.location.href = '/feed/for-you'
         console.log("logged out *")
       // }
     }
     catch(e){
       toTrackMixpanel('logoutFailure')
-        showSnackbar({ message: 'Something went wrong' });
+      showMessage({ message: 'Something went wrong' });
         console.log('errorww',e);
     }
   };
