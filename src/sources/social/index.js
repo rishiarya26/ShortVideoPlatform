@@ -127,6 +127,7 @@ const userAgent =localStorage.get('plaformData')?.ua;
 const os = localStorage.get('plaformData')?.os?.family;
 const browser = localStorage.get('plaformData')?.name;
 const isLoggedIn = localStorage?.get('user-id') || null;
+const previousPage = window?.sessionStorage?.getItem('previous-page');
   try {
     payload =  (event === 'user_video_end') ?
      {

@@ -25,7 +25,7 @@ export const toTrackReco = async(event, info) =>{
     "message": info?.message || 'NA', 
     "objectID": info?.objectID, 
     "position": info?.position, 
-    "queryID": info?.queryID
+    "queryID": info?.queryID,
   }
 
   const toTrack={
