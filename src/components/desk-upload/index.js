@@ -12,8 +12,6 @@ import DownArrowBlack from "../commons/svgicons/down-arrow-black";
 import StaticFooter from "../static-footer";
 import ClearDataPopup from "./data-clear-popup";
 import useDialog from "../../hooks/use-dialog";
-
-
 import styles from "./upload.module.css";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
@@ -33,16 +31,19 @@ const DeskUplaod = () => {
   const [s3Url, setS3Url] = useState("");
   const [userViewPermission, setUserViewPermission] = useState("Public");
   const [language, setLanguage] = useState({ name: "", code: "" });
+
   const [showPermissionList, setShowPermissionList] = useState(false);
   const [showLanguageList, setShowLanguageList] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
   const [source, setSource] = useState({ url: "", name: "" });
   const [allowUser, setAllowUser] = useState({
-    Comment: false,
-    Like: false,
-    Duet: false,
-    saveToDevice: false,
+    Comment: true,
+    Like: true,
+    Duet: true,
+    saveToDevice: true,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleCheckBox = (e, item) => {
     let { checked } = e.target;
@@ -89,6 +90,15 @@ const DeskUplaod = () => {
   };
 
   const submitVideoPost = async (e) => {
+    if(language.name === '' || language.code === ""){
+        showMessage({
+          message: "Kindly select a language before continuing",
+          type: "waiting",
+        });
+        return false;
+    }
+
+    setLoading(true)
     e.preventDefault();
     let postData = {};
     let postVideoData = {};
@@ -159,10 +169,10 @@ const DeskUplaod = () => {
     postData.language = language ?? { code: "hi", name: "Hindi" };
     postData.genre = null;
 
-    console.log(postData, postVideoData, videoOwnerObject, "postVideoData");
     let startTime = localStorage.get("UPLOAD_API_TIMESTAMP_START");
     let endTime = localStorage.get("UPLOAD_API_TIMESTAMP_END");
     let totleTime = Math.floor(endTime - startTime);
+
     try {
       let response = await uploadDeskVideo({ postData });
       console.log("vidoe uploaded response: " + JSON.stringify(response));
@@ -181,8 +191,10 @@ const DeskUplaod = () => {
         message: "Video has been successfully posted.",
         type: "success",
       });
+      setLoading(false);
       console.log(response);
     } catch (e) {
+      setLoading(false);
       toTrackMixpanel("shortPostResult", {
         type: "failure",
         post_time_seconds: totleTime,
@@ -228,7 +240,7 @@ const DeskUplaod = () => {
                 />
 
                 <div className="flex flex-col max-w-xs relative transition duration-500 ease-in-out mb-4">
-                  <p className="text-base font-medium text-gray-700 pb-2 pl-1">
+                  <p className="text-base font-medium text-gray-700 pb-2 pl-1 requiredField">
                     Languages
                   </p>
                   <div
@@ -240,6 +252,7 @@ const DeskUplaod = () => {
                     }}
                   >
                     <input
+                      required
                       type="text"
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       value={language.name}
@@ -343,7 +356,6 @@ const DeskUplaod = () => {
                             checked={allowUser[item]}
                             onClick={(e) => handleCheckBox(e, item)}
                             type="checkbox"
-                            // value="value1"
                           />
 
                           <label
@@ -360,73 +372,36 @@ const DeskUplaod = () => {
                   </div>
                 </div>
 
-                {/* <div className="flex flex-col w-full relative mb-4">
-                  <div className="flex items-center">
-                    <p className="text-base font-semibold text-gray-600 pt-2 mb-2">
-                      Run a copyright check
-                    </p>
-                    <label className="switch ml-4">
-                      <input
-                        type="checkbox"
-                        onChange={(e) => handleSwitch(e)}
-                        checked={copyRightCheck}
-                      />
-                      <span className="slider_new round"></span>
-                    </label>
-                  </div>
-                  {!copyRightCheck && (
-                    <div className="text-xs font-light text-gray-600">
-                      We'll check your video for potential copyright
-                      infringements on used sounds. If infringements are found,
-                      you can edit the video before posting.{" "}
-                      <a>
-                        <b className="cursor-pointer font-bold">Learn More</b>
-                      </a>
-                    </div>
-                  )}
-                  {copyRightCheck && (
-                    <div className="flex items-center bg-gray-200 p-2 rounded-md">
-                      <svg
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 48 48"
-                        fill="red"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M24 6C14.0589 6 6 14.0589 6 24C6 33.9411 14.0589 42 24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6ZM2 24C2 11.8497 11.8497 2 24 2C36.1503 2 46 11.8497 46 24C46 36.1503 36.1503 46 24 46C11.8497 46 2 36.1503 2 24ZM27 16C27 17.6569 25.6569 19 24 19C22.3431 19 21 17.6569 21 16C21 14.3431 22.3431 13 24 13C25.6569 13 27 14.3431 27 16ZM23 22C22.4477 22 22 22.4477 22 23V34C22 34.5523 22.4477 35 23 35H25C25.5523 35 26 34.5523 26 34V23C26 22.4477 25.5523 22 25 22H23Z"
-                        ></path>
-                      </svg>
-                      &nbsp;
-                      <div className="text-xs font-light text-gray-600">
-                        Copyright check will not begin until your video is
-                        uploaded.
-                      </div>
-                    </div>
-                  )}
-                </div> */}
-
                 <div className="flex items-center mt-4">
                   <button
-                    className="rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32"
-                    onClick={()=> showDialog('', ClearDataPopup,'extraSmall', { clearData:resetFields })}
+                    className={`${loading ? "cursor-not-allowed" : null} rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32`}
+                    onClick={loading ? null : ()=> showDialog('', ClearDataPopup,'extraSmall', { clearData:resetFields })}
                   >
                     Discard
                   </button>
 
-                  <button
-                    className={`${
-                      source.url === ""
-                        ? "bg-gray-200 border-gray-200 text-gray-500 cursor-not-allowed"
-                        : " text-white bg-hipired"
-                    } rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4`}
-                    disabled={!source.url}
-                    onClick={(e) => submitVideoPost(e)}
-                  >
-                    Post
-                  </button>
+                  {loading && 
+                    (<button disabled type="button" style={{backgroundColor:"#DF5A4E"}} className=" text-white rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4 flex justify-evenly items-center cursor-not-allowed">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading...
+                    </button>)
+                  }
+                  
+                  {!loading && 
+                    (<button className={`${source.url === ""
+                          ? "bg-gray-200 border-gray-200 text-gray-500 cursor-not-allowed"
+                          : " text-white bg-hipired"
+                      } rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4`}
+                      disabled={!source.url}
+                      onClick={(e) => submitVideoPost(e)}
+                      //onClick={language.name !== "" ? (e) => submitVideoPost(e): null}
+                    >
+                      Post
+                    </button>)
+                  }
                 </div>
               </div>
             </div>
