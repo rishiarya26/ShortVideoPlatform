@@ -594,6 +594,9 @@ function Feed({ router }) {
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (
