@@ -65,7 +65,7 @@ function Users({
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
 
-  const userId = localStorage?.get('user-id');
+  // const userId = localStorage?.get('user-id');
 
   useEffect(()=>{
     setIsFollowing(isFollow);
@@ -99,10 +99,10 @@ function Users({
   async function fetchMoreListItems() {
    try{
     let response;
-    if(type === 'self' || userId === id) {
-      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
-    }else{
+    if(type === 'self') {
       response = await getOwnProfileVideos({ type: selectedTab, offset: `${offset}` });
+    }else{
+      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
     }
     console.log(response)
     if(response?.data?.length > 0){

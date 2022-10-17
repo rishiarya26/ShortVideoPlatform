@@ -3,7 +3,7 @@
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
-import { getProfileVideos, toFollow } from '../../sources/users/profile';
+import { getOwnProfileVideos, getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
@@ -133,7 +133,13 @@ function DeskUsers({
 
   async function fetchMoreListItems() {
    try{
-    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
+    let response = {};
+    
+    if(type === 'self') {
+      response = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
+    }else{
+      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
+    }
     console.log("fetchedMore",response)
     if(response?.data?.length > 0){
       let data = {...videoData};
@@ -141,7 +147,12 @@ function DeskUsers({
         data.items = data?.items?.concat(response?.data);
         data.status = 'success';
       }else{
-        const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+        let resp = {};
+        if(type === 'self') {
+          resp = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
+        }else{
+          const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+        }
         data.items = resp?.data?.concat(response?.data);
         data.status = 'success';
       }
@@ -210,7 +221,15 @@ function DeskUsers({
     // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+  // const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+
+  const dataFetcher = () => {
+    if(type === 'self'){
+      return getOwnProfileVideos({ type: selectedTab });
+    }else{
+      return getProfileVideos({ id, type: selectedTab });
+    }
+  }
   // eslint-disable-next-line no-unused-vars
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
@@ -319,14 +338,17 @@ function DeskUsers({
       ],
       self: [
         {
+          text: 'Videos',
           icon: <Listing />,
           type: 'all'
         },
         {
+          text: 'Shoppable',
           icon: <LikedList/>,
           type: 'shoppable'
         },
         {
+          text: 'Private',
           icon: <Lock />,
           type: 'PRIVATE'
         }
