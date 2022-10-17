@@ -38,7 +38,7 @@ import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
-import { INDEX_TO_SHOW_LANG } from '../../constants';
+import { INDEX_TO_SHOW_LANG_IPHONE , INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 
@@ -378,6 +378,9 @@ function FeedIphone({ router }) {
 
  const incrementShowItems = async() =>{
  try{ 
+  setMuted(true);
+  // setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   let updateShowItems = [...toShowItems];
   let deletedTill = pretoInsertElemant?.toInsertElements-12;
   let dataItem = [...items];
@@ -404,9 +407,6 @@ function FeedIphone({ router }) {
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
-  setMuted(true);
-  // setShowAppBanner(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
@@ -577,9 +577,9 @@ console.log('errorrr',e)
                     itemID={item?.content_id}
                   >
                   { item !==null && 
-                  // !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
-                  //  <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
-                  // :
+                  !languagesSelected && id === INDEX_TO_SHOW_LANG_IPHONE && lang24ShowOnce === 'false' ? 
+                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                     :
                    <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -629,6 +629,9 @@ console.log('errorrr',e)
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (
@@ -645,7 +648,7 @@ console.log('errorrr',e)
               >
                 <CircularProgress/>
               </div>}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : !(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : !(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -661,7 +664,7 @@ console.log('errorrr',e)
               >
                 <Play/>
               </div> */}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength && <div
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : validItemsLength && <div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
@@ -671,7 +674,7 @@ console.log('errorrr',e)
                 <Mute/>
                 </div>
               </div>}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength ? seekedPercentage > 0
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
@@ -715,7 +718,7 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) || items?.[videoActiveIndex]?.adId) 
+         {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) || items?.[videoActiveIndex]?.adId) 
           ? '' : 
           <OpenAppStrip
           pageName={pageName}
@@ -724,8 +727,8 @@ console.log('errorrr',e)
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
-        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
-        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <div className="fixed mt-10 z-10 w-full">
+        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu/>}
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>}
         {info?.[id]}

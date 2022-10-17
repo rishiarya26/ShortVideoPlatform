@@ -27,6 +27,7 @@ import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
 import EmbedIcon from '../commons/svgicons/embedicon';
 import detectDeviceModal from '../open-in-app';
+import { toTrackReco } from '../../analytics/view-events';
 
 const login = dynamic(() => import('../auth-options'),{
   loading: () => <div />,
@@ -38,7 +39,8 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA"
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA",
+  correlationID=null, explain=null, userId=null
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -83,6 +85,7 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
+    toTrackReco("click", {page: pageName, tab: tabName, correlation_id: correlationID, assetId: videoId, user_id: userId, objectID: userId, objectType: "creator"})
      router && router?.push(`/@${userName}`);
   };
 
@@ -297,7 +300,7 @@ const handleSaveMoments = () =>{
       <div
         className={`${
           type === 'feed' ? 'flex' : 'hidden'
-        } relative my-2 mx-3 text-center items-end flex-col  self-end`}
+        } relative my-2 mx-3 text-center items-end flex-col iphone_small self-end`}
       >
         <div 
            id="comment"
@@ -325,7 +328,7 @@ const handleSaveMoments = () =>{
       
         <div className={`${
         type === 'feed' ? 'flex' : 'hidden'
-      } relative my-2 mx-3 text-center items-end flex-col  self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
+      } relative my-2 mx-3 text-center items-end flex-col iphone_small self-end`} onClick={() => showDialog('Embed Code', CopyEmbedCode,'medium', { videoId, onEmbedCopy })}>
           <EmbedIcon />
           <p className="text-xs mt-1 text-center">Embed</p>
         </div>

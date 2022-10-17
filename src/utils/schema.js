@@ -77,7 +77,7 @@
    const videosList = videoItems?.length > 0 && videoItems.map((item,id)=>{
      return {"@type": "VideoObject",
      "position": id+1,
-     "name": "excuse me miss",
+     "name": `${item?.content_description || ''} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
      "url": `https://www.hipi.co.in/single-video/${item?.id}`,
      "description": item?.content_description,
      "thumbnailUrl": [

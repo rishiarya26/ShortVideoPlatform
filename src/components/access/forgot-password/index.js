@@ -9,9 +9,10 @@ import {  verifyUserOnly } from "../../../sources/auth/verify-user";
 import { CountryCode } from "../../commons/button/country-code"
 import { SubmitButton } from "../../commons/button/submit";
 import { Back } from "../../commons/svgicons/back"
+import { localStorage } from "../../../utils/storage";
 
  const ForgotPassword = ({router}) =>{
-    const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
+    const [phoneData, setPhoneData] = useState({ mobile: localStorage.get("mobileNum") || "", countryCode: '91' });
     const [emailData, setEmailData] = useState({ email :'' })
 
     const { showSnackbar } = useSnackbar();
@@ -55,6 +56,7 @@ import { Back } from "../../commons/svgicons/back"
             try{ 
                     const mobile = `${phoneData?.countryCode}${phoneData?.mobile}`;
                     const resp = await verifyUserOnly({mobile: mobile, type:'mobile'});
+                    localStorage.set("mobileNum", phoneData?.mobile);
                     if (resp.status === 'success') {
                         const response = await resetPasswordMobile(`${phoneData?.countryCode}${phoneData?.mobile}`);
                         if (response.data.code === 1) {        

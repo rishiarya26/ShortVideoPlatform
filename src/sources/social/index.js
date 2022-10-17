@@ -146,24 +146,29 @@ const previousPage = window?.sessionStorage?.getItem('previous-page');
    const userId = localStorage.get('user-id') || null;
    let geoData = localStorage?.get('geo-info') || null;
    const guestToken =  getItem('guest-token') || null;
-  //  const languageCodesSelected = localStorage.get('lang-codes-selected')?.lang || [];
+   const languageCodesSelected = localStorage.get('lang-codes-selected')?.lang || [];
 // console.log('la',languageCodesSelected, typeof languageCodesSelected === 'array', languageCodesSelected?.reduce((item,acc)=>{acc = `${acc},${item}`}))
     const apiPath = `${getApiBasePath('viewCount')}/Prod/v1/events`;
     response = await post(apiPath, payload, {
       Authorization : userId || guestToken,
       ...headers,
-      'X-GEO-IPADDR' : geoData?.ip || '',
-      'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
-      'X-GEO-REGION-CODE':geoData?.state_code || '',
-      'X-GEO-CITY':geoData?.city || '',
-      'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
-      'X-GEO-PINCODE':geoData?.pin || '',
-      'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
-      'X-DEVICE-MODEL': userAgent
+      'X-Z5-AppPlatform': 'PWA',
+      'Content-Type': 'application/json',
+      ...(userId ? {'X-Z5-Guest-Token': userId} : {}),
+      ...(geoData ? {
+        'X-GEO-IPADDR' : geoData?.ip || '',
+        'X-GEO-COUNTRY-CODE':geoData?.country_code || 'IN',
+        'X-GEO-REGION-CODE':geoData?.state_code || '',
+        'X-GEO-CITY':geoData?.city || '',
+        'X-GEO-LATLONG':`${geoData?.lat || ''}${(geoData?.lat && geoData?.long) ? ',' : ''}${geoData?.long || ''}`,
+        'X-GEO-PINCODE':geoData?.pin || '',
+        'X-DEVICE-BRAND' : `PWA-${device} ${os}- ${browser}`,
+        'X-DEVICE-MODEL': userAgent,
+      } : {}),
       // 'X-HIPI-APPPLATFORM' : 'pwa',
       // 'X-USER-TYPE' : `pwa-${isLoggedIn ? 'member' : 'guest'}`,
-      // 'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
-      // languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
+      'X-USER-LANGUAGE-CODES' : languageCodesSelected && languageCodesSelected?.length > 0 ? 
+      languageCodesSelected?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'
       });
     response.data.status = 'success';
     response.data.message = '';
