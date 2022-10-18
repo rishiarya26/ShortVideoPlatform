@@ -6,21 +6,21 @@ import fallbackUser from "../../../../../public/images/users.png";
 import Verified from "../../svgicons/verified";
 
 function AdButton({
+  id,
   vmaxAd,
   noShow = false,
   setMuted,
-  adBtnClickCb,
   ctaText,
   ctaColor,
   ctaPath,
-  id,
   activeVideoId,
   ctaTrackers,
   profilePic,
   userName,
   userVerified,
+  adBtnClickCb,
 }) {
-  const [btnColor, setBtnColor] = useState(vmaxAd ? "#8e8e97" :  "#63ABFF" );
+  const [btnColor, setBtnColor] = useState(vmaxAd ? "#8e8e97" :  "#63ABFF");
   const [show, setShow] = useState(false);
 
   // !! Keep this useEffect always on top
