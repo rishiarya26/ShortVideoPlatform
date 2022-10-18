@@ -1,15 +1,13 @@
 import { useRouter } from 'next/router';
 import useDialog from '../../hooks/use-dialog';
 import useDrawer from '../../hooks/use-drawer';
-import useSnackbar from '../../hooks/use-snackbar';
 import { getItem, removeItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
 
-const LogoutPopup = ({page}) => {
+const LogoutPopup = ({page, showMessage}) => {
 const router = useRouter();
 const {close} = useDialog();
 const {close:closePopUp} = useDrawer();
-const {showSnackbar} = useSnackbar();
 const device = getItem('device-type')
 
   const logout = () => {
@@ -17,10 +15,11 @@ const device = getItem('device-type')
       localStorage.remove('tokens');
       localStorage.remove('user-id');
         closePopUp();
+        showMessage({message: 'Logged Out Successfully'});
         router?.asPath && (window.location.href=router.asPath);
     }
     catch(e){
-        showSnackbar({ message: 'Something went wrong' });
+        showMessage({ message: 'Something went wrong' });
         console.log('errorww',e);
     }
   };

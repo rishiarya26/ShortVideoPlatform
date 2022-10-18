@@ -154,7 +154,7 @@ const TopItems = ({item, redirectTab}) =>{
                        }catch(e){
                          console.error('search result click',e)
                        }
-                       router && router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                       router && router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card z-10 bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

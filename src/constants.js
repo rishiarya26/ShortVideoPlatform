@@ -34,4 +34,5 @@ export const S3_REGION = 'ap-south-1';
 export const S3_BUCKET_STAGE = 'hipi-videos-stage'
 export const S3_BUCKET_PROD = 'hipi-videos'
 export const INDEX_TO_SHOW_LANG = 5;
+export const INDEX_TO_SHOW_LANG_IPHONE = 5;
  
