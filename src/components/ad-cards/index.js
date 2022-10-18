@@ -39,7 +39,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 campaignId
               }
             );
-            appsflyerId && appsflyerPixel({type:'click',appId:appsflyerId,advertiser:getBrand(data?.product_url),uri:data?.product_url})
+            data?.appsflyer_id && appsflyerPixel({type:'click',appId:data?.appsflyer_id,advertiser:getBrand(data?.product_url),uri:data?.product_url})
             window.open(data?.product_url);
         } else {
             toTrackMixpanel(
@@ -97,7 +97,7 @@ function AdCards({
     >
       {
         adCardsLength > 0 ? adCardsLength > 1 ? (
-          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show} />
+          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show}/>
         ) : (
           <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show} appsflyerId={adCards[0]?.appsflyer_id || null}/>
         ):''

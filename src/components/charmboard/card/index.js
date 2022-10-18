@@ -12,8 +12,10 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
 
   
       useEffect(()=>{
+               // console.log('uuu')
+      //   console.log('A******',productIdChange=== id, appsflyerId)
          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
-         appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
+         productIdChange === id && appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
       },[productIdChange])
 
       const onProductInView =(entry)=>{
