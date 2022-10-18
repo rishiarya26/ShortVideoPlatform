@@ -395,25 +395,32 @@ function Video(props) {
 
 
       <AdButton 
-         noShow={!!props?.feedAd}
+         id = {props?.id}
+         ctaColor = "#63ABFF"
+         noShow = {!!props?.feedAd}
+         userName = {props.userName}
          setMuted = {props?.setMuted}
-         adBtnClickCb = {props?.adBtnClickCb}
-         CtaText = {props?.feedAd?.cta_text}
-         CtaColor ="#63ABFF"
+         profilePic = {props?.profilePic}
+         ctaText = {props?.feedAd?.cta_text}
          ctaPath = {props?.feedAd?.click_url}
+         userVerified = {props?.userVerified}
+         adBtnClickCb = {props?.adBtnClickCb}
       />
       
       <AdButton 
          vmaxAd
-         noShow={!!props?.vmaxAd}
-         setMuted = {props?.setMuted}
-         adBtnClickCb = {props?.adBtnClickCb}
-         CtaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
-         CtaColor = {props?.vmaxAd?.ctaColor}
-         ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath}
          id={props?.id}
+         noShow={!!props?.vmaxAd}
+         userName={props.userName}
+         setMuted = {props?.setMuted}
+         profilePic={props?.profilePic}
+         adBtnClickCb = {props?.adBtnClickCb}
          activeVideoId={props?.activeVideoId}
+         userVerified = {props?.userVerified}
+         ctaColor = {props?.vmaxAd?.ctaColor}
          ctaTrackers={props?.vmaxAd?.clicktrackers}
+         ctaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
+         ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath} 
       />
       
       <VideoSidebar
