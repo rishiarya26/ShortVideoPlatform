@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { appsflyerPixel } from "../../../analytics/appsflyer";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
 import CardRibbon from "../../card-ribbon";
@@ -6,9 +7,10 @@ import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId}) =>{
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId}) =>{
     useEffect(()=>{
         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+        appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
      },[productIdChange])
 
      const onProductInView =(entry)=>{
@@ -24,6 +26,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
 
        const onProductClick= ()=>{
         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+        appsflyerId && appsflyerPixel({type:'click', advertiser:shopName, appId:appsflyerId, uri:shopLink})
         window?.open(shopLink)
        }   
     return(

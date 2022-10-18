@@ -31,4 +31,5 @@ export const STORYBLOK_TOKEN = 'quNBuDdvpWQyR7qL35OGjwtt'
 export const STATIC_PAGE_CREATOR_KEY = '1EC97-25A91-DAA24-FF3CA4-4LD8D-OFB84';
 export const INDEX_TO_SHOW_LANG = 5;
 export const INDEX_TO_SHOW_LANG_IPHONE = 5;
+export const SITE_ID = "hipi"
  

@@ -335,6 +335,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
          />
          </div>
         })}
@@ -366,6 +367,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
          />
          </div>
          ))}
@@ -420,6 +422,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
          />
          </div>
           ))}
@@ -476,6 +479,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
            />
            </div>
           ))}
@@ -509,6 +513,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
          />
          </div>
         })}
@@ -545,6 +550,7 @@ const onProductChange = (id)=>{
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
            />
            </div>
           ))}

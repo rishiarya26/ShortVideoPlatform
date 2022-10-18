@@ -7,6 +7,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
+import { appsflyerPixel } from '../../analytics/appsflyer';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -20,7 +21,7 @@ function LabelHolder({label}){
   return <div className='bg-hipired text-10 rounded-2xl px-1 py-0.5 w-max relative bottom-2 left-1/2 transform -translate-x-1/2'>{label}</div>
 }
 
-const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show}) => {
+const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,appsflyerId}) => {
   return(
     <div className="relative flex flex-col">
       <div
@@ -38,6 +39,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show})
                 campaignId
               }
             );
+            appsflyerId && appsflyerPixel({type:'click',appId:appsflyerId,advertiser:getBrand(data?.product_url),uri:data?.product_url})
             window.open(data?.product_url);
         } else {
             toTrackMixpanel(
@@ -95,9 +97,9 @@ function AdCards({
     >
       {
         adCardsLength > 0 ? adCardsLength > 1 ? (
-          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show}/>
+          <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show} />
         ) : (
-          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show}/>
+          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show} appsflyerId={adCards[0]?.appsflyer_id || null}/>
         ):''
       }
     </div>

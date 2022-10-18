@@ -5,13 +5,15 @@ import fallbackImg from '../../../../public/images/fallback-charms.png'
 import CardRibbon from "../../card-ribbon";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
+import { appsflyerPixel } from "../../../analytics/appsflyer";
 
 const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId
 }) =>{
  
        useEffect(()=>{
           productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+          appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
        },[productIdChange])
  
        const onProductInView =(entry)=>{
@@ -27,6 +29,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
  
          const onProductClick= ()=>{
           toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+          appsflyerId && appsflyerPixel({type:'click', advertiser:shopName, appId:appsflyerId, uri:shopLink})
           window?.open(shopLink)
          }   
     const [show, setShow] = useState(false);
