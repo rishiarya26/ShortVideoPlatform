@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useSnackbar from "../../hooks/use-snackbar";
 import { uploadDeskVideo } from "../../sources/desk-upload";
 import { localStorage } from "../../utils/storage";
@@ -13,6 +13,7 @@ import StaticFooter from "../static-footer";
 import ClearDataPopup from "./data-clear-popup";
 import useDialog from "../../hooks/use-dialog";
 import styles from "./upload.module.css";
+import CicularProgress from "../commons/svgicons/circular-progress";
 
 const AllowedPermissionList = ["Comment", "Like", "Duet", "saveToDevice"];
 const AllowedUserList = ["Public", "Friends", "Private"];
@@ -36,14 +37,15 @@ const DeskUplaod = () => {
   const [showLanguageList, setShowLanguageList] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const [uploadingStatus, setUploadingStatus] = useState(false);
   const [source, setSource] = useState({ url: "", name: "" });
+  const [loading, setLoading] = useState(false);
   const [allowUser, setAllowUser] = useState({
     Comment: true,
     Like: true,
     Duet: true,
     saveToDevice: true,
   });
-  const [loading, setLoading] = useState(false);
 
   const handleCheckBox = (e, item) => {
     let { checked } = e.target;
@@ -51,6 +53,19 @@ const DeskUplaod = () => {
     else setAllowUser({ ...allowUser, [item]: false });
   };
 
+  const closePopup = () => {
+    setShowPermissionList(false);
+  };
+
+  const setS3UrlCb = (url) => {
+    url !== "" && setS3Url(url);
+  };
+
+  const showMessage = ({ message, type }) => {
+    showSnackbar({ message: message, type: type });
+  };
+
+  // ! reset permissions
   const resetFields = () => {
     CaptionInputRef.current.innerHTML = ""; // removing caption data
     videoInputRef.current.value = ""; // removing data from fileUpLOAD element
@@ -60,10 +75,10 @@ const DeskUplaod = () => {
     setSource({ ...source, url: "", name: "" });
     setAllowUser({
       ...allowUser,
-      Comment: false,
-      Like: false,
-      Duet: false,
-      saveToDevice: false,
+      Comment: true,
+      Like: true,
+      Duet: true,
+      saveToDevice: true,
     });
     setLanguage({ name: "", code: "" });
   };
@@ -77,29 +92,19 @@ const DeskUplaod = () => {
     });
   }
 
-  const closePopup = () => {
-    setShowPermissionList(false);
-  };
-
-  const setS3UrlCb = (url) => {
-    !!url && setS3Url(url);
-  };
-
-  const showMessage = ({ message, type }) => {
-    showSnackbar({ message: message, type: type });
-  };
-
   const submitVideoPost = async (e) => {
+    e.preventDefault();
+    
     if(language.name === '' || language.code === ""){
         showMessage({
-          message: "Kindly select a language before continuing",
+          message: "Please select video language",
           type: "waiting",
         });
         return false;
     }
 
-    setLoading(true)
-    e.preventDefault();
+    setLoading(true);
+
     let postData = {};
     let postVideoData = {};
     let videoOwnerObject = {};
@@ -226,6 +231,7 @@ const DeskUplaod = () => {
                 source={source}
                 setSource={setSource}
                 resetVideoData={resetVideoData}
+                setUploadingStatus={setUploadingStatus}
               />
             </div>
 
@@ -374,19 +380,16 @@ const DeskUplaod = () => {
 
                 <div className="flex items-center mt-4">
                   <button
-                    className={`${loading ? "cursor-not-allowed" : null} rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32`}
-                    onClick={loading ? null : ()=> showDialog('', ClearDataPopup,'extraSmall', { clearData:resetFields })}
+                    className={`${loading || uploadingStatus ? "cursor-not-allowed" : null} rounded text-sm font-semibold px-6 py-2 text-gray-500 border border-gray-300 min-w-32`}
+                    onClick={loading || uploadingStatus ? null : ()=> showDialog('', ClearDataPopup,'extraSmall', { clearData:resetFields })}
                   >
                     Discard
                   </button>
 
                   {loading && 
                     (<button disabled type="button" style={{backgroundColor:"#DF5A4E"}} className=" text-white rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4 flex justify-evenly items-center cursor-not-allowed">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Loading...
+                     <CicularProgress />
+                        Posting...
                     </button>)
                   }
                   
@@ -397,7 +400,6 @@ const DeskUplaod = () => {
                       } rounded text-sm font-semibold px-6 py-2  border border-gray-300 min-w-32 ml-4`}
                       disabled={!source.url}
                       onClick={(e) => submitVideoPost(e)}
-                      //onClick={language.name !== "" ? (e) => submitVideoPost(e): null}
                     >
                       Post
                     </button>)

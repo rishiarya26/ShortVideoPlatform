@@ -9,8 +9,9 @@ import CheckRoundBlack from "../../commons/svgicons/check-round-black";
 import UploadSvg from "../../commons/svgicons/upload";
 import ClearDataPopup from "../data-clear-popup";
 import styles from "../upload.module.css";
+// import { withBasePath } from "../../../config";
 
-function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
+function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData, setUploadingStatus}) {
   const { showSnackbar } = useSnackbar();
   const [videoLoader, setVideoLoader] = useState(false);
   const [progressBar, setPorgressBar] = useState(0);
@@ -37,21 +38,16 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
   const updateProgressBar = (value, file, fileName) => {
     if (value === 100) {
       setVideoLoader(false);
-      localStorage.set(
-        "UPLOAD_API_TIMESTAMP_END",
-        new Date()?.getTime() / 1000
-      );
-
+      localStorage.set("UPLOAD_API_TIMESTAMP_END",new Date()?.getTime() / 1000);
+      let s3Url = createS3Url(fileName);
+      const url = URL.createObjectURL(file);
+      if (s3Url) sets3Url(s3Url);
+      console.log(document.getElementById("videoElement"))
+      setSource({ ...source, url, name: fileName });
       showMessage({
         message: "video successfully uploaded.",
         type: "success",
       });
-
-      let s3Url = createS3Url(fileName);
-      if (s3Url) sets3Url(s3Url);
-
-      const url = URL.createObjectURL(file);
-      setSource({ ...source, url, name: fileName });
     }
     setPorgressBar(value);
   };
@@ -71,6 +67,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
 
       const { name } = file;
       setPorgressBar(0); //reset the progressbar
+      setUploadingStatus(true);
 
       localStorage.set("UPLOAD_API_TIMESTAMP_START", "");
       localStorage.set("UPLOAD_API_TIMESTAMP_END", "");
@@ -89,6 +86,7 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
             type: "error",
           });
         }
+        setUploadingStatus(false);
       } catch (e) {
         setVideoLoader(false);
         showMessage({
@@ -200,25 +198,32 @@ function FileUpload({ source, setSource, sets3Url, inputRef , resetVideoData}) {
         ) : !videoLoader || progressBar === 100 ? (
           <>
             <div
-              
-              className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full"
+              style={{height:"27.7vw"}}
+              className="flex flex-col justify-center items-center  rounded-lg border-gray-300 cursor-pointer w-full relative"
             >
+              {/* <img
+                src={withBasePath('images/PhoneScreen.png')}
+                className="w-12 h-12"
+                alt="playicon"
+              /> */}
               <video
+                id="videoElement"
                 onContextMenu={(e) => {
                   e.preventDefault();
                   return false;
                 }}
-                controlsList="nodownload"
-                className="VideoInput_video rounded-lg shadow-xl w-full h-full object-fill"
+                disablePictureInPicture
+                controlsList="nodownload nofullscreen noremoteplayback"
+                className={`VideoInput_video rounded-lg shadow-xl w-full h-full bg-gray-200`}
                 width="100%"
                 height="100vh"
-                controls={false}
+                controls={true}
                 loop
                 autoPlay
                 muted
                 playsInline
                 preload="auto"
-                objectfit="cover"
+                objectfit="cover" 
               >
                 <source src={`${source.url}`} type="video/mp4" />
               </video>

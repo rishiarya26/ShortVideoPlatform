@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import UserList from "../user-list";
 import debounce from "lodash.debounce";
 import { getUserSuggestions } from "../../../sources/explore/user-suggestion";
@@ -536,4 +536,4 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
   );
 }
 
-export default DeskCaption;
+export default memo(DeskCaption);
