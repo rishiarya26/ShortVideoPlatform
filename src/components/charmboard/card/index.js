@@ -8,13 +8,13 @@ import Img from "../../commons/image"
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId,appsflyerId, iosAppsflyerId}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory}) =>{
 
   
       useEffect(()=>{
                // console.log('uuu')
       //   console.log('A******',productIdChange=== id, appsflyerId)
-         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
          productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId})
       },[productIdChange])
 
@@ -30,7 +30,7 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
            });  
 
         const onProductClick= ()=>{
-         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
          const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink}) : null;
          console.log("finalLink",appsflyerLink)
          window?.open(appsflyerLink || shopLink)

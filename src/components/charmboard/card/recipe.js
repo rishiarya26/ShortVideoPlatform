@@ -7,11 +7,11 @@ import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId, iosAppsflyerId}) =>{
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory}) =>{
     useEffect(()=>{
         // console.log('uuu')
         // console.log('A******',productIdChange, id, appsflyerId)
-        productIdChange && productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+        productIdChange && productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
         productIdChange && productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId})
      },[productIdChange])
 
@@ -27,7 +27,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
           });  
 
        const onProductClick= ()=>{
-        toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+        toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
         const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink}) : null;
         console.log("finalLink",appsflyerLink)
         window?.open(appsflyerLink || shopLink)

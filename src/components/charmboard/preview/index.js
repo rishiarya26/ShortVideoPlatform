@@ -337,6 +337,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
         })}
@@ -370,6 +373,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
          ))}
@@ -426,6 +432,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
           ))}
@@ -484,6 +493,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
            />
            </div>
           ))}
@@ -519,6 +531,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
         })}
@@ -557,6 +572,9 @@ const onProductChange = (id)=>{
              campaignId={campaignIdResp}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
            />
            </div>
           ))}

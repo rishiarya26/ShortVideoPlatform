@@ -8,11 +8,11 @@ import useIntersect from "../../../hooks/use-intersect";
 import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 
 const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory
 }) =>{
  
        useEffect(()=>{
-          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
           appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId})
        },[productIdChange])
  
@@ -28,7 +28,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
             });  
  
          const onProductClick= ()=>{
-          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
           const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink}) : null;
           window?.open(appsflyerLink || shopLink)
          }   
