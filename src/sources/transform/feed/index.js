@@ -1,6 +1,6 @@
 import { transformModel, getMessage, isSuccess } from '../index';
 import { getNewObjectCopy } from '../../../utils/app';
-import { DEFAULT_ERROR_CODE, INDEX_TO_SHOW_LANG } from '../../../constants';
+import { DEFAULT_ERROR_CODE, INDEX_TO_SHOW_LANG, INDEX_TO_SHOW_LANG_IPHONE } from '../../../constants';
 import { getNetworkConnection } from '../../../utils/device-details';
 import { localStorage } from '../../../utils/storage';
 import { isObjectEmpty } from '../../../network/utils';
@@ -36,6 +36,10 @@ function transformSuccess(resp) {
 
     const device = getItem('device-type');
     const deviceType = getItem('device-info');
+    const indexToShowLang = {
+      android : INDEX_TO_SHOW_LANG,
+      ios : INDEX_TO_SHOW_LANG
+    }
    
     payload['http-status'] = resp['http-status'];
     payload.message = getMessage(data, msgMap);
@@ -117,7 +121,7 @@ function transformSuccess(resp) {
     const lang24ShowOnce = localStorage.get('lang-24-hr');
 
     if(!languagesSelected && data?.firstApiCall && lang24ShowOnce === 'false'){
-    payloadData?.splice(INDEX_TO_SHOW_LANG,0,{'data':'languageSlide'})
+    payloadData?.splice(indexToShowLang?.[deviceType],0,{'data':'languageSlide'})
     }}catch(e){
       console.error('issue in lang-select slide adding in transform')
     }

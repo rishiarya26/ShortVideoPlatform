@@ -104,7 +104,7 @@ const redirectToFeed = ()=>{
             <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
             <div onClick={()=>{
                toTrackMixpanel('cta',{name: 'Logout'})
-               show('Logout', LogoutPopup, 'small',{page:typeParam})}} className="flex items-center ">
+               show('Logout', LogoutPopup, 'small',{page:typeParam, showMessage})}} className="flex items-center ">
             <Logout/>
             <p className="text-base px-3">Logout</p>
             </div>

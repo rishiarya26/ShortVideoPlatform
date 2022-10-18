@@ -52,6 +52,7 @@ function Users({
   isFollow=false, userVerified
 
 }) {
+  const tabType = router?.query?.type;
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
@@ -79,15 +80,19 @@ function Users({
   //  timer = setTimeout(()=>{
   //   getVideoSchemaItems();
   //  },1000)
-
   //  return ()=>{clearTimeout(timer);}
   // },[])
-
 
   // async function showPopUp(){
   //   show('', detectDeviceModal, 'extraSmall');
   //   setIsFetching(false);
   // }
+
+  useEffect(() => {
+    if(tabType === "shoppable") {
+      setSelectedTab("shoppable");
+     }
+  },[])
 
   useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
@@ -149,6 +154,11 @@ function Users({
 
   const onTabChange = selected => {
     setSelectedTab(selected);
+    if(selected === "shoppable") {
+      router.replace(`/${userHandle}?type=shoppable`);
+    } else {
+      router.replace(`/${userHandle}`);
+    }
   };
 
   const onLikedVideosTab = selected => {

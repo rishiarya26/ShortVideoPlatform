@@ -215,10 +215,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
    </>,
    mobile : 
    <div className="flex flex-col px-4 pt-10">
-   <BackButton back={() =>  router && router?.push({
-     pathname: `/${ref}/phone`,
-     query: { option: 'otp', mobile }
-   })}
+   <BackButton back={() =>  router && router?.back()}
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
