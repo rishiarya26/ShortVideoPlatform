@@ -7,7 +7,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
-import { appsflyerPixel } from '../../analytics/appsflyer';
+import { appsflyerPixelClick } from '../../sources/appsflyer-pixel';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -39,8 +39,9 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 campaignId
               }
             );
-            data?.appsflyer_id && appsflyerPixel({type:'click',appId:data?.appsflyer_id,advertiser:getBrand(data?.product_url),uri:data?.product_url})
-            window.open(data?.product_url);
+            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url}) : null;
+            console.log("finalLink",appsflyerLink)
+            window.open(appsflyerLink || data?.product_url);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",

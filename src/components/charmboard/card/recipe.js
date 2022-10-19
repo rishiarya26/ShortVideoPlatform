@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { appsflyerPixel } from "../../../analytics/appsflyer";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
+import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId}) =>{
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId, iosAppsflyerId}) =>{
     useEffect(()=>{
         // console.log('uuu')
         // console.log('A******',productIdChange, id, appsflyerId)
         productIdChange && productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
-        productIdChange && productIdChange === id && appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
+        productIdChange && productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId})
      },[productIdChange])
 
      const onProductInView =(entry)=>{
@@ -28,8 +28,9 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
 
        const onProductClick= ()=>{
         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
-        appsflyerId && appsflyerPixel({type:'click', advertiser:shopName, appId:appsflyerId, uri:shopLink})
-        window?.open(shopLink)
+        const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink}) : null;
+        console.log("finalLink",appsflyerLink)
+        window?.open(appsflyerLink || shopLink)
        }   
     return(
     <>
@@ -47,8 +48,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                     <Img data={thumbnailProduct}/>
                </div>
                 <div onClick={()=>
-                        {  onProductClick()
-                            window?.open(shopLink)}} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
+                        {onProductClick()}} className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                     <Img data={thumbnail}/> 
                 </div>
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}

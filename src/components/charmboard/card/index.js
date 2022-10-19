@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { appsflyerPixel } from "../../../analytics/appsflyer";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
+import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId,appsflyerId}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId}) =>{
 
   
       useEffect(()=>{
                // console.log('uuu')
       //   console.log('A******',productIdChange=== id, appsflyerId)
          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
-         productIdChange === id && appsflyerId && appsflyerPixel({type:'impression', advertiser:shopName, appId:appsflyerId})
+         productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId})
       },[productIdChange])
 
       const onProductInView =(entry)=>{
@@ -31,8 +31,9 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
 
         const onProductClick= ()=>{
          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
-         appsflyerId && appsflyerPixel({type:'click', advertiser:shopName, appId:appsflyerId, uri:shopLink})
-         window?.open(shopLink)
+         const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink}) : null;
+         console.log("finalLink",appsflyerLink)
+         window?.open(appsflyerLink || shopLink)
         }  
  
 return(
