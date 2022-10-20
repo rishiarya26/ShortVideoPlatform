@@ -36,12 +36,17 @@ const DeskUplaod = () => {
   const [uploadingStatus, setUploadingStatus] = useState(false);
   const [source, setSource] = useState({ url: '', name: '' });
   const [loading, setLoading] = useState(false);
+  const [videoFileName, setFileName] = useState('');
   const [allowUser, setAllowUser] = useState({
     Comment: true,
     Like: true,
     Duet: true,
     saveToDevice: true,
   });
+
+  function setVideoFileName(value){
+    setFileName(value)
+  }
 
   const handleCheckBox = (e, item) => {
     let { checked } = e.target;
@@ -224,6 +229,8 @@ const DeskUplaod = () => {
                   setSource={setSource}
                   resetVideoData={resetVideoData}
                   setUploadingStatus={setUploadingStatus}
+                  videoFileName={videoFileName}
+                  setFileName={setVideoFileName}
                 />
               </div>
 
@@ -235,6 +242,8 @@ const DeskUplaod = () => {
                     InputRefCaption={CaptionInputRef}
                     showSuggestions={showSuggestions}
                     setShowSuggestions={setShowSuggestions}
+                    uploadingStatus={uploadingStatus}
+                    videoFileName={videoFileName}
                   />
                   <CustomSelect
                     tabIndex={2}

@@ -42,7 +42,15 @@ async function search(
 
 const optimisedSearch = debounce(search, 500);
 
-function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSuggestions, tabIndex}) {
+function DeskCaption({
+  InputRefCaption,
+  closePopup,
+  showSuggestions,
+  setShowSuggestions,
+  tabIndex,
+  uploadingStatus,
+  videoFileName  
+}) {
   const [showUserField, setShowUserField] = useState(false);
   const [suggestionListIndex, setSuggestionListIndex] = useState();
   const [userList, setUserList] = useState([]);
@@ -72,6 +80,27 @@ function DeskCaption({InputRefCaption, closePopup, showSuggestions, setShowSugge
     document.body.addEventListener('click', closeDrop);
     return () => document.body.removeEventListener('click', closeDrop);
   }, []);
+
+  useEffect(() =>{
+   
+    if(uploadingStatus){   
+      const fileName = videoFileName.split(".")[0] || "";
+      const input = InputRefCaption.current;
+      input.querySelectorAll('.current').forEach((el) => {
+        el.classList.remove('current');
+      });
+      let spanElemParent = document.createElement('span');
+      ;
+      spanElemParent.classList.add('emptySpan');
+      spanElemParent.classList.add('current');
+      spanElemParent.setAttribute('contentEditable', true);
+      spanElemParent.innerHTML = `${fileName}`;
+      input.innerHTML = input.innerHTML.replace(/(\s+)?.$/, '');
+      input?.appendChild(spanElemParent);
+      setCaptionLength(prevState => prevState + fileName?.length)
+      toFocus();
+    }
+  },[uploadingStatus])
 
   function closeDropdown() {
     setShowSuggestions(false);
