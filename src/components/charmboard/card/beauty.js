@@ -13,7 +13,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
  
        useEffect(()=>{
           productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
-          appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId})
+          productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId})
        },[productIdChange])
  
        const onProductInView =(entry)=>{
