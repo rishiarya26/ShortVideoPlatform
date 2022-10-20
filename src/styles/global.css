@@ -913,6 +913,13 @@ title:first-letter {
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
+
+  .box_shadow_2{
+    box-shadow: rgb(0 0 0 / 6%) 0px 2px 8px;
+    background-color: rgb(255, 255, 255);
+  }
+  
+
   .purple_light{
     color: #9c21aa;
   }
@@ -1235,4 +1242,10 @@ background-color:rgb(255 237 223);
   .iphone_small{
    display: none;
   }
+}
+
+.videoResponsiveWidth {
+  max-width: 263px;
+  height: 27.7vw;
+  max-height: 466px;
 }

@@ -19,11 +19,15 @@
   outline: 1px solid #d9d2d2;
 }
 .styledCheckbox:hover + label:before {
-  outline: 2px solid #f35429;
+  outline: 1px solid #f35429;
 }
-.styledCheckbox:focus + label:before {
+
+.styledCheckbox:checked + label:before {
+  outline: none
+}
+/* .styledCheckbox:focus + label:before {
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-}
+} */
 .styledCheckbox:checked + label:before {
   @apply bg-hipired;
 }
@@ -87,6 +91,10 @@
   box-shadow: 0 0 20px 5px #888;
 }
 
-.top60 {
-  top: 92%;
+.top20 {
+  top: 20%;
+}
+
+.underlineClass:hover {
+  text-decoration: underline;
 }

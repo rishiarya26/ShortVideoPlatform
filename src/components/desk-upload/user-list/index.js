@@ -3,7 +3,6 @@ import Close from "../../commons/svgicons/close-black";
 
 export default function UserList({
   optimisedSearch,
-  userList,
   setUserList,
   setLoading,
   setShowSuggestions,
@@ -14,8 +13,7 @@ export default function UserList({
   userListInputRef,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(userList, "userList");
-  // const inputRef = useRef(userListInputRef);
+
 
   useEffect(() => {
     if (userListInputRef.current) {
@@ -44,7 +42,7 @@ export default function UserList({
         className="w-full border-none focus:outline-none"
         value={searchTerm}
         onChange={handleChange}
-        placeholder="friends"
+        placeholder="Type userhandle to search"
         onClick={() => callback()}
       />
       <p
