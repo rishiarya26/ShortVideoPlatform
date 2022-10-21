@@ -7,7 +7,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
-import { appsflyerPixelClick } from '../../sources/appsflyer-pixel';
+import { appsflyerPixelClick, appsflyerPixelImp } from '../../sources/appsflyer-pixel';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -43,8 +43,9 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 mainCategory: data?.main_category
               }
             );
-            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url}) : null;
+            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
+            appsflyerLink && appsflyerPixelImp({ advertiser:getBrand(data?.product_url), appId:data?.appsflyer_id, productId:data?.card_id,comp:'Feed'})
             window.open(appsflyerLink || data?.product_url);
         } else {
             toTrackMixpanel(
