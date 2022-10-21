@@ -135,9 +135,25 @@ function FeedIphone({ router }) {
 // const notNowClick = ()=>{
 //   setShowAppBanner(false);
 // }
+
+const adImpressionCall =  (index = 0)=>{
+  if(toShowItems[index]?.adId && window !== undefined){
+    let adInfo = toShowItems?.[index]?.adId || {};
+    let {impression_url = null } = adInfo;
+    let timeStamp = Date.now();
+    try{
+      impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+    }catch(e){
+      console.error("Impression error: " + e);
+    }
+  }
+}
+
+
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
+        adImpressionCall();
         const mixpanelEvents = commonEvents();
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
         toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
@@ -256,12 +272,11 @@ function FeedIphone({ router }) {
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         try{
-          impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp}); 
+          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
           toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         }
        
-        event_url && await pushAdService({url: event_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
@@ -530,6 +545,7 @@ console.log('errorrr',e)
                 //Mixpanel
                 setInitialPlayStarted(false);
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+                adImpressionCall();
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
 

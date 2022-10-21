@@ -120,9 +120,23 @@ function Feed({ router }) {
     setShowAppBanner(null);
   }
 
+  const adImpressionCall =  (index = 0)=>{
+    if(toShowItems[index]?.adId && window !== undefined){
+      let adInfo = toShowItems?.[index]?.adId || {};
+      let {impression_url = null } = adInfo;
+      let timeStamp = Date.now();
+      try{
+        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+      }catch(e){
+        console.error("Impression error: " + e);
+      }
+    }
+  }
+
   useEffect(() => {
      setTimeout(()=>{
     if(initialLoadComplete === true){
+      adImpressionCall();
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
@@ -130,7 +144,7 @@ function Feed({ router }) {
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
     }
-  },1500);
+    },1500);
   }, [initialLoadComplete]);
 
   useEffect(()=>{    
@@ -242,13 +256,12 @@ function Feed({ router }) {
   const videoAdSessionsCalls = async (percentage) => {
     if(items[videoActiveIndex]?.adId && window !== undefined){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
-      let {impression_url = null, event_url = null } = adInfo;
+      let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       console.log(timeStamp, "timeStamp");
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         try{
-         impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
           toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
@@ -495,6 +508,8 @@ function Feed({ router }) {
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+                adImpressionCall(activeIndex);
+
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
