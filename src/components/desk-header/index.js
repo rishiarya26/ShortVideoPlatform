@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UploadPlusSvg from "../commons/svgicons/upload-plus";
+import ProfileSm from "../commons/svgicons/profile-small";
 
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
@@ -116,12 +117,16 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
              </div>
              }
            {showlogoutMenu && 
-            <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
+            <div className="absolute top-12 right-6 w-40 flex items-center cursor-pointer flex-col bg-white box_shadow_1 rounded-md p-2 ">
+            <div className="flex items-center border-b border-gray-300 w-full py-3 px-2">
+            <ProfileSm/>
+            <p className="text-sm px-3 font-semibold">View profile</p>
+            </div>
             <div onClick={()=>{
                toTrackMixpanel('cta',{name: 'Logout'})
-               show('Logout', LogoutPopup, 'small',{page:typeParam, showMessage})}} className="flex items-center ">
+               show('Logout', LogoutPopup, 'small',{page:typeParam, showMessage})}} className="flex items-center w-full py-3 px-2">
             <Logout/>
-            <p className="text-base px-3">Logout</p>
+            <p className="text-sm px-3 font-semibold">Logout</p>
             </div>
            </div>}
            </div>

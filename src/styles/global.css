@@ -1246,10 +1246,6 @@ background-color:rgb(255 237 223);
 
 .videoResponsiveWidth {
   max-width: 263px;
-  height: 27.7vw;
+  height: 32.3vw;
   max-height: 466px;
-}
-
-*:focus{
-  outline: 1px solid #5f5fb9;
 }

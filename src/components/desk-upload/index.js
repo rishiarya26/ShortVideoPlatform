@@ -238,7 +238,7 @@ const DeskUplaod = () => {
 
               {/* right section  */}
               <div className='flex w-9/12  bg-white pl-4'>
-                <div className='flex w-full flex-col px-8 flex-1'>
+                <div className='flex w-full flex-col px-2 flex-1'>
                   <DeskCaption
                     tabIndex={1}
                     InputRefCaption={CaptionInputRef}

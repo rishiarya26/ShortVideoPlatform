@@ -15,17 +15,15 @@ const messages = {
     <>
       <div className="flex justify-center items-center flex-col z-1">
         <p className="mt-4 text-center px-4 text-lg text-hipidblue font-semibold w-full">{messages?.[type]?.head}</p>
-        <p className="mt-2 mb-4 text-center px-4 text-gray-400 text-sm w-3/4">{messages?.[type]?.body}</p>
-        <hr  className='h-1 w-full text-gray-300'/>
+        <p className="mt-2 mb-4 text-center px-4 text-gray-400 text-sm w-full">{messages?.[type]?.body}</p>
         <div 
           onClick={() => {clearData();closePopUp();}}
-          className="p-4 text-hipired font-semibold text-base cursor-pointer w-full text-center">
+          className="px-4 py-3 text-hipired font-semibold text-base cursor-pointer w-full text-center border-b border-t border-gray-200 mt-2">
             {messages?.[type]?.ctaText?.top}
         </div>
-        <hr className='h-1 w-full text-gray-300' />
         <div 
           onClick={type === "videoCompletion" ? () => {viewProfile();closePopUp()} : ()=>{closePopUp()}}
-          className="p-4 text-hipidblue font-semibold text-base cursor-pointer w-full text-center">
+          className="px-4 py-3 text-hipidblue font-semibold text-base cursor-pointer w-full text-center">
             {messages?.[type]?.ctaText?.bottom}
         </div>
       </div>
