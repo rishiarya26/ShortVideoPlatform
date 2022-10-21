@@ -1249,3 +1249,7 @@ background-color:rgb(255 237 223);
   height: 27.7vw;
   max-height: 466px;
 }
+
+*:focus{
+  outline: 1px solid #5f5fb9;
+}

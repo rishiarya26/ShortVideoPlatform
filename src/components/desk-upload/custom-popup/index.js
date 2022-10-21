@@ -24,7 +24,7 @@ const messages = {
         </div>
         <hr className='h-1 w-full text-gray-300' />
         <div 
-          onClick={type === "videoCompletion" ? () => viewProfile() : ()=>{closePopUp()}}
+          onClick={type === "videoCompletion" ? () => {viewProfile();closePopUp()} : ()=>{closePopUp()}}
           className="p-4 text-hipidblue font-semibold text-base cursor-pointer w-full text-center">
             {messages?.[type]?.ctaText?.bottom}
         </div>

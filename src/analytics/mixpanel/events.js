@@ -223,6 +223,10 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
         track('Shopping Product Impression', globalCommonEvents)
        },
        'shoppableProductClicked' :  ()=>{
@@ -232,6 +236,10 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
         track('Shoppable Product Clicked', globalCommonEvents)
        },
        'monetisationProductImp' :  ()=>{
@@ -241,6 +249,10 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
        },
        'monetisationProductClick' :  ()=>{
@@ -250,6 +262,10 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      

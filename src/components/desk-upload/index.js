@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import useSnackbar from '../../hooks/use-snackbar';
-import { uploadDeskVideo } from '../../sources/desk-upload';
-import { localStorage } from '../../utils/storage';
-import { toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { languageCodes } from '../../../public/languages.json';
 import Header from '../desk-header';
 import DeskCaption from './desk-caption';
 import FileUpload from './file-upload';
@@ -12,7 +9,11 @@ import CustomPopUp from './custom-popup';
 import useDialog from '../../hooks/use-dialog';
 import CicularProgress from '../commons/svgicons/circular-progress';
 import CustomSelect from './custom-select';
-import { useRouter } from 'next/router';
+import styles from './upload.module.css';
+import { uploadDeskVideo } from '../../sources/desk-upload';
+import { localStorage } from '../../utils/storage';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { languageCodes } from '../../../public/languages.json';
 
 const AllowedPermissionList = ['Comment', 'Like', 'Duet', 'saveToDevice'];
 const AllowedUserList = ['Public', 'Friends', 'Private'];
@@ -43,6 +44,7 @@ const DeskUplaod = () => {
     Duet: true,
     saveToDevice: true,
   });
+  const [discard, setDiscard] = useState(false);
 
   function setVideoFileName(value){
     setFileName(value)
@@ -77,6 +79,7 @@ const DeskUplaod = () => {
       saveToDevice: true,
     });
     setLanguage({ name: '', code: '' });
+    setDiscard(true)
   };
 
   const resetVideoData = () => {
@@ -210,8 +213,7 @@ const DeskUplaod = () => {
     <div className='h-screen w-screen flex flex-col justify-between'>
       <Header />
       <div
-        style={{ backgroundColor: '#f8f8f8' }}
-        className='w-full flex justify-center items-center md:mt-16'
+        className={`w-full flex justify-center items-center md:mt-16 ${styles.backgroundGry}`}
       >
         <div className='flex w-feed box_shadow_2 my-4 mb-12 py-8 pb-12 px-12 flex-col rounded-md'>
           <h1 className='text-2xl font-semibold text-gray-800'>Upload video</h1>
@@ -244,6 +246,8 @@ const DeskUplaod = () => {
                     setShowSuggestions={setShowSuggestions}
                     uploadingStatus={uploadingStatus}
                     videoFileName={videoFileName}
+                    discard={discard}
+                    setDiscard={setDiscard}
                   />
                   <CustomSelect
                     tabIndex={2}
@@ -280,7 +284,9 @@ const DeskUplaod = () => {
                       onClick={
                         loading || uploadingStatus
                           ? null
-                          : () => showDialog('', CustomPopUp, 'xExtraSmall', {type:"discard",clearData: resetFields})
+                          : () => {
+                            showDialog('', CustomPopUp, 'xExtraSmall', {type:"discard",clearData: resetFields});
+                          } 
                       }
                     >
                       Discard

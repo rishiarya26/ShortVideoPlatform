@@ -141,7 +141,7 @@ const LanguageSelection = ({activeVideoIndex})=>{
               <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>onLangSelect(item?.code)}>
                 <p className="text-white text-sm font-semibold absolute top-1 left-2 z-10">{item?.lang}</p>
                 <img className="z-20" src={withBasePath(item?.img)}/>
-                {selectedLang?.includes(item?.code) && <div className="absolute z-30 w-full h-full bg-black opacity-60 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>onLangSelect(item?.code)}><Check/></div>}
+                {selectedLang?.includes(item?.code) && <div className="absolute z-30 w-full h-full bg-black opacity-40 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>onLangSelect(item?.code)}><Check/></div>}
               </div>))
               }
           </div>  

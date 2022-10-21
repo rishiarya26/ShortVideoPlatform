@@ -98,3 +98,7 @@
 .underlineClass:hover {
   text-decoration: underline;
 }
+
+.backgroundGry {
+  background-color: #f8f8f8;
+}
