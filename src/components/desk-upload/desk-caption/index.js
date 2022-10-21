@@ -49,7 +49,9 @@ function DeskCaption({
   setShowSuggestions,
   tabIndex,
   uploadingStatus,
-  videoFileName  
+  videoFileName,
+  discard,
+  setDiscard
 }) {
   const [showUserField, setShowUserField] = useState(false);
   const [suggestionListIndex, setSuggestionListIndex] = useState();
@@ -82,7 +84,6 @@ function DeskCaption({
   }, []);
 
   useEffect(() =>{
-   
     if(uploadingStatus){   
       const fileName = videoFileName.split(".")[0] || "";
       const input = InputRefCaption.current;
@@ -101,6 +102,13 @@ function DeskCaption({
       toFocus();
     }
   },[uploadingStatus])
+
+  useEffect(() => {
+    if(discard) {
+      setCaptionLength(0);
+      setDiscard(false);
+    }
+  },[discard])
 
   function closeDropdown() {
     setShowSuggestions(false);
@@ -183,25 +191,7 @@ function DeskCaption({
           }
         }
       }, 200);
-      // if (!hasEmptySpan?.length > 0) {
-      //   let spanElemParent = document.createElement('span');
-      //   ;
-      //   spanElemParent.classList.add('emptySpan');
-      //   spanElemParent.setAttribute('contentEditable', true);
-      //   spanElemParent.innerHTML = `&#160`;
-      //   //input.innerHTML = input.innerHTML.replace(/\&nbsp;$/g, '');
-      //   input?.appendChild(spanElemParent);
-      //   toFocus();
-      // }
     }
-
-    // if (/[a-zA-Z-_ ]/.test(e.key)) {
-    //   let currentChild = input.querySelector('.current');
-    //   currentChild.innerHTML = `${currentChild.innerHTML}${e.key}`;
-    //   setTimeout(() => {
-    //     toFocus();
-    //   }, 200);
-    // }
   };
 
   const handleKeyUp = (e) => {
@@ -219,12 +209,6 @@ function DeskCaption({
     if(input.innerHTML === '') {
       setCaptionLength(0)
     }
-    
-    // if(captionLength >= 200) {
-    //   return false;
-    // }
-  
-
     if(event?.which === 32){
 
     }
@@ -448,7 +432,7 @@ function DeskCaption({
             {!showUserField ? "Caption" : "@Friends"}
         </p>
         {!showUserField && (
-          <p className='text-base font-thin text-gray-400 pt-2'>{captionLength}/200</p>
+          <p className=' text-sm font-thin text-gray-700 pt-2'>{captionLength} / 200</p>
         )}
       </div>
       <div
@@ -492,7 +476,7 @@ function DeskCaption({
         ) : null}
  
         {!showUserField && (
-          <div className='absolute right-4 top-3 font-semibold text-lg'>
+          <div className='absolute right-4 top-3 text-lg w-10 flex items-center justify-between'>
             {' '}
             <span className='cursor-pointer' onClick={friendsearch}>@</span>{" "}
             <span className='cursor-pointer' onClick={hashtagSearch}>#</span>
