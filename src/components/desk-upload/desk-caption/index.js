@@ -448,7 +448,7 @@ function DeskCaption({
             {!showUserField ? "Caption" : "@Friends"}
         </p>
         {!showUserField && (
-          <p className='text-base font-thin text-gray-400 pt-2'>{captionLength}/200</p>
+          <p className='text-sm text-gray-400 pt-2'>{captionLength}/200</p>
         )}
       </div>
       <div

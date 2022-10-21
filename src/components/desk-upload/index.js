@@ -213,7 +213,7 @@ const DeskUplaod = () => {
         style={{ backgroundColor: '#f8f8f8' }}
         className='w-full flex justify-center items-center md:mt-16'
       >
-        <div className='flex w-feed box_shadow_2 my-4 py-8 pb-12 px-12 flex-col rounded-md'>
+        <div className='flex w-feed box_shadow_2 my-4 mb-12 py-8 pb-12 px-12 flex-col rounded-md'>
           <h1 className='text-2xl font-semibold text-gray-800'>Upload video</h1>
           <p className='text-md font-base text-gray-400 pt-2'>
             Post a video to your account

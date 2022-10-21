@@ -159,13 +159,13 @@ function FileUpload({
               <span className='text-sm font-normal text-gray-400 mt-8'>
                 MP4, WebM, Mkv, Avi & Mov
               </span>
-              <span className='text-sm font-normal text-gray-400 mt-4'>
+              <span className='text-sm font-normal text-gray-400 mt-2'>
                 720x1280 resolution or higher
               </span>
-              <span className='text-sm font-normal text-gray-400 mt-4'>
+              <span className='text-sm font-normal text-gray-400 mt-2'>
                 Up to 90 seconds
               </span>
-              <span className='text-sm font-normal text-gray-400 mt-4'>
+              <span className='text-sm font-normal text-gray-400 mt-2'>
                 Less than 1 GB
               </span>
               <div className='rounded text-sm font-semibold px-8 p-2 bg-hipired text-white mt-8'>
