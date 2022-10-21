@@ -40,6 +40,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
     const tokens = localStorage?.get('tokens') || null;
     let isLoggedIn = useAuth('false','true');
+    const userId = localStorage.get('user-id');
 
     useEffect(()=>{
       if(tokens){
@@ -120,7 +121,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
             <div className="absolute top-12 right-6 w-40 flex items-center cursor-pointer flex-col bg-white box_shadow_1 rounded-md p-2 ">
             <div className="flex items-center border-b border-gray-300 w-full py-3 px-2">
             <ProfileSm/>
-            <p className="text-sm px-3 font-semibold">View profile</p>
+            <p className="text-sm px-3 font-semibold" onClick={() => router.push(`/${userId}`)}>View profile</p>
             </div>
             <div onClick={()=>{
                toTrackMixpanel('cta',{name: 'Logout'})

@@ -474,7 +474,7 @@ function Feed({ router }) {
                   activeIndex, slides
                 } = swiper;
                 localStorage.set("adArr",[]);
-                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set("adArrMixPanel",[]);
                 setInitialPlayStarted(false);
               }}
               onSlideChange={swiperCore => {

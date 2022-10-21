@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DownArrowBlack from '../../commons/svgicons/down-arrow-black';
 import UpArrowBlack from '../../commons/svgicons/up-arrow-black';
 import styles from '../upload.module.css';
@@ -90,7 +90,7 @@ function CustomSelect({type, caption, data, value, setValue, setShowSuggestions,
 
   return (
     <div className={`${type === 'editPermissions'? 'max-w-md' : 'max-w-xs'} flex flex-col relative transition duration-500 ease-in-out mb-4`}>
-      <p className={`text-base font-medium text-gray-700 pb-2 pl-1 ${type === 'language' ? 'requiredField': null}`}>
+      <p className={`text-base font-medium text-gray-700 pb-2 pl-1 ${type === 'language' ? 'requiredField': ""}`}>
         {caption}
       </p>
       <button
