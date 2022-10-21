@@ -120,7 +120,7 @@ function Feed({ router }) {
     setShowAppBanner(null);
   }
 
-  const adImpressionCall =  (index = 0)=>{
+  const adImpression =  (index = 0)=>{
     if(toShowItems[index]?.adId && window !== undefined){
       let adInfo = toShowItems?.[index]?.adId || {};
       let {impression_url = null } = adInfo;
@@ -136,7 +136,7 @@ function Feed({ router }) {
   useEffect(() => {
      setTimeout(()=>{
     if(initialLoadComplete === true){
-      adImpressionCall();
+      adImpression();
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
@@ -508,7 +508,7 @@ function Feed({ router }) {
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-                adImpressionCall(activeIndex);
+                adImpression(activeIndex);
 
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])

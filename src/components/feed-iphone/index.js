@@ -136,7 +136,7 @@ function FeedIphone({ router }) {
 //   setShowAppBanner(false);
 // }
 
-const adImpressionCall =  (index = 0)=>{
+const adImpression =  (index = 0)=>{
   if(toShowItems[index]?.adId && window !== undefined){
     let adInfo = toShowItems?.[index]?.adId || {};
     let {impression_url = null } = adInfo;
@@ -153,7 +153,7 @@ const adImpressionCall =  (index = 0)=>{
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
-        adImpressionCall();
+        adImpression();
         const mixpanelEvents = commonEvents();
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
         toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
@@ -545,7 +545,7 @@ console.log('errorrr',e)
                 //Mixpanel
                 setInitialPlayStarted(false);
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
-                adImpressionCall(activeIndex);
+                adImpression(activeIndex);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
 
