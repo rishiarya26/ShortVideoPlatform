@@ -267,7 +267,7 @@ const adImpression =  (index = 0)=>{
   const videoAdSessionsCalls = async(percentage) => {
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
-      let {impression_url = null, event_url = null } = adInfo;
+      let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
