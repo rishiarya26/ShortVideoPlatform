@@ -365,7 +365,7 @@ const handleSaveMoments = () =>{
       {canShop && (!profileFeed
         &&(
           adCards?.monitisation ?
-          <div  style={{height: "90px", width: "136px"}}>
+          <div  style={{height: "90px", width: "156px"}}>
             <AdCards
             adCards={adCards?.monitisationCardArray}
             videoId={activeVideoId}

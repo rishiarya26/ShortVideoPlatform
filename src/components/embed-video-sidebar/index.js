@@ -85,7 +85,7 @@ const router = useRouter();
         <Share />
         <p className="text-sm text-center">Share</p>
       </div>
-      <div style={{width: "136px", height: "90px"}}>
+      <div style={{width: "156px", height: "90px"}}>
           {props.adData?.monitisation &&
             <AdCards
             videoId={props.videoId}
