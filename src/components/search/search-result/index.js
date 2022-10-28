@@ -12,6 +12,7 @@ import { trimHash } from '../../../utils/string';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import { DISCOVER_SEARCH_RESULTS, SEARCH_EVENT } from '../../../constants';
 import { toTrackReco } from '../../../analytics/view-events';
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
 
 function SearchResult({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,6 +26,7 @@ function SearchResult({router}) {
     item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item);
     toTrackMixpanel('screenView',{pageName:DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]})
+    toTrackClevertap('screenView',{pageName:DISCOVER_SEARCH_RESULTS}, {tabName: items?.display?.[selectedIndex]})
   },[])
 
   useEffect(()=>{

@@ -29,6 +29,7 @@ import OpenAppStrip from '../commons/user-experience';
 import { isObjectEmpty } from '../../network/utils';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -82,6 +83,7 @@ function SearchFeed({ router }) {
     // fbq.event('Screen View')
     // trackEvent('Screen_View',{'Page Name' :'Search Feed'})
     toTrackFirebase('screenView',{'page':'Search Feed'});
+    toTrackClevertap('screenView', {pageName});
     ToTrackFbEvents('screenView')
     track('Screen View',mixpanelEvents );
   }, []);
@@ -111,6 +113,7 @@ function SearchFeed({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
+      toTrackClevertap('play', {pageName},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -165,6 +168,7 @@ function SearchFeed({ router }) {
       /********** Mixpanel ***********/
       if(currentTime >= duration-0.2){
         toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+        toTrackClevertap('watchTime', items?.[videoActiveIndex],{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
         toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
 
         toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
@@ -324,6 +328,7 @@ function SearchFeed({ router }) {
             setSeekedPercentage(0)
             setInitialPlayStarted(false);
             toTrackMixpanel('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+            toTrackClevertap('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
             toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
             ToTrackFbEvents('watchTime');
             //fbq.event('watchTime')

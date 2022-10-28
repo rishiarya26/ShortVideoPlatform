@@ -24,6 +24,7 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { trimHash } from '../../utils/string';
 import {specialHashtagSeo} from '../../utils/seo/index'
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -71,6 +72,7 @@ function HashTag({router}) {
       // fbq.event('Screen View')
       // trackEvent('Screen_View',{'Page Name' :'Hashtag'})
       toTrackMixpanel('screenView',{pageName:pageName,hashtagName:trimHash(item)})
+      toTrackClevertap('screenView',{pageName:pageName,hashtagName:trimHash(item)})
     },[500])
     window.onunload = function () {
       window?.scrollTo(0, 1);

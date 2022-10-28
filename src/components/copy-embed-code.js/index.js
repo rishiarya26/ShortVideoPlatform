@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 import { CopyToClipBoard } from '../../utils/web';
 
 const CopyEmbedCode = ({ videoId = '', onEmbedCopy }) => {
@@ -7,6 +8,7 @@ const CopyEmbedCode = ({ videoId = '', onEmbedCopy }) => {
   const copy = () => {
     CopyToClipBoard(embedCode);
     onEmbedCopy();
+    toTrackClevertap("popupCta", {pageName: "embed"}, {name: 'Embed Code', ctaName: 'Copy Code'})
   };
 
   return (

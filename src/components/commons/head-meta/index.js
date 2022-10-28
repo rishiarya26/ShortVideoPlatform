@@ -4,6 +4,7 @@ import useTranslation from '../../../hooks/use-translation';
 import appVersion from '../../../../app-version';
 import { withBasePath } from '../../../config';
 import { SeoMeta } from './seo-meta';
+import { FB_PIXEL_ID } from '../../../analytics/fb-pixel';
 
 function HeadMeta() {
   const APP_NAME = 'hipi Starter Kit';
@@ -14,7 +15,7 @@ function HeadMeta() {
     <>
       <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
       <SeoMeta />
-      <meta charSet="utf-8" />
+      {/* <meta charSet="utf-8" /> */}
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       {/* <link rel="preconnect" href="https://hipigwapi.zee5.com"/> */}
@@ -193,6 +194,65 @@ function HeadMeta() {
       <link href={withBasePath('images/hipi_logo_v01.png')} rel="apple-touch-icon-precomposed" sizes="57x57" />
 
       <link rel="shortcut icon" href={withBasePath('/icons/favicon.ico')} />
+
+      <script
+          type='text/javascript'
+          async
+          dangerouslySetInnerHTML = {{
+            __html: `var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[], region:'in1'};
+
+                    clevertap.account.push({"id": "TEST-KK8-65R-9Z6Z"});
+                    clevertap.privacy.push({optOut: false}); //set the flag to true, if the user of the device opts out of sharing their data
+                    clevertap.privacy.push({useIP: false}); //set the flag to true, if the user agrees to share their IP data
+                    (function () {
+                            var wzrk = document.createElement('script');
+                            wzrk.type = 'text/javascript';
+                            wzrk.async = true;
+                            wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(wzrk, s);
+                      })();`
+            }}/>
+            {/* <script
+            type='text/javascript'
+            async
+            dangerouslySetInnerHTML={{
+              __html: `var notificationObj;
+              window.parent.clevertap.popupCallback = (notificationData) => {
+              notificationObj = notificationData;
+              };`
+            }}/> */}
+             <script
+                async
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    !function(f,b,e,v,n,t,s)
+                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)}(window, document,'script',
+                    'https://connect.facebook.net/en_US/fbevents.js');
+                    fbq('init', ${FB_PIXEL_ID});
+                  `,
+        }}
+      />
+          <script
+              async
+              dangerouslySetInnerHTML={{
+                __html: `
+                _linkedin_partner_id = "4069492"; 
+                window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
+                window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
+                (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} 
+                var s = document.getElementsByTagName("script")[0]; 
+                var b = document.createElement("script"); b.type = "text/javascript";b.async = true; 
+                b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
+                s.parentNode.insertBefore(b, s);})(window.lintrk);
+                `,
+        }}
+      />
 
     </>
   );

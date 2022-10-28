@@ -1,3 +1,4 @@
+import { toTrackClevertap } from "../analytics/clevertap/events";
 import { ToTrackFbEvents } from "../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../analytics/firebase/events";
 import { toTrackMixpanel } from "../analytics/mixpanel/events";
@@ -56,16 +57,19 @@ const callViewEvent = (videosViewed)=>{
   console.log("MIX- checking...", videosViewed)
   if(videosViewed === 5){
     toTrackMixpanel('videosCompleted5')
+    toTrackClevertap('videosCompleted5')
     toTrackFirebase('videosCompleted5')
     ToTrackFbEvents('videosCompleted5')
     }
     if(videosViewed === 10){
       toTrackMixpanel('videosCompleted10')
+      toTrackClevertap('videosCompleted10')
       toTrackFirebase('videosCompleted10')
       ToTrackFbEvents('videosCompleted10')
     }
     if(videosViewed === 15){
     toTrackMixpanel('videosCompleted15')
+    toTrackClevertap('videosCompleted15')
     toTrackFirebase('videosCompleted15')
     ToTrackFbEvents('videosCompleted15')
     }

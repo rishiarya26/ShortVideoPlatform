@@ -1151,3 +1151,54 @@ background-color:rgb(255 237 223);
    display: none;
   }
 }
+
+
+
+/* Start of clevertap notification styles */
+.wzrk-powered{
+  display: none;
+}
+.wzrk-alert.wiz-show-animate {
+  @apply rounded-lg;
+  position: fixed !important;
+  background: white !important;
+  top: unset !important;
+  right: 10px !important;
+  bottom: 10px !important;
+  padding: 15px 15px !important;
+}
+#wzrk-cancel{
+  @apply text-xs md:text-base text-gray-800;
+  background-color: white !important;
+}
+#wzrk-confirm {
+  @apply text-sm md:text-base text-white font-semibold;
+  background-color: #d21404 !important;
+}
+.wzrk-alert-heading {
+  /* @apply text-xl font-semibold; */
+  @apply text-lg font-bold px-2 text-gray-800;
+}
+.wzrl-alert-body {
+  @apply text-center mt-2 text-xs text-gray-700;
+}
+@media screen and (max-width: 640px) {
+  .wzrk-alert.wiz-show-animate {
+    left: 50% !important;
+    bottom: unset !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+    @apply w-3/4;
+    padding: 16px 16px !important;
+  }
+  #wzrk-cancel, #wzrk-confirm{
+    width: 100%;
+    margin: 0px !important;
+  }
+  .wzrk-button-container{
+    @apply mx-2 px-4;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+/* End of clevertap notification styles */

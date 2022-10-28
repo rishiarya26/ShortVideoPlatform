@@ -18,6 +18,7 @@ import CircularLoaderSearch from '../commons/circular-loader-search';
 import usePreviousValue from '../../hooks/use-previous';
 import VideoUnavailable from '../video-unavailable';
 import SnackCenter from '../commons/snack-bar-center';
+import { webPush } from '../../analytics/clevertap';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
@@ -27,6 +28,7 @@ const LoadComp = () => (<Loading />);
   const [muted, setMuted] = useState(true)
   const [fetchState, setFetchState] = useState('pending');
   const [activeIndex, setActiveIndex] = useState();
+  const [activeFeedIndex, setActiveFeedIndex] = useState();
   const [hasMore, setHasMore] = useState(true);
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [videoDetailData, setVideoDetailData] = useState({})
@@ -36,6 +38,10 @@ const LoadComp = () => (<Loading />);
   const [tokens, setTokens] = useState(localStorage.get('tokens') || false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+
+  const updateActiveFeedIndex = (id) => {
+    setActiveFeedIndex(id);
+  }
 
   const checkNoSound =()=>{
     if(!items?.[activeIndex]?.videoSound){
@@ -58,6 +64,12 @@ const LoadComp = () => (<Loading />);
   const dataFetcherWLogin = () => getHomeFeedWLogin({ type: id,videoId:videoId, firstApiCall:firstApiCall, campaign_id:campaign_id});
 
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
+
+  useEffect(() => {
+    if(activeFeedIndex > 8) {
+      webPush();
+    }
+  }, [activeFeedIndex])
 
   useEffect(()=>{console.log("items changed to - ",items)},[items])
 
@@ -231,35 +243,36 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
  endMessage={<h4>Error</h4>}
 >
      {items.map((item,id)=>
-    <span key={id} ref={refs[id]}>
-        <Video 
-         index={id} 
-         userName={item?.userName} 
-         likesCount={item?.likesCount} 
-         music_title={item?.music_title} 
-         userProfilePicUrl={item?.userProfilePicUrl} 
-         url={item?.video_url} 
-         firstFrame={item?.firstFrame} 
-         muted={item?.videoSound === false ? true : muted}
-         toggleMute={toggleMute} 
-         firstName={item?.firstName} 
-         lastName={item?.lastName} 
-         description={item?.content_description} 
-         updateActiveIndex={updateActiveIndex} 
-         showVideoDetail={showVideoDetail}
-         shareCount={item?.shareCount || null}
-         commentCount={item?.commentCount || null}
-         videoId={item?.content_id}
-         socialId={item?.getSocialId}
-         userVerified = {item?.verified}
-         convivaItemInfo={()=>convivaItemInfo(item)}
-         videoSound={item?.videoSound}
-         noSound={noSound}
-         activeIndex={activeIndex}
-         checkNoSound={checkNoSound}
-         fetchState={fetchState}
-         />
-    </span>
+     <span key={id} ref={refs[id]}>
+          <Video 
+          index={id} 
+          userName={item?.userName} 
+          likesCount={item?.likesCount} 
+          music_title={item?.music_title} 
+          userProfilePicUrl={item?.userProfilePicUrl} 
+          url={item?.video_url} 
+          firstFrame={item?.firstFrame} 
+          muted={item?.videoSound === false ? true : muted}
+          toggleMute={toggleMute} 
+          firstName={item?.firstName} 
+          lastName={item?.lastName} 
+          description={item?.content_description} 
+          updateActiveIndex={updateActiveIndex} 
+          showVideoDetail={showVideoDetail}
+          shareCount={item?.shareCount || null}
+          commentCount={item?.commentCount || null}
+          videoId={item?.content_id}
+          socialId={item?.getSocialId}
+          userVerified = {item?.verified}
+          convivaItemInfo={()=>convivaItemInfo(item)}
+          videoSound={item?.videoSound}
+          noSound={noSound}
+          activeIndex={activeIndex}
+          checkNoSound={checkNoSound}
+          fetchState={fetchState}
+          updateActiveFeedIndex={updateActiveFeedIndex}
+          />
+      </span>
      )}
 </InfiniteScroll>
 : <div className=' w-full flex justify-center p-28 text-gray-600 items-center'>No Videos Found</div>}

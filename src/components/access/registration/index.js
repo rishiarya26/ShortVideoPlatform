@@ -13,6 +13,7 @@ import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
 import useSnackbar from '../../../hooks/use-snackbar';
 import * as fbq from '../../../analytics/fb-pixel'
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
 
 const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
 
@@ -133,6 +134,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     try {
       const methodMixpanel = data?.type && data.type === 'email' ? 'email' : data.type === 'mobile' && 'phone';
       toTrackMixpanel('signupInitiated',{method : methodMixpanel, pageName:'signup'})
+      toTrackClevertap('signupInitiated',{method : methodMixpanel, pageName:'signup'})
       const response = await registerUser(data);
       console.log("user registered",response.status)
       // console.log("suces rep",response)

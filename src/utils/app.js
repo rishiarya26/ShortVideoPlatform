@@ -4,6 +4,7 @@ import { setItem } from './cookie';
 import { GUEST_TOKEN, NO_SUPPORT } from '../constants';
 import { toTrackMixpanel } from '../analytics/mixpanel/events';
 import { track } from '../analytics';
+import { toTrackClevertap } from '../analytics/clevertap/events';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
@@ -52,9 +53,17 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
    profile : ''
  }
 
+ const clevertap = {
+  video : toTrackClevertap &&  toTrackClevertap('share',{pageName:pageName, tabName:tabName && tabName},{content_id:id, userId:creatorId, userName:userName }),
+  profile : ''
+ }
+
   if (navigator.share) {
    try{ 
-   type && mixpanel[type];
+   if(type) {
+    mixpanel[type];
+    clevertap[type];
+   }
     const url = document?.location?.href;
     console.log("url",url)
     let domain = (new URL(url));

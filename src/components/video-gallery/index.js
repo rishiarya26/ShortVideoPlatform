@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackReco } from '../../analytics/view-events';
 import { DISCOVER_SEARCH_RESULTS } from '../../constants';
@@ -93,6 +94,7 @@ export default function VideoGallery({
                ? ()=> {
                 try{
                   toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Videos'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
+                  toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Videos'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
                   toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
                  }catch(e){
                    console.error('search result click',e)

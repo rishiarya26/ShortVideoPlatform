@@ -8,6 +8,7 @@ import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
 import { appsflyerPixelClick, appsflyerPixelImp } from '../../sources/appsflyer-pixel';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -48,6 +49,17 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
             const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
             appsflyerLink && appsflyerPixelImp({ advertiser:getBrand(data?.product_url), appId:data?.appsflyer_id, productId:data?.card_id,comp:'Feed'})
+            toTrackClevertap(
+              "monetisationProductClick",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: data?.card_id,
+                productUrl: data?.product_url,
+                brandName: getBrand(data?.product_url),
+                campaignId
+              }
+            );
             window.open(appsflyerLink || data?.product_url);
         } else {
             toTrackMixpanel(
@@ -63,6 +75,17 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 subCategory: data?.sub_category,
                 subSubCategory: data?.subsub_category,
                 mainCategory: data?.main_category
+              }
+            );
+            toTrackClevertap(
+              "monetisationProductClick",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: data?.card_id,
+                productUrl: data?.product_url,
+                brandName: getBrand(data?.product_url),
+                campaignId
               }
             );
             show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id});

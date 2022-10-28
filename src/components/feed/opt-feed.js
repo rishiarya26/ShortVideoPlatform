@@ -39,6 +39,7 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up';
 import { viewEvents } from '../../sources/social';
 import { viewEventsCall } from '../../analytics/view-events';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 // import {sessionStorage} from "../../utils/storage"
  
@@ -128,6 +129,7 @@ function Feed({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel(videoActiveIndex,'play')
+      toTrackClevertap(videoActiveIndex,'play')
       viewEventsCall(activeVideoId, 'user_video_start');
     }
   },[initialPlayStarted])
@@ -195,6 +197,7 @@ function Feed({ router }) {
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
        toTrackMixpanel(videoActiveIndex,'watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+       toTrackClevertap('watchTime',items?.[videoActiveIndex] ,{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
        toTrackMixpanel(videoActiveIndex,'replay',{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
       //  viewEventsCall(activeVideoId, 'completed');

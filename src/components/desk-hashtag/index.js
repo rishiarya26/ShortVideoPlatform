@@ -33,6 +33,7 @@ import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -176,6 +177,7 @@ function DeskHashtag({
       // fbq.event('Screen View');
       //trackEvent('Screen_View',{'Page Name' :'Hashtag'});
       ToTrackFbEvents('screenView');
+      toTrackClevertap('screenView', {pageName: 'Hashtag'});
       toTrackFirebase('screenView',{'page' :'Hashtag'});
       track('Screen View',mixpanelEvents );
     },500);

@@ -7,6 +7,7 @@ import Close from '../commons/svgicons/close-black';
 import { getItem } from '../../utils/cookie';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { useEffect } from 'react';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const router= useRouter();
@@ -16,6 +17,7 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   useEffect(()=>{
    try{
       toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Signup'})
+      toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Signup'})
     }catch(e){
       console.error('mixpanel - signup')
     }
@@ -24,7 +26,8 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
   const chooseComp = {
     mobile :   
       <div onClick={()=>{
-        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:'Signup',ctaName:'Phone or Email',elemant:'Phone or Email'})
+        toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Signup',ctaName:'Phone or Email',elemant:'Phone or Email'})
+        toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Signup',ctaName:'Phone or Email',elemant:'Phone or Email'})
         router && router.push('/signup/phone')}}>
       <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>

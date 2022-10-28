@@ -28,6 +28,7 @@ import { videoSchema } from '../../utils/schema';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Verified from '../commons/svgicons/verified';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 // import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
@@ -138,11 +139,13 @@ function Users({
   useEffect(() => {
     setTimeout(()=>{
       toTrackFirebase('screenView', {'page':'Profile'});
+      // toTrack('Screen View', {pageName: 'Profile'});
       ToTrackFbEvents('screenView');
       // fbq.event('Screen View')
       // trackEvent('Screen_View',{'Page Name' :'Profile'})
       if(type === 'others'){
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName},{userId:id, userName:userHandle})
+        toTrackClevertap('screenView',{pageName:pageName, tabName:tabName},{userId:id, userName:userHandle})
       }
     },500);
   }, []);
@@ -188,8 +191,10 @@ function Users({
     if(response){
       if(isFollowing){
         toTrackMixpanel('unFollow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id})
+        toTrackClevertap('unFollow',{pageName:pageName,tabName:tabName},{userName:userHandle, userId:id})
       }else{
         toTrackMixpanel('follow',{pageName:pageName,tabName:tabName},{userName: userHandle, userId:id});
+        toTrackClevertap('follow',{pageName:pageName,tabName:tabName},{userName: userHandle, userId:id});
       }  
      setIsFollowing(!isFollowing);
   } 

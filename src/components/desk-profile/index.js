@@ -29,6 +29,7 @@ import UserTab from '../commons/tabs/desk-user-tab';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { videoSchema } from '../../utils/schema';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const detectDeviceModal = dynamic(() => import('../open-in-app'),{
   loading: () => <div />,
@@ -193,6 +194,7 @@ function DeskUsers({
       // trackEvent('Screen_View',{'Page Name' :'Profile'})
       ToTrackFbEvents('screenView');
       toTrackFirebase('screenView',{'page' :'Profile'});
+      toTrackClevertap('screenView', {pageName: "Profile"});
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

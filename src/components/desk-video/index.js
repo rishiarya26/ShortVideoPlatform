@@ -20,7 +20,7 @@ function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
 userVerified, convivaItemInfo, videoSound,checkNoSound,
- noSound, activeIndex, fetchState
+ noSound, activeIndex, fetchState, updateActiveFeedIndex
 }) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
@@ -55,6 +55,7 @@ const handleVideoPress = () => {
 useEffect(()=>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(!!currentRef?.getAttribute('src') && active === true){
+      updateActiveFeedIndex(rootRef.current.id);
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
       try{
@@ -190,7 +191,7 @@ const pushToProfile = ()=>{
 
 return (
 <>
-<div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
+<div id={index} ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div onClick={()=>pushToProfile()} className="flex items-center w-14 h-14 overflow-hidden cursor-pointer rounded-full">

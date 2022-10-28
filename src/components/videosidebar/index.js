@@ -27,6 +27,7 @@ import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
 import EmbedIcon from '../commons/svgicons/embedicon';
 import detectDeviceModal from '../open-in-app';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const login = dynamic(() => import('../auth-options'),{
   loading: () => <div />,
@@ -65,6 +66,7 @@ function VideoSidebar({
      /* mixpanel - like */
      toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
      toTrackMixpanel('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+     toTrackClevertap('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
      /********* */
   } 
   // show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
@@ -272,6 +274,7 @@ const handleSaveMoments = () =>{
                 /* mixpanel - dislike */
                 toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
                 toTrackMixpanel('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+                toTrackClevertap('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
                 /******************** */
               }}
             >
@@ -385,6 +388,7 @@ const handleSaveMoments = () =>{
               onClick={()=>{handleSaveMoments();
                 try{
                   toTrackMixpanel('saveLook',{pageName:compName,tabName:(tabName && tabName) || null},{content_id:videoId})
+                  toTrackClevertap('saveLook',{pageName:compName,tabName:(tabName && tabName) || null},{content_id:videoId})
                   toTrackMixpanel('shoppingPopUp',{pageName:compName, tabName:tabName && tabName|| null},{content_id:videoId})
               }catch{
                 console.error('mixpanel issue - discover look click')

@@ -85,6 +85,7 @@ const getReffererPage = (reffereUrl) =>{
     refferUrl?.includes('/search?term') && (pageName = 'Discover Search Results')
   }
   console.log("reff-pagename",pageName)
+  return pageName;
 }
 
 const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{

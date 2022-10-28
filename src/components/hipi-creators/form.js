@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { ToTrackFbEvents } from "../../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../../analytics/firebase/events";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
@@ -31,6 +32,7 @@ const Form = ()=>{
         console.log('CData',resp);
         try{
           toTrackMixpanel('creatorFormSubmitted');
+          toTrackClevertap('creatorFormSubmitted');
           toTrackFirebase('creatorFormSubmitted');
           ToTrackFbEvents('creatorFormSubmitted');
         }catch(e){

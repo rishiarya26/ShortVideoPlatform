@@ -1,5 +1,5 @@
 // import App from "next/app"
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../src/styles/global.css';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -18,8 +18,7 @@ import { init } from '../src/get-social';
 // import { initConviva } from '../src/conviva';
 import { initConviva } from '../src/analytics/conviva';
 import { useRouter } from 'next/router';
-import * as fbq from '../src/analytics/fb-pixel'
-import Script from 'next/script'
+import * as fbq from '../src/analytics/fb-pixel';
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
@@ -33,6 +32,7 @@ import { getFullDate } from '../src/utils/date';
 import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
+import { toTrackClevertap } from "../src/analytics/clevertap/events";
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -368,7 +368,8 @@ function Hipi({
   let setTimeoutsTracker = [];
   function endSessionOnIdle() {
       //  console.error("reset - session end - from logout")
-       toTrackMixpanel('sessionEnd')
+       toTrackMixpanel('sessionEnd');
+       toTrackClevertap('sessionEnd');
        setTimeoutsTracker = null;
        clearTimeouts();
        window.sessionStorage.setItem("minutes",undefined);
@@ -393,7 +394,8 @@ function Hipi({
    let minutesTracker =  window.sessionStorage.getItem("minutes");
       if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
         // console.error("reset - session start R");
-        toTrackMixpanel('sessionStart')
+        toTrackMixpanel('sessionStart');
+        toTrackClevertap('sessionStart');
         window.sessionStorage.setItem('seconds',60);
         window.sessionStorage.setItem("sessionEventTrack",undefined);
         window.sessionStorage.setItem("minutes",0);
@@ -418,8 +420,10 @@ function Hipi({
         }
         else{
          if( minutesTracker === 6) { 
-           toTrackMixpanel('sessionEnd')
-           toTrackMixpanel('sessionStart')
+           toTrackMixpanel('sessionEnd');
+           toTrackMixpanel('sessionStart');
+           toTrackClevertap('sessionStart');
+           toTrackClevertap('sessionEnd')
           window.sessionStorage.setItem("minutes",0);
           // console.error("reset - session end");
           window.sessionStorage.setItem('seconds',60);
@@ -509,6 +513,7 @@ function Hipi({
           window.sessionStorage.setItem("minutes",0);
           // console.error("reset - session start");
           toTrackMixpanel('sessionStart');
+          toTrackClevertap('sessionStart');
         }
       }
 
@@ -580,37 +585,6 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
-                    <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', ${fbq.FB_PIXEL_ID});
-          `,
-        }}
-      />
-          <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-          _linkedin_partner_id = "4069492"; 
-          window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
-          window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
-          (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} 
-          var s = document.getElementsByTagName("script")[0]; 
-          var b = document.createElement("script"); b.type = "text/javascript";b.async = true; 
-          b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
-          s.parentNode.insertBefore(b, s);})(window.lintrk);
-          `,
-        }}
-      />
                       <Component {...pageProps} />
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>

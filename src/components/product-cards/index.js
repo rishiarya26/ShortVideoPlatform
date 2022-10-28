@@ -9,6 +9,7 @@ import { Loading } from './loading';
 import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 function ProductCards({
   shopCards, videoId, comp, loading,pageName,tabName, campaignId='NA'
@@ -51,6 +52,7 @@ function ProductCards({
               // eslint-disable-next-line no-undef
               onClick={() =>   {
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
+                toTrackClevertap('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
                 show('',charmboardDrawer , 'big', { videoId : videoId, campaignId})}}
             >
               <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
