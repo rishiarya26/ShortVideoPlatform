@@ -31,6 +31,7 @@ const appsflyerPixelClick = ({appId, iosAppId, advertiser,uri, productId, comp})
   }  
 
   const appsflyerPixelWrapperImp = async({appId,advertiser,productId,comp})=>{
+    let response;
     try {
       const appsflyerImpUrl = `https://impression.appsflyer.com/${appId}?pid=hipi_int&Advertiser=${advertiser}&af_siteid=${SITE_ID}&af_sub1=${productId}&af_sub2=${comp}&af_sub3=web&af_click_lookback=7`;
       const encodedAppsflyerUrl = encodeURIComponent(appsflyerImpUrl);

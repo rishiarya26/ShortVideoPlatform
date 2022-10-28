@@ -42,7 +42,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 category: data?.category,
                 subCategory: data?.sub_category,
                 subSubCategory: data?.subsub_category,
-                mainCategory: data?.main_category
+                mainCategory: data?.main_category,
+                appsflyerId : data?.appsflyer_id
               }
             );
             const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
@@ -62,7 +63,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 category: data?.category,
                 subCategory: data?.sub_category,
                 subSubCategory: data?.subsub_category,
-                mainCategory: data?.main_category
+                mainCategory: data?.main_category,
+                appsflyerId : data?.appsflyer_id
               }
             );
             show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id});

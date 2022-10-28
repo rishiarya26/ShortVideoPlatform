@@ -12,7 +12,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
 }) =>{
  
        useEffect(()=>{
-          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
+          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory, isMonetization,appsflyerId:appsflyerId})
           productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
        },[productIdChange])
  
@@ -28,7 +28,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
             });  
  
          const onProductClick= ()=>{
-          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
+          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})  
           const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
           window?.open(appsflyerLink || shopLink)
          }   
