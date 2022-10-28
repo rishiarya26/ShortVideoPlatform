@@ -335,6 +335,11 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
         })}
@@ -366,6 +371,11 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
          ))}
@@ -420,6 +430,11 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
           ))}
@@ -476,6 +491,11 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
            />
            </div>
           ))}
@@ -509,6 +529,11 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
          />
          </div>
         })}
@@ -545,6 +570,11 @@ const onProductChange = (id)=>{
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
              campaignId={campaignIdResp}
+             appsflyerId={item?.appsflyer_id || null}
+             iosAppsflyerId={item?.appsflyer_ios_id || null}
+             subCategory={item?.sub_category || "NA"}
+             subSubCategory={item?.subsub_category || "NA"}
+             mainCategory={item?.main_category || "NA"}
            />
            </div>
           ))}

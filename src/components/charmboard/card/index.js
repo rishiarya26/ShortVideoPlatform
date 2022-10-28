@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
+import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory}) =>{
 
   
       useEffect(()=>{
-         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+               // console.log('uuu')
+      //   console.log('A******',productIdChange=== id, appsflyerId)
+         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
+         productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId,productId:id, comp:'Shop'})
       },[productIdChange])
 
       const onProductInView =(entry)=>{
@@ -26,8 +30,10 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
            });  
 
         const onProductClick= ()=>{
-         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
-         window?.open(shopLink)
+         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
+         const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
+         console.log("finalLink",appsflyerLink)
+         window?.open(appsflyerLink || shopLink)
         }  
  
 return(

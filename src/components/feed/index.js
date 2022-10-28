@@ -126,9 +126,23 @@ function Feed({ router }) {
     setShowAppBanner(null);
   }
 
+  const adImpression =  (index = 0)=>{
+    if(toShowItems[index]?.adId && window !== undefined){
+      let adInfo = toShowItems?.[index]?.adId || {};
+      let {impression_url = null } = adInfo;
+      let timeStamp = Date.now();
+      try{
+        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+      }catch(e){
+        console.error("Impression error: " + e);
+      }
+    }
+  }
+
   useEffect(() => {
      setTimeout(()=>{
     if(initialLoadComplete === true){
+      adImpression();
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
       toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
@@ -136,7 +150,7 @@ function Feed({ router }) {
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
     }
-  },1500);
+    },1500);
   }, [initialLoadComplete]);
 
   useEffect(()=>{    
@@ -191,7 +205,7 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
   },[shop])
  /************************ */ 
 
@@ -303,15 +317,14 @@ function Feed({ router }) {
       }
     }
 
-    if(toShowItems[videoActiveIndex]?.adId){
+    if(toShowItems[videoActiveIndex]?.adId && window !== undefined){
       let adInfo = toShowItems?.[videoActiveIndex]?.adId || {};
-      let {impression_url = null, event_url = null } = adInfo;
+      let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       console.log(timeStamp, "timeStamp");
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         try{
-         impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
           toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
@@ -580,6 +593,8 @@ function Feed({ router }) {
                 /***************/
                 /*** Mixpanel ****/
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+                adImpression(activeIndex);
+
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem?.['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})

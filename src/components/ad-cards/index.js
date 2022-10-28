@@ -7,6 +7,7 @@ import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
+import { appsflyerPixelClick, appsflyerPixelImp } from '../../sources/appsflyer-pixel';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -17,10 +18,12 @@ const charmboardDrawer = dynamic (
 );
 
 function LabelHolder({label}){
-  return <div className='bg-hipired text-10 rounded-2xl px-1 py-0.5 w-max relative bottom-2 left-1/2 transform -translate-x-1/2'>{label}</div>
+  return <><div className='bg-hipired px-1 py-0.5 w-16 h-3 opacity-60 absolute bottom-0 left-0'></div>
+  <div className='text-10 px-1 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
+  </>
 }
 
-const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show}) => {
+const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,appsflyerId}) => {
   return(
     <div className="relative flex flex-col">
       <div
@@ -35,10 +38,17 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show})
                 productId: data?.card_id,
                 productUrl: data?.product_url,
                 brandName: getBrand(data?.product_url),
-                campaignId
+                campaignId,
+                category: data?.category,
+                subCategory: data?.sub_category,
+                subSubCategory: data?.subsub_category,
+                mainCategory: data?.main_category
               }
             );
-            window.open(data?.product_url);
+            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
+            console.log("finalLink",appsflyerLink)
+            appsflyerLink && appsflyerPixelImp({ advertiser:getBrand(data?.product_url), appId:data?.appsflyer_id, productId:data?.card_id,comp:'Feed'})
+            window.open(appsflyerLink || data?.product_url);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",
@@ -48,20 +58,25 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show})
                 productId: data?.card_id,
                 productUrl: data?.product_url,
                 brandName: getBrand(data?.product_url),
-                campaignId
+                campaignId,
+                category: data?.category,
+                subCategory: data?.sub_category,
+                subSubCategory: data?.subsub_category,
+                mainCategory: data?.main_category
               }
             );
             show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id});
         }
         }
       }
-        className="w-14 h-14 rounded-lg bg-gray-500 overflow-hidden relative"
+        className="w-16 h-16 rounded-lg bg-gray-500 overflow-hidden relative"
         // eslint-disable-next-line no-undef
       >
         {/* <img height={50} width={50} src={data?.img_url}/> */}
         <Img data={data?.img_url} height={120} width={120} fallback={fallbackShop?.src}/>
-      </div>
         {data?.card_labels && data.card_labels !== "" && <LabelHolder label={data?.card_labels}/>}
+      </div>
+       
     </div>
   )
 }
@@ -97,7 +112,7 @@ function AdCards({
         adCardsLength > 0 ? adCardsLength > 1 ? (
           <Carousel id={videoId} slideData={adCards} Children={CardElement} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} comp={comp} show={show}/>
         ) : (
-          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show}/>
+          <CardElement comp={comp} data={adCards[0]} tabName={tabName} pageName={pageName} videoId={videoId} campaignId={campaignId} show={show} appsflyerId={adCards[0]?.appsflyer_id || null}/>
         ):''
       }
     </div>
