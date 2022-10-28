@@ -18,11 +18,15 @@ import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UploadPlusSvg from "../commons/svgicons/upload-plus";
 import ProfileSm from "../commons/svgicons/profile-small";
+import { UPLOAD_ACCESS_USERS } from "../../constants";
 
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
+
+   const user = localStorage.get('user-details') ?? {};
+   const trimmedUserHandle = user?.userHandle?.replace('@','');
    
    const login = dynamic(
       () => import('../auth-options'),
@@ -100,7 +104,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
       
       <div className="flex">
-      <div id="uploadButton" className="border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4"
+      <div id="uploadButton" className={`${!UPLOAD_ACCESS_USERS?.includes(trimmedUserHandle) ? 'hidden': '' } border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
       onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
          <UploadPlusSvg />
          <span className="text-sm font-semibold pl-2">
