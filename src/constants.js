@@ -36,4 +36,4 @@ export const S3_BUCKET_PROD = 'hipi-videos'
 export const INDEX_TO_SHOW_LANG = 5;
 export const INDEX_TO_SHOW_LANG_IPHONE = 5;
 export const SITE_ID = "hipi"
-export const UPLOAD_ACCESS_USERS = ["Tamil360","MiniatureFoods","WanderessKriti","Aditi_Prabhudeva"]
+export const UPLOAD_ACCESS_USERS = ["Tamil360","MiniatureFoods","WanderessKriti","Aditi_Prabhudeva", "bharatjangid3649", "murali.teams","anuragguptazee","16cf2063", "khushi_angel"]
