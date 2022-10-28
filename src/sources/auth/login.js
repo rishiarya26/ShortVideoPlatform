@@ -1,4 +1,5 @@
 import { post } from 'network';
+import { initClevertapUser } from '../../analytics/clevertap';
 import { getApiBasePath } from '../../config';
 import { init } from '../../get-social';
 /* eslint-disable import/no-cycle */
@@ -62,7 +63,7 @@ const updateLanguageOnLogin = async(data) =>{
   }
 }
 
-const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null }) => {
+const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA" }) => {
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
@@ -112,6 +113,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
    
     setTimeout(()=>{
       init();
+      initClevertapUser({email, mobile});
     },200)
     // setItem('user-id', JSON.stringify(userId), { path: '/', domain });
     response.data.accessToken = accessToken;

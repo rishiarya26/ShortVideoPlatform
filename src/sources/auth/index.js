@@ -27,7 +27,7 @@ const login = async ({
     const accessToken = resp.data.access_token;
     const refreshToken = resp.data.refresh_token;
     const getSocialToken = resp.data.getSocialToken;
-    response = await hipiLogin({ accessToken, refreshToken, getSocialToken });
+    response = await hipiLogin({ accessToken, refreshToken, getSocialToken, email, mobile });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

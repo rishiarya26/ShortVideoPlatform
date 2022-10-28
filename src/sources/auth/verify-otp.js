@@ -17,7 +17,7 @@ async function validateOTP({
     };
     const accessToken = resp?.data?.token;
     const refreshToken = resp.data.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken });
+    response = await hipiLogin({ accessToken, refreshToken, mobile });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

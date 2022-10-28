@@ -59,10 +59,6 @@ export function track(event, payload) {
 
   export const initClevertapUser = (prop) => {
 
-    let utmData = localStorage?.get('utm-data') || {}
-    // const deviceModal = localStorage?.get('device-modal');
-    // const device = getItem('device-type');
-    // const networkStrength = localStorage?.get('network-strength');
     let geoData = localStorage?.get('geo-info') || null;
     const guestId = getItem('guest-token');
     const loggedInId = localStorage?.get('user-id') || null;
@@ -72,43 +68,19 @@ export function track(event, payload) {
     if(isLoaded) {
       window.clevertap.onUserLogin.push({
         "Site": {
-          "Name": prop?.name || "NA",
+          "Name": loggedInUserDetails?.firstName || "NA",
           "Unique ID": loggedInId || guestId,
           "Email": prop?.email || "NA",
-          "Phone Number": prop?.phoneNumber || "NA",
-          "Gender": oggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA',
+          "Phone Number": prop?.mobile || "NA",
+          "Gender": loggedInUserDetails?.gender ? loggedInUserDetails?.gender : 'NA',
           "Age": loggedInUserDetails?.age ? loggedInUserDetails?.age : 'NA',
           "User Handle": loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA',
           "User Id": userId || "NA",
           "guest-token": guestId || "NA",
-          "Advertisement ID": prop?.advertisementId || "NA",
-          // "First App Launch Date": props?.firstAppLaunchDate || "NA",
           "User Type": loggedInId ? 'member' : 'guest',
-          "Registering Country": prop?.registeringCountry || "NA",
-          // "Appsflyer ID": prop?.appsflyerId || "NA",
-          // "Appsflyer Campaign": prop?.appsflyerCampaign || "NA",
-          // "Appsflyer Source": prop?.appsflyerSource || "NA",
-          // "Appsflyer Medium": prop?.appsflyerMedium || "NA",
-          // "App Source": prop?.appSource || "NA",
-          // "App Campaign": prop?.appCampaign || "NA",
-          "App UTM Source": utmData?.utm_source || "NA",
-          "App UTM Medium": utmData?.utm_medium || "NA",
-          "App UTM Campaign": utmData?.utm_campaign || "NA",
-          "App UTM Content": utmData?.utm_content || "NA",
-          "App UTM Term": utmData?.utm_term || "NA",
-          // "App isRetargeting": prop?.appIsRetargeting || "NA",
-          "Platform Name": "Hipi",
-          "Platform Section": APP_NAME,
-          // "App Version": prop?.appVersion || "NA",
           "City": geoData?.city || "NA",
           "State": geoData?.state_code || "NA",
-          "Country": geoData?.country_code || "NA",
-          "Latitude": geoData?.lat || "NA",
-          "Longitude": geoData?.long || "NA",
-          // "New App Language": LANGUAGE,
-          // "New Content Language": prop?.newContentLanguage || "NA",
-          "Page Name": prop?.pageName || "NA",
-          "Source": prop?.source || "NA",
+          "Country": geoData?.country_code || "NA"
         }
        });
     }
@@ -118,10 +90,10 @@ export function track(event, payload) {
     const isPopupShown = sessionStorage.get("clevertapWebpopup") || false;
     if(isLoaded && !isPopupShown) {
       clevertap.notifications.push({
-        "titleText": "Would you like to receive Push Notifications?",
-        "bodyText": "We promise to only send you relevant content and give you updates on your transactions",
-        "okButtonText": "Yes",
-        "rejectButtonText": "No",
+        "titleText": "Get notifications for trending videos from Hipi",
+        "bodyText": "We promise to send you notifications for relevant content only",
+        "okButtonText": "Enable",
+        "rejectButtonText": "Not Now",
         "askAgainTimeInSeconds": 5
       });
       sessionStorage.set("clevertapWebpopup", true);
