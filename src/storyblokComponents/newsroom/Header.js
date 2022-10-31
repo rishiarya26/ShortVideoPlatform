@@ -34,6 +34,7 @@ const Header = ({ blok = {}, date, blogType = "newsroom" }) => {
     type = router.pathname.split("/")[2],
     subheading = null,
     cardImage = null,
+    writtenBy=null
   } = blok;
   const created_at_date = new Date(date);
   const newDate = `${
@@ -91,10 +92,15 @@ const Header = ({ blok = {}, date, blogType = "newsroom" }) => {
             <div className={headerStyles.heading}>
               <h1>{heading}</h1>
             </div>
+            <div className="mb-4">
+              <p className="text-gray-600 text-base">
+                <i>{subheading}</i>
+              </p>
+            </div>
             <div className="text-10">
               <span className={headerStyles.chips}>Entertainment</span>
               &nbsp;|&nbsp;
-              <span className={headerStyles.chips}>{subheading}</span>
+              <span className={headerStyles.chips}>written by {writtenBy}</span>
               &nbsp;|&nbsp;
               <span className={headerStyles.chips}>
                 Created:&nbsp;

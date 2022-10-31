@@ -19,7 +19,7 @@ const VisualContent = ({ blok = {}, primary=false }) => {
             <img className="flex md:hidden h-full w-full object-cover" src={mobileImageSrc.filename} alt={alt}/>
           </>
       )}
-      {type === "video" && src && <Embedvideo primary={primary} id={src} type={videoType} />}
+      {type === "video" && src && <div className="mt-2"> <Embedvideo primary={primary} id={src} type={videoType} /> </div>}
     </div>
   );
 };
