@@ -318,8 +318,8 @@ const onProductChange = (id)=>{
            <CharmCard 
              key = {id}
              id={item?.card_id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+             title = {item?.lingerieTitle  || item?.title}
              shopName = {item?.product_url ? getBrand(item?.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
@@ -354,8 +354,8 @@ const onProductChange = (id)=>{
          <CharmCard 
              key = {id}
              id={item?.card_id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             thumbnail = {item?.lingerieImageUrl  || item?.product_img_url}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getBrand(item?.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
@@ -410,8 +410,8 @@ const onProductChange = (id)=>{
             <CharmCardBeauty 
              key={id}
              id={item?.card_id}
-             thumbnail =  {item?.product_rounded_img_url || null}
-             title = {item?.title}
+             thumbnail =  {item?.lingerieImageUrl || item?.product_rounded_img_url || null}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {(item?.product_url ?  getBrand(item?.product_url): '')}
              shopNameImg={item?.camp_img_url || null}
              shopLink = {item?.product_url}
@@ -470,8 +470,8 @@ const onProductChange = (id)=>{
              <CharmCardBeauty 
              key={id}
              id={item?.card_id}
-             thumbnail = {item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url}
-             title = {item?.title}
+             thumbnail = {item?.lingerieImageUrl || (item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url)}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getBrand(item.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
@@ -512,8 +512,8 @@ const onProductChange = (id)=>{
            <CharmCard 
              key = {id}
              id={item?.card_id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getBrand(item?.product_url): ''}
              shopLink = {item?.product_url}
              shopNameImg={item?.camp_img_url || null}
@@ -549,8 +549,8 @@ const onProductChange = (id)=>{
           <CharmCardRecipe 
              key={id}
              id={item?.card_id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             thumbnail = {item?.lingerieImageUrl  || item?.product_img_url}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.title}
              shopLink = {item?.product_url}
              category = {item?.category}
