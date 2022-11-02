@@ -111,7 +111,7 @@ useEffect(()=>{
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
 <h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> November Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    Show us your Cozy outfit
+    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Show us your Cozy outfit</span>
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
