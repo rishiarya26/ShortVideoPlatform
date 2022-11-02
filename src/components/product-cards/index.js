@@ -33,9 +33,9 @@ function ProductCards({
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
   const type = {
-    profile: 'bottom-12 flex w-6/12 h-24 justify-between items-center p-2 absolute',
+    profile: 'bottom-8 flex w-6/12 h-24 justify-between items-center p-2 absolute',
     embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
-    single: 'bottom-16 flex w-6/12 h-24 justify-between items-center p-2 fixed',
+    single: 'bottom-14 flex w-6/12 h-24 justify-between items-center p-2 fixed',
 
   };
   return (
@@ -47,7 +47,7 @@ function ProductCards({
           {shopCardsLength > 0 && shopCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
+              className="w-16 h-16 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
               onClick={() =>   {
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
