@@ -67,6 +67,8 @@ import WikiWhite from '../commons/svgicons/wikipedia-white';
            <p className="hidden md:flex text-xs  text-gray-500">|</p>
            <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/newsroom')}>Newsroom</div>
            <p className="hidden md:flex text-xs  text-gray-500">|</p>
+           <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/theedit')}>The Edit</div>
+           <p className="hidden md:flex text-xs  text-gray-500">|</p>
            <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/ads')}>Ads</div>
            <p className="hidden md:flex text-xs  text-gray-500">|</p>
            <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router?.push('/terms-conditions.html')}>Terms of Use</div>
