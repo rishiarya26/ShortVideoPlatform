@@ -4,8 +4,6 @@ import { localStorage } from "../../utils/storage";
 
 let adView;
 
-
-
 export const initVmax = () => {
   if (
     typeof window !== 'undefined' &&
@@ -61,7 +59,7 @@ export const initAdView = async() => {
     
     adView = null;
     adView = new VMAXSDK.CreateVmaxAdView();
-    adView.setAdspotKey('2a363bda').setCustomData({...customData});
+    adView.setAdspotKey('c7fed20e').setCustomData({...customData});
     console.log("vmax setting custom data: " + JSON.stringify(customData), adView);
     return "success";
   }
