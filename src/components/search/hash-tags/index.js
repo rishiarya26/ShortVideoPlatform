@@ -62,7 +62,7 @@ function HashTags({item}) {
                  <div key={id} onClick={()=>{
                   try{
                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Hashtags'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag',query:searchTerm})
-                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Hashtags'})
                    }catch(e){
                      console.error('search result click',e)
                    }
