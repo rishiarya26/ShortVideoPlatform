@@ -23,6 +23,11 @@ export const trimHashag = (hashTag) =>{
   trimmedHashtag = hashTag?.replace('#', '');
   return trimmedHashtag;
 }
+export const trimAtTheRate = (value) =>{
+  let trimmedAtTheRate = ''
+  trimmedAtTheRate = value?.replace('@', '');
+  return trimmedAtTheRate;
+}
 
 export const compareArrays = (a,b)=>{
     return a.join() == b.join();

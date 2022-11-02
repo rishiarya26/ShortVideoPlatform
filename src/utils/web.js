@@ -70,6 +70,7 @@ function getCanonicalUrl(orgUrl){
 const getPageName = (refferUrl) =>{
   // const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
+  const loggedInUserHandle = localStorage?.get('user-details')?.userHandle
   // console.log("reff**",document?.referrer,refferUrl,refferUrl?.includes('/explore'), typeof document != "undefined", typeof refferUrl,typeof refferUrl === 'string')
   if(refferUrl && typeof refferUrl === 'string'){
   console.log("reff__",refferUrl?.includes('/feed'))
@@ -78,7 +79,8 @@ const getPageName = (refferUrl) =>{
     refferUrl?.includes('/profile-feed') ? (pageName = 'Profile Feed') :
     refferUrl?.includes('/hashtag-feed') ? (pageName = 'Hashtag Feed') :
     refferUrl?.includes('/hashtag') ? (pageName = 'Hashtag Details'):
-    refferUrl?.includes('/@') ? (pageName = 'Creator Profile'):
+    refferUrl?.includes(loggedInUserHandle) ? (pageName = 'My Profile'):
+    refferUrl?.includes('/@') ?  (pageName = 'Creator Profile'):
     refferUrl?.includes('/terms-conditions.html') ? (pageName = 'Terms of Use'):
     refferUrl?.includes('/community-guidelines.html') ? (pageName = 'Community Guidelines'):
     refferUrl?.includes('/privacy-policy.html') ? (pageName = 'Privacy Policy'):
