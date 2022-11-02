@@ -219,7 +219,7 @@ export const toTrackMixpanel = (type, value, item) => {
        'shoppingProductImp' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product ID'] = item?.productId;
+        globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
@@ -227,12 +227,14 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
         globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
         globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Shopping Product Impression', globalCommonEvents)
        },
        'shoppableProductClicked' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product ID'] = item?.productId;
+        globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
@@ -240,12 +242,14 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
         globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
         globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Shoppable Product Clicked', globalCommonEvents)
        },
        'monetisationProductImp' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product ID'] = item?.productId || 'NA';
+        globalCommonEvents['Product Id'] = item?.productId || 'NA';
         globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
@@ -253,12 +257,14 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
         globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
         globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
        },
        'monetisationProductClick' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product ID'] = item?.productId || 'NA';
+        globalCommonEvents['Product Id'] = item?.productId || 'NA';
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
@@ -266,6 +272,8 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
         globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
         globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      
