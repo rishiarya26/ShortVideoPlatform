@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { toTrackReco } from "../../../analytics/view-events";
 import { DISCOVER_SEARCH_RESULTS } from "../../../constants";
+import { numberFormatter } from "../../../utils/convert-to-K";
 // import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
@@ -75,7 +76,7 @@ function HashTags({item}) {
                                </p>
                          </div>
                          <div className="text-sm text-gray-300 items-center">
-                            2k views
+                            {item?.hashtagPlayCount ?  numberFormatter(item?.hashtagPlayCount) : ''} {item?.hashtagPlayCount ? 'views' : ''}
                         </div>
                        </div>
                        )):
