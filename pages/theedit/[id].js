@@ -22,7 +22,7 @@ export async function getStaticProps({ params }) {
   try {
     resp = await getStoryblokData({
       params: sbParams,
-      parentSlug: "blog",
+      parentSlug: "theedit",
       slug,
     });
   } catch (e) {
@@ -41,7 +41,7 @@ export async function getStaticPaths() {
   try {
     const resp = await getStoryblokPage({
       params: { version: "published" },
-      blogType: "blog",
+      blogType: "theedit",
     });
     paths = resp.data;
   } catch (e) {
