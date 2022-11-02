@@ -12,7 +12,7 @@ function getSchemaObj({story, url}){
   const body = story?.content?.body;
   const header = body?.[0];
   const contentContainer = body?.[1];
-  const author = header?.subheading?.split("By")[1].trim()
+  const author = header?.writtenBy || "";
   const headline = header?.heading;
   const description = richTextRenderer(contentContainer);
   return{
