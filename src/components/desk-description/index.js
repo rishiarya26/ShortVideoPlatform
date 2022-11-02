@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
 import { trimHash } from "../../utils/string";
+import { replaceNbsps } from "../../utils/web";
 
 const Description = ({description}) =>{
     const router = useRouter();
+    
     const redirect = (item) =>{
         try{  
           if(item?.indexOf('#')!==-1){
@@ -21,7 +23,7 @@ const Description = ({description}) =>{
 
     return (
         <>
-        {description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
+        {replaceNbsps(description)?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
               <p key={id} className='inline-block'>
                 <span 
                  className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} 

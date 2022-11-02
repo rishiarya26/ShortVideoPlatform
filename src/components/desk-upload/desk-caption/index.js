@@ -429,7 +429,8 @@ function DeskCaption({
     <div className='flex flex-col w-full relative mb-4'>
       <div className='flex justify-between items-center'>
         <p style={{color:'#171924'}} className='text-base font-medium pb-2 pl-1 caption'>
-            {!showUserField ? "Caption" : "@Friends"}
+            {/* {!showUserField ? "Caption" : "@Friends"} */}
+            Caption
         </p>
         {!showUserField && (
           <p className='text-sm text-gray-400 pt-2'>{captionLength}/200</p>

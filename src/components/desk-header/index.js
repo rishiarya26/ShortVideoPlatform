@@ -104,7 +104,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
       
       <div className="flex">
-      <div id="uploadButton" className={`${!UPLOAD_ACCESS_USERS?.includes(trimmedUserHandle) ? 'hidden': '' } border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
+      <div id="uploadButton" className={`${!UPLOAD_ACCESS_USERS?.includes(trimmedUserHandle) || isLoggedIn !== 'true' ? 'hidden': '' } border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
       onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
          <UploadPlusSvg />
          <span className="text-sm font-semibold pl-2">

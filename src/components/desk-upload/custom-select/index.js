@@ -8,7 +8,7 @@ function CustomSelect({type, caption, data, value, setValue, setShowSuggestions,
   const [showList, setShowList] = useState(false);
 
   let comp = {
-    language: (<><div className='w-full border border-gray-200 rounded-md px-3 py-2 flex justify-start'>{value.name ? value.name : 'Select language..'}</div>
+    language: (<><div className='w-full border border-gray-200 rounded-md px-3 py-2 flex justify-start'>{value.name ? value.name : 'Select language'}</div>
       <span className='absolute right-3 top-2'>
         {showList ? <UpArrowBlack /> : <DownArrowBlack />}
       </span>

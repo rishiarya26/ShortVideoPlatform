@@ -226,7 +226,7 @@ function FileUpload({
                 }}
                 disablePictureInPicture
                 controlsList='nodownload noremoteplayback'
-                className={`VideoInput_video rounded-lg shadow-xl w-full h-full bg-gray-200`}
+                className={`VideoInput_video rounded-lg shadow-xl w-full h-full bg-hipidblue`}
                 width='100%'
                 height='100vh'
                 controls={true}
