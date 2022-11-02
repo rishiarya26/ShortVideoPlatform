@@ -8,7 +8,7 @@ const {close:closePopUp} = useDialog();
 const messages = {
   discard: {ctaText: {top:"Discard",bottom:"Continue editing"} ,head: "Discard this post?", body:"The video and all edits will be discarded."},
   replaceVideo: {ctaText: {top:"Replace",bottom:"Continue editing"}, head: "Replace this video?", body:"Caption and video settings will still be saved."},
-  videoCompletion: {ctaText: {top:"Upload another video",bottom:"View profile"}, head: "Your video is being uploaded to Hipi!", body:""},
+  videoCompletion: {ctaText: {top:"Upload another video",bottom:"Visit profile"}, head: "Your video is uploaded successfully", body:""},
 }
 
   return (

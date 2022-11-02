@@ -204,12 +204,12 @@ function FileUpload({
                 text='UNAVAILABLE'
               />
               <br />
-              {videoLoader && progressBar === 0 && (
+              {videoLoader && (
                 <span className=' text-gray-500 font-normal'>Uploading</span>
               )}
               {videoLoader && progressBar > 0 && (
-                <span className=' text-gray-500 font-normal text-center overflow-ellipsis overflow-hidden whitespace-nowrap w-60'>
-                  Uploading {videoFileName}
+                <span className=' text-gray-500 font-normal text-center overflow-hidden whitespace-pre-wrap w-60 px-4'>
+                  {videoFileName}
                 </span>
               )}
               {/* <button className='py-2 border border-gray-200 text-black px-8 mt-6'>Cancel</button> */}
