@@ -70,7 +70,6 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
-
   // const [videoSchemaItems, setVideoSchemaItems] = useState([]);
 
   const [noSound, setNoSound] = useState(false);
@@ -143,7 +142,6 @@ function DeskUsers({
     if(typeOfUser === 'self') {
       response = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
     }else{
-      debugger;
       response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
     }
     console.log("fetchedMore",response)
