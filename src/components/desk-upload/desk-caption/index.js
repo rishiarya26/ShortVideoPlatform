@@ -48,10 +48,10 @@ function DeskCaption({
   showSuggestions,
   setShowSuggestions,
   tabIndex,
-  uploadingStatus,
-  videoFileName,
   discard,
   setDiscard
+  // uploadingStatus,
+  // videoFileName,
 }) {
   const [showUserField, setShowUserField] = useState(false);
   const [suggestionListIndex, setSuggestionListIndex] = useState();
@@ -83,25 +83,25 @@ function DeskCaption({
     return () => document.body.removeEventListener('click', closeDrop);
   }, []);
 
-  useEffect(() =>{
-    if(uploadingStatus){   
-      const fileName = videoFileName.split(".")[0] || "";
-      const input = InputRefCaption.current;
-      input.querySelectorAll('.current').forEach((el) => {
-        el.classList.remove('current');
-      });
-      let spanElemParent = document.createElement('span');
-      ;
-      spanElemParent.classList.add('emptySpan');
-      spanElemParent.classList.add('current');
-      spanElemParent.setAttribute('contentEditable', true);
-      spanElemParent.innerHTML = `${fileName}`;
-      input.innerHTML = input.innerHTML.replace(/(\s+)?.$/, '');
-      input?.appendChild(spanElemParent);
-      setCaptionLength(prevState => prevState + fileName?.length)
-      toFocus();
-    }
-  },[uploadingStatus])
+  // useEffect(() =>{
+  //   if(uploadingStatus){   
+  //     const fileName = videoFileName.split(".")[0] || "";
+  //     const input = InputRefCaption.current;
+  //     input.querySelectorAll('.current').forEach((el) => {
+  //       el.classList.remove('current');
+  //     });
+  //     let spanElemParent = document.createElement('span');
+  //     ;
+  //     spanElemParent.classList.add('emptySpan');
+  //     spanElemParent.classList.add('current');
+  //     spanElemParent.setAttribute('contentEditable', true);
+  //     spanElemParent.innerHTML = `${fileName}`;
+  //     input.innerHTML = input.innerHTML.replace(/(\s+)?.$/, '');
+  //     input?.appendChild(spanElemParent);
+  //     setCaptionLength(prevState => prevState + fileName?.length)
+  //     toFocus();
+  //   }
+  // },[uploadingStatus])
 
   useEffect(() => {
     if(discard) {

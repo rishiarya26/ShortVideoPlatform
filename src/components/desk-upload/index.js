@@ -244,8 +244,8 @@ const DeskUplaod = () => {
                     InputRefCaption={CaptionInputRef}
                     showSuggestions={showSuggestions}
                     setShowSuggestions={setShowSuggestions}
-                    uploadingStatus={uploadingStatus}
-                    videoFileName={videoFileName}
+                    // uploadingStatus={uploadingStatus}
+                    // videoFileName={videoFileName}
                     discard={discard}
                     setDiscard={setDiscard}
                   />
