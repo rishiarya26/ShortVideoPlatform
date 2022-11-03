@@ -1,7 +1,7 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
 import { withRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { getOwnProfileVideos, getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
@@ -70,9 +70,14 @@ function DeskUsers({
   const [showVideoDetail, setShowVideoDetail] = useState(false);
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
+
   // const [videoSchemaItems, setVideoSchemaItems] = useState([]);
 
   const [noSound, setNoSound] = useState(false);
+
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
 
   const checkNoSound =()=>{
     if(!videoData?.[vDetailActiveIndex]?.videoSound){
@@ -135,9 +140,10 @@ function DeskUsers({
    try{
     let response = {};
     
-    if(type === 'self') {
+    if(typeOfUser === 'self') {
       response = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
     }else{
+      debugger;
       response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
     }
     console.log("fetchedMore",response)
@@ -148,7 +154,7 @@ function DeskUsers({
         data.status = 'success';
       }else{
         let resp = {};
-        if(type === 'self') {
+        if(typeOfUser === 'self') {
           resp = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
         }else{
           const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
@@ -224,7 +230,7 @@ function DeskUsers({
   // const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
 
   const dataFetcher = () => {
-    if(type === 'self'){
+    if(typeOfUser === 'self'){
       return getOwnProfileVideos({ type: selectedTab });
     }else{
       return getProfileVideos({ id, type: selectedTab });
@@ -261,7 +267,7 @@ function DeskUsers({
   } 
   }
 
-  const userId = localStorage.get('user-id');
+  // const userId = localStorage.get('user-id');
   const followFunc = !isFollowing;
 
   const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))
@@ -543,4 +549,4 @@ function DeskUsers({
   );
 }
 
-export default withRouter(DeskUsers);
+export default memo(withRouter(DeskUsers));
