@@ -61,6 +61,7 @@ function transformSuccess(resp) {
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
         payloadObject.duration = d?.videoDuration || null;
+        payloadObject.status = d?.status || null;
 
         payloadData.push(payloadObject);
       });

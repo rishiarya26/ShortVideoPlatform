@@ -35,7 +35,7 @@ function FileUpload({
         process?.env?.APP_ENV === 'development' ||
         process?.env?.NODE_ENV === 'development'
       ) {
-        url = `https://${S3_BUCKET_STAGE}.s3.ap-south-1.amazonaws.com/src/${filename}`;
+        url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`;
       } else {
         url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
       }
