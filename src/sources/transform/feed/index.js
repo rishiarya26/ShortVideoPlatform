@@ -109,6 +109,7 @@ function transformSuccess(resp) {
     }
 
     if(!isObjectEmpty(data?.vmaxAdVideo) && data?.vmaxVideoIndex){      
+      delete data?.vmaxAdVideo?.adId; //Need to remove this
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
       console.log("adding data in payload", payloadData);
     }

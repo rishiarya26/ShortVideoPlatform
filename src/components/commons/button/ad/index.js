@@ -20,7 +20,7 @@ function AdButton({
   userVerified,
   adBtnClickCb,
 }) {
-  const [btnColor, setBtnColor] = useState(vmaxAd ? "#8e8e97" :  "#63ABFF");
+  const [btnColor, setBtnColor] = useState("#8e8e97");
   const [show, setShow] = useState(false);
 
   // !! Keep this useEffect always on top
@@ -31,6 +31,9 @@ function AdButton({
         setShow(true);
         setTimeout(() => setBtnColor(ctaColor), 2000);
       }, 2000);
+      else {
+        setBtnColor(ctaColor)
+      }
   }, [activeVideoId]);
 
   const type = {
@@ -148,4 +151,4 @@ function AdButton({
   );
 }
 
-export default memo(AdButton);
+export default AdButton;

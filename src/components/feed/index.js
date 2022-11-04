@@ -237,6 +237,7 @@ function Feed({ router }) {
        let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
 
        if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
+          delete cacheAdVideo?.adId; //Neeed to remove
           data?.data.splice(adPosition, 0, cacheAdVideo);
           cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
           updateItems = updateItems.concat(data?.data);
@@ -246,6 +247,7 @@ function Feed({ router }) {
           // debugger;
           let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
+            delete cacheAdVideo?.adId; //Neeed to remove
             data?.data.splice(adPosition, 0, cachedVideo);
           }
         }catch(error){

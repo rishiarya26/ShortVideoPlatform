@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
 import fallbackUser from "../../../public/images/users.png"
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
@@ -139,4 +139,4 @@ function VideoFooter({
   );
 }
 
-export default VideoFooter;
+export default memo(VideoFooter);

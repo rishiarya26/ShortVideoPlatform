@@ -242,7 +242,7 @@ const adImpression =  (index = 0)=>{
       let adPosition = localStorage.get('vmaxAdPosition') || null;
       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
-       
+        delete cacheAdVideo?.adId; //Neeed to remove
         data?.data.splice(adPosition, 0, cacheAdVideo);
         cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
         console.log(`added cachead successfully from cache! ${ data?.data}`)
@@ -252,6 +252,7 @@ const adImpression =  (index = 0)=>{
         try{
           let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
+            delete cachedVideo?.adId; //Neeed to remove
             data?.data?.splice(adPosition, 0, cachedVideo);
             console.log(`added cachead successfully not from cache! ${ data?.data}`)
           }
