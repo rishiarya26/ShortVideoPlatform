@@ -28,6 +28,7 @@ import { videoSchema } from '../../utils/schema';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Verified from '../commons/svgicons/verified';
+import { toTrackReco } from '../../analytics/view-events';
 // import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
@@ -253,7 +254,14 @@ console.log("onClick follow btn issue ",e);
     function: {
       others: <>
         <button 
-        onClick={toShowFollow}
+        onClick={() => {
+           if(isFollowing) {
+            toTrackReco("unfollow", {page: "profile", tab: "NA", user_id: id, objectID: id, objectType: "creator"});
+           } else {
+            toTrackReco("follow", {page: "profile", tab: "NA", user_id: id, objectID: id, objectType: "creator"});
+           }
+          toShowFollow()
+        }}
         // onClick={handleFollow} 
         className={isFollowing ? "font-semibold text-sm border border-black rounded-sm py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white"}>
           {isFollowing ? 'Following' : t('FOLLOW')}

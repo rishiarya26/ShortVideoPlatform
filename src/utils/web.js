@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useRef } from "react";
 import { ONE_TAP_DOWNLOAD } from "../constants";
 import { getOneLink } from "../sources/social";
 import { localStorage } from "./storage";
@@ -65,10 +67,11 @@ function getCanonicalUrl(orgUrl){
   }
 }
 
-const getReffererPage = (reffereUrl) =>{
-  const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
+const getPageName = (refferUrl) =>{
+  // const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
-  console.log("reff**",document?.referrer,refferUrl,refferUrl?.includes('/explore'), typeof document != "undefined", typeof refferUrl,typeof refferUrl === 'string')
+  const loggedInUserHandle = localStorage?.get('user-details')?.userHandle
+  // console.log("reff**",document?.referrer,refferUrl,refferUrl?.includes('/explore'), typeof document != "undefined", typeof refferUrl,typeof refferUrl === 'string')
   if(refferUrl && typeof refferUrl === 'string'){
   console.log("reff__",refferUrl?.includes('/feed'))
     refferUrl?.includes('/feed') ? (pageName = 'Feed') : 
@@ -76,7 +79,8 @@ const getReffererPage = (reffereUrl) =>{
     refferUrl?.includes('/profile-feed') ? (pageName = 'Profile Feed') :
     refferUrl?.includes('/hashtag-feed') ? (pageName = 'Hashtag Feed') :
     refferUrl?.includes('/hashtag') ? (pageName = 'Hashtag Details'):
-    refferUrl?.includes('/@') ? (pageName = 'Creator Profile'):
+    refferUrl?.includes(loggedInUserHandle) ? (pageName = 'My Profile'):
+    refferUrl?.includes('/@') ?  (pageName = 'Creator Profile'):
     refferUrl?.includes('/terms-conditions.html') ? (pageName = 'Terms of Use'):
     refferUrl?.includes('/community-guidelines.html') ? (pageName = 'Community Guidelines'):
     refferUrl?.includes('/privacy-policy.html') ? (pageName = 'Privacy Policy'):
@@ -84,7 +88,7 @@ const getReffererPage = (reffereUrl) =>{
     refferUrl?.includes('/signup') ? (pageName = 'Signup'):
     refferUrl?.includes('/search?term') && (pageName = 'Discover Search Results')
   }
-  console.log("reff-pagename",pageName)
+  return pageName
 }
 
 const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
@@ -129,6 +133,19 @@ const getBrand =(url)=>{
    }
   }
 }
+
+// const usePreviousRoute = () => {
+//   const { asPath } = useRouter();
+
+//   const ref = useRef<string | null>(null);
+
+//   useEffect(() => {
+//     ref.current = asPath;
+//   }, [asPath]);
+
+//   console.log('reff()',ref.current);
+//   return ref.current;
+// };
            
 export {
   CopyToClipBoard,
@@ -138,9 +155,9 @@ export {
   getHostname,
   getUrl,
   getCanonicalUrl,
-  getReffererPage,
+  getPageName,
   onStoreRedirect,
   isReffererGoogle,
-  getBrand,
+  getBrand
 };
 

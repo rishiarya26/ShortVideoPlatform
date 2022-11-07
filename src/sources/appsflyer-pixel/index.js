@@ -37,6 +37,7 @@ const appsflyerPixelClick = ({appId, iosAppId, advertiser,uri, productId, comp})
       const encodedAppsflyerUrl = encodeURIComponent(appsflyerImpUrl);
       const apiPath = `${getApiBasePath('hipi')}/v1/shorts/impressionappsflyer?url=${encodedAppsflyerUrl}`;
       response = await get(apiPath);
+      console.log("APPSFLYER PIXEL IMP FIRED", response);
       response.data.requestedWith = { appId };
       return Promise.resolve(response);
     } catch (err) {

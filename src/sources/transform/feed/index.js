@@ -96,6 +96,8 @@ function transformSuccess(resp) {
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
       payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
+      payloadObject.correlationID = d?.correlation_id || null;
+      payloadObject.explain = d?.explanations?.[0] || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);
