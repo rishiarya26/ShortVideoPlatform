@@ -84,7 +84,6 @@ function ProfileFeed({ router }) {
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
-  const { userType = '' }  = router?.query;
 
   const pageName = 'Profile Feed';
 
@@ -92,11 +91,20 @@ function ProfileFeed({ router }) {
     setLoading(false);
   };
 
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
+
   const loadMoreItems = async() =>{
     let videos = [...items]
     try {
     if(loadMore){   
-    const resp = await getProfileVideos({ id, type: type, offset: offset });
+      let resp = {};
+      if(typeOfUser === 'self'){
+        resp = await getOwnProfileVideos({ type: type, offset: offset });
+      }else{
+         resp = await getProfileVideos({ id, type: type, offset: offset });
+      }
     if(resp?.data?.length > 0){
       console.log("innn",resp)
       const index = resp.data.findIndex((data)=>(data?.id === videoId))
@@ -157,7 +165,7 @@ function ProfileFeed({ router }) {
   },[initialPlayStarted])
 
   const dataFetcher = () => {
-    if(userType === 'self'){
+    if(typeOfUser === 'self'){
       return getOwnProfileVideos({ type: type, videoId: videoId && videoId });
     }else{
       return getProfileVideos({ id, type: type, videoId: videoId && videoId });
