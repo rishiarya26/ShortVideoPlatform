@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/inline-script-id */
 // import App from "next/app"
 import { useEffect, useRef, useState } from 'react';
 import '../src/styles/global.css';
@@ -604,6 +603,7 @@ function Hipi({
                   <RouteStateProvider>
                     <Layout>
                     <Script
+                    id="pixelScript"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -620,6 +620,7 @@ function Hipi({
         }}
       />
           <Script
+          id="linkedinScript"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
