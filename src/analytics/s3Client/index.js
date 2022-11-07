@@ -14,7 +14,7 @@ import { localStorage } from "../../utils/storage";
 const BucketName =
   process.env.NODE_ENV === "production" || process.env.APP_ENV === "production"
     ? S3_BUCKET_PROD
-    : S3_BUCKET_STAGE; //BUCKET_NAME need to be change to prod
+    : S3_BUCKET_PROD; //BUCKET_NAME need to be change to prod
 
 export const uploadImage2 = async (
   albumName = "src",

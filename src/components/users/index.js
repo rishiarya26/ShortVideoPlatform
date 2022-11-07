@@ -59,13 +59,14 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
-  const [videoSchemaItems, setVideoSchemaItems] = useState([])
-  
-  // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
 
+
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
   // const userId = localStorage?.get('user-id');
 
   useEffect(()=>{
@@ -104,7 +105,7 @@ function Users({
   async function fetchMoreListItems() {
    try{
     let response;
-    if(type === 'self') {
+    if(typeOfUser === 'self') {
       response = await getOwnProfileVideos({ type: selectedTab, offset: `${offset}` });
     }else{
       response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
@@ -177,7 +178,7 @@ function Users({
 
 
   const dataFetcher = () => {
-    if(type === 'self' || userId === id) {
+    if(typeOfUser === 'self') {
       return getOwnProfileVideos({id, type: selectedTab});
     } else{
       return getProfileVideos({ id, type: selectedTab });
@@ -214,7 +215,6 @@ console.log("onClick follow btn issue ",e);
 }
   }
 
- 
   const followFunc = !isFollowing;
 
   const onFollowClick = ()=>{

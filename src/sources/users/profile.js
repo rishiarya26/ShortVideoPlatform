@@ -200,16 +200,10 @@ async function fetchUserProfileVideos({
 async function fetchOwnProfileVideos({
   limit = '15', offset = '1', type='all', videoId, sortType = ''
 }) {
-  console.log("videoId",videoId)
-  ;
   let response = {};
-  let video = {}    
-
   let tokens = localStorage.get('tokens');
   const { shortsAuthToken = '' } = tokens;
-
   try {
-    /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?filter=${type}&limit=${limit}&offset=${offset}&sortType=${sortType}`;
     response = await get(apiPath, null,
       {
@@ -227,16 +221,7 @@ async function fetchOwnProfileVideos({
         const video = localStorage.get('selected-profile-video')
           video && (response.data.firstVideo = video);
       }
-      // const data = await getSingleFeed({id : videoId});
-      // video = data?.data;
-      // response.data.firstVideo = video;
-      // console.log("resppp", response, data)}
     }
-    //   , null, {
-    //   Authorization: `Bearer ${shortsAuthToken}`,
-    //   'access-token': accessToken
-    // });
-    //response.data.requestedWith = { id, limit, offset };
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -284,7 +269,7 @@ const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transform
 // const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
 const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccessPopular, transformErrorPopular);
 const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
-const [getOwnProfileVideos] = apiMiddleWare(fetchOwnProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
+const [getOwnProfileVideos] = apiMiddleWare(fetchOwnProfileVideos, transformProfileVideoSuccess, transformProfileVideoError, {requiresAuth : true});
 const [toFollow] = apiMiddleWare(follow, transformSuccessFollow, transformErrorFollow, {requiresAuth : true})
 
 export {
