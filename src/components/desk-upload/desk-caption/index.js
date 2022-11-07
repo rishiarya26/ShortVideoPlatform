@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import UserList from '../user-list';
 import debounce from 'lodash.debounce';
-import { getUserSuggestions } from '../../../sources/explore/user-suggestion';
+import { getUserSuggestions } from '../../../sources/upload/user-suggestion';
 import Img from '../../commons/image';
 import fallbackUser from '../../../../public/images/users.png';
-import { getSuggestions as getHashtagSuggestions } from '../../../sources/explore/hashtag-suggestion';
+import { getSuggestions as getHashtagSuggestions } from '../../../sources/upload/hashtag-suggestion';
 
 async function search(
   searchTerm,

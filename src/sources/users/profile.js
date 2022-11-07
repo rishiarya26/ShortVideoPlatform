@@ -269,7 +269,7 @@ const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transform
 // const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
 const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccessPopular, transformErrorPopular);
 const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
-const [getOwnProfileVideos] = apiMiddleWare(fetchOwnProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
+const [getOwnProfileVideos] = apiMiddleWare(fetchOwnProfileVideos, transformProfileVideoSuccess, transformProfileVideoError, {requiresAuth : true});
 const [toFollow] = apiMiddleWare(follow, transformSuccessFollow, transformErrorFollow, {requiresAuth : true})
 
 export {
