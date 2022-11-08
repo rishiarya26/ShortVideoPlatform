@@ -98,6 +98,8 @@ function transformSuccess(resp) {
       payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
       // payloadObject.vmaxAd = d?.vmaxAd || null;
       // payloadObject.feedVmaxAd = d?.feedVmaxAd || null;
+      payloadObject.correlationID = d?.correlation_id || null;
+      payloadObject.explain = d?.explanations?.[0] || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);

@@ -8,11 +8,11 @@ import useIntersect from "../../../hooks/use-intersect";
 import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 
 const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard
 }) =>{
  
        useEffect(()=>{
-          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory, isMonetization,appsflyerId:appsflyerId})
+          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
           productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
        },[productIdChange])
  
@@ -34,9 +34,21 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
          }   
     const [show, setShow] = useState(false);
 
+    const lingerieComp = <div ref={beautyProductRef} id={id} className="flex flex-col my-4 shadow-md">
+   <div className="w-full overflow-hidden relative">
+         <CardRibbon ribbonData={ribbonData}/>
+         <Img data={thumbnail}/>
+               <div className="absolute bottom-4 min-h-28 w-full left-0">
+               <p className="font-medium text-center protip_font px-8">{title}</p>
+               
+      </div>
+</div>
+   </div> 
+
+
     return(
     <>
-           {/* Card div */}
+    {lingerieCard ? lingerieComp :
            <div ref={beautyProductRef} className="flex flex-col w-full my-4 shadow-md">
             <div className={category === 'beauty' ? "flex head_bg bg_beauty w-full h-14 ":
              "flex head_bg bg_hair w-full h-14 "
@@ -94,6 +106,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
                 </div>
             </div>
         </div>
+        }
         {/* Card div end*/}
     </>    
     )

@@ -17,6 +17,7 @@ import SearchActive from '../commons/svgicons/search-active';
 import HomeActive from '../commons/svgicons/home-active'
 import { getItem } from '../../utils/cookie';
 import detectDeviceModal from '../open-in-app';
+import { trimAtTheRate } from '../../utils/string';
 
 const AppBanner = dynamic(
   () => import('../app-banner'),
@@ -58,7 +59,9 @@ const toShow = {
   profile : ()=>{
    try{ 
      const userId = localStorage.get('user-id');
-     window.location.href=`/${userId}`
+     const userHandle = trimAtTheRate(localStorage.get('user-details')?.userHandle);
+     const user = userHandle || userId;
+     window.location.href=`/@${user}`
     //  router && router && router.push(`/${userId}`)
   }catch(e){
      console.error('error occured while fetching user-id from cookies')

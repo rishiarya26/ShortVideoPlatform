@@ -744,6 +744,9 @@ console.log('errorrr',e)
                       // showBanner={showBanner}
                       setMuted={setMuted}
                       vmaxAd={item?.feedVmaxAd || null}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (

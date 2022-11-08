@@ -1154,3 +1154,9 @@ background-color:rgb(255 237 223);
    display: none;
   }
 }
+
+/* protip_font */
+
+.protip_font{
+  color: #212c4b;
+}

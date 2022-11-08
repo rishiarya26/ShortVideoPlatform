@@ -13,6 +13,7 @@ import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
 import useSnackbar from '../../hooks/use-snackbar';
 import Img from '../commons/image';
+import { toTrackReco } from '../../analytics/view-events';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -38,7 +39,12 @@ function VideoFooter({
   videoSoundAvailable=true,
   isAdShowVisible,
   profilePic,
-  activeVideoId
+  activeVideoId,
+  correlationID=null,
+  explain=null,
+  userId=null,
+  tabName=null,
+  pageName=null,
 }) {
   const [loaded, setLoaded] = useState(false);
   const {showSnackbar} = useSnackbar();
@@ -85,6 +91,15 @@ function VideoFooter({
 
   if(!!isAdShowVisible) return false;
 
+  const userNameOnClick = () => {
+    toTrackReco("click", {page: pageName, tab: tabName, correlation_id: correlationID, assetId: videoId, user_id: userId, objectID: userId, objectType: "creator"})
+    router && router?.push(`/@${userName}`);
+  }
+
+  const hashtagOnClick = (item) => {
+    toTrackReco("click", {page: pageName, tab: tabName, correlation_id: correlationID, assetId: videoId, user_id: userId, objectID: userId, objectType: "hashtag"})
+    item?.includes('#') ? (toHashTag(trimHash(item))) :item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded);
+  }
 
   return (
     <div className={type[comp]} >
@@ -95,13 +110,12 @@ function VideoFooter({
             Shoppable
           </div>
         )} */}
-        <h3 onClick={()=> router && router?.push(`/@${userName}`)} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
+        <h3 onClick={userNameOnClick} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
         <div className=" text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
-             item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded)}>{item}{' '}
+            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>{item}{' '}
              </span>
           ))}
          {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded ?  
