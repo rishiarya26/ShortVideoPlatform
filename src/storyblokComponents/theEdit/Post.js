@@ -40,7 +40,7 @@ export default function Post({ story }) {
           version: "published",
           page: page.current,
           per_page: 1,
-          starts_with: "theedit",
+          starts_with: "blog",
           filter_query: {
             name: {
               not_in: story?.name,
