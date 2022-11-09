@@ -710,6 +710,7 @@ function Feed({ router }) {
       </div>
        <Landscape/> 
       {/* {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
+      {showAppBanner && <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>}
     </>
     </ComponentStateHandler>
   );
