@@ -7,7 +7,7 @@ import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
 
 const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory}) =>{
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, shopNameImg, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard}) =>{
     useEffect(()=>{
         // console.log('uuu')
         // console.log('A******',productIdChange, id, appsflyerId)
@@ -32,9 +32,22 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
         console.log("finalLink",appsflyerLink)
         window?.open(appsflyerLink || shopLink)
        }   
+
+       const lingerieComp = <div ref={recipeRef} id={id} className="flex flex-col my-4 shadow-md">
+       <div className="w-full overflow-hidden relative">
+         <CardRibbon ribbonData={ribbonData}/>
+         <Img data={thumbnail}/>
+               <div className="absolute bottom-4 min-h-28 w-full left-0">
+               <p className="font-medium text-center protip_font px-8">{title}</p>
+               
+      </div>
+</div>
+      </div> 
+   
     return(
     <>
            {/* Card div */}
+           {lingerieCard ? lingerieComp :
            <div ref={recipeRef} className="flex flex-col w-full my-4 shadow-md">
             <div className="flex head_bg bg_hair w-full h-14 ">
                 <div className="heading w-1/2 flex justify-center items-center">
@@ -74,6 +87,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                 </div>
             </div>
         </div>
+    }
         {/* Card div end*/}
     </>    
     )

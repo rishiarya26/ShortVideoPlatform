@@ -3,7 +3,7 @@ import { track } from "../index";
 import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
-import { getReffererPage } from "../../utils/web";
+import { getReffererPage, usePreviousRoute } from "../../utils/web";
 
 
 let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
@@ -29,6 +29,7 @@ export const commonEvents = ()=>{
     const guestId = getItem('guest-token');
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
+    const previousPage = window?.sessionStorage?.getItem('previous-page');
   
     let payload = {}
     payload['unique ID'] = loggedInId || guestId;
@@ -48,6 +49,9 @@ export const commonEvents = ()=>{
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
+    payload['Source'] = previousPage;
+    // getReffererPage();
+    // usePreviousRoute();
     // payload['Source'] = getReffererPage() || 'NA';
     return payload;
 }

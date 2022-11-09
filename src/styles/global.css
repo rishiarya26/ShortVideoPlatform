@@ -1249,3 +1249,8 @@ background-color:rgb(255 237 223);
   height: 32.3vw;
   max-height: 466px;
 }
+/* protip_font */
+
+.protip_font{
+  color: #212c4b;
+}
