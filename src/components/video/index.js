@@ -389,6 +389,11 @@ function Video(props) {
          videoSoundAvailable={props?.videoSound}
          isAdShowVisible={props?.feedAd}
          profilePic={props?.profilePic}
+         explain={props?.explain}
+         correlationID={props?.correlationID}
+         userId={props?.videoOwnersId}
+         pageName={props?.pageName}
+         tabName={props?.tabName}
          />
       {/* TO-DO  comdition acc to comp */}
 
@@ -445,6 +450,10 @@ function Video(props) {
          showBanner={props?.showBanner}
          isAdShowVisible={props?.feedAd}
          campaignId={props?.campaignId || "NA"}
+         explain={props?.explain || null}
+         correlationID={props?.correlationID || null}
+         userId={props?.videoOwnersId || null}
+         profileId={props?.profileId || ""}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

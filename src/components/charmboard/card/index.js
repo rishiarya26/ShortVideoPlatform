@@ -8,7 +8,7 @@ import Img from "../../commons/image"
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard}) =>{
 
   
       useEffect(()=>{
@@ -35,11 +35,23 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
          console.log("finalLink",appsflyerLink)
          window?.open(appsflyerLink || shopLink)
         }  
- 
+
+const lingerieComp = <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
+<div className="w-full overflow-hidden relative">
+         <CardRibbon ribbonData={ribbonData}/>
+         <Img data={thumbnail}/>
+               <div className="absolute bottom-4 min-h-28 w-full left-0">
+               <p className="font-medium text-center protip_font px-8">{title}</p>
+               
+      </div>
+</div>
+</div> 
+
 return(
 <>
 {/* Card div */}
-<div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
+{lingerieCard ? lingerieComp :
+   <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
    <div onClick={onProductClick} style={{backgroundColor: `${dominantColor}7a` || "gray"}}  className="w-full overflow-hidden relative min-h-49v">
    <CardRibbon ribbonData={ribbonData}/>
       <Img data={thumbnail}/> 
@@ -65,6 +77,8 @@ return(
       </div>
    </div>
 </div>
+}
+
 {/* Card div end*/}
 </>    
 )
