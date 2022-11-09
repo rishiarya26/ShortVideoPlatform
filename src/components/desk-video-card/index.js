@@ -12,6 +12,10 @@ const DeskVideoCard = ({ thumbnailUrl,videoTitle,viewCount,shoppable,
   const formattedViewCount =  numberFormatter(viewCount);
   const [showLoader, setShowLoader] = useState(false);
 
+  useEffect(()=>{
+    console.log("status of video: " + status);
+  },[])
+
   return (
     <div key={id} className="video-card h-full min-h-28 w-full relative z-0 cursor-pointer rounded overflow-hidden">
      {page === 'hashTag' && tag && <div className="bg-red-700 text-white py-1 px-2 absolute top-2 left-2 z-10 rounded-sm text-xs">{tag}</div>}
