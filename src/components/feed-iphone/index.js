@@ -153,6 +153,10 @@ const adImpression =  (index = 0)=>{
       console.error("Impression error: " + e);
     }
   }
+  if(toShowItems[index]?.feedVmaxAd){
+    let tracker = toShowItems[index]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+    vmaxTrackerEvents(tracker,'impression')
+  }
 }
 
 
@@ -302,7 +306,7 @@ const adImpression =  (index = 0)=>{
        let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
        if(percentage > 0 && percentage < 25){
          toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
-         vmaxTrackerEvents(tracker,'impression')
+        //  vmaxTrackerEvents(tracker,'impression')
          vmaxTrackerEvents(tracker,'videoAdStarted')
        }
        if(percentage > 25 && percentage < 50) {
