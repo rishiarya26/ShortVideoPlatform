@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /*eslint-disable @next/next/no-img-element */
 
 import EmbedIcon from "../commons/svgicons/embedicon-black";

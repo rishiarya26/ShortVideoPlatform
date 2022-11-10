@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import useSnackbar from "../../hooks/use-snackbar";
 import { postStunnerData } from "../../sources/google-sheets";

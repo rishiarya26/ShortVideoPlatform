@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { withRouter } from "next/router";
 import { useState } from "react";
 import useDrawer from "../../../hooks/use-drawer";
