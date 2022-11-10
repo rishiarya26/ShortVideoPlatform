@@ -273,6 +273,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             {items && items?.outfit?.map((item,id) =>(
            <CharmCard 
              key = {id}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
              thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
              title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
@@ -293,6 +294,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
            {items && items?.accessories?.map((item, id) =>(
            <CharmCard 
              key = {id}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
              thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
              title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
@@ -331,6 +333,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.beauty?.map((item, id) =>(
             id>0 && <CharmCardBeauty 
              key={id}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
              thumbnail =  {item?.lingerieImageUrl || item?.product_rounded_img_url || null}
              title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
@@ -373,6 +376,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.hair?.map((item, id) =>(
              id > 0 && <CharmCardBeauty 
              key={id}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
              thumbnail = {item?.lingerieImageUrl  || (item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url)}
              title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item.product_url): ''}
@@ -399,6 +403,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
               console.log("debug-ad",item)
          return <CharmCard 
               key = {id}
+              lingerieCard= {item?.lingerieImageUrl ? true : false}
               thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
               title = {item?.lingerieTitle  || item?.title}
               shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
@@ -420,6 +425,7 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.recipe?.map((item, id) =>(
              <CharmCardRecipe 
              key={id}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
              thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
              title = {item?.lingerieTitle  || item?.title}
              shopName = {item?.title}

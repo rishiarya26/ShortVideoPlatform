@@ -31,7 +31,7 @@ export async function getStaticProps() {
   // load the draft version
   let sbParams = {
     version: "published", // or 'draft'
-    starts_with: "theedit/",
+    starts_with: "blog/",
   };
   let resp;
   try {
