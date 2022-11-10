@@ -603,6 +603,7 @@ function Hipi({
                   <RouteStateProvider>
                     <Layout>
                     <Script
+                    id="pixelScript"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -619,6 +620,7 @@ function Hipi({
         }}
       />
           <Script
+          id="linkedinScript"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
