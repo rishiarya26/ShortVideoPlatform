@@ -147,9 +147,9 @@
       }
     }
 
-    const theEditArticleSchema = ({url, headline, description, author, datePublished}) =>  ({
+    const theEditArticleSchema = ({url, headline, description, author, datePublished, type="NewsArticle"}) =>  ({
       "@context": "https://schema.org/",
-      "@type": "NewsArticle",
+      "@type": type,
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": url
