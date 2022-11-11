@@ -73,6 +73,7 @@
   }
   .card {
     width: 100%;
+    height: min-content;
   }
   .cardWrapper {
     @apply flex flex-row;

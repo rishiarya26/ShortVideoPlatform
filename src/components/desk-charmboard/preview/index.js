@@ -273,8 +273,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
             {items && items?.outfit?.map((item,id) =>(
            <CharmCard 
              key = {id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
+             thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
@@ -293,8 +294,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
            {items && items?.accessories?.map((item, id) =>(
            <CharmCard 
              key = {id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
+             thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
@@ -331,8 +333,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.beauty?.map((item, id) =>(
             id>0 && <CharmCardBeauty 
              key={id}
-             thumbnail =  {item?.product_rounded_img_url || null}
-             title = {item?.title}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
+             thumbnail =  {item?.lingerieImageUrl || item?.product_rounded_img_url || null}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
@@ -373,8 +376,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.hair?.map((item, id) =>(
              id > 0 && <CharmCardBeauty 
              key={id}
-             thumbnail = {item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url}
-             title = {item?.title}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
+             thumbnail = {item?.lingerieImageUrl  || (item?.product_rounded_img_url ? item?.product_rounded_img_url :  item?.product_img_url)}
+             title = {item?.lingerieTitle || item?.title}
              shopName = {item?.product_url ? getOrigin(item.product_url): ''}
              shopLink = {item?.product_url}
              category = {item?.category}
@@ -399,8 +403,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
               console.log("debug-ad",item)
          return <CharmCard 
               key = {id}
-              thumbnail = {item?.product_img_url}
-              title = {item?.title}
+              lingerieCard= {item?.lingerieImageUrl ? true : false}
+              thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+              title = {item?.lingerieTitle  || item?.title}
               shopName = {item?.product_url ? getOrigin(item?.product_url): ''}
               shopLink = {item?.product_url}
               category = {item?.category}
@@ -420,8 +425,9 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
           {expand && items && items?.recipe?.map((item, id) =>(
              <CharmCardRecipe 
              key={id}
-             thumbnail = {item?.product_img_url}
-             title = {item?.title}
+             lingerieCard= {item?.lingerieImageUrl ? true : false}
+             thumbnail = {item?.lingerieImageUrl || item?.product_img_url}
+             title = {item?.lingerieTitle  || item?.title}
              shopName = {item?.title}
              shopLink = {item?.product_url}
              category = {item?.category}

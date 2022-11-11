@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /*eslint-disable  @next/next/no-img-element */
 import { useEffect, useRef, useState } from "react";
 import { reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from "../../analytics/conviva";
