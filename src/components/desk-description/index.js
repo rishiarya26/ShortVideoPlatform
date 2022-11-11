@@ -4,7 +4,6 @@ import { replaceNbsps } from "../../utils/web";
 
 const Description = ({description}) =>{
     const router = useRouter();
-    
     const redirect = (item) =>{
         try{  
           if(item?.indexOf('#')!==-1){
@@ -12,7 +11,7 @@ const Description = ({description}) =>{
             window.location.href = `/hashtag/${trimmedHashtag}`;
           }else if(item?.indexOf('@')!==-1){
             const userHandle = (item);
-             router && router?.push(`/${userHandle}`);
+             window.location.href = `/${userHandle}`
           }else if(item?.indexOf('https')!==-1){
             window?.open(item)
           }

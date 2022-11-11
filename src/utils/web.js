@@ -20,8 +20,8 @@ function ScrollToTop(){
 }
 
 function replaceNbsps(str) {
-  var re = new RegExp(String.fromCharCode(160), "g");
-  return str.replace(re, " ");
+  let re = new RegExp(String.fromCharCode(160), "g");
+  return str?.replace(re, " ");
 }
 
 function updateUtmData(queryStrings){

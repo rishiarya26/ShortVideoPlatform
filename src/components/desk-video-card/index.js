@@ -6,10 +6,10 @@ import Cart from '../commons/svgicons/cart';
 import Play from '../commons/svgicons/play-outlined';
 import fallbackVideo from '../../../public/images/video.png';
 import Like from '../commons/svgicons/like-outlined';
-import { useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
-export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
-   id, likesCount, videoUrl, activeHoverIndex, page,tag }) {
+const DeskVideoCard = ({ thumbnailUrl,videoTitle,viewCount,shoppable,
+   id, likesCount, videoUrl, activeHoverIndex, page,tag, status }) => {
   const formattedViewCount =  numberFormatter(viewCount);
   const [showLoader, setShowLoader] = useState(false);
 
@@ -57,6 +57,7 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
            </div>}
          </>
       }
+      <div className="absolute bottom-8 left-2 z-10 text-white text-sm flex items-center">{status === 'PENDING' ? "Publishing in process" : "" }</div>
       <div className="absolute bottom-2 left-2 z-10 text-white text-xs flex items-center">
         <Play/> {formattedViewCount}
       </div>
@@ -66,3 +67,5 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
     </div>
   );
 }
+
+export default memo(DeskVideoCard);
