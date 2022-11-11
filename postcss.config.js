@@ -1,3 +1,7 @@
 module.exports = {
-  plugins: ['@tailwindcss/jit', 'postcss-preset-env']
+  plugins: {
+    tailwindcss: {}, // remove '@tailwindcss/jit': {},
+    autoprefixer: {},
+  },
+  // plugins: ['@tailwindcss/jit', 'postcss-preset-env']
 };
