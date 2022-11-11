@@ -14,7 +14,7 @@ function getSchemaObj({story, url}){
   const contentContainer = body?.[1];
   const author = header?.writtenBy || "";
   const headline = header?.heading;
-  const description = richTextRenderer(contentContainer);
+  const description = richTextRenderer(contentContainer, true);
   return{
     url,
     author,
@@ -105,6 +105,10 @@ export default function Post({ story }) {
     <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(theEditArticleSchema(schemaObj)) }}
+    />
+     <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(theEditArticleSchema({...schemaObj, type: "BlogPosting"})) }}
     />
     <script
     type="application/ld+json"
