@@ -44,7 +44,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                 <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-                  <p className="text-xs px-2 h-44 text-gray-600">{title && title}</p>
+                  <p className="text-xs px-2 h-44 text-gray-600 overflow-hidden">{title && title}</p>
                 </div>}
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
            </div>
