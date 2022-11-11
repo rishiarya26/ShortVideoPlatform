@@ -1,6 +1,8 @@
-export const richTextRenderer = (contentContainer) => {
+export const richTextRenderer = (contentContainer, short=false) => {
     const { content = [] } = contentContainer;
     let result = "";
+    let firstPara = "";
+    let paraCount = 0;
     if(content.length > 0) {
       content.forEach((child) => {
         if(child?.component === "description") {
@@ -15,7 +17,14 @@ export const richTextRenderer = (contentContainer) => {
             }
           })
         }
+        if(result.length > 0 && short && paraCount === 0) {
+          firstPara = result;
+          paraCount = 1;
+        }
       })
+      if(short) {
+        return firstPara;
+      }
       return result;
     }
   }
