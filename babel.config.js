@@ -5,6 +5,7 @@ module.exports = function (api) {
 
   const plugins = [
     'inline-dotenv',
+    "@babel/plugin-proposal-nullish-coalescing-operator",
     ['module-resolver', {
       root: ['./src']
     }]
@@ -16,7 +17,7 @@ module.exports = function (api) {
     test: {
       presets: [
         ['next/babel']
-      ]
+      ],
     },
     production: {
       presets: [
@@ -27,10 +28,11 @@ module.exports = function (api) {
             corejs: { version: 3, proposals: true },
             targets: {
               esmodules: true
-            }
+            },
           }
         }]
       ]
+     
     }
   };
   return {
