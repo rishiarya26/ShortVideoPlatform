@@ -252,7 +252,7 @@ const DeskUplaod = () => {
                   <CustomSelect
                     tabIndex={2}
                     type='language'
-                    caption='Languages'
+                    caption='Language'
                     data={languageCodes}
                     value={language}
                     setValue={setLanguage}
