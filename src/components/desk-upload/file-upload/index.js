@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, { useState } from 'react';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import { uploadImage2 } from '../../../analytics/s3Client';
