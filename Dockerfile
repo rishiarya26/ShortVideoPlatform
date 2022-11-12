@@ -8,7 +8,7 @@ COPY . /usr/src/app
 COPY . ./
 
 # APP_ENV value needs to be dynamic
-RUN npm i
+RUN npm i --legacy-peer-deps
 RUN APP_ENV=production npm run build
 
 
