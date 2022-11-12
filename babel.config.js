@@ -5,6 +5,10 @@ module.exports = function (api) {
 
   const plugins = [
     'inline-dotenv',
+    "@babel/plugin-proposal-logical-assignment-operators",
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    "@babel/plugin-proposal-numeric-separator",
+    "@babel/plugin-proposal-optional-chaining",
     ['module-resolver', {
       root: ['./src']
     }]
@@ -16,11 +20,7 @@ module.exports = function (api) {
     test: {
       presets: [
         ['next/babel']
-      ],
-      plugins: ["@babel/plugin-proposal-logical-assignment-operators",
-      "@babel/plugin-proposal-nullish-coalescing-operator",
-      "@babel/plugin-proposal-numeric-separator",
-      "@babel/plugin-proposal-optional-chaining"]
+      ]
     },
     production: {
       presets: [
@@ -34,11 +34,7 @@ module.exports = function (api) {
             },
           }
         }]
-      ],
-      plugins: ["@babel/plugin-proposal-logical-assignment-operators",
-      "@babel/plugin-proposal-nullish-coalescing-operator",
-      "@babel/plugin-proposal-numeric-separator",
-      "@babel/plugin-proposal-optional-chaining"]
+      ]
     }
   };
   return {

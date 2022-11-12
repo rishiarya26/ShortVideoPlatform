@@ -13,7 +13,6 @@
     "@aws-sdk/client-s3": "3.100.0",
     "@aws-sdk/credential-provider-cognito-identity": "3.100.0",
     "@aws-sdk/credential-providers": "3.100.0",
-    "@aws-sdk/eventstream-codec": "3.100.0",
     "@aws-sdk/lib-storage": "3.100.0",
     "@babel/plugin-proposal-logical-assignment-operators": "^7.18.9",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
