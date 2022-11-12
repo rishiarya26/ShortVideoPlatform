@@ -57,6 +57,7 @@
     "react-scripts": "^4.0.0",
     "react-window": "^1.8.6",
     "serve": "^11.3.0",
+    "styled-jsx-css-loader": "^0.3.0",
     "swiper": "^6.4.15",
     "tailwindcss": "^2.0.2",
     "webpack-bundle-analyzer": "^4.4.2",
