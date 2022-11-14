@@ -30,7 +30,7 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { videoSchema } from '../../utils/schema';
 
-const detectDeviceModal = dynamic(() => import('../open-in-app'),{
+const detectDeviceModal = dynamic(() => import('../desk-download-app'),{
   loading: () => <div />,
   ssr: false
 });
