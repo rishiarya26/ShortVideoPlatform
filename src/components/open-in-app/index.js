@@ -109,9 +109,9 @@ export default function DownloadAppWidget({videoId}) {
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
-      {/* <div onClick={close} className='flex w-full justify-end p-2'>
+      <div onClick={close} className='flex w-full justify-end p-2 md:hidden'>
       <Close/>
-   </div> */}
+   </div>
         <div onClick={onStoreRedirect} className="flex py-3 items-center">
           <div className="flex w-18v h-11v object-contain justify-center px-4">
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
