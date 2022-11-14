@@ -1,9 +1,9 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/display-name */
 import { withRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
-import { getProfileVideos, toFollow } from '../../sources/users/profile';
+import { getOwnProfileVideos, getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import Lock from '../commons/svgicons/lock';
 import Listing from '../commons/svgicons/listing';
@@ -30,7 +30,7 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { videoSchema } from '../../utils/schema';
 
-const detectDeviceModal = dynamic(() => import('../open-in-app'),{
+const detectDeviceModal = dynamic(() => import('../desk-download-app'),{
   loading: () => <div />,
   ssr: false
 });
@@ -73,6 +73,10 @@ function DeskUsers({
   // const [videoSchemaItems, setVideoSchemaItems] = useState([]);
 
   const [noSound, setNoSound] = useState(false);
+
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
 
   const checkNoSound =()=>{
     if(!videoData?.[vDetailActiveIndex]?.videoSound){
@@ -133,7 +137,13 @@ function DeskUsers({
 
   async function fetchMoreListItems() {
    try{
-    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
+    let response = {};
+    
+    if(typeOfUser === 'self') {
+      response = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
+    }else{
+      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}`});
+    }
     console.log("fetchedMore",response)
     if(response?.data?.length > 0){
       let data = {...videoData};
@@ -141,7 +151,12 @@ function DeskUsers({
         data.items = data?.items?.concat(response?.data);
         data.status = 'success';
       }else{
-        const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+        let resp = {};
+        if(typeOfUser === 'self') {
+          resp = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
+        }else{
+          const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+        }
         data.items = resp?.data?.concat(response?.data);
         data.status = 'success';
       }
@@ -210,7 +225,15 @@ function DeskUsers({
     // setVideoData([]);
   };
 
-  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+  // const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
+
+  const dataFetcher = () => {
+    if(typeOfUser === 'self'){
+      return getOwnProfileVideos({ type: selectedTab });
+    }else{
+      return getProfileVideos({ id, type: selectedTab });
+    }
+  }
   // eslint-disable-next-line no-unused-vars
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
@@ -242,7 +265,7 @@ function DeskUsers({
   } 
   }
 
-  const userId = localStorage.get('user-id');
+  // const userId = localStorage.get('user-id');
   const followFunc = !isFollowing;
 
   const toShowFollow = useAuth( ()=>show('',login, 'medium'), ()=>followUser(id, userId, followFunc))
@@ -296,7 +319,7 @@ function DeskUsers({
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "edit Profile"})}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
+          <button onClick={() => show('', detectDeviceModal, 'small', {text: "edit Profile"})}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>
         {/* </Link> */}
@@ -319,14 +342,17 @@ function DeskUsers({
       ],
       self: [
         {
+          text: 'Videos',
           icon: <Listing />,
           type: 'all'
         },
         {
+          text: 'Shoppable',
           icon: <LikedList/>,
           type: 'shoppable'
         },
         {
+          text: 'Private',
           icon: <Lock />,
           type: 'PRIVATE'
         }
@@ -437,15 +463,15 @@ function DeskUsers({
                </div>
             </div>
             <div className="list flex  mt-8">
-                  <div className="flex text-gray-700 items-end">
+                  <div className="flex text-gray-700 items-center">
                      <p className="font-semibold text-lg">{numberFormatter(following)}</p>
                      <p className="pl-2">Following</p>
                   </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+                  <div className="flex text-gray-700 items-center ml-4">
                      <p className="font-semibold text-lg">{numberFormatter(followers)}</p>
                      <p className="pl-2">Followers</p>
                   </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+                  <div className="flex text-gray-700 items-center ml-4">
                      <p className="font-semibold text-lg">{numberFormatter(totalLikes)}</p>
                      <p className="pl-2">Likes</p>
                   </div>
@@ -521,4 +547,4 @@ function DeskUsers({
   );
 }
 
-export default withRouter(DeskUsers);
+export default memo(withRouter(DeskUsers));

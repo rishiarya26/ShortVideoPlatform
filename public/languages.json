@@ -1,0 +1,15 @@
+{ "languageCodes" :  [
+  { "name" :  "English", "code" :  "en" },
+  { "name" :  "हिन्दी", "code" :  "hi" },
+  { "name" :  "मराठी", "code" :  "mr" },
+  { "name" :  "తెలుగు", "code" :  "te" },
+  { "name" :  "தமிழ்", "code" :  "ta" },
+  { "name" :  "ಕನ್ನಡ", "code" :  "kn" },
+  { "name" :  "മലയാളം", "code" :  "ml" },
+  { "name" :  "ગુજરાતી", "code" :  "gu" },
+  { "name" :  "বাংলা", "code" :  "bn" },
+  { "name" :  "भोजपुरी", "code" :  "hr" },
+  { "name" :  "ଓଡିଆ", "code" :  "or" },
+  { "name" :  "ਪੰਜਾਬੀ", "code" :  "pa" },
+  { "name" :  "Other", "code" :  "ot" }
+  ]}

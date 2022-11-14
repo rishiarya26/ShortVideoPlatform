@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { trimHash } from "../../utils/string";
+import { replaceNbsps } from "../../utils/web";
 
 const Description = ({description}) =>{
     const router = useRouter();
@@ -10,7 +11,7 @@ const Description = ({description}) =>{
             window.location.href = `/hashtag/${trimmedHashtag}`;
           }else if(item?.indexOf('@')!==-1){
             const userHandle = (item);
-             router && router?.push(`/${userHandle}`);
+             window.location.href = `/${userHandle}`
           }else if(item?.indexOf('https')!==-1){
             window?.open(item)
           }
@@ -21,7 +22,7 @@ const Description = ({description}) =>{
 
     return (
         <>
-        {description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
+        {replaceNbsps(description)?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
               <p key={id} className='inline-block'>
                 <span 
                  className={`pl-1 cursor-pointer ${(item?.indexOf('#')!==-1 || item?.indexOf('@')!==-1)?'font-semibold':''} `} 

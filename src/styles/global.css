@@ -913,6 +913,13 @@ title:first-letter {
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
+
+  .box_shadow_2{
+    box-shadow: rgb(0 0 0 / 6%) 0px 2px 8px;
+    background-color: rgb(255, 255, 255);
+  }
+  
+
   .purple_light{
     color: #9c21aa;
   }
@@ -1093,6 +1100,87 @@ title:first-letter {
   .carousel .swiper-container {
    position: unset!important;
   }
+
+
+  /* switch css */
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider_new {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    height: 25px;
+  }
+  
+  .slider_new:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 1px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider_new {
+    background-color: #0be09b;
+  }
+  
+  input:focus + .slider_new {
+    box-shadow: 0 0 1px #0be09b;
+  }
+  
+  input:checked + .slider_new:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider_new.round {
+    border-radius: 34px;
+  }
+  
+  .slider_new.round:before {
+    border-radius: 50%;
+  }
+
+  /* styled checkbox*/
+/* #uploadButton:hover svg{
+  fill: #f4def2
+} */
+/* language iphone 6 */
+@media only screen 
+    and (max-device-width : 376px) {
+      .lang-sm{
+        max-width: 15vh!important;
+        min-height: 8vh;
+        margin: 10px 4%;
+      }
+      .done_btn{
+        width: 55vh;
+      }
+    }
 /* Language selection */
     @media only screen 
     and (min-device-width : 376px) {
@@ -1145,6 +1233,10 @@ background-color:rgb(255 237 223);
   z-index: 1!important;
 }
 
+.requiredField::after{
+  content: "*";
+  color: red;
+}
 /* iphone_small sidebar icons hide */
 @media only screen and (max-height: 580px) {
   .iphone_small{
@@ -1152,6 +1244,11 @@ background-color:rgb(255 237 223);
   }
 }
 
+.videoResponsiveWidth {
+  max-width: 263px;
+  height: 32.3vw;
+  max-height: 466px;
+}
 /* protip_font */
 
 .protip_font{
