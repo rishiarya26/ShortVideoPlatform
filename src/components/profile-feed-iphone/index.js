@@ -250,7 +250,7 @@ function ProfileFeedIphone({ router }) {
   // const dataFetcher = () => getProfileVideos({ id, limit: 6, type: type, videoId: videoId && videoId });
 
   const dataFetcher = () => {
-    if(userType === 'self'){
+    if(typeOfUser === 'self'){
       return getOwnProfileVideos({ limit: 6, type: type, videoId: videoId && videoId });
     }else{
       return getProfileVideos({ id, limit: 6, type: type, videoId: videoId && videoId });
