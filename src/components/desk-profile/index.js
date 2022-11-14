@@ -463,15 +463,15 @@ function DeskUsers({
                </div>
             </div>
             <div className="list flex  mt-8">
-                  <div className="flex text-gray-700 items-end">
+                  <div className="flex text-gray-700 items-center">
                      <p className="font-semibold text-lg">{numberFormatter(following)}</p>
                      <p className="pl-2">Following</p>
                   </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+                  <div className="flex text-gray-700 items-center ml-4">
                      <p className="font-semibold text-lg">{numberFormatter(followers)}</p>
                      <p className="pl-2">Followers</p>
                   </div>
-                  <div className="flex text-gray-700 items-end ml-4">
+                  <div className="flex text-gray-700 items-center ml-4">
                      <p className="font-semibold text-lg">{numberFormatter(totalLikes)}</p>
                      <p className="pl-2">Likes</p>
                   </div>

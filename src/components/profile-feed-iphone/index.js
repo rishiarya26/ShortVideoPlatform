@@ -33,6 +33,7 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { localStorage } from '../../utils/storage';
 
 SwiperCore.use([Mousewheel]);
 
