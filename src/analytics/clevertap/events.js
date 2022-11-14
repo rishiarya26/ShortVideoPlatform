@@ -3,7 +3,7 @@ import { track } from "./index";
 import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
-import { getReffererPage } from "../../utils/web";
+import { getPageName } from "../../utils/web";
 
 
 let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd']
@@ -29,7 +29,7 @@ export const commonEvents = ()=>{
     const guestId = getItem('guest-token');
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
-    const referrer = getReffererPage();
+    const referrer = getPageName();
   
     let payload = {}
     payload['Source'] = referrer;
@@ -50,7 +50,7 @@ export const commonEvents = ()=>{
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
-    // payload['Source'] = getReffererPage() || 'NA';
+    // payload['Source'] = getPageName() || 'NA';
     return payload;
 }
 
