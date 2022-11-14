@@ -17,7 +17,7 @@ const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
 export default function VideoGallery({
-  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems, searchTerm, userType
+  items, status, retry, userId='', type = 'all', page ='profile', hashTag='', showLoading, fetchMoreListItems, searchTerm
 }) {
 
   const { t } = useTranslation();
@@ -67,7 +67,7 @@ export default function VideoGallery({
   const toProfileFeed = (userId, videoId, type)=>{
     const index = items.findIndex((data)=>data.content_id === videoId);
     index !== -1 && localStorage.set('selected-profile-video',items[index]);
-     router && router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}&userType=${userType}`)
+     router && router?.push(`/profile-feed/${userId}?videoId=${videoId}&type=${type}`)
   }
 
   const toHashTagFeed =(hashTag, videoId, type)=>{

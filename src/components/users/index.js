@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import useTranslation from '../../hooks/use-translation';
-import { getProfileVideos, getOwnProfileVideos, toFollow } from '../../sources/users/profile';
+import { getProfileVideos, toFollow } from '../../sources/users/profile';
 import { useFetcher } from '../commons/component-state-handler';
 import UserTab from '../commons/tabs/user-tab';
 import VideoGallery from '../video-gallery';
@@ -60,15 +60,10 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
+  // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
-
-
-  const tokens = localStorage.get('tokens');
-  const userId = localStorage.get('user-id');
-  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
-  // const userId = localStorage?.get('user-id');
 
   useEffect(()=>{
     setIsFollowing(isFollow);
@@ -105,12 +100,7 @@ function Users({
 
   async function fetchMoreListItems() {
    try{
-    let response;
-    if(typeOfUser === 'self') {
-      response = await getOwnProfileVideos({ type: selectedTab, offset: `${offset}` });
-    }else{
-      response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
-    }
+    const response = await getProfileVideos({ id, type: selectedTab, offset: `${offset}` });
     console.log(response)
     if(response?.data?.length > 0){
       let data = {...videoData};
@@ -177,14 +167,7 @@ function Users({
     // setVideoData([]);
   };
 
-
-  const dataFetcher = () => {
-    if(typeOfUser === 'self') {
-      return getOwnProfileVideos({id, type: selectedTab});
-    } else{
-      return getProfileVideos({ id, type: selectedTab });
-    }
-  }
+  const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   // eslint-disable-next-line no-unused-vars
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
@@ -216,6 +199,7 @@ console.log("onClick follow btn issue ",e);
 }
   }
 
+  const userId = localStorage?.get('user-id');
   const followFunc = !isFollowing;
 
   const onFollowClick = ()=>{
@@ -425,7 +409,6 @@ const notNowClick=()=>{
         retry={retry && retry}
         userId={id}
         type={selectedTab}
-        userType={type}
         page='profile'
         showLoading={showLoading}
         fetchMoreListItems={fetchMoreListItems}

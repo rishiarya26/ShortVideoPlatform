@@ -5,9 +5,6 @@ const Dialog = ({
   
 }) => {
   const height = {
-    xExtraSmall:{
-      width:'w-1/5'
-    },
     extraSmall:{
       height: 'h-1/3 drawer-height',
       width:'w-1/3',
@@ -53,14 +50,14 @@ const Dialog = ({
         {' '}
         <div data-testid="dialog-header flex w-full justify-between relative">
           <div className=" flex justify-center text-xl font-semibold" data-testid="dialog-title">{title}</div>
-          {type !== 'xExtraSmall' && <div
+          <div
             data-testid="dialog-close"
             role="presentation"
             onClick={() => (close())}
             className="w-6 h-6 absolute right-3 top-3 cursor-pointer z-20"
           >
             <Close />
-          </div>}
+          </div>
 
         </div>
         <div data-testid="dialog-content w-full">
