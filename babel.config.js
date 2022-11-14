@@ -5,10 +5,6 @@ module.exports = function (api) {
 
   const plugins = [
     'inline-dotenv',
-    "@babel/plugin-proposal-logical-assignment-operators",
-    "@babel/plugin-proposal-nullish-coalescing-operator",
-    "@babel/plugin-proposal-numeric-separator",
-    "@babel/plugin-proposal-optional-chaining",
     ['module-resolver', {
       root: ['./src']
     }]
@@ -31,7 +27,7 @@ module.exports = function (api) {
             corejs: { version: 3, proposals: true },
             targets: {
               esmodules: true
-            },
+            }
           }
         }]
       ]

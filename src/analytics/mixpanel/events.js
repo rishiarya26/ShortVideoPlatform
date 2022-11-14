@@ -56,6 +56,7 @@ export const commonEvents = ()=>{
     return payload;
 }
 
+
 /* Func to send mixpanel event - 
 type(event name), value(additional Info keys), item(obj containing info/Ids) */
 export const toTrackMixpanel = (type, value, item) => {
@@ -119,16 +120,6 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
       isShopMonetizeAd()
       return globalCommonEvents
-    }
-
-    const eventsForUpload = () =>{
-      const videoUploadStatus = value?.type === 'success' ? true : false;
-       globalCommonEvents['success'] = videoUploadStatus ?? 'N/A';
-       globalCommonEvents["Post Time Seconds"] = value?.post_time_seconds ?? 'NA';
-       globalCommonEvents['UGC Language'] = item?.ugc_language ?? 'N/A';
-       if(!videoUploadStatus) globalCommonEvents['Failure Reason'] = value?.failure_reason ?? 'N/A';
-       addUgcId();
-       return globalCommonEvents;
     }
 
 
@@ -469,9 +460,8 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),
         'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
         'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
-        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
-        'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
-        'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds())
+
       
         
         
