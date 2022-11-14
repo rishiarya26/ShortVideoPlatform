@@ -9,11 +9,11 @@ import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsfly
 import { toTrackClevertap } from "../../../analytics/clevertap/events";
 
 const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, category, heading, subTitle, thumbnailProduct, index, ribbonData, actualPrice, salePrice,
-    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory
+    productIdChange,onProductChange,pageName,tabName,id,productName,videoId, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard
 }) =>{
  
        useEffect(()=>{
-          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})
+          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
           productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
           productIdChange === id && toTrackClevertap('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
        },[productIdChange])
@@ -30,16 +30,28 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
             });  
  
          const onProductClick= ()=>{
-          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory})  
+          toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})  
           toTrackClevertap('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
           const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
           window?.open(appsflyerLink || shopLink)
          }   
     const [show, setShow] = useState(false);
 
+    const lingerieComp = <div ref={beautyProductRef} id={id} className="flex flex-col my-4 shadow-md">
+   <div className="w-full overflow-hidden relative">
+         <CardRibbon ribbonData={ribbonData}/>
+         <Img data={thumbnail}/>
+               <div className="absolute bottom-4 min-h-28 w-full left-0">
+               <p className="font-medium text-center protip_font px-8">{title}</p>
+               
+      </div>
+</div>
+   </div> 
+
+
     return(
     <>
-           {/* Card div */}
+    {lingerieCard ? lingerieComp :
            <div ref={beautyProductRef} className="flex flex-col w-full my-4 shadow-md">
             <div className={category === 'beauty' ? "flex head_bg bg_beauty w-full h-14 ":
              "flex head_bg bg_hair w-full h-14 "
@@ -65,7 +77,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
                   <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-                  <p className="text-xs px-2 h-44 text-gray-600">{title && title}</p>
+                  <p className="text-xs px-2 h-44 text-gray-600 overflow-hidden">{title && title}</p>
                 </div>}
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
            </div>
@@ -97,6 +109,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
                 </div>
             </div>
         </div>
+        }
         {/* Card div end*/}
     </>    
     )

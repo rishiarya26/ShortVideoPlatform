@@ -1152,6 +1152,12 @@ background-color:rgb(255 237 223);
   }
 }
 
+/* protip_font */
+
+.protip_font{
+  color: #212c4b;
+}
+
 
 
 /* Start of clevertap notification styles */

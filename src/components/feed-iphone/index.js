@@ -662,6 +662,9 @@ console.log('errorrr',e)
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (

@@ -34,7 +34,7 @@ function ProductWidget({
 
   return (
     <div
-      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-28 mb-1"
+      className="flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-24 mb-3"
     >
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">
@@ -44,7 +44,7 @@ function ProductWidget({
           {shopCardsLength > 0 ? shopCards.map((data, id) => (
             <div
               key={id}
-              className="w-14 h-14 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
+              className="w-16 h-16 mr-4 rounded-lg bg-gray-500 overflow-hidden relative"
               // eslint-disable-next-line no-undef
               onClick={() => {
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName && tabName || ''},{productId:id || null}) 
@@ -63,7 +63,7 @@ function ProductWidget({
       </div>
       <div className="flex p-4">
         <div
-          className="flex rounded-full h-10 w-10 bg-red-600 justify-center items-center text-white"
+          className="flex rounded-full h-12 w-12 bg-red-600 justify-center items-center text-white"
           onClick={()=>handleSaveLook(true)}
         >
           <Close />

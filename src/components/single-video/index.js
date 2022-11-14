@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /*eslint-disable @next/next/no-img-element*/
 import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';

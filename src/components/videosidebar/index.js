@@ -27,6 +27,7 @@ import Comment from '../commons/svgicons/comment';
 import Shop from '../commons/svgicons/shop';
 import EmbedIcon from '../commons/svgicons/embedicon';
 import detectDeviceModal from '../open-in-app';
+import { toTrackReco } from '../../analytics/view-events';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const login = dynamic(() => import('../auth-options'),{
@@ -39,7 +40,8 @@ function VideoSidebar({
   socialId,
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
-  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA"
+  charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA",
+  correlationID=null, explain=null, userId=null
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -85,6 +87,7 @@ function VideoSidebar({
   };
 
   const handleProfileClick = () => {
+    toTrackReco("click", {page: pageName, tab: tabName, correlation_id: correlationID, assetId: videoId, user_id: userId, objectID: userId, objectType: "creator"})
      router && router?.push(`/@${userName}`);
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
@@ -389,6 +390,11 @@ function Video(props) {
          videoSoundAvailable={props?.videoSound}
          isAdShowVisible={props?.feedAd}
          profilePic={props?.profilePic}
+         explain={props?.explain}
+         correlationID={props?.correlationID}
+         userId={props?.videoOwnersId}
+         pageName={props?.pageName}
+         tabName={props?.tabName}
          />
       {/* TO-DO  comdition acc to comp */}
 
@@ -445,6 +451,10 @@ function Video(props) {
          showBanner={props?.showBanner}
          isAdShowVisible={props?.feedAd}
          campaignId={props?.campaignId || "NA"}
+         explain={props?.explain || null}
+         correlationID={props?.correlationID || null}
+         userId={props?.videoOwnersId || null}
+         profileId={props?.profileId || ""}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

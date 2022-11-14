@@ -628,6 +628,9 @@ function Feed({ router }) {
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (
@@ -726,6 +729,7 @@ function Feed({ router }) {
       </div>
        <Landscape/> 
       {/* {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
+      {showAppBanner && <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>}
     </>
     </ComponentStateHandler>
   );

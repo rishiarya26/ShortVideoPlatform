@@ -12,9 +12,9 @@ function getSchemaObj({story, url}){
   const body = story?.content?.body;
   const header = body?.[0];
   const contentContainer = body?.[1];
-  const author = header?.subheading?.split("By")[1].trim()
+  const author = header?.writtenBy || "";
   const headline = header?.heading;
-  const description = richTextRenderer(contentContainer);
+  const description = richTextRenderer(contentContainer, true);
   return{
     url,
     author,
@@ -40,7 +40,7 @@ export default function Post({ story }) {
           version: "published",
           page: page.current,
           per_page: 1,
-          starts_with: "theedit",
+          starts_with: "blog",
           filter_query: {
             name: {
               not_in: story?.name,
@@ -105,6 +105,10 @@ export default function Post({ story }) {
     <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(theEditArticleSchema(schemaObj)) }}
+    />
+     <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(theEditArticleSchema({...schemaObj, type: "BlogPosting"})) }}
     />
     <script
     type="application/ld+json"

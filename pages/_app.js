@@ -33,6 +33,7 @@ import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
 import { toTrackClevertap } from "../src/analytics/clevertap/events";
+import { getPageName } from '../src/utils/web';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -496,9 +497,29 @@ function Hipi({
       console.error('refferer error',e)
     }
   }
+          
+  useEffect(()=>{
+    savePreviousPage(router);
+  },[router?.asPath])
+
+  const savePreviousPage = (router) =>{
+   try{
+    const {asPath = ''} = router;
+    const previousPage = window.sessionStorage.getItem('current-page');
+    const pageName = getPageName(asPath)
+  if(pageName !== previousPage ){  
+    console.error('asPath',asPath, previousPage,)
+    previousPage && window.sessionStorage.setItem('previous-page',previousPage);
+    window.sessionStorage.setItem('current-page',pageName);
+  }
+  }catch(e){
+    console.error('save previous path error',e)
+  }
+  }
  /*************************** */
     useEffect(()=>{
       setRefferer();
+     
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
       if(typeof document != "undefined"){
@@ -549,6 +570,7 @@ function Hipi({
     events.forEach((data)=>{
       window.addEventListener(data,resetTimeout);
     })
+
     return () => {
       events.forEach((data)=>{
         window.addEventListener(data,resetTimeout);

@@ -101,8 +101,8 @@ export default function Mobile({
           showMessage({ message: t('SUCCESS_OTP') });
         }
       } catch (e) {
+        toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
         if (e.errorCode === 404) {
-          toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
           showMessage({ message: t('NOT_REGISTERED') });
         }
       }

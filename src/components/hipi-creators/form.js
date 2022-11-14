@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { ToTrackFbEvents } from "../../analytics/fb-pixel/events";

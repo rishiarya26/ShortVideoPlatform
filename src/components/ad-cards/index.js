@@ -23,7 +23,7 @@ function LabelHolder({label}){
   <div className='text-10 px-1 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
   </>
 }
-
+let allAdCards = [];
 const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,appsflyerId}) => {
   return(
     <div className="relative flex flex-col">
@@ -43,12 +43,15 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 category: data?.category,
                 subCategory: data?.sub_category,
                 subSubCategory: data?.subsub_category,
-                mainCategory: data?.main_category
+                mainCategory: data?.main_category,
+                appsflyerId : data?.appsflyer_id
               }
             );
             const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
-            appsflyerLink && appsflyerPixelImp({ advertiser:getBrand(data?.product_url), appId:data?.appsflyer_id, productId:data?.card_id,comp:'Feed'})
+            appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
+              appsflyerPixelImp({ advertiser:getBrand(item?.product_url), appId:item?.appsflyer_id, productId:item?.card_id,comp:'Feed'})
+            }) 
             toTrackClevertap(
               "monetisationProductClick",
               { pageName: pageName, tabName: tabName },
@@ -74,7 +77,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 category: data?.category,
                 subCategory: data?.sub_category,
                 subSubCategory: data?.subsub_category,
-                mainCategory: data?.main_category
+                mainCategory: data?.main_category,
+                appsflyerId : data?.appsflyer_id
               }
             );
             toTrackClevertap(
@@ -115,6 +119,7 @@ function AdCards({
   //   setLoading(false);
   // };
   useEffect(() => {
+    allAdCards = adCards;
   //  adCards?.map { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, brandUrl:data?.product_url})}
   }, []);
 

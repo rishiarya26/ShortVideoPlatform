@@ -39,6 +39,10 @@ const HamburgerMenu = ()=>{
             <NewsroomIcon height="24px" width="24px"/>
             <p className="text-base px-3 text-gray-900 ">Newsroom</p>
           </div>
+          <div onClick={()=> router && router?.push('/blog')} className="flex items-center py-3">
+            <NewsroomIcon height="24px" width="24px"/>
+            <p className="text-base px-3 text-gray-900 ">Blog</p>
+          </div>
           <div onClick={()=> router && router?.push('/ads')} className="flex items-center py-3">
             <AdsIcon/>
             <p className="text-base px-3 text-gray-900 ">Ads</p>

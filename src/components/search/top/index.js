@@ -79,7 +79,7 @@ const TopItems = ({item, redirectTab}) =>{
                     try{
                      toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
                      toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
-                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                     }catch(e){
                       console.error('search result click',e)
                     }
@@ -118,7 +118,7 @@ const TopItems = ({item, redirectTab}) =>{
                   try{
                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
                     toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
-                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                    }catch(e){
                      console.error('search result click',e)
                    }
@@ -155,7 +155,7 @@ const TopItems = ({item, redirectTab}) =>{
                       try{
                         toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
                         toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
-                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                        }catch(e){
                          console.error('search result click',e)
                        }
