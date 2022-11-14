@@ -319,7 +319,7 @@ function DeskUsers({
       </>,
       self: <>
         {/* <Link href={`/edit-profile/${id}`}> */}
-          <button onClick={() => show('', detectDeviceModal, 'extraSmall', {text: "edit Profile"})}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
+          <button onClick={() => show('', detectDeviceModal, 'small', {text: "edit Profile"})}  className="font-semibold text-sm border border-gray-400 rounded-sm py-2 px-12 mr-1 bg-white text-black">
             Edit Profile
           </button>
         {/* </Link> */}
