@@ -1,6 +1,8 @@
 import { ToTrackFbEvents } from "../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../analytics/firebase/events";
 import { toTrackMixpanel } from "../analytics/mixpanel/events";
+import { toTrackFloodlight } from "../analytics/floodlight/events";
+import { inject } from "../analytics/async-script-loader";
 
 // let videosCompleted = (typeof window !== "undefined" &&  JSON.parse(window.sessionStorage.getItem('videos-completed')) || 0);
 
@@ -54,7 +56,10 @@ import { toTrackMixpanel } from "../analytics/mixpanel/events";
 
 const callViewEvent = (videosViewed)=>{
   console.log("MIX- checking...", videosViewed)
+  const body = document.querySelector('body');
   if(videosViewed === 5){
+    inject(null,toTrackFloodlight({eventName: 'view_5', type: 'script'}));
+    inject(null,toTrackFloodlight({eventName: 'view_5', type: 'noscript'}));
     toTrackMixpanel('videosCompleted5')
     toTrackFirebase('videosCompleted5')
     ToTrackFbEvents('videosCompleted5')
