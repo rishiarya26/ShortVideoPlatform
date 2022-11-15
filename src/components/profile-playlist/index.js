@@ -2,7 +2,7 @@ import React from 'react'
 
 function ProfilePlaylist() {
   return (
-    <div></div>
+    <div>Hi</div>
   )
 }
 
