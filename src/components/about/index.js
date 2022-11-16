@@ -32,9 +32,9 @@ function About() {
     <>
      <SeoMeta
         data={{
-          title: 'Discover Popular Videos |  Hipi - Indian Short Video App',
+          title: 'About Us | Hipi Karo More Karo | Know Everything About Hipi',
           // image: item?.thumbnail,
-          description: 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
+          description: 'Hipi -India’s favorite short trending video platform brings you with the best and latest content available that you can enjoy, About Us - Know everything about Hipi here',
           canonical: url && getCanonicalUrl(url),
         }}
       />
