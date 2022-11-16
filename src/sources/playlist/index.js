@@ -14,7 +14,6 @@ const msgMap = {
 };
 
 function transformSuccess(resp) {
-debugger;
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   try {
@@ -88,7 +87,6 @@ async function getPlaylistDetailsApi({playlistid, firstApiCall}) {
     let response = {};
     try {
       const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist`;
-      debugger;
       response = await get(apiPath, null, {
           'accept': 'application/json',
           'guest-token': guestToken,

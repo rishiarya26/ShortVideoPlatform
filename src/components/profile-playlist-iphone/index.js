@@ -85,6 +85,12 @@ function ProfilePlaylistIphone({ router }) {
 
   const pageName = 'Profile Playlist Feed';
 
+  // useEffect(()=>{
+  //   if(items.length > 0){
+
+  //   }
+  // },[playlistId])
+
 
   const loadMoreItems = async() =>{
     let videos = [...items]
@@ -128,7 +134,7 @@ function ProfilePlaylistIphone({ router }) {
      setDeletedTill(deletedTill);
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    // setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
      catch(e){
@@ -145,7 +151,7 @@ function ProfilePlaylistIphone({ router }) {
      }
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    // setShowAppBanner(true);
      setDeletedTill(deletedTill-5);
      setToShowItems(updateShowItems);
     }
@@ -213,9 +219,9 @@ const getUserDetails = async(id)=>{
 
   const onDataFetched = (data) => {
     let videos = data?.data;
-    data && setItems(videos);
+    data && setItems([...videos, ...videos, ...videos, ...videos]);
     setInitialLoadComplete(true);
-    data && setToShowItems(videos);
+    data && setToShowItems([...videos, ...videos, ...videos, ...videos]);
     console.log("before",activeVideoId);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
@@ -356,11 +362,10 @@ const getUserDetails = async(id)=>{
           <Swiper
             className="max-h-full"
             direction="vertical"
-            // onSwiper={swiper => {
-          
-            //   router?.replace(`/playlist/${playlistId}`);
-            //   setInitialPlayStarted(false);
-            // }}
+            //initialSlide={10}
+            onSwiper={swiper => {
+              document.querySelector(".swiper-container").swiper?.slideTo(10,2,false);
+            }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"

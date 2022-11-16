@@ -119,7 +119,7 @@ function Video(props) {
       //    });
       // }
       } else {
-      rootRef?.current?.children[0]?.pause();
+      rootRef?.current?.children[0]?.pause && rootRef?.current?.children[0]?.pause();
       setPlaying(false);
       }
       }
