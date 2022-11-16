@@ -61,6 +61,7 @@ function ProfilePlaylistIphone({ router }) {
   const [toShowItems, setToShowItems] = useState([]);
   const [deletedTill, setDeletedTill] = useState();
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
+  const [firstApiCall, setFirstApiCall] = useState(true);
   
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [noSound, setNoSound] = useState(false);
@@ -207,21 +208,18 @@ const getUserDetails = async(id)=>{
    console.log("get profile error",e)
   }
   }
-  useEffect(()=>{
-    id && getUserDetails(id)
-  },[id])
 
-  const dataFetcher = () => getPlaylistDetails({ playlistId });
+  const dataFetcher = () => getPlaylistDetails({ playlistId,firstApiCall:firstApiCall });
 
   const onDataFetched = (data) => {
-  let videos = data?.data;
+    let videos = data?.data;
     data && setItems(videos);
     setInitialLoadComplete(true);
     data && setToShowItems(videos);
     console.log("before",activeVideoId);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
-    // checkNoSound();
+    setFirstApiCall(false);
   };
 
     /* mixpanel - monetization cards impression */
@@ -335,11 +333,12 @@ const getUserDetails = async(id)=>{
 
        
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-        {/* <OpenAppStrip
-        pageName={pageName}
-        item={items?.[videoActiveIndex]}
-        activeVideoId={activeVideoId}
-        /> */}
+        <OpenAppStrip
+          pageName={pageName}
+          item={items?.[videoActiveIndex]}
+          activeVideoId={activeVideoId}
+          isPlaylistView
+        />
         {/* <PlaylistStrip
           data={data}
           currentVideoIndex={currentVideoIndex}
@@ -355,12 +354,11 @@ const getUserDetails = async(id)=>{
           <Swiper
             className="max-h-full"
             direction="vertical"
-            onSwiper={swiper => {
-              // const slideToId = swiper?.slides?.findIndex(data => data?.id === videoId);
-              // swiper?.slideTo(slideToId, 0);
-              router?.replace(`/profile-feed/${id}`);
-              setInitialPlayStarted(false);
-            }}
+            // onSwiper={swiper => {
+          
+            //   router?.replace(`/playlist/${playlistId}`);
+            //   setInitialPlayStarted(false);
+            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"
