@@ -337,6 +337,8 @@ const getUserDetails = async(id)=>{
           pageName={pageName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          data={items}
+          fetchMore={loadMoreItems}
           isPlaylistView
         />
         {/* <PlaylistStrip
