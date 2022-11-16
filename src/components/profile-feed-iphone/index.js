@@ -10,7 +10,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos, getUserProfile, getOwnProfileVideos } from '../../sources/users/profile';
+import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import Mute from '../commons/svgicons/mute';
@@ -33,7 +33,6 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
-import { localStorage } from '../../utils/storage';
 
 SwiperCore.use([Mousewheel]);
 
@@ -98,7 +97,6 @@ function ProfileFeedIphone({ router }) {
   const { id } = router?.query;
   const { videoId = items?.[0]?.content_id } = router?.query;
   const { type = 'all' } = router?.query;
-  const { userType = '' }  = router?.query;
 
   const {show} = useDrawer();
 
@@ -108,34 +106,25 @@ function ProfileFeedIphone({ router }) {
   //   setLoading(false);
   // };
 
-  const tokens = localStorage.get('tokens');
-  const userId = localStorage.get('user-id');
-  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
-
   const loadMoreItems = async() =>{
     let videos = [...items]
     try {
-      let resp = {};
-      if(typeOfUser === 'self'){
-        resp = await getOwnProfileVideos({ type: type, offset: offset });
-      }else{
-          resp = await getProfileVideos({ id, limit: 6, type: type, offset: offset });
-      }
-      if(resp?.data?.length > 0){
-        console.log("innn",resp)
-        // const index = resp.data.findIndex((data)=>(data?.id === videoId))
-        // if(index !== -1){
-        //   resp.data.splice(index,1);
-        // }
-        videos = videos?.concat(resp?.data);
-        console.log("concat",videos)
-        setItems(videos);
-        setOffset(offset+1);
-        return resp?.data
-      }
-    }catch(e){
-      console.log('data fetch error',e)
+    const resp = await getProfileVideos({ id, limit: 6, type: type, offset: offset });
+    if(resp?.data?.length > 0){
+      console.log("innn",resp)
+      // const index = resp.data.findIndex((data)=>(data?.id === videoId))
+      // if(index !== -1){
+      //   resp.data.splice(index,1);
+      // }
+      videos = videos?.concat(resp?.data);
+      console.log("concat",videos)
+      setItems(videos);
+      setOffset(offset+1);
+      return resp?.data
     }
+  }catch(e){
+    console.log('data fetch error',e)
+  }
   }
 
   const incrementShowItems = async() =>{
@@ -247,16 +236,7 @@ function ProfileFeedIphone({ router }) {
     id && getUserDetails(id)
   },[id])
 
-  // const dataFetcher = () => getProfileVideos({ id, limit: 6, type: type, videoId: videoId && videoId });
-
-  const dataFetcher = () => {
-    if(typeOfUser === 'self'){
-      return getOwnProfileVideos({ limit: 6, type: type, videoId: videoId && videoId });
-    }else{
-      return getProfileVideos({ id, limit: 6, type: type, videoId: videoId && videoId });
-    }
-  }
-
+  const dataFetcher = () => getProfileVideos({ id, limit: 6, type: type, videoId: videoId && videoId });
   const onDataFetched = (data) => {
   let videos = data?.data;
     data && setItems(videos);
