@@ -16,9 +16,9 @@ export default function All({ stories }) {
       <SeoMeta
         data={{
           title:
-            "Latest Bollywood News | Celebrity Fashion & Style Trends | Hipi",
+            "Latest Hipi - Blogs Get Detailed Updates Here On Hipi Blogs",
           description:
-            "Follow Bollywood Celebrities with their latest fashion trends & news and discover what your favourite celebrities are wearing, from red carpet events to airport-style at Hipi - India short video app",
+            "Find the latest blog articles written especially for the Hipi community to deep dive into the topic discussed and get Informational insights on Hipi community",
           canonical: url && getCanonicalUrl(url),
         }}
       />
