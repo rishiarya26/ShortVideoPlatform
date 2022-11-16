@@ -56,7 +56,6 @@ import { inject } from "../analytics/async-script-loader";
 
 const callViewEvent = (videosViewed)=>{
   console.log("MIX- checking...", videosViewed)
-  const body = document.querySelector('body');
   if(videosViewed === 5){
     inject(null,toTrackFloodlight({eventName: 'view_5', type: 'script'}));
     inject(null,toTrackFloodlight({eventName: 'view_5', type: 'noscript'}));
@@ -65,11 +64,15 @@ const callViewEvent = (videosViewed)=>{
     ToTrackFbEvents('videosCompleted5')
     }
     if(videosViewed === 10){
+      inject(null,toTrackFloodlight({eventName: 'view_10', type: 'script'}));
+      inject(null,toTrackFloodlight({eventName: 'view_10', type: 'noscript'}));
       toTrackMixpanel('videosCompleted10')
       toTrackFirebase('videosCompleted10')
       ToTrackFbEvents('videosCompleted10')
     }
     if(videosViewed === 15){
+      inject(null,toTrackFloodlight({eventName: 'view_15', type: 'script'}));
+      inject(null,toTrackFloodlight({eventName: 'view_15', type: 'noscript'}));
     toTrackMixpanel('videosCompleted15')
     toTrackFirebase('videosCompleted15')
     ToTrackFbEvents('videosCompleted15')
