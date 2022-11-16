@@ -19,11 +19,6 @@ function ScrollToTop(){
 
 }
 
-function replaceNbsps(str) {
-  let re = new RegExp(String.fromCharCode(160), "g");
-  return str?.replace(re, " ");
-}
-
 function updateUtmData(queryStrings){
   const utmData = localStorage?.get('utm-data') || {}
   console.log('ini',utmData)
@@ -163,7 +158,6 @@ export {
   getPageName,
   onStoreRedirect,
   isReffererGoogle,
-  getBrand,
-  replaceNbsps
+  getBrand
 };
 

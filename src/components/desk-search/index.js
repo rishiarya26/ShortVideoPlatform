@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { getSuggestions } from "../../sources/explore/suggestions";
 import debounce from "lodash.debounce";
 import { localStorage } from "../../utils/storage";
+import { Back } from "../commons/svgicons/back";
+import RightArrow from "../commons/svgicons/right-arrow";
 import Search from "../commons/svgicons/search";
 import { getSearchResults } from "../../sources/search/search";
 import CircularProgress from "../commons/circular-loader-search";
@@ -165,6 +167,7 @@ const SearchItems = ({router,type})=>{
 
     useEffect(()=>{
         const closeDrop = e =>{
+            console.log(e.path[0])
             // console.log("777",e.path[0], btnContent.current, btnRef.current, searchInput.current)
         if(e.path[0] !== inputRef?.current && e.path[0] !== searchSuggRef?.current){
             closeDropdown();
