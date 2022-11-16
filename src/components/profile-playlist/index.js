@@ -258,6 +258,8 @@ console.log("debug1", items);
           pageName={pageName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          data={items}
+          fetchMore={loadMoreItems}
           isPlaylistView
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
