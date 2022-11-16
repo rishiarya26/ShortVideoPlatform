@@ -46,7 +46,6 @@ const AppBanner = dynamic(
   }
 );
 
-
 function ProfilePlaylist({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
@@ -136,12 +135,12 @@ function ProfilePlaylist({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset });
+  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true });
   const onDataFetched = data => {
-    let videos = data?.data;
-    data && setItems(videos);
+    const playlistVideos = data?.data || [];
+    playlistVideos.length > 0 && setItems([...playlistVideos]);
     setInitialLoadComplete(true);
-    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+    !activeVideoId && data && setActiveVideoId(playlistVideos?.[0]?.content_id);
     // checkNoSound();
   };
 
@@ -238,7 +237,7 @@ function ProfilePlaylist({ router }) {
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
-
+console.log("debug1", items);
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -255,23 +254,24 @@ function ProfilePlaylist({ router }) {
         }}
      /> */}
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-
         <OpenAppStrip
-        pageName={pageName}
-        item={items?.[videoActiveIndex]}
-        activeVideoId={activeVideoId}
+          pageName={pageName}
+          item={items?.[videoActiveIndex]}
+          activeVideoId={activeVideoId}
+          data={items}
+          fetchMore={loadMoreItems}
+          isPlaylistView
         />
-
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
           <Swiper
             className="max-h-full"
             direction="vertical"
-            onSwiper={() => {
-              router?.replace(`/profile-feed/${id}`);
-              setInitialPlayStarted(false);
-            }}
+            // onSwiper={() => {
+            //   router?.replace(`/profile-feed/${id}`);
+            //   setInitialPlayStarted(false);
+            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"

@@ -4,6 +4,7 @@ import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getNewObjectCopy } from '../../utils/app';
 import { getItem } from '../../utils/cookie';
 import { getNetworkConnection } from '../../utils/device-details';
+import { localStorage } from '../../utils/storage';
 import { getMessage, isSuccess, transformModel } from '../transform';
 
 
@@ -83,7 +84,7 @@ function transformError(data) {
 
 async function getPlaylistDetailsApi({playlistid, firstApiCall}) {
     const guestToken = getItem('guest-token');
-    const userId = "f43ca1a5-6ee8-4380-9272-e44db8656bf4" || localStorage.getItem('user-id');
+    const userId =  localStorage.get('user-id');
     let response = {};
     try {
       const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist`;
