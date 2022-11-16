@@ -45,8 +45,8 @@ const {show} = useDrawer();
           Playlist
         </p>
         <div onClick={()=>show('', detectDeviceModal, 'extraSmall', {data,  fetchMore})} 
-           className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
-            <RightArrow />
+           className="font-semibold text-sm py-1 px-2 mr-1 text-white">
+            <RightArrow value="#fff" />
         </div>
       </div>
     )
