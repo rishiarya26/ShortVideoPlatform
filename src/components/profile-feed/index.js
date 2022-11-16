@@ -12,7 +12,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
+import { getProfileVideos, getUserProfile, getOwnProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import Mute from '../commons/svgicons/mute';
@@ -31,6 +31,7 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { localStorage } from '../../utils/storage';
 
 SwiperCore.use([Mousewheel]);
 
@@ -91,11 +92,20 @@ function ProfileFeed({ router }) {
     setLoading(false);
   };
 
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
+
   const loadMoreItems = async() =>{
     let videos = [...items]
     try {
     if(loadMore){   
-    const resp = await getProfileVideos({ id, type: type, offset: offset });
+      let resp = {};
+      if(typeOfUser === 'self'){
+        resp = await getOwnProfileVideos({ type: type, offset: offset });
+      }else{
+         resp = await getProfileVideos({ id, type: type, offset: offset });
+      }
     if(resp?.data?.length > 0){
       console.log("innn",resp)
       const index = resp.data.findIndex((data)=>(data?.id === videoId))
@@ -155,7 +165,13 @@ function ProfileFeed({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  const dataFetcher = () => {
+    if(typeOfUser === 'self'){
+      return getOwnProfileVideos({ type: type, videoId: videoId && videoId });
+    }else{
+      return getProfileVideos({ id, type: type, videoId: videoId && videoId });
+    }
+  }
   const onDataFetched = data => {
     let videos = data?.data;
     data && setItems(videos);

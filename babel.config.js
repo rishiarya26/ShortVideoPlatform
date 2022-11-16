@@ -27,7 +27,7 @@ module.exports = function (api) {
             corejs: { version: 3, proposals: true },
             targets: {
               esmodules: true
-            }
+            },
           }
         }]
       ]

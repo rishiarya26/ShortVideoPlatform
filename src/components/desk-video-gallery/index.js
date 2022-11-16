@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import useTranslation from '../../hooks/use-translation';
 import { localStorage } from '../../utils/storage';
 import { trimHash, trimHashag } from '../../utils/string';
@@ -14,12 +14,13 @@ let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
 const LoadComp = () => (<Loading />);
 
-export default function DeskVideoGallery({
+const DeskVideoGallery = ({
   items, status, retry, userId='', type = 'all', page ='profile', hashTag='',
    showLoading, fetchMoreListItems, updateActiveIndex,lastItemInView
-}) {
+}) => {
   const [activeHoverIndex, setActiveHoverIndex ] = useState(null);
   const [delayHandler, setDelayHandler] = useState(null)
+
 
   const handleMouseEnter = (index) => {
          delayHandler && clearTimeout(delayHandler);
@@ -138,6 +139,7 @@ export default function DeskVideoGallery({
                   id={id} 
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
+                  status={item?.status}
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
@@ -167,6 +169,7 @@ export default function DeskVideoGallery({
                   activeHoverIndex={activeHoverIndex}
                   tag={item?.tag}
                   page={page}
+                  status={item?.status}
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
@@ -200,3 +203,5 @@ export default function DeskVideoGallery({
     </>
   );
 }
+
+export default memo(DeskVideoGallery);

@@ -197,6 +197,39 @@ async function fetchUserProfileVideos({
   }
 }
 
+async function fetchOwnProfileVideos({
+  limit = '15', offset = '1', type='all', videoId, sortType = ''
+}) {
+  let response = {};
+  let tokens = localStorage.get('tokens');
+  const { shortsAuthToken = '' } = tokens;
+  try {
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/profile/videos?filter=${type}&limit=${limit}&offset=${offset}&sortType=${sortType}`;
+    response = await get(apiPath, null,
+      {
+        Authorization: `Bearer ${shortsAuthToken}`
+    });
+    if(videoId && response?.data?.responseData?.length > 0){
+      const items = response.data.responseData
+      const index = items.findIndex((data)=>(data?.id === videoId))
+      if(index !== -1){
+        const video = items[index]
+        items.splice(index,1);
+        items.splice(0,0,video);
+      }
+      else{ 
+        const video = localStorage.get('selected-profile-video')
+          video && (response.data.firstVideo = video);
+      }
+    }
+    return Promise.resolve(response);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
+
+
 async function follow({
     userId= "",
     followerId= "",
@@ -236,6 +269,7 @@ const [getUserRecommendation] = apiMiddleWare(fetchUserRecommendation, transform
 // const [getSimilarProfile] = apiMiddleWare(fetchSimilarProfile, transformSuccess, transformError);
 const [getPopularUser] = apiMiddleWare(fetchPopularUser, transformSuccessPopular, transformErrorPopular);
 const [getProfileVideos] = apiMiddleWare(fetchUserProfileVideos, transformProfileVideoSuccess, transformProfileVideoError);
+const [getOwnProfileVideos] = apiMiddleWare(fetchOwnProfileVideos, transformProfileVideoSuccess, transformProfileVideoError, {requiresAuth : true});
 const [toFollow] = apiMiddleWare(follow, transformSuccessFollow, transformErrorFollow, {requiresAuth : true})
 
 export {
@@ -248,5 +282,6 @@ export {
   // getSimilarProfile,
   getPopularUser,
   getProfileVideos,
-  toFollow
+  toFollow,
+  getOwnProfileVideos
 };
