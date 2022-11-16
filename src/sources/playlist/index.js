@@ -4,6 +4,7 @@ import { apiMiddleWare, isObjectEmpty } from '../../network/utils';
 import { getNewObjectCopy } from '../../utils/app';
 import { getItem } from '../../utils/cookie';
 import { getNetworkConnection } from '../../utils/device-details';
+import { localStorage } from '../../utils/storage';
 import { getMessage, isSuccess, transformModel } from '../transform';
 
 
@@ -14,7 +15,6 @@ const msgMap = {
 };
 
 function transformSuccess(resp) {
-debugger;
   const { payload } = getNewObjectCopy(transformModel);
   const { data = {} } = resp;
   try {
@@ -88,7 +88,6 @@ async function getPlaylistDetailsApi({playlistid, firstApiCall}) {
     let response = {};
     try {
       const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist`;
-      debugger;
       response = await get(apiPath, null, {
           'accept': 'application/json',
           'guest-token': guestToken,
