@@ -46,7 +46,6 @@ const AppBanner = dynamic(
   }
 );
 
-
 function ProfilePlaylist({ router }) {
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
@@ -138,8 +137,9 @@ function ProfilePlaylist({ router }) {
 
   const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset });
   const onDataFetched = data => {
-    let videos = data?.data;
-    data && setItems(videos);
+    const playlist = data?.[0] || [];
+    const videos = playlist?.videos || [];
+    setItems([...videos]);
     setInitialLoadComplete(true);
     !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     // checkNoSound();
@@ -268,10 +268,10 @@ function ProfilePlaylist({ router }) {
           <Swiper
             className="max-h-full"
             direction="vertical"
-            onSwiper={() => {
-              router?.replace(`/profile-feed/${id}`);
-              setInitialPlayStarted(false);
-            }}
+            // onSwiper={() => {
+            //   router?.replace(`/profile-feed/${id}`);
+            //   setInitialPlayStarted(false);
+            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"
