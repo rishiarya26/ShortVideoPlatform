@@ -122,6 +122,16 @@ export const toTrackMixpanel = (type, value, item) => {
       return globalCommonEvents
     }
 
+    const eventsForUpload = () =>{
+      const videoUploadStatus = value?.type === 'success' ? true : false;
+       globalCommonEvents['success'] = videoUploadStatus ?? 'N/A';
+       globalCommonEvents["Post Time Seconds"] = value?.post_time_seconds ?? 'NA';
+       globalCommonEvents['UGC Language'] = item?.ugc_language ?? 'N/A';
+       if(!videoUploadStatus) globalCommonEvents['Failure Reason'] = value?.failure_reason ?? 'N/A';
+       addUgcId();
+       return globalCommonEvents;
+    }
+
 
     const bannerType = {
       Hashtag: 'Hashtag',
@@ -460,7 +470,9 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),
         'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
         'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
-        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds())
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
+        'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
+        'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
 
       
         
