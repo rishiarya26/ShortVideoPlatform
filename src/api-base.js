@@ -51,7 +51,8 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"http://middleware-stage.charmd.me/api/v1"
   },
   production: {
     test: 'https://api.github.com',
@@ -67,7 +68,8 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"http://middleware-stage.charmd.me/api/v1"
   }
 };
 
