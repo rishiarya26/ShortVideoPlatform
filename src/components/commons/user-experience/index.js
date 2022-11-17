@@ -8,9 +8,9 @@ import { onStoreRedirect } from '../../../utils/web';
 import {appsflyer} from '../../../scripts/appsflyer-smart'
 import RightArrow from '../svgicons/right-arrow';
 import useDrawer from '../../../hooks/use-drawer';
-import detectDeviceModal from '../../playlist-drawer';
+import playListModal from '../../playlist-drawer';
 
-export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView, data, fetchMore}) {
+export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView, data, fetchMore, drawerOnClick=()=>{}}) {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -44,7 +44,7 @@ const {show} = useDrawer();
         <p className="text-sm">
           Playlist
         </p>
-        <div onClick={()=>show('', detectDeviceModal, 'extraSmall', {data,  fetchMore})} 
+        <div onClick={()=>show('', playListModal, 'extraSmall', {data,  fetchMore, activeVideoId, drawerOnClick})} 
            className="font-semibold text-sm py-1 px-2 mr-1 text-white">
             <RightArrow value="#fff" />
         </div>

@@ -82,17 +82,15 @@ function transformError(data) {
   return data;
 }
 
-async function getPlaylistDetailsApi({playlistid, firstApiCall}) {
+async function getPlaylistDetailsApi({playlistid, firstApiCall, creatorId=null}) {
     const guestToken = getItem('guest-token');
-    const userId =  localStorage.get('user-id');
+    const userId =  creatorId || localStorage.get('user-id');
     let response = {};
     try {
-      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist`;
+      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist?creatorid=${userId}${playlistid ? `&playlistid=${playlistid}` : ``}`;
       response = await get(apiPath, null, {
           'accept': 'application/json',
           'guest-token': guestToken,
-          'creatorid': userId,
-          ...(playlistid ? {'playlistid' : playlistid} : {}),
       });
       response.data.firstApiCall = firstApiCall;
       console.log('resp-video',response)

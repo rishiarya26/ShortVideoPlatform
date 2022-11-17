@@ -46,7 +46,15 @@ const AppBanner = dynamic(
   }
 );
 
+const searchVideo = ({videoId=null, playlistArr=[]}) => {
+  if(videoId && playlistArr.length > 0) {
+    return playlistArr.findIndex(item => item.content_id === videoId);
+  }
+}
+
 function ProfilePlaylist({ router }) {
+  const playListVideoId = router?.query?.videoId || null;
+  const creatorId = router?.query?.creatorId || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -62,6 +70,7 @@ function ProfilePlaylist({ router }) {
   const [userDetails, setUserDetails] = useState({})
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [showAppBanner, setShowAppBanner]=useState(false);
+  const [initialId, setInitialId] = useState(0);
   const notNowClick=()=>{
     setShowAppBanner(false);
   }
@@ -98,6 +107,16 @@ function ProfilePlaylist({ router }) {
     setLoadMore(false);
   }
   }
+
+  useEffect(() => {
+    if(playListVideoId && items.length > 0) {
+      const id = searchVideo({videoId: playListVideoId, playlistArr: items});
+      if(id > -1 && id < items.length) {
+        setInitialId(id);
+        setActiveVideoId(playListVideoId);
+      }
+    }
+  }, [items]);
 
   useEffect(()=>{
    async function loadItems() 
@@ -140,7 +159,9 @@ function ProfilePlaylist({ router }) {
     const playlistVideos = data?.data || [];
     playlistVideos.length > 0 && setItems([...playlistVideos]);
     setInitialLoadComplete(true);
-    !activeVideoId && data && setActiveVideoId(playlistVideos?.[0]?.content_id);
+    if(!playListVideoId){
+      !activeVideoId && data && setActiveVideoId(playlistVideos?.[0]?.content_id);
+    }
     // checkNoSound();
   };
 
@@ -149,18 +170,6 @@ function ProfilePlaylist({ router }) {
       shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
     },[shop])
    /************************ */ 
-
-//   const getUserDetails = async(id)=>{
-//  try{   
-//    const data = await getUserProfile(id);
-//    setUserDetails(data?.data);
-//   }catch(e){
-//    console.log("get profile error",e)
-//   }
-//   }
-  // useEffect(()=>{
-  //   id && getUserDetails(id)
-  // },[id])
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
@@ -237,7 +246,10 @@ function ProfilePlaylist({ router }) {
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
-console.log("debug1", items);
+  const drawerOnClick = ({index}) => {
+    const swiper = document.querySelector("#playlistFeedSwiper");
+    swiper.swiper.slideTo(index);
+  }
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -245,14 +257,6 @@ console.log("debug1", items);
       ErrorComp={ErrorComp}
     >
       <>
-      {/* <SeoMeta
-        data={{
-          title: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} on Hipi - Indian Short Video App`,
-          // image: item?.thumbnail,
-          description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`,
-          canonical: getCanonicalUrl && getCanonicalUrl(),        
-        }}
-     /> */}
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         <OpenAppStrip
           pageName={pageName}
@@ -261,11 +265,14 @@ console.log("debug1", items);
           data={items}
           fetchMore={loadMoreItems}
           isPlaylistView
+          drawerOnClick={drawerOnClick}
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
           <Swiper
+            id="playlistFeedSwiper"
+            initialSlide={initialId}
             className="max-h-full"
             direction="vertical"
             // onSwiper={() => {
