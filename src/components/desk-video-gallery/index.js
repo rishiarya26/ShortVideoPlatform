@@ -138,6 +138,7 @@ export default function DeskVideoGallery({
                   id={id} 
                   videoUrl = {item?.video_url}
                   activeHoverIndex={activeHoverIndex}
+                  status={item?.status}
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
@@ -167,6 +168,7 @@ export default function DeskVideoGallery({
                   activeHoverIndex={activeHoverIndex}
                   tag={item?.tag}
                   page={page}
+                  status={item?.status}
                 />
                 </div>
                 <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>
