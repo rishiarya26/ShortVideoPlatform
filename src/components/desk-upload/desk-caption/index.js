@@ -454,11 +454,11 @@ function DeskCaption({
           onKeyUp={handleKeyUp}
           onPaste={(e)=>{
             e.preventDefault();
-            if(InputRefCaption.current.innerHTML.length <= MAX_CAPTION_LENGTH){
+            if(InputRefCaption.current.textContent.length < MAX_CAPTION_LENGTH){
               let copiedContent = e.clipboardData.getData('Text');
-              let contentLength = MAX_CAPTION_LENGTH - InputRefCaption.current.innerHTML.length;
-              InputRefCaption.current.innerHTML = `${InputRefCaption.current.innerHTML}${copiedContent.substring(0,contentLength)}`
-              setCaptionLength(InputRefCaption.current.innerHTML.length);
+              let contentLength = MAX_CAPTION_LENGTH - InputRefCaption?.current?.textContent.length;
+              InputRefCaption.current.textContent = `${InputRefCaption.current.textContent}${copiedContent.substring(0,contentLength)}`
+              setCaptionLength(InputRefCaption.current.textContent.length);
               toFocus();
             }else{
               return;
