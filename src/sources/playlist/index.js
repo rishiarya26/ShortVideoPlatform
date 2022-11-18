@@ -71,6 +71,8 @@ function transformSuccess(resp) {
       payloadData.push(payloadObject);
     });
     payload.data = payloadData;
+     const playlistArr = playlists.map((playlist) => ({name: playlist?.name, id: playlist?.id}));
+    payload.playlists = playlistArr;
     return payload;
   } catch (err) {
     data.appError = err.message;

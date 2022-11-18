@@ -29,6 +29,8 @@ import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Verified from '../commons/svgicons/verified';
 import { toTrackReco } from '../../analytics/view-events';
+import { getPlaylistDetails } from "../../sources/playlist";
+import PlaylistBadge from '../commons/svgicons/playlistBadge';
 // import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
@@ -60,6 +62,7 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
+  const [playlistArr, setPlaylistArr] = useState([]);
   // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
@@ -130,6 +133,15 @@ function Users({
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
   // },[])
+
+  const getPlaylists = async() => {
+    const { playlists } = await getPlaylistDetails({creatorId: id});
+    setPlaylistArr([...playlists]);
+  }
+
+  useEffect(() =>{ 
+    getPlaylists();
+  }, [])
 
   useEffect(()=>{
     setIsFetching(false);
@@ -402,7 +414,13 @@ const notNowClick=()=>{
         selected={selectedTab}
         onLikedVideosTab={onLikedVideosTab}
       />
-   
+     {playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
+        {playlistArr.map((playlist) => (
+          <div className='mr-2 p-3 border flex items-center justify-center cursor-pointer bg-white'>
+            <span className='mr-2'><PlaylistBadge /></span> &#128293; {playlist.name} &#128293;
+          </div>
+        ))}
+      </div>}
       <VideoGallery
         items={videoData?.items}
         status={videoData?.status}
