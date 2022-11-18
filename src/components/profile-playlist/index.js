@@ -114,6 +114,10 @@ function ProfilePlaylist({ router }) {
       if(id > -1 && id < items.length) {
         setInitialId(id);
         setActiveVideoId(playListVideoId);
+      } else {
+        //handling when passing invallid playlist id
+        setInitialId(0);
+        setActiveVideoId(items?.[0]?.content_id);
       }
     }
   }, [items]);
@@ -246,10 +250,10 @@ function ProfilePlaylist({ router }) {
 
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
-  const drawerOnClick = ({index}) => {
-    const swiper = document.querySelector("#playlistFeedSwiper");
-    swiper.swiper.slideTo(index);
-  }
+  // const drawerOnClick = ({index}) => {
+  //   const swiper = document.querySelector("#playlistFeedSwiper");
+  //   swiper.swiper.slideTo(index);
+  // }
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -265,7 +269,7 @@ function ProfilePlaylist({ router }) {
           data={items}
           fetchMore={loadMoreItems}
           isPlaylistView
-          drawerOnClick={drawerOnClick}
+          //drawerOnClick={drawerOnClick}
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />

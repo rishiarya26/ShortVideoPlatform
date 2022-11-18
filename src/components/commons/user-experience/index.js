@@ -10,7 +10,7 @@ import RightArrow from '../svgicons/right-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 
-export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView, data, fetchMore, drawerOnClick=()=>{}}) {
+export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView, data, fetchMore}) {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -40,12 +40,14 @@ const {show} = useDrawer();
 
   if(isPlaylistView){
     return (
-      <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
+      <div 
+        className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
+        onClick={()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId})}
+      >
         <p className="text-sm">
           Playlist
         </p>
-        <div onClick={()=>show('', playListModal, 'extraSmall', {data,  fetchMore, activeVideoId, drawerOnClick})} 
-           className="font-semibold text-sm py-1 px-2 mr-1 text-white">
+        <div className="font-semibold text-sm py-1 px-2 mr-1 text-white">
             <RightArrow value="#fff" />
         </div>
       </div>

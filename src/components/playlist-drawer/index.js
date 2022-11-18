@@ -4,9 +4,14 @@ import Img from '../commons/image';
 import Close from '../commons/svgicons/close-black';
 import PlaylistShare from "../commons/svgicons/playlistShare";
 
-function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, drawerOnClick=()=>{}}) {
+function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null}) {
 
   const {close} = useDrawer();
+
+   const drawerOnClick = ({ index }) => {
+    const swiper = document.querySelector("#playlistFeedSwiper");
+    swiper.swiper.slideTo(index);
+  };
 
   return (
 
@@ -23,7 +28,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         </div>
       </div>
       
-      <div>
+      <div className='overflow-y-auto'>
         {data?.map((item, index)=>{
           return(
             <div
@@ -31,8 +36,8 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
             className={`p-3 ${item?.content_id === activeVideoId ? "bg-gray-300" : ""}`}
             onClick={()=>{drawerOnClick({index}); close();}}
           >
-            <span className='py-4 flex items-end whitespace-nowrap space-x-6 mr-12 lg:mr-0 cursor-pointer'>
-              <div className='usrimg w-10 h-10 overflow-hidden'>
+            <span className='flex items-end whitespace-nowrap space-x-6 mr-12 lg:mr-0 cursor-pointer'>
+              <div className='usrimg w-16 h-24 overflow-hidden rounded-md'>
                 <Img
                   title='Hipi'
                   data={item.thumbnail}
