@@ -30,6 +30,8 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackCenter from '../commons/snack-bar-center';
 import PlaylistUnavailable from '../playlist-unavailable';
+import useDrawer from '../../hooks/use-drawer';
+import playListModal from "../playlist-drawer";
 
 SwiperCore.use([Mousewheel]);
 
@@ -70,6 +72,8 @@ function ProfilePlaylist({ router }) {
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [showAppBanner, setShowAppBanner]=useState(false);
   const [initialId, setInitialId] = useState(0);
+  const [playListName, setPlayListName] = useState("");
+  const { show } = useDrawer();
   const notNowClick=()=>{
     setShowAppBanner(false);
   }
@@ -106,6 +110,12 @@ function ProfilePlaylist({ router }) {
     setLoadMore(false);
   }
   }
+
+  useEffect(() => {
+    if(items && items.length > 0 && playListVideoId) {
+        show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName})
+    }
+  }, [items]);
 
   useEffect(() => {
     if(playListVideoId && items.length > 0) {
@@ -160,8 +170,10 @@ function ProfilePlaylist({ router }) {
   const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true, creatorId });
   const onDataFetched = data => {
     const playlistVideos = data?.data || [];
+    const playlistName = data?.playlists?.[0]?.name || null;
     playlistVideos.length > 0 && setItems([...playlistVideos]);
     setInitialLoadComplete(true);
+    setPlayListName(playlistName);
     if(!playListVideoId){
       !activeVideoId && data && setActiveVideoId(playlistVideos?.[0]?.content_id);
     }
@@ -269,6 +281,7 @@ function ProfilePlaylist({ router }) {
           fetchMore={loadMoreItems}
           isPlaylistView
           videoId={playListVideoId}
+          playlistName={playListName}
           //drawerOnClick={drawerOnClick}
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">

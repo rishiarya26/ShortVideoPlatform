@@ -10,7 +10,7 @@ import RightArrow from '../svgicons/right-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data, fetchMore, playlistId=null, creatorId, videoId}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data, fetchMore, playlistId=null, creatorId, videoId, playlistName=null}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -38,8 +38,7 @@ const {show} = useDrawer();
   // )
 
   // appsflyer && appsflyer();
-  
-  console.log("playlistId", playlistId)
+
   if(isPlaylistView || playlistId){
     // if(isPlaylistView && videoId) {
     //   console.log("debug", isPlaylistView, videoId);
@@ -51,7 +50,7 @@ const {show} = useDrawer();
       className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
       onClick={playlistId ?
         () => router.push(`/playlist/${playlistId}?videoId=${videoId}&creatorId=${creatorId}`):
-        ()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId})}
+        ()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName})}
         >
         <p className="text-sm">
           Playlist
