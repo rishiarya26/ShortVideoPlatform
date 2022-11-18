@@ -67,6 +67,7 @@ function ProfilePlaylistIphone({ router }) {
     totalDuration: null,
     currentT: 0,
   });
+  const [playlistName, setPlaylistName] = useState("");
   const [offset, setOffset] = useState(2);
   const [showSwipeUp, setShowSwipeUp] = useState({ count: 0, value: false });
   const [firstApiCall, setFirstApiCall] = useState(true);
@@ -105,12 +106,12 @@ function ProfilePlaylistIphone({ router }) {
       if (id > -1 && id < items.length) {
         setInitialId(id);
         setActiveVideoId(playListVideoId);
-        show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId})
       } else {
         //handling when passing invallid playlist id
         setInitialId(0);
         setActiveVideoId(items?.[0]?.content_id);
       }
+      show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId, playlistName})
     }
   }, [items]);
 
@@ -203,7 +204,9 @@ function ProfilePlaylistIphone({ router }) {
         setPlaylistNotfound(true);
       };
       playlistVideos.length > 0 && setItems([...playlistVideos]);
+      const playListName = data?.playlists?.[0]?.name || null;
       setInitialLoadComplete(true);
+      setPlaylistName(playListName);
       if (!playListVideoId) {
         !activeVideoId &&
           data &&

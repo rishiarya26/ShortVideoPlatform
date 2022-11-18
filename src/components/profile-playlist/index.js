@@ -112,12 +112,6 @@ function ProfilePlaylist({ router }) {
   }
 
   useEffect(() => {
-    if(items && items.length > 0 && playListVideoId) {
-        show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName})
-    }
-  }, [items]);
-
-  useEffect(() => {
     if(playListVideoId && items.length > 0) {
       const id = searchVideo({videoId: playListVideoId, playlistArr: items});
       if(id > -1 && id < items.length) {
@@ -128,6 +122,7 @@ function ProfilePlaylist({ router }) {
         setInitialId(0);
         setActiveVideoId(items?.[0]?.content_id);
       }
+      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName})
     }
   }, [items]);
 
