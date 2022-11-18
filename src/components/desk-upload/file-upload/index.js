@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState } from 'react';
-import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
-import { uploadImage2 } from '../../../analytics/s3Client';
-import { S3_BUCKET_PROD, S3_BUCKET_STAGE } from '../../../constants';
+// import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
+// import { uploadImage2 } from '../../../analytics/s3Client';
+// import { S3_BUCKET_PROD, S3_BUCKET_STAGE } from '../../../constants';
 import useDialog from '../../../hooks/use-dialog';
 import useSnackbar from '../../../hooks/use-snackbar';
-import { localStorage } from '../../../utils/storage';
+// import { localStorage } from '../../../utils/storage';
 import CheckRoundBlack from '../../commons/svgicons/check-round-black';
 import UploadSvg from '../../commons/svgicons/upload';
 import CustomPopUp from '../custom-popup';
@@ -29,88 +29,88 @@ function FileUpload({
 
   const { show: showDialog } = useDialog();
 
-  let createS3Url = (filename = '') => {
-    let url = '';
-    try {
-      if (
-        process?.env?.APP_ENV === 'development' ||
-        process?.env?.NODE_ENV === 'development'
-      ) {
-        url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`;
-      } else {
-        url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
-      }
-      return url;
-    } catch (e) {
-      console.error('error while creating s3 url.');
-    }
-  };
+  // let createS3Url = (filename = '') => {
+  //   let url = '';
+  //   try {
+  //     if (
+  //       process?.env?.APP_ENV === 'development' ||
+  //       process?.env?.NODE_ENV === 'development'
+  //     ) {
+  //       url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`;
+  //     } else {
+  //       url = `https://${S3_BUCKET_PROD}.s3.ap-south-1.amazonaws.com/src/${filename}`; //need to changee to prod
+  //     }
+  //     return url;
+  //   } catch (e) {
+  //     console.error('error while creating s3 url.');
+  //   }
+  // };
 
-  const updateProgressBar = (value, file, fileName) => {
-    if (value === 100) {
-      setVideoLoader(false);
-      localStorage.set(
-        'UPLOAD_API_TIMESTAMP_END',
-        new Date()?.getTime() / 1000
-      );
-      let s3Url = createS3Url(fileName);
-      const url = URL.createObjectURL(file);
-      if (s3Url) sets3Url(s3Url);
-      console.log(document.getElementById('videoElement'));
-      setSource({ ...source, url, name: fileName });
-    }
-    setPorgressBar(value);
-  };
+  // const updateProgressBar = (value, file, fileName) => {
+  //   if (value === 100) {
+  //     setVideoLoader(false);
+  //     localStorage.set(
+  //       'UPLOAD_API_TIMESTAMP_END',
+  //       new Date()?.getTime() / 1000
+  //     );
+  //     let s3Url = createS3Url(fileName);
+  //     const url = URL.createObjectURL(file);
+  //     if (s3Url) sets3Url(s3Url);
+  //     console.log(document.getElementById('videoElement'));
+  //     setSource({ ...source, url, name: fileName });
+  //   }
+  //   setPorgressBar(value);
+  // };
 
   const handleFileChange = async (event) => {
-    try {
-      const file = event?.target?.files[0] || {};
-      if (!file.size) {
-        showMessage({
-          message: 'Choose a file to upload first.',
-          type: 'error',
-        });
-        return false;
-      }
-      const { name } = file;
+    // try {
+    //   const file = event?.target?.files[0] || {};
+    //   if (!file.size) {
+    //     showMessage({
+    //       message: 'Choose a file to upload first.',
+    //       type: 'error',
+    //     });
+    //     return false;
+    //   }
+    //   const { name } = file;
 
-      setFileName(name);
-      setPorgressBar(0);
-      setUploadingStatus(true);
+    //   setFileName(name);
+    //   setPorgressBar(0);
+    //   setUploadingStatus(true);
 
-      localStorage.set('UPLOAD_API_TIMESTAMP_START', '');
-      localStorage.set('UPLOAD_API_TIMESTAMP_END', '');
+    //   localStorage.set('UPLOAD_API_TIMESTAMP_START', '');
+    //   localStorage.set('UPLOAD_API_TIMESTAMP_END', '');
 
-      toTrackMixpanel('uploadCTAClicked');
-      const fileName = `${name.replace('.mp4', '')}${Date.now()}.mp4`;
+    //   toTrackMixpanel('uploadCTAClicked');
+    //   const fileName = `${name.replace('.mp4', '')}${Date.now()}.mp4`;
 
-      try {
-        setVideoLoader(true);
-        let res = await uploadImage2('src', file, fileName, updateProgressBar);
+    //   try {
+    //     setVideoLoader(true);
+    //     let res = await uploadImage2('src', file, fileName, updateProgressBar);
 
-        if (res?.status === 'failure') {
-          setVideoLoader(false);
-          showMessage({
-            message: res?.message,
-            type: 'error',
-          });
-        }
-        setUploadingStatus(false);
-      } catch (e) {
-        setVideoLoader(false);
-        showMessage({
-          message: 'facing issues while uploading video',
-          type: 'error',
-        });
-      }
-    } catch (e) {
-      setVideoLoader(false);
-      showMessage({
-        message: 'facing issues while uploading video',
-        type: 'error',
-      });
-      console.error(e);
-    }
+    //     if (res?.status === 'failure') {
+    //       setVideoLoader(false);
+    //       showMessage({
+    //         message: res?.message,
+    //         type: 'error',
+    //       });
+    //     }
+    //     setUploadingStatus(false);
+    //   } catch (e) {
+    //     setVideoLoader(false);
+    //     showMessage({
+    //       message: 'facing issues while uploading video',
+    //       type: 'error',
+    //     });
+    //   }
+    // } catch (e) {
+    //   setVideoLoader(false);
+    //   showMessage({
+    //     message: 'facing issues while uploading video',
+    //     type: 'error',
+    //   });
+    //   console.error(e);
+    // }
   };
 
   const handleChoose = (event) => {
