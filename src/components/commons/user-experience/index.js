@@ -39,7 +39,6 @@ const {show} = useDrawer();
 
   // appsflyer && appsflyer();
   
-  console.log("playlistId", playlistId)
   if(isPlaylistView || playlistId){
     // if(isPlaylistView && videoId) {
     //   console.log("debug", isPlaylistView, videoId);

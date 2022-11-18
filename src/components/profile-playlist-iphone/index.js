@@ -31,6 +31,7 @@ import OpenAppStrip from "../commons/user-experience";
 import SnackCenter from "../commons/snack-bar-center";
 import { getPlaylistDetails } from "../../sources/playlist";
 import PlaylistUnavailable from "../playlist-unavailable";
+import PlaylistDrawer from "../playlist-drawer";
 
 
 SwiperCore.use([Mousewheel]);
@@ -104,6 +105,7 @@ function ProfilePlaylistIphone({ router }) {
       if (id > -1 && id < items.length) {
         setInitialId(id);
         setActiveVideoId(playListVideoId);
+        show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId})
       } else {
         //handling when passing invallid playlist id
         setInitialId(0);
