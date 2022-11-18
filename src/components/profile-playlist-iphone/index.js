@@ -189,9 +189,8 @@ function ProfilePlaylistIphone({ router }) {
 
   const dataFetcher = () =>
     getPlaylistDetails({ playlistid, offset: offset, firstApiCall }).catch((err)=>{
-      debugger;
-      if(err.message === "Playlist not found" && err.status === 404) {  
-        setPlaylistNotfound(true);
+      if(err?.message === "Playlist not found" && err?.status === 404) {  
+        console.log("playlist not found");
       }
     });
 
@@ -405,10 +404,6 @@ function ProfilePlaylistIphone({ router }) {
             className="max-h-full"
             direction="vertical"
             initialSlide={initialId}
-            //initialSlide={10}
-            // onSwiper={swiper => {
-            //   document.querySelector(".swiper-container").swiper?.slideTo(10,2,false);
-            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"

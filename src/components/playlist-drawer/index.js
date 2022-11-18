@@ -33,7 +33,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
           return(
             <div
             key={index}
-            className={`p-3 ${item?.content_id === activeVideoId ? "bg-gray-300" : ""}`}
+            className={`p-3 ${item?.content_id === activeVideoId ? "bg-gray-300 rounded-md" : ""}`}
             onClick={()=>{drawerOnClick({index}); close();}}
           >
             <span className='flex items-end whitespace-nowrap space-x-6 mr-12 lg:mr-0 cursor-pointer'>
