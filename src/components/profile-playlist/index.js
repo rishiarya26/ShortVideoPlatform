@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 import { withRouter } from 'next/router';
 import Video from '../video';
-import Error from './error';
 import Loading from './loader';
 import ComponentStateHandler, { useFetcher } from '../commons/component-state-handler';
 import Seekbar from '../seekbar';
@@ -19,7 +18,6 @@ import useWindowSize from '../../hooks/use-window-size';
 import Mute from '../commons/svgicons/mute';
 import CircularProgress from '../commons/circular-loader'
 import usePreviousValue from '../../hooks/use-previous';
-import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up'; 
 import { viewEventsCall } from '../../analytics/view-events';
@@ -31,11 +29,12 @@ import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackCenter from '../commons/snack-bar-center';
+import PlaylistUnavailable from '../playlist-unavailable';
 
 SwiperCore.use([Mousewheel]);
 
 let retry;
-const ErrorComp = () => (<Error retry={retry} />);
+const ErrorComp = () => (<PlaylistUnavailable retry={retry} />);
 const LoadComp = () => (<Loading />);
 
 const AppBanner = dynamic(
