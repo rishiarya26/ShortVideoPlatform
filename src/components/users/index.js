@@ -355,6 +355,9 @@ const notNowClick=()=>{
 
   const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=> router && router?.push(`/profile-detail/${id}?type=following`))
   const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=> router && router?.push(`/profile-detail/${id}?type=followers`))
+  const chipOnClick = (id) => {
+    router.push({pathname: `/playlist/${id}`});
+  }
 
   return (
     <>
@@ -416,7 +419,7 @@ const notNowClick=()=>{
       />
      {playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
         {playlistArr.map((playlist) => (
-          <div className='mr-2 p-3 border flex items-center justify-center cursor-pointer bg-white'>
+          <div onClick={() => chipOnClick(playlist?.id)} className='mr-2 px-3 py-4 border flex items-center justify-center cursor-pointer bg-white min-w-max rounded'>
             <span className='mr-2'><PlaylistBadge /></span> &#128293; {playlist.name} &#128293;
           </div>
         ))}
