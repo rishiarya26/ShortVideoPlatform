@@ -98,6 +98,8 @@ function transformSuccess(resp) {
       payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
       payloadObject.correlationID = d?.correlation_id || null;
       payloadObject.explain = d?.explanations?.[0] || null;
+      payloadObject.playlistId = d?.playlists?.[0]?.id || null;
+      payloadObject.playlistName = d?.playlists?.[0]?.name || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);

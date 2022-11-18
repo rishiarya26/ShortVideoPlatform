@@ -158,7 +158,7 @@ function ProfilePlaylist({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true });
+  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true, creatorId });
   const onDataFetched = data => {
     const playlistVideos = data?.data || [];
     playlistVideos.length > 0 && setItems([...playlistVideos]);
@@ -269,6 +269,7 @@ function ProfilePlaylist({ router }) {
           data={items}
           fetchMore={loadMoreItems}
           isPlaylistView
+          videoId={playListVideoId}
           //drawerOnClick={drawerOnClick}
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">

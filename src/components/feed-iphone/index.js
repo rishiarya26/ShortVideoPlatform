@@ -736,13 +736,18 @@ console.log('errorrr',e)
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
          {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) || items?.[videoActiveIndex]?.adId) 
           ? '' : 
-          <OpenAppStrip
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />}
+          creatorId={toShowItems?.[videoActiveIndex]?.videoOwnersId}
+          videoId={toShowItems?.[videoActiveIndex]?.id}
+          playlistId={toShowItems?.[videoActiveIndex]?.playlistId}
+          playlistName={toShowItems?.[videoActiveIndex]?.playlistName}
+        />
+        }
         {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu/>}
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { memo } from 'react'
 import { ToTrackFbEvents } from '../../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../../analytics/firebase/events';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
@@ -10,13 +10,14 @@ import RightArrow from '../svgicons/right-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 
-export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView, data, fetchMore}) {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data, fetchMore, playlistId=null, creatorId, videoId}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
 }  
 const router = useRouter();
 const {show} = useDrawer();
+
   //   return (
   //   <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
   //     <p className="text-sm">
@@ -37,13 +38,21 @@ const {show} = useDrawer();
   // )
 
   // appsflyer && appsflyer();
+  
+  console.log("playlistId", playlistId)
+  if(isPlaylistView || playlistId){
+    // if(isPlaylistView && videoId) {
+    //   console.log("debug", isPlaylistView, videoId);
+    //   show('', playListModal, 'medium', {data,  fetchMore, activeVideoId})
+    // }
 
-  if(isPlaylistView){
     return (
       <div 
-        className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
-        onClick={()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId})}
-      >
+      className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
+      onClick={playlistId ?
+        () => router.push(`/playlist/${playlistId}?videoId=${videoId}&creatorId=${creatorId}`):
+        ()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId})}
+        >
         <p className="text-sm">
           Playlist
         </p>
@@ -53,6 +62,8 @@ const {show} = useDrawer();
       </div>
     )
   }
+  
+
 
   return (
     <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
@@ -72,3 +83,6 @@ const {show} = useDrawer();
 
   /*******************************/  
 }
+
+
+export default memo(OpenAppStrip);

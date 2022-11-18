@@ -3,7 +3,8 @@
 export const apiBaseEndPoints = {
   local: {
     test: 'https://api.github.com',
-    hipi: 'https://hipigwapi.zee5.com/api',
+    // hipi: 'https://hipigwapi.zee5.com/api',
+    hipi:"http://3.6.36.112:8000/api",
     app: 'https://preprod.hipi.co.in/',
     stagingMobile: 'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
@@ -17,11 +18,12 @@ export const apiBaseEndPoints = {
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
-    playlist:"http://middleware-stage.charmd.me/api/v1"
+    playlist:"http://middleware-stage.charmd.me/api/v1",
   },
   development: {
     test: 'https://api.github.com',
-    hipi: 'https://hipigwapi.zee5.com/api',
+    hipi:"http://3.6.36.112:8000/api",
+    // hipi: 'https://hipigwapi.zee5.com/api',
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
     charmboard:

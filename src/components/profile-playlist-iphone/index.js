@@ -51,6 +51,7 @@ const searchVideo = ({ videoId = null, playlistArr = [] }) => {
 };
 
 function ProfilePlaylistIphone({ router }) {
+  const creatorId = router?.query?.creatorId || null;
   const playListVideoId = router?.query?.videoId || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
@@ -188,7 +189,7 @@ function ProfilePlaylistIphone({ router }) {
   }, [activeVideoId]);
 
   const dataFetcher = () =>
-    getPlaylistDetails({ playlistid, offset: offset, firstApiCall }).catch((err)=>{
+    getPlaylistDetails({ playlistid, offset: offset, creatorId,  firstApiCall }).catch((err)=>{
       if(err?.message === "Playlist not found" && err?.status === 404) {  
         console.log("playlist not found");
       }

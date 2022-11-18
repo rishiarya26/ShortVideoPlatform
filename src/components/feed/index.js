@@ -696,6 +696,10 @@ function Feed({ router }) {
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
+          creatorId={toShowItems?.[videoActiveIndex]?.videoOwnersId}
+          videoId={toShowItems?.[videoActiveIndex]?.id}
+          playlistId={toShowItems?.[videoActiveIndex]?.playlistId}
+          playlistName={toShowItems?.[videoActiveIndex]?.playlistName}
         />}
         {/* hamburger */}
        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}

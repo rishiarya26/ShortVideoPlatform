@@ -21,7 +21,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
           <Close/>
         </div>
         <div className='font-bold'>
-          {playlistName}{`(${data.length})`}
+          {playlistName}{`(${ data && data?.length})`}
         </div>
         <div>
           <PlaylistShare />

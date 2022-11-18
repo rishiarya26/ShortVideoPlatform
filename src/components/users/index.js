@@ -135,8 +135,12 @@ function Users({
   // },[])
 
   const getPlaylists = async() => {
-    const { playlists } = await getPlaylistDetails({creatorId: id});
-    setPlaylistArr([...playlists]);
+    try{
+      const { playlists } = await getPlaylistDetails({creatorId: id});
+      setPlaylistArr([...playlists]);
+    }catch(e){
+      console.log("no playlist found")
+    }
   }
 
   useEffect(() =>{ 
