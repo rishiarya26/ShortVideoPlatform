@@ -24,7 +24,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
   // let payload = {}
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    const apiPath = flush === 'true' ? `${getApiBasePath('hipi_stage')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi_stage')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     flush === 'true' && localStorage.set('lang-flush','false');
      let tokens = localStorage.get('tokens');
       const { shortsAuthToken = '' } = tokens;
@@ -95,7 +95,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
   let response = {};
   try {
     const condition = type === 'for-you' ? 'forYou' : 'following';
-    const apiPath = flush === 'true' ? `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
+    const apiPath = flush === 'true' ? `${getApiBasePath('hipi_stage')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}&flush=true` : `${getApiBasePath('hipi_stage')}/v1/shorts/home?limit=${total}&type=${condition}&offset=${page}`;
     flush === 'true' && localStorage.set('lang-flush','false');
     const payload = {
       'x-campaign-id':campaign_id || '',
