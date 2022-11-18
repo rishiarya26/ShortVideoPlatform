@@ -44,7 +44,15 @@ const detectDeviceModal = dynamic(
   }
 );
 
+
+const searchVideo = ({videoId=null, playlistArr=[]}) => {
+  if(videoId && playlistArr.length > 0) {
+    return playlistArr.findIndex(item => item.content_id === videoId);
+  }
+}
+
 function ProfilePlaylistIphone({ router }) {
+  const playListVideoId = router?.query?.videoId || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -62,7 +70,8 @@ function ProfilePlaylistIphone({ router }) {
   const [deletedTill, setDeletedTill] = useState();
   const [showSwipeUp, setShowSwipeUp] = useState({count : 0 , value : false});
   const [firstApiCall, setFirstApiCall] = useState(true);
-  
+  const [initialId, setInitialId] = useState(0);
+
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [noSound, setNoSound] = useState(false);
 
@@ -76,26 +85,26 @@ function ProfilePlaylistIphone({ router }) {
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const pretoInsertElemant = usePreviousValue({toInsertElements});
-
-  const { id: playlistId } = router?.query;
-  // const { videoId = items?.[0]?.content_id } = router?.query;
-  // const { type = 'all' } = router?.query;
-
+  const { id: playlistid } = router?.query;
   const {show} = useDrawer();
-
   const pageName = 'Profile Playlist Feed';
 
-  // useEffect(()=>{
-  //   if(items.length > 0){
 
-  //   }
-  // },[playlistId])
+  useEffect(() => {
+    if(playListVideoId && items.length > 0) {
+      const id = searchVideo({videoId: playListVideoId, playlistArr: items});
+      if(id > -1 && id < items.length) {
+        setInitialId(id);
+        setActiveVideoId(playListVideoId);
+      }
+    }
+  }, [items]);
 
 
   const loadMoreItems = async() =>{
     let videos = [...items]
     try {
-    const resp = await getPlaylistDetails({ playlistId, offset: offset });
+    const resp = await getPlaylistDetails({ playlistid, offset: offset });
     if(resp?.data?.length > 0){
       console.log("innn",resp)
       videos = videos?.concat(resp?.data);
@@ -142,43 +151,43 @@ function ProfilePlaylistIphone({ router }) {
      }
    }
    
-    const decrementingShowItems = async() =>{
-   
-     let updateShowItems = [...toShowItems];
-     const dataItem = [...items];
-     for(let i=0;i<=5;i++){
-       updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
-     }
-     setMuted(true);
-     show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    // setShowAppBanner(true);
-     setDeletedTill(deletedTill-5);
-     setToShowItems(updateShowItems);
+  const decrementingShowItems = async() =>{
+  
+    let updateShowItems = [...toShowItems];
+    const dataItem = [...items];
+    for(let i=0;i<=5;i++){
+      updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
     }
+    setMuted(true);
+    show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  // setShowAppBanner(true);
+    setDeletedTill(deletedTill-5);
+    setToShowItems(updateShowItems);
+  }
    
-     useEffect(()=>{
-       if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
-         //swipe-down
-         if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
-          console.log('increment called', 'insertIndex Incremented to :',toInsertElements+6);
-           incrementShowItems();
-           setToInsertElements(toInsertElements +6);
-         }
-       }
-       else{
-         //swipe-up
-         if(toShowItems.length > 0 && deletedTill === videoActiveIndex){
-          decrementingShowItems();
-         }
-       }
-       checkNoSound();
-     },[videoActiveIndex])
-
-     useEffect(()=>{
-      if(initialLoadComplete){
-        toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+  useEffect(()=>{
+    if(videoActiveIndex > preActiveVideoId?.videoActiveIndex){
+      //swipe-down
+      if(toShowItems.length > 0 && toInsertElements === videoActiveIndex){
+      console.log('increment called', 'insertIndex Incremented to :',toInsertElements+6);
+        incrementShowItems();
+        setToInsertElements(toInsertElements +6);
       }
-    },[initialLoadComplete])
+    }
+    else{
+      //swipe-up
+      if(toShowItems.length > 0 && deletedTill === videoActiveIndex){
+      decrementingShowItems();
+      }
+    }
+    checkNoSound();
+  },[videoActiveIndex])
+
+  useEffect(()=>{
+  if(initialLoadComplete){
+    toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+  }
+},[initialLoadComplete])
 
   
   useEffect(() => {
@@ -215,15 +224,21 @@ const getUserDetails = async(id)=>{
   }
   }
 
-  const dataFetcher = () => getPlaylistDetails({ playlistId,firstApiCall:firstApiCall });
+  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset,firstApiCall: true });
 
   const onDataFetched = (data) => {
-    let videos = data?.data;
-    data && setItems([...videos, ...videos, ...videos, ...videos]);
-    setInitialLoadComplete(true);
-    data && setToShowItems([...videos, ...videos, ...videos, ...videos]);
+    // let videos = data?.data;
+    // data && setItems([...videos, ...videos, ...videos, ...videos]);
+    // setInitialLoadComplete(true);
+    // data && setToShowItems([...videos, ...videos, ...videos, ...videos]);
     console.log("before",activeVideoId);
-    !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
+    const playlistVideos = data?.data || [];
+    playlistVideos.length > 0 && setItems([...playlistVideos]);
+    setInitialLoadComplete(true);
+    if(!playListVideoId){
+      !activeVideoId && data && setActiveVideoId(playlistVideos?.[0]?.content_id);
+    }
+   // !activeVideoId && data && setActiveVideoId(videos?.[0]?.content_id);
     setToInsertElements(4);
     setFirstApiCall(false);
   };
@@ -238,7 +253,7 @@ const getUserDetails = async(id)=>{
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
   
-  const validItemsLength = toShowItems?.length > 0;
+  const validItemsLength = items?.length > 0;
 
   const updateSeekbar = (percentage, currentTime, duration) => {
     if(percentage > 0){
@@ -321,6 +336,11 @@ const getUserDetails = async(id)=>{
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
+  const drawerOnClick = ({index}) => {
+    const swiper = document.querySelector("#playlistFeedSwiper");
+    swiper.swiper.slideTo(index);
+  }
+
   return (
     <ComponentStateHandler
       state={fetchState}
@@ -346,6 +366,7 @@ const getUserDetails = async(id)=>{
           data={items}
           fetchMore={loadMoreItems}
           isPlaylistView
+          drawerOnClick={drawerOnClick}
         />
         {/* <PlaylistStrip
           data={data}
@@ -360,12 +381,14 @@ const getUserDetails = async(id)=>{
           </div>
           
           <Swiper
+            id="playlistFeedSwiper"
             className="max-h-full"
             direction="vertical"
+            initialSlide={initialId}
             //initialSlide={10}
-            onSwiper={swiper => {
-              document.querySelector(".swiper-container").swiper?.slideTo(10,2,false);
-            }}
+            // onSwiper={swiper => {
+            //   document.querySelector(".swiper-container").swiper?.slideTo(10,2,false);
+            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"
@@ -410,13 +433,14 @@ const getUserDetails = async(id)=>{
             }}
           >
             {
-              validItemsLength &&  toShowItems?.map(
+              validItemsLength &&  items?.map(
                 (item,id) => (
                   <SwiperSlide
                     key={id}
                     id={item?.content_id}
 
                   >
+                    {activeVideoId !== item?.content_id ? <div>xyz</div> :
                     <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -453,7 +477,7 @@ const getUserDetails = async(id)=>{
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
-                    />
+                    />}
 
                   </SwiperSlide>
                 )
