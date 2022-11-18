@@ -3,8 +3,8 @@
 export const apiBaseEndPoints = {
   local: {
     test: 'https://api.github.com',
-    // hipi: 'https://hipigwapi.zee5.com/api',
-    hipi:"http://3.6.36.112:8000/api",
+    hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://preprod.hipi.co.in/',
     stagingMobile: 'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',

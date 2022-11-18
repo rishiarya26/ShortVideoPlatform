@@ -31,7 +31,6 @@ import Verified from '../commons/svgicons/verified';
 import { toTrackReco } from '../../analytics/view-events';
 import { getPlaylistDetails } from "../../sources/playlist";
 import PlaylistBadge from '../commons/svgicons/playlistBadge';
-// import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
