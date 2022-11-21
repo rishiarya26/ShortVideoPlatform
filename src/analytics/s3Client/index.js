@@ -11,10 +11,10 @@ import {
 } from "../../constants";
 import { localStorage } from "../../utils/storage";
 
-// const BucketName =
-//   process.env.NODE_ENV === "production" || process.env.APP_ENV === "production"
-//     ? S3_BUCKET_PROD
-//     : S3_BUCKET_PROD; //BUCKET_NAME need to be change to prod
+const BucketName =
+  process.env.NODE_ENV === "production" || process.env.APP_ENV === "production"
+    ? S3_BUCKET_PROD
+    : S3_BUCKET_PROD; //BUCKET_NAME need to be change to prod
 
 export const uploadImage2 = async (
   albumName = "src",
@@ -22,49 +22,49 @@ export const uploadImage2 = async (
   fileName,
   cbProgressBar
 ) => {
-  // localStorage.set("UPLOAD_API_TIMESTAMP_START", new Date()?.getTime() / 1000);
-  // const albumPhotosKey = `${encodeURIComponent(albumName)}`;
-  // const photoKey = `${albumPhotosKey}/${fileName}`;
-  // const contentType = file.type;
-  // const target = {
-  //   Bucket: BucketName,
-  //   Key: photoKey,
-  //   Body: file,
-  //   ContentType: contentType,
-  // };
-  // try {
-  //   const parallelUploads3 = new Upload({
-  //     client: new S3Client({
-  //       region: S3_REGION,
-  //       credentials: fromCognitoIdentityPool({
-  //         client: new CognitoIdentityClient({ region: S3_REGION }),
-  //         identityPoolId: S3_POOL_ID, // IDENTITY_POOL_ID
-  //       }),
-  //     }),
-  //     queueSize: 4, // optional concurrency configuration
-  //     leavePartsOnError: false, // optional manually handle dropped parts
-  //     params: target,
-  //   });
-  //   parallelUploads3.on("httpUploadProgress", (progress) => {
-  //     cbProgressBar(
-  //       Math.floor((progress.loaded / progress.total) * 100),
-  //       file,
-  //       fileName
-  //     );
-  //   });
+  localStorage.set("UPLOAD_API_TIMESTAMP_START", new Date()?.getTime() / 1000);
+  const albumPhotosKey = `${encodeURIComponent(albumName)}`;
+  const photoKey = `${albumPhotosKey}/${fileName}`;
+  const contentType = file.type;
+  const target = {
+    Bucket: BucketName,
+    Key: photoKey,
+    Body: file,
+    ContentType: contentType,
+  };
+  try {
+    const parallelUploads3 = new Upload({
+      client: new S3Client({
+        region: S3_REGION,
+        credentials: fromCognitoIdentityPool({
+          client: new CognitoIdentityClient({ region: S3_REGION }),
+          identityPoolId: S3_POOL_ID, // IDENTITY_POOL_ID
+        }),
+      }),
+      queueSize: 4, // optional concurrency configuration
+      leavePartsOnError: false, // optional manually handle dropped parts
+      params: target,
+    });
+    parallelUploads3.on("httpUploadProgress", (progress) => {
+      cbProgressBar(
+        Math.floor((progress.loaded / progress.total) * 100),
+        file,
+        fileName
+      );
+    });
 
-  //   await parallelUploads3.done();
+    await parallelUploads3.done();
 
-  //   return {
-  //     message: "file added successfully",
-  //     status: "success",
-  //   };
-  // } catch (e) {
-  //   return {
-  //     message: e.message,
-  //     status: "failure",
-  //   };
-  // }
+    return {
+      message: "file added successfully",
+      status: "success",
+    };
+  } catch (e) {
+    return {
+      message: e.message,
+      status: "failure",
+    };
+  }
 };
 
 /** old implementation */
