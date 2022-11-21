@@ -144,7 +144,10 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
-      'impression' : ()=> track('UGC Impression', commonWithIds()),
+      'impression' : () => {
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();
         addPageTabName();  
@@ -158,9 +161,15 @@ export const toTrackMixpanel = (type, value, item) => {
     //     eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime
     //     track('UGC Swipe', eventsWithIds)
     //   },
-      'play' : () => track('UGC Play', commonWithIds()),
+      'play' : () => {
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        track('UGC Play', eventsWithIds)},
       'share' : () => track('UGC Share Click', commonWithIds()),
-      'replay' : () => track('UGC Replayed', commonWithIds()),
+      'replay' : () => {
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        track('UGC Replayed', eventsWithIds)},
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
@@ -169,7 +178,9 @@ export const toTrackMixpanel = (type, value, item) => {
         track('UGC Skipped',eventsWithIds)
       }, 
       'watchTime' : () => {
-        let eventsWithIds = commonWithIds()  
+        console.log("Watch Time", value);
+        let eventsWithIds = commonWithIds()
+        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
         eventsWithIds['UGC Duration'] =  value?.duration && Math.round(value.duration)
         eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
