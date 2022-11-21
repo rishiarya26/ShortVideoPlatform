@@ -100,6 +100,8 @@ function ProfilePlaylistIphone({ router }) {
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
+
+
   useEffect(() => {
     if (playListVideoId && items.length > 0) {
       const id = searchVideo({ videoId: playListVideoId, playlistArr: items });
@@ -200,9 +202,9 @@ function ProfilePlaylistIphone({ router }) {
 
   const onDataFetched = (data) => {
       const playlistVideos = data?.data || [];
-      if(playlistVideos.length === 0 ){
-        setPlaylistNotfound(true);
-      };
+      // if(playlistVideos.length === 0 ){
+      //   setPlaylistNotfound(true);
+      // };
       playlistVideos.length > 0 && setItems([...playlistVideos]);
       const playListName = data?.playlists?.[0]?.name || null;
       setInitialLoadComplete(true);
@@ -237,6 +239,16 @@ function ProfilePlaylistIphone({ router }) {
       console.log("data fetch error", e);
     }
   };
+
+  useEffect(()=>{
+    async function loadItems() 
+    { 
+     const toLoadMoreIndex = items.length-4;
+      videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
+    }
+    loadItems();
+    checkNoSound();
+   },[videoActiveIndex])
 
   const validItemsLength = items?.length > 0;
 
@@ -358,17 +370,6 @@ function ProfilePlaylistIphone({ router }) {
     setItems(data);
     setsaveLook(!saveLook);
   };
-
-  // const drawerOnClick = ({ index }) => {
-  //   const swiper = document.querySelector("#playlistFeedSwiper");
-  //   swiper.swiper.slideTo(index);
-  // };
-
-  if(playlistNotfound){
-    return(
-      <div>Playlist Not found!</div>
-    )
-  }
 
   return (
     <ComponentStateHandler
@@ -522,7 +523,7 @@ function ProfilePlaylistIphone({ router }) {
               items?.map((item, id) => (
                 <SwiperSlide key={id} id={item?.content_id}>
                   {activeVideoId !== item?.content_id ? (
-                    <></>
+                    <div></div>
                   ) : (
                     <Video
                       updateSeekbar={updateSeekbar}
