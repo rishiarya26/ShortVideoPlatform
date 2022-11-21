@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */

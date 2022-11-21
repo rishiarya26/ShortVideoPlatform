@@ -29,22 +29,14 @@ const fetchVideoData = async (id) => {
 function getSchemaObj({videoDetails, url, id}){
   const description = videoDetails?.content_description;
   const uploadDate = new Date(videoDetails?.createdOn).toISOString();
-  const nameSchema = videoSchema({
-    name: `${videoDetails?.videoOwnersDetail?.firstName || ""} ${
-      videoDetails?.videoOwnersDetail?.lastName || ""
-    }`,
-    videoId: videoDetails?.content_id,
-    userThumnail: videoDetails?.firstFrame,
-    desc: videoDetails?.content_description,
-    createdOn: videoDetails?.createdOn,
-  });
+  const name = `${videoDetails?.content_description || ''} | ${videoDetails?.videoOwnersDetail?.firstName || ''} ${videoDetails?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`;
   const thumbnailUrl = videoDetails?.thumbnail;
-  
+
   return{
     description,
     uploadDate,
     contentUrl: url,
-    nameSchema,
+    name,
     thumbnailUrl,
     embedUrl: `${location.origin}/embed/${id}`
   }

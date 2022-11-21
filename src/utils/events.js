@@ -1,6 +1,8 @@
 import { ToTrackFbEvents } from "../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../analytics/firebase/events";
 import { toTrackMixpanel } from "../analytics/mixpanel/events";
+import { toTrackFloodlight } from "../analytics/floodlight/events";
+import { inject } from "../analytics/async-script-loader";
 
 // let videosCompleted = (typeof window !== "undefined" &&  JSON.parse(window.sessionStorage.getItem('videos-completed')) || 0);
 
@@ -55,16 +57,22 @@ import { toTrackMixpanel } from "../analytics/mixpanel/events";
 const callViewEvent = (videosViewed)=>{
   console.log("MIX- checking...", videosViewed)
   if(videosViewed === 5){
+    inject(null,toTrackFloodlight({eventName: 'view_5', type: 'script'}));
+    inject(null,toTrackFloodlight({eventName: 'view_5', type: 'noscript'}));
     toTrackMixpanel('videosCompleted5')
     toTrackFirebase('videosCompleted5')
     ToTrackFbEvents('videosCompleted5')
     }
     if(videosViewed === 10){
+      inject(null,toTrackFloodlight({eventName: 'view_10', type: 'script'}));
+      inject(null,toTrackFloodlight({eventName: 'view_10', type: 'noscript'}));
       toTrackMixpanel('videosCompleted10')
       toTrackFirebase('videosCompleted10')
       ToTrackFbEvents('videosCompleted10')
     }
     if(videosViewed === 15){
+      inject(null,toTrackFloodlight({eventName: 'view_15', type: 'script'}));
+      inject(null,toTrackFloodlight({eventName: 'view_15', type: 'noscript'}));
     toTrackMixpanel('videosCompleted15')
     toTrackFirebase('videosCompleted15')
     ToTrackFbEvents('videosCompleted15')

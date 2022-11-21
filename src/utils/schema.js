@@ -147,9 +147,9 @@
       }
     }
 
-    const theEditArticleSchema = ({url, headline, description, author, datePublished}) =>  ({
+    const theEditArticleSchema = ({url, headline, description, author, datePublished, type="NewsArticle"}) =>  ({
       "@context": "https://schema.org/",
-      "@type": "NewsArticle",
+      "@type": type,
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": url
@@ -179,10 +179,10 @@
       "datePublished": datePublished
     });
 
-    const theEditVideoSchema = ({nameSchema, description, uploadDate, contentUrl, embedUrl, thumbnailUrl}) => ({
+    const theEditVideoSchema = ({name, description, uploadDate, contentUrl, embedUrl, thumbnailUrl}) => ({
       "@context": "https://schema.org",
       "@type": "VideoObject",
-      "name": nameSchema,
+      "name": name,
       "description": description,
       "thumbnailUrl": thumbnailUrl,
       "uploadDate": uploadDate,

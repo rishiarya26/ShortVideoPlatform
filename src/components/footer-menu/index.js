@@ -81,7 +81,7 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
 
   return (
     <div>
-      <div className="w-full bg-black fixed bottom-0 left-0 py-2 flex justify-around items-center h-16 relative">
+      <div className="w-full bg-black fixed bottom-0 left-0 py-2 flex justify-around items-center h-16">
       <div onClick={()=>  router && router?.push({pathname: '/feed/[pid]',query: { pid: 'for-you' }})} className="flex flex-col text-white text-xs items-center">
        {selectedTab === 'home' ? <><HomeActive/><p className="text-white text-xxs mt-1.5 select-none">Home</p></>  : <><Home/><p className="text-gray-400 text-xxs mt-1.5 select-none">Home</p></> } 
        

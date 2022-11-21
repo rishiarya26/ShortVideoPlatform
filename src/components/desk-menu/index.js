@@ -76,7 +76,7 @@ useEffect(()=>{
 },[tokens]);
 
     return(
-        <div className={`${width} flex fixed max-h-100v menu_bar overflow-y-scroll bg-white flex-col p-4 pt-24 z-1 relative`}>
+        <div className={`${width} flex fixed max-h-100v menu_bar overflow-y-scroll bg-white flex-col p-4 pt-24 z-1`}>
           
         <div className="flex flex-col pb-4 border-b border-gray-200">
           <Tabs items={tabs}/>
@@ -90,7 +90,7 @@ useEffect(()=>{
         <div className="flex text-xs text-gray-400 pt-4 pr-8 flex-wrap static_links sm-menu"> 
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/about')}>About</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/newsroom')}>Newsroom</div>
-          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/theedit')}>The Edit</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/blog')}>Blog</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/ads')}>Ads</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/terms-conditions.html')}>Terms of Use</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=> router && router?.push('/community-guidelines.html')} >Community Guidelines</div>
