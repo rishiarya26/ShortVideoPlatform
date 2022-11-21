@@ -1,4 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
+/*eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
 import React from 'react';
 import Image from 'next/image';
 import fallbackImg from '../../../../public/images/fallback-charms.png'

@@ -1,5 +1,6 @@
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
 import React, { useState, useRef, useEffect } from 'react';
 import useWindowSize from '../../hooks/use-window-size';
 import useIntersect from '../../hooks/use-intersect';

@@ -1,3 +1,5 @@
+/*eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
 import dynamic from 'next/dynamic';
 import { numberFormatter } from '../../utils/convert-to-K';
 import Img from '../commons/image';

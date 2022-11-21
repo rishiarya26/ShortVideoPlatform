@@ -1,4 +1,6 @@
-/*eslint-disable  @next/next/no-img-element */
+/*eslint-disable react/jsx-no-duplicate-props*/
+/*eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
 import { useEffect, useRef, useState } from "react";
 import { reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from "../../analytics/conviva";
 import { withBasePath } from "../../config";

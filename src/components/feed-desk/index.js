@@ -1,4 +1,6 @@
+/*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
 
 import CloseSolid from "../commons/svgicons/close-solid";
 import Search from "../commons/svgicons/search";
