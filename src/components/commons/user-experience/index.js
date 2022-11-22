@@ -9,6 +9,7 @@ import {appsflyer} from '../../../scripts/appsflyer-smart'
 import RightArrow from '../svgicons/right-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
+import PlaylistWhite from '../svgicons/playlist_white';
 
 const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data, fetchMore, playlistId=null, creatorId, videoId, playlistName=null}) => {
 const placement = {
@@ -46,10 +47,12 @@ const {show} = useDrawer();
         () => router.push(`/playlist/${playlistId}?videoId=${videoId}&creatorId=${creatorId}`):
         ()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName})}
         >
-        <p className="text-sm">
-          Playlist
-        </p>
-        <div className="font-semibold text-sm py-1 px-2 mr-1 text-white">
+          <div className='flex items-center'>
+          <PlaylistWhite/> 
+          <p className="text-sm ml-2">Playlist.{playlistName}{`(${ data && data?.length})`}</p>
+          </div>
+       
+        <div className="font-semibold text-sm  text-white">
             <RightArrow value="#fff" />
         </div>
       </div>

@@ -7,6 +7,7 @@ import PlaylistShare from "../commons/svgicons/playlistShare";
 function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null}) {
 
   const {close} = useDrawer();
+  const vCount = 365;
 
    const drawerOnClick = ({ index }) => {
     const swiper = document.querySelector("#playlistFeedSwiper");
@@ -16,12 +17,14 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
   return (
 
     <div className=" flex flex-col w-full">
-      <div className='flex w-full justify-between p-3 items-center'>
+      <div className='flex w-full justify-between py-4 items-center'>
         <div onClick={close}>
           <Close/>
         </div>
-        <div className='font-bold'>
-          {playlistName}{`(${ data && data?.length})`}
+        <div className=' flex flex-col items-center'>
+        <p className='font-bold capitalize'>{playlistName}</p>
+          <p className='font-light text-gray-500 text-xs'>{`${ data && data?.length}`} episodes</p>
+
         </div>
         <div>
           <PlaylistShare />
@@ -33,19 +36,23 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
           return(
             <div
             key={index}
-            className={`p-3 ${item?.content_id === activeVideoId ? "bg-gray-300 rounded-md" : ""}`}
+            className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
             onClick={()=>{drawerOnClick({index}); close();}}
           >
-            <span className='flex items-end whitespace-nowrap space-x-6 mr-12 lg:mr-0 cursor-pointer'>
-              <div className='usrimg w-16 h-24 overflow-hidden rounded-md'>
+            <span className='flex'>
+              <div className='usrimg min-w-16 w-16 h-28 overflow-hidden rounded-md'>
                 <Img
                   title='Hipi'
                   data={item.thumbnail}
                   //fallback={fallbackUser?.src}
                 />
               </div>
-              <div className='text-base font-semibold text-gray-900 self-center'>
-                {item.content_description}
+              <div className="flex flex-col justify-center pl-4">
+              <div className='text-sm text-gray-700 line-clamp-3 w-full'>
+                {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member
+              </div>
+              {/* {item?.vCount && item?.vCount > 0 ? <div>{item.vCount}</div> : null } */}
+              <div className='mt-1 text-gray-400 text-xs'>{vCount} views</div>
               </div>
             </span>
           </div>

@@ -3,11 +3,11 @@ import ChooseOnType from '../../src/components/choose-on-type';
 
 
 const Feed = dynamic(()=> import('../../src/components/profile-playlist'),{
-  loading: () => <div />,
+  loading: () => <></>,
   ssr: false
 });
 const FeedIphone = dynamic(()=> import('../../src/components/profile-playlist-iphone'),{
-  loading: () => <div />,
+  loading: () => <></>,
   ssr: false
 });
 
