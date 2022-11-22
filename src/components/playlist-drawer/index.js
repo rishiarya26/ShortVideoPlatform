@@ -1,4 +1,5 @@
 import React from 'react'
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import useDrawer from '../../hooks/use-drawer';
 import Img from '../commons/image';
 import Close from '../commons/svgicons/close-black';
@@ -13,6 +14,10 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
     const swiper = document.querySelector("#playlistFeedSwiper");
     swiper.swiper.slideTo(index);
   };
+
+  const mixpanelEvents = () => {
+    toTrackMixpanel("cta", {name:"Playlist Video"});
+  }
 
   return (
 
@@ -37,7 +42,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
             <div
             key={index}
             className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
-            onClick={()=>{drawerOnClick({index}); close();}}
+            onClick={()=>{drawerOnClick({index}); close(); mixpanelEvents();}}
           >
             <span className='flex'>
               <div className='usrimg min-w-16 w-16 h-28 overflow-hidden rounded-md'>

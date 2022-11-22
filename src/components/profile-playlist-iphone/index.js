@@ -113,6 +113,7 @@ function ProfilePlaylistIphone({ router }) {
         setInitialId(0);
         setActiveVideoId(items?.[0]?.content_id);
       }
+      toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"});
       show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId, playlistName})
     }
   }, [items]);
@@ -240,15 +241,15 @@ function ProfilePlaylistIphone({ router }) {
     }
   };
 
-  useEffect(()=>{
-    async function loadItems() 
-    { 
-     const toLoadMoreIndex = items.length-4;
-      videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
-    }
-    loadItems();
-    checkNoSound();
-   },[videoActiveIndex])
+  // useEffect(()=>{
+  //   async function loadItems() 
+  //   { 
+  //    const toLoadMoreIndex = items.length-4;
+  //     videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
+  //   }
+  //   loadItems();
+  //   checkNoSound();
+  //  },[videoActiveIndex])
 
   const validItemsLength = items?.length > 0;
 
@@ -522,9 +523,9 @@ function ProfilePlaylistIphone({ router }) {
             {validItemsLength &&
               items?.map((item, id) => (
                 <SwiperSlide key={id} id={item?.content_id}>
-                  {activeVideoId !== item?.content_id ? (
+                  {/* {activeVideoId !== item?.content_id ? (
                     <div></div>
-                  ) : (
+                  ) : ( */}
                     <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -566,7 +567,7 @@ function ProfilePlaylistIphone({ router }) {
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                     />
-                  )}
+                  )
                 </SwiperSlide>
               ))}
             <div

@@ -23,7 +23,7 @@ export const apiBaseEndPoints = {
   development: {
     test: 'https://api.github.com',
     hipi:"http://3.6.36.112:8000/api",
-    // hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
     charmboard:
@@ -42,6 +42,7 @@ export const apiBaseEndPoints = {
   staging: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://preprod.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
@@ -59,6 +60,7 @@ export const apiBaseEndPoints = {
   production: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:

@@ -126,15 +126,15 @@ function ProfilePlaylist({ router }) {
     }
   }, [items]);
 
-  useEffect(()=>{
-   async function loadItems() 
-   { 
-    const toLoadMoreIndex = items.length-4;
-     videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
-   }
-   loadItems();
-   checkNoSound();
-  },[videoActiveIndex])
+  // useEffect(()=>{
+  //  async function loadItems() 
+  //  { 
+  //   const toLoadMoreIndex = items.length-4;
+  //    videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
+  //  }
+  //  loadItems();
+  //  checkNoSound();
+  // },[videoActiveIndex])
 
   useEffect(()=>{
     if(initialLoadComplete){

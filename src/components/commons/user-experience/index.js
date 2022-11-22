@@ -44,8 +44,14 @@ const {show} = useDrawer();
       <div 
       className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
       onClick={playlistId ?
-        () => router.push(`/playlist/${playlistId}?videoId=${videoId}&creatorId=${creatorId}`):
-        ()=>show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName})}
+        () => {
+          toTrackMixpanel("playlistClicked", {pageName:"Playlist screen"})
+          router.push(`/playlist/${playlistId}?videoId=${videoId}&creatorId=${creatorId}`)
+        } :
+        ()=>{
+          toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"})
+          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName})
+        }}
         >
           <div className='flex items-center'>
           <PlaylistWhite/> 

@@ -197,7 +197,7 @@ function Video(props) {
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
    
    const selectVideoPlayer = {
-      'multi-player-muted' : <video
+      'multi-player-muted' :  <video
       onContextMenu={(e)=>{
          e.preventDefault();
          return false}}
@@ -217,7 +217,7 @@ function Video(props) {
       // width={size.width}
       // height={videoHeight}
       // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
-      poster={firstFrame}
+      // poster={firstFrame}
       objectfit="cover"
       key={props.url}
       onSeeked={handleSeeked}
@@ -225,10 +225,10 @@ function Video(props) {
          console.log("MIX&&- ended")
          window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
-      <source
+      {(props.id && props.activeVideoId && (props.id === props?.activeVideoId)) && <source
          src={props.url}
          type="video/mp4"
-      /> 
+      /> }
       </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
@@ -347,7 +347,7 @@ function Video(props) {
            type="video/mp4"
         />  
         </video> :
-        <img className="h-screen" src={firstFrame}></img>
+        <img className="h-screen" loading="lazy" src={firstFrame}></img>
    }
 
    return (
