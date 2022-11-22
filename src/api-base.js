@@ -18,7 +18,7 @@ export const apiBaseEndPoints = {
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
-    playlist:"http://middleware-stage.charmd.me/api/v1",
+    playlist:"https://stage-hipigwapis2.zee5.com/api/v1",
   },
   development: {
     test: 'https://api.github.com',
@@ -37,7 +37,7 @@ export const apiBaseEndPoints = {
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
-    playlist:"http://middleware-stage.charmd.me/api/v1"
+    playlist:"https://stage-hipigwapis2.zee5.com/api/v1"
   },
   staging: {
     test: 'https://api.github.com',
@@ -54,7 +54,7 @@ export const apiBaseEndPoints = {
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
-    playlist:"http://middleware-stage.charmd.me/api/v1"
+    playlist:"https://stage-hipigwapis2.zee5.com/api/v1"
   },
   production: {
     test: 'https://api.github.com',
@@ -71,7 +71,7 @@ export const apiBaseEndPoints = {
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
-    playlist:"http://middleware-stage.charmd.me/api/v1"
+    playlist:"https://stage-hipigwapis2.zee5.com/api/v1"
   }
 };
 
