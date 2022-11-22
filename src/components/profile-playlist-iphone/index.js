@@ -409,9 +409,13 @@ function ProfilePlaylistIphone({ router }) {
           </div>
           <Swiper
             id="playlistFeedSwiper"
+            initialSlide={initialId}
             className="max-h-full"
             direction="vertical"
-            initialSlide={initialId}
+            // onSwiper={() => {
+            //   router?.replace(`/profile-feed/${id}`);
+            //   setInitialPlayStarted(false);
+            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"
@@ -567,7 +571,6 @@ function ProfilePlaylistIphone({ router }) {
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                     />
-                  )
                 </SwiperSlide>
               ))}
             <div

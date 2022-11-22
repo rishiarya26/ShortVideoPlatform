@@ -65,7 +65,7 @@ function transformSuccess(resp) {
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
-      payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
+      payloadObject.adId = typeof d?.adId === 'object' && JSON.parse(d?.adId) || null;
       payloadObject.correlationID = d?.correlation_id || null;
       payloadObject.explain = d?.explanations?.[0] || null;
       payloadData.push(payloadObject);
@@ -89,7 +89,7 @@ async function getPlaylistDetailsApi({playlistid, firstApiCall, creatorId=null})
     const userId =  creatorId ?? localStorage.get('user-id');
     let response = {};
     try {
-      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist?creatorid=${userId}${playlistid ? `&playlistid=${playlistid}` : ``}`;
+      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist?${userId ? `creatorid=${userId}` : ``}${playlistid ? userId ? `&playlistid=${playlistid}` : `playlistid=${playlistid}` : ``}`;
       response = await get(apiPath, null, {
           'accept': 'application/json',
           'guest-token': guestToken,
@@ -99,6 +99,7 @@ async function getPlaylistDetailsApi({playlistid, firstApiCall, creatorId=null})
       firstTimeCall = false;
       return Promise.resolve(response);
     } catch (err) {
+      console.error("playlist api issue",err);
       return Promise.reject(err);
     }
 }
