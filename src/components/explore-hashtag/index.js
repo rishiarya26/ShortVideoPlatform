@@ -119,9 +119,9 @@ function HashTag({router}) {
   >
     <SeoMeta
         data={{
-          title: item === 'gay'||item ==='hd'||item ==='aunty'||item ==='badi'||item ==='gtav'||item ==='saxena'||item ==='fifa'||item ==='shaadi'||item ==='sab' ? customTitleSeo(item) : `#${item} Hashtag videos on Hipi - Indian Short Video App`,
+          title: item === 'gay'||item ==='hd'||item ==='aunty'||item ==='badi'||item ==='gtav'||item ==='saxena'||item ==='fifa'||item ==='shaadi'||item ==='sab' ? customTitleSeo(item) : `Find Latest Videos on Hipi | Hashtag ${item} |Trending Videos`,
           // image: item?.thumbnail,
-          description: `#${item} videos on Hipi. Checkout latest trending videos for #${item} hashtag that you can enjoy and share with your friends.`,
+          description: `Explore all the latest videos on Hipi by #${item}, hashtag are a brilliant way to group up posts and find latest video trends. Also, find the influencers daily content`,
           canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
         }}
      />
