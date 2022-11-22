@@ -11,7 +11,7 @@ import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data, fetchMore, playlistId=null, creatorId, videoId, playlistName=null}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, creatorId, videoId, playlistName=null}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -55,7 +55,7 @@ const {show} = useDrawer();
         >
           <div className='flex items-center'>
           <PlaylistWhite/> 
-          <p className="text-sm ml-2">Playlist.{playlistName}{`(${ data && data?.length})`}</p>
+          <p className="text-sm ml-2">Playlist.{playlistName}{ data && data?.length ? `(${data.length})` : ""}</p>
           </div>
        
         <div className="font-semibold text-sm  text-white">
