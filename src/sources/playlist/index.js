@@ -86,10 +86,9 @@ function transformError(data) {
 
 async function getPlaylistDetailsApi({playlistid, firstApiCall, creatorId=null}) {
     const guestToken = getItem('guest-token');
-    const userId =  creatorId ?? localStorage.get('user-id');
     let response = {};
     try {
-      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist?${userId ? `creatorid=${userId}` : ``}${playlistid ? userId ? `&playlistid=${playlistid}` : `playlistid=${playlistid}` : ``}`;
+      const apiPath = `${getApiBasePath('playlist')}/shorts/profile/playlist?${creatorId ? `creatorid=${creatorId}` : ``}${playlistid ? creatorId ? `&playlistid=${playlistid}` : `playlistid=${playlistid}` : ``}`;
       response = await get(apiPath, null, {
           'accept': 'application/json',
           'guest-token': guestToken,
