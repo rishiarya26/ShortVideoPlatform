@@ -1,4 +1,4 @@
-/*eslint-disable react/display-name*/
+/* eslint-disable react/display-name */
 import dynamic from 'next/dynamic';
 import ChooseOnType from '../../src/components/choose-on-type';
 

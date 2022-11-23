@@ -153,6 +153,7 @@ function Video(props) {
             console.error(e,"setplayer error");
          }
       }
+      props?.setMuted(true);
    },[props.activeVideoId])
 
    useEffect(() => {

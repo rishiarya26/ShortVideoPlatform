@@ -527,9 +527,9 @@ function ProfilePlaylistIphone({ router }) {
             {validItemsLength &&
               items?.map((item, id) => (
                 <SwiperSlide key={id} id={item?.content_id}>
-                  {/* {activeVideoId !== item?.content_id ? (
+                  {activeVideoId !== item?.content_id ? (
                     <div></div>
-                  ) : ( */}
+                  ) : (
                     <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -569,8 +569,9 @@ function ProfilePlaylistIphone({ router }) {
                       userVerified={item?.verified}
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
+                      setMuted={setMuted}
                       // showBanner={showBanner}
-                    />
+                    />)}
                 </SwiperSlide>
               ))}
             <div
