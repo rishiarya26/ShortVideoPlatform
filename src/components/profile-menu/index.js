@@ -37,6 +37,14 @@ const {showSnackbar} = useSnackbar();
         <Terms/>
         <p className="text-base px-3">Terms of Use</p>
       </div>
+
+      {/* Content lang */}
+      <div onClick={()=>router && router.push('/content-language')} className="flex items-center py-3">
+         <PrivacyIco/>
+        <p className="text-base px-3">Content Langugage</p>
+      </div>
+      {/* ************ */}
+
       <div onClick={()=>showDialog('Logout', LogoutPopup,'medium',{showMessage: showSnackbar})} className="flex items-center py-3">
         <Logout/>
         <p className="text-base px-3">Logout</p>
