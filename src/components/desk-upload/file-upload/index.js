@@ -82,7 +82,7 @@ function FileUpload({
       localStorage.set('UPLOAD_API_TIMESTAMP_END', '');
 
       toTrackMixpanel('uploadCTAClicked');
-      const fileName = `${name.replace('.mp4', '')}${Date.now()}.mp4`;
+      const fileName = `${name.replace('.mp4', '').replace(/[^\w]/g, "")}${Date.now()}.mp4`;
 
       try {
         setVideoLoader(true);
