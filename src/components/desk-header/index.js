@@ -18,10 +18,16 @@ import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
 import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
+import UploadPlusSvg from "../commons/svgicons/upload-plus";
+import ProfileSm from "../commons/svgicons/profile-small";
+import { UPLOAD_ACCESS_USERS } from "../../constants";
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
    const [showlogoutMenu,setShowlogoutMenu] = useState(false);
+
+   const user = localStorage.get('user-details') ?? {};
+   const trimmedUserHandle = user?.userHandle?.replace('@','');
    
    const login = dynamic(
       () => import('../auth-options'),
@@ -39,6 +45,7 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 
     const tokens = localStorage?.get('tokens') || null;
     let isLoggedIn = useAuth('false','true');
+    const userId = localStorage.get('user-id');
 
     useEffect(()=>{
       if(tokens){
@@ -62,6 +69,11 @@ const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
 const redirectToFeed = ()=>{
    // window.location.href = '/feed/for-you'
    router && router.push('/feed/for-you');
+}
+
+const naviagteToUploadPage = () => {
+   let {id} = router.query;
+   if(id !== 'upload') router && router.push('/upload');
 }
  
    return(
@@ -90,7 +102,14 @@ const redirectToFeed = ()=>{
             </div> 
          </div>
       </div> */}
-      <div>
+       <div className="flex">
+         <div id="uploadButton" className={`${!UPLOAD_ACCESS_USERS?.includes(trimmedUserHandle) || isLoggedIn !== 'true' ? 'hidden': '' } border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
+         onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
+            <UploadPlusSvg />
+            <span className="text-sm font-semibold pl-2">
+               Upload
+            </span>
+         </div>
            {isLoggedIn === 'true'?
            <div className="relative">
            <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
@@ -101,12 +120,16 @@ const redirectToFeed = ()=>{
              </div>
              }
            {showlogoutMenu && 
-            <div className="absolute top-10 right-6 w-36 flex items-center cursor-pointer flex-col p-3 bg-white border">
+            <div className="absolute top-12 right-6 w-40 flex items-center cursor-pointer flex-col bg-white box_shadow_1 rounded-md p-2 ">
+            <div className="flex items-center border-b border-gray-300 w-full py-3 px-2">
+            <ProfileSm/>
+            <p className="text-sm px-3 font-semibold" onClick={() => router.push(`/${userId}`)}>View profile</p>
+            </div>
             <div onClick={()=>{
                toTrackMixpanel('cta',{name: 'Logout'})
-               show('Logout', LogoutPopup, 'small',{page:typeParam, showMessage})}} className="flex items-center ">
+               show('Logout', LogoutPopup, 'small',{page:typeParam, showMessage})}} className="flex items-center w-full py-3 px-2 ">
             <Logout/>
-            <p className="text-base px-3">Logout</p>
+            <p className="text-sm px-3 font-semibold">Logout</p>
             </div>
            </div>}
            </div>
