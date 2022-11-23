@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
+import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard}) =>{
 
   
       useEffect(()=>{
-         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+               // console.log('uuu')
+      //   console.log('A******',productIdChange=== id, appsflyerId)
+         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
+         productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId,productId:id, comp:'Shop'})
       },[productIdChange])
 
       const onProductInView =(entry)=>{
@@ -26,14 +30,28 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
            });  
 
         const onProductClick= ()=>{
-         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
-         window?.open(shopLink)
+         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})  
+         const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
+         console.log("finalLink",appsflyerLink)
+         window?.open(appsflyerLink || shopLink)
         }  
- 
+
+const lingerieComp = <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
+<div className="w-full overflow-hidden relative">
+         <CardRibbon ribbonData={ribbonData}/>
+         <Img data={thumbnail}/>
+               <div className="absolute bottom-4 min-h-28 w-full left-0">
+               <p className="font-medium text-center protip_font px-8">{title}</p>
+               
+      </div>
+</div>
+</div> 
+
 return(
 <>
 {/* Card div */}
-<div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
+{lingerieCard ? lingerieComp :
+   <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
    <div onClick={onProductClick} style={{backgroundColor: `${dominantColor}7a` || "gray"}}  className="w-full overflow-hidden relative min-h-49v">
    <CardRibbon ribbonData={ribbonData}/>
       <Img data={thumbnail}/> 
@@ -59,6 +77,8 @@ return(
       </div>
    </div>
 </div>
+}
+
 {/* Card div end*/}
 </>    
 )

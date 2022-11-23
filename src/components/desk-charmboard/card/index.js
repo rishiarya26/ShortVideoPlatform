@@ -1,10 +1,22 @@
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
 import Arrow from "../../commons/svgicons/arrow-red";
-const CharmCard = ({thumbnail, title, shopName, shopLink, category,shopNameImg,ribbonData,actualPrice, salePrice}) =>{
-return(
-<>
+const CharmCard = ({thumbnail, title, shopName, shopLink, category,shopNameImg,ribbonData,actualPrice, salePrice,lingerieCard}) =>{
+
+   const lingerieComp=<div className="flex flex-col my-4 shadow-md">
+   <div className="w-full overflow-hidden relative">
+            <CardRibbon ribbonData={ribbonData}/>
+            <Img data={thumbnail}/>
+                  <div className="absolute bottom-0 h-2/6 w-full left-0">
+                  <p className="font-medium text-center protip_font px-12 py-6">{title}</p>
+                  
+         </div>
+   </div>
+  </div> ;
+ 
+return(<>
 {/* Card div */}
+{lingerieCard ? lingerieComp :
 <div className="flex flex-col my-4 shadow-md ">
       <div onClick={()=> window?.open(shopLink)} className="w-full overflow-hidden cursor-pointer relative">
       <CardRibbon ribbonData={ribbonData}/>
@@ -32,6 +44,7 @@ return(
       </div>
    </div>
 </div>
+}
 {/* Card div end*/}
 </>    
 )

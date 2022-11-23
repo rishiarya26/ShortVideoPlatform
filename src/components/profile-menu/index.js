@@ -7,10 +7,12 @@ import { useRouter } from 'next/router';
 import { removeItem } from '../../utils/cookie';
 import useDialog from '../../hooks/use-dialog';
 import LogoutPopup from '../logout-popup';
+import useSnackbar from '../../hooks/use-snackbar';
 
 function ProfileMenu() {
 const router = useRouter();
 const {show : showDialog} = useDialog();
+const {showSnackbar} = useSnackbar();
   return (
     <>
     <div className="headbar w-full flex h-16 shadow-md bg-white items-center p-4 justify-center">
@@ -35,7 +37,7 @@ const {show : showDialog} = useDialog();
         <Terms/>
         <p className="text-base px-3">Terms of Use</p>
       </div>
-      <div onClick={()=>showDialog('Logout', LogoutPopup,'medium')} className="flex items-center py-3">
+      <div onClick={()=>showDialog('Logout', LogoutPopup,'medium',{showMessage: showSnackbar})} className="flex items-center py-3">
         <Logout/>
         <p className="text-base px-3">Logout</p>
       </div>

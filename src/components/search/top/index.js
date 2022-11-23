@@ -76,7 +76,7 @@ const TopItems = ({item, redirectTab}) =>{
                   <div onClick={()=>{
                     try{
                      toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
-                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                     }catch(e){
                       console.error('search result click',e)
                     }
@@ -114,7 +114,7 @@ const TopItems = ({item, redirectTab}) =>{
                  <div onClick={()=>{
                   try{
                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
-                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                    toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                    }catch(e){
                      console.error('search result click',e)
                    }
@@ -150,11 +150,11 @@ const TopItems = ({item, redirectTab}) =>{
                     <div onClick={()=>{
                       try{
                         toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
-                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id})
+                        toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                        }catch(e){
                          console.error('search result click',e)
                        }
-                       router && router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card bg-gray-300 m-1 w-28v min-h-38 relative">
+                       router && router?.push(`/single-video/${item?.id}`)}} key={id} className="trending_card z-10 bg-gray-300 m-1 w-28v min-h-38 relative">
                         <Img data = {item?.thumbnailUrl} alt="image"/>
                       </div>
                    ))}

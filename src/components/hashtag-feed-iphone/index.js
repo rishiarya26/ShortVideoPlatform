@@ -190,7 +190,7 @@ function HashTagFeedIphone({ router }) {
 
      useEffect(()=>{
       if(initialLoadComplete){
-        toTrackMixpanel('impression',{pageName:pageName, hashtagName: item},items?.[videoActiveIndex]);
+        toTrackMixpanel('impression',{pageName:pageName, hashtagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
       }
     },[initialLoadComplete])
   
@@ -210,7 +210,7 @@ function HashTagFeedIphone({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName, hashtagName: item},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName, hashtagName: item, isShoppable: items[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -242,7 +242,7 @@ function HashTagFeedIphone({ router }) {
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
-      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
+      shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
     },[shop])
    /************************ */ 
   
@@ -266,8 +266,8 @@ function HashTagFeedIphone({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName: item},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, hashtagName: item},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, hashtagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{  duration : duration, durationWatchTime: duration})
 
@@ -380,9 +380,9 @@ function HashTagFeedIphone({ router }) {
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
-              toTrackMixpanel('impression',{pageName:pageName, hashtagName: item},items?.[videoActiveIndex]);
+              toTrackMixpanel('impression',{pageName:pageName, hashtagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashtagName: item},items?.[videoActiveIndex])
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashtagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
               toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 

@@ -38,7 +38,7 @@ import VideoUnavailable from '../video-unavailable';
 import { isReffererGoogle } from '../../utils/web';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
-import { INDEX_TO_SHOW_LANG } from '../../constants';
+import { INDEX_TO_SHOW_LANG_IPHONE , INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 
@@ -135,12 +135,28 @@ function FeedIphone({ router }) {
 // const notNowClick = ()=>{
 //   setShowAppBanner(false);
 // }
+
+const adImpression =  (index = 0)=>{
+  if(toShowItems[index]?.adId && window !== undefined){
+    let adInfo = toShowItems?.[index]?.adId || {};
+    let {impression_url = null } = adInfo;
+    let timeStamp = Date.now();
+    try{
+      impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+    }catch(e){
+      console.error("Impression error: " + e);
+    }
+  }
+}
+
+
   useEffect(() => {
     setTimeout(()=>{
       if(initialLoadComplete === true){
+        adImpression();
         const mixpanelEvents = commonEvents();
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
-        toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
+        toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);  
         // trackEvent('Screen_View',{'Page Name' :'Feed'})
         toTrackFirebase('screenView',{'page' :'Feed'});
         setLoading(false);
@@ -189,13 +205,13 @@ function FeedIphone({ router }) {
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
     // console.log("aAAAADDD",shop?.adData)
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
   },[shop])
   /************************ */ 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -251,17 +267,16 @@ function FeedIphone({ router }) {
   const videoAdSessionsCalls = async(percentage) => {
     if(items[videoActiveIndex]?.adId){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
-      let {impression_url = null, event_url = null } = adInfo;
+      let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         try{
-          impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp}); 
+          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
           toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         }
        
-        event_url && await pushAdService({url: event_url, value: "start"});
       }
       if(percentage > 25) {
         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
@@ -326,8 +341,8 @@ function FeedIphone({ router }) {
      }
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
 
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'}, { watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
@@ -378,6 +393,9 @@ function FeedIphone({ router }) {
 
  const incrementShowItems = async() =>{
  try{ 
+  setMuted(true);
+  // setShowAppBanner(true);
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   let updateShowItems = [...toShowItems];
   let deletedTill = pretoInsertElemant?.toInsertElements-12;
   let dataItem = [...items];
@@ -404,9 +422,6 @@ function FeedIphone({ router }) {
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
-  setMuted(true);
-  // setShowAppBanner(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
   // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
@@ -529,9 +544,10 @@ console.log('errorrr',e)
 
                 //Mixpanel
                 setInitialPlayStarted(false);
-                toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+                toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+                adImpression(activeIndex);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
 
                 ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -577,9 +593,9 @@ console.log('errorrr',e)
                     itemID={item?.content_id}
                   >
                   { item !==null && 
-                  // !languagesSelected && id === INDEX_TO_SHOW_LANG && lang24ShowOnce === 'false' ? 
-                  //  <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
-                  // :
+                  !languagesSelected && id === INDEX_TO_SHOW_LANG_IPHONE && lang24ShowOnce === 'false' ? 
+                   <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
+                     :
                    <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -629,6 +645,9 @@ console.log('errorrr',e)
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (
@@ -645,7 +664,7 @@ console.log('errorrr',e)
               >
                 <CircularProgress/>
               </div>}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : !(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : !(items?.[videoActiveIndex]?.videoSound) &&initialPlayStarted&& <SnackCenter showSnackbar={noSound}/>}
               {validItemsLength &&  <div onClick={()=>setShowSwipeUp({count : 1, value : false})} id="swipe_up" className={showSwipeUp.value ? "absolute flex flex-col justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full" : 
           "absolute hidden justify-center items-center top-0 left-0 bg-black bg-opacity-30 h-full z-9 w-full"}>
                <div className="p-1 relative">
@@ -661,7 +680,7 @@ console.log('errorrr',e)
               >
                 <Play/>
               </div> */}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength && <div
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : validItemsLength && <div
                 onClick={()=>setMuted(false)}
                 className="absolute top-0 right-4  mt-4 items-center flex justify-center p-4"
                 style={{ display: !initialPlayButton && (items?.[videoActiveIndex]?.videoSound && muted) ? 'flex' : 'none' }}
@@ -671,7 +690,7 @@ console.log('errorrr',e)
                 <Mute/>
                 </div>
               </div>}
-              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : validItemsLength ? seekedPercentage > 0
+              {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : validItemsLength ? seekedPercentage > 0
               ? <Seekbar seekedPercentage={seekedPercentage} type={'aboveFooterMenu'} />
               : !toSuspendLoader && <SeekbarLoading type={'aboveFooterMenu'}/>
               : ''}
@@ -705,6 +724,7 @@ console.log('errorrr',e)
   if (typeof window !== 'undefined') {
     hostname = window?.location?.hostname;
  }
+ const langViewed = localStorage?.get('lang-24-hr');
 
   return (
     <ComponentStateHandler
@@ -714,15 +734,17 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         {((!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) || items?.[videoActiveIndex]?.adId) ? '' : <OpenAppStrip
+         {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) || items?.[videoActiveIndex]?.adId) 
+          ? '' : 
+          <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <div className="fixed mt-10 z-10 w-full">
+        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu/>}
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>}
         {info?.[id]}

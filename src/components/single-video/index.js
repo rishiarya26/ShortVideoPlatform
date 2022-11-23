@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /*eslint-disable @next/next/no-img-element*/
 import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
@@ -176,7 +177,7 @@ export default function SingleVideo(props){
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
       toTrackMixpanel('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration})
+      toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable})
        /*** view events ***/
        viewEventsCall(props?.id, 'completed');
        viewEventsCall(props?.id, 'user_video_start');

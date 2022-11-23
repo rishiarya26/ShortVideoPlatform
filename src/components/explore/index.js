@@ -314,7 +314,7 @@ function Explore() {
                       <div key={id} id={content?.widgetName} 
                       onClick={(e)=>{
                         toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', content_id:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
-                        toSearchFeed(e, d?.video?.id )}} className="trending_card bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
+                        toSearchFeed(e, d?.video?.id )}} className="trending_card z-0 bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
                         <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
                         {d?.video?.shoppable === true && <div className="absolute top-2 right-2 z-1">
                            <Cart/>
@@ -337,7 +337,7 @@ function Explore() {
                     <p className="text-sm font-medium">{content?.widgetName}</p>
                     <div onClick={()=> {
                       toTrackMixpanel('viewMoreSelected',{pageName:pageName},{carousalType:'Creator Profile',carousalId:content?.widgetId,carousalName:content?.widgetName})
-                      // toUserList(content?.widgetName)
+                      toUserList(content?.widgetName)
                     }}
                        className="flex items-center justify-center">
     

@@ -16,6 +16,7 @@ import VerifyOTP from '../verify-otp';
 import { DeskSendOtp } from '../../commons/button/desk-send-otp';
 import { useState, useEffect } from 'react';
 import { DeskCountryCode } from '../../commons/button/desk-country-code';
+import { localStorage } from '../../../utils/storage';
 
 
 export default function Mobile({
@@ -98,8 +99,8 @@ export default function Mobile({
           showMessage({ message: t('SUCCESS_OTP') });
         }
       } catch (e) {
+        toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
         if (e.errorCode === 404) {
-          toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
           showMessage({ message: t('NOT_REGISTERED') });
         }
       }
@@ -151,6 +152,10 @@ export default function Mobile({
   })
 
   const handleForgotPassword = ()=>{
+    const mobileNum = localStorage.get("mobileNum");
+    if(mobileNum) {
+      localStorage.remove("mobileNum");
+    }
     if(device === 'mobile'){
       router && router.push('/forgot-password?type=mobile')
     }else if(device === 'desktop'){

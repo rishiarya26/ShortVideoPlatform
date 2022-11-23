@@ -120,17 +120,31 @@ function Feed({ router }) {
     setShowAppBanner(null);
   }
 
+  const adImpression =  (index = 0)=>{
+    if(toShowItems[index]?.adId && window !== undefined){
+      let adInfo = toShowItems?.[index]?.adId || {};
+      let {impression_url = null } = adInfo;
+      let timeStamp = Date.now();
+      try{
+        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+      }catch(e){
+        console.error("Impression error: " + e);
+      }
+    }
+  }
+
   useEffect(() => {
      setTimeout(()=>{
     if(initialLoadComplete === true){
+      adImpression();
       toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
-      toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]); 
+      toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]); 
       //fbq.event('Screen View')
       ToTrackFbEvents('screenView');
       //trackEvent('Screen_View',{'Page Name' :'Feed'});
       toTrackFirebase('screenView',{'page':'Feed'});
     }
-  },1500);
+    },1500);
   }, [initialLoadComplete]);
 
   useEffect(()=>{    
@@ -139,7 +153,7 @@ function Feed({ router }) {
 
   useEffect(()=>{
      initailShopContentAdded && 
-    toTrackMixpanel('impression',{pageName:pageName,tabName:tabName,isShoppable:shop?.isShoppable !== 'pending' ? shop?.isShoppable : 'fail', isMonetization : shop?.adCards?.monitisation || false},items?.[videoActiveIndex]);  
+    toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable, isMonetization : shop?.adCards?.monitisation || false},items?.[videoActiveIndex]);  
   },[initailShopContentAdded])
 
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
@@ -185,14 +199,14 @@ function Feed({ router }) {
 
 /* mixpanel - monetization cards impression */
   useEffect(()=>{
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
   },[shop])
  /************************ */ 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
       // let currentActiveFeedItem = items?.[videoActiveIndex];
-      toTrackMixpanel('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
       ToTrackFbEvents('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       toTrackFirebase('play', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -242,13 +256,12 @@ function Feed({ router }) {
   const videoAdSessionsCalls = async (percentage) => {
     if(items[videoActiveIndex]?.adId && window !== undefined){
       let adInfo = items?.[videoActiveIndex]?.adId || {};
-      let {impression_url = null, event_url = null } = adInfo;
+      let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       console.log(timeStamp, "timeStamp");
       if(percentage > 0){
         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
         try{
-         impression_url && await pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
           toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
@@ -316,8 +329,8 @@ function Feed({ router }) {
      }
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
-       toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
-       toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
+       toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+       toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
 
        fbq.event('UGC_Played_Complete ')
        ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration}, {  duration : duration, durationWatchTime: duration})
@@ -494,9 +507,11 @@ function Feed({ router }) {
                 
                 /***************/
                 /*** Mixpanel ****/
-                toTrackMixpanel('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+                toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+                adImpression(activeIndex);
+
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
                 ToTrackFbEvents('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
                 toTrackFirebase('watchTime',{userId: currentActiveFeedItem['userId'], content_id: currentActiveFeedItem['content_id'], page:'Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
@@ -594,6 +609,9 @@ function Feed({ router }) {
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
+                      explain={item?.explain || null}
+                      correlationID={item?.correlationID || null}
+                      profileId=""
                     />}
                   </SwiperSlide>
                 )) : (
@@ -665,12 +683,13 @@ function Feed({ router }) {
 //     hostname = window?.location?.hostname;
 //  }
 
+  // console.log('&&&',!languagesSelected,langViewed === 'false',videoActiveIndex === INDEX_TO_SHOW_LANG)
   return (
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
-        {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
         <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
@@ -679,9 +698,9 @@ function Feed({ router }) {
           type='aboveBottom'
         />}
         {/* hamburger */}
-       {(!languagesSelected && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+       {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
        {/* <HamburgerMenu/> */}
-        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null ? 'hidden' : ''}`}>
+        <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null && lang24ShowOnce === 'false' ? 'hidden' : ''}`}>
           <FeedTabs items={tabs} />
         </div>
         {info?.[id]}
@@ -690,7 +709,8 @@ function Feed({ router }) {
         </div>
       </div>
        <Landscape/> 
-      {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''}
+      {/* {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
+      {showAppBanner && <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>}
     </>
     </ComponentStateHandler>
   );

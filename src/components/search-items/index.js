@@ -194,7 +194,7 @@ const SearchItems = ({router,type})=>{
               {info.back[type]}
             <input
               onChange={onTermChange}
-              className=" w-full bg-gray-100 text-xs flex items-center px-4 py-3 pl-8"
+              className=" w-full bg-gray-100 text-base flex items-center px-4 py-2 pl-8"
               type="search"
               autoComplete="off"
               name="Search"
@@ -205,13 +205,13 @@ const SearchItems = ({router,type})=>{
                 setShowSuggestions(true)}}
               onKeyPress={onKeyboardEnter}
             />
-            {searchTerm?.length > 0 && <button className="absolute right-0 top-2 p-4 text-semibold text-gray-600 text-sm" 
+            {searchTerm?.length > 0 && <button className="absolute right-2 top-2 p-4 text-semibold text-gray-600 text-sm" 
              onClick={()=>{
                  toTrackMixpanel('searchCancelled',{pageName: pageName},{query: searchTerm})
                  setSearchTerm('')}}>
             <Close />
             </button>}
-           {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-2 p-4">
+           {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-2 p-4 py-5">
               <SearchBlack/>       
             </div>}
             </div>

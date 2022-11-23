@@ -4,11 +4,24 @@ import Arrow from "../../commons/svgicons/arrow-red";
 import fallbackImg from '../../../../public/images/fallback-charms.png'
 import CardRibbon from "../../card-ribbon";
 
-const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index,shopNameImg,ribbonData, actualPrice, salePrice}) =>{
+const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, heading, subTitle, thumbnailProduct, index,shopNameImg,ribbonData, actualPrice, salePrice,lingerieCard}) =>{
     const [show, setShow] = useState(false);  
+
+    const lingerieComp= <div className="flex flex-col my-4 shadow-md">
+    <div className="w-full overflow-hidden relative">
+            <CardRibbon ribbonData={ribbonData}/>
+            <Img data={thumbnail}/>
+                  <div className="absolute bottom-0 h-2/6 w-full left-0">
+                  <p className="font-medium text-center protip_font px-12 py-6">{title}</p>
+                  
+         </div>
+   </div>
+   </div> ;
+    
     return(
     <>
            {/* Card div */}
+           {lingerieCard ? lingerieComp :
            <div className="flex flex-col w-full my-4 shadow-md">
             <div className={category === 'beauty' ? "flex head_bg bg_beauty w-full h-14 ":
              "flex head_bg bg_hair w-full h-14 "
@@ -31,7 +44,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                 <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-                  <p className="text-xs px-2 h-44 text-gray-600">{title && title}</p>
+                  <p className="text-xs px-2 h-44 text-gray-600 overflow-hidden">{title && title}</p>
                 </div>}
                {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
            </div>
@@ -63,6 +76,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName, shopLink, category, headin
                 </div>
             </div>
         </div>
+      }
         {/* Card div end*/}
     </>    
     )

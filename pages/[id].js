@@ -8,9 +8,9 @@ import { localStorage } from '../src/utils/storage';
 import FooterMenu from '../src/components/footer-menu';
 import isEmptyObject from '../src/utils/is-object-empty';
 import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
-import { breadcrumbSchema, personSchema, videoSchema } from '../src/utils/schema';
+import { breadcrumbSchema, pageSchema, personSchema, videoSchema } from '../src/utils/schema';
 import { getCanonicalUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
-import { getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
+import { getProfileVideos, getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { customTitleSeo } from '../src/utils/seo';
 // import DeskUsers from '../src/components/desk-profile';
 // import Users from '../src/components/users';
@@ -41,6 +41,14 @@ export default function Hipi(params) {
   //console.log("PU**",params.uri)
 
   const [isFollowing, setIsFollowing] = useState(item?.isFollowing);
+  const [videoSchemaItems, setVideoSchemaItems] = useState([]);
+
+  const getVideoSchemaItems = async() =>{
+    const response = await getProfileVideos({ id:item?.id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+    if(response?.data?.length > 0){
+      setVideoSchemaItems(response.data);
+    }
+  }
 
   const router = useRouter();
   const device = getItem('device-type');
@@ -97,6 +105,20 @@ export default function Hipi(params) {
         updateUtmData(queryStrings);
         updateCampaignId(queryStrings);
         console.log("logout page load **")
+
+          let timer;
+           timer = setTimeout(()=>{
+            getVideoSchemaItems();
+           },1000)
+        
+           console.log("typo", type);
+        
+        
+        window.onunload = function () {
+          window?.scrollTo(0, 0);
+        }
+        return ()=>{clearTimeout(timer);}
+ 
     }catch(e){
       console.log('something went wrong with id')
     }
@@ -147,15 +169,29 @@ export default function Hipi(params) {
     <>
       {item && 
       <>
-        <script
+       <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema({name:name, userHandle:item?.userHandle})) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema({userName:item?.userHandle})) }}
         />
-        <script
+       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema({name:name, desc:item?.bio || '', userHandle:item?.userHandle}))}}
         />
-      </>}
+        {videoSchemaItems?.length > 0 &&
+          <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema({name:name, userHandle:item?.userHandle, videoId:videoSchemaItems[0]?.id})) }}
+        />
+       }
+      </>
+      }
+      {videoSchemaItems?.length > 0 && 
+      /* eslint-disable-next-line react/jsx-key */      
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema(videoSchemaItems))}}
+        />
+    }
     <SeoMeta
       data={{
         title: item?.userHandle === 'Sneha_pundir_' ?  customTitleSeo(item?.userHandle) : `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,

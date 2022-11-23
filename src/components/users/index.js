@@ -28,6 +28,7 @@ import { videoSchema } from '../../utils/schema';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Verified from '../commons/svgicons/verified';
+import { toTrackReco } from '../../analytics/view-events';
 // import { BackButton } from '../commons/button/back';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
@@ -52,13 +53,14 @@ function Users({
   isFollow=false, userVerified
 
 }) {
+  const tabType = router?.query?.type;
   const [videoData, setVideoData] = useState({});
   const [selectedTab, setSelectedTab] = useState('all');
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
-  const [videoSchemaItems, setVideoSchemaItems] = useState([])
+  // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
   const tabName = selectedTab === 'all' ? 'All videos' : selectedTab === 'shoppable' && 'Shoppable videos'
@@ -67,27 +69,31 @@ function Users({
     setIsFollowing(isFollow);
   },[isFollow])
 
-  const getVideoSchemaItems = async() =>{
-    const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
-    if(response?.data?.length > 0){
-      setVideoSchemaItems(response.data);
-    }
-  }
+  // const getVideoSchemaItems = async() =>{
+  //   const response = await getProfileVideos({ id, type: 'all', offset: '1', limit : '10', sortType:'view' });
+  //   if(response?.data?.length > 0){
+  //     setVideoSchemaItems(response.data);
+  //   }
+  // }
 
-  useEffect(()=>{
-  let timer;
-   timer = setTimeout(()=>{
-    getVideoSchemaItems();
-   },1000)
-
-   return ()=>{clearTimeout(timer);}
-  },[])
-
+  // useEffect(()=>{
+  // let timer;
+  //  timer = setTimeout(()=>{
+  //   getVideoSchemaItems();
+  //  },1000)
+  //  return ()=>{clearTimeout(timer);}
+  // },[])
 
   // async function showPopUp(){
   //   show('', detectDeviceModal, 'extraSmall');
   //   setIsFetching(false);
   // }
+
+  useEffect(() => {
+    if(tabType === "shoppable") {
+      setSelectedTab("shoppable");
+     }
+  },[])
 
   useEffect(()=>{setShowLoading(isFetching)},[isFetching])
 
@@ -149,6 +155,11 @@ function Users({
 
   const onTabChange = selected => {
     setSelectedTab(selected);
+    if(selected === "shoppable") {
+      router.replace(`/${userHandle}?type=shoppable`);
+    } else {
+      router.replace(`/${userHandle}`);
+    }
   };
 
   const onLikedVideosTab = selected => {
@@ -243,7 +254,14 @@ console.log("onClick follow btn issue ",e);
     function: {
       others: <>
         <button 
-        onClick={toShowFollow}
+        onClick={() => {
+           if(isFollowing) {
+            toTrackReco("unfollow", {page: "profile", tab: "NA", user_id: id, objectID: id, objectType: "creator"});
+           } else {
+            toTrackReco("follow", {page: "profile", tab: "NA", user_id: id, objectID: id, objectType: "creator"});
+           }
+          toShowFollow()
+        }}
         // onClick={handleFollow} 
         className={isFollowing ? "font-semibold text-sm border border-black rounded-sm py-1 px-9 mr-1 bg-white text-black" : "font-semibold text-sm border border-hipired rounded-sm py-1 px-9 mr-1 bg-hipired text-white"}>
           {isFollowing ? 'Following' : t('FOLLOW')}
@@ -328,13 +346,14 @@ const notNowClick=()=>{
 
   return (
     <>
-    {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
-      /* eslint-disable-next-line react/jsx-key */      
+    {/* {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
+       eslint-disable-next-line react/jsx-key    
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema({name:`${firstName} ${lastName}`, videoId:item?.id, userThumnail:profilePic, createdOn:item?.createdOn,desc:item?.content_description}))}}
         />
-    ))}
+    ))} 
+    */}
     <div className="relative">
       <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">

@@ -9,24 +9,53 @@ import CircularLoader from "../commons/circular-loader-button-small";
 import useSnackbar from "../../hooks/use-snackbar";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import {contentLang} from "../../../public/content-lang.json"
+import { INDEX_TO_SHOW_LANG, INDEX_TO_SHOW_LANG_IPHONE } from "../../constants";
+import { getItem } from "../../utils/cookie";
 
 const LanguageSelection = ({activeVideoIndex})=>{
     const [selectedLang, setSelectedLang] = useState([]);
     const [loading, setLoading] = useState(false);
     const isShowed = localStorage.get('lang-24-hr');
+    const device = getItem('device-info');
+    const indexToShowLang = {
+      android : INDEX_TO_SHOW_LANG,
+      iphone : INDEX_TO_SHOW_LANG
+    }
 
     const {showSnackbar} = useSnackbar();
+   
+    const autoSelectLang = (region) => {
+      switch(region){
+        case 'KA' : return ['en','hi','ka']
+        case 'KL' : return ['en','hi','ml']
+        case 'TN' : return ['en','hi','ta']
+        case 'TG' : return ['en','hi','te']
+        case 'AD' : return ['en','hi','te']
+        case 'MH' : return ['en','hi','mr']
+        case 'GJ' : return ['en','hi','gu']
+        case 'OR' : return ['en','hi','or']
+        case 'BR' : return ['en','hi','hr']
+        case 'WB' : return ['en','hi','bn']
+        case 'PB' : return ['en','hi','pa']
+        default : return ['en','hi']
+       }
+     } 
 
     useEffect(()=>{
         const region = localStorage?.get('geo-info')?.state_code;
         console.log('region**',region);
-        region && (region === 'KA' || region === 'KL' || region === 'TN' || region === 'TG' || region === 'AD') ? setSelectedLang(['en']) : setSelectedLang(['en','hi'])
+        // region && (region === 'KA' || region === 'KL' || region === 'TN' || region === 'TG' || region === 'AD' || region === 'MH'|| region === 'GJ') ? setSelectedLang(autoSelectLang?.[region]) : setSelectedLang(['en','hi'])
+        const autoSelect = region ? autoSelectLang(region) : ['en','hi'];
+        console.log('region',autoSelect)
+        setSelectedLang(autoSelect);
     },[])
 
     useEffect(()=>{
-        console.log("PP",activeVideoIndex,isShowed);
-        activeVideoIndex === 3 && toTrackMixpanel('contentLanguagesImpression');
-        activeVideoIndex === 3 && isShowed === 'false' && localStorage.set('lang-24-hr','true');
+        // console.log("PP",activeVideoIndex,isShowed);
+       if(device){ 
+        activeVideoIndex === indexToShowLang[device] && toTrackMixpanel('contentLanguagesImpression');
+        activeVideoIndex === indexToShowLang[device] && isShowed === 'false' && localStorage.set('lang-24-hr','true');
+       }
     },[activeVideoIndex])
 
     const updateLanguageWLogin = async() =>{
@@ -112,7 +141,7 @@ const LanguageSelection = ({activeVideoIndex})=>{
               <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>onLangSelect(item?.code)}>
                 <p className="text-white text-sm font-semibold absolute top-1 left-2 z-10">{item?.lang}</p>
                 <img className="z-20" src={withBasePath(item?.img)}/>
-                {selectedLang.includes(item?.code) && <div className="absolute z-30 w-full h-full bg-black opacity-60 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>onLangSelect(item?.code)}><Check/></div>}
+                {selectedLang?.includes(item?.code) && <div className="absolute z-30 w-full h-full bg-black opacity-40 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>onLangSelect(item?.code)}><Check/></div>}
               </div>))
               }
           </div>  
@@ -120,9 +149,9 @@ const LanguageSelection = ({activeVideoIndex})=>{
           <div 
            className="done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white" 
            onClick={()=>{
-            if(selectedLang.length > 0){
+            if(selectedLang?.length > 0){
                localStorage.set('lang-flush','true');
-               toTrackMixpanel('contentLanguagesSubmitted',{method:'Feed'});
+               toTrackMixpanel('contentLanguagesSubmitted',{method:'Feed'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
                onSubmit();
             }else{
                showSnackbar({message: 'Please select atleast 1 language'});

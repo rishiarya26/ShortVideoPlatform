@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import { ToTrackFbEvents } from "../../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../../analytics/firebase/events";
