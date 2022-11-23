@@ -195,7 +195,7 @@ function ProfilePlaylistIphone({ router }) {
   }, [activeVideoId]);
 
   const dataFetcher = () =>
-    getPlaylistDetails({ playlistid, offset: offset, creatorId,  firstApiCall }).catch((err)=>{
+    getPlaylistDetails({ playlistid, offset: offset,  firstApiCall }).catch((err)=>{
       if(err?.message === "Playlist not found" && err?.status === 404) {  
         console.log("playlist not found");
       }

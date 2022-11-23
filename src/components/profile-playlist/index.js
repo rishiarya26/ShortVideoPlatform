@@ -162,7 +162,7 @@ function ProfilePlaylist({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true, creatorId });
+  const dataFetcher = () => getPlaylistDetails({ playlistid, offset: offset, firstApiCall: true });
   const onDataFetched = data => {
     const playlistVideos = data?.data || [];
     const playlistName = data?.playlists?.[0]?.name || null;
