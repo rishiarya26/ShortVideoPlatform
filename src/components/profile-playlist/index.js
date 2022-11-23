@@ -341,6 +341,9 @@ function ProfilePlaylist({ router }) {
                     id={item.content_id}
 
                   >
+                    {activeVideoId !== item?.content_id ? (
+                      <div></div>
+                      ) : (
                     <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
@@ -378,7 +381,7 @@ function ProfilePlaylist({ router }) {
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
                     />
-
+                  )}
                   </SwiperSlide>
                 )
               )
