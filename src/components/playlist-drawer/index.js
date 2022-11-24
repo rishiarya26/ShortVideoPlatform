@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import useDrawer from '../../hooks/use-drawer';
 import Img from '../commons/image';
@@ -19,6 +19,17 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
     toTrackMixpanel("cta", {name:"Playlist Video"});
   }
 
+  // useEffect(() => {
+  //   debugger
+  //   const playlistDrawerContainer = document?.querySelector("#playlistDrawer");
+  //   if(playlistDrawerContainer) {
+  //     const activePlaylistVideo = playlistDrawerContainer?.querySelector(`#${activeVideoId}`);
+  //     if(activePlaylistVideo) {
+  //       activePlaylistVideo.scrollIntoView();
+  //     } 
+  //   }
+  // }, [])
+
   return (
 
     <div className=" flex flex-col w-full">
@@ -36,10 +47,11 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         </div>
       </div>
       
-      <div className='overflow-y-auto'>
+      <div id="playlistDrawer" className='overflow-y-auto'>
         {data?.map((item, index)=>{
           return(
             <div
+            id={item?.content_id}
             key={index}
             className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
             onClick={()=>{drawerOnClick({index}); close(); mixpanelEvents();}}
@@ -54,7 +66,8 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
               </div>
               <div className="flex flex-col justify-center pl-4">
               <div className='text-sm text-gray-700 line-clamp-3 w-full'>
-                {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member
+                {/* {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member */}
+                {index}
               </div>
               {/* {item?.vCount && item?.vCount > 0 ? <div>{item.vCount}</div> : null } */}
               <div className='mt-1 text-gray-400 text-xs'>{vCount} views</div>

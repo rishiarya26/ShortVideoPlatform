@@ -72,14 +72,9 @@ function ProfilePlaylistIphone({ router }) {
   const [showSwipeUp, setShowSwipeUp] = useState({ count: 0, value: false });
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [initialId, setInitialId] = useState(0);
-
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [noSound, setNoSound] = useState(false);
-
-  // const [userDetails, setUserDetails] = useState({});
-  // const [toInsertElements, setToInsertElements] = useState(4);
   const [toShowItems, setToShowItems] = useState([]);
-  // const [deletedTill, setDeletedTill] = useState();
 
   const checkNoSound = () => {
     if (!items?.[videoActiveIndex]?.videoSound) {
@@ -102,54 +97,37 @@ function ProfilePlaylistIphone({ router }) {
 
   const addVideos = () => {
     const tempToShowItems = toShowItems;
-    let tempOffset = offset;
-    const n = items.length < 5 ? items.length : 5;
-    // for(let i = 0;i < tempToShowItems.length; i++) { 
-    //   tempToShowItems[i] = null;
-    // }
-    for(let i = 0;i < n; i++) { 
-      console.log("debug1", n, i)
-      tempToShowItems.push(items[tempOffset]);
-      tempOffset++;
-    }
-    setOffset(tempOffset);
-  }
-
-  const addVideosFromBack = () => {
-    const tempToShowItems = toShowItems;
-    const tempOffset = offset;
-    for(let i = offset;i > offset-5; i--) { 
+    let tempOffset = offset + 1;
+    let deleteFrom =offset-4;
+    for(let i = deleteFrom;i < offset;i++){
       tempToShowItems[i] = null;
     }
-    items.forEach((item) => {
-      tempToShowItems.push(item[tempOffset-5]);
-      tempOffset--;
-    })
-    setOffset(tempOffset);
+    for(let i = 0;i < 4; i++) { 
+      tempToShowItems.push(items[tempOffset]);
+      tempOffset++;
+      if(tempOffset >= items.length) {
+        break;
+      }
+    }
+    setToShowItems(tempToShowItems)
+    setOffset(tempOffset-1);
   }
 
-  useEffect(() => {
-    console.log("debug", videoActiveIndex, offset);
-    if(offset < items.length && videoActiveIndex >= offset - 2){
-      addVideos();
-    }
-  }, [videoActiveIndex])
-
-  useEffect(() => {
-    if (playListVideoId && items.length > 0) {
-      const id = searchVideo({ videoId: playListVideoId, playlistArr: items });
-      if (id > -1 && id < items.length) {
-        setInitialId(id);
-        setActiveVideoId(playListVideoId);
-      } else {
-        //handling when passing invallid playlist id
-        setInitialId(0);
-        setActiveVideoId(items?.[0]?.content_id);
-      }
-      toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"});
-      show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId, playlistName})
-    }
-  }, [items]);
+  // useEffect(() => {
+  //   if (playListVideoId && items.length > 0) {
+  //     const id = searchVideo({ videoId: playListVideoId, playlistArr: items });
+  //     if (id > -1 && id < items.length) {
+  //       setInitialId(id);
+  //       setActiveVideoId(playListVideoId);
+  //     } else {
+  //       //handling when passing invallid playlist id
+  //       setInitialId(0);
+  //       setActiveVideoId(items?.[0]?.content_id);
+  //     }
+  //     toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"});
+  //     show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId, playlistName})
+  //   }
+  // }, [items]);
 
   useEffect(() => {
     if (initialLoadComplete) {
@@ -241,12 +219,21 @@ function ProfilePlaylistIphone({ router }) {
       // };
       playlistVideos.length > 0 && setItems([...playlistVideos]);
       const playListName = data?.playlists?.[0]?.name || null;
-      if(playlistVideos.length < 5) {
+      let playlistVideoIndex = null;
+      if(playListVideoId) {
+        playlistVideoIndex = searchVideo({playlistArr: playlistVideos, videoId: playListVideoId});
+        setActiveVideoId(playlistVideos?.[playlistVideoIndex]?.content_id);
+        setInitialId(playlistVideoIndex);
+        if(playlistVideoIndex < playlistVideos.length -1) {
+          playlistVideoIndex += 2;
+        }
+      }
+      if(playlistVideos.length < 6) {
         setToShowItems([...playlistVideos]);
       } else {
-        setToShowItems([...playlistVideos.slice(0,offset)]);
-        setOffset(toShowItems.length + 5);
+        setToShowItems([...playlistVideos.slice(0,playlistVideoIndex ?? offset)]);
       }
+      setOffset(playlistVideos.length < 6? playlistVideos.length - 1 : playlistVideoIndex ? playlistVideoIndex - 1 : 4);
       setInitialLoadComplete(true);
       setPlaylistName(playListName);
       if (!playListVideoId) {
@@ -418,15 +405,6 @@ function ProfilePlaylistIphone({ router }) {
       ErrorComp={ErrorComp}
     >
       <>
-        {/* <SeoMeta
-        data={{
-          title: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} on Hipi - Indian Short Video App`,
-          // image: item?.thumbnail,
-          description: `${userDetails?.firstName || ''} ${userDetails?.lastName || ''} (@${userDetails?.userHandle || ''}) on Hipi. Checkout latest trending videos from ${userDetails?.firstName || ''} ${userDetails?.lastName || ''} that you can enjoy and share with your friends.`,
-          canonical: getCanonicalUrl && getCanonicalUrl(),        
-        }}
-     /> */}
-
         <div
           className="overflow-hidden relative"
           style={{ height: `${videoHeight}px` }}
@@ -563,16 +541,32 @@ function ProfilePlaylistIphone({ router }) {
               setActiveVideoId(activeId);
             }}
             // onSlidePrevTransitionEnd={() => {
-            //   if(videoActiveIndex < offset-5) {
-
+            //   if(offset < 9) return;
+            //   if(videoActiveIndex < offset-) {
+            //     const tempToShowItems = [...toShowItems];
+            //     for(let i = 0;i<4;i++) {
+            //       tempToShowItems[offset-4+i] = null;
+            //     }
+            //     for(let i = 0;i<4;i++) { 
+            //       tempToShowItems[offset-5-i] = items[offset-5-i];
+            //     }
             //   }
             // }}
+            onSlideChangeTransitionStart={() => {
+              if(offset >= items.length-1) {
+                return;
+              }
+              console.log("debug", videoActiveIndex, offset)
+              if(videoActiveIndex === offset) {
+                addVideos();
+              }
+            }}
           >
             {validItemsLength &&
               toShowItems?.map((item, id) => (
                 <SwiperSlide key={id} id={item?.content_id}>
-                  {false ? (
-                    <div></div>
+                  {item?.content_id !== activeVideoId ? (
+                      <img src={item?.thumbnail}/>
                   ) : (
                     <Video
                       updateSeekbar={updateSeekbar}

@@ -200,7 +200,7 @@ function Video(props) {
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
    
    const selectVideoPlayer = {
-      'multi-player-muted' :  <video
+      'multi-player-muted' :  (props.id && props.activeVideoId && (props.id === props?.activeVideoId))  ? <video
       onContextMenu={(e)=>{
          e.preventDefault();
          return false}}
@@ -228,11 +228,11 @@ function Video(props) {
          console.log("MIX&&- ended")
          window.sessionStorage.setItem('videos-finished',window.sessionStorage.getItem('videos-finished') || 1)}}
       >
-      {(props.id && props.activeVideoId && (props.id === props?.activeVideoId)) && <source
+      <source
          src={props.url}
          type="video/mp4"
-      /> }
-      </video>,
+      />
+      </video> :  <img className="h-screen" src={firstFrame}></img>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
          e.preventDefault();
