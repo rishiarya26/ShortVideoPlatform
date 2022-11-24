@@ -19,16 +19,19 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
     toTrackMixpanel("cta", {name:"Playlist Video"});
   }
 
-  // useEffect(() => {
-  //   debugger
-  //   const playlistDrawerContainer = document?.querySelector("#playlistDrawer");
-  //   if(playlistDrawerContainer) {
-  //     const activePlaylistVideo = playlistDrawerContainer?.querySelector(`#${activeVideoId}`);
-  //     if(activePlaylistVideo) {
-  //       activePlaylistVideo.scrollIntoView();
-  //     } 
-  //   }
-  // }, [])
+  useEffect(() => {
+    const playlistDrawerContainer = document?.querySelector("#playlistDrawer");
+    if(playlistDrawerContainer) {
+      const activePlaylistVideo = playlistDrawerContainer?.querySelector(`#episode_${activeVideoId}`);
+      console.log("debug", activePlaylistVideo);
+      if(activePlaylistVideo) {
+        activePlaylistVideo.scrollIntoView();
+      } 
+    }
+    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
+    overlayContainer.onclick = close
+    console.log("debug", overlayContainer);
+  }, [])
 
   return (
 
@@ -51,7 +54,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         {data?.map((item, index)=>{
           return(
             <div
-            id={item?.content_id}
+            id={`episode_${item?.content_id}`}
             key={index}
             className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
             onClick={()=>{drawerOnClick({index}); close(); mixpanelEvents();}}
@@ -66,8 +69,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
               </div>
               <div className="flex flex-col justify-center pl-4">
               <div className='text-sm text-gray-700 line-clamp-3 w-full'>
-                {/* {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member */}
-                {index}
+                {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member
               </div>
               {/* {item?.vCount && item?.vCount > 0 ? <div>{item.vCount}</div> : null } */}
               <div className='mt-1 text-gray-400 text-xs'>{vCount} views</div>
