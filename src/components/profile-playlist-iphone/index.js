@@ -68,18 +68,17 @@ function ProfilePlaylistIphone({ router }) {
     currentT: 0,
   });
   const [playlistName, setPlaylistName] = useState("");
-  const [offset, setOffset] = useState(2);
+  const [offset, setOffset] = useState(5);
   const [showSwipeUp, setShowSwipeUp] = useState({ count: 0, value: false });
   const [firstApiCall, setFirstApiCall] = useState(true);
   const [initialId, setInitialId] = useState(0);
 
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [noSound, setNoSound] = useState(false);
-  const [playlistNotfound, setPlaylistNotfound] = useState(false);
 
   // const [userDetails, setUserDetails] = useState({});
   // const [toInsertElements, setToInsertElements] = useState(4);
-  // const [toShowItems, setToShowItems] = useState([]);
+  const [toShowItems, setToShowItems] = useState([]);
   // const [deletedTill, setDeletedTill] = useState();
 
   const checkNoSound = () => {
@@ -101,6 +100,40 @@ function ProfilePlaylistIphone({ router }) {
   const videoHeight = `${size.height}`;
 
 
+  const addVideos = () => {
+    const tempToShowItems = toShowItems;
+    let tempOffset = offset;
+    const n = items.length < 5 ? items.length : 5;
+    // for(let i = 0;i < tempToShowItems.length; i++) { 
+    //   tempToShowItems[i] = null;
+    // }
+    for(let i = 0;i < n; i++) { 
+      console.log("debug1", n, i)
+      tempToShowItems.push(items[tempOffset]);
+      tempOffset++;
+    }
+    setOffset(tempOffset);
+  }
+
+  const addVideosFromBack = () => {
+    const tempToShowItems = toShowItems;
+    const tempOffset = offset;
+    for(let i = offset;i > offset-5; i--) { 
+      tempToShowItems[i] = null;
+    }
+    items.forEach((item) => {
+      tempToShowItems.push(item[tempOffset-5]);
+      tempOffset--;
+    })
+    setOffset(tempOffset);
+  }
+
+  useEffect(() => {
+    console.log("debug", videoActiveIndex, offset);
+    if(offset < items.length && videoActiveIndex >= offset - 2){
+      addVideos();
+    }
+  }, [videoActiveIndex])
 
   useEffect(() => {
     if (playListVideoId && items.length > 0) {
@@ -208,6 +241,12 @@ function ProfilePlaylistIphone({ router }) {
       // };
       playlistVideos.length > 0 && setItems([...playlistVideos]);
       const playListName = data?.playlists?.[0]?.name || null;
+      if(playlistVideos.length < 5) {
+        setToShowItems([...playlistVideos]);
+      } else {
+        setToShowItems([...playlistVideos.slice(0,offset)]);
+        setOffset(toShowItems.length + 5);
+      }
       setInitialLoadComplete(true);
       setPlaylistName(playListName);
       if (!playListVideoId) {
@@ -225,20 +264,20 @@ function ProfilePlaylistIphone({ router }) {
   retry = setRetry;
 
   const loadMoreItems = async () => {
-    let videos = [...items];
-    try {
-      const resp = await getPlaylistDetails({ playlistid, offset: offset });
-      if (resp?.data?.length > 0) {
-        console.log("innn", resp);
-        videos = videos?.concat(resp?.data);
-        console.log("concat", videos);
-        setItems(videos);
-        setOffset(offset + 1);
-        return resp?.data;
-      }
-    } catch (e) {
-      console.log("data fetch error", e);
-    }
+    // let videos = [...items];
+    // try {
+    //   const resp = await getPlaylistDetails({ playlistid, offset: offset });
+    //   if (resp?.data?.length > 0) {
+    //     console.log("innn", resp);
+    //     videos = videos?.concat(resp?.data);
+    //     console.log("concat", videos);
+    //     setItems(videos);
+    //     setOffset(offset + 1);
+    //     return resp?.data;
+    //   }
+    // } catch (e) {
+    //   console.log("data fetch error", e);
+    // }
   };
 
   // useEffect(()=>{
@@ -523,11 +562,16 @@ function ProfilePlaylistIphone({ router }) {
               setVideoActiveIndex(activeIndex);
               setActiveVideoId(activeId);
             }}
+            // onSlidePrevTransitionEnd={() => {
+            //   if(videoActiveIndex < offset-5) {
+
+            //   }
+            // }}
           >
             {validItemsLength &&
-              items?.map((item, id) => (
+              toShowItems?.map((item, id) => (
                 <SwiperSlide key={id} id={item?.content_id}>
-                  {activeVideoId !== item?.content_id ? (
+                  {false ? (
                     <div></div>
                   ) : (
                     <Video

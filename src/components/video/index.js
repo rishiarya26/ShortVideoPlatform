@@ -153,9 +153,9 @@ function Video(props) {
             console.error(e,"setplayer error");
          }
       }
-      if(props?.player !== 'single-player-muted'){
-         props?.setMuted(true);
-      }
+      // if(props?.player !== 'single-player-muted'){
+      //    props?.setMuted(true);
+      // }
    },[props.activeVideoId])
 
    useEffect(() => {
