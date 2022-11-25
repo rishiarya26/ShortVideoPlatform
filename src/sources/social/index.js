@@ -227,6 +227,7 @@ const getSmartOneLink = ({oneLink, afChannel, videoId})=>{
   const af_dp = { paramKey: "af_dp" , defaultValue:`zee5hipi://video/${videoId}`}
   const is_retargeting = {paramKey: "is_retargeting", defaultValue:"true"}
   
+  
   let result = window?.AF_SMART_SCRIPT?.generateOneLinkURL({
     oneLinkURL,
     afParameters:{
