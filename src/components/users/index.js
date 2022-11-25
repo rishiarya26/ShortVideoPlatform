@@ -373,7 +373,7 @@ const notNowClick=()=>{
     ))} 
     */}
     <div className="relative">
-      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
           { info.header.leftButton[type] }
         </div>
@@ -420,7 +420,7 @@ const notNowClick=()=>{
         selected={selectedTab}
         onLikedVideosTab={onLikedVideosTab}
       />
-     {playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
+     {selectedTab === 'all' && playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
         {playlistArr.map((playlist) => (
           <div key={playlist?.id} onClick={() => chipOnClick(playlist?.id)} className='mr-2 px-3 py-4 border flex items-center justify-center cursor-pointer bg-white min-w-max rounded'>
             <span className='mr-2'><PlaylistBadge /></span> &#128293; {playlist.name} &#128293;

@@ -68,6 +68,7 @@ function transformSuccess(resp) {
       payloadObject.adId = typeof d?.adId === 'object' && JSON.parse(d?.adId) || null;
       payloadObject.correlationID = d?.correlation_id || null;
       payloadObject.explain = d?.explanations?.[0] || null;
+      payloadObject.viewCount = d?.viewCount || 0;
       payloadData.push(payloadObject);
     });
     payload.data = payloadData;
