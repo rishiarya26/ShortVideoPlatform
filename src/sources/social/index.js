@@ -224,7 +224,7 @@ const getSmartOneLink = ({oneLink, afChannel, videoId})=>{
   const term = {paramKey:"term", keys:["utm_term"]}
   const afchannel= afChannel
   const deepLinkValue = {defaultValue:`https://www.hipi.co.in/video/${videoId}`};
-  const af_dp = { paramKey: "af_dp" , defaultValue:"zee5hipi://"}
+  const af_dp = { paramKey: "af_dp" , defaultValue:`zee5hipi://video/${videoId}`}
   const is_retargeting = {paramKey: "is_retargeting", defaultValue:"true"}
   
   let result = window?.AF_SMART_SCRIPT?.generateOneLinkURL({
