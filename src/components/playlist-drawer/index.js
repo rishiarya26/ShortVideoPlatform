@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import useDrawer from '../../hooks/use-drawer';
 import { getItem } from '../../utils/cookie';
@@ -9,8 +10,15 @@ import Close from '../commons/svgicons/close-black';
 import PlaylistShare from "../commons/svgicons/playlistShare";
 
 function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, callbackForIos=null}) {
+  const detectDeviceModal = dynamic(
+    () => import('../commons/list-with-search'),
+    {
+      loading: () => <div />,
+      ssr: false
+    }
+  );
 
-  const {close} = useDrawer();
+  const {close, show} = useDrawer();
   const { query: { id } } = useRouter();
   const device = getItem('device-info');
   const [showBanner, setShowBanner] = useState(false);
@@ -42,7 +50,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
-        await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipihttps://www.hipi.co.in/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
+        await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://www.hipi.co.in/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
       } catch(err){
         console.err('something went wrong', err)
       }
