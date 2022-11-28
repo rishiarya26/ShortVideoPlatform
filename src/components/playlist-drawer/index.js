@@ -8,7 +8,7 @@ import Img from '../commons/image';
 import Close from '../commons/svgicons/close-black';
 import PlaylistShare from "../commons/svgicons/playlistShare";
 
-function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null}) {
+function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, callbackForIos=null}) {
 
   const {close} = useDrawer();
   const { query: { id } } = useRouter();
@@ -73,7 +73,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
               id={`episode_${item?.content_id}`}
               key={index}
               className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
-              onClick={()=>{drawerOnClick({index}); close(); mixpanelEvents();}}
+              onClick={()=>{callbackForIos ? callbackForIos(index) : drawerOnClick({index}); close(); mixpanelEvents();}}
             >
               <span className='flex'>
                 <div className='usrimg min-w-16 w-16 h-28 overflow-hidden rounded-md'>

@@ -11,7 +11,7 @@ import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, creatorId, videoId, playlistName=null}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, creatorId, videoId, playlistName=null, callbackForIos=undefined}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -50,7 +50,7 @@ const {show} = useDrawer();
         } :
         ()=>{
           toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"})
-          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName})
+          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId, playlistName, callbackForIos})
         }}
         >
           <div className='flex items-center'>
