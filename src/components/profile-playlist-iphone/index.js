@@ -4,10 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Mousewheel } from "swiper";
 import { withRouter } from "next/router";
 import Video from "../video";
-import Error from "./error";
 import Loading from "./loader";
 import ComponentStateHandler, {
-useFetcher,
+  useFetcher,
 } from "../commons/component-state-handler";
 import Seekbar from "../seekbar";
 import SeekbarLoading from "../seekbar/loader.js";
@@ -31,13 +30,11 @@ import OpenAppStrip from "../commons/user-experience";
 import SnackCenter from "../commons/snack-bar-center";
 import { getPlaylistDetails } from "../../sources/playlist";
 import PlaylistUnavailable from "../playlist-unavailable";
-import PlaylistDrawer from "../playlist-drawer";
-
 
 SwiperCore.use([Mousewheel]);
 
 let retry;
-const ErrorComp = () => <PlaylistUnavailable retry={retry} />
+const ErrorComp = () => <PlaylistUnavailable retry={retry} />;
 const LoadComp = () => <Loading />;
 
 const detectDeviceModal = dynamic(() => import("../open-in-app"), {
@@ -67,7 +64,7 @@ function ProfilePlaylistIphone({ router }) {
     totalDuration: null,
     currentT: 0,
   });
-  const [playlistName, setPlaylistName] = useState("");
+  const [playListName, setPlayListName] = useState("");
   const [offset, setOffset] = useState(5);
   const [showSwipeUp, setShowSwipeUp] = useState({ count: 0, value: false });
   const [firstApiCall, setFirstApiCall] = useState(true);
@@ -75,6 +72,8 @@ function ProfilePlaylistIphone({ router }) {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [noSound, setNoSound] = useState(false);
   const [toShowItems, setToShowItems] = useState([]);
+  // const [toInsertElements, setToInsertElements] = useState(3);
+  const [deletedTill, setDeletedTill] = useState();
 
   const checkNoSound = () => {
     if (!items?.[videoActiveIndex]?.videoSound) {
@@ -86,48 +85,70 @@ function ProfilePlaylistIphone({ router }) {
   };
 
   const preVideoDurationDetails = usePreviousValue({ videoDurationDetails });
-  // const preActiveVideoId = usePreviousValue({ videoActiveIndex });
+  const preActiveVideoId = usePreviousValue({ videoActiveIndex });
   // const pretoInsertElemant = usePreviousValue({ toInsertElements });
+
   const { id: playlistid } = router?.query;
   const { show } = useDrawer();
   const pageName = "Profile Playlist Feed";
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
+  const incrementShowItems = async () => {
+    console.log("in increment");
+    try {
+      let updateShowItems = [...toShowItems];
+      let dataItem = [...items];
 
-  const addVideos = () => {
-    const tempToShowItems = toShowItems;
-    let tempOffset = offset + 1;
-    let deleteFrom =offset-4;
-    for(let i = deleteFrom;i < offset;i++){
-      tempToShowItems[i] = null;
+      // slice from main array: start= videoActiveIndex+1 , end= videoActiveIndex + offset
+      updateShowItems = [
+        ...updateShowItems,
+        ...dataItem.slice(videoActiveIndex + 1, videoActiveIndex + 5 + 1),
+      ];
+      setToShowItems(updateShowItems);
+      setMuted(true);
+    } catch (e) {
+      console.log("errorree", e);
     }
-    for(let i = 0;i < 4; i++) { 
-      tempToShowItems.push(items[tempOffset]);
-      tempOffset++;
-      if(tempOffset >= items.length) {
-        break;
+  };
+
+  useEffect(() => {
+    if (videoActiveIndex > preActiveVideoId?.videoActiveIndex) {
+      //swipe-down || forwardSwipe
+      if (toShowItems.length && videoActiveIndex === toShowItems.length - 1) {
+        console.log('debug: About to add items in "toShowItems" array');
+        // add new set
+        incrementShowItems();
+      } else {
+        let updateShowItems = [...toShowItems];
+        // remove items from "toShowItems" array by keeping at least one item before the current index
+        if (updateShowItems.length > 5) {
+          for (let i = 0; i <= videoActiveIndex - 2; i++) {
+            updateShowItems[i] && (updateShowItems[i] = null);
+          }
+        }
+        //console.log("debug:", updateShowItems);
+        setToShowItems(updateShowItems);
       }
+    } else {
+      //swipe-up || backwardSwipe
+      let updateShowItems = [...toShowItems];
+      let dataItem = [...items];
+      // remove items from "toShowItems" array by keeping at least one item before the current index
+      if (updateShowItems.length > 5 && updateShowItems[0] === null) {
+        for (let i = toShowItems.length - 1; i > videoActiveIndex + 1; i--) {
+          updateShowItems.splice(i, 1);
+        }
+        for (let i = videoActiveIndex - 1; i >= videoActiveIndex - 5; i--) {
+          updateShowItems[i] = dataItem[i];
+        }
+      }
+      //console.log("debug decrement:", updateShowItems);
+      setToShowItems(updateShowItems);
+      setMuted(true);
     }
-    setToShowItems(tempToShowItems)
-    setOffset(tempOffset-1);
-  }
-
-  // useEffect(() => {
-  //   if (playListVideoId && items.length > 0) {
-  //     const id = searchVideo({ videoId: playListVideoId, playlistArr: items });
-  //     if (id > -1 && id < items.length) {
-  //       setInitialId(id);
-  //       setActiveVideoId(playListVideoId);
-  //     } else {
-  //       //handling when passing invallid playlist id
-  //       setInitialId(0);
-  //       setActiveVideoId(items?.[0]?.content_id);
-  //     }
-  //     toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"});
-  //     show('', PlaylistDrawer, 'medium', {data:items,  fetchMore:loadMoreItems, activeVideoId:playListVideoId, playlistName})
-  //   }
-  // }, [items]);
+    checkNoSound();
+  }, [videoActiveIndex]);
 
   useEffect(() => {
     if (initialLoadComplete) {
@@ -206,76 +227,73 @@ function ProfilePlaylistIphone({ router }) {
   }, [activeVideoId]);
 
   const dataFetcher = () =>
-    getPlaylistDetails({ playlistid, offset: offset,  firstApiCall }).catch((err)=>{
-      if(err?.message === "Playlist not found" && err?.status === 404) {  
-        console.log("playlist not found");
-      }
-    });
-
-  const onDataFetched = (data) => {
-      const playlistVideos = data?.data || [];
-      // if(playlistVideos.length === 0 ){
-      //   setPlaylistNotfound(true);
-      // };
-      playlistVideos.length > 0 && setItems([...playlistVideos]);
-      const playListName = data?.playlists?.[0]?.name || null;
-      let playlistVideoIndex = null;
-      if(playListVideoId) {
-        playlistVideoIndex = searchVideo({playlistArr: playlistVideos, videoId: playListVideoId});
-        setActiveVideoId(playlistVideos?.[playlistVideoIndex]?.content_id);
-        setInitialId(playlistVideoIndex);
-        if(playlistVideoIndex < playlistVideos.length -1) {
-          playlistVideoIndex += 2;
+    getPlaylistDetails({ playlistid, offset: offset, firstApiCall }).catch(
+      (err) => {
+        if (err?.message === "Playlist not found" && err?.status === 404) {
+          console.log("playlist not found");
         }
       }
-      if(playlistVideos.length < 6) {
-        setToShowItems([...playlistVideos]);
+    );
+
+  const onDataFetched = (data) => {
+    const playlistVideos = data?.data || [];
+    playlistVideos.length > 0 && setItems([...playlistVideos]);
+    const playListName = data?.playlists?.[0]?.name || null;
+    setPlayListName(playListName);
+    let playlistVideoIndex = null;
+    if (playListVideoId) {
+      playlistVideoIndex = searchVideo({
+        playlistArr: playlistVideos,
+        videoId: playListVideoId,
+      });
+      setActiveVideoId(playlistVideos?.[playlistVideoIndex]?.content_id);
+      setInitialId(playlistVideoIndex);
+    }
+    if (playlistVideos.length < 6) {
+      setToShowItems([...playlistVideos]);
+    } else if (playlistVideos.length > 0) {
+      if (playListVideoId) {
+        if (playlistVideoIndex === 0) {
+          setToShowItems([...playlistVideos.slice(0, 5)]);
+        }
+        if (playlistVideoIndex === playlistVideos.length - 1) {
+          setToShowItems([
+            ...playlistVideos.slice(Math.max(playlistVideos.length - 5, 0)),
+          ]);
+        }
+
+        let tempArr = [];
+        for (let i = 0; i < playlistVideoIndex - 1; i++) {
+          tempArr[i] = null;
+        }
+        tempArr[playlistVideoIndex - 1] =
+          playlistVideos[playlistVideoIndex - 1];
+        tempArr[playlistVideoIndex] = playlistVideos[playlistVideoIndex];
+        tempArr[playlistVideoIndex + 1] =
+          playlistVideos[playlistVideoIndex + 1];
+        setToShowItems(tempArr);
       } else {
-        setToShowItems([...playlistVideos.slice(0,playlistVideoIndex ?? offset)]);
+        setToShowItems([...playlistVideos.slice(0, offset)]);
       }
-      setOffset(playlistVideos.length < 6? playlistVideos.length - 1 : playlistVideoIndex ? playlistVideoIndex - 1 : 4);
-      setInitialLoadComplete(true);
-      setPlaylistName(playListName);
-      if (!playListVideoId) {
-        !activeVideoId &&
-          data &&
-          setActiveVideoId(playlistVideos?.[0]?.content_id);
-      }
-      //setToInsertElements(4);
-      setFirstApiCall(false);
-    
-    
+
+      console.log("debug onload", [
+        ...playlistVideos.slice(0, playlistVideoIndex ?? offset),
+      ]);
+    }
+
+    //setOffset(playlistVideos.length < 6? playlistVideos.length - 1 : playlistVideoIndex ? playlistVideoIndex - 1 : 6);
+    setInitialLoadComplete(true);
+    if (!playListVideoId) {
+      !activeVideoId &&
+        data &&
+        setActiveVideoId(playlistVideos?.[0]?.content_id);
+    }
+    //setToInsertElements(4);
+    setFirstApiCall(false);
   };
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
-
-  const loadMoreItems = async () => {
-    // let videos = [...items];
-    // try {
-    //   const resp = await getPlaylistDetails({ playlistid, offset: offset });
-    //   if (resp?.data?.length > 0) {
-    //     console.log("innn", resp);
-    //     videos = videos?.concat(resp?.data);
-    //     console.log("concat", videos);
-    //     setItems(videos);
-    //     setOffset(offset + 1);
-    //     return resp?.data;
-    //   }
-    // } catch (e) {
-    //   console.log("data fetch error", e);
-    // }
-  };
-
-  // useEffect(()=>{
-  //   async function loadItems() 
-  //   { 
-  //    const toLoadMoreIndex = items.length-4;
-  //     videoActiveIndex === toLoadMoreIndex && await loadMoreItems();
-  //   }
-  //   loadItems();
-  //   checkNoSound();
-  //  },[videoActiveIndex])
 
   const validItemsLength = items?.length > 0;
 
@@ -389,6 +407,36 @@ function ProfilePlaylistIphone({ router }) {
     setShop(shopContent);
   };
 
+  function handleDrawerClick(index){
+   console.log(index,"debug")
+   const swiper = document.querySelector("#playlistFeedSwiper");
+    if(!!toShowItems[index]){ //if index already present in toshowItems array
+      swiper.swiper.slideTo(index);
+    }else{
+      let playlistVideoIndex = null;
+      playlistVideoIndex = searchVideo({
+        playlistArr: items,
+        videoId: items[index].content_id,
+      });
+      setActiveVideoId(items?.[playlistVideoIndex]?.content_id);
+      setInitialId(playlistVideoIndex);
+      let tempArr = [];
+        for (let i = 0; i < playlistVideoIndex - 1; i++) {
+          tempArr[i] = null;
+        }
+        tempArr[playlistVideoIndex - 1] =
+          items[playlistVideoIndex - 1];
+        tempArr[playlistVideoIndex] = items[playlistVideoIndex];
+        tempArr[playlistVideoIndex + 1] =
+          items[playlistVideoIndex + 1];
+        setToShowItems(tempArr);
+        setTimeout(() =>{
+          swiper.swiper.slideTo(playlistVideoIndex);
+        },100)
+        
+    }
+  }
+
   const handleSaveLook = () => {
     const data = [...items];
     data.forEach((item) => {
@@ -414,8 +462,11 @@ function ProfilePlaylistIphone({ router }) {
             item={items?.[videoActiveIndex]}
             activeVideoId={activeVideoId}
             data={items}
-            fetchMore={loadMoreItems}
+            //fetchMore={loadMoreItems}
             isPlaylistView
+            videoId={playListVideoId}
+            playlistName={playListName}
+            callbackForIos={handleDrawerClick}
             //drawerOnClick={drawerOnClick}
           />
           <div
@@ -429,10 +480,6 @@ function ProfilePlaylistIphone({ router }) {
             initialSlide={initialId}
             className="max-h-full"
             direction="vertical"
-            // onSwiper={() => {
-            //   router?.replace(`/profile-feed/${id}`);
-            //   setInitialPlayStarted(false);
-            // }}
             draggable="true"
             spaceBetween={0}
             calculateheight="true"
@@ -540,78 +587,54 @@ function ProfilePlaylistIphone({ router }) {
               setVideoActiveIndex(activeIndex);
               setActiveVideoId(activeId);
             }}
-            // onSlidePrevTransitionEnd={() => {
-            //   if(offset < 9) return;
-            //   if(videoActiveIndex < offset-) {
-            //     const tempToShowItems = [...toShowItems];
-            //     for(let i = 0;i<4;i++) {
-            //       tempToShowItems[offset-4+i] = null;
-            //     }
-            //     for(let i = 0;i<4;i++) { 
-            //       tempToShowItems[offset-5-i] = items[offset-5-i];
-            //     }
-            //   }
-            // }}
-            onSlideChangeTransitionStart={() => {
-              if(offset >= items.length-1) {
-                return;
-              }
-              console.log("debug", videoActiveIndex, offset)
-              if(videoActiveIndex === offset) {
-                addVideos();
-              }
-            }}
           >
-            {validItemsLength &&
-              toShowItems?.map((item, id) => (
-                <SwiperSlide key={id} id={item?.content_id}>
-                  {item?.content_id !== activeVideoId ? (
-                      <img src={item?.thumbnail}/>
-                  ) : (
-                    <Video
-                      updateSeekbar={updateSeekbar}
-                      socialId={item?.getSocialId}
-                      url={item?.video_url}
-                      id={item?.content_id}
-                      comments={item?.commentsCount}
-                      likes={item?.likesCount}
-                      music={item?.musicCoverTitle}
-                      musicTitle={item?.music_title}
-                      profilePic={item?.userProfilePicUrl}
-                      userName={item?.userName}
-                      musicCoverTitle={item?.musicCoverTitle}
-                      videoid={item?.content_id}
-                      hashTags={item?.hashTags}
-                      videoOwnersId={item?.videoOwnersId}
-                      thumbnail={item?.firstFrame}
-                      canShop={shop?.isShoppable === "success" || false}
-                      shopCards={shop?.data}
-                      shopType={shop?.type}
-                      handleSaveLook={handleSaveLook}
-                      saveLook={saveLook}
-                      saved={item?.saveLook}
-                      activeVideoId={activeVideoId}
-                      comp="profile"
-                      profileFeed
-                      loading={loading}
-                      muted={
-                        item?.[videoActiveIndex]?.videoSound === false
-                          ? true
-                          : muted
-                      }
-                      firstFrame={item?.firstFrame}
-                      player={"multi-player-muted"}
-                      description={item?.content_description}
-                      pageName={pageName}
-                      adData={shop?.adData}
-                      userVerified={item?.verified}
-                      videoSound={item?.videoSound}
-                      campaignId={shop?.campaignId}
-                      setMuted={setMuted}
-                      // showBanner={showBanner}
-                    />)}
-                </SwiperSlide>
-              ))}
+            {toShowItems?.map((item, id) => (
+              <SwiperSlide key={id} id={item?.content_id}>
+                {!!item?.content_id ? <Video
+                  updateSeekbar={updateSeekbar}
+                  socialId={item?.getSocialId}
+                  url={item?.video_url}
+                  id={item?.content_id}
+                  comments={item?.commentsCount}
+                  likes={item?.likesCount}
+                  music={item?.musicCoverTitle}
+                  musicTitle={item?.music_title}
+                  profilePic={item?.userProfilePicUrl}
+                  userName={item?.userName}
+                  musicCoverTitle={item?.musicCoverTitle}
+                  videoid={item?.content_id}
+                  hashTags={item?.hashTags}
+                  videoOwnersId={item?.videoOwnersId}
+                  thumbnail={item?.firstFrame}
+                  canShop={shop?.isShoppable === "success" || false}
+                  shopCards={shop?.data}
+                  shopType={shop?.type}
+                  handleSaveLook={handleSaveLook}
+                  saveLook={saveLook}
+                  saved={item?.saveLook}
+                  activeVideoId={activeVideoId}
+                  comp="profile"
+                  profileFeed
+                  loading={loading}
+                  muted={
+                    item?.[videoActiveIndex]?.videoSound === false
+                      ? true
+                      : muted
+                  }
+                  firstFrame={item?.firstFrame}
+                  player={"multi-player-muted"}
+                  description={item?.content_description}
+                  pageName={pageName}
+                  adData={shop?.adData}
+                  userVerified={item?.verified}
+                  videoSound={item?.videoSound}
+                  campaignId={shop?.campaignId}
+                  setMuted={setMuted}
+                  // showBanner={showBanner}
+                />:<div></div>}
+                
+              </SwiperSlide>
+            ))}
             <div
               className="absolute top-1/2 justify-center w-screen flex"
               style={{

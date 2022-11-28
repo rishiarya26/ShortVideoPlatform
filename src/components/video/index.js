@@ -200,7 +200,7 @@ function Video(props) {
    const firstFrame = thumanilWidth?.replaceAll('.jpg','.webp');
    
    const selectVideoPlayer = {
-      'multi-player-muted' :  (props.id && props.activeVideoId && (props.id === props?.activeVideoId))  ? <video
+      'multi-player-muted' : <video
       onContextMenu={(e)=>{
          e.preventDefault();
          return false}}
@@ -232,7 +232,7 @@ function Video(props) {
          src={props.url}
          type="video/mp4"
       />
-      </video> :  <img className="h-screen" src={firstFrame}></img>,
+      </video>,
        'multi-player-non-muted' : <video
        onContextMenu={(e)=>{
          e.preventDefault();
