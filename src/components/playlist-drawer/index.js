@@ -43,7 +43,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
     }
     const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
     overlayContainer.onclick = close
-  }, [])
+  }, [activeVideoId])
 
   const shareOnClick = async() => {
     if(!navigator.canShare) {
@@ -94,7 +94,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
                 </div>
                 <div className="flex flex-col justify-center pl-4">
                 <div className='text-sm text-gray-700 line-clamp-3 w-full'>
-                  {item.content_description}The dot prefix indicates that it is a #class#selector#and#will match an HTML element which is a member
+                  {item.content_description}
                 </div>
                 {item?.viewCount ? <div className='mt-1 text-gray-400 text-xs'>{item.viewCount} views</div> : null }
                 {/* <div className='mt-1 text-gray-400 text-xs'>{vCount} views</div> */}

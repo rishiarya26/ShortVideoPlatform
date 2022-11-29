@@ -30,17 +30,13 @@ import OpenAppStrip from "../commons/user-experience";
 import SnackCenter from "../commons/snack-bar-center";
 import { getPlaylistDetails } from "../../sources/playlist";
 import PlaylistUnavailable from "../playlist-unavailable";
+import playListModal from "../playlist-drawer";
 
 SwiperCore.use([Mousewheel]);
 
 let retry;
 const ErrorComp = () => <PlaylistUnavailable retry={retry} />;
 const LoadComp = () => <Loading />;
-
-const detectDeviceModal = dynamic(() => import("../open-in-app"), {
-  loading: () => <div />,
-  ssr: false,
-});
 
 const searchVideo = ({ videoId = null, playlistArr = [] }) => {
   if (videoId && playlistArr.length > 0) {
@@ -49,7 +45,6 @@ const searchVideo = ({ videoId = null, playlistArr = [] }) => {
 };
 
 function ProfilePlaylistIphone({ router }) {
-  const creatorId = router?.query?.creatorId || null;
   const playListVideoId = router?.query?.videoId || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
@@ -116,7 +111,6 @@ function ProfilePlaylistIphone({ router }) {
     if (videoActiveIndex > preActiveVideoId?.videoActiveIndex) {
       //swipe-down || forwardSwipe
       if (toShowItems.length && videoActiveIndex === toShowItems.length - 1) {
-        console.log('debug: About to add items in "toShowItems" array');
         // add new set
         incrementShowItems();
       } else {
@@ -272,13 +266,10 @@ function ProfilePlaylistIphone({ router }) {
         tempArr[playlistVideoIndex + 1] =
           playlistVideos[playlistVideoIndex + 1];
         setToShowItems(tempArr);
+        show('', playListModal, 'medium', {data: playlistVideos,  fetchMore: () => {}, activeVideoId: playlistVideos[playlistVideoIndex]?.content_id, playlistName: playListName})
       } else {
         setToShowItems([...playlistVideos.slice(0, offset)]);
       }
-
-      console.log("debug onload", [
-        ...playlistVideos.slice(0, playlistVideoIndex ?? offset),
-      ]);
     }
 
     //setOffset(playlistVideos.length < 6? playlistVideos.length - 1 : playlistVideoIndex ? playlistVideoIndex - 1 : 6);
@@ -291,6 +282,13 @@ function ProfilePlaylistIphone({ router }) {
     //setToInsertElements(4);
     setFirstApiCall(false);
   };
+
+  useEffect(() => {
+    const playlistDrawerChilds = document.querySelectorAll(`[id^="episode_"]`);
+    playlistDrawerChilds.forEach((item, index) => {
+      item.onclick = function(){ handleDrawerClick(index)};
+    })
+  }, [items]);
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
   retry = setRetry;
@@ -432,7 +430,7 @@ function ProfilePlaylistIphone({ router }) {
         setToShowItems(tempArr);
         setTimeout(() =>{
           swiper.swiper.slideTo(playlistVideoIndex);
-        },100)
+        },10)
         
     }
   }
@@ -462,9 +460,9 @@ function ProfilePlaylistIphone({ router }) {
             item={items?.[videoActiveIndex]}
             activeVideoId={activeVideoId}
             data={items}
+            {...(activeVideoId === playListVideoId ? {videoId: playListVideoId} : {})}
             //fetchMore={loadMoreItems}
             isPlaylistView
-            videoId={playListVideoId}
             playlistName={playListName}
             callbackForIos={handleDrawerClick}
             //drawerOnClick={drawerOnClick}
@@ -711,82 +709,3 @@ function ProfilePlaylistIphone({ router }) {
 }
 
 export default withRouter(ProfilePlaylistIphone);
-
-/**
-  useEffect(() => {
-    if (videoActiveIndex > preActiveVideoId?.videoActiveIndex) {
-      //swipe-down
-      if (toShowItems.length > 0 && toInsertElements === videoActiveIndex) {
-        console.log(
-          "increment called",
-          "insertIndex Incremented to :",
-          toInsertElements + 6
-        );
-        incrementShowItems();
-        setToInsertElements(toInsertElements + 6);
-      }
-    } else {
-      //swipe-up
-      if (toShowItems.length > 0 && deletedTill === videoActiveIndex) {
-        decrementingShowItems();
-      }
-    }
-    checkNoSound();
-  }, [videoActiveIndex]);
-
-   const incrementShowItems = async () => {
-    console.log("in increment");
-    try {
-      let updateShowItems = [...toShowItems];
-      let deletedTill = pretoInsertElemant?.toInsertElements - 12;
-      let dataItem = [...items];
-      const arr = await loadMoreItems();
-      arr && (dataItem = dataItem?.concat(arr));
-
-      //add
-      for (let i = 0; i <= 5; i++) {
-        if (dataItem?.[videoActiveIndex + i + 2]) {
-          updateShowItems.push(dataItem[videoActiveIndex + i + 2]);
-        }
-      }
-      //delete
-      if (videoActiveIndex >= 10) {
-        for (
-          let i = 0;
-          i <= pretoInsertElemant?.toInsertElements - 6 - 1;
-          i++
-        ) {
-          updateShowItems[i] && (updateShowItems[i] = null);
-        }
-      }
-      deletedTill = pretoInsertElemant?.toInsertElements - 6 - 1;
-      setDeletedTill(deletedTill);
-      setMuted(true);
-      show("", detectDeviceModal, "extraSmall", {
-        text: "see more",
-        setMuted: setMuted,
-      });
-      // setShowAppBanner(true);
-      setToShowItems(updateShowItems);
-    } catch (e) {
-      console.log("errorree", e);
-    }
-  };
-
-  const decrementingShowItems = async () => {
-    let updateShowItems = [...toShowItems];
-    const dataItem = [...items];
-    for (let i = 0; i <= 5; i++) {
-      updateShowItems[deletedTill - i] = dataItem[deletedTill - i];
-    }
-    setMuted(true);
-    show("", detectDeviceModal, "extraSmall", {
-      text: "see more",
-      setMuted: setMuted,
-    });
-    // setShowAppBanner(true);
-    setDeletedTill(deletedTill - 5);
-    setToShowItems(updateShowItems);
-  };
-
-  */

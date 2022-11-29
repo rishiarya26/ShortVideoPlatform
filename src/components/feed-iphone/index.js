@@ -743,7 +743,6 @@ console.log('errorrr',e)
           activeVideoId={activeVideoId}
           type='aboveBottom'
           creatorId={toShowItems?.[videoActiveIndex]?.videoOwnersId}
-          videoId={toShowItems?.[videoActiveIndex]?.id}
           playlistId={toShowItems?.[videoActiveIndex]?.playlistId}
           playlistName={toShowItems?.[videoActiveIndex]?.playlistName}
         />

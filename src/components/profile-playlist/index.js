@@ -11,7 +11,6 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getUserProfile } from '../../sources/users/profile';
 import { getPlaylistDetails } from "../../sources/playlist";
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
@@ -21,7 +20,7 @@ import usePreviousValue from '../../hooks/use-previous';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import SwipeUp from '../commons/svgicons/swipe-up'; 
 import { viewEventsCall } from '../../analytics/view-events';
-import { getBrand, getCanonicalUrl } from '../../utils/web';
+import { getBrand } from '../../utils/web';
 import dynamic from 'next/dynamic';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
@@ -272,10 +271,10 @@ function ProfilePlaylist({ router }) {
           pageName={pageName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          {...(activeVideoId === playListVideoId ? {videoId: playListVideoId} : {})}
           data={items}
           fetchMore={loadMoreItems}
           isPlaylistView
-          videoId={playListVideoId}
           playlistName={playListName}
           //drawerOnClick={drawerOnClick}
         />
