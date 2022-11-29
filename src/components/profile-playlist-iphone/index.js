@@ -384,7 +384,13 @@ function ProfilePlaylistIphone({ router }) {
   };
 
   const handleBackClick = () => {
-    router?.back();
+    //HIPI-5340
+    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
+    if([...overlayContainer?.classList]?.includes('visible')){
+      return false;
+    }else{
+      router?.back();
+    }
   };
 
   const getCanShop = async () => {
@@ -470,6 +476,7 @@ function ProfilePlaylistIphone({ router }) {
           <div
             onClick={handleBackClick}
             className="fixed z-10 w-full p-4 mt-4 w-1/2"
+            id="back_button"
           >
             <Back />
           </div>

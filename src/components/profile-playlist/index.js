@@ -219,7 +219,13 @@ function ProfilePlaylist({ router }) {
   };
 
   const handleBackClick = () => {
-    router?.back();
+    //HIPI-5340
+    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
+    if([...overlayContainer?.classList]?.includes('visible')){
+      return false;
+    }else{
+      router?.back();
+    }
   };
 
   const getCanShop = async () => {
