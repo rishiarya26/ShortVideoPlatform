@@ -1146,7 +1146,12 @@ background-color:rgb(255 237 223);
     width: 50%;
   }
 }
-
+.bg_pastel_reward{
+ background-color: #cce1fc;
+}
+.reward_font{
+  color: #20376b;
+ }
 .explore_carousel > .swiper-container > .swiper-pagination {
   z-index: 1!important;
 }
