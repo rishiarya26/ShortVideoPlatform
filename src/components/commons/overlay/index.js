@@ -4,7 +4,7 @@ const OverLay = ({ visible = false, compClose }) => (
     data-testid="dt-overlay"
     className={`${visible ? 'visible' : 'invisible'}
     bg-black overlay-z-index opacity-70 fixed inset-0 overflow-y-auto w-full h-full`}
-    onClick={compClose ? compClose : () => {}}
+    {...(compClose && {onClick: compClose})}
   />
 );
 

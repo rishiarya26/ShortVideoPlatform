@@ -50,7 +50,7 @@ const {show} = useDrawer();
         } :
         ()=>{
           toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist"})
-          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos})
+          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true})
         }}
         >
           <div className='flex items-center'>

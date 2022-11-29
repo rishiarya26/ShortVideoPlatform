@@ -266,7 +266,7 @@ function ProfilePlaylistIphone({ router }) {
         tempArr[playlistVideoIndex + 1] =
           playlistVideos[playlistVideoIndex + 1];
         setToShowItems(tempArr);
-        show('', playListModal, 'medium', {data: playlistVideos,  fetchMore: () => {}, activeVideoId: playlistVideos[playlistVideoIndex]?.content_id, playlistName: playListName})
+        show('', playListModal, 'medium', {data: playlistVideos,  fetchMore: () => {}, activeVideoId: playlistVideos[playlistVideoIndex]?.content_id, playlistName: playListName, hideOverLay: true})
       } else {
         setToShowItems([...playlistVideos.slice(0, offset)]);
       }

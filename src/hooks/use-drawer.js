@@ -32,7 +32,7 @@ export const DrawerProvider = ({ children }) => {
     /* eslint-disable no-param-reassign */
     ComponentProps.current = props;
     DrawerContent = content;
-    showOverLay({compClose: close});
+    showOverLay({compClose: props?.hideOverLay ? close: null});
     setState({
       visible: true,
       title,
@@ -46,7 +46,7 @@ export const DrawerProvider = ({ children }) => {
     setState({
       visible: false
     });
-    playerEvents('waitEnded')
+    playerEvents('waitEnded');
   };
 
 
