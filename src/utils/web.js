@@ -72,6 +72,18 @@ function getCanonicalUrl(orgUrl){
   }
 }
 
+function getSmallcaseUsernameUrl(orgUrl){
+  if(typeof window !== "undefined"){
+    const url = orgUrl || (document &&  document?.location?.href);
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    let pathname  = domain?.pathname?.toLowerCase() || '';
+    console.log("canonical - pathname, hostname",pathname, hostname);
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
+    return finalUrl;
+  }
+}
+
 const getPageName = (refferUrl) =>{
   // const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
@@ -164,6 +176,7 @@ export {
   onStoreRedirect,
   isReffererGoogle,
   getBrand,
-  replaceNbsps
+  replaceNbsps,
+  getSmallcaseUsernameUrl
 };
 
