@@ -41,8 +41,8 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         activePlaylistVideo.scrollIntoView();
       } 
     }
-    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
-    overlayContainer.onclick = close
+    // const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
+    // overlayContainer.onclick = close
   }, [activeVideoId])
 
   const shareOnClick = async() => {
