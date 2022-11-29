@@ -73,7 +73,7 @@
        }
 
  const videoSchema = (videoItems=[])=>{
-   console.log('video',videoItems)
+   console.log('video',videoItems, 'uploadDate', new Date(videoItems?.[0]?.updatedOn) )
    const videosList = videoItems?.length > 0 && videoItems.map((item,id)=>{
      return {"@type": "VideoObject",
      "position": id+1,
@@ -83,7 +83,7 @@
      "thumbnailUrl": [
        item?.thumbnailUrl
      ],
-     "uploadDate":  item?.createdTimestamp ? new Date(item?.createdTimestamp)?.toISOString : '',
+     "uploadDate":  item?.createdOn ? new Date(item?.createdOn)?.toISOString() : '',
      "duration": item?.duration,
      "contentUrl": `https://www.hipi.co.in/single-video/${item?.id}`,
      "embedUrl": `https://www.hipi.co.in/@${item?.userName}`,
