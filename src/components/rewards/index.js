@@ -7,8 +7,8 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import {getCanonicalUrl} from '../../utils/web';
 import { useEffect, useState } from 'react';
 import faq from '../../../public/rewards-FAQ.json';
-import CloseFaq from '../commons/svgicons/close-faq';
-import OpenFaq from '../commons/svgicons/open-faq';
+import OpenFaqBlue from '../commons/svgicons/open-faq-blue';
+import CloseFaqBlue from '../commons/svgicons/close-faq-blue';
 function Rewards() {
 const [items, setItems] = useState(faq?.faq);
 const handleClick = (id) =>{
@@ -60,8 +60,8 @@ site_name: 'Hipi'
         <div className='flex w-full flex-col-reverse md:flex-row pb-4 md:pb-12'>
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Earn Rewards with Hipi</h1>
-                <p className='md:w-3/4'>Hipi Rewards is a token of appreciation from Hipi to our incredible community of users. </p>
-                <p className='md:w-3/4'>Hipi Rewards can be earned when a user participates in regular video watching tasks. Such video watching activities are usually time bound. Thus the user must watch videos within the specified time period to earn rewards. You can earn Hipi rewards by watching videos, following creators, creating videos, and sharing the video with your friends and families. </p>
+                <p className='md:w-3/4'>Hipi Rewards is a token of appreciation from Hipi to our incredible community of users. 
+                Hipi Rewards can be earned when a user participates in regular video watching tasks. Such video watching activities are usually time bound. Thus the user must watch videos within the specified time period to earn rewards. You can earn Hipi rewards by watching videos, following creators, creating videos, and sharing the video with your friends and families. </p>
                 <p className='md:w-3/4'>Here are some easy ways to earn Hipi rewards and a classification of the level goals to be achieved for maximum benefit: </p>
             </div>
             <div className=' w-full md:w-7/12 px-8 md:pr-20 pt-8 md:py-0'>
@@ -103,17 +103,17 @@ site_name: 'Hipi'
                 <p className='text-center w-full md:w-1/2'>When you follow creators on the app, you will unlock the following levels:</p>
              
                 <div className='flex w-full justify-center items-center py-4'>
-                <div className='box_shadow_1 bg_pastel_reward p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
+                <div className='box_shadow_1 bg_pastel_reward p-2 py-4 md:p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>1</p>
                      <p className='text-gray-500 text-xs md:text-sm font-medium'>On following 20 creators</p>
                 </div>
-                <div className='box_shadow_1 bg_pastel_reward p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4 md:mx-8'>
+                <div className='box_shadow_1 bg_pastel_reward p-2 py-4 md:p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4 md:mx-8'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>2</p>
                      <p className='text-gray-500 text-xs md:text-sm font-medium'>On following 40 creators</p>
                 </div>
-                <div className='box_shadow_1 bg_pastel_reward p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
+                <div className='box_shadow_1 bg_pastel_reward p-2 py-4 md:p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>3</p>
                      <p className=' text-gray-500 text-xs md:text-sm font-medium'>On following 60 creators</p>
@@ -128,17 +128,17 @@ site_name: 'Hipi'
                 <p className='text-center w-full md:w-1/2'>When you post a video on the app and share the video link with your friends. When your friends view the video using the video link shared by you, you will unlock the following levels:</p>
             
                 <div className='flex w-full justify-center items-center py-4'>
-                <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4'>
+                <div className='box_shadow_1 bg-white p-2 py-4 md:p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>1</p>
                      <p className='text-gray-500 text-xs md:text-sm font-medium'>On receiving 5 views on the video</p>
                 </div>
-                <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4 md:mx-8'>
+                <div className='box_shadow_1 bg-white p-2 py-4 md:p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4 md:mx-8'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>2</p>
                      <p className='text-gray-500 text-xs md:text-sm font-medium'>On receiving 10 views on the video</p>
                 </div>
-                <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4'>
+                <div className='box_shadow_1 bg-white p-2 py-4 md:p-4 w-1/2 md:w-48 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>3</p>
                      <p className=' text-gray-500 text-xs md:text-sm font-medium'>On receiving 15 views on the video</p>
@@ -161,8 +161,8 @@ site_name: 'Hipi'
                 <h3 className='mt-4 font-medium reward_font text-lg pb-4'>Unlock the levels, spin a wheel, and earn reward coins</h3>
                 <p>Once you unlock a level, you will see the level as ‘Unlocked’ on the app. Unlocked levels alone allow you  to spin a wheel to win reward coins.</p>
                 <p>You will earn reward coins from one of the following denominations at Level 1:</p>
-                <p className='mb-2 py-4 font-bold text-2xl reward_font'>50, 25, 15, 10, 5, 0.</p>
-                <p>These reward coins get multiplied by 1.5 when won at Level <span className='font-semibold text-4xl reward_font'>2</span>, and by 2 when won at Level <span className='font-semibold text-4xl reward_font'>3</span>.</p>
+                <p className='mb-2 py-4 font-bold text-2xl reward_font'>50, 25, 15, 10, 5, 0</p>
+                <p>These reward coins get multiplied by 1.5 when won at Level 2, and by 2 when won at Level 3. </p>
 
 
                 {/* <h3 className='mt-4 font-medium reward_font text-lg pb-1'>Details & Conditions</h3>
@@ -171,11 +171,11 @@ site_name: 'Hipi'
                 
                  */}
                  <div className='text-left md:w-3/4 text-sm'>
-                <h3 className='mt-14 font-medium reward_font text-lg pb-4 w-full text-center'>Terms & Conditions</h3>
+                <h3 className='mt-6 font-medium reward_font text-lg pb-4 w-full text-center'>Terms & Conditions</h3>
 
-                <p className='text-center'>Your daily progress will reset at 11:59 PM every day during the Hipi Reward Program period</p>
+                <p className='text-center'>Your daily progress will reset at 11:59 PM every day during the Hipi Rewards Program period</p>
                 <p className='text-center'>You should spin the wheel and unlock your reward coins for the levels achieved daily before 11:59 PM while the Hipi Reward Program is running.</p>
-                <p>Your participation in Hipi Rewards Program is subject to further Terms & Conditions as stated below:</p>
+                <p className='py-2'>Your participation in Hipi Rewards Program is subject to further Terms & Conditions as stated below:</p>
 
                 <div className='flex items-start'>•<p className='mb-2 pl-2 text-left'> A user will be eligible for the program if the user is logged-in to Hipi mobile app  an Android phone alone.</p></div>
                 <div className='flex items-start'>•<p className='mb-2 pl-2 text-left'> The videos posted by the user should be in line with Hipi Community Guidelines and Hipi Terms of Use. Any content that does not conform to the above-mentioned policies will be taken down from the platform. In the event of a copyright claim or any reported unauthorized use of third-party intellectual property rights, we will take down such content from the platform, and the reward points would withdrawn</p></div>
@@ -194,9 +194,9 @@ site_name: 'Hipi'
                     handleClick(id)}>
                     <span className="pr-2 flex" >
                         {data.show ? 
-                        <CloseFaq/>
+                        <CloseFaqBlue/>
                         : 
-                        <OpenFaq/>
+                        <OpenFaqBlue/>
                         }
                     </span>
                     {data.ques}
@@ -208,7 +208,7 @@ site_name: 'Hipi'
             ))}
         </div>
     </div>
-    <StaticFooter/>
+    {/* <StaticFooter/> */}
 </div>
 </>
 );
