@@ -79,7 +79,7 @@ function getSmallcaseUsernameUrl(orgUrl){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname?.toLowerCase() || '';
     console.log("canonical - pathname, hostname",pathname, hostname);
-    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url && url?.toLowerCase() 
     return finalUrl;
   }
 }
