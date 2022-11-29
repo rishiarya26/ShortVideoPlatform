@@ -73,7 +73,7 @@
        }
 
  const videoSchema = (videoItems=[])=>{
-   console.log('video',videoItems, 'uploadDate', new Date(videoItems?.[0]?.updatedOn) )
+   console.log('video',videoItems)
    const videosList = videoItems?.length > 0 && videoItems.map((item,id)=>{
      return {"@type": "VideoObject",
      "position": id+1,
