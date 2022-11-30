@@ -41,8 +41,8 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         activePlaylistVideo.scrollIntoView();
       } 
     }
-    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
-    overlayContainer.onclick = close
+    // const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
+    // overlayContainer.onclick = close
   }, [activeVideoId])
 
   const shareOnClick = async() => {
@@ -51,7 +51,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
-        await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://www.hipi.co.in/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
+        await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
       } catch(err){
         console.err('something went wrong', err)
       }

@@ -121,7 +121,7 @@ function ProfilePlaylist({ router }) {
         setInitialId(0);
         setActiveVideoId(items?.[0]?.content_id);
       }
-      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName})
+      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
     }
   }, [items]);
 
@@ -248,7 +248,7 @@ function ProfilePlaylist({ router }) {
     setShop({});
     items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
-  }, [activeVideoId]);
+  }, [activeVideoId, videoActiveIndex]);
 
   const handleSaveLook = () => {
     const data = [...items];
