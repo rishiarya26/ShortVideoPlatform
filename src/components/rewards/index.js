@@ -161,7 +161,7 @@ site_name: 'Hipi'
                 <h3 className='mt-4 font-medium reward_font text-lg pb-4'>Unlock the levels, spin a wheel, and earn reward coins</h3>
                 <p>Once you unlock a level, you will see the level as ‘Unlocked’ on the app. Unlocked levels alone allow you  to spin a wheel to win reward coins.</p>
                 <p>You will earn reward coins from one of the following denominations at Level 1:</p>
-                <p className='mb-2 py-4 font-bold text-2xl reward_font'>50, 25, 15, 10, 5, 0</p>
+                <p className='mb-2 py-4 font-bold text-2xl reward_font'>12, 10, 8, 6, 4, 0</p>
                 <p>These reward coins get multiplied by 1.5 when won at Level 2, and by 2 when won at Level 3. </p>
 
 
