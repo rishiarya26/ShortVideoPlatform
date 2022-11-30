@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element*/
 import { useEffect, useState } from "react";
 import useSnackbar from "../../hooks/use-snackbar";
 import { updateUserProfile } from "../../sources/users";
@@ -96,7 +97,7 @@ const ContentLangProfile = () =>{
     }
    
     return(
-      <div className='flex flex-col bg-black h-full justify-center pb-16 box-border'>
+      <div className='flex flex-col bg-black h-screen justify-center box-border'>
         <div className="flex w-full justify-center items-end pb-4 px-4 lang-sm-title">
             <div className="text-white text-xl font-semibold">Select your language</div>
         </div>
