@@ -111,6 +111,7 @@ function ProfilePlaylist({ router }) {
   }
 
   useEffect(() => {
+    const backButton = document.getElementById("backButton");
     if(playListVideoId && items.length > 0) {
       const id = searchVideo({videoId: playListVideoId, playlistArr: items});
       if(id > -1 && id < items.length) {
@@ -123,6 +124,9 @@ function ProfilePlaylist({ router }) {
       }
       show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
     }
+    
+    backButton && (backButton.onClick = handleBackClick);
+
   }, [items]);
 
   // useEffect(()=>{
@@ -218,13 +222,20 @@ function ProfilePlaylist({ router }) {
     /******************************/
   };
 
-  const handleBackClick = () => {
+  const handleBackClick = async () => {
     //HIPI-5340
-    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
-    if([...overlayContainer?.classList]?.includes('visible')){
+    const overlayContainer = document?.querySelector(
+      `[data-testid="dt-overlay"]`
+    );
+    if ([...overlayContainer?.classList]?.includes("visible")) {
       return false;
-    }else{
-      router?.back();
+    } else {
+      let fallbackURL = `/feed/for-you`;
+      if (typeof window !== "undefined" && +window?.history?.state?.idx > 0) {
+        await router.back();
+      } else {
+        window.location.href = fallbackURL;
+      }
     }
   };
 
@@ -284,7 +295,7 @@ function ProfilePlaylist({ router }) {
           playlistName={playListName}
           //drawerOnClick={drawerOnClick}
         />
-          <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
+          <div id="backButton" onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
           </div>
           <Swiper
