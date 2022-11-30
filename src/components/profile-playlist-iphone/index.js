@@ -285,9 +285,12 @@ function ProfilePlaylistIphone({ router }) {
 
   useEffect(() => {
     const playlistDrawerChilds = document.querySelectorAll(`[id^="episode_"]`);
+    const backButton = document.getElementById('backButton');
     playlistDrawerChilds.forEach((item, index) => {
       item.onclick = function(){ handleDrawerClick(index)};
     })
+    
+    backButton && (backButton.onClick = handleBackClick);
   }, [items]);
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -383,13 +386,18 @@ function ProfilePlaylistIphone({ router }) {
     /******************************/
   };
 
-  const handleBackClick = () => {
+  const handleBackClick = async () => {
     //HIPI-5340
     const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
     if([...overlayContainer?.classList]?.includes('visible')){
       return false;
     }else{
-      router?.back();
+      let fallbackURL = `/feed/for-you`;
+      if (typeof window !== 'undefined' && +window?.history?.state?.idx > 0) {
+        await router.back()
+      } else {
+        window.location.href = fallbackURL;
+      }
     }
   };
 
@@ -476,7 +484,7 @@ function ProfilePlaylistIphone({ router }) {
           <div
             onClick={handleBackClick}
             className="fixed z-10 w-full p-4 mt-4 w-1/2"
-            id="back_button"
+            id="backButton"
           >
             <Back />
           </div>
