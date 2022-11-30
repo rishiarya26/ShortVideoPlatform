@@ -32,7 +32,7 @@ export const DrawerProvider = ({ children }) => {
     /* eslint-disable no-param-reassign */
     ComponentProps.current = props;
     DrawerContent = content;
-    showOverLay({compClose: props?.hideOverLay ? close: null});
+    showOverLay(props?.hideOverLay ? close: null);
     setState({
       visible: true,
       title,

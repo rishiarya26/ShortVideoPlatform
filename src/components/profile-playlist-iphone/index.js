@@ -18,7 +18,6 @@ import CircularProgress from "../commons/circular-loader";
 import usePreviousValue from "../../hooks/use-previous";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import useDrawer from "../../hooks/use-drawer";
-import dynamic from "next/dynamic";
 import SwipeUp from "../commons/svgicons/swipe-up";
 import { viewEventsCall } from "../../analytics/view-events";
 import { getBrand } from "../../utils/web";
@@ -121,7 +120,6 @@ function ProfilePlaylistIphone({ router }) {
             updateShowItems[i] && (updateShowItems[i] = null);
           }
         }
-        //console.log("debug:", updateShowItems);
         setToShowItems(updateShowItems);
       }
     } else {
@@ -137,7 +135,6 @@ function ProfilePlaylistIphone({ router }) {
           updateShowItems[i] = dataItem[i];
         }
       }
-      //console.log("debug decrement:", updateShowItems);
       setToShowItems(updateShowItems);
       setMuted(true);
     }
@@ -218,7 +215,7 @@ function ProfilePlaylistIphone({ router }) {
     setShop({});
     items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
-  }, [activeVideoId]);
+  }, [videoActiveIndex, activeVideoId]);
 
   const dataFetcher = () =>
     getPlaylistDetails({ playlistid, offset: offset, firstApiCall }).catch(
@@ -241,6 +238,7 @@ function ProfilePlaylistIphone({ router }) {
         videoId: playListVideoId,
       });
       setActiveVideoId(playlistVideos?.[playlistVideoIndex]?.content_id);
+      setVideoActiveIndex(playlistVideoIndex);
       setInitialId(playlistVideoIndex);
     }
     if (playlistVideos.length < 6) {
@@ -412,7 +410,6 @@ function ProfilePlaylistIphone({ router }) {
   };
 
   function handleDrawerClick(index){
-   console.log(index,"debug")
    const swiper = document.querySelector("#playlistFeedSwiper");
     if(!!toShowItems[index]){ //if index already present in toshowItems array
       swiper.swiper.slideTo(index);
@@ -436,9 +433,9 @@ function ProfilePlaylistIphone({ router }) {
         setToShowItems(tempArr);
         setTimeout(() =>{
           swiper.swiper.slideTo(playlistVideoIndex);
-        },10)
-        
+        },10)   
     }
+    setVideoActiveIndex(index);
   }
 
   const handleSaveLook = () => {
@@ -475,7 +472,7 @@ function ProfilePlaylistIphone({ router }) {
           />
           <div
             onClick={handleBackClick}
-            className="fixed z-10 w-full p-4 mt-4 w-1/2"
+            className="fixed z-10 p-4 mt-4 w-1/2"
             id="back_button"
           >
             <Back />

@@ -17,7 +17,7 @@ export const OverLayProvider = ({ children }) => {
     compClose : null
   });
 
-  const show = ({compClose= null }) => {
+  const show = (compClose=null) => {
     setState({
       visible: true,
       compClose: compClose

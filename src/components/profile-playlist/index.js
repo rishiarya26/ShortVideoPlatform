@@ -248,7 +248,7 @@ function ProfilePlaylist({ router }) {
     setShop({});
     items?.[videoActiveIndex]?.shoppable && getCanShop();
     setsaveLook(true);
-  }, [activeVideoId]);
+  }, [activeVideoId, videoActiveIndex]);
 
   const handleSaveLook = () => {
     const data = [...items];
