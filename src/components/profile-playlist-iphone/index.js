@@ -127,16 +127,21 @@ function ProfilePlaylistIphone({ router }) {
       let updateShowItems = [...toShowItems];
       let dataItem = [...items];
       // remove items from "toShowItems" array by keeping at least one item before the current index
-      if (updateShowItems.length > 5 && updateShowItems[0] === null) {
+      if (
+        updateShowItems.length > 5 &&
+        updateShowItems[videoActiveIndex - 1] === null
+      ) {
         for (let i = toShowItems.length - 1; i > videoActiveIndex + 1; i--) {
           updateShowItems.splice(i, 1);
         }
         for (let i = videoActiveIndex - 1; i >= videoActiveIndex - 5; i--) {
-          updateShowItems[i] = dataItem[i];
+          if(dataItem[i]){
+            updateShowItems[i] = dataItem[i];
+          }
         }
+        setMuted(true);
+        setToShowItems(updateShowItems);
       }
-      setToShowItems(updateShowItems);
-      setMuted(true);
     }
     checkNoSound();
   }, [videoActiveIndex]);
@@ -249,9 +254,21 @@ function ProfilePlaylistIphone({ router }) {
           setToShowItems([...playlistVideos.slice(0, 5)]);
         }
         if (playlistVideoIndex === playlistVideos.length - 1) {
-          setToShowItems([
-            ...playlistVideos.slice(Math.max(playlistVideos.length - 5, 0)),
-          ]);
+          let tempArr = [];
+          for (let i = 0; i < playlistVideoIndex; i++) {
+            tempArr[i] = null;
+          }
+
+          let lastFiveItems = playlistVideos.slice(Math.max(items.length - 5, 0));
+          for (
+            let i = playlistVideoIndex, j = lastFiveItems.length - 1;
+            i >= playlistVideoIndex - 5, j >= 0;
+            i--, j--
+          ) {
+            tempArr[i] = lastFiveItems[j];
+          }
+          setToShowItems(tempArr);
+          setVideoActiveIndex(playlistVideoIndex);
         }
 
         let tempArr = [];
@@ -264,10 +281,17 @@ function ProfilePlaylistIphone({ router }) {
         tempArr[playlistVideoIndex + 1] =
           playlistVideos[playlistVideoIndex + 1];
         setToShowItems(tempArr);
-        show('', playListModal, 'medium', {data: playlistVideos,  fetchMore: () => {}, activeVideoId: playlistVideos[playlistVideoIndex]?.content_id, playlistName: playListName, hideOverLay: true})
+        show("", playListModal, "medium", {
+          data: playlistVideos,
+          fetchMore: () => {},
+          activeVideoId: playlistVideos[playlistVideoIndex]?.content_id,
+          playlistName: playListName,
+          hideOverLay: true,
+        });
       } else {
         setToShowItems([...playlistVideos.slice(0, offset)]);
       }
+     
     }
 
     //setOffset(playlistVideos.length < 6? playlistVideos.length - 1 : playlistVideoIndex ? playlistVideoIndex - 1 : 6);
@@ -283,11 +307,13 @@ function ProfilePlaylistIphone({ router }) {
 
   useEffect(() => {
     const playlistDrawerChilds = document.querySelectorAll(`[id^="episode_"]`);
-    const backButton = document.getElementById('backButton');
+    const backButton = document.getElementById("backButton");
     playlistDrawerChilds.forEach((item, index) => {
-      item.onclick = function(){ handleDrawerClick(index)};
-    })
-    
+      item.onclick = function () {
+        handleDrawerClick(index);
+      };
+    });
+
     backButton && (backButton.onClick = handleBackClick);
   }, [items]);
 
@@ -386,13 +412,15 @@ function ProfilePlaylistIphone({ router }) {
 
   const handleBackClick = async () => {
     //HIPI-5340
-    const overlayContainer = document?.querySelector(`[data-testid="dt-overlay"]`)
-    if([...overlayContainer?.classList]?.includes('visible')){
+    const overlayContainer = document?.querySelector(
+      `[data-testid="dt-overlay"]`
+    );
+    if ([...overlayContainer?.classList]?.includes("visible")) {
       return false;
-    }else{
+    } else {
       let fallbackURL = `/feed/for-you`;
-      if (typeof window !== 'undefined' && +window?.history?.state?.idx > 0) {
-        await router.back()
+      if (typeof window !== "undefined" && +window?.history?.state?.idx > 0) {
+        await router.back();
       } else {
         window.location.href = fallbackURL;
       }
@@ -417,11 +445,12 @@ function ProfilePlaylistIphone({ router }) {
     setShop(shopContent);
   };
 
-  function handleDrawerClick(index){
-   const swiper = document.querySelector("#playlistFeedSwiper");
-    if(!!toShowItems[index]){ //if index already present in toshowItems array
+  function handleDrawerClick(index) {
+    const swiper = document.querySelector("#playlistFeedSwiper");
+    if (!!toShowItems[index]) {
+      //if index already present in toshowItems array
       swiper.swiper.slideTo(index);
-    }else{
+    } else {
       let playlistVideoIndex = null;
       playlistVideoIndex = searchVideo({
         playlistArr: items,
@@ -429,19 +458,34 @@ function ProfilePlaylistIphone({ router }) {
       });
       setActiveVideoId(items?.[playlistVideoIndex]?.content_id);
       setInitialId(playlistVideoIndex);
-      let tempArr = [];
+
+      if (index === items.length - 1) {
+        let tempArr = [];
+        for (let i = 0; i <= playlistVideoIndex; i++) {
+          tempArr[i] = null;
+        }
+        let lastFiveItems = items.slice(Math.max(items.length - 5, 0));
+        for (
+          let i = playlistVideoIndex, j = lastFiveItems.length - 1;
+          i >= playlistVideoIndex - 5, j >= 0;
+          i--, j--
+        ) {
+          tempArr[i] = lastFiveItems[j];
+        }
+        setToShowItems(tempArr);
+      } else {
+        let tempArr = [];
         for (let i = 0; i < playlistVideoIndex - 1; i++) {
           tempArr[i] = null;
         }
-        tempArr[playlistVideoIndex - 1] =
-          items[playlistVideoIndex - 1];
+        tempArr[playlistVideoIndex - 1] = items[playlistVideoIndex - 1];
         tempArr[playlistVideoIndex] = items[playlistVideoIndex];
-        tempArr[playlistVideoIndex + 1] =
-          items[playlistVideoIndex + 1];
+        tempArr[playlistVideoIndex + 1] = items[playlistVideoIndex + 1];
         setToShowItems(tempArr);
-        setTimeout(() =>{
-          swiper.swiper.slideTo(playlistVideoIndex);
-        },10)   
+      }
+      setTimeout(() => {
+        swiper.swiper.slideTo(playlistVideoIndex);
+      }, 0);
     }
     setVideoActiveIndex(index);
   }
@@ -471,7 +515,9 @@ function ProfilePlaylistIphone({ router }) {
             item={items?.[videoActiveIndex]}
             activeVideoId={activeVideoId}
             data={items}
-            {...(activeVideoId === playListVideoId ? {videoId: playListVideoId} : {})}
+            {...(activeVideoId === playListVideoId
+              ? { videoId: playListVideoId }
+              : {})}
             //fetchMore={loadMoreItems}
             isPlaylistView
             playlistName={playListName}
@@ -600,49 +646,52 @@ function ProfilePlaylistIphone({ router }) {
           >
             {toShowItems?.map((item, id) => (
               <SwiperSlide key={id} id={item?.content_id}>
-                {!!item?.content_id ? <Video
-                  updateSeekbar={updateSeekbar}
-                  socialId={item?.getSocialId}
-                  url={item?.video_url}
-                  id={item?.content_id}
-                  comments={item?.commentsCount}
-                  likes={item?.likesCount}
-                  music={item?.musicCoverTitle}
-                  musicTitle={item?.music_title}
-                  profilePic={item?.userProfilePicUrl}
-                  userName={item?.userName}
-                  musicCoverTitle={item?.musicCoverTitle}
-                  videoid={item?.content_id}
-                  hashTags={item?.hashTags}
-                  videoOwnersId={item?.videoOwnersId}
-                  thumbnail={item?.firstFrame}
-                  canShop={shop?.isShoppable === "success" || false}
-                  shopCards={shop?.data}
-                  shopType={shop?.type}
-                  handleSaveLook={handleSaveLook}
-                  saveLook={saveLook}
-                  saved={item?.saveLook}
-                  activeVideoId={activeVideoId}
-                  comp="profile"
-                  profileFeed
-                  loading={loading}
-                  muted={
-                    item?.[videoActiveIndex]?.videoSound === false
-                      ? true
-                      : muted
-                  }
-                  firstFrame={item?.firstFrame}
-                  player={"multi-player-muted"}
-                  description={item?.content_description}
-                  pageName={pageName}
-                  adData={shop?.adData}
-                  userVerified={item?.verified}
-                  videoSound={item?.videoSound}
-                  campaignId={shop?.campaignId}
-                  setMuted={setMuted}
-                  // showBanner={showBanner}
-                />:<div></div>}
-                
+                {!!item?.content_id ? (
+                  <Video
+                    updateSeekbar={updateSeekbar}
+                    socialId={item?.getSocialId}
+                    url={item?.video_url}
+                    id={item?.content_id}
+                    comments={item?.commentsCount}
+                    likes={item?.likesCount}
+                    music={item?.musicCoverTitle}
+                    musicTitle={item?.music_title}
+                    profilePic={item?.userProfilePicUrl}
+                    userName={item?.userName}
+                    musicCoverTitle={item?.musicCoverTitle}
+                    videoid={item?.content_id}
+                    hashTags={item?.hashTags}
+                    videoOwnersId={item?.videoOwnersId}
+                    thumbnail={item?.firstFrame}
+                    canShop={shop?.isShoppable === "success" || false}
+                    shopCards={shop?.data}
+                    shopType={shop?.type}
+                    handleSaveLook={handleSaveLook}
+                    saveLook={saveLook}
+                    saved={item?.saveLook}
+                    activeVideoId={activeVideoId}
+                    comp="profile"
+                    profileFeed
+                    loading={loading}
+                    muted={
+                      item?.[videoActiveIndex]?.videoSound === false
+                        ? true
+                        : muted
+                    }
+                    firstFrame={item?.firstFrame}
+                    player={"multi-player-muted"}
+                    description={item?.content_description}
+                    pageName={pageName}
+                    adData={shop?.adData}
+                    userVerified={item?.verified}
+                    videoSound={item?.videoSound}
+                    campaignId={shop?.campaignId}
+                    setMuted={setMuted}
+                    // showBanner={showBanner}
+                  />
+                ) : (
+                  <div></div>
+                )}
               </SwiperSlide>
             ))}
             <div
