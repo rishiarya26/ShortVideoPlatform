@@ -10,6 +10,10 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@aws-sdk/client-s3": "3.100.0",
+    "@aws-sdk/credential-provider-cognito-identity": "3.100.0",
+    "@aws-sdk/credential-providers": "3.100.0",
+    "@aws-sdk/lib-storage": "3.100.0",
     "@babel/runtime-corejs2": "^7.8.7",
     "@convivainc/conviva-js-coresdk": "^4.5.8",
     "@convivainc/conviva-js-html5": "^4.0.9",
@@ -18,10 +22,6 @@
     "@storyblok/react": "^1.1.0",
     "@testing-library/react": "^10.0.4",
     "@zeit/next-source-maps": "0.0.3",
-    "@aws-sdk/client-s3": "3.100.0",
-    "@aws-sdk/credential-provider-cognito-identity": "3.100.0",
-    "@aws-sdk/credential-providers": "3.100.0",
-    "@aws-sdk/lib-storage": "3.100.0",
     "autoprefixer": "^10.2.4",
     "axios": "^0.27.2",
     "babel-plugin-module-resolver": "^4.0.0",

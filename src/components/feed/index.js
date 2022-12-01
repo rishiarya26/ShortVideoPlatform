@@ -543,6 +543,8 @@ function Feed({ router }) {
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId); 
+
+                window.sessionStorage.setItem('used-impression-link',false); //to reset appsflyer value for apps-impression to be called for diff video.(line 54 in ad-cards).
               }}
             >
               {!loadFeed && <VideoUnavailable/>}

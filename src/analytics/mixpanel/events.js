@@ -501,7 +501,22 @@ export const toTrackMixpanel = (type, value, item) => {
         'playlistPopUpLaunch' :() => track('Playlist Pop Up',eventsForPlaylist()),
         'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
         'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
-
+        'appsflyerImpPixel' : ()=> {
+            addUgcId();
+            addPageTabName();
+            globalCommonEvents['Product Id'] = item?.productId || 'NA';
+            globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
+            globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
+            globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+            globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+            globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+            globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+            globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+            // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+            globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
+          
+          track('Appsflyer Impression Pixel',globalCommonEvents)
+        }
       
         
         
