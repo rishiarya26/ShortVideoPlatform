@@ -105,6 +105,7 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [slideToNext, setSlideToNext] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
   const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
@@ -158,6 +159,15 @@ const adImpression =  (index = 0)=>{
     vmaxTrackerEvents(tracker,'impression')
   }
 }
+
+  useEffect(()=>{
+    if(items?.[videoActiveIndex]?.feedVmaxAd){
+      setSlideToNext(false)
+      setTimeout(()=>{
+        setSlideToNext(true)
+      },5000)
+    }
+  },[videoActiveIndex])
 
 
   useEffect(() => {
@@ -601,6 +611,7 @@ console.log('errorrr',e)
               slidesPerView={1}
               mousewheel
               scrollbar={{ draggable: true }}
+              allowSlideNext={slideToNext}
               // autoplay= {{
               //     disableOnInteraction: false
               // }}
