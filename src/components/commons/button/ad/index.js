@@ -5,6 +5,9 @@ import RightArrow from "../../svgicons/right-arrow";
 import fallbackUser from "../../../../../public/images/users.png";
 import Verified from "../../svgicons/verified";
 
+const BUTTON_SHOW_DELAY = 3000;
+const BUTTON_COLOR_SHOW_DELAY = 1500;
+
 function AdButton({
   id,
   vmaxAd,
@@ -26,14 +29,15 @@ function AdButton({
   // !! Keep this useEffect always on top
   useEffect(() => {
     if (!vmaxAd) return false; //safe check from vmaxAd condition
-    if (vmaxAd && id === activeVideoId)
+    if (vmaxAd && id === activeVideoId){
       setTimeout(() => {
         setShow(true);
-        setTimeout(() => setBtnColor(ctaColor), 2000);
-      }, 2000);
-      else {
-        setBtnColor(ctaColor)
-      }
+        setTimeout(() => setBtnColor(ctaColor), BUTTON_COLOR_SHOW_DELAY);
+      }, BUTTON_SHOW_DELAY);
+      // else {
+      //   setBtnColor(ctaColor)
+      // }
+    }
   }, [activeVideoId]);
 
   const type = {
