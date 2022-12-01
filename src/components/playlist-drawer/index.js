@@ -10,6 +10,10 @@ import Img from '../commons/image';
 import Close from '../commons/svgicons/close-black';
 import PlaylistShare from "../commons/svgicons/playlistShare";
 
+function kFormatter(num) {
+  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+}
+
 function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, callbackForIos=null}) {
   const detectDeviceModal = dynamic(
     () => import('../commons/list-with-search'),
@@ -96,7 +100,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
                 <div className='text-sm text-gray-700 line-clamp-3 w-full'>
                   {item.content_description}
                 </div>
-                {item?.viewCount ? <div className='mt-1 text-gray-400 text-xs'>{item.viewCount} views</div> : null }
+                {item?.viewCount ? <div className='mt-1 text-gray-400 text-xs'>{kFormatter(item.viewCount)} views</div> : null }
                 {/* <div className='mt-1 text-gray-400 text-xs'>{vCount} views</div> */}
                 </div>
               </span>
