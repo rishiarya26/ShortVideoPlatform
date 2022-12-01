@@ -12,7 +12,7 @@ import ComponentStateHandler, { useFetcher } from '../commons/component-state-ha
 import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import { canShop } from '../../sources/can-shop';
-import { getProfileVideos, getUserProfile } from '../../sources/users/profile';
+import { getProfileVideos, getUserProfile, getOwnProfileVideos } from '../../sources/users/profile';
 import { Back } from '../commons/svgicons/back_white';
 import useWindowSize from '../../hooks/use-window-size';
 import Mute from '../commons/svgicons/mute';
@@ -31,6 +31,7 @@ import { incrementCountVideoView } from '../../utils/events';
 import OpenAppStrip from '../commons/user-experience';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { localStorage } from '../../utils/storage';
 
 SwiperCore.use([Mousewheel]);
 
@@ -91,11 +92,20 @@ function ProfileFeed({ router }) {
     setLoading(false);
   };
 
+  const tokens = localStorage.get('tokens');
+  const userId = localStorage.get('user-id');
+  const typeOfUser = tokens && userId && userId === id ? 'self': 'others';
+
   const loadMoreItems = async() =>{
     let videos = [...items]
     try {
     if(loadMore){   
-    const resp = await getProfileVideos({ id, type: type, offset: offset });
+      let resp = {};
+      if(typeOfUser === 'self'){
+        resp = await getOwnProfileVideos({ type: type, offset: offset });
+      }else{
+         resp = await getProfileVideos({ id, type: type, offset: offset });
+      }
     if(resp?.data?.length > 0){
       console.log("innn",resp)
       const index = resp.data.findIndex((data)=>(data?.id === videoId))
@@ -127,7 +137,7 @@ function ProfileFeed({ router }) {
 
   useEffect(()=>{
     if(initialLoadComplete){
-      toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+      toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
     }
   },[initialLoadComplete])
 
@@ -147,7 +157,7 @@ function ProfileFeed({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName, isShoppable: items[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -155,7 +165,14 @@ function ProfileFeed({ router }) {
     }
   },[initialPlayStarted])
 
-  const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  //const dataFetcher = () => getProfileVideos({ id, type: type, videoId: videoId && videoId });
+  const dataFetcher = () => {
+    if(typeOfUser === 'self'){
+      return getOwnProfileVideos({ type: type, videoId: videoId && videoId });
+    }else{
+      return getProfileVideos({ id, type: type, videoId: videoId && videoId });
+    }
+  }
   const onDataFetched = data => {
     let videos = data?.data;
     data && setItems(videos);
@@ -203,8 +220,8 @@ function ProfileFeed({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
      
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
@@ -317,9 +334,9 @@ function ProfileFeed({ router }) {
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
-              toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
+              toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
               toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 

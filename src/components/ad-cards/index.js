@@ -46,10 +46,27 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 appsflyerId : data?.appsflyer_id
               }
             );
+            const usedAppsflyerLink = window.sessionStorage.getItem('used-impression-link') || null;
             const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
-            appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
+            usedAppsflyerLink !== 'true' && appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
               appsflyerPixelImp({ advertiser:getBrand(item?.product_url), appId:item?.appsflyer_id, productId:item?.card_id,comp:'Feed'})
+              toTrackMixpanel("appsflyerImpPixel",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: item?.card_id,
+                productUrl: item?.product_url,
+                brandName: getBrand(item?.product_url),
+                campaignId,
+                category: item?.category,
+                subCategory: item?.sub_category,
+                subSubCategory: item?.subsub_category,
+                mainCategory: item?.main_category,
+                appsflyerId : item?.appsflyer_id
+              }
+              )
+              window.sessionStorage.setItem('used-impression-link',true);
             }) 
             window.open(appsflyerLink || data?.product_url);
         } else {

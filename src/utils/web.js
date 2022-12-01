@@ -19,6 +19,11 @@ function ScrollToTop(){
 
 }
 
+function replaceNbsps(str) {
+  let re = new RegExp(String.fromCharCode(160), "g");
+  return str?.replace(re, " ");
+}
+
 function updateUtmData(queryStrings){
   const utmData = localStorage?.get('utm-data') || {}
   console.log('ini',utmData)
@@ -63,6 +68,18 @@ function getCanonicalUrl(orgUrl){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname || '';
     let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url
+    return finalUrl;
+  }
+}
+
+function getSmallcaseUsernameUrl(orgUrl){
+  if(typeof window !== "undefined"){
+    const url = orgUrl || (document &&  document?.location?.href);
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    let pathname  = domain?.pathname?.toLowerCase() || '';
+    console.log("canonical - pathname, hostname",pathname, hostname);
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url && url?.toLowerCase() 
     return finalUrl;
   }
 }
@@ -158,6 +175,8 @@ export {
   getPageName,
   onStoreRedirect,
   isReffererGoogle,
-  getBrand
+  getBrand,
+  replaceNbsps,
+  getSmallcaseUsernameUrl
 };
 

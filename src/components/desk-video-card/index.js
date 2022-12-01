@@ -10,7 +10,7 @@ import Like from '../commons/svgicons/like-outlined';
 import { useState } from 'react';
 
 export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
-   id, likesCount, videoUrl, activeHoverIndex, page,tag }) {
+   id, likesCount, videoUrl, activeHoverIndex, page,tag , status}) {
   const formattedViewCount =  numberFormatter(viewCount);
   const [showLoader, setShowLoader] = useState(false);
 
@@ -58,6 +58,7 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
            </div>}
          </>
       }
+      <div className="absolute bottom-8 left-2 z-10 text-white text-sm flex items-center">{status === 'PENDING' ? "Publishing in process" : "" }</div>
       <div className="absolute bottom-2 left-2 z-10 text-white text-xs flex items-center">
         <Play/> {formattedViewCount}
       </div>
