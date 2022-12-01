@@ -275,7 +275,7 @@ function HashTagFeedIphone({ router }) {
       //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'completed', {duration : duration} );
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
 
