@@ -95,7 +95,7 @@ function transformSuccess(resp) {
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
-      payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
+      payloadObject.adId = d?.adId && typeof d?.adId === 'object' && JSON.parse(d?.adId) || null;
       // payloadObject.vmaxAd = d?.vmaxAd || null;
       // payloadObject.feedVmaxAd = d?.feedVmaxAd || null;
       payloadObject.correlationID = d?.correlation_id || null;

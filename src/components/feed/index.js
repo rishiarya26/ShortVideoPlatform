@@ -95,6 +95,7 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [slideToNext, setSlideToNext] = useState(true);
 
   const cacheAd = useContext(CacheAdContext);
   const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
@@ -165,6 +166,15 @@ function Feed({ router }) {
      initailShopContentAdded && 
     toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable, isMonetization : shop?.adCards?.monitisation || false},items?.[videoActiveIndex]);  
   },[initailShopContentAdded])
+
+  useEffect(()=>{
+    if(items?.[videoActiveIndex]?.feedVmaxAd){
+      setSlideToNext(false)
+      setTimeout(()=>{
+        setSlideToNext(true)
+      },5000)
+    }
+  },[videoActiveIndex])
 
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
@@ -241,7 +251,7 @@ function Feed({ router }) {
        let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
 
        if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
-          delete cacheAdVideo?.adId; //Neeed to remove
+          //delete cacheAdVideo?.adId; //Neeed to remove
           data?.data.splice(adPosition, 0, cacheAdVideo);
           cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
           updateItems = updateItems.concat(data?.data);
@@ -251,7 +261,7 @@ function Feed({ router }) {
           // debugger;
           let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
           if(!isEmptyObject(cachedVideo) && adPosition){
-            delete cacheAdVideo?.adId; //Neeed to remove
+            //delete cacheAdVideo?.adId; //Neeed to remove
             data?.data.splice(adPosition, 0, cachedVideo);
           }
         }catch(error){
@@ -579,6 +589,7 @@ function Feed({ router }) {
 
                 setInitialPlayStarted(false);
               }}
+              allowSlideNext={slideToNext}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides

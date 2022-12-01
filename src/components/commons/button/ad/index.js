@@ -6,7 +6,7 @@ import fallbackUser from "../../../../../public/images/users.png";
 import Verified from "../../svgicons/verified";
 
 const BUTTON_SHOW_DELAY = 3000;
-const BUTTON_COLOR_SHOW_DELAY = 1500;
+const BUTTON_COLOR_SHOW_DELAY = 2000;
 
 function AdButton({
   id,
@@ -23,21 +23,26 @@ function AdButton({
   userVerified,
   adBtnClickCb,
 }) {
-  const [btnColor, setBtnColor] = useState("#8e8e97");
+  const [btnColor, setBtnColor] = useState(!vmaxAd ? ctaColor : "#8e8e97");
   const [show, setShow] = useState(false);
 
   // !! Keep this useEffect always on top
   useEffect(() => {
+    let timer;
     if (!vmaxAd) return false; //safe check from vmaxAd condition
     if (vmaxAd && id === activeVideoId){
-      setTimeout(() => {
+      timer = setTimeout(() => {
         setShow(true);
         setTimeout(() => setBtnColor(ctaColor), BUTTON_COLOR_SHOW_DELAY);
       }, BUTTON_SHOW_DELAY);
       // else {
       //   setBtnColor(ctaColor)
       // }
+    }else{
+      setShow(false);
+      setBtnColor("#8e8e97")
     }
+    return () => clearTimeout(timer);
   }, [activeVideoId]);
 
   const type = {
