@@ -91,7 +91,7 @@ function AppBanner({notNowClick, videoId}) {
     z-30 fixed rounded-lg p-4 pt-8 bg-white 
     transition-all duration-300
     top-2/4 left-2/4
-    transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4
+    transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4 translate_center 
     motion-reduce:transition-none motion-reduce:transform-none
     ">
     <div className="dialog-header flex w-full justify-between relative" >

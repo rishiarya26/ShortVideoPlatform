@@ -43,7 +43,7 @@ const Dialog = ({
       overflow-y-auto width-mob
       transition-all duration-300
       top-2/4 left-2/4
-      transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4
+      transform-gpu origin-bottom -translate-y-2/4 -translate-x-2/4 translate_center
       motion-reduce:transition-none motion-reduce:transform-none
       ${height[type].height}
     `}
