@@ -173,7 +173,7 @@ function SearchFeed({ router }) {
         ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
         ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Search Feed'},{  duration : duration, durationWatchTime: duration})
         /*** view events ***/
-        viewEventsCall(activeVideoId, 'completed');
+        viewEventsCall(activeVideoId, 'completed', {duration : duration} );
         viewEventsCall(activeVideoId, 'user_video_start');
 
         // try{
