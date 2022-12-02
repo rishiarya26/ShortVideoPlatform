@@ -1257,6 +1257,7 @@ input:checked + .slider_new:before {
 .text-8 {
   font-size: 8px;
   line-height: 12px;
+}
 
 .playlist_bg {
   background-color: #f2f2f2;
