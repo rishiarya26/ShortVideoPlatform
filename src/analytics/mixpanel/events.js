@@ -129,6 +129,8 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['UGC ID'] = item?.content_id;
       globalCommonEvents['Tab Name'] = value?.tabName || 'NA';
       globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+      globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+      globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
       globalCommonEvents['Device Modal'] = 'NA';
       globalCommonEvents['Network Strength'] = 'NA';
       globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
@@ -172,6 +174,7 @@ export const toTrackMixpanel = (type, value, item) => {
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist']
         track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();
@@ -499,6 +502,7 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
         'playlistClicked': () => track('Playlist Clicked',eventsForPlaylist()),
         'playlistPopUpLaunch' :() => track('Playlist Pop Up',eventsForPlaylist()),
+        'sharePlaylist':() => track('Share Playlist',eventsForPlaylist()),
         'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
         'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
         'appsflyerImpPixel' : ()=> {

@@ -122,10 +122,10 @@ function ProfilePlaylist({ router }) {
         setInitialId(0);
         setActiveVideoId(items?.[0]?.content_id);
       }
-      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
+      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true, playlistId: playlistid})
     }
     if(utmVal) {
-      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
+      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true, playlistId: playlistid})
     }
     backButton && (backButton.onClick = handleBackClick);
 
@@ -295,6 +295,7 @@ function ProfilePlaylist({ router }) {
           fetchMore={loadMoreItems}
           isPlaylistView
           playlistName={playListName}
+          piD={playlistid}
           //drawerOnClick={drawerOnClick}
         />
           <div id="backButton" onClick={handleBackClick} className="fixed z-10 p-4 mt-4 w-1/2">

@@ -14,9 +14,9 @@ function kFormatter(num) {
   return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
-function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, callbackForIos=null}) {
+function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVideoId=null, callbackForIos=null, playlistId}) {
   const detectDeviceModal = dynamic(
-    () => import('../commons/list-with-search'),
+    () => import('../open-in-app'),
     {
       loading: () => <div />,
       ssr: false
@@ -51,11 +51,12 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
 
   const shareOnClick = async() => {
     if(!navigator.canShare) {
-      device === 'ios' &&  show('', detectDeviceModal, 'extraSmall', {videoId: videoId && videoId});
+      device === 'ios' &&  show('', detectDeviceModal, 'extraSmall');
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
         await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
+        toTrackMixpanel('sharePlaylist',{playlistName, playlistId});
       } catch(err){
         console.err('something went wrong', err)
       }

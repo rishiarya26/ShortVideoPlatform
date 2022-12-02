@@ -288,6 +288,7 @@ function ProfilePlaylistIphone({ router }) {
           activeVideoId: playlistVideos[playlistVideoIndex]?.content_id,
           playlistName: playListName,
           hideOverLay: true,
+          playlistId: playlistid
         });
       } else {
         setToShowItems([...playlistVideos.slice(0, offset)]);
@@ -317,7 +318,7 @@ function ProfilePlaylistIphone({ router }) {
     backButton && (backButton.onClick = handleBackClick);
     if(utmVal){
       if(utmVal) {
-        show('', playListModal, 'medium', {data:items, activeVideoId, playlistName: playListName, hideOverLay: true})
+        show('', playListModal, 'medium', {data:items, activeVideoId, playlistName: playListName, hideOverLay: true, playlistId: playlistid})
       }
     }
   }, [items]);
@@ -527,6 +528,7 @@ function ProfilePlaylistIphone({ router }) {
             isPlaylistView
             playlistName={playListName}
             callbackForIos={handleDrawerClick}
+            piD={playlistid}
             //drawerOnClick={drawerOnClick}
           />
           <div
