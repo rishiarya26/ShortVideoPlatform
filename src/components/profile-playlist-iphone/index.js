@@ -45,6 +45,7 @@ const searchVideo = ({ videoId = null, playlistArr = [] }) => {
 
 function ProfilePlaylistIphone({ router }) {
   const playListVideoId = router?.query?.videoId || null;
+  const utmVal = router?.query?.utm_source || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -160,10 +161,10 @@ function ProfilePlaylistIphone({ router }) {
     setTimeout(() => {
       //inject(CHARMBOARD_PLUGIN_URL, null, loaded);
       setLoading(false);
-      toTrackFirebase("screenView", { page: "Profile Feed" });
+      toTrackFirebase("screenView", { page: "Playlist Feed" });
       ToTrackFbEvents("screenView");
       // fbq.event('Screen View')
-      // trackEvent('Screen_View',{'Page Name' :'Profile Feed'})
+      // trackEvent('Screen_View',{'Page Name' :'Playlist Feed'})
       toTrackMixpanel("screenView", { pageName: pageName });
     }, 500);
   }, []);
@@ -178,12 +179,12 @@ function ProfilePlaylistIphone({ router }) {
       ToTrackFbEvents("play", {
         userId: items?.[videoActiveIndex]?.["userId"],
         content_id: items?.[videoActiveIndex]?.["content_id"],
-        page: "Profile Feed",
+        page: "Playlist Feed",
       });
       toTrackFirebase("play", {
         userId: items?.[videoActiveIndex]?.["userId"],
         content_id: items?.[videoActiveIndex]?.["content_id"],
-        page: "Profile Feed",
+        page: "Playlist Feed",
       });
 
       viewEventsCall(activeVideoId, "user_video_start");
@@ -313,8 +314,12 @@ function ProfilePlaylistIphone({ router }) {
         handleDrawerClick(index);
       };
     });
-
     backButton && (backButton.onClick = handleBackClick);
+    if(utmVal){
+      if(utmVal) {
+        show('', playListModal, 'medium', {data:items, activeVideoId, playlistName: playListName, hideOverLay: true})
+      }
+    }
   }, [items]);
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
@@ -358,7 +363,7 @@ function ProfilePlaylistIphone({ router }) {
         {
           userId: items?.[videoActiveIndex]?.["userId"],
           content_id: items?.[videoActiveIndex]?.["content_id"],
-          page: "Profile Feed",
+          page: "Playlist Feed",
         },
         {
           watchTime: "Complete",
@@ -371,7 +376,7 @@ function ProfilePlaylistIphone({ router }) {
         {
           userId: items?.[videoActiveIndex]?.["userId"],
           content_id: items?.[videoActiveIndex]?.["content_id"],
-          page: "Profile Feed",
+          page: "Playlist Feed",
         },
         { duration: duration, durationWatchTime: duration }
       );
@@ -383,7 +388,7 @@ function ProfilePlaylistIphone({ router }) {
         {
           userId: items?.[videoActiveIndex]?.["userId"],
           content_id: items?.[videoActiveIndex]?.["content_id"],
-          page: "Profile Feed",
+          page: "Playlist Feed",
         },
         { duration: duration, durationWatchTime: duration }
       );
@@ -531,6 +536,9 @@ function ProfilePlaylistIphone({ router }) {
           >
             <Back />
           </div>
+          <div className=" text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2">
+            {playListName ? playListName: null}
+          </div>
           <Swiper
             id="playlistFeedSwiper"
             initialSlide={initialId}
@@ -572,7 +580,7 @@ function ProfilePlaylistIphone({ router }) {
                 {
                   userId: items?.[videoActiveIndex]?.["userId"],
                   content_id: items?.[videoActiveIndex]?.["content_id"],
-                  page: "Profile Feed",
+                  page: "Playlist Feed",
                 },
                 {
                   durationWatchTime:
@@ -588,7 +596,7 @@ function ProfilePlaylistIphone({ router }) {
                 {
                   userId: items?.[videoActiveIndex]?.["userId"],
                   content_id: items?.[videoActiveIndex]?.["content_id"],
-                  page: "Profile Feed",
+                  page: "Playlist Feed",
                 },
                 {
                   durationWatchTime:
