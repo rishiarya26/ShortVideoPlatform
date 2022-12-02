@@ -18,8 +18,8 @@ const charmboardDrawer = dynamic (
 );
 
 function LabelHolder({label}){
-  return <><div className='bg-hipired px-1 py-0.5 w-16 h-3 opacity-60 absolute bottom-0 left-0'></div>
-  <div className='text-10 px-1 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
+  return <><div className='bg-hipired py-0.5 w-16 h-3 opacity-60 absolute bottom-0 left-0'></div>
+  <div className='text-8 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
   </>
 }
 let allAdCards = [];

@@ -1247,3 +1247,14 @@ input:checked + .slider_new:before {
   height: 32.3vw;
   max-height: 466px;
 }
+/* login_bug_fix */
+.translate_center
+{
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+} 
+/* PRODUCT CARD */
+.text-8 {
+  font-size: 8px;
+  line-height: 12px;
+}
