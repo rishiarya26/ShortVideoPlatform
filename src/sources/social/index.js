@@ -129,7 +129,7 @@ const browser = localStorage.get('plaformData')?.name;
 const isLoggedIn = localStorage?.get('user-id') || null;
 const previousPage = window?.sessionStorage?.getItem('previous-page');
   try {
-    payload =  (event === 'user_video_end') ?
+    payload =  (event === 'user_video_end' || event === 'completed') ?
      {
       "assetId": id,
       "event": event,
