@@ -15,7 +15,7 @@ import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
 import RightArrow from '../commons/svgicons/right-arrow';
-import AdButton from '../commons/button/ad';
+import { VmaxAdButton ,FeedAdButton } from '../commons/button/ad';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -400,35 +400,67 @@ function Video(props) {
          />
       {/* TO-DO  comdition acc to comp */}
 
+      {
+         !!props?.feedAd && (
+            <>
+            <FeedAdButton
+            id = {props?.id}
+            ctaColor = "#63ABFF"
+            noShow = {!!props?.feedAd}
+            userName = {props.userName}
+            setMuted = {props?.setMuted}
+            profilePic = {props?.profilePic}
+            ctaText = {props?.feedAd?.cta_text}
+            ctaPath = {props?.feedAd?.click_url}
+            userVerified = {props?.userVerified}
+            adBtnClickCb = {props?.adBtnClickCb}
+            >
+               <button
+                  className="pb-4 pt-2 pr-4 bottom-16 w-full z-50 box-border animateBottom"
+                  onClick={() => {
+                  props?.setMuted && props?.setMuted(true);
+                  props?.adBtnClickCb && props?.adBtnClickCb();
+                  props?.feedAd?.click_url && window.open(props?.feedAd?.click_url)
+                  }}
+               >
+                  <a
+                  href={void 0}
+                  style={{ backgroundColor: "#63ABFF" }}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
+                  >
+                  {props?.feedAd?.cta_text}
+                  <span>
+                     <RightArrow value="#fff" />
+                  </span>
+                  </a>
+               </button>
+            </FeedAdButton>
+            
+            </>
+         )
+      }
 
-      <AdButton 
-         id = {props?.id}
-         ctaColor = "#63ABFF"
-         noShow = {!!props?.feedAd}
-         userName = {props.userName}
-         setMuted = {props?.setMuted}
-         profilePic = {props?.profilePic}
-         ctaText = {props?.feedAd?.cta_text}
-         ctaPath = {props?.feedAd?.click_url}
-         userVerified = {props?.userVerified}
-         adBtnClickCb = {props?.adBtnClickCb}
-      />
+      { !!props?.vmaxAd && (
+         <VmaxAdButton 
+            vmaxAd={!!props?.vmaxAd}
+            id={props?.id}
+            noShow={!!props?.vmaxAd}
+            userName={props.userName}
+            setMuted = {props?.setMuted}
+            profilePic={props?.profilePic}
+            adBtnClickCb = {props?.adBtnClickCb}
+            activeVideoId={props?.activeVideoId}
+            videoActiveIndex={props?.videoActiveIndex}
+            userVerified = {props?.userVerified}
+            ctaColor = {props?.vmaxAd?.ctaColor}
+            ctaTrackers={props?.vmaxAd?.clicktrackers}
+            ctaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
+            ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath} 
+         />
+      )}
       
-      <AdButton 
-         vmaxAd
-         id={props?.id}
-         noShow={!!props?.vmaxAd}
-         userName={props.userName}
-         setMuted = {props?.setMuted}
-         profilePic={props?.profilePic}
-         adBtnClickCb = {props?.adBtnClickCb}
-         activeVideoId={props?.activeVideoId}
-         userVerified = {props?.userVerified}
-         ctaColor = {props?.vmaxAd?.ctaColor}
-         ctaTrackers={props?.vmaxAd?.clicktrackers}
-         ctaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
-         ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath} 
-      />
       
       <VideoSidebar
          userName={props.userName}

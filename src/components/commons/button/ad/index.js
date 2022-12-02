@@ -8,7 +8,7 @@ import Verified from "../../svgicons/verified";
 const BUTTON_SHOW_DELAY = 3000;
 const BUTTON_COLOR_SHOW_DELAY = 2000;
 
-function AdButton({
+export function VmaxAdButton({
   id,
   vmaxAd,
   noShow = false,
@@ -23,7 +23,7 @@ function AdButton({
   userVerified,
   adBtnClickCb,
 }) {
-  const [btnColor, setBtnColor] = useState(!vmaxAd ? ctaColor : "#8e8e97");
+  const [btnColor, setBtnColor] = useState("#8e8e97");
   const [show, setShow] = useState(false);
 
   // !! Keep this useEffect always on top
@@ -35,9 +35,6 @@ function AdButton({
         setShow(true);
         setTimeout(() => setBtnColor(ctaColor), BUTTON_COLOR_SHOW_DELAY);
       }, BUTTON_SHOW_DELAY);
-      // else {
-      //   setBtnColor(ctaColor)
-      // }
     }else{
       setShow(false);
       setBtnColor("#8e8e97")
@@ -131,7 +128,7 @@ function AdButton({
             </a>
           </div>
         )}
-        {!vmaxAd && (
+        {/* {!vmaxAd && (
           <div
             className="pb-4 pt-2 pr-4 bottom-16 w-full z-50 box-border animateBottom"
             onClick={() => {
@@ -154,10 +151,61 @@ function AdButton({
               </span>
             </a>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
 }
 
-export default AdButton;
+export function FeedAdButton({
+  profilePic,
+  userName,
+  userVerified,
+  children
+}){
+  let optProfilePic = profilePic;
+  if (optProfilePic?.match("upload/w_300")) {
+    optProfilePic = optProfilePic?.replaceAll("upload/w_300", "upload/w_100");
+  } else {
+    optProfilePic = optProfilePic?.replaceAll("upload", "upload/w_100");
+  }
+  return(
+    <div className="bottom-16 absolute left-0  flex text-white ml-2 w-full pr-4 animateBottom flex-col">
+        <div className="flex items-center">
+          <div
+            className="usrimg w-10 h-10 overflow-hidden rounded-full"
+            onClick={() => router && router?.push(`/@${userName}`)}
+          >
+            <Img
+              title="Hipi"
+              data={optProfilePic}
+              fallback={fallbackUser?.src}
+            />
+          </div>
+          <div className="font-medium dark:text-white ml-1">
+            <div className=" text-white dark:text-gray-400">
+              <h3
+                onClick={() => router && router?.push(`/@${userName}`)}
+                style={{ lineHeight: "1rem" }}
+                className="font-semibold text-sm flex items-center"
+              >
+                @{userName}{" "}
+                {userVerified === "verified" ? (
+                  <div className="ml-2">
+                    <Verified />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </h3>
+            </div>
+            <div className="text-xs text-white dark:text-gray-400">
+              Sponsored
+            </div>
+          </div>
+        </div>
+        {children}
+        </div>
+  )
+}
+

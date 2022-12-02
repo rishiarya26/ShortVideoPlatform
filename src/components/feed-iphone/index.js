@@ -45,6 +45,7 @@ import { CacheAdContext } from '../../hooks/use-cacheAd';
 import { vmaxTrackerEvents } from '../../analytics/vmax';
 import isEmptyObject from '../../utils/is-object-empty';
 import { isObjectEmpty } from '../../network/utils';
+import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -143,16 +144,36 @@ function FeedIphone({ router }) {
 //   setShowAppBanner(false);
 // }
 
-const adImpression =  (index = 0)=>{
+const adImpression =  async (index = 0)=>{
   if(toShowItems[index]?.adId && window !== undefined){
     let adInfo = toShowItems?.[index]?.adId || {};
     let {impression_url = null } = adInfo;
+   
+    // let formedUrl = impression_url.split("&").map((item)=>{
+    //   if(item.match(/af_sub2/)){
+    //     let splititem = item.split("=");
+    //     item = `${splititem[0]}` + "=" + "pwa"
+    //     return item;
+    //   }else{
+    //     return item
+    //   }
+    // }).join("&")
+    
+    if(impression_url.split(".").includes("appsflyer")){
+      try{
+       let response = await impressionUrlWrapper({url: impression_url})
+      }
+      catch(e){
+        console.error("error getting impression");
+      }
+    }else{
     let timeStamp = Date.now();
     try{
       impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
     }catch(e){
       console.error("Impression error: " + e);
     }
+  }
   }
   if(toShowItems[index]?.feedVmaxAd){
     let tracker = toShowItems[index]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
@@ -161,7 +182,7 @@ const adImpression =  (index = 0)=>{
 }
 
   useEffect(()=>{
-    if(items?.[videoActiveIndex]?.feedVmaxAd){
+    if(toShowItems?.[videoActiveIndex]?.feedVmaxAd){
       setSlideToNext(false)
       setTimeout(()=>{
         setSlideToNext(true)
@@ -309,9 +330,11 @@ const adImpression =  (index = 0)=>{
   const validItemsLength = toShowItems?.length > 0;
   // setRetry = retry && retry;
 
+  let advmaxObj = toShowItems[videoActiveIndex]?.feedVmaxAd;
+  let adIdObj = toShowItems[videoActiveIndex]?.adId;
   const videoAdSessionsCalls = async(percentage) => {
 
-    if(toShowItems[videoActiveIndex]?.feedVmaxAd){
+    if(!!advmaxObj && typeof advmaxObj === 'object' && !isObjectEmpty(advmaxObj) && window !== undefined){
       console.log("adView", toShowItems[videoActiveIndex]?.feedVmaxAd, "=>" , toShowItems[videoActiveIndex]?.feedVmaxAd?.adView);
        let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
        if(percentage > 0 && percentage < 25){
@@ -340,7 +363,7 @@ const adImpression =  (index = 0)=>{
        }
      }
 
-    if(toShowItems[videoActiveIndex]?.adId){
+     if(!!adIdObj && typeof adIdObj === 'object' && !isObjectEmpty(adIdObj) && window !== undefined){
       let adInfo = toShowItems?.[videoActiveIndex]?.adId || {};
       let { event_url = null } = adInfo;
       let timeStamp = Date.now();
@@ -753,12 +776,13 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      feedAd={item?.adId}
+                      
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
-                      vmaxAd={item?.feedVmaxAd || null}
+                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
+                      vmaxAd={item?.feedVmaxAd && typeof item?.feedVmaxAd === 'object' && !isEmptyObject(item?.feedVmaxAd) ? item.feedVmaxAd : null}
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
