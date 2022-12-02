@@ -1156,6 +1156,9 @@ background-color:rgb(255 237 223);
   z-index: 1!important;
 }
 
+.animateBottom {
+  transition: bottom 0.1s ease-out;
+}
 /* iphone_small sidebar icons hide */
 @media only screen and (max-height: 580px) {
   .iphone_small{

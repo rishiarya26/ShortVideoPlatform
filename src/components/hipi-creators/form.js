@@ -1,3 +1,5 @@
+/*eslint-disable react/jsx-no-duplicate-props*/
+/*eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import { ToTrackFbEvents } from "../../analytics/fb-pixel/events";

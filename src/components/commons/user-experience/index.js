@@ -11,7 +11,7 @@ import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -19,6 +19,8 @@ const placement = {
 const router = useRouter();
 const {show} = useDrawer();
 
+
+if(noShow) return false;
   //   return (
   //   <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
   //     <p className="text-sm">

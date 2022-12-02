@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable @next/next/no-img-element */
+/*eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useRef, useEffect } from 'react';
 import VideoFooter from '../videofooter/index';
 import VideoSidebar from '../videosidebar/index';
@@ -14,6 +15,7 @@ import { getItem } from '../../utils/cookie';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics  } from '../../analytics/conviva';
 import {incrementCountVideoView} from '../../utils/events';
 import RightArrow from '../commons/svgicons/right-arrow';
+import { VmaxAdButton ,FeedAdButton } from '../commons/button/ad';
 
 // import { rptPlaybackEnd, rptPlaybackStart, setPlayer } from '../../analytics/conviva/analytics';
 // import Pause from '../commons/svgicons/pause';
@@ -41,8 +43,7 @@ function Video(props) {
    const rootRef = useRef(null);
    const size = useWindowSize();
    const videoHeight = `${size.height}`;
-   const device = getItem('device-info')
-
+   const device = getItem('device-info');
 
    useEffect(()=>{
       let videoElement;
@@ -389,9 +390,10 @@ function Video(props) {
          adCards={props?.adData}
          showBanner={props?.showBanner}
          videoId={props.id}
+         activeVideoId={props?.activeVideoId}
          userVerified = {props?.userVerified}
          videoSoundAvailable={props?.videoSound}
-         isAdShowVisible={props?.feedAd}
+         isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          profilePic={props?.profilePic}
          explain={props?.explain}
          correlationID={props?.correlationID}
@@ -403,29 +405,66 @@ function Video(props) {
 
       {
          !!props?.feedAd && (
-            <button
-               className="px-2 py-4 absolute bottom-16 w-full z-50 box-border"
-               onClick={() => {
-               props?.setMuted && props?.setMuted(true);
-               props?.adBtnClickCb && props?.adBtnClickCb();
-               }}
+            <>
+            <FeedAdButton
+            id = {props?.id}
+            ctaColor = "#63ABFF"
+            noShow = {!!props?.feedAd}
+            userName = {props.userName}
+            setMuted = {props?.setMuted}
+            profilePic = {props?.profilePic}
+            ctaText = {props?.feedAd?.cta_text}
+            ctaPath = {props?.feedAd?.click_url}
+            userVerified = {props?.userVerified}
+            adBtnClickCb = {props?.adBtnClickCb}
             >
-               <a
-               href={props?.feedAd?.click_url}
-               style={{ backgroundColor: "#63ABFF" }}
-               target="_blank"
-               rel="noreferrer"
-               className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
+               <button
+                  className="pb-4 pt-2 pr-4 bottom-16 w-full z-50 box-border animateBottom"
+                  onClick={() => {
+                  props?.setMuted && props?.setMuted(true);
+                  props?.adBtnClickCb && props?.adBtnClickCb();
+                  props?.feedAd?.click_url && window.open(props?.feedAd?.click_url)
+                  }}
                >
-               {props?.feedAd?.cta_text}
-               <span>
-                  <RightArrow value="#fff" />
-               </span>
-               </a>
-            </button>
+                  <a
+                  href={void 0}
+                  style={{ backgroundColor: "#63ABFF" }}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2 py-2 text-white rounded-md flex items-center justify-between text-sm font-semibold"
+                  >
+                  {props?.feedAd?.cta_text}
+                  <span>
+                     <RightArrow value="#fff" />
+                  </span>
+                  </a>
+               </button>
+            </FeedAdButton>
+            
+            </>
          )
       }
 
+      { !!props?.vmaxAd && (
+         <VmaxAdButton 
+            vmaxAd={!!props?.vmaxAd}
+            id={props?.id}
+            noShow={!!props?.vmaxAd}
+            userName={props.userName}
+            setMuted = {props?.setMuted}
+            profilePic={props?.profilePic}
+            adBtnClickCb = {props?.adBtnClickCb}
+            activeVideoId={props?.activeVideoId}
+            videoActiveIndex={props?.videoActiveIndex}
+            userVerified = {props?.userVerified}
+            ctaColor = {props?.vmaxAd?.ctaColor}
+            ctaTrackers={props?.vmaxAd?.clicktrackers}
+            ctaText = {props?.vmaxAd?.ctaText ? props.vmaxAd.ctaText: "Click here"}
+            ctaPath = {props?.vmaxAd?.ctaLinkUrl ? props?.vmaxAd?.ctaLinkUrl : props?.vmaxAd?.ctaPath} 
+         />
+      )}
+      
+      
       <VideoSidebar
          userName={props.userName}
          videoOwnersId={props.videoOwnersId}
@@ -452,8 +491,9 @@ function Video(props) {
          creatorId={props?.creatorId}
          adCards={props?.adData}
          showBanner={props?.showBanner}
-         isAdShowVisible={props?.feedAd}
+         isAdShowVisible={!!props?.feedAd || !!props?.vmaxAd}
          campaignId={props?.campaignId || "NA"}
+         vmaxAd={!!props?.vmaxAd}
          explain={props?.explain || null}
          correlationID={props?.correlationID || null}
          userId={props?.videoOwnersId || null}

@@ -29,6 +29,7 @@ import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 import * as platform from 'platform';
+import { initVmax } from '../src/analytics/vmax';
 import { getFullDate } from '../src/utils/date';
 import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
@@ -42,6 +43,7 @@ import { getPageName } from '../src/utils/web';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
 
 
 (function storyBlokInitSelfFunction(){
@@ -75,6 +77,11 @@ const LoaderProvider = dynamic(() => import('../src/hooks/use-loader').then(modu
 const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(module => {
   const { OverLayProvider } = module;
   return OverLayProvider;
+}));
+
+const CacheAdProvider = dynamic(() => import('../src/hooks/use-cacheAd').then(module => {
+  const { CacheAdProvider } = module;
+  return CacheAdProvider;
 }));
 
 export function reportWebVitals() {
@@ -263,6 +270,7 @@ function Hipi({
 
       updatingGoogleCookies();
       initConviva()
+      initVmax();
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();
@@ -276,6 +284,8 @@ function Hipi({
       localStorage.set('device-modal',deviceModel);
       localStorage.set("adArr",[]);
       localStorage.set("adArrMixPanel",[]);
+      localStorage.set("vmaxEvents",[]);
+      
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
       localStorage.set('network-strength',effectiveType);
@@ -635,7 +645,21 @@ function Hipi({
           `,
         }}
       />
-                      <Component {...pageProps} />
+      <Script 
+       id = "mFilterIt"
+       strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function (m, f, i, l, t, e, r) {
+            m[t] = m[t] || function () {(m[t].q = m[t].q || []).push(arguments)}, m[t].l = 1 * new Date();
+            e = f.createElement(l); e.async = 1; e.id = "mfilterit-visit-tag"; e.src = i; r=f.getElementsByTagName(l)[0]; r.parentNode.insertBefore(e, r);
+            })(window, document,"https://script.mfilterit.net/v3/v/client/web.hipi.cpv.js", "script", "mf");
+            mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
+          `}}
+       />
+                      <CacheAdProvider>
+                        <Component {...pageProps} />
+                      </CacheAdProvider>
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>
                   </RouteStateProvider>

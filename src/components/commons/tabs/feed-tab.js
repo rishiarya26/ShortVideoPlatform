@@ -20,4 +20,4 @@ const FeedTabs = ({ items = [], router }) => {
   );
 };
 
-export default withRouter(FeedTabs);
+export default withRouter(React.memo(FeedTabs));
