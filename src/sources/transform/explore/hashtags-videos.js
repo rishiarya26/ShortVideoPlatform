@@ -60,7 +60,8 @@ function transformSuccess(resp) {
         payloadObject.tag = d?.tag?.name || null;
         payloadObject.verified=d?.videoOwners?.tag?.toLowerCase() || null;
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
-
+        payloadObject.playlistId = d?.playlists?.[0]?.id || null;
+        payloadObject.playlistName = d?.playlists?.[0]?.name || null;
         payloadData.push(payloadObject);
       });
       if(data?.firstVideo){

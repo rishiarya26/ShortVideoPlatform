@@ -1244,3 +1244,7 @@ input:checked + .slider_new:before {
   height: 32.3vw;
   max-height: 466px;
 }
+
+.playlist_bg {
+  background-color: #f2f2f2;
+}

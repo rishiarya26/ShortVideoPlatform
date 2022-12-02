@@ -350,9 +350,12 @@ function HashTagFeedIphone({ router }) {
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
 
         <OpenAppStrip
-        pageName={pageName}
-        item={items?.[videoActiveIndex]}
-        activeVideoId={activeVideoId}
+          pageName={pageName}
+          item={items?.[videoActiveIndex]}
+          activeVideoId={activeVideoId}
+          creatorId={items?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={items?.[videoActiveIndex]?.playlistId}
+          playlistName={items?.[videoActiveIndex]?.playlistName}
         />
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">

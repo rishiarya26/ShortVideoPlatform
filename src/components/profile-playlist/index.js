@@ -54,7 +54,7 @@ const searchVideo = ({videoId=null, playlistArr=[]}) => {
 
 function ProfilePlaylist({ router }) {
   const playListVideoId = router?.query?.videoId || null;
-  const creatorId = router?.query?.creatorId || null;
+  const utmVal = router?.query?.utm_source || null;
   const [seekedPercentage, setSeekedPercentage] = useState(0);
   const [items, setItems] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -91,7 +91,7 @@ function ProfilePlaylist({ router }) {
 
   const preVideoDurationDetails = usePreviousValue({videoDurationDetails});
   const { id: playlistid } = router?.query;
-  const pageName = 'Profile Playlist feed';
+  const pageName = 'Playlist feed';
 
   const loadMoreItems = async() =>{
     let videos = [...items]
@@ -124,7 +124,9 @@ function ProfilePlaylist({ router }) {
       }
       show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
     }
-    
+    if(utmVal) {
+      show('', playListModal, 'medium', {data:items,  fetchMore: loadMore, activeVideoId, playlistName: playListName, hideOverLay: true})
+    }
     backButton && (backButton.onClick = handleBackClick);
 
   }, [items]);
@@ -148,7 +150,7 @@ function ProfilePlaylist({ router }) {
   useEffect(() => {
     setTimeout(()=>{
       setLoading(false);
-      toTrackFirebase('screenView',{'page' :'Profile Feed'});
+      toTrackFirebase('screenView',{'page' :'Playlist Feed'});
       ToTrackFbEvents('screenView');
       toTrackMixpanel('screenView',{pageName:pageName});
     },500)
@@ -158,8 +160,8 @@ function ProfilePlaylist({ router }) {
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName},items?.[videoActiveIndex]);
-      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
-      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
+      ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'})
+      toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'})
       viewEventsCall(activeVideoId, 'user_video_start');
       checkNoSound();
     }
@@ -206,11 +208,11 @@ function ProfilePlaylist({ router }) {
       toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
       toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
      
-      toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
+      toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'},{  duration : duration, durationWatchTime: duration})
 
       ToTrackFbEvents('ugcPlayedComplete');
-      ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
+      ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
@@ -295,8 +297,11 @@ function ProfilePlaylist({ router }) {
           playlistName={playListName}
           //drawerOnClick={drawerOnClick}
         />
-          <div id="backButton" onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
+          <div id="backButton" onClick={handleBackClick} className="fixed z-10 p-4 mt-4 w-1/2">
             <Back />
+          </div>
+          <div className=" text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2">
+            {playListName ? playListName: null}
           </div>
           <Swiper
             id="playlistFeedSwiper"
@@ -322,8 +327,8 @@ function ProfilePlaylist({ router }) {
               setShowSwipeUp({count : 1, value:false});
               toTrackMixpanel('impression',{pageName:pageName},items?.[videoActiveIndex]);
               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
-              ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
-              toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
+              toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Playlist Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               /** Mixpanel - increment view count **/
               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && incrementCountVideoView(items?.[videoActiveIndex]?.content_id);
