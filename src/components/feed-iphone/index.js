@@ -159,7 +159,7 @@ const adImpression =  async (index = 0)=>{
     //   }
     // }).join("&")
     
-    if(impression_url.split(".").includes("appsflyer")){
+    if(impression_url && impression_url?.split(".").includes("appsflyer")){
       try{
        let response = await impressionUrlWrapper({url: impression_url})
       }
