@@ -55,7 +55,7 @@ const {show} = useDrawer();
         >
           <div className='flex items-center'>
           <PlaylistWhite/> 
-          <p className="text-sm ml-2">Playlist &#x2022; {playlistName}</p>
+          <p className="text-sm ml-2">Playlist <span className='font-black'>&#x2022;</span> {playlistName}</p>
           </div>
        
         <div className="font-semibold text-sm  text-white">
