@@ -141,9 +141,9 @@ function VideoFooter({
           </span>
         </div>
         : 
-        <div className="w-8/12 my-1 text-sm">
+        <div className="w-full my-1 text-sm">
           {music[comp]}
-          <span className=" my-1 text-sm w-4/12 text-gray-300">
+          <span className="ml-2 my-1 text-sm w-4/12 text-gray-300">
             Audio unavailable
           </span>
         </div>

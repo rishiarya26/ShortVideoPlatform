@@ -85,7 +85,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
               <div
               id={`episode_${item?.content_id}`}
               key={index}
-              className={`p-2 ${item?.content_id === activeVideoId ? "bg-gray-100" : ""}`}
+              className={`p-2 ${item?.content_id === activeVideoId ? "playlist_bg" : ""}`}
               onClick={()=>{callbackForIos ? callbackForIos(index) : drawerOnClick({index}); close(); mixpanelEvents();}}
             >
               <span className='flex'>

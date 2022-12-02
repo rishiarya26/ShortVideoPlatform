@@ -7,6 +7,7 @@ import { FULL_EXPERIENCE } from '../../../constants';
 import { onStoreRedirect } from '../../../utils/web';
 import {appsflyer} from '../../../scripts/appsflyer-smart'
 import RightArrow from '../svgicons/right-arrow';
+import UpArrow from '../svgicons/up-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
@@ -57,11 +58,11 @@ if(noShow) return false;
         >
           <div className='flex items-center'>
           <PlaylistWhite/> 
-          <p className="text-sm ml-2">Playlist &#x2022; {playlistName}</p>
+          <p className="text-sm ml-2">Playlist <span className='font-black'>&#x2022;</span> {playlistName}</p>
           </div>
        
-        <div className="font-semibold text-sm  text-white">
-            <RightArrow value="#fff" />
+        <div className={`font-semibold text-sm text-white`}>
+            {isPlaylistView ? <UpArrow /> : <RightArrow value="#fff" />}
         </div>
       </div>
     )
