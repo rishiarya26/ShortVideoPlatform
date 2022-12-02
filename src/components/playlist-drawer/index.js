@@ -34,7 +34,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
   };
 
   const mixpanelEvents = () => {
-    toTrackMixpanel("cta", {name:"Playlist Video"});
+    toTrackMixpanel("popupCta", {pageName:"Playlist Detail",name:"playlist video", ctaName:"playlist video", playlistName, playlistId});
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
     } else {
       try{
         await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
-        toTrackMixpanel('sharePlaylist',{playlistName, playlistId});
+        toTrackMixpanel('popupCta',{page:"Playlist Detail",name:"share playlist", ctaName:"share playlist",  playlistName, playlistId});
       } catch(err){
         console.err('something went wrong', err)
       }

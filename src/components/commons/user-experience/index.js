@@ -48,11 +48,10 @@ if(noShow) return false;
       className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
       onClick={playlistId ?
         () => {
-          toTrackMixpanel("playlistClicked", {pageName:"Playlist screen", playlistName, playlistId})
           router.push(`/playlist/${playlistId}?videoId=${videoId || activeVideoId}`)
         } :
         ()=>{
-          toTrackMixpanel("playlistPopUpLaunch", {popUpName:"playlist",playlistName, playlistId: piD})
+          toTrackMixpanel("playlistPopUpLaunch", {name:"playlist",playlistName, playlistId: piD})
           show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true, playlistId})
         }}
         >

@@ -376,7 +376,9 @@ const notNowClick=()=>{
 
   const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=> router && router?.push(`/profile-detail/${id}?type=following`))
   const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=> router && router?.push(`/profile-detail/${id}?type=followers`))
-  const chipOnClick = (id) => {
+
+  const chipOnClick = (id,name) => {
+    toTrackMixpanel("playlistClicked", {pageName:"Creator Profile", playlistName: name, playlistId: id})
     router.push({pathname: `/playlist/${id}`});
   }
 
@@ -440,7 +442,7 @@ const notNowClick=()=>{
       />
      {selectedTab === 'all' && playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
         {playlistArr.map((playlist) => (
-          <div key={playlist?.id} onClick={() => chipOnClick(playlist?.id)} className='mr-2 px-3 py-4 border flex items-center justify-center cursor-pointer bg-white min-w-max rounded'>
+          <div key={playlist?.id} onClick={() => chipOnClick(playlist?.id, playlist?.name)} className='mr-2 px-3 py-4 border flex items-center justify-center cursor-pointer bg-white min-w-max rounded'>
             <span className='mr-2'><PlaylistBadge /></span>{playlist.name}
           </div>
         ))}
