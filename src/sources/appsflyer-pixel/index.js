@@ -46,4 +46,20 @@ const appsflyerPixelClick = ({appId, iosAppId, advertiser,uri, productId, comp})
     }
   }  
 
-export { appsflyerPixelWrapperImp as appsflyerPixelImp , appsflyerPixelClick};
+  const impressionUrlWrapper = async({url})=>{
+    let response;
+    try {
+      // const appsflyerImpUrl = `https://impression.appsflyer.com/${appId}?pid=hipi_int&Advertiser=${advertiser}&af_siteid=${SITE_ID}&af_sub1=${productId}&af_sub2=${comp}&af_sub3=web&af_click_lookback=7`;
+      const encodedImpressionUrl = encodeURIComponent(url);
+      const apiPath = `${getApiBasePath('hipi')}/v1/shorts/impressionappsflyer?url=${encodedImpressionUrl}`;
+      response = await get(apiPath);
+      console.log("APPSFLYER Impression AD PIXEL FIRED", response);
+      response.data.requestedWith = { appId };
+      return Promise.resolve(response);
+    } catch (err) {
+      console.error('error',err)
+      return Promise.resolve({ data: '' });
+    }
+  }  
+
+export { appsflyerPixelWrapperImp as appsflyerPixelImp , appsflyerPixelClick, impressionUrlWrapper};
