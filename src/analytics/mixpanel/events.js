@@ -122,6 +122,16 @@ export const toTrackMixpanel = (type, value, item) => {
       return globalCommonEvents
     }
 
+    const eventsForUpload = () =>{
+      const videoUploadStatus = value?.type === 'success' ? true : false;
+       globalCommonEvents['success'] = videoUploadStatus ?? 'N/A';
+       globalCommonEvents["Post Time Seconds"] = value?.post_time_seconds ?? 'NA';
+       globalCommonEvents['UGC Language'] = item?.ugc_language ?? 'N/A';
+       if(!videoUploadStatus) globalCommonEvents['Failure Reason'] = value?.failure_reason ?? 'N/A';
+       addUgcId();
+       return globalCommonEvents;
+    }
+
 
     const bannerType = {
       Hashtag: 'Hashtag',
@@ -471,8 +481,25 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),
         'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
         'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
-        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds())
-
+        'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
+        'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
+        'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
+        'appsflyerImpPixel' : ()=> {
+            addUgcId();
+            addPageTabName();
+            globalCommonEvents['Product Id'] = item?.productId || 'NA';
+            globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
+            globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
+            globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+            globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+            globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+            globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+            globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+            // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+            globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
+          
+          track('Appsflyer Impression Pixel',globalCommonEvents)
+        }
       
         
         

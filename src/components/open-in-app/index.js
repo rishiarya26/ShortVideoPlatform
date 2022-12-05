@@ -109,7 +109,7 @@ export default function DownloadAppWidget({videoId}) {
   return (
     <>
       <div className=" flex flex-col items-center w-full ">
-      <div onClick={close} className='flex w-full justify-end p-2'>
+      <div onClick={close} className='flex w-full justify-end p-2 md:hidden'>
       <Close/>
    </div>
         <div onClick={onStoreRedirect} className="flex py-3 items-center">

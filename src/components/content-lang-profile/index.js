@@ -9,8 +9,11 @@ import CircularLoaderButtonSmall from "../commons/circular-loader-button-small";
 import { withBasePath } from "../../config";
 import { localStorage } from "../../utils/storage";
 import Check from "../commons/svgicons/check";
+import { Back } from "../commons/svgicons/back";
+import { useRouter } from 'next/router';
 
 const ContentLangProfile = () =>{
+    const router = useRouter()
     const [selectedLang, setSelectedLang] = useState([]);
     const [loading, setLoading] = useState(false);
     const device = getItem('device-info');
@@ -97,10 +100,20 @@ const ContentLangProfile = () =>{
     }
    
     return(
-      <div className='flex flex-col bg-black h-screen justify-center box-border'>
-        <div className="flex w-full justify-center items-end pb-4 px-4 lang-sm-title">
-            <div className="text-white text-xl font-semibold">Select your language</div>
+      <div className='flex flex-col h-screen justify-center box-border relative'>
+
+      <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+        <div onClick={()=>router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
+        <Back/>
         </div>
+       
+      </div>
+
+
+        <div className="flex w-full justify-center items-end pb-4 px-4 lang-sm-title">
+            <div className="text-gray-600 text-xl font-semibold">Select your language</div>
+        </div>
+
           <div className='flex flex-wrap justify-center w-full'>
               {contentLang?.map((item,id)=>(
               <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>onLangSelect(item?.code)}>

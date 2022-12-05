@@ -41,6 +41,8 @@ import SnackCenter from '../commons/snack-bar-center';
 import { INDEX_TO_SHOW_LANG_IPHONE , INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
+import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
+import isEmptyObject from '../../utils/is-object-empty';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -136,15 +138,24 @@ function FeedIphone({ router }) {
 //   setShowAppBanner(false);
 // }
 
-const adImpression =  (index = 0)=>{
+const adImpression =  async (index = 0)=>{
   if(toShowItems[index]?.adId && window !== undefined){
     let adInfo = toShowItems?.[index]?.adId || {};
     let {impression_url = null } = adInfo;
-    let timeStamp = Date.now();
-    try{
-      impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
-    }catch(e){
-      console.error("Impression error: " + e);
+    if(impression_url && impression_url?.split(".").includes("appsflyer")){
+      try{
+       let response = await impressionUrlWrapper({url: impression_url})
+      }
+      catch(e){
+        console.error("error getting impression");
+      }
+    }else{
+      let timeStamp = Date.now();
+      try{
+        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+      }catch(e){
+        console.error("Impression error: " + e);
+      }
     }
   }
 }
@@ -351,7 +362,7 @@ const adImpression =  (index = 0)=>{
       // fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'completed', {duration : duration} );
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
 
@@ -640,7 +651,7 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      feedAd={item?.adId}
+                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
