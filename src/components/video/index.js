@@ -221,7 +221,7 @@ function Video(props) {
       // width={size.width}
       // height={videoHeight}
       // onPlay={()=>{(prePlayState?.play === true) &&  props.toTrackMixpanel(props.videoActiveIndex,'resume')}}
-      // poster={firstFrame}
+      poster={firstFrame}
       objectfit="cover"
       key={props.url}
       onSeeked={handleSeeked}
