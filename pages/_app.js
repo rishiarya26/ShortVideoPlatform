@@ -567,6 +567,12 @@ function Hipi({
     })
 
     showPWAPopup();
+    // const myWorker = new Worker('service-worker.js')
+  //      window?.navigator?.serviceWorker?.register('service-worker.js')
+  //  .then(() => {
+  //    console.log('Service worker successfully registered.');
+  //  })
+  //  .catch(err => console.log("There is an error registering SW."))
 
     return () => {
       events.forEach((data)=>{
@@ -588,11 +594,9 @@ function Hipi({
      response = await toGetSocialToken();
    }};
 
-  //  navigator.serviceWorker.register('service-worker.js')
-  //  .then(() => {
-  //    console.log('Service worker successfully registered.');
-  //  })
-  //  .catch(err => console.log("There is an error registering SW."))
+
+  // const new Worker(/)
+ 
 
    const showPWAPopup = () =>{
     // let deferredPrompt;

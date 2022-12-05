@@ -3,7 +3,7 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
-// const withPWA = require('next-pwa');
+const withPWA = require('next-pwa');
 
 const {
   GEN_SOURCE_MAP,
@@ -46,10 +46,12 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-  // pwa: {
-  //   swSrc: './src/service-worker.js',
-  //   dest: 'public'
-  // },
+  pwa: {
+    register : true,
+    skipWaiting: true,
+    // swSrc: './src/service-worker.js',
+    dest: 'public'
+  },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -111,6 +113,6 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+module.exports = withPWA(nextConfig);
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 

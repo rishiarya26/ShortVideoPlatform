@@ -3,7 +3,7 @@
   "name": "Hipi",
   "lang": "en",
   "description": "hipi",
-  "start_url": "https://hipi.co.in/feed/for-you",
+  "start_url": "/",
   "background_color": "#fff",
   "theme_color": "#fff",
   "dir": "ltr",
