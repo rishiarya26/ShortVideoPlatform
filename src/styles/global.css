@@ -117,6 +117,12 @@ img{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+  .line-clamp-4{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
  .h-80p{
    height: 80%;
  }
@@ -1150,6 +1156,9 @@ background-color:rgb(255 237 223);
   z-index: 1!important;
 }
 
+.animateBottom {
+  transition: bottom 0.1s ease-out;
+}
 /* iphone_small sidebar icons hide */
 @media only screen and (max-height: 580px) {
   .iphone_small{
@@ -1248,4 +1257,8 @@ input:checked + .slider_new:before {
 .text-8 {
   font-size: 8px;
   line-height: 12px;
+}
+
+.playlist_bg {
+  background-color: #f2f2f2;
 }

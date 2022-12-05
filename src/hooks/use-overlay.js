@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import OverLay from '../components/commons/overlay';
+import useDrawer from './use-drawer';
 
 const OverLayContext = createContext({
   hide: () => { },
@@ -12,12 +13,14 @@ const OverLayContext = createContext({
 export const OverLayProvider = ({ children }) => {
   const [state, setState] = useState({
     visible: false,
-    title: ''
+    title: '',
+    compClose : null
   });
 
-  const show = () => {
+  const show = (compClose=null) => {
     setState({
-      visible: true
+      visible: true,
+      compClose: compClose
     });
   };
 
@@ -30,7 +33,7 @@ export const OverLayProvider = ({ children }) => {
   return (
     <OverLayContext.Provider value={{ show, hide }}>
       {children}
-      <OverLay visible={state.visible} />
+      <OverLay compClose={state.compClose} visible={state.visible} />
     </OverLayContext.Provider>
   );
 };

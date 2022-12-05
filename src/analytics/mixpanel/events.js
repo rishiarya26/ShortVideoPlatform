@@ -122,6 +122,23 @@ export const toTrackMixpanel = (type, value, item) => {
       return globalCommonEvents
     }
 
+    const eventsForPlaylist = () => {
+      const userName = item?.userName?.replace('@','')
+      globalCommonEvents['Creator ID'] = item?.userId;
+      globalCommonEvents['Creator Handle'] = userName;
+      globalCommonEvents['UGC ID'] = item?.content_id;
+      globalCommonEvents['Tab Name'] = value?.tabName || 'NA';
+      globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+      globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+      globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+      globalCommonEvents['Device Modal'] = 'NA';
+      globalCommonEvents['Network Strength'] = 'NA';
+      globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
+      globalCommonEvents['popup Name'] = value?.popUpName || 'NA';
+      isShopMonetizeAd()
+      return globalCommonEvents
+    }
+
     const eventsForUpload = () =>{
       const videoUploadStatus = value?.type === 'success' ? true : false;
        globalCommonEvents['success'] = videoUploadStatus ?? 'N/A';
@@ -201,6 +218,8 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Element'] = value?.name
         globalCommonEvents['Button Type'] = value?.type
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
         track('CTAs', globalCommonEvents)
       },
       'saveLook' : ()=>{
@@ -342,9 +361,12 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'popupCta' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = item?.name;
-        globalCommonEvents['Popup CTAs'] = item?.ctaName;
-        globalCommonEvents['elemant'] = item?.elemant;
+        globalCommonEvents['Popup Name'] = value?.name;
+        globalCommonEvents['Popup CTAs'] = value?.ctaName;
+        globalCommonEvents['elemant'] = value?.elemant;
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+
         track('Popup CTAs', globalCommonEvents);
        },
        'sessionStart' :  ()=>{
@@ -482,6 +504,9 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
         'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
         'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
+        'playlistClicked': () => track('Playlist Clicked',eventsForPlaylist()),
+        'playlistPopUpLaunch' :() => track('Popup launch',eventsForPlaylist()),
+        'sharePlaylist':() => track('Share Playlist',eventsForPlaylist()),
         'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
         'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
         'appsflyerImpPixel' : ()=> {
