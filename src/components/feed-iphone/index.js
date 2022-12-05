@@ -282,7 +282,6 @@ const adImpression =  async (index = 0)=>{
         cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
         console.log(`added cachead successfully from cache! ${ data?.data}`)
       }else{
-       
         // debugger;
         try{
           let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
@@ -295,7 +294,6 @@ const adImpression =  async (index = 0)=>{
           console.error(error);
         }
       }
-
       updateItems = updateItems.concat(data?.data);
       console.log("data after", data?.data, "=>" ,updateItems);
       //  setOffset(offset+1)
@@ -502,8 +500,8 @@ const adImpression =  async (index = 0)=>{
   arr && (dataItem = dataItem?.concat(arr));
   //add
   for(let i=0;i<=5;i++){
-    if(dataItem?.[videoActiveIndex+i+3]){ 
-      updateShowItems.push(dataItem[videoActiveIndex+i+3])
+    if(dataItem?.[videoActiveIndex+i+2]){ 
+      updateShowItems.push(dataItem[videoActiveIndex+i+2])
     }
     // else{
 
@@ -705,17 +703,11 @@ console.log('errorrr',e)
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
-
+                //console.log("active index: " + activeIndex)
 
                 console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
-
-                
-
                 //? next vmax ad video (position & details)
                 getNextVmaxAd(activeIndex);
-
-               
-                
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -732,7 +724,7 @@ console.log('errorrr',e)
                   !languagesSelected && id === INDEX_TO_SHOW_LANG_IPHONE && lang24ShowOnce === 'false' ? 
                    <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
                      :
-                   <Video
+                    item !== null ? <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
                       url={item?.video_url}
@@ -785,7 +777,7 @@ console.log('errorrr',e)
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
-                    />}
+                    />:<div></div>}
                   </SwiperSlide>
                 )) : (
                   <div className="h-screen bg-black flex justify-center items-center">

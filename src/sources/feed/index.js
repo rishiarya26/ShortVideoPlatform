@@ -237,7 +237,7 @@ const cacheAdResponse = async () => {
 
     let {postid = "", ctaButtonColor = "", ctatext ="", ctaPath = "", ctaLinkUrl =""} = ctaInfo ?? {};
 
-    const singleVideoData = await getSingleVideo({id : postid});
+    const singleVideoData = postid && await getSingleVideo({id : postid});
 
     const video = await singleVideoData?.data || {};
     
