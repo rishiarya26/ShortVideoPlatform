@@ -776,7 +776,6 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
