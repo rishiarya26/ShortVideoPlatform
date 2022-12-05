@@ -51,7 +51,7 @@ if(noShow) return false;
           router.push(`/playlist/${playlistId}?videoId=${videoId || activeVideoId}`)
         } :
         ()=>{
-          toTrackMixpanel("playlistPopUpLaunch", {name:"playlist",playlistName, playlistId: playlistId ?? piD})
+          toTrackMixpanel("playlistPopUpLaunch", {name:"playlist",pageName:"Playlist Details",playlistName, playlistId: playlistId ?? piD})
           show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true, playlistId:playlistId ?? piD })
         }}
         >
