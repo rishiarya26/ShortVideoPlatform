@@ -4,10 +4,10 @@ import Terms from '../commons/svgicons/terms';
 import PrivacyIco from '../commons/svgicons/privacy';
 import Logout from '../commons/svgicons/logout';
 import { useRouter } from 'next/router';
-import { removeItem } from '../../utils/cookie';
 import useDialog from '../../hooks/use-dialog';
 import LogoutPopup from '../logout-popup';
 import useSnackbar from '../../hooks/use-snackbar';
+import Language from '../commons/svgicons/language';
 
 function ProfileMenu() {
 const router = useRouter();
@@ -40,12 +40,12 @@ const {showSnackbar} = useSnackbar();
 
       {/* Content lang */}
       <div onClick={()=>router && router.push('/content-language')} className="flex items-center py-3">
-         <PrivacyIco/>
+         <Language/>
         <p className="text-base px-3">Content Langugage</p>
       </div>
       {/* ************ */}
 
-      <div onClick={()=>showDialog('Logout', LogoutPopup,'medium',{showMessage: showSnackbar})} className="flex items-center py-3">
+      <div onClick={()=>showDialog('Logout', LogoutPopup,'medium',{showMessage: showSnackbar})} className="flex items-center py-3 pl-1">
         <Logout/>
         <p className="text-base px-3">Logout</p>
       </div>
