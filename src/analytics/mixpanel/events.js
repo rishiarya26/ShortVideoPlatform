@@ -174,7 +174,6 @@ export const toTrackMixpanel = (type, value, item) => {
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
-        eventsWithIds['playlist']
         track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();

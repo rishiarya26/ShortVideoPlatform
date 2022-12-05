@@ -218,7 +218,6 @@ const adImpression =  async (index = 0)=>{
         let toUpdateShowData = [];
         const videoIdInitialItem = data?.data?.[0]?.content_id
         const videos = data?.data;
-        console.log("initial data", videos)
         /* show pop up & call api for next items after specified index */
         const insertItemsIndex = videoId ? 5 : 4
         setItems(videos);
@@ -273,14 +272,13 @@ const adImpression =  async (index = 0)=>{
     let data = []
      try{
       data =  await fetchData({ type: id });
-      console.log("data before", data?.data, "=>" , updateItems);
       let adPosition = localStorage.get('vmaxAdPosition') || null;
       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
         //delete cacheAdVideo?.adId; //Neeed to remove
         data?.data.splice(adPosition, 0, cacheAdVideo);
         cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
-        console.log(`added cachead successfully from cache! ${ data?.data}`)
+       
       }else{
         // debugger;
         try{
@@ -288,14 +286,14 @@ const adImpression =  async (index = 0)=>{
           if(!isEmptyObject(cachedVideo) && adPosition){
             //delete cachedVideo?.adId; //Neeed to remove
             data?.data?.splice(adPosition, 0, cachedVideo);
-            console.log(`added cachead successfully not from cache! ${ data?.data}`)
+           
           }
         }catch(error){
           console.error(error);
         }
       }
       updateItems = updateItems.concat(data?.data);
-      console.log("data after", data?.data, "=>" ,updateItems);
+      
       //  setOffset(offset+1)
       setItems(updateItems);
       }
@@ -333,7 +331,6 @@ const adImpression =  async (index = 0)=>{
   const videoAdSessionsCalls = async(percentage) => {
 
     if(!!advmaxObj && typeof advmaxObj === 'object' && !isObjectEmpty(advmaxObj) && window !== undefined){
-      console.log("adView", toShowItems[videoActiveIndex]?.feedVmaxAd, "=>" , toShowItems[videoActiveIndex]?.feedVmaxAd?.adView);
        let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
        if(percentage > 0 && percentage < 25){
          toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
@@ -518,12 +515,11 @@ const adImpression =  async (index = 0)=>{
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
-  // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
 }
   catch(e){
-console.log('errorrr',e)
+console.error('errorrr',e)
   }
 }
 
@@ -613,7 +609,7 @@ console.log('errorrr',e)
         }
       }
     }catch(error){ 
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -703,7 +699,6 @@ console.log('errorrr',e)
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId);
-                //console.log("active index: " + activeIndex)
 
                 console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
                 //? next vmax ad video (position & details)
