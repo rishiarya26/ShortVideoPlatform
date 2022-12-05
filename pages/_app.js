@@ -566,6 +566,8 @@ function Hipi({
       window.addEventListener(data,resetTimeout);
     })
 
+    showPWAPopup();
+
     return () => {
       events.forEach((data)=>{
         window.addEventListener(data,resetTimeout);
@@ -585,6 +587,32 @@ function Hipi({
      console.error("guest get social error",e)
      response = await toGetSocialToken();
    }};
+
+  //  navigator.serviceWorker.register('service-worker.js')
+  //  .then(() => {
+  //    console.log('Service worker successfully registered.');
+  //  })
+  //  .catch(err => console.log("There is an error registering SW."))
+
+   const showPWAPopup = () =>{
+    // let deferredPrompt;
+    console.log("before fn called");
+   try{ 
+     window.addEventListener('beforeinstallprompt', (e) => {
+     console.log("beforeInstall called",e);
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      // deferredPrompt = e;
+      window.deferredPrompt = e;
+      // Update UI notify the user they can install the PWA
+      // showInstallPromotion();
+      // Optionally, send analytics event that PWA install promo was shown.
+      console.log(`'beforeinstallprompt' event was fired.`);
+    });}catch(e){
+      console.error('error',e)
+    }
+   }
 
   return (
     <>
