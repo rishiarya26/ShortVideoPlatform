@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element*/
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import useSnackbar from "../../hooks/use-snackbar";
 import { updateUserProfile } from "../../sources/users";

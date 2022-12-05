@@ -40,6 +40,8 @@ import SnackCenter from '../commons/snack-bar-center';
 import { INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
+import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
+import isEmptyObject from '../../utils/is-object-empty';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -120,15 +122,24 @@ function Feed({ router }) {
     setShowAppBanner(null);
   }
 
-  const adImpression =  (index = 0)=>{
+  const adImpression =  async (index = 0)=>{
     if(toShowItems[index]?.adId && window !== undefined){
       let adInfo = toShowItems?.[index]?.adId || {};
       let {impression_url = null } = adInfo;
-      let timeStamp = Date.now();
-      try{
-        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
-      }catch(e){
-        console.error("Impression error: " + e);
+      if(impression_url && impression_url?.split(".").includes("appsflyer")){
+        try{
+         let response = await impressionUrlWrapper({url: impression_url})
+        }
+        catch(e){
+          console.error("error getting impression");
+        }
+      }else{
+        let timeStamp = Date.now();
+        try{
+          impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+        }catch(e){
+          console.error("Impression error: " + e);
+        }
       }
     }
   }
@@ -337,6 +348,8 @@ function Feed({ router }) {
        toTrackFirebase('watchTime', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
        toTrackFirebase('replay', {userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
        /*** view events ***/
+       console.log('duration',duration?.toString());
+       viewEventsCall(activeVideoId, 'completed', {duration : duration} );
        viewEventsCall(activeVideoId, 'user_video_start');
        if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
       //  try{
@@ -543,6 +556,8 @@ function Feed({ router }) {
                   setVideoActiveIndex(0);
                 }
                 activeId && setActiveVideoId(activeId); 
+
+                window.sessionStorage.setItem('used-impression-link',false); //to reset appsflyer value for apps-impression to be called for diff video.(line 54 in ad-cards).
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -604,7 +619,7 @@ function Feed({ router }) {
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      feedAd={item?.adId}
+                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
@@ -689,6 +704,40 @@ function Feed({ router }) {
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
+        <button className=' top-32 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center' 
+         onClick={async()=>{
+           console.log('👍', 'butInstall-clicked');
+           let deferredPrompt = ''
+          //  window.addEventListener('beforeinstallprompt', (e) => {
+            
+          //   // Prevent the mini-infobar from appearing on mobile
+          //   e.preventDefault();
+          //   // Stash the event so it can be triggered later.
+          //   // deferredPrompt = e;
+          //   deferredPrompt = e;
+          //   // Update UI notify the user they can install the PWA
+          //   // showInstallPromotion();
+          //   // Optionally, send analytics event that PWA install promo was shown.
+          //   console.log(`'beforeinstallprompt' event was fired.`);
+          //  }
+          //  )
+           const promptEvent = window.deferredPrompt;
+           if (!promptEvent) {
+            console.log("prompt not found",promptEvent)
+             // The deferred prompt isn't available.
+             return;
+           }
+           // Show the install prompt.
+           promptEvent.prompt();
+           // Log the result
+           const result = await promptEvent.userChoice;
+           console.log('👍', 'userChoice', result);
+           // Reset the deferred prompt variable, since
+           // prompt() can only be called once.
+           deferredPrompt = null;
+        }}>
+          Install
+        </button>
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
         <OpenAppStrip
           pageName={pageName}
@@ -697,6 +746,7 @@ function Feed({ router }) {
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
+        
         {/* hamburger */}
        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
        {/* <HamburgerMenu/> */}

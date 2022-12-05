@@ -83,7 +83,7 @@
      "thumbnailUrl": [
        item?.thumbnailUrl
      ],
-     "uploadDate":  item?.createdTimestamp,
+     "uploadDate":  item?.createdOn ? new Date(item?.createdOn)?.toISOString() : '',
      "duration": item?.duration,
      "contentUrl": `https://www.hipi.co.in/single-video/${item?.id}`,
      "embedUrl": `https://www.hipi.co.in/@${item?.userName}`,
