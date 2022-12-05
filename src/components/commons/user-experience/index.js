@@ -12,7 +12,7 @@ import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false, piD}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false, piD=null}) => {
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -51,8 +51,8 @@ if(noShow) return false;
           router.push(`/playlist/${playlistId}?videoId=${videoId || activeVideoId}`)
         } :
         ()=>{
-          toTrackMixpanel("playlistPopUpLaunch", {name:"playlist",playlistName, playlistId: piD})
-          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true, playlistId})
+          toTrackMixpanel("playlistPopUpLaunch", {name:"playlist",playlistName, playlistId: playlistId ?? piD})
+          show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true, playlistId:playlistId ?? piD })
         }}
         >
           <div className='flex items-center'>

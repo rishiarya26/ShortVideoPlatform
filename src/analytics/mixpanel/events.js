@@ -362,9 +362,9 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'popupCta' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = item?.name;
-        globalCommonEvents['Popup CTAs'] = item?.ctaName;
-        globalCommonEvents['elemant'] = item?.elemant;
+        globalCommonEvents['Popup Name'] = value?.name;
+        globalCommonEvents['Popup CTAs'] = value?.ctaName;
+        globalCommonEvents['elemant'] = value?.elemant;
         globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
         globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
 

@@ -34,7 +34,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
   };
 
   const mixpanelEvents = () => {
-    toTrackMixpanel("popupCta", {pageName:"Playlist Detail",name:"playlist video", ctaName:"playlist video", playlistName, playlistId});
+    toTrackMixpanel("popupCta", {pageName:"Playlist Detail",ctaName:"Playlist Video",name:"playlist video", playlistName, playlistId});
   }
 
   useEffect(() => {
@@ -51,12 +51,13 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
 
   const shareOnClick = async() => {
     if(!navigator.canShare) {
+      // toTrackMixpanel('popupCta',{page:"Playlist Detail",name:"share playlist", ctaName:"share playlist",  playlistName, playlistId});
       device === 'ios' &&  show('', detectDeviceModal, 'extraSmall');
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
+        toTrackMixpanel('popupCta',{page:"Playlist Detail",name:"Share Playlist", ctaName:"Share Playlist",  playlistName, playlistId});
         await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
-        toTrackMixpanel('popupCta',{page:"Playlist Detail",name:"share playlist", ctaName:"share playlist",  playlistName, playlistId});
       } catch(err){
         console.err('something went wrong', err)
       }
