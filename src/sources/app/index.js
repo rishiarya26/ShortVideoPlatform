@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';// 
+// import { promises as fs } from 'fs';
 import path from 'path';
 import canUseDom from 'can-use-dom';
 import { get } from 'network';
@@ -14,12 +14,12 @@ const transformError = data => data;
 
 async function getLocaleData(locale = 'en-in') {
   let response = {};
-  if (!canUseDom) {
-    const postsDirectory = path.join(process.cwd(), 'public/i10n');
-    const filePath = path.join(postsDirectory, `${locale}.json`);
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(fileContents);
-  }
+  // if (!canUseDom) {
+  //   const postsDirectory = path.join(process.cwd(), 'public/i10n');
+  //   const filePath = path.join(postsDirectory, `${locale}.json`);
+  //   const fileContents = await fs.readFile(filePath, 'utf8');
+  //   return JSON.parse(fileContents);
+  // }
   try {
     response = await get(`${getApiBasePath('app')}/i10n/${locale}.json`,null,{'content-type':'noHeaders'});
     return response.data;
