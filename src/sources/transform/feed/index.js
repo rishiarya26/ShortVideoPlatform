@@ -112,6 +112,7 @@ function transformSuccess(resp) {
       payloadData?.splice(0,0,data?.firstVideo);
     }
 
+    // putting this upside to make sure the add should not get replaced by language slide
     if(!isObjectEmpty(data?.vmaxAdVideo) && data?.vmaxVideoIndex){      
       // delete data?.vmaxAdVideo?.adId; //Need to remove this
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
