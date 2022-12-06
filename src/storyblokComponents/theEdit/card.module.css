@@ -4,7 +4,7 @@
   margin: auto;
   display: grid;
   gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .card {
@@ -24,6 +24,10 @@
 .descWrapper {
   padding: 6px 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1; 
 }
 
 .imageContainer {
@@ -63,7 +67,7 @@
 
 @media screen and (max-width: 990px) {
   .cardContainer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
