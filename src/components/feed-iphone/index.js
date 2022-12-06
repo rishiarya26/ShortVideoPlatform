@@ -494,11 +494,14 @@ const adImpression =  async (index = 0)=>{
   let dataItem = [...items];
 
   const arr = await getFeedData();
+  //to add the data from the index which is greater than the current dataItem length
+  let insertItemIndex = dataItem.length - videoActiveIndex;
   arr && (dataItem = dataItem?.concat(arr));
+
   //add
-  for(let i=0;i<=5;i++){
-    if(dataItem?.[videoActiveIndex+i+2]){ 
-      updateShowItems.push(dataItem[videoActiveIndex+i+2])
+  for(let i=0;i<=arr.length-1;i++){
+    if(dataItem?.[videoActiveIndex+i+insertItemIndex]){ 
+      updateShowItems.push(dataItem[videoActiveIndex+i+insertItemIndex])
     }
     // else{
 
