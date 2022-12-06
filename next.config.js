@@ -46,11 +46,6 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-    register : true,
-    // reactStrictMode : true,
-    // skipWaiting: true,
-    // swSrc: './src/service-worker.js',
-    dest: 'public',
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -112,7 +107,11 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-module.exports = withPWA(nextConfig);
+module.exports = {...nextConfig, ...withPWA({register : true,
+  // reactStrictMode : true,
+  // skipWaiting: true,
+  // swSrc: './src/service-worker.js',
+  dest: 'public'})};
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 
