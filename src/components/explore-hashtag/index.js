@@ -1,5 +1,6 @@
 /*eslint-disable react/no-unescaped-entities */
 /*eslint-disable react/display-name */
+/*eslint-disable @next/next/no-img-element*/
 
 import Save from '../commons/svgicons/save';
 import { Back } from '../commons/svgicons/back';
@@ -152,6 +153,16 @@ function HashTag({router}) {
          </p>
         </div>
       </div>
+      {details?.hashTagPromoBanner && (
+          <div onClick={() => {
+            if(details?.hashTagPromoUrl) {
+              const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+              router.push(`/${pathName}`);
+            }
+             }}>
+            <img src={details?.hashTagPromoBanner}/>
+          </div>
+      )}
       <VideoGallery
         items={items}
         status={fetchState}

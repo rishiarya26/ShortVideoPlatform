@@ -454,7 +454,16 @@ if(item?.indexOf('#')){
                 </div>
                
             </div>
-
+            {details?.hashTagPromoBanner && (
+                <div className='p-5 cursor-pointer' onClick={() => {
+                  if(details?.hashTagPromoUrl) {
+                    const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+                    router.push(`/${pathName}`);
+                  }
+                  }}>
+                  <img src={details?.hashTagPromoBanner}/>
+                </div>
+            )}
             <div className="w-full h-full flex flex-col p-4 ">   
               <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
               <DeskVideoGallery
