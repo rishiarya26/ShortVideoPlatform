@@ -117,9 +117,7 @@ function transformSuccess(resp) {
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
     }
 
-   
-
-    if(device === 'mobile' && deviceType !== 'ios'){
+    if(device === 'mobile'){
     try{
     const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
     const lang24ShowOnce = localStorage.get('lang-24-hr');
