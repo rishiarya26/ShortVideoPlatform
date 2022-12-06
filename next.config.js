@@ -50,7 +50,7 @@ const nextConfig = {
     // register : true,
     // skipWaiting: true,
     // swSrc: './src/service-worker.js',
-    // dest: 'public'
+    dest: 'public'
   },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
@@ -113,7 +113,7 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-// module.exports = withPWA(nextConfig);
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
+module.exports = withPWA(nextConfig);
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 
