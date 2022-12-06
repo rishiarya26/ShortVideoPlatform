@@ -47,9 +47,9 @@ const nextConfig = {
     defaultLocale: 'en-in'
   },
   pwa: {
-    register : true,
-    skipWaiting: true,
-    // swSrc: './src/service-worker.js',
+    // register : true,
+    // skipWaiting: true,
+    swSrc: './src/service-worker.js',
     dest: 'public'
   },
   generateEtags: true,
