@@ -146,7 +146,7 @@ function HashTag({router}) {
             </div>
           </div>
         </div>
-        <div className="flex text-sm text-gray-400 py-2">
+        <div className="flex text-sm text-gray-400 py-2 leading-4">
           <p>
             {details?.hashTagDesc}
             {/* <span className="font-medium text-gray-500">#hashtag</span> */}
