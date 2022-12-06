@@ -49,8 +49,8 @@ const nextConfig = {
   pwa: {
     // register : true,
     // skipWaiting: true,
-    swSrc: './src/service-worker.js',
-    dest: 'public'
+    // swSrc: './src/service-worker.js',
+    // dest: 'public'
   },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
