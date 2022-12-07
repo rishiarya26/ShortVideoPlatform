@@ -33,6 +33,7 @@ import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import RightArrow from '../commons/svgicons/right-arrow';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -438,6 +439,23 @@ if(item?.indexOf('#')){
                             {/* 
                             <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
                             */}
+
+                              {details?.hashTagPromoBanner && (
+                                  <div className='cursor-pointer' onClick={() => {
+                                    if(details?.hashTagPromoUrl) {
+                                      toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
+                                      const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+                                      router.push(`/${pathName}`);
+                                    }
+                                    }}>
+                                    {/* <img className='w-64' src={details?.hashTagPromoBanner}/> */}
+                                    <div className='border border-gray-200 text-gray-600 px-4 pr-2 py-1 flex w-max '>Know more
+                                    <RightArrow/>
+                                    </div>
+                                  </div>
+                              )}
+
+                              
                         </div>
                         {/* <div onClick={()=>
                             show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
@@ -454,17 +472,6 @@ if(item?.indexOf('#')){
                 </div>
                
             </div>
-            {details?.hashTagPromoBanner && (
-                <div className='p-5 cursor-pointer' onClick={() => {
-                  if(details?.hashTagPromoUrl) {
-                    toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
-                    const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
-                    router.push(`/${pathName}`);
-                  }
-                  }}>
-                  <img src={details?.hashTagPromoBanner}/>
-                </div>
-            )}
             <div className="w-full h-full flex flex-col p-4 ">   
               <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
               <DeskVideoGallery
