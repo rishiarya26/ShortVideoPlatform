@@ -171,6 +171,12 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
+      'hashtagBannerClicked' : () => {
+        globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+        globalCommonEvents['Hashtag ID'] = value?.hashtagId || 'NA';
+        globalCommonEvents['Hashtag Name'] = value?.hashtagName || 'NA';
+        track('Hashtag Banner Clicked', globalCommonEvents);
+      },
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;

@@ -156,8 +156,9 @@ function HashTag({router}) {
       {details?.hashTagPromoBanner && (
           <div onClick={() => {
             if(details?.hashTagPromoUrl) {
-              const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
-              router.push(`/${pathName}`);
+              toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
+              // const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+              // router.push(`/${pathName}`);
             }
              }}>
             <img src={details?.hashTagPromoBanner}/>
