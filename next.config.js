@@ -22,11 +22,11 @@ const appVersion = require('./app-version');
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  // disable: process.env.NODE_ENV === 'development',
-  register: true,
-});
+// const withPWA = require('next-pwa')({
+//   dest: 'public',
+//   // disable: process.env.NODE_ENV === 'development',
+//   register: true,
+// });
 
 
 const nextConfig = {
@@ -53,13 +53,13 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-  //   pwa: {
-  //     register : true,
-  //   // reactStrictMode : true,
-  //   // skipWaiting: true,
-  //   // swSrc: './src/service-worker.js',
-  //   dest: 'public'
-  // },
+    pwa: {
+      register : true,
+    // reactStrictMode : true,
+    // skipWaiting: true,
+    // swSrc: './src/service-worker.js',
+    dest: 'public'
+  },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
