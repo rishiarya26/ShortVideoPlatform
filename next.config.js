@@ -3,7 +3,7 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
-const withPWA = require('next-pwa');
+// const withPWA = require('next-pwa');
 
 const {
   GEN_SOURCE_MAP,
@@ -21,6 +21,13 @@ const appVersion = require('./app-version');
 
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  // disable: process.env.NODE_ENV === 'development',
+  register: true,
+});
+
 
 const nextConfig = {
   async headers() {
@@ -46,6 +53,13 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
+  //   pwa: {
+  //     register : true,
+  //   // reactStrictMode : true,
+  //   // skipWaiting: true,
+  //   // swSrc: './src/service-worker.js',
+  //   dest: 'public'
+  // },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -107,11 +121,7 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-module.exports = {...nextConfig, ...withPWA({register : true,
-  // reactStrictMode : true,
-  // skipWaiting: true,
-  // swSrc: './src/service-worker.js',
-  dest: 'public'})};
+module.exports = withPWA(nextConfig);
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 
