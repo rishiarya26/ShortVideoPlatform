@@ -387,6 +387,7 @@ export const toTrackMixpanel = (type, value, item) => {
         getBannerType();
          globalCommonEvents['Carousal ID'] = item?.carousalId;
          globalCommonEvents['Carousal Name'] = item?.carousalName;
+         globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
         track('Carousal Banner Impression', globalCommonEvents);
        },
        'carousalBannerClick' : ()=>{
@@ -394,6 +395,7 @@ export const toTrackMixpanel = (type, value, item) => {
          getBannerType();
         globalCommonEvents['Carousal ID'] = item?.carousalId;
         globalCommonEvents['Carousal Name'] = item?.carousalName;
+        globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
        track('Carousal Banner Click', globalCommonEvents);
       },
         'searchInitiated' : ()=>{
