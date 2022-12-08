@@ -434,7 +434,7 @@ if(item?.indexOf('#')){
                         <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
                   </div>
                       <div className="flex flex-col px-4 ">
-                        <div className="flex flex-col">
+                        <div className="flex w-3/4 justify-between">
                             <h1 className="text-3xl font-semibold">{details?.hashtagName}</h1>
                             {/* 
                             <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
