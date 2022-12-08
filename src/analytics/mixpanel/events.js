@@ -177,14 +177,6 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Hashtag Name'] = value?.hashtagName || 'NA';
         track('Hashtag Banner Clicked', globalCommonEvents);
       },
-      'carousalBannerClicker' : () => {
-        globalCommonEvents['Page Name'] = value?.pageName || 'NA';
-        globalCommonEvents['Banner Type'] = value?.bannerType || 'NA';
-        globalCommonEvents['Carousel ID'] = value?.carousalId || 'NA';
-        globalCommonEvents['Carousel Name'] = value?.carousalName || 'NA';
-        globalCommonEvents['Horizontal Index'] = value?.horizontalIndex || 'NA';
-        track('Carousal Banner Clicker', globalCommonEvents);
-      },
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;

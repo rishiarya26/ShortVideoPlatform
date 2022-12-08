@@ -262,7 +262,6 @@ function Explore() {
                      key={id} 
                      id={id} 
                      onClick={()=> {
-                      toTrackMixpanel('carousalBannerClicker', {pageName, bannerType: data?.contentType, carousalId: data?.id, carousalName: data?.id, horizontalIndex: id})
                       data?.contentType === 'User' ?
                         onBannerClick(data?.contentType, data?.user?.userName, id) :
                         data?.contentType === 'Hashtag' ? 
