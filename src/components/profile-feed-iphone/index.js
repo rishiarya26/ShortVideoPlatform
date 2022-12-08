@@ -431,7 +431,7 @@ function ProfileFeedIphone({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  toShowItems?.[videoActiveIndex]?.videoDuration});
 
                 /***************/
 

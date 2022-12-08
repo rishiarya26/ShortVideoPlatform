@@ -354,7 +354,7 @@ function ProfileFeed({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  items?.[videoActiveIndex]?.videoDuration});
 
                 /***************/
 

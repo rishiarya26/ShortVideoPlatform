@@ -687,7 +687,7 @@ console.error('errorrr',e)
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  toShowItems[videoActiveIndex]?.videoDuration});
                 /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){

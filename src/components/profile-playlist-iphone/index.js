@@ -639,7 +639,7 @@ function ProfilePlaylistIphone({ router }) {
                 timeSpent:
                   preVideoDurationDetails?.videoDurationDetails?.currentT,
                 duration:
-                  toShowItems[videoActiveIndex]?.videoDuration
+                  toShowItems?.[videoActiveIndex]?.videoDuration
               });
               // preVideoDurationDetails?.videoDurationDetails?.totalDuration,
 

@@ -744,7 +744,6 @@ function Feed({ router }) {
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
-                      isFollow={item?.isFollowing}
                     />}
                   </SwiperSlide>
                 )) : (
