@@ -22,11 +22,11 @@ const appVersion = require('./app-version');
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
 
-// const withPWA = require('next-pwa')({
-//   dest: 'public',
-//   // disable: process.env.NODE_ENV === 'development',
-//   register: true,
-// });
+const withPWA = require('next-pwa')({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+});
 
 
 const nextConfig = {
