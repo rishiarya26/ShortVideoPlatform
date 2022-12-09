@@ -120,9 +120,9 @@ async function search(userId,searchTerm,setItems) {
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
               <Img data={data?.profilePic}  alt='image' fallback={fallbackUser?.src}/>
               </div>
-            <div className="flex flex-col justify-between pl-4 pb-2">
-              <p className="text-sm text-gray-400">{data?.firstName}{' '}{data?.lastName}</p>
-              <p className="font-medium text-base text-gray-700">{`@${data?.userHandle}`} </p>
+            <div className="flex flex-col justify-between pl-4 pb-2 max-w-45v">
+              <p className="text-sm text-gray-400 w-full truncate">{data?.firstName}{' '}{data?.lastName}</p>
+              <p className="font-medium text-base text-gray-700 w-full truncate">{`@${data?.userHandle}`} </p>
             </div>
           </div>
           <div className="flex items-center">
