@@ -1250,8 +1250,8 @@ input:checked + .slider_new:before {
 /* login_bug_fix */
 .translate_center
 {
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) !important;
 } 
 /* PRODUCT CARD */
 .text-8 {

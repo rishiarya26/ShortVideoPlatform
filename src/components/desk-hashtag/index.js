@@ -19,7 +19,7 @@ import { shareProfile } from '../../utils/app';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import DeskVideoGallery from '../desk-video-gallery';
@@ -33,6 +33,7 @@ import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import RightArrow from '../commons/svgicons/right-arrow';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -433,11 +434,27 @@ if(item?.indexOf('#')){
                         <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
                   </div>
                       <div className="flex flex-col px-4 ">
-                        <div className="flex flex-col">
+                        <div className="flex w-3/4 justify-between">
                             <h1 className="text-3xl font-semibold">{details?.hashtagName}</h1>
                             {/* 
                             <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
                             */}
+
+                              {details?.hashTagPromoBanner && (
+                                  <div className='cursor-pointer' onClick={() => {
+                                    if(details?.hashTagPromoUrl) {
+                                      const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+                                      router.push(`/${pathName}`);
+                                    }
+                                    }}>
+                                    {/* <img className='w-64' src={details?.hashTagPromoBanner}/> */}
+                                    <div className='border border-gray-200 text-gray-600 px-4 pr-2 py-1 flex w-max '>Know more
+                                    <RightArrow/>
+                                    </div>
+                                  </div>
+                              )}
+
+                              
                         </div>
                         {/* <div onClick={()=>
                             show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
@@ -454,7 +471,6 @@ if(item?.indexOf('#')){
                 </div>
                
             </div>
-
             <div className="w-full h-full flex flex-col p-4 ">   
               <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
               <DeskVideoGallery

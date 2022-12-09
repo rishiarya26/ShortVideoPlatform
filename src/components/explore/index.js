@@ -200,7 +200,7 @@ function Explore() {
 
   const onBannerClick =(contentType, id, index)=>{
     const item = crousalItems?.length>0 && crousalItems?.[index];
-    toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+    toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: index})
     toRedirect?.[contentType](id);
     // (data?.redirectUrl && router && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
   }
@@ -242,14 +242,14 @@ function Explore() {
                   activeIndex, slides
                 } = swiper;
                 const item = crousalItems?.length>0 && crousalItems?.[0];
-                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: activeIndex})
               }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
                 const item = crousalItems?.length>0 && crousalItems?.[activeIndex];
-                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: activeIndex})
               }
               }
             > 
@@ -261,10 +261,13 @@ function Explore() {
                     <div 
                      key={id} 
                      id={id} 
-                     onClick={()=> data?.contentType === 'User' ?
-                      onBannerClick(data?.contentType, data?.user?.userName, id) :
-                    data?.contentType === 'Hashtag' ? onBannerClick(data?.contentType, data?.displayName, id) :
-                    onBannerClick(data?.contentType, data?.id, id)
+                     onClick={()=> {
+                      data?.contentType === 'User' ?
+                        onBannerClick(data?.contentType, data?.user?.userName, id) :
+                        data?.contentType === 'Hashtag' ? 
+                          onBannerClick(data?.contentType, data?.displayName, id) :
+                          onBannerClick(data?.contentType, data?.id, id);
+                      }
                   } 
                      className="carousel_item bg-gray-300 min-w-full relative">
                        <Img data={data?.bannerUrl} title={data?.name || data?.displayName}/>

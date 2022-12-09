@@ -171,6 +171,12 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
+      'hashtagBannerClicked' : () => {
+        globalCommonEvents['Page Name'] = value?.pageName || 'NA';
+        globalCommonEvents['Hashtag ID'] = value?.hashtagId || 'NA';
+        globalCommonEvents['Hashtag Name'] = value?.hashtagName || 'NA';
+        track('Hashtag Banner Clicked', globalCommonEvents);
+      },
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
@@ -381,6 +387,7 @@ export const toTrackMixpanel = (type, value, item) => {
         getBannerType();
          globalCommonEvents['Carousal ID'] = item?.carousalId;
          globalCommonEvents['Carousal Name'] = item?.carousalName;
+         globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
         track('Carousal Banner Impression', globalCommonEvents);
        },
        'carousalBannerClick' : ()=>{
@@ -388,6 +395,7 @@ export const toTrackMixpanel = (type, value, item) => {
          getBannerType();
         globalCommonEvents['Carousal ID'] = item?.carousalId;
         globalCommonEvents['Carousal Name'] = item?.carousalName;
+        globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
        track('Carousal Banner Click', globalCommonEvents);
       },
         'searchInitiated' : ()=>{
