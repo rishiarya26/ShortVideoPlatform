@@ -443,7 +443,6 @@ if(item?.indexOf('#')){
                               {details?.hashTagPromoBanner && (
                                   <div className='cursor-pointer' onClick={() => {
                                     if(details?.hashTagPromoUrl) {
-                                      toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
                                       const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
                                       router.push(`/${pathName}`);
                                     }
