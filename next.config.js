@@ -4,6 +4,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
+const runtimeCaching = require("next-pwa/cache");
 
 const {
   GEN_SOURCE_MAP,
@@ -58,7 +59,9 @@ const nextConfig = {
     // reactStrictMode : true,
     // skipWaiting: true,
     // swSrc: './src/service-worker.js',
-    dest: 'public'
+    dest: 'public',
+  //   runtimeCaching,
+  //   buildExcludes: [/apple-icon-152x152-dunplab-manifest-17016.822f1c3da8df1ee9d1eeb35f622ea109.png$/]
   },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
