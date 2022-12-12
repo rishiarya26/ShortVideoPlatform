@@ -211,7 +211,7 @@ const SearchItems = ({router,type})=>{
                  setSearchTerm('')}}>
             <Close />
             </button>}
-           {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-2 p-4 py-5">
+           {type === 'explore' && !showSuggestions && <div className="absolute left-1 top-1 p-4 py-5">
               <SearchBlack/>       
             </div>}
             </div>

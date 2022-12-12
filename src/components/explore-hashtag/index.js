@@ -1,5 +1,6 @@
 /*eslint-disable react/no-unescaped-entities */
 /*eslint-disable react/display-name */
+/*eslint-disable @next/next/no-img-element*/
 
 import Save from '../commons/svgicons/save';
 import { Back } from '../commons/svgicons/back';
@@ -145,13 +146,24 @@ function HashTag({router}) {
             </div>
           </div>
         </div>
-        <div className="flex text-sm text-gray-400 py-2">
+        <div className="flex text-sm text-gray-400 py-2 leading-4">
           <p>
             {details?.hashTagDesc}
             {/* <span className="font-medium text-gray-500">#hashtag</span> */}
          </p>
         </div>
       </div>
+      {details?.hashTagPromoBanner && (
+          <div onClick={() => {
+            if(details?.hashTagPromoUrl) {
+              toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
+              const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+              router.push(`/${pathName}`);
+            }
+             }}>
+            <img src={details?.hashTagPromoBanner}/>
+          </div>
+      )}
       <VideoGallery
         items={items}
         status={fetchState}
