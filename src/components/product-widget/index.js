@@ -6,7 +6,7 @@ import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import Close from '../commons/svgicons/close-white';
 import { Loading } from './loading';
-import fallbackShop from '../../../public/images/shop.png'
+// import fallbackShop from '../../../public/images/shop.png'
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
@@ -51,7 +51,7 @@ function ProductWidget({
                 setClose('open');             
               }}
             >
-              <Img data={data} height={120} width={120} fallback={fallbackShop?.src}/>
+              <Img data={data} height={120} width={120} fallback={"/images/shop.png"}/>
             </div>
           ))
             : (

@@ -94,7 +94,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
         // eslint-disable-next-line no-undef
       >
         {/* <img height={50} width={50} src={data?.img_url}/> */}
-        <Img data={data?.img_url} height={120} width={120} fallback={fallbackShop?.src}/>
+        <Img data={data?.img_url} height={120} width={120} fallback={"/images/shop.png"}/>
         {data?.card_labels && data.card_labels !== "" && <LabelHolder label={data?.card_labels}/>}
       </div>
        
