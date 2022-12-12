@@ -164,7 +164,7 @@ function ProfileFeedIphone({ router }) {
      setDeletedTill(deletedTill);
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    //setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
      catch(e){
@@ -181,7 +181,7 @@ function ProfileFeedIphone({ router }) {
      }
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    //setShowAppBanner(true);
      setDeletedTill(deletedTill-5);
      setToShowItems(updateShowItems);
     }
@@ -431,7 +431,7 @@ function ProfileFeedIphone({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  toShowItems?.[videoActiveIndex]?.videoDuration});
+                 duration :  toShowItems?.[videoActiveIndex]?.duration});
 
                 /***************/
 
