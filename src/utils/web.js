@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useRef } from "react";
 import { ONE_TAP_DOWNLOAD } from "../constants";
 import { getOneLink } from "../sources/social";
+import { getItem } from "./cookie";
 import { localStorage } from "./storage";
 
 function CopyToClipBoard(value) {
@@ -125,7 +126,8 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   }
   catch(e){
   }
-  window?.open(link);
+  const device = getItem('device-info') || 'ios';
+  device === 'ios' ? (window.location.href = link) : (window?.open(link));
 }
 
  const isReffererGoogle = ()=>{
