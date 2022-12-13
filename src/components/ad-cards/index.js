@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import Img from '../commons/image';
-import fallbackShop from '../../../public/images/shop.png';
+// import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
