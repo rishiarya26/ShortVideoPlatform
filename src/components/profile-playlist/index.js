@@ -498,7 +498,7 @@ function ProfilePlaylist({ router }) {
                 timeSpent:
                   preVideoDurationDetails?.videoDurationDetails?.currentT,
                 duration:
-                  preVideoDurationDetails?.videoDurationDetails?.totalDuration,
+                items?.[videoActiveIndex]?.videoDuration,
               });
 
               /***************/

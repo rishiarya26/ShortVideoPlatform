@@ -67,6 +67,7 @@ function transformSuccess(resp) {
         payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
         payloadObject.playlistId = d?.playlists?.[0]?.id || null;
         payloadObject.playlistName = d?.playlists?.[0]?.name || null;
+        payloadObject.videoDuration = d?.videoDuration || null;
       });
       payload.data = payloadObject;
     } else {
