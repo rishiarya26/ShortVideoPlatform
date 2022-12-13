@@ -12,7 +12,7 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
-import fallbackUser from '../../../public/images/users.png' 
+// import '/images/users.png' '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { shareProfile } from '../../utils/app';
@@ -449,7 +449,7 @@ function DeskUsers({
          </div> */}
             <div className="flex items-center pb-2">
                <div className="flex items-center usrimg w-32 h-32 min-w-32 rounded-full overflow-hidden mr-4">
-               <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />               </div>
+               <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />               </div>
                <div className="flex flex-col h-32 justify-between">
                   <div>
                   <h3 className=" mb-1 mt-1.5 flex items-center font-bold text-2xl ">{userHandle} <div className="ml-2">{userVerified === 'Verified' ?<VerifiedLg/> : ''} </div></h3>
@@ -484,7 +484,7 @@ function DeskUsers({
       {/* <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
+            <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <p className="font-medium p-2 text-sm">{firstName} {lastName}</p>
         </div>

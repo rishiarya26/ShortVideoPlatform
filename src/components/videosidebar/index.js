@@ -12,7 +12,7 @@ import useDialog from '../../hooks/use-dialog';
 import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
 import { share } from '../../utils/app';
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
@@ -246,7 +246,7 @@ const handleSaveMoments = () =>{
           <Img
             title="Hipi"
             data={optProfilePic}
-            fallback={fallbackUser?.src}
+            fallback={'/images/users.png'}
           />
           </div>}
           {/* <div

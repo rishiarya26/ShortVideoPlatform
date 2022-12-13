@@ -4,7 +4,7 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import Img from '../commons/image';
 import Cart from '../commons/svgicons/cart';
 import Play from '../commons/svgicons/play-outlined';
-import fallbackVideo from '../../../public/images/video.png';
+// import fallbackVideo from '../../../public/images/video.png';
 import Like from '../commons/svgicons/like-outlined';
 import { useState } from 'react';
 
@@ -20,7 +20,7 @@ export default function DeskVideoCard({ thumbnailUrl,videoTitle,viewCount,shoppa
         <Cart/>
       </div>}
       {activeHoverIndex !== id ?
-      <Img data={thumbnailUrl} title={videoTitle} fallback={fallbackVideo?.src}/>
+      <Img data={thumbnailUrl} title={videoTitle} fallback={'/images/video.png'}/>
       :<>
       <video
         //  onLoadStart={()=>setShowLoader(true)}

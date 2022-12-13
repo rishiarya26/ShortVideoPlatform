@@ -6,8 +6,7 @@ import { withBasePath } from '../../config';
 import { getLeaderboardData } from '../../sources/leaderboard';
 import Img from '../commons/image';
 import Tabs from '../commons/tabs/leadership';
-import fallbackUsers from '../../../public/images/users.png';
-
+//import fallbackUsers from '../../../public/images/users.png';
 function GoatDeskLb() {
   // const [data, setData] = useState(null);
   // const [selectedRound, setSelectedRound] = useState(0);
@@ -91,7 +90,7 @@ const onStoreRedirect =(device)=>{
           {first?.position}
           </div>
           <div className="w-10 mx-2 h-10 bg-gray-200 text-white">
-          <Img data={first?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={first?.profilepic} fallback={'/images/users.png'}/>
           </div>
           <div className="mx-2">
             {/* <p className="text-xl font-semibold text-white">{first?.username}</p> */}
@@ -108,7 +107,7 @@ const onStoreRedirect =(device)=>{
           {item?.position}
           </div>
           <div className="w-10 mx-2 h-10 bg-gray-200 text-white">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
           </div>
           <div className="mx-2">
             {/* <p className="text-xl font-semibold text-white">{item?.username}</p> */}

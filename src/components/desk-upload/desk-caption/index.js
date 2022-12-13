@@ -3,7 +3,7 @@ import UserList from '../user-list';
 import debounce from 'lodash.debounce';
 import { getUserSuggestions } from '../../../sources/upload/user-suggestion';
 import Img from '../../commons/image';
-import fallbackUser from '../../../../public/images/users.png';
+// import fallbackUser from '../../../../public/images/users.png';
 import { getSuggestions as getHashtagSuggestions } from '../../../sources/upload/hashtag-suggestion';
 
 async function search(
@@ -517,7 +517,7 @@ function DeskCaption({
                         <Img
                           title='Hipi'
                           data={item.userIcon}
-                          fallback={fallbackUser?.src}
+                          fallback={'/images/users.png'}
                         />
                       </div>
 
