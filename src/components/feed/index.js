@@ -649,10 +649,9 @@ function Feed({ router }) {
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
-
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration : toShowItems[videoActiveIndex]?.videoDuration});
 
                 /***************/
 
