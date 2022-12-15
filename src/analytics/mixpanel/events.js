@@ -532,7 +532,24 @@ export const toTrackMixpanel = (type, value, item) => {
             globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
           
           track('Appsflyer Impression Pixel',globalCommonEvents)
-        }
+        },
+        'appsflyerLogs' : ()=> {
+          addUgcId();
+          addPageTabName();
+          globalCommonEvents['Product Id'] = item?.productId || 'NA';
+          globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
+          globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
+          globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
+          globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
+          globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
+          globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
+          globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
+          // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
+          globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
+          globalCommonEvents['Appsflyer Header'] = item?.response;
+          globalCommonEvents['Appsflyer Id'] = item?.request;
+        track('Appsflyer Logs',globalCommonEvents)
+      }
       
         
         

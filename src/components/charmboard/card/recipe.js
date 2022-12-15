@@ -12,7 +12,13 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
         // console.log('uuu')
         // console.log('A******',productIdChange, id, appsflyerId)
         productIdChange && productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
-        productIdChange && productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
+        // productIdChange && productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
+        if(productIdChange === id && appsflyerId){
+            try{
+             const response = appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop', mixpanelProperties:{pageName:pageName, tabName:tabName, id:id,shopName:shopName,productName:productName,videoId:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId}})
+            }catch(e){
+            }
+            }
      },[productIdChange])
 
      const onProductInView =(entry)=>{
