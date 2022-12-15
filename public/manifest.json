@@ -11,16 +11,16 @@
   "orientation": "any",
   "screenshots" : [
     {
-      "src": "/images/stunner/hipistunner_challenge-Dec-1.jpeg",
-      "sizes": "540x720",
-      "type": "image/webp",
+      "src": "images/2.jpg",
+      "sizes": "761x1080",
+      "type": "image/jpg",
       "platform": "wide",
       "label": "Homescreen of Awesome App"
     },
     {
-      "src": "/images/stunner/hipistunner_challenge-Dec-2.jpeg",
-      "sizes": "540x720",
-      "type": "image/webp",
+      "src": "images/3.jpg",
+      "sizes": "761x1085",
+      "type": "image/jpg",
       "platform": "wide",
       "label": "List of Awesome Resources available in Awesome App"
     }
