@@ -35,6 +35,7 @@ import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
 import { getPageName } from '../src/utils/web';
+import { toTrackReco } from '../src/analytics/view-events';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -253,7 +254,8 @@ function Hipi({
 
   useEffect(()=>{
     //let timer;
-    try{ 
+    try{
+        toTrackReco('launch')
       window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){

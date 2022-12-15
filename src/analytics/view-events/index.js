@@ -12,7 +12,7 @@ export const viewEventsCall = async(id, event, info)=>{
 const callRecoEvent = async(payload)=>{
  try{
     console.log("reco event",payload)
-  await viewEvents({payloads:payload});
+    await viewEvents({payloads:payload});
  }catch(e){
    console.error("reco events",e)
  }
@@ -52,6 +52,7 @@ export const toTrackReco = async(event, info) =>{
     "follow": ()=>callRecoEvent(recoEvents),
     "unfollow": ()=>callRecoEvent(recoEvents),
     "click": ()=>callRecoEvent(recoEvents),
+    "launch": ()=>callRecoEvent({event: "launch"})
   }
 
   event && toTrack?.[event] && toTrack?.[event]();
