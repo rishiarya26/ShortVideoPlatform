@@ -7,7 +7,7 @@ import ComponentStateHandler, { useFetcher } from "../commons/component-state-ha
 import SearchFollowers from "../search-followers";
 import Error from "./error";
 import Loader from "./loader";
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import { useRouter } from "next/router";
 import useInfiniteScroll from "../../hooks/use-infinite-scroll";
@@ -118,7 +118,7 @@ async function search(userId,searchTerm,setItems) {
         <div key={id} className="user_card flex justify-between py-2 px-4 "> 
           <div onClick={()=> router && router?.push(`/@${data?.userHandle}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
-              <Img data={data?.profilePic}  alt='image' fallback={fallbackUser?.src}/>
+              <Img data={data?.profilePic}  alt='image' fallback={'/images/users.png'}/>
               </div>
             <div className="flex flex-col justify-between pl-4 pb-2">
               <p className="text-sm text-gray-400">{data?.firstName}{' '}{data?.lastName}</p>

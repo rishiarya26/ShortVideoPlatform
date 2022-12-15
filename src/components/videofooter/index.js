@@ -6,7 +6,7 @@ import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
@@ -100,7 +100,7 @@ function VideoFooter({
       <div className='bottom-32 videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4'>
         <div className="flex items-center">
           <div className="usrimg w-10 h-10 overflow-hidden rounded-full" onClick={()=> router && router?.push(`/@${userName}`)}>
-            <Img title="Hipi" data={optProfilePic} fallback={fallbackUser?.src} />
+            <Img title="Hipi" data={optProfilePic} fallback={'/images/users.png'} />
           </div>
           
           <div className="font-medium dark:text-white ml-1">

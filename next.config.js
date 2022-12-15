@@ -22,11 +22,12 @@ const appVersion = require('./app-version');
 
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
-
 const withPWA = require('next-pwa')({
   dest: "public",
   register: true,
   skipWaiting: true,
+  publicExcludes: ['!images'],
+  buildExcludes: [/chunks\/.*$/, /css\/.*$/, /media\/.*$/],
 });
 
 
@@ -53,15 +54,6 @@ const nextConfig = {
     localeDetection: false,
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
-  },
-    pwa: {
-      register : true,
-    // reactStrictMode : true,
-    // skipWaiting: true,
-    // swSrc: './src/service-worker.js',
-    dest: 'public',
-  //   runtimeCaching,
-  //   buildExcludes: [/apple-icon-152x152-dunplab-manifest-17016.822f1c3da8df1ee9d1eeb35f622ea109.png$/]
   },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
