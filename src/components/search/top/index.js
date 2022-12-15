@@ -81,12 +81,12 @@ const TopItems = ({item, redirectTab}) =>{
                       console.error('search result click',e)
                     }
                      router && router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
-                      <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
+                      <div className=" w-15v flex h-15v min-w-15v bg-gray-300 relative rounded-full overflow-hidden" >
                       <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-bold text-sm text-gray-700">{item?.userId} </p>
-                        <p className="text-xs text-gray-400">{item?.userId}</p>
+                        <p className="font-bold text-sm text-gray-700 line-clamp-1">{item?.userId} </p>
+                        <p className="text-xs text-gray-400 line-clamp-1">{item?.userId}</p>
                         <p className="text-xs text-gray-400 whitespace-nowrap">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>
