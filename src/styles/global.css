@@ -81,6 +81,9 @@ img{
 .text-xxs{
   font-size: 10px;
 }
+.break-word{
+  word-break: break-word;
+}
 .video-card img, .trending_card img{
   height: 100%;
 }
