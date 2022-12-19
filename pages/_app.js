@@ -566,13 +566,7 @@ function Hipi({
       window.addEventListener(data,resetTimeout);
     })
 
-    showPWAPopup();
-    // const myWorker = new Worker('service-worker.js')
-  //      window?.navigator?.serviceWorker?.register('service-worker.js')
-  //  .then(() => {
-  //    console.log('Service worker successfully registered.');
-  //  })
-  //  .catch(err => console.log("There is an error registering SW."))
+    trapPwaInstallEvent();
 
     return () => {
       events.forEach((data)=>{
@@ -594,11 +588,7 @@ function Hipi({
      response = await toGetSocialToken();
    }};
 
-
-  // const new Worker(/)
- 
-
-   const showPWAPopup = () =>{
+   const trapPwaInstallEvent = () =>{
     // let deferredPrompt;
     console.log("before fn called");
    try{ 

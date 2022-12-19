@@ -499,9 +499,25 @@ export const toTrackMixpanel = (type, value, item) => {
             globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
           
           track('Appsflyer Impression Pixel',globalCommonEvents)
+        },
+        'pwaInstallClickSuccess' : ()=>{
+          addPageTabName();
+          track('PWA Install Success',globalCommonEvents)
+        },
+        'pwaInstallClickError' : ()=>{ 
+          addPageTabName();
+          track('PWA Install Failure',globalCommonEvents)
+        },
+        'pwaInstallStripImpression' : ()=>{
+          addPageTabName();
+          track('PWA Install Button Impression',globalCommonEvents)
+        },
+        'pwaInstallStripClicked' : ()=> {
+          addPageTabName();
+          track('PWA Install Button Clicked',globalCommonEvents)
         }
       
-        
+        //how to make sunrise in html?
         
  //   'pause' : () => track('Pause', commonWithIds()),
 //   'resume' : () => track('Resume', commonWithIds()),

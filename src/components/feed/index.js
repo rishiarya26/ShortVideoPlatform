@@ -705,37 +705,7 @@ function Feed({ router }) {
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
         <button className=' top-32 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center' 
-         onClick={async()=>{
-           console.log('👍', 'butInstall-clicked');
-           let deferredPrompt = ''
-          //  window.addEventListener('beforeinstallprompt', (e) => {
-            
-          //   // Prevent the mini-infobar from appearing on mobile
-          //   e.preventDefault();
-          //   // Stash the event so it can be triggered later.
-          //   // deferredPrompt = e;
-          //   deferredPrompt = e;
-          //   // Update UI notify the user they can install the PWA
-          //   // showInstallPromotion();
-          //   // Optionally, send analytics event that PWA install promo was shown.
-          //   console.log(`'beforeinstallprompt' event was fired.`);
-          //  }
-          //  )
-           const promptEvent = window.deferredPrompt;
-           if (!promptEvent) {
-            console.log("prompt not found",promptEvent)
-             // The deferred prompt isn't available.
-             return;
-           }
-           // Show the install prompt.
-           promptEvent.prompt();
-           // Log the result
-           const result = await promptEvent.userChoice;
-           console.log('👍', 'userChoice', result);
-           // Reset the deferred prompt variable, since
-           // prompt() can only be called once.
-           deferredPrompt = null;
-        }}>
+         onClick={}>
           Install
         </button>
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 

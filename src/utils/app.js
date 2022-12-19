@@ -79,6 +79,31 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
   return Promise.reject(NO_SUPPORT);
 };
 
+export const showPwaInstall = async()=>{
+    console.log('👍', 'butInstall-clicked');
+    const promptEvent = window.deferredPrompt;
+    if (!promptEvent) {
+      console.info("prompt not found",promptEvent)
+      // The deferred prompt isn't available.
+      return;
+    }
+    // Show the install prompt.
+    promptEvent.prompt();
+    toTrackMixpanel('pwaInstallPopup',{});
+
+    // after user choice 
+    const result = await promptEvent.userChoice;
+    console.log('👍', 'userChoice', result);
+    if(result?.outcome){
+      result.outcome === "accepted" && toTrackMixpanel('pwaInstallClickSuccess');
+      result.outcome === "dismissed" && toTrackMixpanel('pwaInstallClickError');
+    }
+    // Reset the deferred prompt variable, since
+    // prompt() can only be called once.
+    deferredPrompt = null;
+ }
+
+
 /** example
  * Router.pushState('/user, {name : ankit, age: 31})
  * This will work only on component in pages folder
