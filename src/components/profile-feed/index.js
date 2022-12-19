@@ -303,11 +303,11 @@ function ProfileFeed({ router }) {
      />
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
 
-        <OpenAppStrip
+        {typeof window !== "undefined" && window?.deferredPrompt && <OpenAppStrip
         pageName={pageName}
         item={items?.[videoActiveIndex]}
         activeVideoId={activeVideoId}
-        />
+        />}
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
