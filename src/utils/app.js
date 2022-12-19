@@ -79,7 +79,7 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
   return Promise.reject(NO_SUPPORT);
 };
 
-export const showPwaInstall = async()=>{
+export const showPwaInstall = async({pageName, tabName})=>{
     console.log('👍', 'butInstall-clicked');
     const promptEvent = window.deferredPrompt;
     if (!promptEvent) {
@@ -95,8 +95,8 @@ export const showPwaInstall = async()=>{
     const result = await promptEvent.userChoice;
     console.log('👍', 'userChoice', result);
     if(result?.outcome){
-      result.outcome === "accepted" && toTrackMixpanel('pwaInstallClickSuccess');
-      result.outcome === "dismissed" && toTrackMixpanel('pwaInstallClickError');
+      result.outcome === "accepted" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
+      result.outcome === "dismissed" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Cancel', elemant:'Cancel'});;
     }
     // Reset the deferred prompt variable, since
     // prompt() can only be called once.

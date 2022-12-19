@@ -42,6 +42,7 @@ import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
 import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
 import isEmptyObject from '../../utils/is-object-empty';
+import { showPwaInstall } from '../../utils/app';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -705,7 +706,7 @@ function Feed({ router }) {
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
         {/* open cta */}
         <button className=' top-32 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center' 
-         onClick={}>
+         onClick={showPwaInstall}>
           Install
         </button>
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 

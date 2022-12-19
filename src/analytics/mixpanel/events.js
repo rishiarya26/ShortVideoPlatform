@@ -30,10 +30,12 @@ export const commonEvents = ()=>{
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
     const previousPage = window?.sessionStorage?.getItem('previous-page');
+    const isInstalled = JSON.parse(localStorage?.get('isInstalled'));
   
     let payload = {}
     payload['unique ID'] = loggedInId || guestId;
     payload['isPWA'] = getIsMobile();
+    payload['isInstalled'] = isInstalled;
     payload['Device'] = device;
     payload['User Type'] = loggedInId ? 'member' : 'guest';
     payload['User Handle'] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'

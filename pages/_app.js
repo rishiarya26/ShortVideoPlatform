@@ -515,6 +515,7 @@ function Hipi({
  /*************************** */
     useEffect(()=>{
       setRefferer();
+      isPwa();
      
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
@@ -567,6 +568,7 @@ function Hipi({
     })
 
     trapPwaInstallEvent();
+    
 
     return () => {
       events.forEach((data)=>{
@@ -607,6 +609,24 @@ function Hipi({
       console.error('error',e)
     }
    }
+
+   function isPwa() {
+   try{ 
+    // localStorage?.remove('isInstalled');
+      // let mode = 'browser tab';     
+      const pwa = ["fullscreen", "standalone", "minimal-ui"].some(
+          (displayMode) => window.matchMedia('(display-mode: ' + displayMode + ')').matches
+      );
+      // if(pwa){
+      //   mode = 'pwa'
+      // }
+      // Log launch display mode to analytics
+      console.log('isInstalled:', pwa);
+      localStorage.set('isInstalled',JSON.stringify(pwa));
+  }catch(e){
+      console.error('error')
+    }
+  }
 
   return (
     <>
