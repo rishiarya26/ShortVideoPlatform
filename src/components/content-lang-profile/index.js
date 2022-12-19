@@ -102,43 +102,49 @@ const ContentLangProfile = () =>{
    
     return(
       <div className='flex flex-col h-screen justify-center box-border relative'>
-
-      <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
-        <div onClick={()=>router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
-        <Back/>
+        <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+            <div onClick={()=>
+              router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
+              <Back/>
+            </div>
         </div>
-       
-      </div>
-
-
         <div className="flex w-full justify-center items-end pb-4 px-4 lang-sm-title">
             <div className="text-gray-600 text-xl font-semibold">Select your language</div>
         </div>
-
-          <div className='flex flex-wrap justify-center w-full'>
-              {contentLang?.map((item,id)=>(
-              <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>onLangSelect(item?.code)}>
-                <p className="text-white text-sm font-semibold absolute top-1 left-2 z-10">{item?.lang}</p>
-                <img className="z-20" src={withBasePath(item?.img)}/>
-                {selectedLang?.includes(item?.code) && <div className="absolute z-30 w-full h-full bg-black opacity-40 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>onLangSelect(item?.code)}><Check/></div>}
-              </div>))
+        <div className='flex flex-wrap justify-center w-full'>
+            {contentLang?.map((item,id)=>(
+            <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>
+              onLangSelect(item?.code)}>
+              <p className="text-white text-sm font-semibold absolute top-1 left-2 z-10">{item?.lang}</p>
+              <img className="z-20" src={withBasePath(item?.img)}/>
+              {selectedLang?.includes(item?.code) && 
+              <div className="absolute z-30 w-full h-full bg-black opacity-40 text-white top-0 left-0 flex justify-center items-center"  onClick={()=>
+                  onLangSelect(item?.code)}>
+                  <Check/>
+              </div>
               }
-          </div>  
-          <div className="flex w-full justify-center pt-4">
-          <div 
-           className="done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white" 
-           onClick={()=>{
-            if(selectedLang?.length > 0){
-               localStorage.set('lang-flush','true');
-               toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
-               onSubmit();
-            }else{
-               showSnackbar({message: 'Please select atleast 1 language'});
+            </div>
+            ))
             }
-            }}
-           >Done {loading ? <CircularLoaderButtonSmall/> : ''}
-          </div>
-          </div>    
+        </div>
+        <div className="flex w-full justify-center pt-4">
+            <div 
+              className="done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white" 
+              onClick={()=>
+              {
+              if(selectedLang?.length > 0){
+              localStorage.set('lang-flush','true');
+              toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
+              onSubmit();
+              }else{
+              showSnackbar({message: 'Please select atleast 1 language'});
+              }
+              }}
+              >Done {loading ? 
+              <CircularLoaderButtonSmall/>
+              : ''}
+            </div>
+        </div>
       </div>
     )
 }

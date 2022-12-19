@@ -89,7 +89,7 @@ export const showPwaInstall = async({pageName, tabName})=>{
     }
     // Show the install prompt.
     promptEvent.prompt();
-    toTrackMixpanel('pwaInstallPopup',{});
+    promptEvent && toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'PWA Install Native'})
 
     // after user choice 
     const result = await promptEvent.userChoice;

@@ -1,4 +1,5 @@
 /*eslint-disable react/display-name */
+/*eslint-disable react/no-unescaped-entities*/
 import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -43,6 +44,7 @@ import { getBrand } from '../../utils/web';
 import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
 import isEmptyObject from '../../utils/is-object-empty';
 import { showPwaInstall } from '../../utils/app';
+import Close from '../commons/svgicons/close-white';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -704,13 +706,30 @@ function Feed({ router }) {
     <ComponentStateHandler state={fetchState} Loader={LoadComp} ErrorComp={ErrorComp} >
       <>
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
+
+{/* install App popup */}
+      {window.deferredPrompt && 
+         <div className='absolute w-full left-0 flex justify-center top-0 z-30 px-2'>
+          <div className='w-full install_app_bg py-4 px-3 flex items-center text-white rounded-lg'>
+             <div className='pr-2'><Close/></div>
+              <div className=' flex justify-center w-full flex-col items-start '>
+                <p className='font-semibold'>Hipi</p>
+                  <p className='text-sm'>Installing our app won't take any space on your phone.</p>
+              </div>
+              <div className='flex justify-end items-center'>
         {/* open cta */}
+        {
         <button className=' top-32 z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center' 
          onClick={showPwaInstall}>
           Install
-        </button>
-        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
-        <OpenAppStrip
+        </button>}
+              </div>
+          </div>
+      </div>}
+{/* install App popup end*/}
+
+        {( !languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
+        window.deferredPrompt && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
