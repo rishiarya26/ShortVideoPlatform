@@ -6,8 +6,7 @@ import { withBasePath } from '../../config';
 import { getLeaderboardData } from '../../sources/leaderboard';
 import Img from '../commons/image';
 import Tabs from '../commons/tabs/leadership';
-import fallbackUsers from '../../../public/images/users.png';
-
+//import fallbackUsers from '../../../public/images/users.png';
 function CashWinnerD({round}) {
   const [data, setData] = useState(null);
   // const [selectedRound, setSelectedRound] = useState(0);
@@ -111,7 +110,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -128,7 +127,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -144,7 +143,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -163,7 +162,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -181,7 +180,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -199,7 +198,7 @@ const stores = {
 {/* <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={first?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={first?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${first?.firstName} ${first?.lastName}`}</p>
     </div>
@@ -215,7 +214,7 @@ const stores = {
  <div key={id} className=" w-25v mx-4 my-4  rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
  <div className="flex items-center"  >
    <div className="w-12 h-12 rounded-full overflow-hidden">
-     <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+     <Img data={item?.profilepic} fallback={'/images/users.png'}/>
    </div>
 <p className="text-gray-500 max-w-60v text-sm font-semibold pl-4 overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
 </div>
@@ -232,7 +231,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -250,7 +249,7 @@ const stores = {
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>

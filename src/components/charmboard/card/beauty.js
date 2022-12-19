@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
-import fallbackImg from '../../../../public/images/fallback-charms.png'
+// import fallbackImg from '../../../../public/images/fallback-charms.png'
 import CardRibbon from "../../card-ribbon";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
@@ -64,14 +64,14 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
            <div className="flex relative w-full">
            <CardRibbon ribbonData={ribbonData}/>
                <div className="flex w-1/2">
-               {thumbnail && <Img data={thumbnail}  fallback={fallbackImg?.src}/> }
+               {thumbnail && <Img data={thumbnail}  fallback={"images/fallback-charms.png"}/> }
                </div>
                 {thumbnailProduct ? 
                 <div onClick={()=> {
                     onProductClick()
                     window?.open(shopLink)}} 
                     className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-                  <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
+                  <Img data={thumbnailProduct} fallback={"images/fallback-charms.png"}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                   <p className="text-xs px-2 h-44 text-gray-600 overflow-hidden">{title && title}</p>
