@@ -79,7 +79,7 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
   return Promise.reject(NO_SUPPORT);
 };
 
-export const showPwaInstall = async({pageName, tabName})=>{
+export const showPwaInstall = async({pageName='', tabName=''})=>{
     console.log('👍', 'butInstall-clicked');
     const promptEvent = window.deferredPrompt;
     if (!promptEvent) {

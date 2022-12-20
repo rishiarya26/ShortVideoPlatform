@@ -7,6 +7,7 @@ import { FULL_EXPERIENCE } from '../../../constants';
 import { onStoreRedirect } from '../../../utils/web';
 import {appsflyer} from '../../../scripts/appsflyer-smart'
 import { getItem } from '../../../utils/cookie';
+import { showPwaInstall } from '../../../utils/app';
 
 export default function OpenAppStrip({pageName, tabName, item , activeVideoId , type='bottom'}) {
 const placement = {
@@ -57,6 +58,7 @@ const router = useRouter();
   'android' : 
   <div onClick={()=>{
      toTrackMixpanel('pwaInstallStripClicked');
+     showPwaInstall({pageName:pageName, tabName:tabName})
    }} 
    className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
     Install
