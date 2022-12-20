@@ -339,14 +339,14 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'popupLaunch' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = item?.name;
+        globalCommonEvents['Popup Name'] = value?.name;
         track('Popup Launch', globalCommonEvents);
        },
        'popupCta' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = item?.name;
-        globalCommonEvents['Popup CTAs'] = item?.ctaName;
-        globalCommonEvents['elemant'] = item?.elemant;
+        globalCommonEvents['Popup Name'] = value?.name;
+        globalCommonEvents['Popup CTAs'] = value?.ctaName;
+        globalCommonEvents['elemant'] = value?.elemant;
         track('Popup CTAs', globalCommonEvents);
        },
        'sessionStart' :  ()=>{

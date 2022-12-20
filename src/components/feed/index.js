@@ -97,6 +97,7 @@ function Feed({ router }) {
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
   const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
+  const [activatePwaCustomPopup, setActivatePwaCustomPopup] = useState({show:false, shown:false});
   
   // const [isSaved, setIsSaved] = useState(false);
   const [initailShopContentAdded, setInitalShopContentAdded] = useState(false);
@@ -555,6 +556,9 @@ function Feed({ router }) {
                 const activeId = slides[activeIndex]?.attributes?.itemid?.value;
 
                 activeIndex && setVideoActiveIndex(activeIndex);
+                if(activeIndex === 4){
+                  !activatePwaCustomPopup?.shown && setActivatePwaCustomPopup({show: true, shown: true});
+                }
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
@@ -708,10 +712,10 @@ function Feed({ router }) {
         <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
 
 {/* install App popup */}
-      {window.deferredPrompt && 
+      {activatePwaCustomPopup?.show && window.deferredPrompt && 
          <div className='absolute w-full left-0 flex justify-center top-0 z-30 px-2'>
           <div className='w-full install_app_bg py-4 px-3 flex items-center text-white rounded-lg'>
-             <div className='pr-2'><Close/></div>
+             <div className='pr-2' onClick={()=>setActivatePwaCustomPopup({show: false, shown: true})}><Close/></div>
               <div className=' flex justify-center w-full flex-col items-start '>
                 <p className='font-semibold'>Hipi</p>
                   <p className='text-sm'>Installing our app won't take any space on your phone.</p>
@@ -750,7 +754,7 @@ function Feed({ router }) {
       </div>
        <Landscape/> 
       {/* {utmData?.utm_source !== 'BestIT' && showAppBanner ? <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/> : ''} */}
-      {showAppBanner && <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>}
+      {/* {showAppBanner && <AppBanner notNowClick={notNowClick} videoId={activeVideoId}/>} */}
     </>
     </ComponentStateHandler>
   );
