@@ -81,7 +81,7 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
 
 export const showPwaInstall = async({pageName='', tabName=''})=>{
     console.log('👍', 'butInstall-clicked');
-    const promptEvent = window.deferredPrompt;
+    const promptEvent = window?.deferredPrompt;
     if (!promptEvent) {
       console.info("prompt not found",promptEvent)
       // The deferred prompt isn't available.

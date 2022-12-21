@@ -733,7 +733,7 @@ function Feed({ router }) {
 {/* install App popup end*/}
 
         {( !languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
-        window.deferredPrompt && <OpenAppStrip
+       (typeof window !== "undefined" && window?.deferredPrompt) && <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
