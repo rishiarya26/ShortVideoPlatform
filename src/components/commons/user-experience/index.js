@@ -57,7 +57,7 @@ const router = useRouter();
   </div>,
   'android' : 
   <div onClick={()=>{
-     toTrackMixpanel('pwaInstallStripClicked');
+     toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
      showPwaInstall({pageName:pageName, tabName:tabName})
    }} 
    className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">

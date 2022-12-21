@@ -16,6 +16,8 @@ import GrievanceIcon from "../commons/svgicons/grievance"
 import AdsIcon from "../commons/svgicons/ads"
 import AboutIcon from "../commons/svgicons/about"
 import Wiki from "../commons/svgicons/wikipedia"
+import { showPwaInstall } from "../../utils/app"
+import { toTrackMixpanel } from "../../analytics/mixpanel/events"
 
 const HamburgerMenu = ()=>{
    const [open, setOpen]= useState(false);
@@ -80,14 +82,22 @@ const HamburgerMenu = ()=>{
           </div> */}
         </div>
     </div>
-    
+     
     <div className="w-full install_app_bg py-4 px-3 flex items-center text-white">
         <div className=" flex justify-center w-full flex-col items-start ">
             <p className="text-sm pr-2">Installing our app won't take any space on your phone.</p>
         </div>
+        {typeof window !== "undefined" && window?.deferredPrompt && 
         <div className="flex justify-end items-center">
-          <button className="font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600">Install</button>
-        </div>
+          <button 
+            onClick={()=>{
+              toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
+              showPwaInstall({pageName:pageName, tabName:tabName})
+            }} 
+           className="font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600">
+            Install
+          </button>
+        </div>}
     </div>
 
   </div>
