@@ -13,7 +13,7 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
   
       useEffect(()=>{
                // console.log('uuu')
-      //   console.log('A******',productIdChange=== id, appsflyerId)
+               productIdChange === id && console.log('A******',campaignId, appsflyerId)
          productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
          // productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId,productId:id, comp:'Shop'})
          if(productIdChange === id && appsflyerId){

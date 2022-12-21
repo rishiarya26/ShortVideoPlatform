@@ -335,7 +335,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}
@@ -372,7 +372,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}
@@ -432,7 +432,7 @@ const onProductChange = (id)=>{
              onProductChange={onProductChange}
              pageName={pageName}
              tabName={tabName}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}
@@ -494,7 +494,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}
@@ -533,7 +533,7 @@ const onProductChange = (id)=>{
              pageName={pageName}
              tabName={tabName}
              dominantColor={item?.dominant_color}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}
@@ -575,7 +575,7 @@ const onProductChange = (id)=>{
              tabName={tabName}
              dominantColor={item?.dominant_color}
              shopNameImg={item?.camp_img_url || null}
-             campaignId={campaignIdResp}
+             campaignId={item?.campaign_id || null}
              appsflyerId={item?.appsflyer_id || null}
              iosAppsflyerId={item?.appsflyer_ios_id || null}
              subCategory={item?.sub_category || "NA"}

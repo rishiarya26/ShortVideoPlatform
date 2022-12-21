@@ -31,10 +31,10 @@ const appsflyerPixelClick = ({appId, iosAppId, advertiser,uri, productId, comp})
     }
   }  
 
-  const appsflyerPixelWrapperImp = async({appId,advertiser,productId,comp,mixpanelProperties})=>{
+  const appsflyerPixelWrapperImp = async({appId,advertiser,productId,comp,mixpanelProperties={}})=>{
     let response;
     let appsflyerImpUrl;
-    let {pageName, tabName, id,shopName,productName,videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId} = mixpanelProperties;
+    let {pageName='', tabName='', id='',shopName='',productName='',videoId='', campaignId='', category='', subCategory='', subSubCategory='', mainCategory='',appsflyerId=''} = mixpanelProperties;
     try {
       appsflyerImpUrl = `https://impression.appsflyer.com/${appId}?pid=hipi_int&Advertiser=${advertiser}&af_siteid=${SITE_ID}&af_sub1=${productId}&af_sub2=${comp}&af_sub3=web&af_click_lookback=7`;
       const encodedAppsflyerUrl = encodeURIComponent(appsflyerImpUrl);
@@ -68,7 +68,7 @@ const appsflyerPixelClick = ({appId, iosAppId, advertiser,uri, productId, comp})
       response.data.requestedWith = { appId };
       return Promise.resolve(response);
     } catch (err) {
-      console.error('error',err)
+      console.error('appsflyer impression error',err)
       return Promise.resolve({ data: '' });
     }
   }  
