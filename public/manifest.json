@@ -2,29 +2,12 @@
   "short_name": "Hipi",
   "name": "Hipi",
   "lang": "en",
-  "description": "hipi is a short video platform to create & explore UGC",
   "start_url": "/",
   "scope": "/",
   "background_color": "#fff",
   "theme_color": "#fff",
   "display": "fullscreen",
   "orientation": "any",
-  "screenshots" : [
-    {
-      "src": "images/2.jpg",
-      "sizes": "761x1080",
-      "type": "image/jpg",
-      "platform": "wide",
-      "label": "Homescreen of Awesome App"
-    },
-    {
-      "src": "images/3.jpg",
-      "sizes": "761x1085",
-      "type": "image/jpg",
-      "platform": "wide",
-      "label": "List of Awesome Resources available in Awesome App"
-    }
-  ],
   "icons": [
     {
       "src": "/android-icon-192x192-dunplab-manifest-17016.png",
