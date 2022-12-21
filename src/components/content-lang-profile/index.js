@@ -102,7 +102,7 @@ const ContentLangProfile = () =>{
    
     return(
       <div className='flex flex-col h-screen justify-center box-border relative'>
-        <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+        <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
             <div onClick={()=>
               router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
               <Back/>

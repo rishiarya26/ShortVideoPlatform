@@ -14,6 +14,7 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { onStoreRedirect } from '../../utils/web';
 
 export default function DownloadAppWidget({videoId}) {
+  const device = getItem('device-info');
   // const stores = {
   //   android: ANDROID_STORE,
   //   ios: IOS_STORE
@@ -117,7 +118,7 @@ export default function DownloadAppWidget({videoId}) {
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
-            <p className="font-semibold text-lg text-gray-600">Hipi -  Open in the App</p>
+            <p className="font-semibold text-lg text-gray-600">{`Hipi -  Open  in the ${device === 'ios' ? 'iOS' : device === 'android' ? 'Android' : '' } App`}</p>
             <p className="text-xs text-gray-400">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
