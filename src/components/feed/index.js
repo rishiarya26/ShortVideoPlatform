@@ -723,7 +723,7 @@ function Feed({ router }) {
               <div className='flex justify-end items-center'>
         {/* open cta */}
         {
-        <button className='font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white' 
+        <button className='font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600' 
          onClick={()=>showPwaInstall({pageName:pageName, tabName:tabName})}>
           Install
         </button>}
