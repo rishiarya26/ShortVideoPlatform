@@ -29,11 +29,13 @@ import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 import * as platform from 'platform';
+import { initVmax } from '../src/analytics/vmax';
 import { getFullDate } from '../src/utils/date';
 import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
 import { getPageName } from '../src/utils/web';
+import { toTrackReco } from '../src/analytics/view-events';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -42,6 +44,7 @@ import { getPageName } from '../src/utils/web';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
 
 
 (function storyBlokInitSelfFunction(){
@@ -75,6 +78,11 @@ const LoaderProvider = dynamic(() => import('../src/hooks/use-loader').then(modu
 const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(module => {
   const { OverLayProvider } = module;
   return OverLayProvider;
+}));
+
+const CacheAdProvider = dynamic(() => import('../src/hooks/use-cacheAd').then(module => {
+  const { CacheAdProvider } = module;
+  return CacheAdProvider;
 }));
 
 export function reportWebVitals() {
@@ -246,7 +254,8 @@ function Hipi({
 
   useEffect(()=>{
     //let timer;
-    try{ 
+    try{
+        toTrackReco('launch')
       window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
@@ -263,6 +272,7 @@ function Hipi({
 
       updatingGoogleCookies();
       initConviva()
+      initVmax();
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();
@@ -276,6 +286,8 @@ function Hipi({
       localStorage.set('device-modal',deviceModel);
       localStorage.set("adArr",[]);
       localStorage.set("adArrMixPanel",[]);
+      localStorage.set("vmaxEvents",[]);
+      
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
       localStorage.set('network-strength',effectiveType);
@@ -689,7 +701,9 @@ function Hipi({
             mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
           `}}
        />
-                      <Component {...pageProps} />
+                      <CacheAdProvider>
+                        <Component {...pageProps} />
+                      </CacheAdProvider>
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>
                   </RouteStateProvider>

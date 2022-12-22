@@ -2,6 +2,7 @@
 /*eslint-disable react/jsx-no-duplicate-props*/
 /*eslint-disable react/no-unescaped-entities*/
 
+import React, { memo } from 'react';
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { withBasePath } from "../../config"
@@ -106,4 +107,4 @@ const HamburgerMenu = ({pageName='', tabName=''})=>{
     )
 }
 
-export default HamburgerMenu;
+export default memo(HamburgerMenu);

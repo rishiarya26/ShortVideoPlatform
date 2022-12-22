@@ -25,14 +25,14 @@ export const DrawerProvider = ({ children }) => {
   const [state, setState] = useState({
     visible: false,
     title: '',
-    type: 'small'
+    type: 'small',
   });
 
   const show = (title, content, type, props) => {
     /* eslint-disable no-param-reassign */
     ComponentProps.current = props;
     DrawerContent = content;
-    showOverLay();
+    showOverLay(props?.hideOverLay ? close: null);
     setState({
       visible: true,
       title,
@@ -46,8 +46,9 @@ export const DrawerProvider = ({ children }) => {
     setState({
       visible: false
     });
-    playerEvents('waitEnded')
+    playerEvents('waitEnded');
   };
+
 
   return (
     <DrawerContext.Provider value={{ show, close }}>

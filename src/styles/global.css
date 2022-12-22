@@ -81,6 +81,9 @@ img{
 .text-xxs{
   font-size: 10px;
 }
+.break-word{
+  word-break: break-word;
+}
 .video-card img, .trending_card img{
   height: 100%;
 }
@@ -116,6 +119,12 @@ img{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+  .line-clamp-4{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
  .h-80p{
    height: 80%;
@@ -1150,6 +1159,9 @@ background-color:rgb(255 237 223);
   z-index: 1!important;
 }
 
+.animateBottom {
+  transition: bottom 0.1s ease-out;
+}
 /* iphone_small sidebar icons hide */
 @media only screen and (max-height: 580px) {
   .iphone_small{
@@ -1241,8 +1253,8 @@ input:checked + .slider_new:before {
 /* login_bug_fix */
 .translate_center
 {
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) !important;
 } 
 /* PRODUCT CARD */
 .text-8 {
@@ -1252,4 +1264,8 @@ input:checked + .slider_new:before {
 /* install app */
 .install_app_bg{
   background-color:#000000c2;
+}
+
+.playlist_bg {
+  background-color: #f2f2f2;
 }

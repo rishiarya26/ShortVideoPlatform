@@ -85,8 +85,8 @@ const TopItems = ({item, redirectTab}) =>{
                       <Img data={item?.userIcon} title="Hipi" fallback={'/images/users.png'}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-bold text-sm text-gray-700">{item?.userId} </p>
-                        <p className="text-xs text-gray-400">{item?.userId}</p>
+                        <p className="font-bold text-sm text-gray-700 line-clamp-1">{item?.userId} </p>
+                        <p className="text-xs text-gray-400 line-clamp-1">{item?.userId}</p>
                         <p className="text-xs text-gray-400 whitespace-nowrap">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>

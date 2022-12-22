@@ -277,6 +277,9 @@ function HashTagFeed({ router }) {
           pageName={pageName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
+          creatorId={items?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={items?.[videoActiveIndex]?.playlistId}
+          playlistName={items?.[videoActiveIndex]?.playlistName}
         />}
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
@@ -326,7 +329,7 @@ function HashTagFeed({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  items[videoActiveIndex]?.videoDuration});
 
                 /***************/
 

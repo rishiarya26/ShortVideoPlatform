@@ -110,7 +110,7 @@ function AppBanner({notNowClick, videoId}) {
                      ToTrackFbEvents('appDownloadCTA')
                      toTrackFirebase('appDownloadCTA')
                      onStoreRedirect({videoId : videoId, afChannel: 'pop_up'})
-                }}  className="flex bg-hipired py-3 mx-2 px-4 my-2 text-white"  >
+                }}  className="flex bg-hipired py-3 mx-2 px-4 my-2 text-white rounded"  >
                     <div className="flex justify-center items-center text-sm md:text-base w-full font-semibold" >
                         <p>Open App</p>
                     </div>

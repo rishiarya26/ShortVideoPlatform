@@ -29,6 +29,7 @@ import OpenAppStrip from '../commons/user-experience';
 import { isObjectEmpty } from '../../network/utils';
 import SnackBar from '../commons/snackbar';
 import SnackCenter from '../commons/snack-bar-center';
+import { viewEventsCall } from '../../analytics/view-events';
 
 SwiperCore.use([Mousewheel]);
 
@@ -118,13 +119,13 @@ function SearchFeed({ router }) {
     }
   },[initialPlayStarted])
 
-  const viewEventsCall = async(id, event)=>{
-  try{  console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }catch(e){
-    console.log('issue in view events',e)
-  }
-  }
+  // const viewEventsCall = async(id, event)=>{
+  // try{  console.log("event to send", id, event)
+  //  await viewEvents({id:id, event:event})
+  // }catch(e){
+  //   console.log('issue in view events',e)
+  // }
+  // }
 
   const dataFetcher = () => JSON.parse(window.sessionStorage.getItem('searchList'));
   const onDataFetched = data => {
@@ -337,9 +338,10 @@ function SearchFeed({ router }) {
               }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                 viewEventsCall(activeVideoId,'no decision')
               }
+              console.log("debug",items[videoActiveIndex]?.videoDuration);
               viewEventsCall(activeVideoId, 'user_video_end', 
               {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                duration :  items[videoActiveIndex]?.videoDuration});
 
             /***************/
 

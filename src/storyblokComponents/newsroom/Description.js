@@ -35,7 +35,7 @@ const Description = ({ blok = {} }) => {
   const { text: { content = {} } = {} } = blok;
 
   return (
-    <div className="my-3" {...storyblokEditable(blok)}>
+    <div className="my-3 break-word text-justify" {...storyblokEditable(blok)}>
       {content.length > 0 &&
         content?.map((data) => {
           const uuid = generateUUID(false);

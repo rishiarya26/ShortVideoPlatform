@@ -1,6 +1,5 @@
 /*eslint-disable react/display-name */
-/*eslint-disable react/no-unescaped-entities*/
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -13,7 +12,7 @@ import Seekbar from '../seekbar';
 import SeekbarLoading from '../seekbar/loader.js';
 import FeedTabs from '../commons/tabs/feed-tab';
 import useTranslation from '../../hooks/use-translation';
-import { getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import { cacheAdResponse, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import useWindowSize from '../../hooks/use-window-size';
 import FooterMenu from '../footer-menu';
@@ -41,10 +40,13 @@ import SnackCenter from '../commons/snack-bar-center';
 import { INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
-import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
+import { vmaxTrackerEvents } from '../../analytics/vmax';
+import { CacheAdContext } from '../../hooks/use-cacheAd';
 import isEmptyObject from '../../utils/is-object-empty';
 import { showPwaInstall } from '../../utils/app';
 import Close from '../commons/svgicons/close-white';
+import { isObjectEmpty } from '../../network/utils';
+import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
 
 SwiperCore?.use([Mousewheel]);
 
@@ -96,6 +98,9 @@ function Feed({ router }) {
   const [showAppBanner, setShowAppBanner] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [slideToNext, setSlideToNext] = useState(true);
+
+  const cacheAd = useContext(CacheAdContext);
   const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
   const [activatePwaCustomPopup, setActivatePwaCustomPopup] = useState({show:false, shown:false});
   
@@ -130,6 +135,17 @@ function Feed({ router }) {
     if(toShowItems[index]?.adId && window !== undefined){
       let adInfo = toShowItems?.[index]?.adId || {};
       let {impression_url = null } = adInfo;
+     
+      // let formedUrl = impression_url.split("&").map((item)=>{
+      //   if(item.match(/af_sub2/)){
+      //     let splititem = item.split("=");
+      //     item = `${splititem[0]}` + "=" + "pwa"
+      //     return item;
+      //   }else{
+      //     return item
+      //   }
+      // }).join("&")
+      
       if(impression_url && impression_url?.split(".").includes("appsflyer")){
         try{
          let response = await impressionUrlWrapper({url: impression_url})
@@ -138,13 +154,17 @@ function Feed({ router }) {
           console.error("error getting impression");
         }
       }else{
-        let timeStamp = Date.now();
-        try{
-          impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
-        }catch(e){
-          console.error("Impression error: " + e);
-        }
+      let timeStamp = Date.now();
+      try{
+        impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
+      }catch(e){
+        console.error("Impression error: " + e);
       }
+    }
+    }
+    if(toShowItems[index]?.feedVmaxAd){
+      let tracker = toShowItems[index]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+      vmaxTrackerEvents(tracker,'impression')
     }
   }
 
@@ -170,6 +190,15 @@ function Feed({ router }) {
      initailShopContentAdded && 
     toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable, isMonetization : shop?.adCards?.monitisation || false},items?.[videoActiveIndex]);  
   },[initailShopContentAdded])
+
+  useEffect(()=>{
+    if(items?.[videoActiveIndex]?.feedVmaxAd){
+      setSlideToNext(false)
+      setTimeout(()=>{
+        setSlideToNext(true)
+      },5000)
+    }
+  },[videoActiveIndex])
 
   const preActiveVideoId = usePreviousValue({videoActiveIndex});
   const preVideoActiveIndex = usePreviousValue({videoActiveIndex});
@@ -238,9 +267,35 @@ function Feed({ router }) {
   const getFeedData = async() =>{
     let updateItems = [...items];
      try{
-       const data =  await fetchData({ type: id });
-       updateItems = updateItems.concat(data?.data);
-       setItems(updateItems);
+       const data =  await fetchData({ type: id });      
+       let adPosition = localStorage.get('vmaxAdPosition') || null;
+       let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
+
+       if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
+          //delete cacheAdVideo?.adId; //Neeed to remove
+          data?.data.splice(adPosition, 0, cacheAdVideo);
+          cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+          updateItems = updateItems.concat(data?.data);
+          setItems(updateItems);
+       }else{
+        try{
+          // debugger;
+          let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            //delete cacheAdVideo?.adId; //Neeed to remove
+            data?.data.splice(adPosition, 0, cachedVideo);
+          }
+        }catch(error){
+          console.error(error);
+        }
+        updateItems = updateItems.concat(data?.data);
+        setItems(updateItems);
+       }
+      
+      
+       console.log("data after", data?.data, "=>" ,updateItems);
+
+       
       }
      catch(err){
      }
@@ -268,53 +323,84 @@ function Feed({ router }) {
 
   const validItemsLength = toShowItems?.length > 0;
 
+  let advmaxObj = toShowItems[videoActiveIndex]?.feedVmaxAd;
+  let adIdObj = toShowItems[videoActiveIndex]?.adId;
   const videoAdSessionsCalls = async (percentage) => {
-    if(items[videoActiveIndex]?.adId && window !== undefined){
-      let adInfo = items?.[videoActiveIndex]?.adId || {};
+    if(!!advmaxObj && typeof advmaxObj === 'object' && !isObjectEmpty(advmaxObj) && window !== undefined){
+     console.log("adView", toShowItems[videoActiveIndex]?.feedVmaxAd, "=>" , toShowItems[videoActiveIndex]?.feedVmaxAd?.adView);
+      let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+      if(percentage > 0 && percentage < 25){
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        // vmaxTrackerEvents(tracker,'impression')
+        vmaxTrackerEvents(tracker,'videoAdStarted')
+      }
+      if(percentage > 25 && percentage < 50) {
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
+      }
+      if(percentage > 50 && percentage < 75) {
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
+      }
+      if(percentage > 75 && percentage < 90) {
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
+      }
+      if(percentage > 98) {
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        vmaxTrackerEvents(tracker,'videoAdEnd');
+        if(document.querySelector(".swiper-container").swiper){
+          document.querySelector(".swiper-container").swiper?.slideNext();
+        }
+      }
+    }
+    
+    if(!!adIdObj && typeof adIdObj === 'object' && !isObjectEmpty(adIdObj) && window !== undefined){
+      let adInfo = toShowItems?.[videoActiveIndex]?.adId || {};
       let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       console.log(timeStamp, "timeStamp");
       if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         try{
          event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
-          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         }
       }
       if(percentage > 25) {
-        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "firstQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
       if(percentage > 50) {
-        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "midpoint"});
         }catch(e){
-          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
        
       }
       if(percentage > 75) {
-        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
       if(percentage > 98) {
-        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "complete"});
         }catch(e){
-          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
         if(document.querySelector(".swiper-container").swiper){
@@ -478,6 +564,23 @@ function Feed({ router }) {
           return obj;
   }
 
+  const getNextVmaxAd = async(activeIndex) => {
+    //? condition to fetch ad for next feed chunk
+    try{
+      if(toShowItems?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+        localStorage.set("vmaxAdPosition", "");
+        let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+        !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
+        if(!isObjectEmpty(cachedVideo)) {
+          //debugger
+          cacheAd?.feedCacheAd(cachedVideo);
+        }
+      }
+    }catch(error){ 
+      console.log(error);
+    }
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -503,16 +606,22 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiper;
+
                 localStorage.set("adArr",[]);
-                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
+
                 setInitialPlayStarted(false);
               }}
+              allowSlideNext={slideToNext}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
+
                 setVideoDurationDetails({totalDuration: null, currentT:0});
 
                 setSeekedPercentage(0)
@@ -543,10 +652,9 @@ function Feed({ router }) {
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')
                 }
-
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration : toShowItems[videoActiveIndex]?.videoDuration});
 
                 /***************/
 
@@ -562,9 +670,16 @@ function Feed({ router }) {
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
-                activeId && setActiveVideoId(activeId); 
+      
+                activeId && setActiveVideoId(activeId);
 
+                console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
+
+                //? next vmax ad video position and  details.
+                getNextVmaxAd(activeIndex);
+                
                 window.sessionStorage.setItem('used-impression-link',false); //to reset appsflyer value for apps-impression to be called for diff video.(line 54 in ad-cards).
+
               }}
             >
               {!loadFeed && <VideoUnavailable/>}
@@ -626,11 +741,12 @@ function Feed({ router }) {
                       convivaItemInfo={()=> convivaItemInfo(item)}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // toggleIsSaved={toggleIsSaved}
                       setMuted={setMuted}
+                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
+                      vmaxAd={item?.feedVmaxAd && typeof item?.feedVmaxAd === 'object' && !isEmptyObject(item?.feedVmaxAd) ? item.feedVmaxAd : null}
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
@@ -678,7 +794,7 @@ function Feed({ router }) {
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={!items[videoActiveIndex]?.adId && 'shop'}
+              type={(!items[videoActiveIndex]?.adId && !toShowItems[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType={shop?.type && shop.type}
               shop={shop}
@@ -718,11 +834,11 @@ function Feed({ router }) {
              <div className='pr-2' onClick={()=>setActivatePwaCustomPopup({show: false, shown: true})}><Close/></div>
               <div className=' flex justify-center w-full flex-col items-start '>
                 <p className='font-semibold'>Hipi</p>
-                  <p className='text-sm'>Installing our app won't take any space on your phone.</p>
+                  <p className='text-sm'>{`Installing our app won't take any space on your phone.`}</p>
               </div>
               <div className='flex justify-end items-center'>
         {/* open cta */}
-        {
+ {
         <button className='font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600' 
          onClick={()=>showPwaInstall({pageName:pageName, tabName:tabName})}>
           Install
@@ -730,15 +846,17 @@ function Feed({ router }) {
               </div>
           </div>
       </div>}
-{/* install App popup end*/}
 
-        {( !languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || items?.[videoActiveIndex]?.adId) ? '' : 
-       (typeof window !== "undefined" && window?.deferredPrompt) && <OpenAppStrip
+        {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
+        (typeof window !== "undefined" && window?.deferredPrompt) &&<OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
+          creatorId={toShowItems?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={toShowItems?.[videoActiveIndex]?.playlistId}
+          playlistName={toShowItems?.[videoActiveIndex]?.playlistName}
         />}
         
         {/* hamburger */}

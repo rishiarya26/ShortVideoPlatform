@@ -24,6 +24,7 @@ import { getOneLink, viewEvents } from '../../sources/social';
 import { getBrand, getCanonicalUrl } from '../../utils/web';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
+import { toTrackReco, viewEventsCall } from '../../analytics/view-events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Landscape from '../landscape';
 import { incrementCountVideoView } from '../../utils/events';
@@ -218,13 +219,13 @@ function HashTagFeedIphone({ router }) {
     }
   },[initialPlayStarted])
 
-  const viewEventsCall = async(id, event)=>{
- try{   console.log("event to send", id, event)
-   await viewEvents({id:id, event:event})
-  }catch(e){
-    console.log("issue in view events",e)
-  }
-  }
+//   const viewEventsCall = async(id, event, info)=>{
+//  try{   console.log("event to send", id, event)
+//    await viewEvents({id:id, event:event})
+//   }catch(e){
+//     console.log("issue in view events",e)
+//   }
+//   }
 
 
   const dataFetcher = () => getHashTagVideos({ keyword : item, videoId: videoId && videoId, limit:6 });
@@ -350,9 +351,12 @@ function HashTagFeedIphone({ router }) {
         <div className="overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
 
         <OpenAppStrip
-        pageName={pageName}
-        item={items?.[videoActiveIndex]}
-        activeVideoId={activeVideoId}
+          pageName={pageName}
+          item={items?.[videoActiveIndex]}
+          activeVideoId={activeVideoId}
+          creatorId={items?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={items?.[videoActiveIndex]?.playlistId}
+          playlistName={items?.[videoActiveIndex]?.playlistName}
         />
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
@@ -398,7 +402,7 @@ function HashTagFeedIphone({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration : toShowItems[videoActiveIndex]?.videoDuration});
 
                 /***************/
 

@@ -307,6 +307,8 @@ function ProfileFeed({ router }) {
         pageName={pageName}
         item={items?.[videoActiveIndex]}
         activeVideoId={activeVideoId}
+        playlistId={items?.[videoActiveIndex]?.playlistId}
+        playlistName={items?.[videoActiveIndex]?.playlistName}
         />}
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
@@ -352,7 +354,7 @@ function ProfileFeed({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  items?.[videoActiveIndex]?.duration});
 
                 /***************/
 

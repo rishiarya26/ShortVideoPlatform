@@ -4,6 +4,7 @@ export const apiBaseEndPoints = {
   local: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://preprod.hipi.co.in/',
     stagingMobile: 'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
@@ -16,11 +17,13 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"https://hipigwapis2.zee5.com/api/v1",
   },
   development: {
     test: 'https://api.github.com',
-    hipi: 'https://hipigwapi.zee5.com/api',
+    hipi:"http://3.6.36.112:8000/api",
+    hipi_stage:"http://3.6.36.112:8000/api",
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
     charmboard:
@@ -33,11 +36,13 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"https://hipigwapis2.zee5.com/api/v1"
   },
   staging: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://preprod.hipi.co.in/',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
@@ -49,11 +54,13 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"https://hipigwapis2.zee5.com/api/v1"
   },
   production: {
     test: 'https://api.github.com',
     hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"http://3.6.36.112:8000/api",
     app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',
     charmboard:
@@ -65,7 +72,8 @@ export const apiBaseEndPoints = {
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
     staggingHipi: 'http://3.6.36.112:8000/api',
     leaderboard: 'https://leaderboard.charmd.me',
-    staggingLeaderboard: 'http://35.154.183.190:3000'
+    staggingLeaderboard: 'http://35.154.183.190:3000',
+    playlist:"https://hipigwapis2.zee5.com/api/v1"
   }
 };
 

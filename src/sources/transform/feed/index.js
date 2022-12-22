@@ -95,9 +95,13 @@ function transformSuccess(resp) {
       payloadObject.createdOn = d?.createdOn || '';
       payloadObject.videoDuration = d?.videoDuration || '';
       payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
-      payloadObject.adId = d?.adId && JSON.parse(d?.adId) || null;
+      payloadObject.adId = d?.adId && typeof d?.adId === 'string' && JSON.parse(d?.adId) || null;
+      // payloadObject.vmaxAd = d?.vmaxAd || null;
+      // payloadObject.feedVmaxAd = d?.feedVmaxAd || null;
       payloadObject.correlationID = d?.correlation_id || null;
       payloadObject.explain = d?.explanations?.[0] || null;
+      payloadObject.playlistId = d?.playlists?.[0]?.id || null;
+      payloadObject.playlistName = d?.playlists?.[0]?.name || null;
     //  z === 2 && (payloadObject.videoSound =false)
       
       payloadData.push(payloadObject);
@@ -108,7 +112,13 @@ function transformSuccess(resp) {
       payloadData?.splice(0,0,data?.firstVideo);
     }
 
-    if(device === 'mobile' && deviceType !== 'ios'){
+    // putting this upside to make sure the add should not get replaced by language slide
+    if(!isObjectEmpty(data?.vmaxAdVideo) && data?.vmaxVideoIndex){      
+      // delete data?.vmaxAdVideo?.adId; //Need to remove this
+      payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
+    }
+
+    if(device === 'mobile'){
     try{
     const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
     const lang24ShowOnce = localStorage.get('lang-24-hr');
@@ -119,6 +129,8 @@ function transformSuccess(resp) {
       console.error('issue in lang-select slide adding in transform')
     }
    }
+
+ 
     /*for stagging api */
     // const { response = [] } = data;
     // const tResponse = [...response];
@@ -128,6 +140,7 @@ function transformSuccess(resp) {
     // payload.data = tResponse;
  
     payload.data = payloadData;
+    console.log(payload.data,"payload.data")
     // payload.requestedWith = data.requestedWith;
     return payload;
   } catch (err) {
