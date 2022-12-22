@@ -742,7 +742,7 @@ function Feed({ router }) {
         />}
         
         {/* hamburger */}
-       {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu/>}
+       {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG) ? '' : <HamburgerMenu pageName={pageName || ''} tabName={tabName || ''}/>}
        {/* <HamburgerMenu/> */}
         <div className={`fixed mt-10 z-10 w-full ${videoActiveIndex === INDEX_TO_SHOW_LANG && languagesSelected === null && lang24ShowOnce === 'false' ? 'hidden' : ''}`}>
           <FeedTabs items={tabs} />

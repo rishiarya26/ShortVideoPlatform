@@ -754,7 +754,7 @@ console.log('errorrr',e)
           activeVideoId={activeVideoId}
           type='aboveBottom'
         />}
-        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu/>}
+        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu pageName={pageName || ''} tabName={tabName || ''}/>}
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>}
