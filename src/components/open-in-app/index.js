@@ -117,11 +117,11 @@ export default function DownloadAppWidget({videoId}) {
               <img src={withBasePath('icons/Hipi-Logo-RGB.png')}></img>
           </div>
           <div className="flex w-3/4 flex-col p-1">
-            <p className="font-semibold text-lg text-gray-600">Hipi -  Open in the App</p>
+            <p className="font-semibold text-lg text-gray-600">Hipi -  Open in iOS App</p>
             <p className="text-xs text-gray-400">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
-        <button onClick={toStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white rounded-sm">Open the Hipi app</button>
+        <button onClick={toStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white rounded-sm">Open App</button>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
             <p onClick={()=>close()} className="text-sm font-semibold text-gray-500">Not now</p>
