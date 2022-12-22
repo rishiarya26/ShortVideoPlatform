@@ -32,7 +32,7 @@ function ProductCards({
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
   const type = {
-    profile: 'bottom-8 flex w-6/12 h-24 justify-between items-center p-2 absolute',
+    profile: `${(typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-8' : 'bottom-0'}  flex w-6/12 h-24 justify-between items-center p-2 absolute`,
     embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
     single: 'bottom-14 flex w-6/12 h-24 justify-between items-center p-2 fixed',
 
