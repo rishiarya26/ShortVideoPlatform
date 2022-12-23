@@ -128,19 +128,20 @@ const ContentLangProfile = () =>{
             }
         </div>
         <div className="flex w-full justify-center pt-4">
-            <div 
-              className="done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white" 
+            <div
+              className={`relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
               onClick={()=>
               {
-              if(selectedLang?.length > 0){
-              localStorage.set('lang-flush','true');
-              toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
-              onSubmit();
-              }else{
-              showSnackbar({message: 'Please select atleast 1 language'});
-              }
+                if(loading) return;
+                if(selectedLang?.length > 0){
+                localStorage.set('lang-flush','true');
+                toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
+                onSubmit();
+                }else{
+                showSnackbar({message: 'Please select atleast 1 language'});
+                }
               }}
-              >Done {loading ? 
+              > Done{loading ? 
               <CircularLoaderButtonSmall/>
               : ''}
             </div>
