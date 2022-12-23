@@ -68,7 +68,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               )
               window.sessionStorage.setItem('used-impression-link',true);
             }) 
-            window.open(appsflyerLink || data?.product_url);
+            window.open(data?.product_url);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",
