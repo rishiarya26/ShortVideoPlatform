@@ -152,7 +152,7 @@ site_name: 'Hipi'
                 <p className='text-left w-full md:w-4/12 text-xs px-6'>
                 <ul className='list-disc'>
                 <li>A new, original video is to be posted and shared. Videos posted or shared by you in the past will not be considered.</li>
-                <li>Views by your friends on the video through the video link shared by you only will be eligible for hip rewards. Views on the video by other users on the app will not be considered.</li>
+                <li>Views by your friends on the video through the video link shared by you only will be eligible for hipi rewards. Views on the video by other users on the app will not be considered.</li>
                 <li>Your daily progress will reset at 11:59 PM every day. You should spin the wheel and unlock your coins for the levels achieved daily before 11:59 PM.</li>
                 </ul>
                      </p>
