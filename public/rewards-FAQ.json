@@ -40,7 +40,7 @@
     "ans" : "Cashed out rewards coins will reflect in your PayTM wallet in the next 5-7 business days.", "show": false},
     
     { "ques" : "Is there an expiry period for coins?",    
-    "ans" : "Rewards coins will expire automatically 90 days after they have been earned. Thus, coins should be redeemed within 30 days.", "show": false},
+    "ans" : "Rewards coins will expire automatically 90 days after they have been earned. Thus, coins should be redeemed within 90 days.", "show": false},
     
     { "ques" : "How can I reach out for any other queries or issues?",    
     "ans" : "For any queries, you can email us at contact@hipi.co.in", "show": false}
