@@ -22,6 +22,7 @@ const placement = {
 const device = getItem('device-info');
 const router = useRouter();
 const {show} = useDrawer();
+appsflyer && appsflyer();
 
 useEffect(()=>{
   if(device === 'ios') return;
@@ -99,9 +100,7 @@ if(noShow) return false;
     )
   }
   
-
-
-  return (
+    return (
     <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
       <p className="text-sm">
       {text?.[device]}

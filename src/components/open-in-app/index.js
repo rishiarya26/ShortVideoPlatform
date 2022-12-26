@@ -12,6 +12,7 @@ import { playerEvents } from '../../analytics/conviva/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { onStoreRedirect } from '../../utils/web';
+import {appsflyer} from '../../scripts/appsflyer-smart'
 
 export default function DownloadAppWidget({videoId}) {
   const device = getItem('device-info');
@@ -19,7 +20,8 @@ export default function DownloadAppWidget({videoId}) {
   //   android: ANDROID_STORE,
   //   ios: IOS_STORE
   // };
-
+  
+  appsflyer && appsflyer();
   useEffect(()=>{
     toTrackMixpanel('launch');
     playerEvents('waitStarted');

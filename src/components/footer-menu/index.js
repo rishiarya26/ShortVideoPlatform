@@ -109,7 +109,7 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
       </div>
       </div>
       <SnackBar />
-      {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
+      {showAppBanner ? <AppBanner videoId={videoId} notNowClick={notNowClick}/>:''}
     </div>
   );
 }
