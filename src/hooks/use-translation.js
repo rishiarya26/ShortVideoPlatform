@@ -56,14 +56,14 @@ const getLanguage = () => (getFirstTruthyValue(getLanguageFromPath, getLanguageP
 //   window.location.href = goto;
 // };
 
-const refreshTranslations = async (locale, locales, setTranslations) => {
-  try {
-    const clLocales = await getLocales(locale);
-    setTranslations({ ...locales, ...clLocales });
-  } catch (e) {
-    console.log(e);
-  }
-};
+// const refreshTranslations = async (locale, locales, setTranslations) => {
+//   try {
+//     const clLocales = await getLocales(locale);
+//     setTranslations({ ...locales, ...clLocales });
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 
 export const TranslationProvider = ({ children, locales, locale }) => {
   const [language, setLang] = useState(locale);
@@ -74,7 +74,7 @@ export const TranslationProvider = ({ children, locales, locale }) => {
     (async () => {
       const language = getLanguage();
       if (!isMockMode()) {
-        refreshTranslations(locale, locales, setTranslations);
+        // refreshTranslations(locale, locales, setTranslations);
       }
       if (!supportedLanguages[language]) return;
       setLanguagePref(language);

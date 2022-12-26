@@ -10,7 +10,7 @@ import Refresh from '../commons/svgicons/refresh';
 import DeskVideoCard from '../desk-video-card';
 import Error from './error';
 import Loading from './loader';
-import fallbackUsers from '../../../public/images/users.png'
+// import fallbackUsers from '../../../public/images/users.png'
 import CircularLoaderSearch from '../commons/circular-loader-search';
 import { trimHash } from '../../utils/string';
 
@@ -136,7 +136,7 @@ return (
                 </div>
          {/* <div className='truncate text-sm w-full mb-2 mt-1 text-gray-700 pr-1'>{ item?.content_description }</div> */}
          <div className='cursor-pointer flex w-full mb-3 justify-start items-center' onClick={()=> router && router?.push(`/@${item?.videoOwners?.userName}`)}>
-            <div className='flex w-6 min-w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={fallbackUsers?.src}/></div>
+            <div className='flex w-6 min-w-6 h-6 border border-gray-100 overflow-hidden rounded-full'><Img  data={item?.videoOwners?.profilePicImgUrl} fallback={'/images/users.png'}/></div>
             <p className='pl-1 text-base truncate text-gray-700'>{item?.videoOwners?.userName}</p>
          </div>
       </span>

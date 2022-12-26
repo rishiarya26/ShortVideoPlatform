@@ -12,7 +12,7 @@ import useDialog from '../../hooks/use-dialog';
 import CopyEmbedCode from '../copy-embed-code.js';
 import useSnackbar from '../../hooks/use-snackbar';
 import { share } from '../../utils/app';
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import Img from '../commons/image';
 import { numberFormatter } from '../../utils/convert-to-K';
 import { deleteReaction, getActivityDetails, postReaction } from '../../get-social';
@@ -181,8 +181,8 @@ const checkSaveLook =()=>{
     }
 
     const options = {
-      profile: `${saveLook ? 'bottom-12 ' : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
-      feed: `${saveLook ?  'bottom-28 ' : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      profile: `${saveLook ? ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-12 ' : 'bottom-2') : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-28 ' : 'bottom-16') : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
       embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
       single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
       cacheAd: `bottom-56 absolute right-0 flex-col  flex text-white ml-2`,
@@ -399,7 +399,7 @@ const handleSaveMoments = () =>{
           <Img
             title="Hipi"
             data={optProfilePic}
-            fallback={fallbackUser?.src}
+            fallback={'/images/users.png'}
           />
           </div>}
           {/* <div

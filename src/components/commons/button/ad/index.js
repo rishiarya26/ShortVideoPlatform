@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { pushAdService } from "../../../../sources/ad-service";
 import Img from "../../image";
 import RightArrow from "../../svgicons/right-arrow";
-import fallbackUser from "../../../../../public/images/users.png";
+// import fallbackUser from "../../../../../public/images/users.png";
 import Verified from "../../svgicons/verified";
 
 const BUTTON_SHOW_DELAY = 3000;
@@ -78,7 +78,7 @@ export function VmaxAdButton({
             <Img
               title="Hipi"
               data={optProfilePic}
-              fallback={fallbackUser?.src}
+              fallback={'/'}
             />
           </div>
           <div className="font-medium dark:text-white ml-1">
@@ -179,7 +179,7 @@ export function FeedAdButton({
             <Img
               title="Hipi"
               data={optProfilePic}
-              fallback={fallbackUser?.src}
+              fallback={'/images/users.png'}
             />
           </div>
           <div className="font-medium dark:text-white ml-1">

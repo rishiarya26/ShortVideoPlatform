@@ -12,7 +12,7 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
-import fallbackUser from '../../../public/images/users.png' 
+// import fallbackUser from '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { share } from '../../utils/app';
@@ -406,7 +406,7 @@ const notNowClick=()=>{
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
+            <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <h1 className="font-medium p-2 text-sm flex">{firstName} {lastName}
           {userVerified === 'Verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}

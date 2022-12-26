@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import Img from '../commons/image';
-import fallbackShop from '../../../public/images/shop.png';
+// import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
@@ -94,7 +94,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
         // eslint-disable-next-line no-undef
       >
         {/* <img height={50} width={50} src={data?.img_url}/> */}
-        <Img data={data?.img_url} height={120} width={120} fallback={fallbackShop?.src}/>
+        <Img data={data?.img_url} height={120} width={120} fallback={"/images/shop.png"}/>
         {data?.card_labels && data.card_labels !== "" && <LabelHolder label={data?.card_labels}/>}
       </div>
        

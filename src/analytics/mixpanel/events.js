@@ -30,10 +30,12 @@ export const commonEvents = ()=>{
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
     const previousPage = window?.sessionStorage?.getItem('previous-page');
+    const isInstalled = JSON.parse(localStorage?.get('isInstalled'));
   
     let payload = {}
     payload['unique ID'] = loggedInId || guestId;
     payload['isPWA'] = getIsMobile();
+    payload['isInstalled'] =  isInstalled;
     payload['Device'] = device;
     payload['User Type'] = loggedInId ? 'member' : 'guest';
     payload['User Handle'] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
@@ -362,7 +364,7 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'popupLaunch' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = item?.name;
+        globalCommonEvents['Popup Name'] = value?.name;
         track('Popup Launch', globalCommonEvents);
        },
        'popupCta' :  ()=>{
@@ -533,6 +535,22 @@ export const toTrackMixpanel = (type, value, item) => {
           
           track('Appsflyer Impression Pixel',globalCommonEvents)
         },
+        'pwaInstallClickSuccess' : ()=>{
+          addPageTabName();
+          track('PWA Install Success',globalCommonEvents)
+        },
+        'pwaInstallClickError' : ()=>{ 
+          addPageTabName();
+          track('PWA Install Failure',globalCommonEvents)
+        },
+        'pwaInstallStripImpression' : ()=>{
+          addPageTabName();
+          track('PWA Install Button Impression',globalCommonEvents)
+        },
+        'pwaInstallStripClicked' : ()=> {
+          addPageTabName();
+          track('PWA Install Button Clicked',globalCommonEvents)
+        },
         'appsflyerLogs' : ()=> {
           addUgcId();
           addPageTabName();
@@ -551,7 +569,7 @@ export const toTrackMixpanel = (type, value, item) => {
         track('Appsflyer Logs',globalCommonEvents)
       }
       
-        
+        //how to make sunrise in html?
         
  //   'pause' : () => track('Pause', commonWithIds()),
 //   'resume' : () => track('Resume', commonWithIds()),

@@ -6,7 +6,6 @@ import { CHARMBOARD_PLUGIN_URL } from '../../constants';
 // import useTranslation from '../../hooks/use-translation';
 import Img from '../commons/image';
 import { Loading } from './loading';
-import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
@@ -33,7 +32,7 @@ function ProductCards({
   // const { t } = useTranslation();
   const shopCardsLength = shopCards?.length;
   const type = {
-    profile: 'bottom-8 flex w-6/12 h-24 justify-between items-center p-2 absolute',
+    profile: `${(typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-8' : 'bottom-0'}  flex w-6/12 h-24 justify-between items-center p-2 absolute`,
     embed: 'bottom-4 flex w-6/12 h-24 justify-between items-center p-2 absolute',
     single: 'bottom-14 flex w-6/12 h-24 justify-between items-center p-2 fixed',
 
@@ -53,7 +52,7 @@ function ProductCards({
                 toTrackMixpanel('shoppablePopupClicked',{pageName:pageName, tabName:tabName},{productId:id || null}) 
                 show('',charmboardDrawer , 'big', { videoId : videoId, campaignId})}}
             >
-              <Img data={data} height={120} width={120} fallbakc={fallbackShop?.src}/>
+              <Img data={data} height={120} width={120} fallback={"/images/shop.png"}/>
             </div>
           ))
           }

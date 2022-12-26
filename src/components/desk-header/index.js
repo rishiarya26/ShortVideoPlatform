@@ -12,7 +12,7 @@ import {getUserProfile} from "../../sources/users/profile"
 import { localStorage } from "../../utils/storage";
 import { useEffect, useState } from "react";
 import Img from "../commons/image";
-import fallbackUser from '../../../public/images/users.png' 
+// import fallbackUser from '../../../public/images/users.png' 
 import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
@@ -113,7 +113,7 @@ const naviagteToUploadPage = () => {
            <div className="relative">
            <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
              { userInfo?.profilePic ? 
-             <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
+             <Img data={userInfo?.profilePic} fallback={'/images/users.png'}/> : 
              Object.keys(userInfo)?.length > 0 && <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>
                 {userInfo?.firstName?.split(' ')?.map(name =>name[0])?.join('').toUpperCase()}
              </div>

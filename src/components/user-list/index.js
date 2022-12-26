@@ -8,7 +8,7 @@ import Loading from './loader';
 import { useState } from 'react';
 import Img from '../commons/image';
 import dynamic from 'next/dynamic';
-import fallbackUsers from '../../../public/images/users.png';
+//import fallbackUsers from '../../../public/images/users.png';
 import useDrawer from '../../hooks/use-drawer';
 import detectDownload from '../open-in-app'
 import { numberFormatter } from '../../utils/convert-to-K';
@@ -72,7 +72,7 @@ function UserList({router}) {
         <div key={id} className="user_card flex justify-between py-2 "> 
           <div onClick={()=> router && router?.push(`/@${data?.user?.userName}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
-              <Img data={data?.user?.profilePicImgUrl}  alt='image' fallback={fallbackUsers?.src}/>
+              <Img data={data?.user?.profilePicImgUrl}  alt='image' fallback={'/images/users.png'}/>
               </div>
             <div className="flex flex-col justify-between pl-4 pb-2 max-w-45v">
               <p className="font-medium text-base text-gray-700 w-full truncate">{data?.user?.userName} </p>

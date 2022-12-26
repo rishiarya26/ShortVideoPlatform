@@ -101,7 +101,7 @@ function AppBanner({notNowClick, videoId}) {
     <div data-testid="dialog-content w-full" >
         <div className="flex flex-col w-full items-center text-center" >
             <div  className="flex flex-col items-center" >
-                <h1 className="text-lg font-bold px-2 text-gray-800">Get the full experience on the app</h1>
+                <h1 className="text-lg font-bold px-2 text-gray-800">Get the full experience on Android app</h1>
                 <p className="text-center text-gray-400 mt-2 text-xs text-gray-700">Follow your favourite accounts,explore new trends and make your own videos</p>
             </div>
             <div className="flex mt-2 flex-col w-full">
@@ -112,7 +112,7 @@ function AppBanner({notNowClick, videoId}) {
                      onStoreRedirect({videoId : videoId, afChannel: 'pop_up'})
                 }}  className="flex bg-hipired py-3 mx-2 px-4 my-2 text-white rounded"  >
                     <div className="flex justify-center items-center text-sm md:text-base w-full font-semibold" >
-                        <p>Open Hipi</p>
+                        <p>Open App</p>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ import VideoInfo from '../desk-video-info';
 import VideoSidebar from '../desk-video-sidebar';
 import { useRouter } from 'next/router';
 import Img from '../commons/image';
-import fallbackUser from '../../../public/images/users.png' 
+// import '/images/users.png' '../../../public/images/users.png' 
 import EmbedSeekbar from '../emded-seekbar';
 import UnMute from '../commons/svgicons/unmute';
 import { analyticsCleanup, reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from '../../analytics/conviva';
@@ -196,7 +196,7 @@ return (
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div onClick={()=>pushToProfile()} className="flex items-center w-14 h-14 overflow-hidden cursor-pointer rounded-full">
-         <Img data={userProfilePicUrl} alt='profile-pic' fallback={fallbackUser?.src}/>
+         <Img data={userProfilePicUrl} alt='profile-pic' fallback={'/images/users.png'}/>
          {/* <img alt="profile-pic" className="usrimg" src={userProfilePicUrl} />     */}
       </div>
    </div>

@@ -1261,6 +1261,10 @@ input:checked + .slider_new:before {
   font-size: 8px;
   line-height: 12px;
 }
+/* install app */
+.install_app_bg{
+  background-color:#000000c2;
+}
 
 .playlist_bg {
   background-color: #f2f2f2;
