@@ -69,7 +69,8 @@ export default function DownloadAppWidget({videoId}) {
   // }
 
 // 
-  const toStoreRedirect = async ()=>{
+  const toStoreRedirectIos = async ()=>{
+    console.log("PP",videoId)
     toTrackMixpanel('downloadClick');
     ToTrackFbEvents('appDownloadCTA');
     toTrackFirebase('appDownloadCTA');
@@ -125,7 +126,7 @@ export default function DownloadAppWidget({videoId}) {
             <p className="text-xs text-gray-400">More ways to interact with the video. And, to create your own. Only on the App.</p>
           </div>
         </div>
-        <button onClick={toStoreRedirect} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white">Open App</button>
+        <button onClick={()=>toStoreRedirectIos()} className="font-semibold text-sm border border-hipired rounded-sm py-2 px-14 my-4 bg-hipired text-white">Open App</button>
         <div className="flex w-full justify-center items-center">
           <div className="flex justify-center items-center w-1/2 ">
             <p onClick={()=>close()} className="text-sm font-semibold text-gray-500">Not now</p>

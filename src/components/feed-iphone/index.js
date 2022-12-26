@@ -488,7 +488,7 @@ const adImpression =  async (index = 0)=>{
  try{ 
   setMuted(true);
   // setShowAppBanner(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted, videoId : activeVideoId});
   let updateShowItems = [...toShowItems];
   let deletedTill = pretoInsertElemant?.toInsertElements-12;
   let dataItem = [...items];
@@ -534,7 +534,7 @@ console.error('errorrr',e)
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted,videoId : activeVideoId });
   // setShowAppBanner(true);
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
