@@ -666,7 +666,8 @@ function Feed({ router }) {
                 activeIndex && setVideoActiveIndex(activeIndex);
                 if(activeIndex === 4){
                   !activatePwaCustomPopup?.shown && setActivatePwaCustomPopup({show: true, shown: true});
-                }
+                  !activatePwaCustomPopup?.shown && window.deferredPrompt && toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'PWA Install Custom'});
+                } 
                 if(activeIndex === 0){
                   setVideoActiveIndex(0);
                 }
@@ -831,7 +832,11 @@ function Feed({ router }) {
       {activatePwaCustomPopup?.show && window.deferredPrompt && 
          <div className='absolute w-full left-0 flex justify-center top-0 z-30 px-2'>
           <div className='w-full install_app_bg py-4 px-3 flex items-center text-white rounded-lg'>
-             <div className='pr-2' onClick={()=>setActivatePwaCustomPopup({show: false, shown: true})}><Close/></div>
+             <div className='pr-2' onClick={()=>{
+              toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Custom',ctaName:'Cancel', elemant:'Cancel'});
+              setActivatePwaCustomPopup({show: false, shown: true})}}>
+                <Close/>
+              </div>
               <div className=' flex justify-center w-full flex-col items-start '>
                 <p className='font-semibold'>Hipi</p>
                   <p className='text-sm'>{`Installing our app won't take any space on your phone.`}</p>
@@ -840,7 +845,9 @@ function Feed({ router }) {
         {/* open cta */}
  {
         <button className='font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600' 
-         onClick={()=>showPwaInstall({pageName:pageName, tabName:tabName})}>
+         onClick={()=>{
+          toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Custom',ctaName:'Install', elemant:'Install'});
+          showPwaInstall({pageName:pageName, tabName:tabName})}}>
           Install
         </button>}
               </div>

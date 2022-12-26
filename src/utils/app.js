@@ -95,8 +95,14 @@ export const showPwaInstall = async({pageName='', tabName=''})=>{
     const result = await promptEvent.userChoice;
     console.log('👍', 'userChoice', result);
     if(result?.outcome){
-      result.outcome === "accepted" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
-      result.outcome === "dismissed" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Cancel', elemant:'Cancel'});;
+     try{
+       if(result.outcome === "accepted"){
+        toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
+        toTrackMixpanel('pwaInstallClickSuccess',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
+      }}catch(e){
+        toTrackMixpanel('pwaInstallClickError',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
+      }
+      result.outcome === "dismissed" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Cancel', elemant:'Cancel'});
     }
     // Reset the deferred prompt variable, since
     // prompt() can only be called once.
