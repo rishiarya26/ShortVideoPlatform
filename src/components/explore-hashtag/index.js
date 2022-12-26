@@ -24,7 +24,7 @@ import { getItem } from '../../utils/cookie';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { trimHash } from '../../utils/string';
-import {specialHashtagSeo} from '../../utils/seo/index'
+import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -118,9 +118,9 @@ function HashTag({router}) {
   >
     <SeoMeta
         data={{
-          title: item === 'gay'||item ==='hd'||item ==='aunty'||item ==='badi'||item ==='gtav'||item ==='saxena'||item ==='fifa'||item ==='shaadi'||item ==='sab' ? customTitleSeo(item) : `Find Latest Videos on Hipi | Hashtag ${item} |Trending Videos`,
+          title: customHashtagTitleSeo({item: item}),
           // image: item?.thumbnail,
-          description: `Explore all the latest videos on Hipi by #${item}, hashtag are a brilliant way to group up posts and find latest video trends. Also, find the influencers daily content`,
+          description: customHashtagDescSeo({item: item}),
           canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
         }}
      />

@@ -34,6 +34,7 @@ import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import RightArrow from '../commons/svgicons/right-arrow';
+import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -388,9 +389,9 @@ if(item?.indexOf('#')){
     <>
     <SeoMeta
     data={{
-      title: `Find Latest Videos on Hipi | Hashtag ${item} |Trending Videos`,
-      // image: item?.thumbnail,
-      description: `Explore all the latest videos on Hipi by #${item}, hashtag are a brilliant way to group up posts and find latest video trends. Also, find the influencers daily content`,
+      title: customHashtagTitleSeo({item: item}),
+          // image: item?.thumbnail,
+      description: customHashtagDescSeo({item: item}),
       canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
     }}
  />
