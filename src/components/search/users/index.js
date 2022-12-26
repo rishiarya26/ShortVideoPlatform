@@ -8,7 +8,7 @@ import Img from "../../commons/image";
 import { withRouter } from "next/router";
 import { Back } from "../../commons/svgicons/back";
 import useTranslation from "../../../hooks/use-translation";
-import fallbackUsers from '../../../../public/images/users.png'
+// import fallbackUsers from '../../../../public/images/users.png'
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { toTrackReco } from "../../../analytics/view-events";
 import { CREATOR_PROFILE, DISCOVER_SEARCH_RESULTS } from "../../../constants";
@@ -73,7 +73,7 @@ const Users = ({item, type = 'normal', router}) =>{
                        }
                      router && router?.push(`/@${item?.userHandle}`)}} key={id} className="flex p-2 min-w-3/5 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
-                          <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
+                          <Img data={item?.userIcon} title="Hipi" fallback={'/images/users.png'}/>
                           </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
                         <p className="font-medium text-sm text-gray-700">{`${item?.firstName} ${item?.lastName}`} </p>

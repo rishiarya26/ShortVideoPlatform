@@ -527,6 +527,7 @@ function Hipi({
  /*************************** */
     useEffect(()=>{
       setRefferer();
+      isPwa();
      
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
@@ -578,6 +579,9 @@ function Hipi({
       window.addEventListener(data,resetTimeout);
     })
 
+    trapPwaInstallEvent();
+    
+
     return () => {
       events.forEach((data)=>{
         window.addEventListener(data,resetTimeout);
@@ -597,6 +601,44 @@ function Hipi({
      console.error("guest get social error",e)
      response = await toGetSocialToken();
    }};
+
+   const trapPwaInstallEvent = () =>{
+    // let deferredPrompt;
+    console.log("before fn called");
+   try{ 
+     window.addEventListener('beforeinstallprompt', (e) => {
+     console.log("beforeInstall called",e);
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      // deferredPrompt = e;
+      window.deferredPrompt = e;
+      // Update UI notify the user they can install the PWA
+      // showInstallPromotion();
+      // Optionally, send analytics event that PWA install promo was shown.
+      console.log(`'beforeinstallprompt' event was fired.`);
+    });}catch(e){
+      console.error('error',e)
+    }
+   }
+
+   function isPwa() {
+   try{ 
+    // localStorage?.remove('isInstalled');
+      // let mode = 'browser tab';     
+      const pwa = ["fullscreen", "standalone", "minimal-ui"].some(
+          (displayMode) => window.matchMedia('(display-mode: ' + displayMode + ')').matches
+      );
+      // if(pwa){
+      //   mode = 'pwa'
+      // }
+      // Log launch display mode to analytics
+      console.log('isInstalled:', pwa);
+      localStorage.set('isInstalled',JSON.stringify(pwa));
+  }catch(e){
+      console.error('error')
+    }
+  }
 
   return (
     <>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Img from "../commons/image"
 import DeskHoverInfo from "../desk-hover-info"
 import {getPopularUser} from "../../sources/users/profile"
-import fallbackUsers from '../../../public/images/users.png';
+//import fallbackUsers from '../../../public/images/users.png';
 import Verified from "../commons/svgicons/verified";
 
 const DeskPopularUsersList = () =>{
@@ -47,7 +47,7 @@ const DeskPopularUsersList = () =>{
         : items?.map((item,id)=>(
            id<9 && 
            <div onClick={()=>pushToProfile(item?.userHandle)} className='flex cursor-pointer items-center hover:bg-gray-100 py-2 pr-4 mr-2' key={id}>
-             <div className=" w-8 min-w-8 flex h-8 bg-gray-300 relative rounded-full overflow-hidden"><Img data={item?.profilepicimageurl} fallback={fallbackUsers?.src} /></div>
+             <div className=" w-8 min-w-8 flex h-8 bg-gray-300 relative rounded-full overflow-hidden"><Img data={item?.profilepicimageurl} fallback={'/images/users.png'} /></div>
              <div className="flex flex-col ml-2 sm-menu">
              <div className="flex flex-col relative font-semibold text-base text-gray-700 cursor-pointer">
                       <div  className="flex items-center text-sm text-gray-800 font-bold cursor-pointer">

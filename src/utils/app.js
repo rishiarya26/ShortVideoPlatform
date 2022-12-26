@@ -79,6 +79,37 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' 
   return Promise.reject(NO_SUPPORT);
 };
 
+export const showPwaInstall = async({pageName='', tabName=''})=>{
+    console.log('👍', 'butInstall-clicked');
+    const promptEvent = window?.deferredPrompt;
+    if (!promptEvent) {
+      console.info("prompt not found",promptEvent)
+      // The deferred prompt isn't available.
+      return;
+    }
+    // Show the install prompt.
+    promptEvent.prompt();
+    promptEvent && toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'PWA Install Native'})
+
+    // after user choice 
+    const result = await promptEvent.userChoice;
+    console.log('👍', 'userChoice', result);
+    if(result?.outcome){
+     try{
+       if(result.outcome === "accepted"){
+        toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
+        toTrackMixpanel('pwaInstallClickSuccess',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
+      }}catch(e){
+        toTrackMixpanel('pwaInstallClickError',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
+      }
+      result.outcome === "dismissed" && toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Cancel', elemant:'Cancel'});
+    }
+    // Reset the deferred prompt variable, since
+    // prompt() can only be called once.
+    deferredPrompt = null;
+ }
+
+
 /** example
  * Router.pushState('/user, {name : ankit, age: 31})
  * This will work only on component in pages folder

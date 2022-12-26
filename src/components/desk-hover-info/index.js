@@ -8,7 +8,7 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import dynamic from 'next/dynamic';
 import Img from '../commons/image';
-import fallbackUser from '../../../public/images/users.png' 
+// import fallbackUser from '../../../public/images/users.png' 
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
@@ -93,7 +93,7 @@ function DeskHoverInfo({id}) {
     <div className="flex justify-between">
       <div className='flex flex-col'> 
           <div onClick={()=>router && router.push(`/${item?.userHandle}`)} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full">
-              <Img data={item?.profilePic} title="Hipi" fallback={fallbackUser?.src} />
+              <Img data={item?.profilePic} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <h3  onClick={()=>router && router.push(`/${item?.userHandle}`)} 
           className="border-black font-semibold text-base text-gray-700 cursor-pointer mt-2 flex items-center">

@@ -2,12 +2,12 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
 import Image from 'next/image';
-import fallbackImg from '../../../../public/images/fallback-charms.png'
+// import fallbackImg from '../../../../public/images/fallback-charms.png'
 
 
 // TODO we need a proper default image url for blurDataURL
 const ImgProfile = ({
-  onClick, fallback={fallbackImg}, data, title = 'hipi'
+  onClick, fallback="images/fallback-charms.png", data, title = 'hipi'
 }) => {
   let finalSrc = data;
 

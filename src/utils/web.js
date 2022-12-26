@@ -115,7 +115,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   try{  
     if(videoId){ 
       try{ const resp = await getOneLink({videoId : videoId, afChannel:afChannel});
-      link = resp?.data;
+      link = resp;
 
       console.log("one link resp",resp);
       }
@@ -125,6 +125,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
     }
   }
   catch(e){
+    console.error("error in getting smart appsflyer link",e)
   }
   const device = getItem('device-info') || 'ios';
   device === 'ios' ? (window.location.href = link) : (window?.open(link));

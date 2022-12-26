@@ -11,7 +11,8 @@ out
 Dockerfile
 start_docker_container.sh
 commits.txt
-
+sw.*
+workbox-*
 # Compiled Java class files
 *.class
 

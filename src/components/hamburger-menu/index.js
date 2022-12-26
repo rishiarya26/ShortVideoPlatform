@@ -1,5 +1,7 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/jsx-no-duplicate-props*/
+/*eslint-disable react/no-unescaped-entities*/
+
 import React, { memo } from 'react';
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -15,9 +17,13 @@ import GrievanceIcon from "../commons/svgicons/grievance"
 import AdsIcon from "../commons/svgicons/ads"
 import AboutIcon from "../commons/svgicons/about"
 import Wiki from "../commons/svgicons/wikipedia"
+import { showPwaInstall } from "../../utils/app"
+import { toTrackMixpanel } from "../../analytics/mixpanel/events"
+import { getItem } from "../../utils/cookie"
 
-const HamburgerMenu = ()=>{
+const HamburgerMenu = ({pageName='', tabName=''})=>{
    const [open, setOpen]= useState(false);
+   const device = getItem('device-info');
 
     const router = useRouter();
     return(
@@ -79,6 +85,23 @@ const HamburgerMenu = ()=>{
           </div> */}
         </div>
     </div>
+     
+    {device === 'android' && typeof window !== "undefined" && window?.deferredPrompt && <div className="w-full install_app_bg py-4 px-3 flex items-center text-white">
+        <div className=" flex justify-center w-full flex-col items-start ">
+            <p className="text-sm pr-2">Installing our app won't take any space on your phone.</p>
+        </div> 
+        <div className="flex justify-end items-center">
+          <button 
+            onClick={()=>{
+              toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
+              showPwaInstall({pageName:pageName, tabName:tabName})
+            }} 
+           className="font-semibold text-sm  rounded py-1 px-2 mr-1 bg-white text-gray-600">
+            Install
+          </button>
+        </div>
+    </div>}
+
   </div>
 </>
     )

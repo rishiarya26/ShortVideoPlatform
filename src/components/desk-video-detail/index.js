@@ -23,7 +23,7 @@ import CopyEmbedCode from "../copy-embed-code.js";
 import useSnackbar from "../../hooks/use-snackbar";
 import useDialog from "../../hooks/use-dialog";
 import Sidebar from "./sidebar"
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import DeskHoverInfo from "../desk-hover-info";
 import VerifiedLg from "../commons/svgicons/verified-lg";
@@ -151,7 +151,7 @@ return (
             <div className="flex justify-between items-center">
                <div className="flex items-center">
                   <div onClick={pushToProfile} className="flex items-center w-12 h-12 overflow-hidden cursor-pointer rounded-full mr-4">
-                   <Img data={userProfilePicUrl} fallback={fallbackUser?.src}/>
+                   <Img data={userProfilePicUrl} fallback={'/images/users.png'}/>
                   </div>
                   <div className="flex flex-col">
                   <div className='flex items-center'>
