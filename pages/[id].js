@@ -11,7 +11,7 @@ import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 import { breadcrumbSchema, pageSchema, personSchema, videoSchema } from '../src/utils/schema';
 import { getCanonicalUrl, getSmallcaseUsernameUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
 import { getProfileVideos, getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
-import { customTitleSeo } from '../src/utils/seo';
+import { customProfileDescSeo, customProfileTitleSeo } from '../src/utils/seo';
 // import DeskUsers from '../src/components/desk-profile';
 // import Users from '../src/components/users';
 
@@ -194,9 +194,9 @@ export default function Hipi(params) {
     }
     <SeoMeta
       data={{
-        title: item?.userHandle === 'Sneha_pundir_' ?  customTitleSeo(item?.userHandle) : `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `,
+        title: customProfileTitleSeo({item}),
         // image: item?.thumbnail,
-        description: `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi. ${item?.followers || ''} followers, Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`,
+        description: customProfileDescSeo({item}),
         additionalMetaTags:[{
         name: 'keywords',
         content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi, ${item?.firstName || ''} ${item?.lastName || ''},${item?.userHandle || ''}`
