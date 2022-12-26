@@ -3,11 +3,10 @@ export const customProfileTitleSeo = ({item})=>{
         return `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `;
     }
     const userHandle = item.userHandle.replace("@", "");
-    console.log("debug", userHandle);
     switch (userHandle) {
-        case '@Sneha_pundir_': return 'Hipi Stunner Winner - Sneha Pundir(@Sneha_pundir_) on Hipi'
+        case 'Sneha_pundir_': return 'Hipi Stunner Winner - Sneha Pundir(@Sneha_pundir_) on Hipi'
 
-        case '@Pitchers' : return 'TVF Pitchers on Hipi |Pitchers Season 2 | Tu Beer Hai | All Episodes'
+        case 'Pitchers' : return 'TVF Pitchers on Hipi |Pitchers Season 2 | Tu Beer Hai | All Episodes'
 
         default: return `${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi | ${item?.firstName || ''} ${item?.lastName || ''} on Hipi `
     }
@@ -47,7 +46,7 @@ export const customProfileDescSeo = ({item}) => {
     }
     const userHandle = item.userHandle.replace("@", "");
     switch(userHandle) {
-        case '@Pitchers' : return `Watch Pitchers Season 2 | TVF Pitchers on Hipi | TVF Pitchers New Season on Hipi | Tu Beer Hai | Naveen | Arunabh Kumar | Jeetu | Jury Room`
+        case 'Pitchers' : return `Watch Pitchers Season 2 | TVF Pitchers on Hipi | TVF Pitchers New Season on Hipi | Tu Beer Hai | Naveen | Arunabh Kumar | Jeetu | Jury Room`
 
         default : return`${item?.firstName || ''} ${item?.lastName || ''}(${item?.userHandle || ''}) on Hipi. ${item?.followers || ''} followers, Check out latest trending videos from ${item?.firstName || ''} ${item?.lastName || ''} on Hipi. Download the App Now!`
     }
