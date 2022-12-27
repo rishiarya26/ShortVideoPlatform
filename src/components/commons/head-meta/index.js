@@ -146,6 +146,7 @@ function HeadMeta() {
       <link href={withBasePath('apple-icon-120x120-dunplab-manifest-17016.png')} rel="apple-touch-icon" sizes="120x120" />
       <link href={withBasePath('apple-icon-152x152-dunplab-manifest-17016.png')} rel="apple-touch-icon" sizes="152x152" />
       <link href={withBasePath('apple-icon-180x180-dunplab-manifest-17016.png')} rel="apple-touch-icon" sizes="180x180" />
+      <link href={withBasePath('apple-icon-144x144-dunplab-manifest-17016.png')} rel="apple-touch-icon" sizes="180x180" />
       
       <link href={withBasePath('android-icon-192x192-dunplab-manifest-17016.png')} rel="apple-touch-icon" sizes="192x192" />
       <link href={withBasePath('output-onlinepngtools_1.png')} rel="apple-touch-icon" sizes="57x57" />
