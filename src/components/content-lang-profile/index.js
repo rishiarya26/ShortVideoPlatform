@@ -77,7 +77,7 @@ const ContentLangProfile = () =>{
             console.log('inside  - lang update w login + ',response)
             console.log('insidie - languages updated successfully');
             setLoading(false);
-            showSnackbar({type: "info", message: "Language successfully changed"})
+            showSnackbar({type: "info", message: "Updation successfull"})
           }
         // }
         } catch(e) {
