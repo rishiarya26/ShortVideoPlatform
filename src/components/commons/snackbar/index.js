@@ -39,7 +39,8 @@ const SnackType = {
   error: 'bg-red-400',
   info: 'bg-blue-400',
   success: 'bg-green-400',
-  warn: 'bg-yellow-400'
+  warn: 'bg-yellow-400',
+  black: 'bg-black',
 };
 
 const IconType = {

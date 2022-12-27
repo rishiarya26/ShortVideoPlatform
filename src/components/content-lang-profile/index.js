@@ -77,13 +77,13 @@ const ContentLangProfile = () =>{
             console.log('inside  - lang update w login + ',response)
             console.log('insidie - languages updated successfully');
             setLoading(false);
-            showSnackbar({type: "info", message: "Language updated successfully"})
+            showSnackbar({type: "black", message: "Language updated successfully"})
           }
         // }
         } catch(e) {
           console.error('inside - languages updation failed',e);
           setLoading(false);
-          showSnackbar({type: "info", message: "Unexpected error occured"})
+          showSnackbar({type: "black", message: "Unexpected error occured"})
         }
       }
 
