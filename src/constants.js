@@ -14,7 +14,7 @@ export const BASIC_ONE_LINK_SKELETON = 'https://hipi.onelink.me/tMco'
 export const DYNAMIC_ONE_TAP_DOWNLOAD = 'https://onelink.appsflyer.com/shortlink/v1/tMco';
 export const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.zee5.hipi';
 export const IOS_STORE = 'https://apps.apple.com/in/app/hipi-indian-short-video-app/id1561950008';
-export const VERSION = '5.0.0';
+export const VERSION = '5.1.2';
 export const APP_NAME = 'HiPi';
 export const APP_ID = "YInJ8G70y098";
 export const LANGUAGE = 'en';
