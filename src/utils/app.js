@@ -88,7 +88,7 @@ export const showPwaInstall = async({pageName='', tabName=''})=>{
       return;
     }
     // Show the install prompt.
-    promptEvent.prompt();
+    promptEvent?.prompt();
     promptEvent && toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'PWA Install Native'})
 
     // after user choice 
@@ -99,6 +99,16 @@ export const showPwaInstall = async({pageName='', tabName=''})=>{
        if(result.outcome === "accepted"){
         toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
         toTrackMixpanel('pwaInstallClickSuccess',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
+        window.deferredPrompt = null;
+        // setTimeout(()=>{
+        //   try{  
+        //     // console.log('current page',window.location.href);
+        //     const currentPage = typeof window !== "undefined" && window?.location?.href;
+        //     window.location.href = currentPage;
+        //     }catch(e){
+        //       console.error('error in page refreshing',e);
+        //     }
+        // },1000)
       }}catch(e){
         toTrackMixpanel('pwaInstallClickError',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
       }
@@ -106,7 +116,7 @@ export const showPwaInstall = async({pageName='', tabName=''})=>{
     }
     // Reset the deferred prompt variable, since
     // prompt() can only be called once.
-    deferredPrompt = null;
+    // deferredPrompt = null;
  }
 
 
