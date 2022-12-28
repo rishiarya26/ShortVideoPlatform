@@ -54,7 +54,7 @@ if(noShow) return false;
   
   const text = {
     'ios' : FULL_EXPERIENCE,
-    'android' : 'Our app wont take up space on your phone.'
+    'android' : "Our app won't take up space on your phone."
   }
 
   const button = {
