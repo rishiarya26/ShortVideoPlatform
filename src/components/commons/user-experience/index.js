@@ -63,7 +63,7 @@ if(noShow) return false;
       toTrackFirebase('appOpenCTA');
       toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
       onStoreRedirect({videoId : activeVideoId})}} 
-     className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
+     className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white select-none">
       Open
   </div>,
   'android' : 
@@ -71,7 +71,7 @@ if(noShow) return false;
      toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
      showPwaInstall({pageName:pageName, tabName:tabName})
    }} 
-   className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white">
+   className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white select-none">
     Install
 </div>
   }
