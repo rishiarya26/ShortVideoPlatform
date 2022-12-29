@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import faq from '../../../public/rewards-FAQ.json';
 import OpenFaqBlue from '../commons/svgicons/open-faq-blue';
 import CloseFaqBlue from '../commons/svgicons/close-faq-blue';
+import { faqRewards } from '../../utils/schema';
+
 function Rewards() {
 const [items, setItems] = useState(faq?.faq);
 const handleClick = (id) =>{
@@ -25,9 +27,9 @@ return (
 <>
 <SeoMeta
 data={{
-title: ' Earn Rewards with Hipi ',
+title: ' Earn Rewards with Hipi | How to Earn rewards on Hipi ',
 // image: item?.thumbnail,
-description: 'You can earn Hipi rewards through Hipi Rewards Program when you use Hipi app to watch videos, follow creators, create videos and share them with your friends.',
+description: 'You can earn Hipi rewards through Hipi Rewards Program when you use Hipi app to watch videos, follow creators, create videos, and share them with your friends. Earn by watching hipi videos to get rewards.',
 canonical: url && getCanonicalUrl(url),
 openGraph: {
 title: 'Earn Rewards with Hipi ',
@@ -46,6 +48,10 @@ site_name: 'Hipi'
 }
 }}
 />
+<script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqRewards) }}
+      />
 <div className="static_body_ relative">
     <div className='hidden md:flex'>
         <Header/>
