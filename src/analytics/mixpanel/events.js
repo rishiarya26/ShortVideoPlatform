@@ -4,6 +4,7 @@ import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
 import { getReffererPage, usePreviousRoute } from "../../utils/web";
+import platform from "platform";
 
 
 let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
@@ -52,6 +53,7 @@ export const commonEvents = ()=>{
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
     payload['Source'] = previousPage;
+    payload['Browser Platform'] = platform ? platform?.name : null;
     // getReffererPage();
     // usePreviousRoute();
     // payload['Source'] = getReffererPage() || 'NA';
