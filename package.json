@@ -10,6 +10,10 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@aws-sdk/client-s3": "3.100.0",
+    "@aws-sdk/credential-provider-cognito-identity": "3.100.0",
+    "@aws-sdk/credential-providers": "3.100.0",
+    "@aws-sdk/lib-storage": "3.100.0",
     "@babel/runtime-corejs2": "^7.8.7",
     "@convivainc/conviva-js-coresdk": "^4.5.8",
     "@convivainc/conviva-js-html5": "^4.0.9",
@@ -37,7 +41,7 @@
     "miragejs": "^0.1.41",
     "mq-polyfill": "^1.1.8",
     "next": "^11.0.0",
-    "next-pwa": "^5.0.5",
+    "next-pwa": "^5.6.0",
     "next-seo": "^4.23.0",
     "parse-link-header": "^1.0.1",
     "platform": "^1.3.6",

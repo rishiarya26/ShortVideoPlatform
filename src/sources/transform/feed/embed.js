@@ -57,6 +57,8 @@ function transformSuccess(resp) {
         payloadObject.firstFrame = d?.firstFrame || null;
         payloadObject.createdOn = d?.createdOn || null
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
+        payloadObject.playlistId = d?.playlists?.[0]?.id || null;
+        payloadObject.playlistName = d?.playlists?.[0]?.name || null;
       });
       payload.data = payloadObject;
     } else {

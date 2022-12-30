@@ -12,7 +12,7 @@ import {getUserProfile} from "../../sources/users/profile"
 import { localStorage } from "../../utils/storage";
 import { useEffect, useState } from "react";
 import Img from "../commons/image";
-import fallbackUser from '../../../public/images/users.png' 
+// import fallbackUser from '../../../public/images/users.png' 
 import Logout from "../commons/svgicons/logout";
 import LogoutPopup from "../desk-logout-popup";
 import { useRouter } from "next/router";
@@ -20,7 +20,6 @@ import DeskSearch from "../desk-search";
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import UploadPlusSvg from "../commons/svgicons/upload-plus";
 import ProfileSm from "../commons/svgicons/profile-small";
-import { UPLOAD_ACCESS_USERS } from "../../constants";
 
 const Header = ({doReload, type='normal', typeParam, searchType='explore'})=>{
    const [userInfo, setUserInfo] = useState({});
@@ -103,7 +102,7 @@ const naviagteToUploadPage = () => {
          </div>
       </div> */}
        <div className="flex">
-         <div id="uploadButton" className={`${!UPLOAD_ACCESS_USERS?.includes(trimmedUserHandle) || isLoggedIn !== 'true' ? 'hidden': '' } border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
+         <div id="uploadButton" className={`border border-gray-200 px-3 py-1 flex justify-center items-center rounded-sm w-28 cursor-pointer hover:bg-gray-100  text-gray-600 mr-4`}
          onClick={isLoggedIn === 'true' ? () => naviagteToUploadPage() : () =>show('', login, 'big',{showMessage:showMessage})}> 
             <UploadPlusSvg />
             <span className="text-sm font-semibold pl-2">
@@ -114,7 +113,7 @@ const naviagteToUploadPage = () => {
            <div className="relative">
            <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer' onClick={()=>setShowlogoutMenu(!showlogoutMenu)}>
              { userInfo?.profilePic ? 
-             <Img data={userInfo?.profilePic} fallback={fallbackUser?.src}/> : 
+             <Img data={userInfo?.profilePic} fallback={'/images/users.png'}/> : 
              Object.keys(userInfo)?.length > 0 && <div className='w-10 h-10 text-lg rounded-full cursor-pointer usricon flex items-center justify-center font-semibold'>
                 {userInfo?.firstName?.split(' ')?.map(name =>name[0])?.join('').toUpperCase()}
              </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Img from "../../commons/image";
 import Arrow from "../../commons/svgicons/arrow-red";
-import fallbackImg from '../../../../public/images/fallback-charms.png'
+// import fallbackImg from '../../../../public/images/fallback-charms.png'
 import CardRibbon from "../../card-ribbon";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
@@ -14,7 +14,12 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
  
        useEffect(()=>{
           productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
-          productIdChange === id && appsflyerId && appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop'})
+          if(productIdChange === id && appsflyerId){
+          try{
+           const response = appsflyerPixelImp({ advertiser:shopName, appId:appsflyerId, productId:id, comp:'Shop', mixpanelProperties:{pageName:pageName, tabName:tabName, id:id,shopName:shopName,productName:productName,videoId:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId}})
+          }catch(e){
+          }
+          }
           productIdChange === id && toTrackClevertap('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
        },[productIdChange])
  
@@ -67,14 +72,14 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
            <div className="flex relative w-full">
            <CardRibbon ribbonData={ribbonData}/>
                <div className="flex w-1/2">
-               {thumbnail && <Img data={thumbnail}  fallback={fallbackImg?.src}/> }
+               {thumbnail && <Img data={thumbnail}  fallback={"images/fallback-charms.png"}/> }
                </div>
                 {thumbnailProduct ? 
                 <div onClick={()=> {
                     onProductClick()
                     window?.open(shopLink)}} 
                     className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
-                  <Img data={thumbnailProduct} fallback={fallbackImg?.src}/>
+                  <Img data={thumbnailProduct} fallback={"images/fallback-charms.png"}/>
                 </div> : 
                 <div className="py-2 product absolute -top-10 max-h-72 h-72 right-0 w-1/2 flex items-center bg-white pt-10 p-6">
                   <p className="text-xs px-2 h-44 text-gray-600 overflow-hidden">{title && title}</p>
@@ -101,7 +106,7 @@ const CharmCardBeauty = ({thumbnail, title, shopName,shopNameImg, shopLink, cate
                         <div className="flex items-center">
                         {actualPrice > 0 && <p className='text-gray-400 pl-2 pr-2  text-sm'>{`${' '}`}<del>{` ${' '} ₹${actualPrice || ''}`}</del></p>}
                           {salePrice > 0 && <p className='text-gray-700 text-sm'>{`${' '} ₹${salePrice || ''}`}</p>}
-                        <div onClick={onProductClick} className="flex px-4 py-2 ">
+                        <div onClick={onProductClick} className="flex px-4 py-2 pr-0">
                             <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
                         </div>

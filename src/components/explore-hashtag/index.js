@@ -1,5 +1,6 @@
 /*eslint-disable react/no-unescaped-entities */
 /*eslint-disable react/display-name */
+/*eslint-disable @next/next/no-img-element*/
 
 import Save from '../commons/svgicons/save';
 import { Back } from '../commons/svgicons/back';
@@ -23,7 +24,7 @@ import { getItem } from '../../utils/cookie';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { trimHash } from '../../utils/string';
-import {specialHashtagSeo} from '../../utils/seo/index'
+import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 let setRetry;
@@ -119,9 +120,9 @@ function HashTag({router}) {
   >
     <SeoMeta
         data={{
-          title: item === 'gay'||item ==='hd'||item ==='aunty'||item ==='badi'||item ==='gtav'||item ==='saxena'||item ==='fifa'||item ==='shaadi'||item ==='sab' ? customTitleSeo(item) : `Find Latest Videos on Hipi | Hashtag ${item} |Trending Videos`,
+          title: customHashtagTitleSeo({item: item}),
           // image: item?.thumbnail,
-          description: `Explore all the latest videos on Hipi by #${item}, hashtag are a brilliant way to group up posts and find latest video trends. Also, find the influencers daily content`,
+          description: customHashtagDescSeo({item: item}),
           canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
         }}
      />
@@ -147,13 +148,24 @@ function HashTag({router}) {
             </div>
           </div>
         </div>
-        <div className="flex text-sm text-gray-400 py-2">
+        <div className="flex text-sm text-gray-400 py-2 leading-4">
           <p>
             {details?.hashTagDesc}
             {/* <span className="font-medium text-gray-500">#hashtag</span> */}
          </p>
         </div>
       </div>
+      {details?.hashTagPromoBanner && (
+          <div onClick={() => {
+            if(details?.hashTagPromoUrl) {
+              toTrackMixpanel('hashtagBannerClicked', {hashtagId: details?.id, hashtagName: details?.hashtagName, pageName: "Hashtag Details"})
+              const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+              router.push(`/${pathName}`);
+            }
+             }}>
+            <img src={details?.hashTagPromoBanner}/>
+          </div>
+      )}
       <VideoGallery
         items={items}
         status={fetchState}

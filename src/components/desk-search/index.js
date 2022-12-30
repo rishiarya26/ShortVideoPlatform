@@ -14,7 +14,7 @@ import { getSearchResults } from "../../sources/search/search";
 import CircularProgress from "../commons/circular-loader-search";
 import { getTopSearches } from "../../sources/explore/top";
 import Img from "../commons/image";
-import fallbackUsers from '../../../public/images/users.png';
+//import fallbackUsers from '../../../public/images/users.png';
 import { trimHash } from "../../utils/string";
 
 async function search(searchTerm, setSuggestions, setLoading) {
@@ -210,7 +210,7 @@ const SearchItems = ({router,type})=>{
             onClick={()=>router && router.push(`/@${suggestion?.users?.userHandle}`)}
             className={`${id === suggestionListIndex ? 'bg-gray-100' : ''} flex text-sm  w-full p-3 bg-white cursor-pointer`}>
                 <div className='w-8 h-8 overflow-hidden rounded-full'>
-                    <Img data={suggestion?.users?.userIcon} fallback={fallbackUsers?.src}/>
+                    <Img data={suggestion?.users?.userIcon} fallback={'/images/users.png'}/>
                 </div>
                 <div className="flex flex-col ml-2">
                 <div className="text-sm font-semibold">{suggestion?.users?.userHandle}</div>

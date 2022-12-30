@@ -8,7 +8,7 @@ import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
 import Img from "../../commons/image";
 import { useRouter } from "next/router";
-import fallbackUsers from '../../../../public/images/users.png';
+// import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { CREATOR_PROFILE, DISCOVER_SEARCH_RESULTS } from "../../../constants";
@@ -85,11 +85,11 @@ const TopItems = ({item, redirectTab}) =>{
                     }
                      router && router?.push(`/@${item?.userHandle}`)}} key={id} className="flex border-2 border-gray-100 py-2 px-4 mr-2">
                       <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden" >
-                      <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
+                      <Img data={item?.userIcon} title="Hipi" fallback={'/images/users.png'}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2 pb-2">
-                        <p className="font-bold text-sm text-gray-700">{item?.userId} </p>
-                        <p className="text-xs text-gray-400">{item?.userId}</p>
+                        <p className="font-bold text-sm text-gray-700 line-clamp-1">{item?.userId} </p>
+                        <p className="text-xs text-gray-400 line-clamp-1">{item?.userId}</p>
                         <p className="text-xs text-gray-400 whitespace-nowrap">{numberFormatter(item?.followers)} Followers</p>
                     </div>
                   </div>

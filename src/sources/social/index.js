@@ -7,8 +7,8 @@ import { getEpochTime } from '../../utils/date';
 import { trimSpace } from '../../utils/string';
 import { getItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
-import { transformErrorOneLink, transformSuccessOneLink } from '../transform/social/get-one-link';
-import { ONE_TAP_DOWNLOAD } from '../../constants';
+// import { transformErrorOneLink, transformSuccessOneLink } from '../transform/social/get-one-link';
+import { BASIC_ONE_LINK_SKELETON, ONE_TAP_DOWNLOAD } from '../../constants';
 
 const apiKey = '4dbc881836c2a0130cda9cfcec0f3383';
 const appId = 'YInJ8G70y098';
@@ -129,7 +129,7 @@ const browser = localStorage.get('plaformData')?.name;
 const isLoggedIn = localStorage?.get('user-id') || null;
 const previousPage = window?.sessionStorage?.getItem('previous-page');
   try {
-    payload =  (event === 'user_video_end') ?
+    payload =  (event === 'user_video_end' || event === 'completed') ?
      {
       "assetId": id,
       "event": event,
@@ -180,68 +180,72 @@ const previousPage = window?.sessionStorage?.getItem('previous-page');
 };
 
 const getDynamicOneLink = async({videoId, afChannel}) => {
-  let response = {};
+  // let response = {};
   try {
   console.log('videoId',videoId)
-    const payload = {
-      deep_link_value: `https://www.hipi.co.in/video/${videoId}`,
-      utm_source: 'pwa_mobile_install_cta',
-      utm_campaign: 'pwa',
-      is_retargeting: 'true',
-      pid:"install",
-      af_dp:"zee5hipi://"
-    }
-    console.log("api called", payload);
-    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/appsflyer`;
-    response = await post(apiPath, {data: payload}, {
-    });
+    // const payload = {
+    //   deep_link_value: `https://www.hipi.co.in/video/${videoId}`,
+    //   // utm_source: 'pwa_mobile_install_cta',
+    //   // utm_campaign: 'pwa',
+    //   is_retargeting: 'true',
+    //   pid:"install",
+    //   af_dp:"zee5hipi://"
+    // }
+    // console.log("api called", payload);
+    // const apiPath = `${getApiBasePath('hipi')}/v1/shorts/appsflyer`;
+    // response = await post(apiPath, {data: payload}, {
+    // });
     // console.log("link",response)
-    // const link = getSmartOneLink({oneLink : response?.data?.responseData || ONE_TAP_DOWNLOAD, afChannel:afChannel});
     // console.log("link-smart",link);
     // response.data.smartLink = link;
-    response.data.status = 'success';
-    response.data.message = '';
-    return Promise.resolve(response);
+    // response.data.status = 'success';
+    // response.data.message = '';
+    // return Promise.resolve(response);
+    const link = getSmartOneLink({oneLink : BASIC_ONE_LINK_SKELETON, afChannel:afChannel, videoId});
+    console.log('smart-script-link',link)
+    return (link || ONE_TAP_DOWNLOAD);
+
   } catch (err) {
-    console.log(err)
-    return Promise.reject(err);
+    console.error('one-link-error',err)
+    return ONE_TAP_DOWNLOAD;
+    // return Promise.reject(err);
   }
 }
 
-const getSmartOneLink = ({oneLink, afChannel})=>{
+const getSmartOneLink = ({oneLink, afChannel, videoId})=>{
   let result_url = "No output from script"
   try{  
-  // console.log("SMART",window)
   //Initializing Smart Script arguments
   const oneLinkURL = oneLink;
   // If a media source key is NOT FOUND on the link and NO default value is found, the script will return a null string 
   const mediaSource = {keys: ["utm_source"], defaultValue: "webOrganic"};
   const campaign = {keys: ["utm_campaign"]};
-  const ad = {key:["utm_term"]};
-  const adSet = {key:["utm_content"]}
+  const content = {paramKey:"content",keys:["utm_content"]};
+  const term = {paramKey:"term", keys:["utm_term"]}
   const afchannel= afChannel
+  const deepLinkValue = {defaultValue:`https://www.hipi.co.in/video/${videoId}`};
+  const af_dp = { paramKey: "af_dp" , defaultValue:`zee5hipi://video/${videoId}`}
+  const is_retargeting = {paramKey: "is_retargeting", defaultValue:"true"}
   
-  // pop_up
-
-// af_channel=bottom_strip
-
-  // const deepLinkValue = {keys: ["dp_dest"], defaultValue: "peaches"};
-  // const afSub3 = {keys: ["promo"]};
-
-  //Calling the function after embedding the code will be through a global parameter on the window object called window.AF_SMART_SCRIPT
-  //Onelink URL is generated
+  
   let result = window?.AF_SMART_SCRIPT?.generateOneLinkURL({
     oneLinkURL,
     afParameters:{
       mediaSource: mediaSource,
       campaign: campaign,
-      ad: ad,
-      adSet: adSet,
-      af_channel: afchannel
+      af_channel: afchannel,
+      deepLinkValue: deepLinkValue,
+      afCustom : [ 
+        af_dp,
+        is_retargeting,
+        term,
+        content
+      ]
     }
   })
-  
+
   if (result) {
+    console.log("re",result)
         result_url = result?.clickURL;            
   }  
 }catch(e){
@@ -253,8 +257,8 @@ const getSmartOneLink = ({oneLink, afChannel})=>{
 
 const [getComments, clearComments] = apiMiddleWare(getActivityFeed, transformSuccess, transformError, middlewareSettings);
 const [viewEvents, clearViewEvents] = apiMiddleWare(viewCountUpdate, transformSuccessViewCount , transformErrorViewCount);
-const [getOneLink, clearOneLink] = apiMiddleWare(getDynamicOneLink, transformSuccessOneLink , transformErrorOneLink);
-
+// const [getOneLink, clearOneLink] = apiMiddleWare(getDynamicOneLink, transformSuccessOneLink , transformErrorOneLink);
+const getOneLink = getDynamicOneLink;
 
 export {
   getComments,
@@ -265,6 +269,5 @@ export {
   viewEvents,
   clearViewEvents,
   getOneLink,
-  clearOneLink,
   getSmartOneLink
 };

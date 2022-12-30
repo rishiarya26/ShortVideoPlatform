@@ -1,9 +1,9 @@
 import { viewEvents } from "../../sources/social";
 
 export const viewEventsCall = async(id, event, info)=>{
-    // console.log("event to send", id, event)
+    console.log("event to send", id, event,info?.duration)
   try{
-      await viewEvents({id:id, event:event, duration:info?.duration?.toString() || '', timeSpent:info?.timeSpent?.toString() || ''});
+      await viewEvents({id:id, event:event, duration:info?.duration?.toString() || "0", timeSpent:info?.timeSpent?.toString() || "0"});
     }catch(e){
       console.log('error in view event');
     }
@@ -12,7 +12,7 @@ export const viewEventsCall = async(id, event, info)=>{
 const callRecoEvent = async(payload)=>{
  try{
     console.log("reco event",payload)
-  await viewEvents({payloads:payload});
+    await viewEvents({payloads:payload});
  }catch(e){
    console.error("reco events",e)
  }
@@ -52,6 +52,7 @@ export const toTrackReco = async(event, info) =>{
     "follow": ()=>callRecoEvent(recoEvents),
     "unfollow": ()=>callRecoEvent(recoEvents),
     "click": ()=>callRecoEvent(recoEvents),
+    "launch": ()=>callRecoEvent({event: "launch"})
   }
 
   event && toTrack?.[event] && toTrack?.[event]();

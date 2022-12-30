@@ -12,7 +12,7 @@ import { numberFormatter } from '../../utils/convert-to-K';
 import useDrawer from '../../hooks/use-drawer';
 import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
-import fallbackUser from '../../../public/images/users.png' 
+// import fallbackUser from '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
 import { share } from '../../utils/app';
@@ -30,7 +30,8 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import Verified from '../commons/svgicons/verified';
 import { toTrackReco } from '../../analytics/view-events';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
-// import { BackButton } from '../commons/button/back';
+import { getPlaylistDetails } from "../../sources/playlist";
+import PlaylistBadge from '../commons/svgicons/playlistBadge';
 
 const LandscapeView = dynamic(() => import('../landscape'),{
   loading: () => <div />,
@@ -61,6 +62,7 @@ function Users({
   const [showLoading, setShowLoading] = useState(isFetching)
   const [offset, setOffset] = useState(2)
   const [isFollowing,setIsFollowing] = useState();
+  const [playlistArr, setPlaylistArr] = useState([]);
   // const [videoSchemaItems, setVideoSchemaItems] = useState([])
 
   const pageName = type === 'others' ? 'Creator Profile' : type === 'self' && 'My Profile'
@@ -142,6 +144,19 @@ function Users({
   // useEffect(()=>{
   //   document?.documentElement?.scrollTop(0);
   // },[])
+
+  const getPlaylists = async() => {
+    try{
+      const { playlists } = await getPlaylistDetails({creatorId: id});
+      setPlaylistArr([...playlists]);
+    }catch(e){
+      console.log("no playlist found")
+    }
+  }
+
+  useEffect(() =>{ 
+    getPlaylists();
+  }, [])
 
   useEffect(()=>{
     setIsFetching(false);
@@ -367,6 +382,11 @@ const notNowClick=()=>{
   const toShowFollowing = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName} ), ()=> router && router?.push(`/profile-detail/${id}?type=following`))
   const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=> router && router?.push(`/profile-detail/${id}?type=followers`))
 
+  const chipOnClick = (id,name) => {
+    toTrackMixpanel("playlistClicked", {pageName:"Creator Profile", playlistName: name, playlistId: id})
+    router.push({pathname: `/playlist/${id}`});
+  }
+
   return (
     <>
     {/* {videoSchemaItems?.length > 0 && videoSchemaItems?.map((item)=>(
@@ -378,7 +398,7 @@ const notNowClick=()=>{
     ))} 
     */}
     <div className="relative">
-      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center relative">
+      <div className="sticky headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
         <div onClick={handleBackClick} className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
           { info.header.leftButton[type] }
         </div>
@@ -391,7 +411,7 @@ const notNowClick=()=>{
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={fallbackUser?.src} />
+            <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <h1 className="font-medium p-2 text-sm flex">{firstName} {lastName}
           {userVerified === 'Verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
@@ -425,7 +445,13 @@ const notNowClick=()=>{
         selected={selectedTab}
         onLikedVideosTab={onLikedVideosTab}
       />
-   
+     {selectedTab === 'all' && playlistArr && playlistArr.length > 0 && <div className='w-full h-16 py-3 pl-3 flex flex-row bg-gray-50 overflow-x-auto'>
+        {playlistArr.map((playlist) => (
+          <div key={playlist?.id} onClick={() => chipOnClick(playlist?.id, playlist?.name)} className='mr-2 px-3 py-4 border flex items-center justify-center cursor-pointer bg-white min-w-max rounded'>
+            <span className='mr-2'><PlaylistBadge /></span>{playlist.name}
+          </div>
+        ))}
+      </div>}
       <VideoGallery
         items={videoData?.items}
         status={videoData?.status}

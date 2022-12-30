@@ -18,7 +18,8 @@ import { init } from '../src/get-social';
 // import { initConviva } from '../src/conviva';
 import { initConviva } from '../src/analytics/conviva';
 import { useRouter } from 'next/router';
-import * as fbq from '../src/analytics/fb-pixel';
+import * as fbq from '../src/analytics/fb-pixel'
+import Script from 'next/script'
 import { initFirebase } from '../src/analytics/firebase';
 import { detectGeoLocationByZee } from '../src/sources/geo-location';
 import Cookies from '../src/components/cookies';
@@ -28,12 +29,14 @@ import { toGetSocialToken } from '../src/sources/get-social';
 import { initLinkdin } from '../src/analytics/linkdin-pixel';
 import { init as storyBlokInit } from "../src/storyblokComponents/storyblokInit";
 import * as platform from 'platform';
+import { initVmax } from '../src/analytics/vmax';
 import { getFullDate } from '../src/utils/date';
 import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
 import { toTrackClevertap } from "../src/analytics/clevertap/events";
 import { getPageName } from '../src/utils/web';
+import { toTrackReco } from '../src/analytics/view-events';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
 
 // import { SW_IGNORE } from '../src/constants';
@@ -42,6 +45,8 @@ import { getPageName } from '../src/utils/web';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
+
 
 
 (function storyBlokInitSelfFunction(){
@@ -75,6 +80,11 @@ const LoaderProvider = dynamic(() => import('../src/hooks/use-loader').then(modu
 const OverLayProvider = dynamic(() => import('../src/hooks/use-overlay').then(module => {
   const { OverLayProvider } = module;
   return OverLayProvider;
+}));
+
+const CacheAdProvider = dynamic(() => import('../src/hooks/use-cacheAd').then(module => {
+  const { CacheAdProvider } = module;
+  return CacheAdProvider;
 }));
 
 export function reportWebVitals() {
@@ -246,7 +256,8 @@ function Hipi({
 
   useEffect(()=>{
     //let timer;
-    try{ 
+    try{
+        toTrackReco('launch')
       window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
       //   if(window?.sessionStorage?.getItem(GET_SOCIAL_LOADED) !== null){
@@ -263,6 +274,7 @@ function Hipi({
 
       updatingGoogleCookies();
       initConviva()
+      initVmax();
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
       initLinkdin();
@@ -276,6 +288,8 @@ function Hipi({
       localStorage.set('device-modal',deviceModel);
       localStorage.set("adArr",[]);
       localStorage.set("adArrMixPanel",[]);
+      localStorage.set("vmaxEvents",[]);
+      
       const networkInformation = window?.navigator?.connection;
       const effectiveType = networkInformation?.effectiveType;
       localStorage.set('network-strength',effectiveType);
@@ -519,6 +533,7 @@ function Hipi({
  /*************************** */
     useEffect(()=>{
       setRefferer();
+      isPwa();
      
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
@@ -571,6 +586,9 @@ function Hipi({
       window.addEventListener(data,resetTimeout);
     })
 
+    trapPwaInstallEvent();
+    
+
     return () => {
       events.forEach((data)=>{
         window.addEventListener(data,resetTimeout);
@@ -591,6 +609,44 @@ function Hipi({
      response = await toGetSocialToken();
    }};
 
+   const trapPwaInstallEvent = () =>{
+    // let deferredPrompt;
+    console.log("before fn called");
+   try{ 
+     window.addEventListener('beforeinstallprompt', (e) => {
+     console.log("beforeInstall called",e);
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      // deferredPrompt = e;
+      window.deferredPrompt = e;
+      // Update UI notify the user they can install the PWA
+      // showInstallPromotion();
+      // Optionally, send analytics event that PWA install promo was shown.
+      console.log(`'beforeinstallprompt' event was fired.`);
+    });}catch(e){
+      console.error('error',e)
+    }
+   }
+
+   function isPwa() {
+   try{ 
+    // localStorage?.remove('isInstalled');
+      // let mode = 'browser tab';     
+      const pwa = ["fullscreen", "standalone", "minimal-ui"].some(
+          (displayMode) => window.matchMedia('(display-mode: ' + displayMode + ')').matches
+      );
+      // if(pwa){
+      //   mode = 'pwa'
+      // }
+      // Log launch display mode to analytics
+      console.log('isInstalled:', pwa);
+      localStorage.set('isInstalled',JSON.stringify(pwa));
+  }catch(e){
+      console.error('error')
+    }
+  }
+
   return (
     <>
       <Head>
@@ -607,7 +663,54 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
-                      <Component {...pageProps} />
+                    <Script
+                    id="pixelScript"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
+          <Script
+          id="linkedinScript"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          _linkedin_partner_id = "4069492"; 
+          window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
+          window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
+          (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} 
+          var s = document.getElementsByTagName("script")[0]; 
+          var b = document.createElement("script"); b.type = "text/javascript";b.async = true; 
+          b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
+          s.parentNode.insertBefore(b, s);})(window.lintrk);
+          `,
+        }}
+      />
+      <Script 
+       id = "mFilterIt"
+       strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function (m, f, i, l, t, e, r) {
+            m[t] = m[t] || function () {(m[t].q = m[t].q || []).push(arguments)}, m[t].l = 1 * new Date();
+            e = f.createElement(l); e.async = 1; e.id = "mfilterit-visit-tag"; e.src = i; r=f.getElementsByTagName(l)[0]; r.parentNode.insertBefore(e, r);
+            })(window, document,"https://script.mfilterit.net/v3/v/client/web.hipi.cpv.js", "script", "mf");
+            mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
+          `}}
+       />
+                      <CacheAdProvider>
+                        <Component {...pageProps} />
+                      </CacheAdProvider>
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
                     </Layout>
                   </RouteStateProvider>

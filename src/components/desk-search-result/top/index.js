@@ -9,7 +9,7 @@ import Hash from "../../commons/svgicons/hash";
 import Img from "../../commons/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import fallbackUsers from '../../../../public/images/users.png';
+// import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import Videos from "../videos";
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";
@@ -65,7 +65,7 @@ const TopItems = ({item, redirectTab}) =>{
                   {data?.items?.users?.map((item, id)=>(
                   <div onClick={()=> router && router?.push(`/@${item?.userHandle}`)} key={id} className="flex border-b cursor-pointer border-gray-300 hover:bg-gray-100 py-4 pl-2 pr-4 mr-2">
                       <div className=" w-16 flex h-16 bg-gray-300 relative rounded-full overflow-hidden" >
-                      <Img data={item?.userIcon} title="Hipi" fallback={fallbackUsers?.src}/>
+                      <Img data={item?.userIcon} title="Hipi" fallback={'/images/users.png'}/>
                       </div>
                       <div className="flex flex-col justify-between pl-2">
                         <p className="font-semibold text-base text-gray-700 ">{item?.userId} </p>

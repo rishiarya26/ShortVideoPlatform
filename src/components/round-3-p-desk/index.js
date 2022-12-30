@@ -5,7 +5,7 @@ import { withBasePath } from '../../config';
 import { getLeaderboardData } from '../../sources/leaderboard';
 import Img from '../commons/image';
 import Tabs from '../commons/tabs/leadership';
-import fallbackUsers from '../../../public/images/users.png';
+//import fallbackUsers from '../../../public/images/users.png';
 function Round3ParticipantD() {
    const [data, setData] = useState(null);
    // const [selectedRound, setSelectedRound] = useState(0);
@@ -58,7 +58,7 @@ return (
          <div key={id} className="w-2/5 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-3 px-3 items-center">
                <div className="flex items-center"  >
                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray">
-                  <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+                  <Img data={item?.profilepic} fallback={'/images/users.png'}/>
                </div>
             <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
             </div>
@@ -79,7 +79,7 @@ return (
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -97,7 +97,7 @@ return (
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -116,7 +116,7 @@ return (
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -134,7 +134,7 @@ return (
   <div className="w-full rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
       <div className="flex items-center"  >
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+          <Img data={item?.profilepic} fallback={'/images/users.png'}/>
         </div>
     <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
     </div>
@@ -149,7 +149,7 @@ return (
          <div key={id} className="w-2/5 m-2 rounded-lg bg-white relative flex justify-between max-w-sm py-4 px-4 items-center">
                <div className="flex items-center"  >
                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray">
-                  <Img data={item?.profilepic} fallback={fallbackUsers?.src}/>
+                  <Img data={item?.profilepic} fallback={'/images/users.png'}/>
                </div>
             <p className="text-gray-500 max-w-60v text-sm pl-4 font-semibold overflow-hidden">{`${item?.firstName} ${item?.lastName}`}</p>
             </div>

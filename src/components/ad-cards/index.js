@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import Img from '../commons/image';
-import fallbackShop from '../../../public/images/shop.png';
+// import fallbackShop from '../../../public/images/shop.png';
 import useDrawer from '../../hooks/use-drawer';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
@@ -19,8 +19,8 @@ const charmboardDrawer = dynamic (
 );
 
 function LabelHolder({label}){
-  return <><div className='bg-hipired px-1 py-0.5 w-16 h-3 opacity-60 absolute bottom-0 left-0'></div>
-  <div className='text-10 px-1 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
+  return <><div className='bg-hipired py-0.5 w-16 h-3 opacity-60 absolute bottom-0 left-0'></div>
+  <div className='text-8 py-0.5 w-16 flex justify-center absolute bottom-0 left-0 uppercase'>{label}</div>
   </>
 }
 let allAdCards = [];
@@ -47,10 +47,27 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 appsflyerId : data?.appsflyer_id
               }
             );
+            const usedAppsflyerLink = window.sessionStorage.getItem('used-impression-link') || null;
             const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
-            appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
+            usedAppsflyerLink !== 'true' && appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
               appsflyerPixelImp({ advertiser:getBrand(item?.product_url), appId:item?.appsflyer_id, productId:item?.card_id,comp:'Feed'})
+              toTrackMixpanel("appsflyerImpPixel",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: item?.card_id,
+                productUrl: item?.product_url,
+                brandName: getBrand(item?.product_url),
+                campaignId,
+                category: item?.category,
+                subCategory: item?.sub_category,
+                subSubCategory: item?.subsub_category,
+                mainCategory: item?.main_category,
+                appsflyerId : item?.appsflyer_id
+              }
+              )
+              window.sessionStorage.setItem('used-impression-link',true);
             }) 
             toTrackClevertap(
               "monetisationProductClick",
@@ -63,7 +80,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 campaignId
               }
             );
-            window.open(appsflyerLink || data?.product_url);
+            window.open(data?.product_url);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",
@@ -100,7 +117,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
         // eslint-disable-next-line no-undef
       >
         {/* <img height={50} width={50} src={data?.img_url}/> */}
-        <Img data={data?.img_url} height={120} width={120} fallback={fallbackShop?.src}/>
+        <Img data={data?.img_url} height={120} width={120} fallback={"/images/shop.png"}/>
         {data?.card_labels && data.card_labels !== "" && <LabelHolder label={data?.card_labels}/>}
       </div>
        

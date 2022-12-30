@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { withRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
@@ -19,7 +19,7 @@ import useAuth from '../../hooks/use-auth';
 import useDrawer from '../../hooks/use-drawer';
 import CircularProgress from '../commons/circular-loader'
 import HamburgerMenu from '../hamburger-menu';
-import {  getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
+import {  cacheAdResponse, getHomeFeed, getHomeFeedWLogin } from '../../sources/feed';
 import { canShop } from '../../sources/can-shop';
 import { viewEventsCall } from '../../analytics/view-events';
 import { localStorage } from '../../utils/storage';
@@ -41,6 +41,11 @@ import SnackCenter from '../commons/snack-bar-center';
 import { INDEX_TO_SHOW_LANG_IPHONE , INDEX_TO_SHOW_LANG } from '../../constants';
 import { pushAdService } from '../../sources/ad-service';
 import { getBrand } from '../../utils/web';
+import { CacheAdContext } from '../../hooks/use-cacheAd';
+import { vmaxTrackerEvents } from '../../analytics/vmax';
+import isEmptyObject from '../../utils/is-object-empty';
+import { isObjectEmpty } from '../../network/utils';
+import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 
@@ -102,6 +107,9 @@ function FeedIphone({ router }) {
   const [toSuspendLoader, setToSuspendLoader] = useState(false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [slideToNext, setSlideToNext] = useState(true);
+
+  const cacheAd = useContext(CacheAdContext);
   const [lang24ShowOnce, setLang24ShowOnce] = useState('true')
 
 
@@ -137,10 +145,29 @@ function FeedIphone({ router }) {
 //   setShowAppBanner(false);
 // }
 
-const adImpression =  (index = 0)=>{
+const adImpression =  async (index = 0)=>{
   if(toShowItems[index]?.adId && window !== undefined){
     let adInfo = toShowItems?.[index]?.adId || {};
     let {impression_url = null } = adInfo;
+   
+    // let formedUrl = impression_url.split("&").map((item)=>{
+    //   if(item.match(/af_sub2/)){
+    //     let splititem = item.split("=");
+    //     item = `${splititem[0]}` + "=" + "pwa"
+    //     return item;
+    //   }else{
+    //     return item
+    //   }
+    // }).join("&")
+    
+    if(impression_url && impression_url?.split(".").includes("appsflyer")){
+      try{
+       let response = await impressionUrlWrapper({url: impression_url})
+      }
+      catch(e){
+        console.error("error getting impression");
+      }
+    }else{
     let timeStamp = Date.now();
     try{
       impression_url && pushAdService({url: impression_url, value:"Impression", timeStamp:timeStamp});
@@ -148,7 +175,21 @@ const adImpression =  (index = 0)=>{
       console.error("Impression error: " + e);
     }
   }
+  }
+  if(toShowItems[index]?.feedVmaxAd){
+    let tracker = toShowItems[index]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+    vmaxTrackerEvents(tracker,'impression')
+  }
 }
+
+  useEffect(()=>{
+    if(toShowItems?.[videoActiveIndex]?.feedVmaxAd){
+      setSlideToNext(false)
+      setTimeout(()=>{
+        setSlideToNext(true)
+      },5000)
+    }
+  },[videoActiveIndex])
 
 
   useEffect(() => {
@@ -237,10 +278,31 @@ const adImpression =  (index = 0)=>{
     let updateItems = [...items];
     let data = []
      try{
-       data =  await fetchData({ type: id });
-       updateItems = updateItems.concat(data?.data);
+      data =  await fetchData({ type: id });
+      let adPosition = localStorage.get('vmaxAdPosition') || null;
+      let cacheAdVideo = (cacheAd?.getCacheAd && cacheAd?.getCacheAd?.()) ?? {};
+      if(!isEmptyObject(cacheAdVideo) && adPosition !== null) {
+        //delete cacheAdVideo?.adId; //Neeed to remove
+        data?.data.splice(adPosition, 0, cacheAdVideo);
+        cacheAd?.feedCacheAd && cacheAd?.feedCacheAd([]); //added cachead successfully!
+       
+      }else{
+        // debugger;
+        try{
+          let {adPosition = "", cachedVideo ={}} = await cacheAdResponse() || {};
+          if(!isEmptyObject(cachedVideo) && adPosition){
+            //delete cachedVideo?.adId; //Neeed to remove
+            data?.data?.splice(adPosition, 0, cachedVideo);
+           
+          }
+        }catch(error){
+          console.error(error);
+        }
+      }
+      updateItems = updateItems.concat(data?.data);
+      
       //  setOffset(offset+1)
-       setItems(updateItems);
+      setItems(updateItems);
       }
      catch(err){
      }
@@ -272,9 +334,40 @@ const adImpression =  (index = 0)=>{
   const validItemsLength = toShowItems?.length > 0;
   // setRetry = retry && retry;
 
+  let advmaxObj = toShowItems[videoActiveIndex]?.feedVmaxAd;
+  let adIdObj = toShowItems[videoActiveIndex]?.adId;
   const videoAdSessionsCalls = async(percentage) => {
-    if(items[videoActiveIndex]?.adId){
-      let adInfo = items?.[videoActiveIndex]?.adId || {};
+
+    if(!!advmaxObj && typeof advmaxObj === 'object' && !isObjectEmpty(advmaxObj) && window !== undefined){
+       let tracker = toShowItems[videoActiveIndex]?.feedVmaxAd?.adView?.getVmaxAd()?.getEventTracker();
+       if(percentage > 0 && percentage < 25){
+         toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        //  vmaxTrackerEvents(tracker,'impression')
+         vmaxTrackerEvents(tracker,'videoAdStarted')
+       }
+       if(percentage > 25 && percentage < 50) {
+         toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+         vmaxTrackerEvents(tracker,'videoAdFirstQuartile')
+       }
+       if(percentage > 50 && percentage < 75) {
+         toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+         vmaxTrackerEvents(tracker,'videoAdSecondQuartile')
+       }
+       if(percentage > 75 && percentage < 90) {
+         toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+         vmaxTrackerEvents(tracker,'videoAdThirdQuartile')
+       }
+       if(percentage > 98) {
+         toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+         vmaxTrackerEvents(tracker,'videoAdEnd');
+         if(document.querySelector(".swiper-container").swiper){
+           document.querySelector(".swiper-container").swiper?.slideNext();
+         }
+       }
+     }
+
+     if(!!adIdObj && typeof adIdObj === 'object' && !isObjectEmpty(adIdObj) && window !== undefined){
+      let adInfo = toShowItems?.[videoActiveIndex]?.adId || {};
       let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       if(percentage > 0){
@@ -283,34 +376,34 @@ const adImpression =  (index = 0)=>{
         try{
           event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
-          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdStartedFailure', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
         }
        
       }
       if(percentage > 25) {
-        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdFirstQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "firstQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdFirstQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
       if(percentage > 50) {
-        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdSecondQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "midpoint"});
         }catch(e){
-          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdSecondQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
        
       }
       if(percentage > 75) {
-        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdThirdQuartile', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "thirdQuartile"});
         }catch(e){
-          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdThirdQuartileFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
       }
@@ -320,7 +413,7 @@ const adImpression =  (index = 0)=>{
         try{
         event_url && await pushAdService({url: event_url, value: "complete"});
         }catch(e){
-          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+          toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
         
         if(document.querySelector(".swiper-container").swiper){
@@ -362,7 +455,7 @@ const adImpression =  (index = 0)=>{
       // fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'completed', {duration : duration} );
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
 
@@ -407,17 +500,20 @@ const adImpression =  (index = 0)=>{
  try{ 
   setMuted(true);
   // setShowAppBanner(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted, videoId : activeVideoId});
   let updateShowItems = [...toShowItems];
   let deletedTill = pretoInsertElemant?.toInsertElements-12;
   let dataItem = [...items];
 
   const arr = await getFeedData();
+  //to add the data from the index which is greater than the current dataItem length
+  let insertItemIndex = dataItem.length - videoActiveIndex;
   arr && (dataItem = dataItem?.concat(arr));
+
   //add
-  for(let i=0;i<=5;i++){
-    if(dataItem?.[videoActiveIndex+i+2]){ 
-      updateShowItems.push(dataItem[videoActiveIndex+i+2])
+  for(let i=0;i<=arr.length-1;i++){
+    if(dataItem?.[videoActiveIndex+i+insertItemIndex]){ 
+      updateShowItems.push(dataItem[videoActiveIndex+i+insertItemIndex])
     }
     // else{
 
@@ -434,12 +530,11 @@ const adImpression =  (index = 0)=>{
   }
   deletedTill = pretoInsertElemant?.toInsertElements-6-1;
   setDeletedTill(deletedTill);
-  // arr && console.log(updateShowItems,updateShowItems?.concat(arr))
   // arr && (updateShowItems = updateShowItems?.concat(arr));
   setToShowItems(updateShowItems);
 }
   catch(e){
-console.log('errorrr',e)
+console.error('errorrr',e)
   }
 }
 
@@ -451,7 +546,7 @@ console.log('errorrr',e)
     updateShowItems[deletedTill-i] = dataItem[deletedTill-i];
   }
   setMuted(true);
-  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
+  show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted,videoId : activeVideoId });
   // setShowAppBanner(true);
   setDeletedTill(deletedTill-5);
   setToShowItems(updateShowItems);
@@ -515,6 +610,24 @@ console.log('errorrr',e)
           return obj;
   }
 
+  const getNextVmaxAd = async(activeIndex) => {
+    //? condition to fetch ad for next feed chunk
+    try{
+      if(toShowItems?.[activeIndex]?.feedVmaxAd && !firstApiCall){
+        localStorage.set("vmaxAdPosition", "");
+        let {adPosition ="", cachedVideo ={}} = await cacheAdResponse() || {};
+        // debugger;
+        !!adPosition && localStorage.set("vmaxAdPosition", adPosition);
+        if(!isObjectEmpty(cachedVideo)) {
+          //debugger
+          cacheAd?.feedCacheAd(cachedVideo);
+        }
+      }
+    }catch(error){ 
+      console.error(error);
+    }
+  }
+
   const tabs = [
     { display: `${t('FOLLOWING')}`, path: `${t('SFOLLOWING')}` },{ display: `${t('FORYOU')}`, path: `${t('FOR-YOU')}` }];
 
@@ -530,6 +643,7 @@ console.log('errorrr',e)
               slidesPerView={1}
               mousewheel
               scrollbar={{ draggable: true }}
+              allowSlideNext={slideToNext}
               // autoplay= {{
               //     disableOnInteraction: false
               // }}
@@ -542,6 +656,7 @@ console.log('errorrr',e)
                 }
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
                 //Mixpanel
                 // toTrackMixpanel(activeIndex,'duration',{duration: slides[0]?.firstChild?.firstChild?.duration}) 
                 setInitialPlayStarted(false);
@@ -552,8 +667,16 @@ console.log('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiperCore;
+
+                // if(items?.[activeIndex].feedVmaxAd){
+                //   setAppStrip(false)
+                // }else{
+                //   if(openAppStrip === false) setAppStrip(true)
+                // }
+
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
+                localStorage.set('vmaxEvents',[]);
                 setVideoDurationDetails({totalDuration: null, currentT:0});
                 setShowSwipeUp({count : 1, value:false});
 
@@ -581,7 +704,7 @@ console.log('errorrr',e)
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  toShowItems[videoActiveIndex]?.videoDuration});
                 /***************/
 
                 if(slides[activeIndex]?.firstChild?.firstChild?.currentTime > 0){
@@ -597,6 +720,9 @@ console.log('errorrr',e)
                 }
                 activeId && setActiveVideoId(activeId);
 
+                console.log("active index: " + activeIndex, toShowItems , "=> main arr" , items,  "is this feedVmaxAd =>",  items?.[activeIndex]?.feedVmaxAd);
+                //? next vmax ad video (position & details)
+                getNextVmaxAd(activeIndex);
               }}
             >
               {!loadFeed && <VideoUnavailable/> }
@@ -613,7 +739,7 @@ console.log('errorrr',e)
                   !languagesSelected && id === INDEX_TO_SHOW_LANG_IPHONE && lang24ShowOnce === 'false' ? 
                    <LanguageSelection activeVideoIndex = {videoActiveIndex}/>  
                      :
-                   <Video
+                    item !== null ? <Video
                       updateSeekbar={updateSeekbar}
                       socialId={item?.getSocialId}
                       url={item?.video_url}
@@ -657,15 +783,16 @@ console.log('errorrr',e)
                       suspendLoader={setToSuspendLoaderCb}
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
-                      feedAd={item?.adId}
                       adBtnClickCb={adBtnClickCb}
                       campaignId={shop?.campaignId}
                       // showBanner={showBanner}
                       setMuted={setMuted}
+                      feedAd={item?.adId && typeof item?.adId === 'object' && !isEmptyObject(item?.adId) ? item.adId : null}
+                      vmaxAd={item?.feedVmaxAd && typeof item?.feedVmaxAd === 'object' && !isEmptyObject(item?.feedVmaxAd) ? item.feedVmaxAd : null}
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
-                    />}
+                    />:<div></div>}
                   </SwiperSlide>
                 )) : (
                   <div className="h-screen bg-black flex justify-center items-center">
@@ -716,7 +843,7 @@ console.log('errorrr',e)
               <FooterMenu 
               videoId={activeVideoId}
               canShop={items?.[videoActiveIndex]?.shoppable}
-              type={!items[videoActiveIndex]?.adId && 'shop'}
+              type={(!items[videoActiveIndex]?.adId && !items[videoActiveIndex]?.feedVmaxAd) && 'shop'}
               selectedTab="home"
               shopType = {shop?.type}
               setClose={setClose}
@@ -751,16 +878,20 @@ console.log('errorrr',e)
     >
     <>
       <div className="feed_screen overflow-hidden relative" style={{ height: `${videoHeight}px` }}>
-         {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) || items?.[videoActiveIndex]?.adId) 
+         {((!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) || items?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd) 
           ? '' : 
-          <OpenAppStrip
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}
           activeVideoId={activeVideoId}
           type='aboveBottom'
-        />}
-        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu/>}
+          creatorId={toShowItems?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={toShowItems?.[videoActiveIndex]?.playlistId}
+          playlistName={toShowItems?.[videoActiveIndex]?.playlistName}
+        />
+        }
+        {(!languagesSelected && lang24ShowOnce === 'false' &&  videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <HamburgerMenu pageName={pageName || ''} tabName={tabName || ''}/>}
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG_IPHONE ) ? '' : <div className="fixed mt-10 z-10 w-full">
           <FeedTabs items={tabs} />
         </div>}

@@ -206,7 +206,7 @@ function HashTagFeed({ router }) {
       //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{  duration : duration, durationWatchTime: duration})
       /*** view events ***/
-      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'completed', {duration : duration} );
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
 
@@ -280,11 +280,15 @@ function HashTagFeed({ router }) {
      />
         <div className="overflow-hidden relative " style={{ height: `${videoHeight}px` }}>
 
+        {typeof window !== "undefined" && window?.deferredPrompt && 
         <OpenAppStrip
-        pageName={pageName}
-        item={items?.[videoActiveIndex]}
-        activeVideoId={activeVideoId}
-        />
+          pageName={pageName}
+          item={items?.[videoActiveIndex]}
+          activeVideoId={activeVideoId}
+          creatorId={items?.[videoActiveIndex]?.videoOwnersId}
+          playlistId={items?.[videoActiveIndex]?.playlistId}
+          playlistName={items?.[videoActiveIndex]?.playlistName}
+        />}
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
@@ -335,7 +339,7 @@ function HashTagFeed({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  items[videoActiveIndex]?.videoDuration});
 
                 /***************/
 

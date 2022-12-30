@@ -15,11 +15,11 @@ import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
-import { shareProfile } from '../../utils/app';
+// import { shareProfile } from '../../utils/app';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import DeskVideoGallery from '../desk-video-gallery';
@@ -33,6 +33,8 @@ import { getHashTagVideos } from '../../sources/explore/hashtags-videos';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import RightArrow from '../commons/svgicons/right-arrow';
+import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const detectDeviceModal = dynamic(
@@ -263,13 +265,14 @@ function DeskHashtag({
         ,
        },
       rightButton: {
-        others:   
-      <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
-        className="flex relative py-2  px-3 text-center items-end flex-col"
-      >
-      <ShareComp type={'profile'}/>
-      </div>, 
+        others:   <></>
+      // <div
+      //   onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
+      //   className="flex relative py-2  px-3 text-center items-end flex-col"
+      // >
+      // <ShareComp type={'profile'}/>
+      // </div>
+      , 
         self: <div onClick={()=> router && router?.push('/profile-settings')}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>
@@ -389,9 +392,9 @@ if(item?.indexOf('#')){
     <>
     <SeoMeta
     data={{
-      title: `Find Latest Videos on Hipi | Hashtag ${item} |Trending Videos`,
-      // image: item?.thumbnail,
-      description: `Explore all the latest videos on Hipi by #${item}, hashtag are a brilliant way to group up posts and find latest video trends. Also, find the influencers daily content`,
+      title: customHashtagTitleSeo({item: item}),
+          // image: item?.thumbnail,
+      description: customHashtagDescSeo({item: item}),
       canonical: getCanonicalUrl && getCanonicalUrl()?.toLowerCase(),        
     }}
  />
@@ -435,11 +438,27 @@ if(item?.indexOf('#')){
                         <Img data={details?.hashTagImage} alt='img' fallback={withBasePath('images/hashtag.png')}/> 
                   </div>
                       <div className="flex flex-col px-4 ">
-                        <div className="flex flex-col">
+                        <div className="flex w-3/4 justify-between">
                             <h1 className="text-3xl font-semibold">{details?.hashtagName}</h1>
                             {/* 
                             <p className="text-sm text-gray-400">{details?.hashTagVideoCount}</p>
                             */}
+
+                              {details?.hashTagPromoBanner && (
+                                  <div className='cursor-pointer' onClick={() => {
+                                    if(details?.hashTagPromoUrl) {
+                                      const pathName = details?.hashTagPromoUrl.split("https://www.hipi.co.in/")?.[1];
+                                      router.push(`/${pathName}`);
+                                    }
+                                    }}>
+                                    {/* <img className='w-64' src={details?.hashTagPromoBanner}/> */}
+                                    <div className='border border-gray-200 text-gray-600 px-4 pr-2 py-1 flex w-max '>Know more
+                                    <RightArrow/>
+                                    </div>
+                                  </div>
+                              )}
+
+                              
                         </div>
                         {/* <div onClick={()=>
                             show('', detectDeviceModal, 'extraSmall')} className="flex items-center border-2 border-gray-300 p-1 mt-2 max-w-38v">
@@ -456,7 +475,6 @@ if(item?.indexOf('#')){
                 </div>
                
             </div>
-
             <div className="w-full h-full flex flex-col p-4 ">   
               <div className="flex justify-around  border-t-2 mx-2 border-grey-600" />
               <DeskVideoGallery

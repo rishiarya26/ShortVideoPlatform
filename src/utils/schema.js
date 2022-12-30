@@ -83,7 +83,7 @@
      "thumbnailUrl": [
        item?.thumbnailUrl
      ],
-     "uploadDate":  item?.createdTimestamp,
+     "uploadDate":  item?.createdOn ? new Date(item?.createdOn)?.toISOString() : '',
      "duration": item?.duration,
      "contentUrl": `https://www.hipi.co.in/single-video/${item?.id}`,
      "embedUrl": `https://www.hipi.co.in/@${item?.userName}`,
@@ -212,6 +212,132 @@
       ],
     };
     
+    const faqRewards = {
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+         {
+            "@type":"Question",
+            "name":"How can I participate in Hipi Rewards Program?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You will need to install Hipi android app on your phone and sign-up. If you already have an account with Hipi, you can directly login using your account on Hipi app. Once signed up or logged in, you would be eligible to earn rewards."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"When will Hipi Rewards Program be live?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Hipi Rewards Program will be live from 26th Sep to 28th Sep 2022. It would be opened again in the future from time to time."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Can I participate in Hipi Rewards Program on Hipi website or iPhone app?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Hipi Rewards Program is currently available only on Hipi android app."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How do I earn reward coins when I achieve a level?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Once you achieve a level, you will see the level as ‘Unlocked’ on the ‘Jackpot’ screen on the app. You will see an option to spin a wheel and win reward coins."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How many reward coins would I earn when I spin a wheel?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You will earn reward coins from one of the following denominations:\n50, 25, 15, 10, 5, 0 (Better Luck Next Time)\n"
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Where can I check my balance for reward coins?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You can view your reward coins balance in the ‘Reward Coins’ screen on the app."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How can I keep track of reward coins I have earned?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You can check the history of reward coins earned and redeemed on the ‘Reward Coins History’ section of the ‘Reward Coins’ screen on the app."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How can I redeem my reward coins?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You can cash out reward coins by clicking on ‘Redeem Coins’ button on the ‘Reward Coins’ screen on the app."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Where will I receive the money from redeeming my reward coins?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You will need to add and verify your mobile number linked to your PayTM account for withdrawal. In case you don’t have a PayTM account, please create one before redeeming your reward coins."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"What is the conversion rate from reward coins to INR?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Currently, 1 reward coin = Rs 1"
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Is there a minimum balance required to redeem reward coins?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"You need a minimum balance of 50 reward coins to redeem."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Can I redeem reward coins to my bank account?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Currently, reward coins can only be cashed out to PayTM wallet. "
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How much time does it take to receive the amount into PayTM wallet?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Cashed out rewards coins will reflect in your PayTM wallet in the next 5-7 business days."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"Is there an expiry period for reward coins?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"Rewards coins will expire automatically 30 days after they have been earned. Thus, reward coins should be redeemed within 30 days."
+            }
+         },
+         {
+            "@type":"Question",
+            "name":"How can I reach out for any other queries or issues?",
+            "acceptedAnswer":{
+               "@type":"Answer",
+               "text":"For any queries, you can email us at contact@hipi.co.in"
+            }
+         }
+      ]
+   }
 
   export  {
       websiteSchema,
@@ -224,5 +350,6 @@
       theEditVideoSchema,
       theEditOrganizationalSchema,
       singleVideoSchema,
-      pageSchema
+      pageSchema,
+      faqRewards
   }

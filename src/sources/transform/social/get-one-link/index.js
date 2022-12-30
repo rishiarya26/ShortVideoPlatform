@@ -28,8 +28,8 @@ function transformSuccessOneLink(resp) {
     }
     payload.status = 'success';
     payload.message = getMessage(data, msgMap);
-    // payload.data = data?.smartLink || ONE_TAP_DOWNLOAD;
-    payload.data = data?.responseData || ONE_TAP_DOWNLOAD;
+    payload.data = data?.smartLink || ONE_TAP_DOWNLOAD;
+    // payload.data = data?.responseData || ONE_TAP_DOWNLOAD;
     console.log("onelink selected", payload.data)
     return payload;
   } catch (err) {

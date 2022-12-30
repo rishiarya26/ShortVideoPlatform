@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name*/
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import SnackBar from '../commons/snackbar';
 import { Shop } from '../commons/button/shop';
@@ -109,10 +109,10 @@ const chooseProfile = useAuth(toShow.login, toShow.profile);
       </div>
       </div>
       <SnackBar />
-      {showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
+      {showAppBanner ? <AppBanner videoId={videoId} notNowClick={notNowClick}/>:''}
     </div>
   );
 }
 
-export default FooterMenu;
+export default memo(FooterMenu);
  

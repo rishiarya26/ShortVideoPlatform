@@ -165,7 +165,7 @@ function ProfileFeedIphone({ router }) {
      setDeletedTill(deletedTill);
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    //setShowAppBanner(true);
      setToShowItems(updateShowItems);
    }
      catch(e){
@@ -182,7 +182,7 @@ function ProfileFeedIphone({ router }) {
      }
      setMuted(true);
      show('', detectDeviceModal, 'extraSmall', {text: "see more", setMuted:setMuted});
-    setShowAppBanner(true);
+    //setShowAppBanner(true);
      setDeletedTill(deletedTill-5);
      setToShowItems(updateShowItems);
     }
@@ -314,7 +314,7 @@ function ProfileFeedIphone({ router }) {
       //fbq.event('UGC_Played_Complete')
       ToTrackFbEvents('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
 
-      // viewEventsCall(activeVideoId, 'completed');
+      viewEventsCall(activeVideoId, 'completed', {duration : duration} );
       viewEventsCall(activeVideoId, 'user_video_start');
       if(showSwipeUp.count < 1 && activeVideoId === items[0].content_id){setShowSwipeUp({count : 1, value:true})}
 
@@ -392,6 +392,8 @@ function ProfileFeedIphone({ router }) {
         pageName={pageName}
         item={items?.[videoActiveIndex]}
         activeVideoId={activeVideoId}
+        playlistId={items?.[videoActiveIndex]?.playlistId}
+        playlistName={items?.[videoActiveIndex]?.playlistName}
         />
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />
@@ -439,7 +441,7 @@ function ProfileFeedIphone({ router }) {
                 }
                 viewEventsCall(activeVideoId, 'user_video_end', 
                 {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
-                 duration :  preVideoDurationDetails?.videoDurationDetails?.totalDuration});
+                 duration :  toShowItems?.[videoActiveIndex]?.duration});
 
                 /***************/
 

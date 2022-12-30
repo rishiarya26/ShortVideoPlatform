@@ -62,6 +62,8 @@ function transformSuccess(resp) {
         payloadObject.videoSound = d?.sound ? !isObjectEmpty(d.sound) : false;
         payloadObject.duration = d?.videoDuration || null;
         payloadObject.status = d?.status || null;
+        payloadObject.playlistId = d?.playlists?.[0]?.id || null;
+        payloadObject.playlistName = d?.playlists?.[0]?.name || null;
 
         payloadData.push(payloadObject);
       });

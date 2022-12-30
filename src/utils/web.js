@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useRef } from "react";
 import { ONE_TAP_DOWNLOAD } from "../constants";
 import { getOneLink } from "../sources/social";
+import { getItem } from "./cookie";
 import { localStorage } from "./storage";
 
 function CopyToClipBoard(value) {
@@ -72,6 +73,18 @@ function getCanonicalUrl(orgUrl){
   }
 }
 
+function getSmallcaseUsernameUrl(orgUrl){
+  if(typeof window !== "undefined"){
+    const url = orgUrl || (document &&  document?.location?.href);
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    let pathname  = domain?.pathname?.toLowerCase() || '';
+    console.log("canonical - pathname, hostname",pathname, hostname);
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url && url?.toLowerCase() 
+    return finalUrl;
+  }
+}
+
 const getPageName = (refferUrl) =>{
   // const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
@@ -102,7 +115,7 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
   try{  
     if(videoId){ 
       try{ const resp = await getOneLink({videoId : videoId, afChannel:afChannel});
-      link = resp?.data;
+      link = resp;
 
       console.log("one link resp",resp);
       }
@@ -112,8 +125,10 @@ const onStoreRedirect = async ({videoId, afChannel='bottom_strip'})=>{
     }
   }
   catch(e){
+    console.error("error in getting smart appsflyer link",e)
   }
-  window?.open(link);
+  const device = getItem('device-info') || 'ios';
+  device === 'ios' ? (window.location.href = link) : (window?.open(link));
 }
 
  const isReffererGoogle = ()=>{
@@ -164,6 +179,7 @@ export {
   onStoreRedirect,
   isReffererGoogle,
   getBrand,
-  replaceNbsps
+  replaceNbsps,
+  getSmallcaseUsernameUrl
 };
 

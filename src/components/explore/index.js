@@ -20,8 +20,8 @@ import detectDeviceModal from "../open-in-app";
 import useDrawer from '../../hooks/use-drawer';
 import { debounce, toLower } from 'lodash';
 import dynamic from 'next/dynamic';
-import fallbackUsers from '../../../public/images/users.png';
-import fallbackVideos from '../../../public/images/video.png';
+//import fallbackUsers from '../../../public/images/users.png';
+// import fallbackVideos from '../../../public/images/video.png';
 import { trimHash } from '../../utils/string';
 import Cart from '../commons/svgicons/cart';
 import 'swiper/swiper.min.css'
@@ -204,7 +204,7 @@ function Explore() {
 
   const onBannerClick =(contentType, id, index)=>{
     const item = crousalItems?.length>0 && crousalItems?.[index];
-    toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+    toTrackMixpanel('carousalBannerClick',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: index})
     toRedirect?.[contentType](id);
     // (data?.redirectUrl && router && router.push(data.redirectUrl)) || toHashtagDetails(data?.displayName)
   }
@@ -246,14 +246,14 @@ function Explore() {
                   activeIndex, slides
                 } = swiper;
                 const item = crousalItems?.length>0 && crousalItems?.[0];
-                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: activeIndex})
               }}
               onSlideChange={swiperCore => {
                 const {
                   activeIndex, slides
                 } = swiperCore;
                 const item = crousalItems?.length>0 && crousalItems?.[activeIndex];
-                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName})
+                toTrackMixpanel('carousalBannerImp',{pageName:pageName},{bannerType:item?.contentType,carousalId:item?.id,carousalName:item?.displayName, horizontalIndex: activeIndex})
               }
               }
             > 
@@ -265,10 +265,13 @@ function Explore() {
                     <div 
                      key={id} 
                      id={id} 
-                     onClick={()=> data?.contentType === 'User' ?
-                      onBannerClick(data?.contentType, data?.user?.userName, id) :
-                    data?.contentType === 'Hashtag' ? onBannerClick(data?.contentType, data?.displayName, id) :
-                    onBannerClick(data?.contentType, data?.id, id)
+                     onClick={()=> {
+                      data?.contentType === 'User' ?
+                        onBannerClick(data?.contentType, data?.user?.userName, id) :
+                        data?.contentType === 'Hashtag' ? 
+                          onBannerClick(data?.contentType, data?.displayName, id) :
+                          onBannerClick(data?.contentType, data?.id, id);
+                      }
                   } 
                      className="carousel_item bg-gray-300 min-w-full relative">
                        <Img data={data?.bannerUrl} title={data?.name || data?.displayName}/>
@@ -321,7 +324,7 @@ function Explore() {
                         toTrackMixpanel('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', content_id:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
                         toTrackClevertap('thumbnailClick',{pageName:pageName},{verticalIndex:content?.position+1,horizontalIndex:id+1,carousalId:content?.widgetHashtag?.id || content?.widgetId,carousalName:content?.widgetHashtag?.name || content?.widgetName,carousalType:'Video', content_id:d?.video?.id, creatorId:d?.video?.videoOwners?.id, creatorName:`${d?.video?.videoOwners?.firstName || ''} ${d?.video?.videoOwners?.lastName || ''}`})
                         toSearchFeed(e, d?.video?.id )}} className="trending_card z-0 bg-gray-300 m-0.5 min-w-28 min-h-38 relative">
-                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={fallbackVideos?.src}/>
+                        <DynamicImg data={d?.video?.thumbnailUrl} title={d?.videoTitle} width='w_120' fallback={'/images/video.png'}/>
                         {d?.video?.shoppable === true && <div className="absolute top-2 right-2 z-1">
                            <Cart/>
                          </div>}
@@ -363,7 +366,7 @@ function Explore() {
                              router && router?.push(`/@${d?.user?.userName}`)
                           }} className="my-1 px-2 flex flex-col justify-center items-center">
                                 <div className="bg-gray-300 w-16.6v overflow-hidden  h-16.6v rounded-full relative">
-                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={fallbackUsers?.src}/>
+                                 <DynamicImg data={d?.user?.profilePicImgUrl} title={`${d?.user?.firstName} ${d?.user?.lastName}`}  width='w_120' fallback={'/images/users.png'}/>
                                  </div>
                                 <p className="text-xs pt-2 truncate max-w-20v  text-center">{`${d?.user?.firstName} ${d?.user?.lastName}`}</p>
                           </div>

@@ -4,6 +4,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { createSecureHeaders } = require("next-secure-headers");
 const withSourceMaps = require('@zeit/next-source-maps');
 // const withPWA = require('next-pwa');
+const runtimeCaching = require("next-pwa/cache");
 
 const {
   GEN_SOURCE_MAP,
@@ -21,6 +22,14 @@ const appVersion = require('./app-version');
 
 // eslint-disable-next-line no-console
 console.log(`running in ${dev ? 'dev' : 'production'} mode pointing to ${APP_ENV}`);
+const withPWA = require('next-pwa')({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  publicExcludes: ['!images'],
+  buildExcludes: [/chunks\/.*$/, /css\/.*$/, /media\/.*$/],
+});
+
 
 const nextConfig = {
   async headers() {
@@ -46,10 +55,6 @@ const nextConfig = {
     locales: ['en-in', 'hi-in', 'bn-in'],
     defaultLocale: 'en-in'
   },
-  // pwa: {
-  //   swSrc: './src/service-worker.js',
-  //   dest: 'public'
-  // },
   generateEtags: true,
   assetPrefix: BASE_PATH || '',
   publicRuntimeConfig: {
@@ -87,15 +92,15 @@ const nextConfig = {
     // }));
     return config;
   },
-    // async redirects() {
-    //   return [
-    //     {
-    //       source: '/(g|G)(o|O)(a|A)(t|T)/',
-    //       destination: '/goat',
-    //       permanent: true,
-    //     }
-    //   ]
-    // },
+    async redirects() {
+      return [
+        {
+            source: '/rewards/home',
+            destination: '/rewards',
+            permanent: true,
+        }
+      ]
+    },
     async rewrites() {
       return [
         {
@@ -111,6 +116,7 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (!local ? withPWA(nextConfig) : nextConfig);
-module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
+module.exports = withPWA(nextConfig);
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
+// module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 

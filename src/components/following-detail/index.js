@@ -1,16 +1,15 @@
 /*eslint-disable react/display-name */
 
 import debounce from "lodash.debounce";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getUserFollowing, getUserProfile, toFollow } from "../../sources/users/profile";
 import ComponentStateHandler, { useFetcher } from "../commons/component-state-handler";
 import SearchFollowers from "../search-followers";
 import Error from "./error";
 import Loader from "./loader";
-import fallbackUser from "../../../public/images/users.png"
+//import fallbackUser from "../../../public/images/users.png"
 import Img from "../commons/image";
 import { useRouter } from "next/router";
-import useInfiniteScroll from "../../hooks/use-infinite-scroll";
 import detectDeviceModal from "../open-in-app"
 import useDrawer from "../../hooks/use-drawer";
 import dynamic from 'next/dynamic';
@@ -46,32 +45,31 @@ async function search(userId,searchTerm,setItems) {
     const [searchTerm, setSearchTerm] = useState('');
     const [items,setItems] = useState([]);
     const [refreshList, setrefreshList] = useState(0);
-    const [isFetching, setIsFetching] = useInfiniteScroll(showPopUp);
     const [showAppBanner, setShowAppBanner] = useState(false)
     
     const {show} = useDrawer();
     const device = getItem('device-info');
   
     async function showPopUp() {
-      // try{
-      //  const response = await getSearchData({ offset: `${offset}` });
-      //  if(response?.data?.length > 0){
-      //    let updateData = [...data];
-      //    updateData = updateData?.concat(response?.data);
-      //    let sessionData = JSON.parse(window?.sessionStorage?.getItem("searchList"));
-      //    sessionData = sessionData?.concat(response?.data);
-      //    window.sessionStorage.setItem("searchList",JSON.stringify(sessionData));
-      //    setData(updateData);
-      //    setOffset(offset+1);
-      
-      //  }else{
-      //   setIsFetching(false);
-      // if(offset === 2){
-        device === 'ios' && show('', detectDeviceModal, 'extraSmall');
-        setShowAppBanner(true);
-        setIsFetching(false);
-      //   setOffset(offset+1);
+      device === 'ios' && show('', detectDeviceModal, 'extraSmall');
+      device === 'android' && setShowAppBanner(true)
+  }
+
+  useEffect(() => {
+    if(window?.outerHeight > document?.body?.clientHeight) return;
+    const lastItem = document?.querySelector(".lastItem");
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.map((entry) =>{
+        if(entry.isIntersecting) {
+          showPopUp();
+        }
+      })
+    })
+    if(lastItem){
+      observer.observe(lastItem);
     }
+    return () => lastItem && observer.observe(lastItem);
+  }, [items])
 
     const router = useRouter();
     
@@ -115,21 +113,21 @@ async function search(userId,searchTerm,setItems) {
         <div>
         <SearchFollowers searchTerm={searchTerm} onTermChange={onTermChange}/>
         {items?.map((data,id)=>(
-        <div key={id} className="user_card flex justify-between py-2 px-4 "> 
+        <div key={id} className={`user_card flex justify-between py-2 px-4 ${id === items.length -1 ? "lastItem" : ""}`}> 
           <div onClick={()=> router && router?.push(`/@${data?.userHandle}`)} className="flex">
             <div className=" w-15v flex h-15v bg-gray-300 relative rounded-full overflow-hidden">
-              <Img data={data?.profilePic}  alt='image' fallback={fallbackUser?.src}/>
+              <Img data={data?.profilePic}  alt='image' fallback={'/images/users.png'}/>
               </div>
-            <div className="flex flex-col justify-between pl-4 pb-2">
-              <p className="text-sm text-gray-400">{data?.firstName}{' '}{data?.lastName}</p>
-              <p className="font-medium text-base text-gray-700">{`@${data?.userHandle}`} </p>
+            <div className="flex flex-col justify-between pl-4 pb-2 max-w-45v">
+              <p className="text-sm text-gray-400 w-full truncate">{data?.firstName}{' '}{data?.lastName}</p>
+              <p className="font-medium text-base text-gray-700 w-full truncate">{`@${data?.userHandle}`} </p>
             </div>
           </div>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <button onClick={()=>unFollowUser(data?.id)}  className="font-semibold text-sm border border-gray rounded-sm py-1 px-5 mr-1  text-black">
               Following
             </button>
-          </div>
+          </div> */}
         </div>))}
         </div>
         {device==='android' && showAppBanner ? <AppBanner notNowClick={notNowClick}/>:''}
