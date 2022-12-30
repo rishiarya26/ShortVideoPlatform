@@ -221,7 +221,7 @@ function HeadMeta() {
           dangerouslySetInnerHTML = {{
             __html: `var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[], region:'in1'};
 
-                    clevertap.account.push({"id": "TEST-KK8-65R-9Z6Z"});
+                    clevertap.account.push({"id": "RK8-65R-9Z6Z"});
                     clevertap.privacy.push({optOut: false}); //set the flag to true, if the user of the device opts out of sharing their data
                     clevertap.privacy.push({useIP: false}); //set the flag to true, if the user agrees to share their IP data
                     (function () {
