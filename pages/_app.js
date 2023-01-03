@@ -580,6 +580,29 @@ function Hipi({
     })
 
     trapPwaInstallEvent();
+
+    
+    /* injecting scripts - floodlight, gtag after 5sec */
+  setTimeout(()=>{
+      inject(null,`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+     
+      gtag('config', 'DC-11937136');
+      gtag('config', 'UA-218793053-1');
+      `)
+
+      inject("https://www.googletagmanager.com/gtag/js?id=DC-11937136");
+
+      inject(null,`
+      (function (m, f, i, l, t, e, r) {
+      m[t] = m[t] || function () {(m[t].q = m[t].q || []).push(arguments)}, m[t].l = 1 * new Date();
+      e = f.createElement(l); e.async = 1; e.id = "mfilterit-visit-tag"; e.src = i; r=f.getElementsByTagName(l)[0]; r.parentNode.insertBefore(e, r);
+      })(window, document,"https://script.mfilterit.net/v3/v/client/web.hipi.cpv.js", "script", "mf");
+      mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
+      `);
+    },5000) 
     
 
     return () => {
@@ -689,19 +712,7 @@ function Hipi({
           `,
         }}
       />
-      <Script 
-       id = "mFilterIt"
-       strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-          (function (m, f, i, l, t, e, r) {
-            m[t] = m[t] || function () {(m[t].q = m[t].q || []).push(arguments)}, m[t].l = 1 * new Date();
-            e = f.createElement(l); e.async = 1; e.id = "mfilterit-visit-tag"; e.src = i; r=f.getElementsByTagName(l)[0]; r.parentNode.insertBefore(e, r);
-            })(window, document,"https://script.mfilterit.net/v3/v/client/web.hipi.cpv.js", "script", "mf");
-            mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
-          `}}
-       />
-                      <CacheAdProvider>
+    <CacheAdProvider>
                         <Component {...pageProps} />
                       </CacheAdProvider>
                       {showCookies && (getItem('cookie-agreed') !== 'yes') && country !== 'India' && <><Cookies/></>}
