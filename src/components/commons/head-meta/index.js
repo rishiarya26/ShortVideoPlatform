@@ -79,19 +79,7 @@ function HeadMeta() {
       <script async src="https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js"></script>
       <script async src="https://websdk.getsocial.im/getsocial.min.js"></script>
       <script defer type="text/javascript" src="/newrelic.js" />
-
-      {/* floodlight pixel script */}
-      <script defer src="https://www.googletagmanager.com/gtag/js?id=DC-11937136"></script>
-      <script defer dangerouslySetInnerHTML={{
-        __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-       
-        gtag('config', 'DC-11937136');
-        gtag('config', 'UA-218793053-1');
-        `
-      }} ></script>
+ 
       {/* <script defer crossOrigin="anonymous" src="https://eum.instana.io/eum.min.js" />
       <script type="text/javascript" src="/agents/instana.js" />
 
