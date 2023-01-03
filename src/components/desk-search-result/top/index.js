@@ -13,8 +13,6 @@ import dynamic from "next/dynamic";
 import { trimHash } from "../../../utils/string";
 import Videos from "../videos";
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";
-import { toTrackClevertap } from "../../../analytics/clevertap/events";
-import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -23,11 +21,6 @@ const LoadComp = () => (<Loader />);
 const TopItems = ({item, redirectTab}) =>{
     const [data, setData] = useState();
     console.log("ITEM***",item)
-
-    useEffect(() => {
-      toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-      toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-    }, [])
 
     const router = useRouter();
 

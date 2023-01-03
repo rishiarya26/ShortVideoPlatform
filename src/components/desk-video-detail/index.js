@@ -37,7 +37,7 @@ function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
 hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,convivaItemInfo,
-comp = 'normal',videoSound=true, noSound, checkNoSound}) {
+comp = 'normal',videoSound=true, noSound, checkNoSound, userId}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -141,7 +141,20 @@ domain = domain?.origin;
 return (
 <div className={`flex ${parentWidth[comp]}`}>
    <div className={`flex ${videoheight[comp]} w-8/12 bg-black justify-center relative overflow-hidden`}>
-      <Video muted={!videoSound} url={url} firstFrame={firstFrame} shareCount={shareCount} comp={comp} videoId={videoId} convivaItemInfo={convivaItemInfo} noSound={noSound} videoSound={videoSound} checkNoSound={checkNoSound}/>
+      <Video
+         muted={!videoSound}
+         url={url}
+         firstFrame={firstFrame}
+         shareCount={shareCount}
+         comp={comp} videoId={videoId}
+         convivaItemInfo={convivaItemInfo}
+         noSound={noSound}
+         videoSound={videoSound}
+         checkNoSound={checkNoSound}
+         userId={userId}
+         contentId={videoId}
+         userName={userName}
+      />
       {NavigationBtns[comp]}
    </div>
    <div className={`flex ${videoheight[comp]}  w-4/12 overflow-hidden bg-white flex-col`}>

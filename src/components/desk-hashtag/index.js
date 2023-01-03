@@ -36,6 +36,7 @@ import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
+import { trimHash } from '../../utils/string';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -178,8 +179,8 @@ function DeskHashtag({
       mixpanelEvents['Page Name'] = 'Hashtag';
       // fbq.event('Screen View');
       ToTrackFbEvents('screenView');
-      toTrackClevertap('screenView', {pageName: 'Hashtag'});
-      toTrackMixpanel('screenView', {pageName: 'Hashtag'})
+      toTrackClevertap('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)});
+      toTrackMixpanel('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)})
       toTrackFirebase('screenView',{'page' :'Hashtag'});
       track('Screen View',mixpanelEvents );
     },500);

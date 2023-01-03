@@ -8,8 +8,6 @@ import useTranslation from "../../../hooks/use-translation";
 import DeskVideoGallery from "../../desk-video-gallery-mLoad";
 import VideoDetail from '../../desk-video-detail';
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";
-import { toTrackClevertap } from "../../../analytics/clevertap/events";
-import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -25,11 +23,6 @@ const Videos = ({item}) =>{
   const [vDetailActiveIndex, setVDetailActiveIndex] = useState();
   const [videoDetailData, setVideoDetailData] = useState({});
   const [noSound, setNoSound] = useState(false);
-
-  useEffect(() => {
-    toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-    toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-  }, [])
 
   const checkNoSound =()=>{
     if(!items?.[vDetailActiveIndex]?.videoSound){

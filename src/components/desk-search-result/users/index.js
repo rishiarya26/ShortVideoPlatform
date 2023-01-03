@@ -12,8 +12,6 @@ import useTranslation from "../../../hooks/use-translation";
 import LoadMore from "../../commons/button/load-more";
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";
 import CircularLoaderSearch from "../../commons/circular-loader-search";
-import { toTrackClevertap } from "../../../analytics/clevertap/events";
-import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -25,11 +23,6 @@ const Users = ({item, type = 'normal', router}) =>{
     const [offset, setOffset] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const {ref = ''} = router?.query;
-
-    useEffect(() => {
-      toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-      toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-    } ,[])
 
     const {t} = useTranslation();
     const onDataFetched=(data)=>{

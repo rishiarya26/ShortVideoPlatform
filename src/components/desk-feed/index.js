@@ -336,6 +336,7 @@ const info ={
          videoSound={videoDetailData?.videoSound}
          noSound={noSound}
          checkNoSound={checkNoSound}
+         userId={videoDetailData?.userId}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>

@@ -2,14 +2,16 @@
 /*eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unknown-property */
 import { useEffect, useRef, useState } from "react";
+import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { reportPlaybackEnded, reportPlaybackRequested, videoAnalytics } from "../../analytics/conviva";
+import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 import { withBasePath } from "../../config";
 import useWindowSize from "../../hooks/use-window-size";
 import CircularProgress from '../commons/circular-loader'
 import SnackCenter from "../commons/snack-bar-center";
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, checkSound, nosound, videoSound})=>{
+const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, checkSound, nosound, videoSound, userId, contentId, userName})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
@@ -29,6 +31,13 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, ch
       }
         checkSound && checkSound();
     },[url])
+
+    useEffect(() => {
+      if(initialPlayStarted) {
+        toTrackClevertap('play', {pageName: "video detail"}, {userId, userName, content_id: contentId});
+        toTrackMixpanel('play', {pageName: "video detail"}, {userId, userName, content_id: contentId})
+      }
+    }, [initialPlayStarted])
 
     
 
