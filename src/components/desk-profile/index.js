@@ -210,10 +210,9 @@ function DeskUsers({
       // trackEvent('Screen_View',{'Page Name' :'Profile'})
       ToTrackFbEvents('screenView');
       toTrackFirebase('screenView',{'page' :'Profile'});
+    },500);
       toTrackClevertap('screenView', {pageName: "Profile"});
       toTrackMixpanel('screenView', {pageName: "Profile"});
-      track('Screen View',mixpanelEvents );
-    },500);
   }, []);
 
   const { show } = useDrawer();
