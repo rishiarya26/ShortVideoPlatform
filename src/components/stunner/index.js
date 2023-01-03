@@ -273,7 +273,7 @@ useEffect(()=>{
         </SwiperSlide><SwiperSlide>
             <div className='w-full h-full flex mx-2 '>
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
-            <video src={withBasePath('videos/stunner/november.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
+            <video src={withBasePath('videos/stunner/november_web.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
             </div>
             </div>
         </SwiperSlide>
