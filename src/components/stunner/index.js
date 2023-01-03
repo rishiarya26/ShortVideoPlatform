@@ -110,9 +110,9 @@ useEffect(()=>{
 </div>
 
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
-<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> December Challenge 2 is now <span className='animate-pulse'>Live</span></h1>
+<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> January Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Show off your unique style for New Year’s Eve with a sizzling party-wear outfit! </span>
+    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Heartbreaks are the worst! But can you wear your heart up your sleeve and turn things around?</span>
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
@@ -219,7 +219,7 @@ useEffect(()=>{
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
-    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Dec challenge 2 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Jan challenge 1 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
     </p> 
     {/* <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Missed October Challenge 2? Not a problem. Know about Oct Challenge 2 <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
@@ -231,7 +231,7 @@ useEffect(()=>{
 
 
     <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center bg_pastel_blue '>
-            <h3 className='text-3xl text-center font-bold purple_font pb-4 px-6'>Meet our Aug, Sep and Oct Hipi Stunners</h3>
+            <h3 className='text-3xl text-center font-bold purple_font pb-4 px-6'>Meet our Aug, Sep, Oct and Nov Hipi Stunners</h3>
             <p className='px-8 md:w-1/2 text-center text-gray-600 font-light'>You could be the next. </p><p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>Check out the monthly challenges <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span> </p>
             <div className="stunner_swiper relative testimonials_swiper carousel">
         <Swiper
@@ -273,7 +273,7 @@ useEffect(()=>{
         </SwiperSlide><SwiperSlide>
             <div className='w-full h-full flex mx-2 '>
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
-            <video src={withBasePath('videos/stunner/november.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
+            <video src={withBasePath('videos/stunner/november_web.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
             </div>
             </div>
         </SwiperSlide>
