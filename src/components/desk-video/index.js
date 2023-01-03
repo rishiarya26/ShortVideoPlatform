@@ -22,7 +22,8 @@ function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
 userVerified, convivaItemInfo, videoSound,checkNoSound,
- noSound, activeIndex, fetchState, updateActiveFeedIndex
+ noSound, activeIndex, fetchState, updateActiveFeedIndex,
+ activeFeedIndex, initialPlayStarted, setInitialPlayStarted
 }) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
@@ -58,6 +59,12 @@ useEffect(()=>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(!!currentRef?.getAttribute('src') && active === true){
       updateActiveFeedIndex(rootRef.current.id);
+      setInitialPlayStarted(prev => ({
+         started: true,
+         activeId: rootRef.current.id,
+         prevActiveId: prev.activeId
+      }))
+      console.log("debug", initialPlayStarted, rootRef.current.id);
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
       try{
@@ -85,8 +92,6 @@ useEffect(() => {
    }
 }, [])
 
-
-
 const convivaReplaySession = (e) =>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(videoAnalytics !== null) reportPlaybackEnded();
@@ -102,19 +107,19 @@ const handleSeeked = () => {
    convivaReplaySession();
 }
 const handlePlay = entry => {
-if (clicked) {
-if (entry?.isIntersecting) {
-setActive(true);
-// console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
-setPlaying(true);
-} else {
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
-setPlaying(false);
-setActive(false);
-}
-}
+   if (clicked) {
+      if (entry?.isIntersecting) {
+         setActive(true);
+         // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
+         setPlaying(true);
+      } else {
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
+         setPlaying(false);
+         setActive(false);
+      }
+   }
 };
 const [ref] = useIntersect({
 callback: handlePlay,
@@ -140,10 +145,6 @@ const handleUpdateSeekbar = e => {
    // const currentTime = e?.target?.currentTime;
    // settDuration(duration);
    // setWatchedTime(currentTime);
-
-   // if(percentage > 0){
-   //   setInitialPlayStarted(true);
-   //  }
 
     /********** Mixpanel ***********/
    //  if(currentTime >= duration-0.2){

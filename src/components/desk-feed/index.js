@@ -19,6 +19,8 @@ import usePreviousValue from '../../hooks/use-previous';
 import VideoUnavailable from '../video-unavailable';
 import SnackCenter from '../commons/snack-bar-center';
 import { webPush } from '../../analytics/clevertap';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 
 const ErrorComp = ({retry}) => (<Error retry={retry}/>);
 const LoadComp = () => (<Loading />);
@@ -38,6 +40,20 @@ const LoadComp = () => (<Loading />);
   const [tokens, setTokens] = useState(localStorage.get('tokens') || false);
   const [loadFeed, setLoadFeed] = useState(true);
   const [noSound, setNoSound] = useState(false);
+  const [initialPlayStarted, setInitialPlayStarted] = useState({
+    started: false,
+    activeId: null,
+    prevActiveId: null,
+  });
+  const { id } = router?.query;
+  const tabName = id && (id === 'following') ? 'Following' : 'ForYou';
+
+  useEffect(() => {
+    if(initialPlayStarted.started && initialPlayStarted.activeId !== initialPlayStarted.prevActiveId) {
+      toTrackClevertap('play',{pageName : 'Feed',tabName:tabName},items?.[activeFeedIndex]);
+      toTrackMixpanel('play', {pageName : 'Feed',tabName:tabName},items?.[activeFeedIndex]);
+    }
+  }, [initialPlayStarted])
 
   const updateActiveFeedIndex = (id) => {
     setActiveFeedIndex(id);
@@ -52,8 +68,6 @@ const LoadComp = () => (<Loading />);
 
   const preTokensValue = usePreviousValue({tokens});
   const tokensPresent = localStorage.get('tokens') || null;
-
-  let { id } = router?.query;
   const { videoId } = router?.query;
   let { campaign_id = null} = router?.query;
   // campaign_id = campaign_id ? campaign_id :  (localStorage?.get('campaign_id') || null);
@@ -77,6 +91,8 @@ const LoadComp = () => (<Loading />);
     window.onunload = function () {
       window?.scrollTo(0, 0);
     }
+    toTrackClevertap('screenView', {pageName: 'Feed'})
+    toTrackMixpanel('screenView', {pageName: 'Feed'})
   },[])
 
   useEffect(()=>{
@@ -271,6 +287,9 @@ const FeedComp =  <div className="W-feed-vid pt-24 flex flex-col no_bar">
           checkNoSound={checkNoSound}
           fetchState={fetchState}
           updateActiveFeedIndex={updateActiveFeedIndex}
+          activeFeedIndex={activeFeedIndex}
+          initialPlayStarted={initialPlayStarted}
+          setInitialPlayStarted={setInitialPlayStarted}
           />
       </span>
      )}

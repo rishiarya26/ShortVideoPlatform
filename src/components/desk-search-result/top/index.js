@@ -2,7 +2,7 @@ import { getTopSearches } from "../../../sources/explore/top";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
 import Loader from './loader';
 import Error from './error';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { numberFormatter } from "../../../utils/convert-to-K";
 import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
@@ -13,6 +13,8 @@ import dynamic from "next/dynamic";
 import { trimHash } from "../../../utils/string";
 import Videos from "../videos";
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";
+import { toTrackClevertap } from "../../../analytics/clevertap/events";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -21,6 +23,11 @@ const LoadComp = () => (<Loader />);
 const TopItems = ({item, redirectTab}) =>{
     const [data, setData] = useState();
     console.log("ITEM***",item)
+
+    useEffect(() => {
+      toTrackClevertap('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      toTrackMixpanel('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+    }, [])
 
     const router = useRouter();
 

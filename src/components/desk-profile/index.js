@@ -19,7 +19,7 @@ import { ShareComp } from '../commons/share';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import DeskVideoGallery from '../desk-video-gallery';
 import Header from '../desk-header';
@@ -211,6 +211,7 @@ function DeskUsers({
       ToTrackFbEvents('screenView');
       toTrackFirebase('screenView',{'page' :'Profile'});
       toTrackClevertap('screenView', {pageName: "Profile"});
+      toTrackMixpanel('screenView', {pageName: "Profile"});
       track('Screen View',mixpanelEvents );
     },500);
   }, []);

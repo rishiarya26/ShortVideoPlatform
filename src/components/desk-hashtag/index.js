@@ -177,7 +177,7 @@ function DeskHashtag({
       const mixpanelEvents = commonEvents();
       mixpanelEvents['Page Name'] = 'Hashtag';
       // fbq.event('Screen View');
-      //trackEvent('Screen_View',{'Page Name' :'Hashtag'});
+      trackEvent('ScreenView',{'Page Name' :'Hashtag'});
       ToTrackFbEvents('screenView');
       toTrackClevertap('screenView', {pageName: 'Hashtag'});
       toTrackFirebase('screenView',{'page' :'Hashtag'});
