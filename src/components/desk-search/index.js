@@ -70,8 +70,8 @@ const SearchItems = ({router,type})=>{
             if(term?.length > 0){
                 setSearchTerm(term);
                 search(term,setSuggestions,setLoading);
-                toTrackClevertap('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS})
-                toTrackMixpanel('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS})
+                toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS})
+                toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS})
             }
         }
     },[])

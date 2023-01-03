@@ -59,12 +59,6 @@ useEffect(()=>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(!!currentRef?.getAttribute('src') && active === true){
       updateActiveFeedIndex(rootRef.current.id);
-      setInitialPlayStarted(prev => ({
-         started: true,
-         activeId: rootRef.current.id,
-         prevActiveId: prev.activeId
-      }))
-      console.log("debug", initialPlayStarted, rootRef.current.id);
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
       try{
@@ -140,6 +134,13 @@ useEffect(()=>{
 const handleUpdateSeekbar = e => {
    const percentage = (e.target.currentTime / e.target.duration) * 100;
    setSeekedPercentage(percentage);
+   if(percentage > 0) {
+      setInitialPlayStarted(prev => ({
+         started: true,
+         activeId: rootRef.current.id,
+         prevActiveId: prev.activeId
+      }))
+   }
    // setVDuration(e.target.duration);
    // const duration = e?.target?.duration;
    // const currentTime = e?.target?.currentTime;

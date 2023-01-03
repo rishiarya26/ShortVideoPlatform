@@ -25,8 +25,8 @@ const TopItems = ({item, redirectTab}) =>{
     console.log("ITEM***",item)
 
     useEffect(() => {
-      toTrackClevertap('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-      toTrackMixpanel('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
     }, [])
 
     const router = useRouter();

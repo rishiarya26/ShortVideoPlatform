@@ -27,8 +27,8 @@ const Videos = ({item}) =>{
   const [noSound, setNoSound] = useState(false);
 
   useEffect(() => {
-    toTrackClevertap('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-    toTrackMixpanel('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+    toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+    toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
   }, [])
 
   const checkNoSound =()=>{

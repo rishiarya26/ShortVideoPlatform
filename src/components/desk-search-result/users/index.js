@@ -27,8 +27,8 @@ const Users = ({item, type = 'normal', router}) =>{
     const {ref = ''} = router?.query;
 
     useEffect(() => {
-      toTrackClevertap('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
-      toTrackMixpanel('ScreenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
     } ,[])
 
     const {t} = useTranslation();
