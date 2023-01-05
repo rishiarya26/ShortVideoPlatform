@@ -87,16 +87,20 @@ export function track(event, payload) {
   };
 
   export const webPush = () => {
-    const isPopupShown = sessionStorage.get("clevertapWebpopup") || false;
-    if(isLoaded && !isPopupShown) {
-      clevertap.notifications.push({
-        "titleText": "Get notifications for trending videos from Hipi",
-        "bodyText": "We promise to send you notifications for relevant content only",
-        "okButtonText": "Enable",
-        "rejectButtonText": "Not Now",
-        "askAgainTimeInSeconds": 5,
-        "serviceWorkerPath": "/sw.js"
-      });
-      sessionStorage.set("clevertapWebpopup", true);
-    }
+    const isPopupShown = localStorage.get("clevertapWebpopup") || false;
+    let timeDiff = 0;
+      if(isPopupShown) {
+        timeDiff = Number(((new Date() - isPopupShown) / (1000 * 60 * 60)).toFixed(1));
+      }
+      if((timeDiff > 24 || !isPopupShown) && isLoaded) {
+        clevertap.notifications.push({
+          "titleText": "Get notifications for trending videos from Hipi",
+          "bodyText": "We promise to send you notifications for relevant content only",
+          "okButtonText": "Enable",
+          "rejectButtonText": "Not Now",
+          "askAgainTimeInSeconds": 5,
+          "serviceWorkerPath": "/sw.js"
+        });
+        localStorage.set("clevertapWebpopup", new Date());
+      }
   }
