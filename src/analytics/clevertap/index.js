@@ -94,7 +94,8 @@ export function track(event, payload) {
         "bodyText": "We promise to send you notifications for relevant content only",
         "okButtonText": "Enable",
         "rejectButtonText": "Not Now",
-        "askAgainTimeInSeconds": 5
+        "askAgainTimeInSeconds": 5,
+        "serviceWorkerPath": "/sw.js"
       });
       sessionStorage.set("clevertapWebpopup", true);
     }
