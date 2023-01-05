@@ -19,8 +19,7 @@ import { ShareComp } from '../commons/share';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import DeskVideoGallery from '../desk-video-gallery';
 import { withBasePath } from '../../config';
@@ -175,14 +174,10 @@ function DeskHashtag({
   
   useEffect(() => {
     setTimeout(()=>{
-      const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Hashtag';
-      // fbq.event('Screen View');
       ToTrackFbEvents('screenView');
       toTrackClevertap('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)});
       toTrackMixpanel('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)})
       toTrackFirebase('screenView',{'page' :'Hashtag'});
-      track('Screen View',mixpanelEvents );
     },500);
   }, []);
 

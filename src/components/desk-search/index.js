@@ -16,9 +16,6 @@ import { getTopSearches } from "../../sources/explore/top";
 import Img from "../commons/image";
 //import fallbackUsers from '../../../public/images/users.png';
 import { trimHash } from "../../utils/string";
-import { toTrackClevertap } from "../../analytics/clevertap/events";
-import { DISCOVER_SEARCH_RESULTS } from "../../constants";
-import { toTrackMixpanel } from "../../analytics/mixpanel/events";
 
 async function search(searchTerm, setSuggestions, setLoading) {
     // optimisedSearch.cancel();
@@ -70,8 +67,6 @@ const SearchItems = ({router,type})=>{
             if(term?.length > 0){
                 setSearchTerm(term);
                 search(term,setSuggestions,setLoading);
-                toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS})
-                toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS})
             }
         }
     },[])

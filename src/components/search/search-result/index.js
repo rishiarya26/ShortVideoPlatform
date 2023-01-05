@@ -26,7 +26,7 @@ function SearchResult({router}) {
     item = item?.indexOf('#') === 0 ? trimHash(item) : item;
     setSearchTerm(item);
     toTrackMixpanel('screenView',{pageName:DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]})
-    toTrackClevertap('screenView',{pageName:DISCOVER_SEARCH_RESULTS}, {tabName: items?.display?.[selectedIndex]})
+    toTrackClevertap('screenView',{pageName:DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]})
   },[])
 
   useEffect(()=>{

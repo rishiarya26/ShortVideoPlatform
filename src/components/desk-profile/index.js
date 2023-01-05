@@ -211,8 +211,8 @@ function DeskUsers({
       ToTrackFbEvents('screenView');
       toTrackFirebase('screenView',{'page' :'Profile'});
     },500);
-      toTrackClevertap('screenView', {pageName: "Profile"});
-      toTrackMixpanel('screenView', {pageName: "Profile"});
+      toTrackClevertap('screenView', {pageName: "Profile"}, {userId: id, userName: userHandle});
+      toTrackMixpanel('screenView', {pageName: "Profile"}, {userId: id, userName: userHandle});
   }, []);
 
   const { show } = useDrawer();
