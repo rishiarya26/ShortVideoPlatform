@@ -188,7 +188,8 @@ site_name: 'Hipi'
 
                 <div className='flex items-start'>1<p className='mb-2 pl-2 text-left'> Your daily progress will reset at 11:59 PM every day during the Hipi rewards Program period</p></div>
                 <div className='flex items-start'>2<p className='mb-2 pl-2 text-left'> You should spin the wheel and unlock your coins for the levels achieved daily before 11:59 PM while the Hipi Reward Program is running.</p></div>
-                <div className='flex items-start'>3<p className='mb-2 pl-2 text-left'> Your participation in Hipi rewards Program is subject to further Terms & Conditions as stated below:</p></div>
+                <div className='flex items-start'>3<p className='mb-2 pl-2 text-left'> A user can participate in Hipi rewards program using a single account only. If a user participates in Hipi rewards program using multiple accounts, coins cashed out will not be transferred by Hipi to the linked PayTM wallet.</p></div>
+                <div className='flex items-start'>4<p className='mb-2 pl-2 text-left'> Your participation in Hipi rewards Program is subject to further Terms & Conditions as stated below:</p></div>
 
                 <div className='flex items-start'>•<p className='mb-2 pl-2 text-left'> A user will be eligible for the program if the user is logged-in to Hipi mobile app  an Android phone alone.</p></div>
                 <div className='flex items-start'>•<p className='mb-2 pl-2 text-left'> The videos posted by the user should be in line with Hipi Community Guidelines and Hipi Terms of Use. Any content that does not conform to the above-mentioned policies will be taken down from the platform. In the event of a copyright claim or any reported unauthorized use of third-party intellectual property rights, we will take down such content from the platform, and the reward points would withdrawn</p></div>
