@@ -63,6 +63,11 @@ const LoginFollowing = dynamic(()=> import('../login-following'),{
   ssr: false
 });
 
+const indexToShowLang = {
+  android : INDEX_TO_SHOW_LANG,
+  ios : INDEX_TO_SHOW_LANG
+}
+
 
 // const UserExperience = dynamic(()=> import('../commons/user-experience'),{
 //   loading: () => <div />,
@@ -168,18 +173,47 @@ function Feed({ router }) {
     }
   }
 
-  useEffect(() => {
-     setTimeout(()=>{
-    if(initialLoadComplete === true){
-      adImpression();
-      toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
-      toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]); 
-      //fbq.event('Screen View')
-      ToTrackFbEvents('screenView');
-      //trackEvent('Screen_View',{'Page Name' :'Feed'});
-      toTrackFirebase('screenView',{'page':'Feed'});
-    }
+  useEffect(async () => {
+    setTimeout(()=>{
+      if(initialLoadComplete === true){
+        adImpression();
+        toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
+        toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]); 
+        //fbq.event('Screen View')
+        ToTrackFbEvents('screenView');
+        //trackEvent('Screen_View',{'Page Name' :'Feed'});
+        toTrackFirebase('screenView',{'page':'Feed'});
+      }
     },1500);
+
+    {/* Logic to make vmax request and add the language slide */}
+    if(items.length>0){
+      let itemsTemp = [...items];
+      try{
+        let {adPosition ="", cachedVideo ={}} = await cacheAdResponse();
+        console.log("DEBUG active", window?.VMAXSDK, cachedVideo);
+        if(!isEmptyObject(cachedVideo) && adPosition){
+          itemsTemp.splice(adPosition, 0, cachedVideo);
+        }
+      }catch(e){
+        console.error(e);
+      }
+      
+      {/* Keeping this logic to make sure the index of language slide would be unchanged */}
+      try{
+        const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
+        const lang24ShowOnce = localStorage.get('lang-24-hr');
+        if(!languagesSelected && lang24ShowOnce === 'false'){
+          itemsTemp?.splice(indexToShowLang?.['android'],0,{'data':'languageSlide'})
+        }
+      }catch(e){
+          console.error('issue in lang-select slide adding in transform')
+      }
+
+      //? saving the suggestions
+      setItems(itemsTemp);
+    }
+
   }, [initialLoadComplete]);
 
   useEffect(()=>{    
@@ -192,11 +226,15 @@ function Feed({ router }) {
   },[initailShopContentAdded])
 
   useEffect(()=>{
+    let timer;
     if(items?.[videoActiveIndex]?.feedVmaxAd){
       setSlideToNext(false)
-      setTimeout(()=>{
+      timer = setTimeout(()=>{
         setSlideToNext(true)
       },5000)
+    }else{
+       clearTimeout(timer)
+      setSlideToNext(true);
     }
   },[videoActiveIndex])
 

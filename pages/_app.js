@@ -275,6 +275,9 @@ function Hipi({
       initVmax();
       console.log('mounted');
       inject(GOOGLE_ONE_TAP , null, loaded);
+      //to make sure before loading the app the vmax should get updated
+      inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
+      
       initLinkdin();
       const cookieAgree = getItem('cookie-agreed');
       cookieAgree !== 'yes' && getCountry();

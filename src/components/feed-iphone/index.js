@@ -181,14 +181,18 @@ const adImpression =  async (index = 0)=>{
   }
 }
 
-  useEffect(()=>{
-    if(toShowItems?.[videoActiveIndex]?.feedVmaxAd){
-      setSlideToNext(false)
-      setTimeout(()=>{
-        setSlideToNext(true)
-      },5000)
-    }
-  },[videoActiveIndex])
+useEffect(()=>{
+  let timer;
+  if(items?.[videoActiveIndex]?.feedVmaxAd){
+    setSlideToNext(false)
+    timer = setTimeout(()=>{
+      setSlideToNext(true)
+    },5000)
+  }else{
+     clearTimeout(timer)
+    setSlideToNext(true);
+  }
+},[videoActiveIndex])
 
 
   useEffect(() => {
