@@ -35,7 +35,7 @@ export const commonEvents = ()=>{
   
     let payload = {}
     payload['unique ID'] = loggedInId || guestId;
-    payload['isPWA'] = getIsMobile();
+    payload['isPWA'] = "yes";
     payload['isInstalled'] =  isInstalled;
     payload['Device'] = device;
     payload['User Type'] = loggedInId ? 'member' : 'guest';
