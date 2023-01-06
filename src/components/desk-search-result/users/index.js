@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getUsers } from "../../../sources/explore/users";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
 import Loader from "./loader";
