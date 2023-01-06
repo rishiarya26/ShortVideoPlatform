@@ -338,7 +338,7 @@ function SearchFeed({ router }) {
               }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                 viewEventsCall(activeVideoId,'no decision')
               }
-              console.log("debug",items[videoActiveIndex]?.videoDuration);
+              // console.log("debug",items[videoActiveIndex]?.videoDuration);
               viewEventsCall(activeVideoId, 'user_video_end', 
               {timeSpent: preVideoDurationDetails?.videoDurationDetails?.currentT,
                 duration :  items[videoActiveIndex]?.videoDuration});
