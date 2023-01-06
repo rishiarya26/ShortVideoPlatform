@@ -14,7 +14,7 @@ function HeadMeta() {
     <>
       <link rel="manifest" href={withBasePath(`manifest.json?v=${appVersion}`)} />
       <SeoMeta />
-      <meta charSet="utf-8" />
+      {/* <meta charSet="utf-8" /> */}
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       {/* <link rel="preconnect" href="https://hipigwapi.zee5.com"/> */}
@@ -202,6 +202,25 @@ function HeadMeta() {
 
       <link rel="shortcut icon" href={withBasePath('favicon.ico')} />
 
+      <script
+          id="clevertapScript"
+          type='text/javascript'
+          async
+          dangerouslySetInnerHTML = {{
+            __html: `var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[], region:'in1'};
+
+                    clevertap.account.push({"id": "RK8-65R-9Z6Z"});
+                    clevertap.privacy.push({optOut: false}); //set the flag to true, if the user of the device opts out of sharing their data
+                    clevertap.privacy.push({useIP: false}); //set the flag to true, if the user agrees to share their IP data
+                    (function () {
+                            var wzrk = document.createElement('script');
+                            wzrk.type = 'text/javascript';
+                            wzrk.async = true;
+                            wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(wzrk, s);
+                      })();`
+            }}/>
     </>
   );
 }

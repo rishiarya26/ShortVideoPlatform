@@ -12,10 +12,23 @@ import deskSearch from '../../desk-search';
 import Header from '../../desk-header';
 import DeskMenu from '../../desk-menu';
 import { trimHash } from '../../../utils/string';
+import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
+import { DISCOVER_SEARCH_RESULTS } from '../../../constants';
 
 function DeskSearchResults({router}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('')
+
+  const items = {
+    display : ['Top','Users', 'Videos', 'Hashtags'],
+    defaultValue : selectedIndex
+  }
+
+  useEffect(() => {
+    toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]});
+    toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: items?.display?.[selectedIndex]});
+  }, [selectedIndex])
 
   useEffect(()=>{
     console.log('@RRR',router)
@@ -44,10 +57,6 @@ function DeskSearchResults({router}) {
       <Hashtags item={searchTerm}/>
   ]; 
 
- const items = {
-   display : ['Top','Users', 'Videos', 'Hashtags'],
-   defaultValue : selectedIndex
- }
 
  const onTabChange = (compNo)=>{
    setSelectedIndex(compNo)

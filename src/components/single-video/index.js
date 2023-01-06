@@ -17,6 +17,7 @@ import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
 import VideoUnavailable from '../video-unavailable';
 import SnackCenter from '../commons/snack-bar-center';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -57,8 +58,10 @@ export default function SingleVideo(props){
   useEffect(()=>{
       if(initialPlayStarted === true){
         toTrackMixpanel('play')
+        toTrackClevertap('play', {pageName: "single-video"}, props);
         viewEventsCall(props?.id, 'user_video_start');
       }
+      console.log("debug", props);
     },[initialPlayStarted])
 
   useEffect(() => {
@@ -69,6 +72,7 @@ export default function SingleVideo(props){
     toTrackMixpanel('impression');
     window.addEventListener("beforeunload", ()=>{
       watchedTime > 0 && toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
+      watchedTime > 0 && toTrackClevertap('watchTime', props,{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
 
       /** Mixpanel - increment view count **/
       watchedTime > 0 && incrementCountVideoView(props?.id);
@@ -179,6 +183,7 @@ export default function SingleVideo(props){
      /********** Mixpanel ***********/
      if(currentTime >= duration-0.2){
       toTrackMixpanel('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
+      toTrackMixpanel('watchTime', props,{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable})
        /*** view events ***/
        viewEventsCall(props?.id, 'completed');

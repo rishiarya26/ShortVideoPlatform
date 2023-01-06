@@ -12,6 +12,7 @@ import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
 import { getAllItems, getItem, removeItem } from "../../utils/cookie";
 import Cookies from "../cookies";
+import { toTrackClevertap } from "../../analytics/clevertap/events";
 
 export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
 
@@ -25,7 +26,8 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
     const { showSnackbar } = useSnackbar();
 
     const onTokenFetched = async(data)=>{
-      toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || '',name:type,ctaName:'Google',elemant:'Google'})
+      toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:type,ctaName:'Google',elemant:'Google'})
+      toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''},{name:type,ctaName:'Google',elemant:'Google'})
         console.log("got token... about to call api",data, data?.tokenId);
         // const allCookies = Cookies.getAll();
         const arrSplit = document?.cookie?.split(";");

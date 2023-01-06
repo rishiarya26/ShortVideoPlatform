@@ -13,6 +13,7 @@ import { trimHash } from "../../../utils/string";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import { CREATOR_PROFILE, DISCOVER_SEARCH_RESULTS } from "../../../constants";
 import { toTrackReco } from "../../../analytics/view-events";
+import { toTrackClevertap } from "../../../analytics/clevertap/events";
 
 let setRetry;
 const ErrorComp = () => (<Error retry={setRetry} />);
@@ -34,6 +35,7 @@ const TopItems = ({item, redirectTab}) =>{
         if(window.sessionStorage.getItem('searchExecuted') === 'true'){
           console.log("MIXsearch-executed",window.sessionStorage.getItem('searchExecuted', typeof window.sessionStorage.getItem('searchExecuted')))
           searchTerm && toTrackMixpanel('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
+          searchTerm && toTrackClevertap('searchExecuted',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{query:searchTerm,resultsLength:resultsLength})
           window.sessionStorage.setItem('searchExecuted', false);
         }
       }
@@ -76,6 +78,7 @@ const TopItems = ({item, redirectTab}) =>{
                   <div onClick={()=>{
                     try{
                      toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
+                     toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.id,creatorHandle:item?.userHandle,objType:CREATOR_PROFILE, query:searchTerm})
                      toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                     }catch(e){
                       console.error('search result click',e)
@@ -114,6 +117,7 @@ const TopItems = ({item, redirectTab}) =>{
                  <div onClick={()=>{
                   try{
                     toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
+                    toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{hashtagName:item?.hashtag,hashTagId:item?.hashtagId,objType:'Hashtag', query:searchTerm})
                     toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                    }catch(e){
                      console.error('search result click',e)
@@ -150,6 +154,7 @@ const TopItems = ({item, redirectTab}) =>{
                     <div onClick={()=>{
                       try{
                         toTrackMixpanel('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
+                        toTrackClevertap('searchResultClicked',{pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'},{creatorId:item?.videoOwners?.id,creatorHandle:item?.videoOwners?.userName,objType:'Video',content_id:item?.id, query:searchTerm})
                         toTrackReco('search_result_click_event',{"objectID": item?.id || item?.objectID, "position": item?.clickPosition, "queryID": item?.correlation_id, pageName:DISCOVER_SEARCH_RESULTS, tabName:'Top'})
                        }catch(e){
                          console.error('search result click',e)

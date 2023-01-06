@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getHashTags } from "../../../sources/explore/hashtags";
 import { numberFormatter } from "../../../utils/convert-to-K";
 import ComponentStateHandler, { useFetcher } from "../../commons/component-state-handler";
@@ -9,6 +9,9 @@ import useTranslation from "../../../hooks/use-translation";
 import { trimHash } from "../../../utils/string";
 import { useRouter } from "next/router";
 import LoadMore from "../../commons/button/load-more";
+import { toTrackClevertap } from "../../../analytics/clevertap/events";
+import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
+import { DISCOVER_SEARCH_RESULTS } from "../../../constants";
 // import { getHashTags } from "../../../sources/explore/hashTags";
 
 let setRetry;
@@ -32,6 +35,11 @@ function HashTags({item}) {
         setHasMore(false);
       }
       }
+
+      useEffect(() => {
+        toTrackClevertap('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+        toTrackMixpanel('screenView', {pageName: DISCOVER_SEARCH_RESULTS, tabName: 'top'});
+      }, [])
      
      const dataFetcher = ()=> item && getHashTags({keyword: item, offset:offset});
      const [fetchState, retry] = useFetcher(dataFetcher, onDataFetched);

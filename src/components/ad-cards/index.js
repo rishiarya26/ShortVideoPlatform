@@ -8,6 +8,7 @@ import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import Carousel from '../commons/carousel';
 import { getBrand } from '../../utils/web';
 import { appsflyerPixelClick, appsflyerPixelImp } from '../../sources/appsflyer-pixel';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const charmboardDrawer = dynamic (
   () => import('../charmboard'),
@@ -68,6 +69,17 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               )
               window.sessionStorage.setItem('used-impression-link',true);
             }) 
+            toTrackClevertap(
+              "monetisationProductClick",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: data?.card_id,
+                productUrl: data?.product_url,
+                brandName: getBrand(data?.product_url),
+                campaignId
+              }
+            );
             window.open(data?.product_url);
         } else {
             toTrackMixpanel(
@@ -84,6 +96,17 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 subSubCategory: data?.subsub_category,
                 mainCategory: data?.main_category,
                 appsflyerId : data?.appsflyer_id
+              }
+            );
+            toTrackClevertap(
+              "monetisationProductClick",
+              { pageName: pageName, tabName: tabName },
+              {
+                content_id: videoId,
+                productId: data?.card_id,
+                productUrl: data?.product_url,
+                brandName: getBrand(data?.product_url),
+                campaignId
               }
             );
             show('',charmboardDrawer , 'big', { videoId : videoId, idToScroll: data?.card_id});

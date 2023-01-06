@@ -17,6 +17,7 @@ import { DeskSendOtp } from '../../commons/button/desk-send-otp';
 import { useState, useEffect } from 'react';
 import { DeskCountryCode } from '../../commons/button/desk-country-code';
 import { localStorage } from '../../../utils/storage';
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
 
 
 export default function Mobile({
@@ -52,6 +53,7 @@ export default function Mobile({
     loginPassword: async () => {
       try {
         toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'})  
+        toTrackClevertap('loginInitiated',{method: 'phone', pageName: 'login'})  
         const finalData = { ...data };
         finalData.type = 'Mobile';
         finalData.mobile = `${data?.countryCode}${data?.mobile}`;
