@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import useDrawer from '../../../hooks/use-drawer';
 import useSnackbar from '../../../hooks/use-snackbar';
@@ -76,6 +77,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
       };
       try {
         toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
+        toTrackClevertap('loginInitiated',{method:'phone', pageName: 'login'})
         const response = await verifyOTP(payload);
         if (response?.data?.status === 200) {
           try{

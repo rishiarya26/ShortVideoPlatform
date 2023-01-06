@@ -15,12 +15,11 @@ import useInfiniteScroll from '../../hooks/use-infinite-scroll';
 import Img from '../commons/image';
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
-import { shareProfile } from '../../utils/app';
+// import { shareProfile } from '../../utils/app';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
-import { track } from '../../analytics';
+import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import DeskVideoGallery from '../desk-video-gallery';
 import { withBasePath } from '../../config';
@@ -35,6 +34,8 @@ import { getCanonicalUrl } from '../../utils/web';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import RightArrow from '../commons/svgicons/right-arrow';
 import { customHashtagTitleSeo, customHashtagDescSeo } from '../../utils/seo/index';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
+import { trimHash } from '../../utils/string';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -173,13 +174,10 @@ function DeskHashtag({
   
   useEffect(() => {
     setTimeout(()=>{
-      const mixpanelEvents = commonEvents();
-      mixpanelEvents['Page Name'] = 'Hashtag';
-      // fbq.event('Screen View');
-      //trackEvent('Screen_View',{'Page Name' :'Hashtag'});
       ToTrackFbEvents('screenView');
+      toTrackClevertap('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)});
+      toTrackMixpanel('screenView', {pageName: 'Hashtag', hashtagName: trimHash(item)})
       toTrackFirebase('screenView',{'page' :'Hashtag'});
-      track('Screen View',mixpanelEvents );
     },500);
   }, []);
 
@@ -263,13 +261,14 @@ function DeskHashtag({
         ,
        },
       rightButton: {
-        others:   
-      <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
-        className="flex relative py-2  px-3 text-center items-end flex-col"
-      >
-      <ShareComp type={'profile'}/>
-      </div>, 
+        others:   <></>
+      // <div
+      //   onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
+      //   className="flex relative py-2  px-3 text-center items-end flex-col"
+      // >
+      // <ShareComp type={'profile'}/>
+      // </div>
+      , 
         self: <div onClick={()=> router && router?.push('/profile-settings')}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>

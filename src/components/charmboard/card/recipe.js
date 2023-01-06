@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toTrackClevertap } from "../../../analytics/clevertap/events";
 import { toTrackMixpanel } from "../../../analytics/mixpanel/events";
 import useIntersect from "../../../hooks/use-intersect";
 import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
@@ -19,6 +20,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
             }catch(e){
             }
             }
+        productIdChange === id && toTrackClevertap('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
      },[productIdChange])
 
      const onProductInView =(entry)=>{
@@ -34,6 +36,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
 
        const onProductClick= ()=>{
         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})  
+        toTrackClevertap('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
         const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink, productId:id, comp:'Shop'}) : null;
         console.log("finalLink",appsflyerLink)
         window?.open(appsflyerLink || shopLink)

@@ -8,8 +8,6 @@ import RightArrow from "../../commons/svgicons/right-arrow";
 import Hash from "../../commons/svgicons/hash";
 import Img from "../../commons/image";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-// import fallbackUsers from '../../../../public/images/users.png';
 import { trimHash } from "../../../utils/string";
 import Videos from "../videos";
 import DeskDownloadAppGoTop from "../../commons/desk-download-go-top";

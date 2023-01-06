@@ -46,6 +46,7 @@ import { vmaxTrackerEvents } from '../../analytics/vmax';
 import isEmptyObject from '../../utils/is-object-empty';
 import { isObjectEmpty } from '../../network/utils';
 import { impressionUrlWrapper } from '../../sources/appsflyer-pixel';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 
 SwiperCore?.use([Mousewheel]);
@@ -201,7 +202,9 @@ useEffect(()=>{
         adImpression();
         const mixpanelEvents = commonEvents();
         toTrackMixpanel('screenView',{pageName:pageName, tabName:tabName});
-        toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);  
+        toTrackClevertap("Screen View", {pageName}, {tabName});
+        toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+        toTrackClevertap('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);  
         // trackEvent('Screen_View',{'Page Name' :'Feed'})
         toTrackFirebase('screenView',{'page' :'Feed'});
         setLoading(false);
@@ -250,13 +253,17 @@ useEffect(()=>{
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
     // console.log("aAAAADDD",shop?.adData)
-    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category})});
+    shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { 
+      toTrackMixpanel('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category});
+      toTrackClevertap('monetisationProductImp',{pageName:pageName, tabName:tabName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId});
+    });
   },[shop])
   /************************ */ 
 
   useEffect(()=>{
     if(initialPlayStarted === true){
       toTrackMixpanel('play',{pageName : pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+      toTrackClevertap('play',{pageName : pageName,tabName:tabName},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'});
       viewEventsCall(activeVideoId, 'user_video_start');
@@ -317,6 +324,7 @@ useEffect(()=>{
     ToTrackFbEvents('screenView');
     //fbq.event('Screen View')
     toTrackMixpanel('tabView',{pageName:pageName, tabName:tabName});
+    toTrackClevertap('tabView',{pageName:pageName, tabName:tabName});
   },[id])
 
   if (id === 'for-you') {
@@ -367,7 +375,8 @@ useEffect(()=>{
       let { event_url = null } = adInfo;
       let timeStamp = Date.now();
       if(percentage > 0){
-        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},toShowItems?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdStarted', {pageName:pageName,tabName:tabName, timeStamp:timeStamp},items?.[videoActiveIndex]);
+        toTrackClevertap('videoAdStarted', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         try{
           event_url && await pushAdService({url: event_url, value: "start"}); 
         }catch(e){
@@ -403,9 +412,10 @@ useEffect(()=>{
         
       }
       if(percentage > 98) {
-        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
+        toTrackMixpanel('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+        toTrackClevertap('videoAdEnd', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
         try{
-          event_url && await pushAdService({url: event_url, value: "complete"});
+        event_url && await pushAdService({url: event_url, value: "complete"});
         }catch(e){
           toTrackMixpanel('videoAdEndFailure', {pageName:pageName,tabName:tabName},toShowItems?.[videoActiveIndex]);
         }
@@ -439,6 +449,7 @@ useEffect(()=>{
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
       toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackClevertap('watchTime',{pageName:pageName,tabName:tabName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
       toTrackMixpanel('replay',{pageName:pageName,tabName:tabName,  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
 
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Feed'}, { watchTime : 'Complete', duration : duration, durationWatchTime: duration})
@@ -467,7 +478,8 @@ useEffect(()=>{
   };
 
   const adBtnClickCb = () => {
-    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex])
+    toTrackMixpanel('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
+    toTrackClevertap('videoAdCTAClicked', {pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
   }
 
   const getCanShop = async () => {
@@ -643,6 +655,9 @@ console.error('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
+                if(activeIndex === 9) {
+                  webPush();
+                }
                 localStorage.set("adArr",[]);
                 localStorage.set("adArrMixPanel",[]);
                 localStorage.set('vmaxEvents',[]);
@@ -673,6 +688,7 @@ console.error('errorrr',e)
                 setInitialPlayStarted(false);
                 toTrackMixpanel('impression',{pageName:pageName,tabName:tabName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
                 adImpression(activeIndex);
+                toTrackClevertap('impression',{pageName:pageName,tabName:tabName},items?.[videoActiveIndex]);
                 // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
                 preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName,tabName:tabName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
 
@@ -685,6 +701,7 @@ console.error('errorrr',e)
                 /*** video events ***/
                 if(preVideoDurationDetails?.videoDurationDetails?.currentT < 3){
                   toTrackMixpanel('skip',{pageName:pageName,tabName:tabName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
+                  toTrackClevertap('skip',{pageName:pageName,tabName:tabName,durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration},items?.[videoActiveIndex])
                   viewEventsCall(activeVideoId,'skip')
                 }else if(preVideoDurationDetails?.videoDurationDetails?.currentT < 7){
                   viewEventsCall(activeVideoId,'no decision')

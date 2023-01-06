@@ -14,6 +14,7 @@ const device = getItem('device-type')
   const logout = () => {
   try{
     toTrackMixpanel('logoutInitiated')
+    toTrackMixpanel('logoutInitiated')
       localStorage.remove('tokens');
       localStorage.remove('user-id');
       const langSelectedInfo = localStorage.get('lang-codes-selected') || null;

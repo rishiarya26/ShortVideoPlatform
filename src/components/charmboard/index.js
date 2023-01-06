@@ -10,6 +10,7 @@ import useDrawer from '../../hooks/use-drawer';
 import Loader from './loader';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import LoaderSavedItems from './loader-saved-items';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 function Charmboard({videoId, setClose, idToScroll,pageName, tabName, campaignId="NA" }) {
 const [charms, setCharms] = useState(null)   
@@ -44,6 +45,7 @@ useEffect(()=>{getSavedMoments()
    // console.log('ading',idToScroll)
  try{
       toTrackMixpanel('shopPageImp',{pageName:pageName,tabName:tabName},{content_id:videoId, campaignId})
+      toTrackClevertap('shopPageImp',{pageName:pageName,tabName:tabName},{content_id:videoId, campaignId})
    }catch(e){
       console.error('mixpanel issue in shop page impression',e);
    }

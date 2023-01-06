@@ -1,3 +1,4 @@
+import { toTrackClevertap } from "../analytics/clevertap/events";
 import { ToTrackFbEvents } from "../analytics/fb-pixel/events";
 import { toTrackFirebase } from "../analytics/firebase/events";
 import { toTrackMixpanel } from "../analytics/mixpanel/events";
@@ -64,6 +65,7 @@ const callViewEvent = (videosViewed)=>{
       console.error(e);
     }
     toTrackMixpanel('videosCompleted5')
+    toTrackClevertap('videosCompleted5')
     toTrackFirebase('videosCompleted5')
     ToTrackFbEvents('videosCompleted5')
     }
@@ -75,6 +77,7 @@ const callViewEvent = (videosViewed)=>{
         console.error(e);
       }
       toTrackMixpanel('videosCompleted10')
+      toTrackClevertap('videosCompleted10')
       toTrackFirebase('videosCompleted10')
       ToTrackFbEvents('videosCompleted10')
     }
@@ -86,6 +89,7 @@ const callViewEvent = (videosViewed)=>{
       console.error(e);
     }
     toTrackMixpanel('videosCompleted15')
+    toTrackClevertap('videosCompleted15')
     toTrackFirebase('videosCompleted15')
     ToTrackFbEvents('videosCompleted15')
     }

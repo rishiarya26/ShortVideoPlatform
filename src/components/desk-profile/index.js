@@ -15,11 +15,11 @@ import Img from '../commons/image';
 // import '/images/users.png' '../../../public/images/users.png' 
 import { getItem } from '../../utils/cookie';
 import { ShareComp } from '../commons/share';
-import { shareProfile } from '../../utils/app';
+// import { shareProfile } from '../../utils/app';
 import useAuth from '../../hooks/use-auth';
 import login from "../auth-options"
 import { localStorage } from '../../utils/storage';
-import { commonEvents } from '../../analytics/mixpanel/events';
+import { commonEvents, toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import DeskVideoGallery from '../desk-video-gallery';
 import Header from '../desk-header';
@@ -29,6 +29,7 @@ import UserTab from '../commons/tabs/desk-user-tab';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { videoSchema } from '../../utils/schema';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 
 const detectDeviceModal = dynamic(() => import('../desk-download-app'),{
   loading: () => <div />,
@@ -209,8 +210,9 @@ function DeskUsers({
       // trackEvent('Screen_View',{'Page Name' :'Profile'})
       ToTrackFbEvents('screenView');
       toTrackFirebase('screenView',{'page' :'Profile'});
-      track('Screen View',mixpanelEvents );
     },500);
+      toTrackClevertap('screenView', {pageName: "Profile"}, {userId: id, userName: userHandle});
+      toTrackMixpanel('screenView', {pageName: "Profile"}, {userId: id, userName: userHandle});
   }, []);
 
   const { show } = useDrawer();
@@ -290,13 +292,14 @@ function DeskUsers({
         ,
        },
       rightButton: {
-        others:   
-      <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
-        className="flex relative py-2  px-3 text-center items-end flex-col"
-      >
-      <ShareComp type={'profile'}/>
-      </div>, 
+        others:   <></>
+      // <div
+      //   onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>shareProfile(id))}
+      //   className="flex relative py-2  px-3 text-center items-end flex-col"
+      // >
+      // <ShareComp type={'profile'}/>
+      // </div>
+      , 
         self: <div onClick={()=> router && router?.push('/profile-settings')}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
         <path d="M7 12C7 13.1046 6.10458 14 5 14C3.89542 14 3 13.1046 3 12C3 10.8954 3.89542 10 5 10C6.10458 10 7 10.8954 7 12Z" fill="#161722"/>

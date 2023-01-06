@@ -34,6 +34,7 @@ import { getFullDate } from '../src/utils/date';
 import useAuth from '../src/hooks/use-auth';
 import { getUserProfile } from '../src/sources/users/profile';
 import { compareArrays } from '../src/utils/string';
+import { toTrackClevertap } from "../src/analytics/clevertap/events";
 import { getPageName } from '../src/utils/web';
 import { toTrackReco } from '../src/analytics/view-events';
 // import { detectGeoLocation, detectGeoLocationByZee } from '../src/sources/geo-location';
@@ -44,6 +45,7 @@ import { toTrackReco } from '../src/analytics/view-events';
 // TODO add withBasePath for everything that gets affected because of base-path i18n
 
 // test changes
+
 
 
 
@@ -384,7 +386,8 @@ function Hipi({
   let setTimeoutsTracker = [];
   function endSessionOnIdle() {
       //  console.error("reset - session end - from logout")
-       toTrackMixpanel('sessionEnd')
+       toTrackMixpanel('sessionEnd');
+       toTrackClevertap('sessionEnd');
        setTimeoutsTracker = null;
        clearTimeouts();
        window.sessionStorage.setItem("minutes",undefined);
@@ -409,7 +412,8 @@ function Hipi({
    let minutesTracker =  window.sessionStorage.getItem("minutes");
       if(window.sessionStorage.getItem("sessionEventTrack") === 'null'){
         // console.error("reset - session start R");
-        toTrackMixpanel('sessionStart')
+        toTrackMixpanel('sessionStart');
+        toTrackClevertap('sessionStart');
         window.sessionStorage.setItem('seconds',60);
         window.sessionStorage.setItem("sessionEventTrack",undefined);
         window.sessionStorage.setItem("minutes",0);
@@ -434,8 +438,10 @@ function Hipi({
         }
         else{
          if( minutesTracker === 6) { 
-           toTrackMixpanel('sessionEnd')
-           toTrackMixpanel('sessionStart')
+           toTrackMixpanel('sessionEnd');
+           toTrackMixpanel('sessionStart');
+           toTrackClevertap('sessionStart');
+           toTrackClevertap('sessionEnd')
           window.sessionStorage.setItem("minutes",0);
           // console.error("reset - session end");
           window.sessionStorage.setItem('seconds',60);
@@ -546,6 +552,7 @@ function Hipi({
           window.sessionStorage.setItem("minutes",0);
           // console.error("reset - session start");
           toTrackMixpanel('sessionStart');
+          toTrackClevertap('sessionStart');
         }
       }
 

@@ -11,6 +11,7 @@ import CircularProgress from '../../commons/circular-loader-small';
 import * as fbq from '../../../analytics/fb-pixel'
 import { getItem } from '../../../utils/cookie';
 import useDrawer from '../../../hooks/use-drawer';
+import { toTrackClevertap } from '../../../analytics/clevertap/events';
 
 export default function Email({
   data, processEmailData, type, toggleShowForgotPassComp, toggleRegistration, showMessage
@@ -34,6 +35,7 @@ export default function Email({
       setPending(true);
       try {
         toTrackMixpanel('loginInitiated',{method:'email', pageName:'login'})
+        toTrackClevertap('loginInitiated',{method:'email', pageName:'login'})
         const finalData = { ...data };
         finalData.type = 'email';
         const response = await userLogin(finalData);

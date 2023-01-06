@@ -22,7 +22,8 @@ function Video({url, player='multi-player-muted',firstFrame,
 userProfilePicUrl, userName, music_title, likesCount, muted, toggleMute,firstName, lastName,
 description, updateActiveIndex, index, showVideoDetail, shareCount, videoId, socialId, commentCount,
 userVerified, convivaItemInfo, videoSound,checkNoSound,
- noSound, activeIndex, fetchState
+ noSound, activeIndex, fetchState, updateActiveFeedIndex,
+ activeFeedIndex, initialPlayStarted, setInitialPlayStarted
 }) {
 const [playing, setPlaying] = useState(true);
 const [clicked, setClicked] = useState(true);
@@ -57,6 +58,7 @@ const handleVideoPress = () => {
 useEffect(()=>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(!!currentRef?.getAttribute('src') && active === true){
+      updateActiveFeedIndex(rootRef.current.id);
       videoAnalytics?.setPlayer(null);
       if(videoAnalytics !== null) reportPlaybackEnded();
       try{
@@ -84,8 +86,6 @@ useEffect(() => {
    }
 }, [])
 
-
-
 const convivaReplaySession = (e) =>{
    let currentRef = rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0];
    if(videoAnalytics !== null) reportPlaybackEnded();
@@ -101,19 +101,19 @@ const handleSeeked = () => {
    convivaReplaySession();
 }
 const handlePlay = entry => {
-if (clicked) {
-if (entry?.isIntersecting) {
-setActive(true);
-// console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
-setPlaying(true);
-} else {
-rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
-setPlaying(false);
-setActive(false);
-}
-}
+   if (clicked) {
+      if (entry?.isIntersecting) {
+         setActive(true);
+         // console.log("IS INTERSECTING", rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0])
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play &&
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.play();
+         setPlaying(true);
+      } else {
+         rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause && rootRef?.current?.children[0]?.children?.[1]?.children?.[1]?.children?.[0]?.children?.[0]?.pause();
+         setPlaying(false);
+         setActive(false);
+      }
+   }
 };
 const [ref] = useIntersect({
 callback: handlePlay,
@@ -134,15 +134,18 @@ useEffect(()=>{
 const handleUpdateSeekbar = e => {
    const percentage = (e.target.currentTime / e.target.duration) * 100;
    setSeekedPercentage(percentage);
+   if(percentage > 0) {
+      setInitialPlayStarted(prev => ({
+         started: true,
+         activeId: rootRef.current.id,
+         prevActiveId: prev.activeId
+      }))
+   }
    // setVDuration(e.target.duration);
    // const duration = e?.target?.duration;
    // const currentTime = e?.target?.currentTime;
    // settDuration(duration);
    // setWatchedTime(currentTime);
-
-   // if(percentage > 0){
-   //   setInitialPlayStarted(true);
-   //  }
 
     /********** Mixpanel ***********/
    //  if(currentTime >= duration-0.2){
@@ -192,7 +195,7 @@ const pushToProfile = ()=>{
 
 return (
 <>
-<div ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
+<div id={index} ref={rootRef} className="feed_card  border-b border-gray-300 pb-6 mb-6">
 <div ref={showVideoDetail ? null : ref} className='flex justify-between'>
    <div className="avatar">
       <div onClick={()=>pushToProfile()} className="flex items-center w-14 h-14 overflow-hidden cursor-pointer rounded-full">

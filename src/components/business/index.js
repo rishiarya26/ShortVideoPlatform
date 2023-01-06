@@ -1,6 +1,7 @@
 /*eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
@@ -14,6 +15,7 @@ function Business() {
    const router = useRouter()
 useEffect(()=>{
    toTrackMixpanel('screenView',{pageName:'Business'});
+   toTrackClevertap('screenView',{pageName:'Business'});
    toTrackFirebase('screenView',{page:'Business'});
    ToTrackFbEvents('screenView',{page:'Business'})
 })

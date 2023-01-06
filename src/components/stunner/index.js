@@ -25,6 +25,7 @@ import Mute, { MutedColor } from '../commons/svgicons/mute';
 import { getItem } from '../../utils/cookie';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
@@ -81,6 +82,7 @@ useEffect(()=>{
       console.error("Error - hashtag video for stunner",e)
     }})()
   toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
+  toTrackClevertap('screenView',{pageName:'Hipi Stunner'})
   toTrackFirebase('screenView',{page:'Hipi Stunner'})
   ToTrackFbEvents('screenView',{page:'Hipi Stunner'})
 

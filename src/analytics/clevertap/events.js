@@ -1,13 +1,12 @@
 
-import { track } from "../index";
+import { track } from "./index";
 import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
-import { getReffererPage, usePreviousRoute } from "../../utils/web";
-import platform from "platform";
+import { getPageName } from "../../utils/web";
 
 
-let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
+let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd']
 
   const getIsMobile = ()=>{
     // let device = 'desktop';
@@ -30,13 +29,12 @@ export const commonEvents = ()=>{
     const guestId = getItem('guest-token');
     const loggedInId = localStorage?.get('user-id') || null;
     const loggedInUserDetails = localStorage?.get('user-details') || null;
-    const previousPage = window?.sessionStorage?.getItem('previous-page');
-    const isInstalled = JSON.parse(localStorage?.get('isInstalled'));
+    const referrer = getPageName();
   
     let payload = {}
+    payload['Source'] = referrer;
     payload['unique ID'] = loggedInId || guestId;
     payload['isPWA'] = 'true';
-    payload['isInstalled'] =  isInstalled;
     payload['Device'] = device;
     payload['User Type'] = loggedInId ? 'member' : 'guest';
     payload['User Handle'] = loggedInUserDetails?.userHandle ? loggedInUserDetails?.userHandle : 'NA'
@@ -52,10 +50,6 @@ export const commonEvents = ()=>{
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
-    payload['Source'] = previousPage;
-    payload['Browser Platform'] = platform ? platform?.name : null;
-    // getReffererPage();
-    // usePreviousRoute();
     // payload['Source'] = getPageName() || 'NA';
     return payload;
 }
@@ -63,7 +57,7 @@ export const commonEvents = ()=>{
 
 /* Func to send mixpanel event - 
 type(event name), value(additional Info keys), item(obj containing info/Ids) */
-export const toTrackMixpanel = (type, value, item) => {
+export const toTrackClevertap = (type, value, item) => {
   let adArr = localStorage.get('adArrMixPanel');
   if(adEvents.includes(type)){
     if(!adArr?.includes(type)){
@@ -121,36 +115,8 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Page Name'] = value?.pageName || 'NA';
       globalCommonEvents['Device Modal'] = 'NA';
       globalCommonEvents['Network Strength'] = 'NA';
-      globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
       isShopMonetizeAd()
       return globalCommonEvents
-    }
-
-    const eventsForPlaylist = () => {
-      const userName = item?.userName?.replace('@','')
-      globalCommonEvents['Creator ID'] = item?.userId;
-      globalCommonEvents['Creator Handle'] = userName;
-      globalCommonEvents['UGC ID'] = item?.content_id;
-      globalCommonEvents['Tab Name'] = value?.tabName || 'NA';
-      globalCommonEvents['Page Name'] = value?.pageName || 'NA';
-      globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
-      globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
-      globalCommonEvents['Device Modal'] = 'NA';
-      globalCommonEvents['Network Strength'] = 'NA';
-      globalCommonEvents['Impression_timeStamp'] = value?.timeStamp || 'NA';
-      globalCommonEvents['popup Name'] = value?.popUpName || 'NA';
-      isShopMonetizeAd()
-      return globalCommonEvents
-    }
-
-    const eventsForUpload = () =>{
-      const videoUploadStatus = value?.type === 'success' ? true : false;
-       globalCommonEvents['success'] = videoUploadStatus ?? 'N/A';
-       globalCommonEvents["Post Time Seconds"] = value?.post_time_seconds ?? 'NA';
-       globalCommonEvents['UGC Language'] = item?.ugc_language ?? 'N/A';
-       if(!videoUploadStatus) globalCommonEvents['Failure Reason'] = value?.failure_reason ?? 'N/A';
-       addUgcId();
-       return globalCommonEvents;
     }
 
 
@@ -174,17 +140,9 @@ export const toTrackMixpanel = (type, value, item) => {
     const addHashtagName = ()=>{
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
+
     const toTrack = {
-      'hashtagBannerClicked' : () => {
-        globalCommonEvents['Page Name'] = value?.pageName || 'NA';
-        globalCommonEvents['Hashtag ID'] = value?.hashtagId || 'NA';
-        globalCommonEvents['Hashtag Name'] = value?.hashtagName || 'NA';
-        track('Hashtag Banner Clicked', globalCommonEvents);
-      },
-      'impression' : () => {
-        let eventsWithIds = commonWithIds();
-        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
-        track('UGC Impression', eventsWithIds)},
+      'impression' : ()=> track('UGC Impression', commonWithIds()),
       'screenView' : ()=> {
         addScreenDetails();
         addPageTabName();  
@@ -198,15 +156,9 @@ export const toTrackMixpanel = (type, value, item) => {
     //     eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime
     //     track('UGC Swipe', eventsWithIds)
     //   },
-      'play' : () => {
-        let eventsWithIds = commonWithIds();
-        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
-        track('UGC Play', eventsWithIds)},
+      'play' : () => track('UGC Play', commonWithIds()),
       'share' : () => track('UGC Share Click', commonWithIds()),
-      'replay' : () => {
-        let eventsWithIds = commonWithIds();
-        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
-        track('UGC Replayed', eventsWithIds)},
+      'replay' : () => track('UGC Replayed', commonWithIds()),
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
@@ -215,9 +167,7 @@ export const toTrackMixpanel = (type, value, item) => {
         track('UGC Skipped',eventsWithIds)
       }, 
       'watchTime' : () => {
-        console.log("Watch Time", value);
-        let eventsWithIds = commonWithIds()
-        eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        let eventsWithIds = commonWithIds()  
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
         eventsWithIds['UGC Duration'] =  value?.duration && Math.round(value.duration)
         eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
@@ -228,8 +178,6 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Element'] = value?.name
         globalCommonEvents['Button Type'] = value?.type
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
-        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
         track('CTAs', globalCommonEvents)
       },
       'saveLook' : ()=>{
@@ -264,61 +212,37 @@ export const toTrackMixpanel = (type, value, item) => {
        'shoppingProductImp' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product Id'] = item?.productId;
+        globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Shopping Product Impression', globalCommonEvents)
        },
        'shoppableProductClicked' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product Id'] = item?.productId;
+        globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Shoppable Product Clicked', globalCommonEvents)
        },
        'monetisationProductImp' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product Id'] = item?.productId || 'NA';
+        globalCommonEvents['Product ID'] = item?.productId || 'NA';
         globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
        },
        'monetisationProductClick' :  ()=>{
         addUgcId();
         addPageTabName();
-        globalCommonEvents['Product Id'] = item?.productId || 'NA';
+        globalCommonEvents['Product ID'] = item?.productId || 'NA';
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-        globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-        globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-        globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-        // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-        globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)
        },
   /**** Login ****/      
@@ -366,17 +290,14 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'popupLaunch' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = value?.name;
+        globalCommonEvents['Popup Name'] = item?.name;
         track('Popup Launch', globalCommonEvents);
        },
        'popupCta' :  ()=>{
         addPageTabName();
-        globalCommonEvents['Popup Name'] = value?.name;
-        globalCommonEvents['Popup CTAs'] = value?.ctaName;
-        globalCommonEvents['elemant'] = value?.elemant;
-        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
-        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
-
+        globalCommonEvents['Popup Name'] = item?.name;
+        globalCommonEvents['Popup CTAs'] = item?.ctaName;
+        globalCommonEvents['elemant'] = item?.elemant;
         track('Popup CTAs', globalCommonEvents);
        },
        'sessionStart' :  ()=>{
@@ -391,7 +312,6 @@ export const toTrackMixpanel = (type, value, item) => {
         getBannerType();
          globalCommonEvents['Carousal ID'] = item?.carousalId;
          globalCommonEvents['Carousal Name'] = item?.carousalName;
-         globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
         track('Carousal Banner Impression', globalCommonEvents);
        },
        'carousalBannerClick' : ()=>{
@@ -399,7 +319,6 @@ export const toTrackMixpanel = (type, value, item) => {
          getBannerType();
         globalCommonEvents['Carousal ID'] = item?.carousalId;
         globalCommonEvents['Carousal Name'] = item?.carousalName;
-        globalCommonEvents['Horizontal Index'] = item?.horizontalIndex;
        track('Carousal Banner Click', globalCommonEvents);
       },
         'searchInitiated' : ()=>{
@@ -501,86 +420,7 @@ export const toTrackMixpanel = (type, value, item) => {
         'videoAdSecondQuartile': () => track('Video Ad Second Quartile',eventsForAds()),
         'videoAdThirdQuartile': () => track('Video Ad Third Quartile',eventsForAds()),
         'videoAdEnd': () => track('Video Ad End',eventsForAds()),
-        'contentLanguagesImpression':()=>track('Content Languages Impression',globalCommonEvents),
-        'contentLanguagesSubmitted':()=>{
-          const languages = localStorage?.get('lang-codes-selected')?.lang
-          globalCommonEvents['Method'] = value?.method;  
-          globalCommonEvents['Languages'] = item?.lang;
-  
-          track('Content Languages Submitted',globalCommonEvents)
-        },
-
-        'videoAdStartedFailure': () => track('Video Ad Start Failure',eventsForAds()),
-        'videoAdFirstQuartileFailure': () => track('Video Ad First Quartile Failure',eventsForAds()),
-        'videoAdSecondQuartileFailure': () => track('Video Ad Second Quartile Failure',eventsForAds()),
-        'videoAdThirdQuartileFailure': () => track('Video Ad Third Quartile Failure',eventsForAds()),
-        'videoAdEndFailure': () => track('Video Ad End Failure',eventsForAds()),
         'videoAdCTAClicked': () => track('Video Ad Clicked',eventsForAds()),
-        'playlistClicked': () => track('Playlist Clicked',eventsForPlaylist()),
-        'playlistPopUpLaunch' :() => track('Popup launch',eventsForPlaylist()),
-        'sharePlaylist':() => track('Share Playlist',eventsForPlaylist()),
-        'uploadCTAClicked' : () => track('Upload Button Clicked',globalCommonEvents),
-        'shortPostResult' : () => track('Short Post Result',eventsForUpload()),
-        'appsflyerImpPixel' : ()=> {
-            addUgcId();
-            addPageTabName();
-            globalCommonEvents['Product Id'] = item?.productId || 'NA';
-            globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
-            globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-            globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-            globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-            globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-            globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-            globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-            // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-            globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
-          
-          track('Appsflyer Impression Pixel',globalCommonEvents)
-        },
-        'pwaInstallClickSuccess' : ()=>{
-          addPageTabName();
-          track('PWA Install Success',globalCommonEvents)
-        },
-        'pwaInstallClickError' : ()=>{ 
-          addPageTabName();
-          track('PWA Install Failure',globalCommonEvents)
-        },
-        'pwaInstallStripImpression' : ()=>{
-          addPageTabName();
-          track('PWA Install Button Impression',globalCommonEvents)
-        },
-        'pwaInstallStripClicked' : ()=> {
-          addPageTabName();
-          track('PWA Install Button Clicked',globalCommonEvents)
-        },
-        'appsflyerLogs' : ()=> {
-          addUgcId();
-          addPageTabName();
-          globalCommonEvents['Product Id'] = item?.productId || 'NA';
-          globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
-          globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
-          globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
-          globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
-          globalCommonEvents['Shoppable Main Category'] = item?.mainCategory || 'NA';
-          globalCommonEvents['Shoppable Sub Category'] = item?.subCategory || 'NA';
-          globalCommonEvents['Shoppable Sub Sub Category'] = item?.subSubCategory || 'NA';
-          // globalCommonEvents['Is Monetization']= item?.isMonetization || false;
-          globalCommonEvents['Advertiser Appsflyer Id']= item?.appsflyerId || 'NA';
-          globalCommonEvents['Appsflyer Header'] = item?.response;
-          globalCommonEvents['Appsflyer Id'] = item?.request;
-        track('Appsflyer Logs',globalCommonEvents)
-      }
-      
-        //how to make sunrise in html?
-        
- //   'pause' : () => track('Pause', commonWithIds()),
-//   'resume' : () => track('Resume', commonWithIds()),
-      // 'downloadClick' : () => {
-      //   mixpanelEvents['Popup Name'] = 'Download App',
-      //   mixpanelEvents['Element'] = 'Download App',
-      //   mixpanelEvents['Button Type'] = 'Link',
-      //   track('Popup CTAs', mixpanelEvents)
-      // }
     }
 
     type && toTrack?.[type] && toTrack?.[type]();

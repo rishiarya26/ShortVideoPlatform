@@ -19,6 +19,7 @@ Autoplay,Pagination,Navigation
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackFirebase } from '../../analytics/firebase/events';
 import { ToTrackFbEvents } from '../../analytics/fb-pixel/events';
+import { toTrackClevertap } from '../../analytics/clevertap/events';
 // install Swiper modules
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 function HipiCreators() {
@@ -45,6 +46,7 @@ useEffect(()=>{
     toTrackMixpanel('screenView',{pageName : 'hipi_creators'})
     toTrackFirebase('screenView',{page : 'hipi_creators'})
     ToTrackFbEvents('screenView',{page : 'hipi_creators'})
+    toTrackClevertap('screenView',{pageName : 'hipi_creators'})
 },[])
 
 return (

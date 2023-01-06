@@ -4,6 +4,7 @@ import useDrawer from "../hooks/use-drawer";
 import { getBrand } from "./web";
 import { toTrackMixpanel } from "../analytics/mixpanel/events";
 import dynamic from "next/dynamic";
+import { toTrackClevertap } from "../analytics/clevertap/events";
 const charmboardDrawer = dynamic (
   () => import('../components/charmboard'),
   {
@@ -61,12 +62,34 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
                   campaignId
                 }
               );
+              toTrackClevertap(
+                "monetisationProductClick",
+                { pageName: pageName, tabName: tabName },
+                {
+                  content_id: id,
+                  productId: adData[idx]?.card_id,
+                  productUrl: adData[idx]?.product_url,
+                  brandName: getBrand(adData[idx]?.product_url),
+                  campaignId
+                }
+              );
               feed ? window.open(adData[idx]?.product_url) :  show("", charmboardDrawer, "big", {
                 videoId: id,
                 idToScroll: adData[idx],
               });
         } else {
             toTrackMixpanel(
+                "monetisationProductClick",
+                { pageName: pageName, tabName: tabName },
+                {
+                  content_id: id,
+                  productId: adData[idx+1]?.card_id,
+                  productUrl: adData[idx+1]?.product_url,
+                  brandName: getBrand(adData[idx+1]?.product_url),
+                  campaignId
+                }
+              );
+              toTrackClevertap(
                 "monetisationProductClick",
                 { pageName: pageName, tabName: tabName },
                 {
