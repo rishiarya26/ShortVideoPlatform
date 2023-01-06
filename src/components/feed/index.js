@@ -875,7 +875,7 @@ function Feed({ router }) {
       </div>}
 
         {(!languagesSelected && lang24ShowOnce === 'false' && videoActiveIndex === INDEX_TO_SHOW_LANG || toShowItems?.[videoActiveIndex]?.adId || toShowItems?.[videoActiveIndex]?.feedVmaxAd ) ? '' : 
-        (typeof window !== "undefined" && window?.deferredPrompt) &&<OpenAppStrip
+        <OpenAppStrip
           pageName={pageName}
           tabName={tabName}
           item={items?.[videoActiveIndex]}

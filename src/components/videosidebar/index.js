@@ -183,11 +183,13 @@ const checkSaveLook =()=>{
     }
 
     const options = {
-      profile: `${saveLook ? ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-12 ' : 'bottom-2') : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
-      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-28 ' : 'bottom-16') : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      profile: `${saveLook ? 'bottom-12 ' : 'bottom-48 '}  absolute right-0 flex-col  flex text-white ml-2`,
+      feed: `${saveLook ? isAdShowVisible ? 'bottom-16' : 'bottom-28 ' : 'bottom-56 '}  absolute right-0 flex-col  flex text-white ml-2`,
       embed: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
       single: `${saveLook ? 'bottom-12 ' : 'bottom-40 '}  absolute right-0 flex-col  flex text-white ml-2`,
       cacheAd: `bottom-56 absolute right-0 flex-col  flex text-white ml-2`,
+
+      
     };
 
 

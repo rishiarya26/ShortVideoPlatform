@@ -54,7 +54,7 @@ if(noShow) return false;
   
   const text = {
     'ios' : FULL_EXPERIENCE,
-    'android' : "Our app won't take up space on your phone."
+    'android' :  (typeof window !== "undefined" && window?.deferredPrompt)  ? "Our app won't take up space on your phone." : <>{setTimeout(()=>(FULL_EXPERIENCE),5000)}</>
   }
 
   const button = {
@@ -67,13 +67,25 @@ if(noShow) return false;
       Open
   </div>,
   'android' : 
+  (typeof window !== "undefined" && window?.deferredPrompt) ? 
   <div onClick={()=>{
      toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
      showPwaInstall({pageName:pageName, tabName:tabName})
    }} 
    className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white select-none">
     Install
-</div>
+</div> : 
+<>
+{setTimeout(()=>(
+  <div onClick={()=>{
+      ToTrackFbEvents('appOpenCTA');
+      toTrackFirebase('appOpenCTA');
+      toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
+      onStoreRedirect({videoId : activeVideoId})}} 
+     className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white select-none">
+      Open
+  </div>),5000)}
+  </>
   }
   if(isPlaylistView || playlistId){
     return (
