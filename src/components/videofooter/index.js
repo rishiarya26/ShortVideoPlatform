@@ -48,19 +48,32 @@ function VideoFooter({
 }) {
   const [loaded, setLoaded] = useState(false);
   const {showSnackbar} = useSnackbar();
+  const device = getItem('device-info');
 
+  const conditionOnDevice = {
+    'android' : {
+      profile: `${(canShop &&  !adCards?.monitisation) ? ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-32' : 'bottom-24') : (typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-12' : 'bottom-2'} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
+      feed: `${saveLook ? ((typeof window !== "undefined" && window?.deferredPrompt) ? ' bottom-28 ' : 'bottom-20') : (typeof window !== "undefined" && window?.deferredPrompt) ? ' bottom-56 ' : 'bottom-48'} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+      embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
+      single: `${canShop  ? adCards?.monitisation ? 'bottom-20' : 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`
+    },
+    'ios' : {
+    profile: `${(canShop &&  !adCards?.monitisation) ? 'bottom-32' : 'bottom-12 '} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
+    feed: `${saveLook ? ' bottom-28 ' : ' bottom-56 '} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
+      embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
+      single: `${canShop  ? adCards?.monitisation ? 'bottom-20' : 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`
+    }
+  }
   // TO-DO common classes // To-Do for embed & single video
-  const type = {
-    profile: `${(canShop &&  !adCards?.monitisation) ? ((typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-32' : 'bottom-24') : (typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-12' : 'bottom-2'} videoFooter absolute left-0 w-2/3 pr-4 flex text-white ml-2`,
-    feed: `${saveLook ? ((typeof window !== "undefined" && window?.deferredPrompt) ? ' bottom-28 ' : 'bottom-20') : (typeof window !== "undefined" && window?.deferredPrompt) ? ' bottom-56 ' : 'bottom-48'} videoFooter absolute left-0  flex text-white ml-2 w-2/3 pr-4`,
-    embed: `${canShop ? 'bottom-44' : 'bottom-22'} videoFooter w-2/3 pr-4  flex`,
-    single: `${canShop  ? adCards?.monitisation ? 'bottom-20' : 'bottom-36' : 'bottom-16 mb-2'} videoFooter fixed left-0 w-2/3 pr-4 flex text-white ml-2`
-  };
+  // const type = {
+    
+   
+  // };
 
   const { show } = useDrawer();
   const router = useRouter();
 
-  const device = getItem('device-info');
+  
 
   const music = {
     profile:    <Music />,
@@ -103,7 +116,7 @@ function VideoFooter({
   }
 
   return (
-    <div className={type[comp]} >
+    <div className={conditionOnDevice[device][comp]} >
       <div className="videoFooter__text w-full break-words">
         {/*
         {canShop === 'success' && (
