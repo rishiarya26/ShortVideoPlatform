@@ -1,4 +1,5 @@
 /*eslint-disable @next/next/no-img-element */
+/*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import StaticFooter from '../static-footer';
