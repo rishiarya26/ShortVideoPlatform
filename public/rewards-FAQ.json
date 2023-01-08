@@ -24,8 +24,8 @@
     { "ques" : "How can I redeem my coins?",    
     "ans" : "You can cash out coins by clicking on ‘Redeem Coins’ button on the ‘Coins’ screen on the app.", "show": false},
     
-    { "ques" : "Where will I receive the money from redeeming my coins?",
-    "ans" : "You will need to add and verify your mobile number linked to your PayTM account for withdrawal. In case you don’t have a PayTM account, please create one before redeeming your coins. Before linking your PayTM account to Hipi, please ensure that transaction limit for the month for your PayTM account is not reached. With PayTM minimum KYC, maintaining a balance of up to Rs. 10,000 per month is permitted in your PayTM wallet. If your PayTM wallet has already reached the limit for the month, then redeemed coins can't be transferred from Hipi to your PayTM wallet. It's advisable to do a full KYC of your PayTM wallet before redeeming coins to your PayTM wallet.", "show": false},
+    { "ques" : "Where will I receive the money from redeeming my coins?",    
+    "ans" : "You will need to add and verify your mobile number linked to your PayTM account for withdrawal. In case you don’t have a PayTM account, please create one before redeeming your coins.", "show": false},
     
     { "ques" : "What is the conversion rate from coins to INR?",    
     "ans" : "Currently, 1 coin = Rs 1", "show": false},

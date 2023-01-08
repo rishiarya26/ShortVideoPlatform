@@ -1,5 +1,4 @@
 /*eslint-disable @next/next/no-img-element */
-/*eslint-disable react/no-unescaped-entities*/
 import { useRouter } from 'next/router';
 import { withBasePath } from '../../config';
 import StaticFooter from '../static-footer';
@@ -14,7 +13,6 @@ import { faqRewards } from '../../utils/schema';
 
 function Rewards() {
 const [items, setItems] = useState(faq?.faq);
-const [showLast, setShowLast] = useState(false);
 const handleClick = (id) =>{
 let updateItem = [...items];
 updateItem[id].show = !(updateItem[id]?.show);
@@ -222,26 +220,6 @@ site_name: 'Hipi'
                 }
             </div>
             ))}
-            <div  className="mt-6">
-                <div id={1} className="cursor-pointer transition duration-500 ease-in-out flex items-center font-medium" onClick={()=>setShowLast(!showLast)}>
-                    <span className="pr-2 flex" >
-                        {showLast ? 
-                        <CloseFaqBlue/>
-                        : 
-                        <OpenFaqBlue/>
-                        }
-                    </span>
-                    How can I check transaction limit & KYC process for PayTM wallet?
-
- 
-                </div>
-                {showLast && 
-                <div id={1} className="pt-2 pl-6 text-gray-700 transition duration-500 ease-in-out"> 
-                <p>Please ensure that transaction limit for the month for your PayTM account is not reached. With PayTM minimum KYC, maintaining a balance of up to Rs. 10,000 per month is permitted in your PayTM wallet. If your PayTM wallet has already reached the limit for the month, then redeemed coins can't be transferred from Hipi to your PayTM wallet.</p>
-                <p>It's advisable to do a full KYC of your PayTM wallet before redeeming coins to your PayTM wallet. Read more about transaction limits & KYC process for PayTM wallet <button className='text-blue-400' onClick={()=>window.open("https://paytm.com/blog/payments/mobile-wallet/types-of-paytm-wallet-kyc/")}>here</button></p>
-                </div>
-                }
-            </div>
         </div>
     </div>
     {/* <StaticFooter/> */}
