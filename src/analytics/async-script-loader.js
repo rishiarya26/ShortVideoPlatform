@@ -33,6 +33,7 @@ const injectScriptSrc = (scriptSrc = '', cb) => {
   }
   const elem = createElement();
   elem.text = scriptSrc;
+  elem.async = true;
   document.body.appendChild(elem);
   cb && cb();
   return Promise.resolve({ loaded: true });

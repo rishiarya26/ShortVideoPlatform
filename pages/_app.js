@@ -46,16 +46,13 @@ import { toTrackReco } from '../src/analytics/view-events';
 
 // test changes
 
-
-
-
 (function storyBlokInitSelfFunction(){
   try{
     storyBlokInit();
   } catch(e){
     console.log("storyblokerr", e);
   }
-})();
+  })();
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
@@ -276,7 +273,6 @@ function Hipi({
       initConviva()
       initVmax();
       console.log('mounted');
-      inject(GOOGLE_ONE_TAP , null, loaded);
       //to make sure before loading the app the vmax should get updated
       inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
       
@@ -612,7 +608,25 @@ function Hipi({
       })(window, document,"https://script.mfilterit.net/v3/v/client/web.hipi.cpv.js", "script", "mf");
       mf("mf_package_name", "web.hipi.cpv"); mf("mf_tracking_type", "pageviews");
       `);
-    },5000) 
+    },6000);
+    
+    setTimeout(
+      () => {
+        inject(null, `var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[], region:'in1'};
+
+        clevertap.account.push({"id": "RK8-65R-9Z6Z"});
+        clevertap.privacy.push({optOut: false}); //set the flag to true, if the user of the device opts out of sharing their data
+        clevertap.privacy.push({useIP: false}); //set the flag to true, if the user agrees to share their IP data
+        (function () {
+                var wzrk = document.createElement('script');
+                wzrk.type = 'text/javascript';
+                wzrk.async = true;
+                wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(wzrk, s);
+          })();`)
+          inject(GOOGLE_ONE_TAP , null, loaded);
+      }, 7000);
     
 
     return () => {

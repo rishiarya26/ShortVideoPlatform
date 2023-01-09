@@ -202,7 +202,7 @@ function HeadMeta() {
 
       <link rel="shortcut icon" href={withBasePath('favicon.ico')} />
 
-      <script
+      {/* <script
           id="clevertapScript"
           type='text/javascript'
           async
@@ -220,7 +220,7 @@ function HeadMeta() {
                             var s = document.getElementsByTagName('script')[0];
                             s.parentNode.insertBefore(wzrk, s);
                       })();`
-            }}/>
+            }}/> */}
     </>
   );
 }
