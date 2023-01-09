@@ -4,6 +4,8 @@ import Img from "../../image";
 import RightArrow from "../../svgicons/right-arrow";
 // import fallbackUser from "../../../../../public/images/users.png";
 import Verified from "../../svgicons/verified";
+import { useRouter } from 'next/router';
+
 
 const BUTTON_SHOW_DELAY = 3000;
 const BUTTON_COLOR_SHOW_DELAY = 2000;
@@ -25,6 +27,7 @@ export function VmaxAdButton({
 }) {
   const [btnColor, setBtnColor] = useState("#8e8e97");
   const [show, setShow] = useState(false);
+  const router = useRouter();
 
   // !! Keep this useEffect always on top
   useEffect(() => {
