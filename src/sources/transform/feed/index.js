@@ -118,17 +118,17 @@ function transformSuccess(resp) {
       payloadData?.splice(data?.vmaxVideoIndex,0,data?.vmaxAdVideo);
     }
 
-    if(device === 'mobile'){
-    try{
-    const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
-    const lang24ShowOnce = localStorage.get('lang-24-hr');
+    if(device === 'mobile' && deviceType === 'ios'){
+      try{
+      const languagesSelected = localStorage.get('lang-codes-selected')?.lang || null;
+      const lang24ShowOnce = localStorage.get('lang-24-hr');
 
-    if(!languagesSelected && data?.firstApiCall && lang24ShowOnce === 'false'){
-    payloadData?.splice(indexToShowLang?.[deviceType],0,{'data':'languageSlide'})
-    }}catch(e){
-      console.error('issue in lang-select slide adding in transform')
+      if(!languagesSelected && data?.firstApiCall && lang24ShowOnce === 'false'){
+      payloadData?.splice(indexToShowLang?.[deviceType],0,{'data':'languageSlide'})
+      }}catch(e){
+        console.error('issue in lang-select slide adding in transform')
+      }
     }
-   }
 
  
     /*for stagging api */

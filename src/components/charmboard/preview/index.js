@@ -26,7 +26,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
  const [productIdChange, setProductIdChange] = useState();
  const [campaignIdResp, serCampaignIdResp] = useState("NA");
 
- console.log('debug',items);
  const itemsPresent = items && (items?.outfit?.length > 0 || items?.accessories?.length > 0 ||
   items?.beauty?.length > 0 || items?.hair?.length > 0 || items?.recipe?.length > 0 || items?.devices?.length > 0)
 
