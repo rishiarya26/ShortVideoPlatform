@@ -69,7 +69,7 @@ site_name: 'Hipi'
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Earn rewards with Hipi</h1>
                 <p className='md:w-3/4'>Hipi rewards is a token of appreciation from Hipi to our incredible community of users. 
-                Hipi rewards can be earned when a user participates in regular video watching tasks. Such video watching activities are usually time bound. Thus the user must watch videos within the specified time period to earn rewards. You can earn Hipi rewards by watching videos, following creators, creating videos, and sharing the video with your friends and families. Here are some easy ways to earn Hipi rewards and a classification of the level goals to be achieved for maximum benefit: </p>
+                Hipi rewards can be earned when a user participates in regular video watching tasks. Such video watching activities are usually time bound. Thus the user must watch videos within the specified time period to earn rewards. You can earn Hipi rewards by watching videos, creating videos, and sharing the video with your friends and families. Here are some easy ways to earn Hipi rewards and a classification of the level goals to be achieved for maximum benefit: </p>
             </div>
             <div className=' w-full md:w-7/12 px-8 md:pr-20 pt-8 md:py-0'>
                 <img className='flex object-contain'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
@@ -106,7 +106,7 @@ site_name: 'Hipi'
                 </ul>
                 </p>
             </div>
-            <div className='flex  flex-col items-center w-full py-8 px-4 md:py-14 bg_1 text-center'>
+            {/* <div className='flex  flex-col items-center w-full py-8 px-4 md:py-14 bg_1 text-center'>
                 <h3 className='mt-4 font-medium text-2xl pb-1 reward_font'>Earn rewards when you follow creators</h3>
                 <p className='text-center w-full md:w-1/2'>When you follow creators on the app, you will unlock the following levels:</p>
              
@@ -135,8 +135,8 @@ site_name: 'Hipi'
                 <li>Your daily progress will reset at 11:59 PM every day. You should spin the wheel and unlock your coins for the levels achieved daily before 11:59 PM.</li>
                 </ul>
                 </p>
-            </div>
-            <div className='flex  flex-col items-center w-full py-8 px-4 md:py-14 bg_pastel_reward text-center'>
+            </div> */}
+            <div className='flex  flex-col items-center w-full py-8 px-4 md:py-14 bg_1 text-center'>
                 <h3 className='mt-4 font-medium text-2xl pb-1 reward_font'>Earn rewards when you create a video and share it with your friends</h3>
                 <p className='text-center w-full md:w-1/2'>When you post a video on the app and share the video link with your friends. When your friends view the video using the video link shared by you, you will unlock the following levels:</p>
             
@@ -176,7 +176,7 @@ site_name: 'Hipi'
                 <h3 className='mt-4 font-medium reward_font text-lg pb-4 text-center'>Unlock the levels, spin a wheel, and earn coins</h3>
                 <p>Once you unlock a level, you will see the level as ‘Unlocked’ on the app. Unlocked levels alone allow you  to spin a wheel to win coins.</p>
                 <p>You will earn coins from one of the following denominations at Level 1:</p>
-                <p className='mb-2 py-4 font-bold text-2xl reward_font'>12, 10, 8, 6, 4, 0</p>
+                <p className='mb-2 py-4 font-bold text-2xl reward_font'>10, 8, 6, 4, 2, 0</p>
                 <p>These coins get multiplied by 1.5 when won at Level 2, and by 2 when won at Level 3. </p>
 
 
