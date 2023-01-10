@@ -280,7 +280,7 @@ function HashTagFeed({ router }) {
      />
         <div className="overflow-hidden relative " style={{ height: `${videoHeight}px` }}>
 
-        {typeof window !== "undefined" && window?.deferredPrompt && 
+       
         <OpenAppStrip
           pageName={pageName}
           item={items?.[videoActiveIndex]}
@@ -288,7 +288,7 @@ function HashTagFeed({ router }) {
           creatorId={items?.[videoActiveIndex]?.videoOwnersId}
           playlistId={items?.[videoActiveIndex]?.playlistId}
           playlistName={items?.[videoActiveIndex]?.playlistName}
-        />}
+        />
 
           <div onClick={handleBackClick} className="fixed z-10 w-full p-4 mt-4 w-1/2">
             <Back />

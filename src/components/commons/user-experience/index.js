@@ -35,11 +35,11 @@ useEffect(()=>{
 
 const promptPresent = localStorage.get('PwaPromptPresent');
 
-//  useEffect(()=>{
-//   if(!impressionUsed){
-//     promptPresent && toTrackMixpanel('pwaInstallStripImpression') && setImpressionUsed(true);
-//   }
-//  },[promptPresent])
+ useEffect(()=>{
+  if(!impressionUsed){
+    promptPresent === 'true' && toTrackMixpanel('pwaInstallStripImpression') && setImpressionUsed(true);
+  }
+ },[promptPresent])
 
 if(noShow) return false;
   //   return (
