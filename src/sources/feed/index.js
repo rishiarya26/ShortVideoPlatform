@@ -13,6 +13,7 @@ import { getSingleVideo } from './single';
 let firstTimeCall = true;
 let geoData = localStorage?.get('geo-info') || null;
 const device = getItem('device-type');
+const deviceInfo = getItem('device-info');
 const userAgent =localStorage.get('plaformData')?.ua;
 const os = localStorage.get('plaformData')?.os?.family;
 const browser = localStorage.get('plaformData')?.name;
@@ -85,7 +86,7 @@ async function fetchHomeFeedWithLogin({ type = 'forYou', page = 1, total = 5, vi
     
       // ? As of now no difference between firstCall and secondCall keeping this for reference
 
-      if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
+      if(firstApiCall && response?.data?.responseData?.videos?.length > 0 && deviceInfo === 'ios'){
         try{
           let {adPosition ="", cachedVideo ={}} = await cacheAdResponse();
           if(!isEmptyObject(cachedVideo) && adPosition){
@@ -172,7 +173,7 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 
     // ? As of now no difference between firstCall and secondCall keeping this for reference
 
-    if(firstApiCall && response?.data?.responseData?.videos?.length > 0){
+    if(firstApiCall && response?.data?.responseData?.videos?.length > 0 && deviceInfo === 'ios'){
       try{
         // let {adPosition = "", cachedVideo = {}} = await cacheAdResponse();
         let resp = await cacheAdResponse();
@@ -228,8 +229,9 @@ async function fetchHomeFeed({ type = 'forYou', page = 1, total = 5, videoId , f
 
 const cacheAdResponse = async () => {
   try{
-    const { adPosition = "" } = await getAdPositions({limit : 5});
-    // debugger;
+    // const { adPosition = "" } = await getAdPositions({limit : 5});
+    
+    let adPosition = 4;
 
     let adShow = await initAdView() // 👈 creating new instance for vmaxsDK
 

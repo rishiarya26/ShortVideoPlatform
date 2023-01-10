@@ -76,7 +76,7 @@ function HeadMeta() {
       <link rel="dns-prefetch" href="https://websdk.getsocial.im/getsocial.min.js" as="script" /> */}
 
       {/* <script async src="https://vmax.charmboard.com/web-sdk/stg/1.3.2/ad.js"></script> */}
-      <script async src="https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js"></script>
+      {/* <script async src="https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js"></script> */}
       <script async src="https://websdk.getsocial.im/getsocial.min.js"></script>
       <script defer type="text/javascript" src="/newrelic.js" />
  
@@ -202,7 +202,7 @@ function HeadMeta() {
 
       <link rel="shortcut icon" href={withBasePath('favicon.ico')} />
 
-      <script
+      {/* <script
           id="clevertapScript"
           type='text/javascript'
           async
@@ -220,7 +220,7 @@ function HeadMeta() {
                             var s = document.getElementsByTagName('script')[0];
                             s.parentNode.insertBefore(wzrk, s);
                       })();`
-            }}/>
+            }}/> */}
     </>
   );
 }
