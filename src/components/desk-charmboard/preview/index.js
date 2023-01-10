@@ -400,7 +400,6 @@ const CharmPreview = ({charmId, initalExpand = true, charms, loader, savedItems 
          <div ref={devices} id='devices'>
         {(items?.devices?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">DEVICE INSPIRATION FROM THIS LOOK</div>} 
             {items && items?.devices?.map((item,id) =>{
-              console.log("debug-ad",item)
          return <CharmCard 
               key = {id}
               lingerieCard= {item?.lingerieImageUrl ? true : false}

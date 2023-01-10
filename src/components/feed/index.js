@@ -437,7 +437,6 @@ function Feed({ router }) {
       viewEventsCall(activeVideoId,'view')
     }
     setVideoDurationDetails(videoDurationDetail);
-    console.log("debug", percentage)
     if(percentage > 0){
       setInitialPlayStarted(true);
      }

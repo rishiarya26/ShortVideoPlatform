@@ -5,6 +5,7 @@ import { GUEST_TOKEN, NO_SUPPORT } from '../constants';
 import { toTrackMixpanel } from '../analytics/mixpanel/events';
 import { track } from '../analytics';
 import { toTrackClevertap } from '../analytics/clevertap/events';
+import { localStorage } from './storage';
 
 export const getNewObjectCopy = ogObj => (cloneDeep(ogObj));
 
@@ -109,6 +110,7 @@ export const showPwaInstall = async({pageName='', tabName=''})=>{
         toTrackMixpanel('popupCta',{pageName:pageName || '', tabName:(tabName && tabName) || '',name:'PWA Install Native',ctaName:'Install', elemant:'Install'});
         toTrackMixpanel('pwaInstallClickSuccess',{pageName:pageName || '', tabName:(tabName && tabName) || ''});
         window.deferredPrompt = null;
+        localStorage.set("PwaPromptPresent",'false');
         // setTimeout(()=>{
         //   try{  
         //     // console.log('current page',window.location.href);

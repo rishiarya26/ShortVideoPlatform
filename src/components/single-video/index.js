@@ -61,7 +61,6 @@ export default function SingleVideo(props){
         toTrackClevertap('play', {pageName: "single-video"}, props);
         viewEventsCall(props?.id, 'user_video_start');
       }
-      console.log("debug", props);
     },[initialPlayStarted])
 
   useEffect(() => {

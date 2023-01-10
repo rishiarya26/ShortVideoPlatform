@@ -511,7 +511,7 @@ const onProductChange = (id)=>{
          <div ref={devices} id='devices'>
         {(items?.devices?.length > 0) && <div className="text-xs w-full text-gray-500 pt-2">DEVICE INSPIRATION FROM THIS LOOK</div>} 
             {items && items?.devices?.map((item,id) =>{
-              console.log("debug-ad",item)
+           
          return <div key={id} className={`${idToScroll}`} ref={idToScroll ?(firstScroll && (item?.card_id  === idToScroll) ? scrollRefs : undefined): undefined} id={item?.card_id}>
            <CharmCard 
              key = {id}

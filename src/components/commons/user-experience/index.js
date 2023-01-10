@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect,memo } from 'react'
+import React, { useEffect,memo, useState } from 'react'
 import { ToTrackFbEvents } from '../../../analytics/fb-pixel/events';
 import { toTrackFirebase } from '../../../analytics/firebase/events';
 import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
@@ -13,8 +13,12 @@ import UpArrow from '../svgicons/up-arrow';
 import useDrawer from '../../../hooks/use-drawer';
 import playListModal from '../../playlist-drawer';
 import PlaylistWhite from '../svgicons/playlist_white';
+import { localStorage } from '../../../utils/storage';
 
-const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false, piD=null}) => {
+const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false, piD=null, promptLoaded=false}) => {
+const [showOpenStrip, setShowOpenStrip] = useState(false);  
+const [impressionUsed, setImpressionUsed] = useState(false);
+
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -26,9 +30,16 @@ appsflyer && appsflyer();
 
 useEffect(()=>{
   if(device === 'ios') return;
-   toTrackMixpanel('pwaInstallStripImpression');
- },[])
- 
+   setTimeout(()=>{setShowOpenStrip(true)},3000); 
+ },[]) 
+
+const promptPresent = localStorage.get('PwaPromptPresent');
+
+//  useEffect(()=>{
+//   if(!impressionUsed){
+//     promptPresent && toTrackMixpanel('pwaInstallStripImpression') && setImpressionUsed(true);
+//   }
+//  },[promptPresent])
 
 if(noShow) return false;
   //   return (
@@ -54,7 +65,7 @@ if(noShow) return false;
   
   const text = {
     'ios' : FULL_EXPERIENCE,
-    'android' :  (typeof window !== "undefined" && window?.deferredPrompt)  ? "Our app won't take up space on your phone." : <>{setTimeout(()=>(FULL_EXPERIENCE),5000)}</>
+    'android' :  promptPresent === 'true'  ? "Our app won't take up space on your phone." : <>{showOpenStrip ? FULL_EXPERIENCE : ''}</>
   }
 
   const button = {
@@ -67,7 +78,7 @@ if(noShow) return false;
       Open
   </div>,
   'android' : 
-  (typeof window !== "undefined" && window?.deferredPrompt) ? 
+  promptPresent === 'true' ? 
   <div onClick={()=>{
      toTrackMixpanel('pwaInstallStripClicked',{pageName,tabName});
      showPwaInstall({pageName:pageName, tabName:tabName})
@@ -76,15 +87,16 @@ if(noShow) return false;
     Install
 </div> : 
 <>
-{setTimeout(()=>(
-  <div onClick={()=>{
+{
+ showOpenStrip ? <div onClick={()=>{
       ToTrackFbEvents('appOpenCTA');
       toTrackFirebase('appOpenCTA');
       toTrackMixpanel('cta',{pageName:pageName,tabName:tabName, name: 'Open App', type: 'Button'},item);
       onStoreRedirect({videoId : activeVideoId})}} 
      className="font-semibold text-sm border border-hipired rounded py-1 px-2 mr-1 bg-hipired text-white select-none">
       Open
-  </div>),5000)}
+  </div> : ''
+  }
   </>
   }
   if(isPlaylistView || playlistId){
@@ -113,7 +125,7 @@ if(noShow) return false;
   }
   
     return (
-    <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}>
+    <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full ${promptPresent === 'true' || showOpenStrip ?  'bg-black bg-opacity-70' : ''}  items-center`}>
       <p className="text-sm">
       {text?.[device]}
       </p>
