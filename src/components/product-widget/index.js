@@ -33,9 +33,7 @@ function ProductWidget({
   const {show } = useDrawer();
 
   return (
-    <div
-      className={`flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute ${(typeof window !== "undefined" && window?.deferredPrompt) ? 'bottom-24' : 'bottom-16'} mb-3`}
-    >
+    <div className={`flex w-full bg-gray-900 bg-opacity-50 h-24 justify-between items-center p-2 absolute bottom-24 mb-3`}>
       <div className="flex flex-col">
         <div className="flex text-xs text-white mb-2">
           {shopType === 'recipe' ? 'Ingredients from this recipe' : t('PRODUCT_CAN_BUY')}

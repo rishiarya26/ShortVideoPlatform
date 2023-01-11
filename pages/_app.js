@@ -182,6 +182,7 @@ function Hipi({
   const [timerArr, setTimerArr] = useState([])
   const [enableSession , setEnableSession] = useState(true)
   const [previousTimer, setPreviousTimer] = useState(60);
+  // const savePWA = typeof window!==undefined ?  window?.deferredPrompt : null;
   // const [videosCompleted, setVideosCompleted] = useState(0);
 
   const router = useRouter();
@@ -215,6 +216,7 @@ function Hipi({
     console.log("error in geo-api/setting it to localStorage",e)
      }
   }
+
 
   // useEffect(()=>{
   //   setItem('cookie-agreed','yes');
@@ -334,6 +336,7 @@ function Hipi({
         console.error("one tap issue ")
       }
     },[loading])
+
 
     // useEffect(()=>{
     //   try{
@@ -533,6 +536,7 @@ function Hipi({
     useEffect(()=>{
       setRefferer();
       isPwa();
+      localStorage.set("PwaPromptPresent",'false');
      
       // console.error("reset - session start")
       // toTrackMixpanel('sessionStart')
@@ -660,6 +664,7 @@ function Hipi({
       // Stash the event so it can be triggered later.
       // deferredPrompt = e;
       window.deferredPrompt = e;
+      localStorage.set("PwaPromptPresent",'true');
       // Update UI notify the user they can install the PWA
       // showInstallPromotion();
       // Optionally, send analytics event that PWA install promo was shown.
