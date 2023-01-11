@@ -54,8 +54,8 @@ function RewardsRules() {
 			</div>
 			<h3 className="text-gray-800 font-medium pb-2">CONTEST DESCRIPTION</h3>
 	        <p><strong>"Hipi Rewards”</strong> is a lucky draw-based contest (<strong>“Contest”</strong>) which can be accessed on the Application (as defined below) owned and operated by Zee Entertainment Enterprises Limited (<strong>“ZEEL”</strong>). Broadly, the Contest consists of the following experiences:</p>
-			<p className='flex'> <span className='px-2'>•</span>To enter the Contest, the Participant(s) (as defined below) will have to Watch videos, and/or Follow creators, and/or Upload videos (each as defined below) on the Application.  The Participant(s) shall receive a link of these Rules and Regulations upon clicking the Contest advertisement banner.</p>
-			<p className='flex'> <span className='px-2'>•</span>The Participant(s) who Watch videos, and/or Follow creators, and/or Upload videos on the Application, shall automatically enter the Contest and stand a chance to win the Gratification (as defined below) during the Term (as defined below) of the Contest. </p>
+			<p className='flex'> <span className='px-2'>•</span>To enter the Contest, the Participant(s) (as defined below) will have to Watch videos and/or Upload videos (each as defined below) on the Application.  The Participant(s) shall receive a link of these Rules and Regulations upon clicking the Contest advertisement banner.</p>
+			<p className='flex'> <span className='px-2'>•</span>The Participant(s) who Watch videos and/or Upload videos on the Application, shall automatically enter the Contest and stand a chance to win the Gratification (as defined below) during the Term (as defined below) of the Contest. </p>
 			<p>This Rules and Regulations set forth the general terms and conditions and rules of the Contest titled <strong>“Hipi Rewards”</strong> and is in addition to (not in lieu of) to the<span className='cursor-pointer  text-blue-600' onClick={()=> router && router?.push('/rewards')}> Hipi Rewards – FAQs</span>,<span className='cursor-pointer  text-blue-600' onClick={()=> router && router?.push('/terms-conditions.html')}>Terms of Use </span>,  <span className='cursor-pointer  text-blue-600' onClick={()=> router && router?.push('/community-guidelines.html')}>Community Guidelines</span>  and <span className='cursor-pointer  text-blue-600' onClick={()=> router && router?.push('/privacy-policy.html')}>Privacy Policy </span> that apply to the Application.</p>
 			<p>For the purpose of this Contest, wherever the context so requires:</p>
 			
@@ -104,20 +104,20 @@ function RewardsRules() {
 			<p className='flex'> <span className='px-2'>1.3.</span><span><strong>Level 2:</strong> The Participant(s) on viewing 20 (twenty) unique videos on the Application shall unlock the spin the wheel option for Level 2. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game. </span></p>
 			<p className='flex'> <span className='px-2'>1.4.</span><span><strong>Level 3:</strong> The Participant(s) on viewing 30 (thirty) unique videos on the Application shall unlock the spin the wheel option for Level 3. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game. </span></p>
 			
-			<p className='flex'> <span className='px-2'>2. </span>Follow and win<strong> (“Follow”):</strong></p>
+			{/* <p className='flex'> <span className='px-2'>2. </span>Follow and win<strong> (“Follow”):</strong></p>
 			
 			<p className='flex'> <span className='px-2'>2.1.</span>There are three levels under the Follow contest.</p>
 			<p className='flex'> <span className='px-2'>2.2.</span><span><strong>Level 1:</strong>The Participant(s) on following 20 (twenty) creators on the Application shall unlock the spin the wheel option for Level 1. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game. </span></p>
 			<p className='flex'> <span className='px-2'>2.3.</span><span><strong>Level 2:</strong>The Participant(s) on following 40 (forty) unique creators on the Application shall unlock the spin the wheel option for Level 2. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game</span></p>
 			<p className='flex'> <span className='px-2'>2.4.</span><span><strong>Level 3:</strong>The Participant(s) on following 60 (sixty) unique creators on the Application shall unlock the spin the wheel option for Level 3. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
-			
-			<p className='flex'> <span className='px-2'>3. </span>Upload and win <strong>(“Upload”):</strong></p>
+			 */}
+			<p className='flex'> <span className='px-2'>2. </span>Upload and win <strong>(“Upload”):</strong></p>
 
-			<p className='flex'> <span className='px-2'>3.1.</span>There are three levels under the Upload contest.</p>
+			<p className='flex'> <span className='px-2'>2.1.</span>There are three levels under the Upload contest.</p>
 
-			<p className='flex'> <span className='px-2'>3.2.</span><span><strong>Level 1:</strong>The Participant(s) on receiving 5 (five) views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 1. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
-			<p className='flex'> <span className='px-2'>3.3.</span><span><strong>Level 2:</strong>The Participant(s) on receiving 10 (ten) unique views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 2. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
-			<p className='flex'> <span className='px-2'>3.4.</span><span><strong>Level 3:</strong>The Participant(s) on receiving 15 (fifteen) unique views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 3. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
+			<p className='flex'> <span className='px-2'>2.2.</span><span><strong>Level 1:</strong>The Participant(s) on receiving 5 (five) views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 1. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
+			<p className='flex'> <span className='px-2'>2.3.</span><span><strong>Level 2:</strong>The Participant(s) on receiving 10 (ten) unique views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 2. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
+			<p className='flex'> <span className='px-2'>2.4.</span><span><strong>Level 3:</strong>The Participant(s) on receiving 15 (fifteen) unique views on a video uploaded by such Participant(s) on the Application shall unlock the spin the wheel option for Level 3. The Participant(s) then stand a chance to win and collect Gratification by playing spin the wheel game.</span></p>
 			
 
 			<p className='flex'> <span className='px-2'>(b)</span>One redeemable coin is equivalent to INR 1/- (Indian national Rupees One Only) under the Contest and the maximum aggregate coins won by Participant(s) can only be 162 (one hundred and sixty-two) for any particular day by an individual Participant(s). </p>
