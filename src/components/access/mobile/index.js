@@ -87,7 +87,7 @@ export default function Mobile({
       try {
         // toTrackMixpanel('loginInitiated',{method: 'phone', pageName: 'login'}) 
         const mobile = `${data?.countryCode}${data?.mobile}`;
-        const response = await verifyUser(mobile);
+        const response = await verifyUser({phoneno:mobile});
         if (response.status === 'success') {
           // toTrackMixpane('loginSuccess',{method:'phone'})
           setSeconds(59);

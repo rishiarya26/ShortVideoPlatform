@@ -4,11 +4,11 @@ import { apiMiddleWare } from '../../network/utils';
 import { transformError, transformSuccess } from '../transform/auth/verify-user';
 import { sendOTP } from './send-otp';
 
-const getUserVerify = async (mobile) => {
+const getUserVerify = async (info) => {
   let response = {};
   try {
     const urlencoded = new URLSearchParams();
-    urlencoded.append('mobile', mobile);
+    urlencoded.append('mobile', info?.phoneno);
     const apiPath = `${getApiBasePath('login')}/getUserToken.php`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded'
@@ -16,7 +16,7 @@ const getUserVerify = async (mobile) => {
     response.data.status = 200;
     response.data.message = 'success';
    if(response.data.code === 0){ 
-     const resp = await sendOTP(mobile);
+     const resp = await sendOTP(info);
      response.data.sendOtp = resp.data;}
      return Promise.resolve(response);
   } catch (err) {

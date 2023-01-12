@@ -72,13 +72,14 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   const fetchData = {
     login: async () => {
       const payload = {
-        mobile: phoneNo,
+        info:{phoneno: phoneNo},
         otp
       };
       try {
         toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
         toTrackClevertap('loginInitiated',{method:'phone', pageName: 'login'})
         const response = await verifyOTP(payload);
+        console.error("response",response)
         if (response?.data?.status === 200) {
           try{
             toTrackMixpanel('loginSuccess',{method:'phone', pageName: 'login'})

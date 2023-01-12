@@ -64,6 +64,7 @@ const updateLanguageOnLogin = async(data) =>{
 }
 
 const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA" }) => {
+  console.log("Response",accessToken,refreshToken)
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
