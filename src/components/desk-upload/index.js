@@ -144,7 +144,7 @@ const DeskUplaod = () => {
     postData.videoOwners = JSON.stringify(videoOwnerObject) ?? null; // {id, name, profileImaheUrl}
     postData.sound = null;
     postData.description =
-      CaptionInputRef?.current?.innerText.replaceAll(/"/g, "'").toString('base64').trim().replace(/[<>]/g, '') ?? null; //caption
+      CaptionInputRef?.current?.innerText.replaceAll(/"/g, "'").toString('base64').trim().replace(/<iframe/g,'') ?? null; //caption
     postData.videoTitle = 'Post the video';
     postData.privacySettings = userViewPermission ?? null;
     postData.users = null;
