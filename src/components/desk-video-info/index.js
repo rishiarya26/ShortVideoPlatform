@@ -63,7 +63,7 @@ const [show, setShow] = useState(false);
           {`${fullName[pageType]}`} 
           {userVerified === 'verified' ? <div className="ml-2"><Verified/></div>:''}
         </div> 
-        <div className=" text-sm font-light text-gray-600 w-8/12 mb-1">
+        <div style={{maxHeight: "200px", overflowY: "auto"}} className=" text-sm font-light text-gray-600 w-8/12 mb-1">
         <Description description={description} />
      {/* {description && description?.replaceAll('\n',' ')?.split(' ').map((item,id)=>(
            <span key={id} className={item?.includes('#') ? 'text-sm font-normal text-gray-900':''}  onClick={()=>item?.includes('#') ? (toHashTag(trimHash(item))) :
