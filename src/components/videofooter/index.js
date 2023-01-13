@@ -114,7 +114,7 @@ function VideoFooter({
         <h3 onClick={userNameOnClick} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
-        <div className=" text-xs  mb-3 mt-2">
+        <div style={{maxHeight: "200px", overflowY: "auto"}} className=" text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>{item}{' '}
              </span>

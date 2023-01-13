@@ -185,7 +185,7 @@ return (
                <div className="flex justify-end">
                </div>
             </div>
-            <div className=" text-sm w-8/12 mb-2 mt-1 text-gray-700">
+            <div style={{maxHeight: "500px", overflowY: "auto"}} className=" text-sm w-8/12 mb-2 mt-1 text-gray-700">
             <Description description={description} />
            </div>
             <div className="w-8/12 my-1 text-sm">
