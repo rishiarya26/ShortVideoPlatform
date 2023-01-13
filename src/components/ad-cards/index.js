@@ -80,7 +80,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 campaignId
               }
             );
-            window.open(data?.product_url);
+            const updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url
+            window.open(updatedProductUrl);
         } else {
             toTrackMixpanel(
               "monetisationProductClick",
