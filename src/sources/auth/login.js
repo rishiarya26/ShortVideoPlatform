@@ -4,8 +4,8 @@ import { getApiBasePath } from '../../config';
 import { init } from '../../get-social';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
-import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
+import { getUserId } from '../../utils/user';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 import { updateUserProfile } from '../users';
 import { getUserProfile } from '../users/profile';
@@ -86,7 +86,8 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     }
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
     response = await post(apiPath, urlencoded, {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
+      'guest-token': getUserId(),
     });
     const tokens = {
       shortsAuthToken: response.data.shortsAuthToken,

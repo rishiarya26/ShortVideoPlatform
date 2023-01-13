@@ -19,6 +19,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   const [seconds, setSeconds] = useState(59);
   const device = getItem('device-type')
   const {showSnackbar} = useSnackbar();
+  const [formData, setFormData] = useState({});
 
   if(device === 'mobile'){
     showMessage = showSnackbar;
@@ -26,19 +27,36 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
 
   const ref =  device === 'desktop' ? typeRef : (device === 'mobile' && router?.query?.ref);
   const {mobile} = router?.query;
+  const {email} = router?.query;
+  const {formData: formDataParam} = router?.query;
 
   useEffect(()=>{
     if(seconds > 0){
     setTimeout(updateTimer,1000);
     }
   })
+  
+  useEffect(() => {
+    console.log("debug 1", device, ref, formDataParam)
+    if(device === 'mobile' && ref === 'signup' && Object.keys(formDataParam).length > 0) {
+      setFormData({...formData});
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("debug", formData)
+  }, [formData])
 
   let phoneNo;
   if(device === 'mobile'){
-    const [countryCode, phone] = mobile && mobile.split('-');
-    phoneNo = `${countryCode}${phone}`;
+    if(mobile) {
+      const [countryCode, phone] = mobile && mobile.split('-');
+      phoneNo = `${countryCode}${phone}`;
+    }
   }else if(device === 'desktop'){
-    phoneNo= fullMobileNo;
+    if(mobile) {
+      phoneNo= fullMobileNo;
+    }
   }
 
   const disable = {
@@ -72,8 +90,9 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   const fetchData = {
     login: async () => {
       const payload = {
-        info:{phoneno: phoneNo},
-        otp
+        info:{...(mobile ? {phoneno: phoneNo} : {email})},
+        otp,
+        type: mobile ? "mobile" : "email"
       };
       try {
         toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
@@ -104,37 +123,6 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
         showMessage({ message: t('INCORRECT_OTP') });
       }
     },
-    signup: async () => {
-      const payload = {
-        mobile: phoneNo,
-        otp
-      };
-      try {
-        const response = await verifyOTP(payload);
-        if (response.data.status === 200) {
-          if(device === 'desktop'){
-            toggleRegistration({show: true, toRegType : 'mobile', toRegValue:phoneNo});
-         }else if(device === 'mobile'){
-            router && router?.push(types[ref]);
-         }
-          showMessage({ message: t('SUCCESS_LOGIN') });
-        }
-      } catch (error) {
-        showMessage({ message: t('INCORRECT_OTP') });
-      }
-    },
-    'forgot-password': async () => {
-      // try {
-      //   const response = await resetPasswordMobile(mobile);
-      //   if (response.data.status === 200) {
-           router && router?.push(types[ref]);
-          // showMessage({ message: t('SUCCESS_LOGIN') });
-      //   }
-      // } catch (error) {
-      //   showMessage({ message: t('INCORRECT_OTP') });
-      // }
-    },
-      
   }
 
   const resendOtp ={
@@ -150,8 +138,8 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
     }}
     ,
     login : async()=>{
-     try{ 
-      const response = await sendOTP(phoneNo);
+     try{
+      const response = await sendOTP({...(mobile ? {phoneno: phoneNo} : {email})});
         if (response.data.code === 0) {
         showMessage({message : 'Otp sent Successfully'});
         setSeconds(59);
@@ -178,30 +166,9 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   }
 
 
-
-  // const fetchData = async () => {
-  //   const payload = {
-  //     mobile: phoneNo,
-  //     otp
-  //   };
-  //   try {
-  //     const response = await verifyOTP(payload);
-  //     if (response.data.status === 200) {
-  //        router && router?.push(types[ref]);
-  //       showMessage({ message: t('SUCCESS_LOGIN') });
-  //     }
-  //   } catch (error) {
-  //     showMessage({ message: t('INCORRECT_OTP') });
-  //   }
-  // };
-
   const chooseComp = {
    desktop : 
    <>
-   {/* <div className="mt-4 flex flex-col">
-     <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to +${mobile}`}</p>
-   </div> */}
    <div className="mt-4 w-full self-start">
      <input
        className=" w-full border-b-2 border-grey-300 px-4 py-2"
@@ -222,7 +189,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to +${mobile}`}</p>
+     <p className="text-gray-400 text-xs">{`Your code was messaged to ${mobile ? `+${mobile}` : email}`}</p>
    </div>
    <div className="mt-4">
      <input
@@ -232,6 +199,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
        placeholder="OTP"
        value={otp}
        onChange={handleOtpChange}
+       autoComplete="off"
      />
    </div>
    <div className="mt-10 mb-4">

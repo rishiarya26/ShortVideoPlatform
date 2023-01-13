@@ -5,7 +5,7 @@ import { transformSuccess, transformError } from '../transform/auth/verify-otp';
 import { hipiLogin } from './login';
 
 async function validateOTP({
-  info, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19'
+  info, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19', type="mobile"
 }) {
   let response = {};
   try {
@@ -24,7 +24,7 @@ async function validateOTP({
     console.log("response*",resp);
     const accessToken = resp?.data?.access_token;
     const refreshToken = resp.data.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken, mobile:info?.phoneno });
+    response = await hipiLogin({ accessToken, refreshToken,...(type === "mobile" ? {mobile: info?.phoneno} : {email: info?.email}) });
     return Promise.resolve(response);
   } catch (err) {
     console.error("error verify-otp",err)

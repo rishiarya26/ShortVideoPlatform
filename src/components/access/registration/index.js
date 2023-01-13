@@ -14,6 +14,13 @@ import { getItem } from '../../../utils/cookie';
 import useSnackbar from '../../../hooks/use-snackbar';
 import * as fbq from '../../../analytics/fb-pixel'
 import { toTrackClevertap } from '../../../analytics/clevertap/events';
+import { sendOTP } from '../../../sources/auth/send-otp';
+
+function formatDate(age) {
+  const year = new Date().getUTCFullYear();
+  const modifiedYear = year - age;
+  return `${modifiedYear}-01-01`;
+}
 
 const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
 
@@ -23,10 +30,8 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     gender: 'Male',
     firstName: '',
     lastName: '',
-    password: '',
     name: '',
-    birthday: '',
-    age: ''
+    dob: '',
   });
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
@@ -39,21 +44,32 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
    showMessage = showSnackbar;
  }
 
-  const info = router?.query;
-  const disable = (!!(data.firstName?.length === 0) || !!(data.lastName?.length === 0) || !!(data.name.length === 0)
-   || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
+  const {mobile} = router?.query;
+  const {email} = router?.query
+
+  let phoneNo;
+  if(device === 'mobile'){
+    if(mobile) {
+      const [countryCode, phone] = mobile && mobile.split('-');
+      phoneNo = `${countryCode}${phone}`;
+    }
+  }
+  // else if(device === 'desktop'){
+  //   if(mobile) {
+  //     phoneNo= fullMobileNo;
+  //   }
+  // }
 
   useEffect(() => {
     const dataToUpdate = { ...data };
     if(device === 'mobile'){
-    const type = Object.keys(info)?.[0];
-    dataToUpdate.type = type;
-    dataToUpdate.value = info[type];
-    }else if (device === 'desktop'){
-      console.log("beofre",dataType, dataValue)
-     dataToUpdate.type = dataType;
-     dataToUpdate.value = dataValue;
+    dataToUpdate.type = mobile ? 'phoneno' : 'email';
+    dataToUpdate.value = mobile ? phoneNo : email;
     }
+    // else if (device === 'desktop'){
+    //  dataToUpdate.type = dataType;
+    //  dataToUpdate.value = dataValue;
+    // }
     console.log(dataToUpdate)
     setData(dataToUpdate);
   }, []);
@@ -62,9 +78,6 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     const [firstName, lastName] = fullName?.split(' ');
     data.firstName = firstName;
     data.lastName = lastName || '';
-  //   if(data.lastName?.length < 1){
-  //     showMessage({message : 'Please Enter Last name'})
-  //  }
     return data;
   };
   /* eslint-disable no-param-reassign */
@@ -107,7 +120,6 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
       setData(dataToUpdate);
-      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -115,18 +127,33 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
 
   const submit = async (e) => {
     e.preventDefault();
-   if(data.lastName?.length > 0 && data.password.length > 5){ 
+   if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
      try {
       setPending(true);
-      await sendData();
+      const info = {
+        ...(mobile ? {"phoneno": phoneNo} : {"email": email})
+      }
+      await sendOTP(info)
+      const reqObject = {
+        ...data,
+        dob: formatDate(Number(data.dob))
+      }
+      if(device === 'mobile'){ 
+        router && router?.push({
+        pathname: '/verify-otp',
+        query: { ref: 'signup', ...(mobile ? {"phoneno": phoneNo} : {"email": email}), formData: JSON.stringify(reqObject) }
+      });}
       setPending(false);
     } catch (e) {
       setPending(false);
     }}else{
       if(data.lastName?.length  < 1){ 
       showMessage({message : "Last name cant be left empty"})
-    }else if(data.password?.length <6){
-      showMessage({message : "Password length should be minimum of 6 characters"})
+    }else if(data.dob === '') {
+      showMessage({message : "Age cant be left empty"})
+    }
+    else if(Number(data.dob) < 18) {
+      showSnackbar({message: "Age should be atleast 18 years"});
     }
   }};
 
@@ -178,6 +205,11 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     setData(updateData);
   };
 
+  const changeDob = e => {
+    setData({...data, dob: e.target.value});
+  };
+
+
   return (
     <div className="flex flex-col px-4 pt-10">
       <BackButton back={()=>toggleRegistration && toggleRegistration({show : false})} />
@@ -186,6 +218,16 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>
       </div>
       <form onSubmit={submit}>
+      <div className="mt-4">
+        <input
+          id="info"
+          readOnly
+          value={data.value}
+          className=" w-full border-b-2 border-grey-300 px-4 py-2"
+          type="text"
+          name="info"
+        />
+      </div>
       <div className="mt-4">
         <input
           id="name"
@@ -198,7 +240,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
           required
           pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
           onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
-          // formNoValidate
+          autoComplete="off"
         />
       </div>
       <div className="mt-4 flex relative">
@@ -217,44 +259,27 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
           <Toggle />
         </span>
       </div>
-      <div className="mt-4">
+      <div className='mt-4 flex'>
         <input
-          
-          id="password"
-          value={data.password}
-          onChange={processPhoneData}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="password"
-          name="phone"
-          placeholder="Password"
-          required
-        />
-      </div>
-      <div className="mt-4">
-        <input  
-          id="age"
-          value={data.age}
-          onChange={processPhoneData}
+          id="dob"
+          value={data.dob}
+          onChange={changeDob}
           className=" w-full border-b-2 border-grey-300 px-4 py-2"
           type="number"
-          name="age"
-          placeholder="Age"
-          required
+          name="dob"
+          placeholder="Age(in years)"
+          autoComplete="off"
         />
       </div>
       <div className="mt-10">
       <button
-        // disabled={disable || pending}
-        // onClick={()=>sendData()}
-        // onKeyDown={submit}
         type="submit"
         className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
       >
         {' '}
-        {"Complete"}
+        {"Sign Up"}
         {!pending ? '' : <CircularProgress />}
       </button>
-        {/* <SubmitButton  fetchData={sendData} disable={disable} text="Complete" /> */}
       </div>
       </form>
     </div>

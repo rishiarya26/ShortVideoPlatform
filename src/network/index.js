@@ -9,7 +9,6 @@ const options = (methodName, body, headersOpt = {},formData) => {
       headers: {
         Accept: 'application/json',
         'content-type': 'application/x-www-form-urlencoded',
-        'guest-token': getUserId(),
         ...headersOpt
       }
     };

@@ -12,7 +12,7 @@ async function dispatchOTP(info) {
         "platform_name": "web",
         "hash_id": "FA+9qCX9VSu"
     },{'content-type' : 'application/json',"ref-origin-id":"2"});
-    response.data.requestedWith = { mobile };
+    response.data.requestedWith = { info };
     return Promise.resolve(response);
   } catch (err) {
     console.error("error- sendotp",err)

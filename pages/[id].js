@@ -85,6 +85,7 @@ export default function Hipi(params) {
       const userId = localStorage.get('user-id');
       tokens && userId && userId === item?.id && (userType = 'self');
       setType(userType);
+      console.log(tokens, userId, item)
 
     /**** to get isfollowing if logged in ****/
       if(tokens){

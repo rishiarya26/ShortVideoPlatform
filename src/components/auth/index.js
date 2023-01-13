@@ -8,9 +8,9 @@ import Mobile from '../access/mobile';
 import useSnackbar from '../../hooks/use-snackbar';
 
 const Auth = ({ router, authType }) => {
-  const [phoneData, setPhoneData] = useState({ mobile: '', countryCode: '91' });
-  const [emailData, setEmailData] = useState({ email: '' });
+  const [phoneData, setPhoneData] = useState({ input: '', countryCode: '91' });
   const [loginOption, setLoginOption] = useState(router?.query?.option);
+  const [numberOrEmail, setNumberOrEmail] = useState("email");
 
   const { t } = useTranslation();
   const { type } = router?.query;
@@ -60,17 +60,14 @@ const Auth = ({ router, authType }) => {
     return data;
   };
 
-  const processPhoneData = e => {
-    let data = { ...phoneData };
-    data = getMappings(e, data);
-    setPhoneData(data);
-  };
-
-  const processEmailData = e => {
-    let data = { ...emailData };
-    data = getMappings(e, data);
-    setEmailData(data);
-  };
+  const onChangeInput = (e) => {
+    if(Number(e.target.value)) {
+      setNumberOrEmail("mobile");;
+    } else {
+      setNumberOrEmail("email");
+    }
+    setPhoneData({countryCode: phoneData.countryCode, input: e.target.value});
+  }
 
   const onCountryCodeChange = selectedData => {
     const data = { ...phoneData };
@@ -85,19 +82,29 @@ const Auth = ({ router, authType }) => {
           <div className="p-4 h-full flex items-center justify-center">
             <BackButton back={() =>  router && router?.push('/feed/for-you')} />
           </div>
-          <div className="font-bold flex justify-center align-center w-9/12">{t(heading[authType])}</div>
+          <div className="font-bold flex justify-center align-center w-9/12">Login or Signup</div>
         </div>
       </div>
-      <div className="fixed mt-10 z-10 w-full">
+      {/* <div className="fixed mt-10 z-10 w-full">
         <Tabs items={tabs[authType]} />
-      </div>
-      <div className="mt-20">
-        {type === 'phone'
+      </div> */}
+      <div className="mt-10">
+      <Mobile
+        toggle={toggle}
+        onCountryCodeChange={onCountryCodeChange}
+        processPhoneData={onChangeInput}
+        data={phoneData}
+        type={info?.[authType]?.phone}
+        showMessage={showSnackbar}
+        numberOrEmail={numberOrEmail}
+        />
+        {/* {type === 'phone'
        && (
          <Mobile
            toggle={toggle}
            processPhoneData={processPhoneData}
-           data={phoneData}
+           processEmailData={processEmailData}
+           data={{...phoneData, ...emailData}}
            onCountryCodeChange={onCountryCodeChange}
            type={info?.[authType]?.phone}
            showMessage={showSnackbar}
@@ -111,7 +118,7 @@ const Auth = ({ router, authType }) => {
            type={info?.[authType]?.email}
            showMessage={showSnackbar}
          />
-       )}
+       )} */}
       </div>
     </>
   );

@@ -6,20 +6,23 @@ import { sendOTP } from './send-otp';
 
 const getUserVerify = async (info) => {
   let response = {};
+  let value = info.type === 'mobile' ? 'mobile' : 'email';
   try {
     const urlencoded = new URLSearchParams();
-    urlencoded.append('mobile', info?.phoneno);
-    const apiPath = `${getApiBasePath('login')}/getUserToken.php`;
+    urlencoded.append(value, info[value]);
+    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
+      'ref-origin-id': 2
     });
     response.data.status = 200;
     response.data.message = 'success';
-   if(response.data.code === 0){ 
-     const resp = await sendOTP(info);
-     response.data.sendOtp = resp.data;}
+      const payload = value === "mobile" ? {"phoneno": info.mobile} : {"email": info.email};
+      const resp = await sendOTP(payload);
+      response.data.sendOtp = resp.data;
      return Promise.resolve(response);
   } catch (err) {
+    console.log("err", err);
     return Promise.reject(err);
   }
 };
@@ -30,14 +33,16 @@ const getUserVerifyOnly = async (payload) => {
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, payload[value]);
-    const apiPath = `${getApiBasePath('login')}/getUserToken.php`;
+    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
+      'ref-origin-id': 2
     });
     response.data.status = 200;
     response.data.message = 'success';
     return Promise.resolve(response);
   } catch (err) {
+    console.log("debug err", err);
     return Promise.reject(err);
   }
 };

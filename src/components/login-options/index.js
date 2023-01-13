@@ -27,7 +27,7 @@ export default function Login({ toggle, loading, setAuth, pageName, tabName=null
        <div onClick={()=>{
         toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
         toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
-         router && router.push('/login/phone?option=password')}}>
+         router && router.push('/login/phone?option=otp')}}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
@@ -52,8 +52,8 @@ export default function Login({ toggle, loading, setAuth, pageName, tabName=null
       <Close/>
    </div>}
       <div className="p-2 flex flex-col items-center">
-        <h1 className="text-lg font-bold">Login to Hipi</h1>
-        <p className="text-center text-gray-400 mt-2 text-sm">Like the video, manage your account and do much more</p>
+        <h1 className="text-lg font-bold">Login or Signup</h1>
+        <p className="text-center text-gray-400 mt-2 text-sm">Make your own videos, follow other accounts, comment on videos and more</p>
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
@@ -83,10 +83,9 @@ export default function Login({ toggle, loading, setAuth, pageName, tabName=null
           </div>
         </div> */}
       </div>
-      <div className="my-2 text-xs md:text-base">
-        <p>
-          Don't have an account? 
-          <span onClick={() => toggle('signup')} className="text-red-600 font-medium"> Sign Up</span>
+      <div>
+        <p className="text-center text-gray-400 mt-2 text-sm">
+          By continuing, you agree Hipi's Terms of Use and confirm that you have read Hipi's Privacy policy
         </p>
       </div>
     </div>
