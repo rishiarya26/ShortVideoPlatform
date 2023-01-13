@@ -130,10 +130,12 @@ function VideoFooter({
               <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))} */}
         </div>
+        <div className='text-xs'>
         {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded &&
           <span className='' onClick={()=>{
            setLoaded(false)
           }}>..LESS</span>)}
+        </div>
         </div>
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 
