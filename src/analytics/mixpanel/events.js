@@ -175,6 +175,24 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
+      'playlistClickedProfile': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Clicked - Profile', globalCommonEvents);
+      },
+      'playlistClickedVideo': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Clicked - Video', globalCommonEvents);
+      },
+      'playlistShareClick': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Share Clicked', globalCommonEvents);
+      },
       'hashtagBannerClicked' : () => {
         globalCommonEvents['Page Name'] = value?.pageName || 'NA';
         globalCommonEvents['Hashtag ID'] = value?.hashtagId || 'NA';

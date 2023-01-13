@@ -56,6 +56,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
+        toTrackMixpanel('playlistShareClick', {pageName:"Playlist Detail",playlistName, playlistId})
         toTrackMixpanel('popupCta',{pageName:"Playlist Detail",name:"Share Playlist", ctaName:"Share Playlist",  playlistName, playlistId});
         await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
       } catch(err){
