@@ -114,15 +114,14 @@ function VideoFooter({
         <h3 onClick={userNameOnClick} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
-        <div style={{maxHeight: "200px", overflowY: "auto"}} className=" text-xs  mb-3 mt-2">
+        <div>
+          <div style={{maxHeight: "200px", overflowY: "auto"}} className="text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>{item}{' '}
+            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
+              {item}{' '}
              </span>
           ))}
-         {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded ?  
-          <span className='ml-2' onClick={()=>{
-           setLoaded(false)
-          }}>LESS</span> :
+           {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (!loaded &&
           <span className='' onClick={()=>{
            setLoaded(true)
           }}>..MORE</span>)}
@@ -130,6 +129,11 @@ function VideoFooter({
             && hashTags.map((data, id) => (
               <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
             ))} */}
+        </div>
+        {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded &&
+          <span className='' onClick={()=>{
+           setLoaded(false)
+          }}>..LESS</span>)}
         </div>
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 
