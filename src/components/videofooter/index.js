@@ -7,13 +7,14 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { trimHash, trimSpace } from '../../utils/string';
 // import fallbackUser from "../../../public/images/users.png"
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getItem } from '../../utils/cookie';
 import Verified from '../commons/svgicons/verified';
 import useSnackbar from '../../hooks/use-snackbar';
 import Img from '../commons/image';
 import { toTrackReco } from '../../analytics/view-events';
+import Carousel from '../commons/carousel';
 
 const detectDeviceModal = dynamic(
   () => import('../open-in-app'),
@@ -22,6 +23,16 @@ const detectDeviceModal = dynamic(
     ssr: false
   }
 );
+
+const sliceString = ({str="", maxLen}) => {
+  const result = [];
+  let tempStr = str;
+  for(let i = 0; i < Math.round(str.length/maxLen); i++) {
+    result.push({description: tempStr.slice(0,maxLen < tempStr.length ? maxLen : tempStr.length)});
+    tempStr = tempStr.substring(maxLen < tempStr.length ? maxLen : tempStr.length);
+  }
+  return result;
+}
 
 
 function VideoFooter({
@@ -102,6 +113,19 @@ function VideoFooter({
     item?.includes('#') ? (toHashTag(trimHash(item))) :item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded);
   }
 
+  const TestElement = useCallback(({data}) => {
+    return (
+    <div style={{border: "1px solid red"}}>  
+    {
+      data?.description && data?.description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
+      <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
+        {item}{' '}
+      </span>
+      ))
+    }
+    </div>
+  )}, [loaded]);
+
   return (
     <div className={type[comp]} >
       <div className="videoFooter__text w-full break-words">
@@ -114,8 +138,9 @@ function VideoFooter({
         <h3 onClick={userNameOnClick} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
-        <div>
-          <div style={{maxHeight: "200px", overflowY: "auto"}} className="text-xs  mb-3 mt-2">
+        <div style={{maxHeight: "200px"}}>
+          <Carousel description={true} slideData={sliceString({str: description, maxLen: 200})} Children={TestElement}/>
+          {/* <div style={{maxHeight: "200px", overflowY: "auto"}} className="text-xs  mb-3 mt-2">
           {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
             <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
               {item}{' '}
@@ -125,15 +150,11 @@ function VideoFooter({
           <span className='' onClick={()=>{
            setLoaded(true)
           }}>..MORE</span>)}
-          {/* {hashTags
-            && hashTags.map((data, id) => (
-              <span onClick={()=>toHashTag(data?.name)} key={id}>{data?.name?.includes('#') ? `${data?.name}${' '}` : `#${data?.name}${' '}`}</span>
-            ))} */}
-        </div>
-        {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded &&
+        </div> */}
+        {/* {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded &&
           <span className='' onClick={()=>{
            setLoaded(false)
-          }}>..LESS</span>)}
+          }}>..LESS</span>)} */}
         </div>
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 

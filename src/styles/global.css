@@ -1434,3 +1434,7 @@ input:checked + .slider_new:before {
   height: 32.3vw;
   max-height: 466px;
 }
+
+.descriptionSlide {
+  height: max-content !important;
+}
