@@ -165,8 +165,8 @@ const Sidebar = ({
 
             <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
-                ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : "" 
-                : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
+                ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : "" 
+                : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
             </p>
           </div>
         ) : (
@@ -176,8 +176,8 @@ const Sidebar = ({
             </div>
             <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
-                ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""
-                : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
+                ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""
+                : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
             </p>
           </div>
         )}
