@@ -81,15 +81,15 @@ const Sidebar = ({
     if (time === "now") {
       if (action === "add") {
         setReactionCount({
-          likes: details?.reactionsCount?.like || likes + 1,
+          likes: details?.reactionsCount?.like ?? likes+1,
         });
       } else if (action === "delete") {
         setReactionCount({
-          likes: details?.reactionsCount?.like || likes - 1,
+          likes: details?.reactionsCount?.like ?? likes-1,
         });
       }
     } else {
-      setReactionCount({ likes: details?.reactionsCount?.like || likes });
+      setReactionCount({ likes: details?.reactionsCount?.like ?? likes });
     }
     //  console.log('mrReact',details.myReactions)
     if (details?.myReactions?.length > 0) {
@@ -165,8 +165,8 @@ const Sidebar = ({
 
             <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
-                ? numberFormatter(reactionCount.likes)
-                : numberFormatter(reactionCount.likes)}
+                ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : "" 
+                : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
             </p>
           </div>
         ) : (
@@ -176,8 +176,8 @@ const Sidebar = ({
             </div>
             <p className="text-xs font-semibold ml-2">
               {isLiked?.reactionTime === "past"
-                ? numberFormatter(reactionCount.likes)
-                : numberFormatter(reactionCount.likes)}
+                ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""
+                : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
             </p>
           </div>
         )}

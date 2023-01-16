@@ -85,14 +85,15 @@ const getVideoReactions = async(socialId,time,action)=>{
    let isLiked;
    const details = await getActivityDetails(socialId);
    // console.log('like count',details.reactionsCount.like)
+   console.log("%likes Count***",details)
    if(time === 'now') { 
      if(action === 'add'){
-       setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
+       setReactionCount({likes: details?.reactionsCount?.like+1 ?? likes+1})
      }else if(action === 'delete'){
-       setReactionCount({likes: details?.reactionsCount?.like-1 || likes-1})
+       setReactionCount({likes: details?.reactionsCount?.like-1 ?? likes-1})
      }
    }else{
-     setReactionCount({likes: details?.reactionsCount?.like || likes})
+     setReactionCount({likes: details?.reactionsCount?.like ?? likes})
    }
  //  console.log('mrReact',details.myReactions)
    if(details?.myReactions?.length > 0){
@@ -155,7 +156,7 @@ useEffect(()=>{
             >
               <Liked />
             </div>
-            <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""   : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
           </div>
         ) : (
           <div>
@@ -166,7 +167,7 @@ useEffect(()=>{
             >
               <Like />
             </div>
-            <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
+            <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""  : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
           </div>
        )
       } 
