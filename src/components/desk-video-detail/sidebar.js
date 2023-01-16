@@ -81,15 +81,15 @@ const Sidebar = ({
     if (time === "now") {
       if (action === "add") {
         setReactionCount({
-          likes: details?.reactionsCount?.like || likes + 1,
+          likes: details?.reactionsCount?.like ?? likes+1,
         });
       } else if (action === "delete") {
         setReactionCount({
-          likes: details?.reactionsCount?.like || likes - 1,
+          likes: details?.reactionsCount?.like ?? likes-1,
         });
       }
     } else {
-      setReactionCount({ likes: details?.reactionsCount?.like || likes });
+      setReactionCount({ likes: details?.reactionsCount?.like ?? likes });
     }
     //  console.log('mrReact',details.myReactions)
     if (details?.myReactions?.length > 0) {

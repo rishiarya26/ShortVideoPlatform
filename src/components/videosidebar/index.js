@@ -109,15 +109,15 @@ function VideoSidebar({
   const getVideoReactions = async(socialId,time,action)=>{
     let isLiked;
     const details = await getActivityDetails(socialId);
-     console.log('like count',details?.reactionsCount)
+    console.log("%likes Count***",details)
     if(time === 'now') { 
       if(action === 'add'){
-        setReactionCount({likes: details?.reactionsCount?.like || likes+1})
+        setReactionCount({likes: details?.reactionsCount?.like+1 ?? likes+1})
       }else if(action === 'delete'){
-        setReactionCount({likes: details?.reactionsCount?.like || likes-1})
+        setReactionCount({likes: details?.reactionsCount?.like-1 ?? likes-1})
       }
     }else{
-      setReactionCount({likes: details?.reactionsCount?.like || likes})
+      setReactionCount({likes: details?.reactionsCount?.like ?? likes})
     }
   //  console.log('mrReact',details.myReactions)
     if(details?.myReactions?.length > 0){
