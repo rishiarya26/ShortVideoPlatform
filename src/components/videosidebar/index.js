@@ -315,8 +315,8 @@ const handleSaveMoments = () =>{
 
                 <p className="text-xs mt-1 text-center">
                   {isLiked?.reactionTime === "past"
-                    ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""
-                    : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
+                    ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""
+                    : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
                 </p>
               </div>
             ) : (
@@ -326,8 +326,8 @@ const handleSaveMoments = () =>{
                 </div>
                 <p className="text-xs mt-1 text-center">
                   {isLiked?.reactionTime === "past"
-                    ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""
-                    : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}
+                    ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""
+                    : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
                 </p>
               </div>
             )}
@@ -450,7 +450,7 @@ const handleSaveMoments = () =>{
               <Liked />
             </div>
 
-            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""   : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""   : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
         ) : (
           <div>
@@ -461,7 +461,7 @@ const handleSaveMoments = () =>{
             >
               <Like />
             </div>
-            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""  : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""  : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
        )} 
 

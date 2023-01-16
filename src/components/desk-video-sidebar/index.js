@@ -156,7 +156,7 @@ useEffect(()=>{
             >
               <Liked />
             </div>
-            <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""   : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
+            <p className="text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ?  reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""   : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
         ) : (
           <div>
@@ -167,7 +167,7 @@ useEffect(()=>{
             >
               <Like />
             </div>
-            <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""  : numberFormatter(reactionCount.likes) > 0 ? numberFormatter(reactionCount.likes) : ""}</p>
+            <p className=" text-xs font-semibold mt-2 text-center">{isLiked?.reactionTime === 'past' ? reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""  : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
        )
       } 
