@@ -1435,6 +1435,7 @@ input:checked + .slider_new:before {
   max-height: 466px;
 }
 
-.descriptionSlide {
-  height: max-content !important;
+.descriptionSwiper {
+  overflow-y: scroll !important;
+  height: 200px !important;
 }

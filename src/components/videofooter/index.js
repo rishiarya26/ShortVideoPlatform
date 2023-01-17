@@ -35,6 +35,23 @@ const sliceString = ({str="", maxLen}) => {
 }
 
 
+const LongDescription = (({data, setLoaded, hashtagOnClick}) => {
+  return (
+  <div>  
+  {
+    data?.description && data?.description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
+    <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
+      {item}{' '}
+    </span>
+    ))
+  }
+   <span className='' onClick={()=>{
+            setLoaded(false)
+           }}>..LESS</span>
+  </div>
+)
+})
+
 function VideoFooter({
   userName,
   musicTitle,
@@ -113,19 +130,6 @@ function VideoFooter({
     item?.includes('#') ? (toHashTag(trimHash(item))) :item?.includes('@') ? toUser(item) : item?.includes('https') ? window?.open(item) : setLoaded(!loaded);
   }
 
-  const TestElement = useCallback(({data}) => {
-    return (
-    <div style={{border: "1px solid red"}}>  
-    {
-      data?.description && data?.description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
-      <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
-        {item}{' '}
-      </span>
-      ))
-    }
-    </div>
-  )}, [loaded]);
-
   return (
     <div className={type[comp]} >
       <div className="videoFooter__text w-full break-words">
@@ -139,18 +143,27 @@ function VideoFooter({
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
         <div style={{maxHeight: "200px"}}>
-          <Carousel description={true} slideData={sliceString({str: description, maxLen: 200})} Children={TestElement}/>
-          {/* <div style={{maxHeight: "200px", overflowY: "auto"}} className="text-xs  mb-3 mt-2">
-          {description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
-            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
-              {item}{' '}
-             </span>
-          ))}
+        {loaded ? description?.length > 400 ?
+          (
+            <Carousel description={true} slideData={[{description}]} Children={LongDescription} setLoaded={setLoaded} hashtagOnClick={hashtagOnClick}/>
+          ) : (
+           <> {description?.replaceAll('\n',' ')?.split(' ')?.splice(0,loaded ? description?.replaceAll('\n',' ').split(' ').length : 4).map((item,id)=>(
+              <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
+                {item}{' '}
+               </span>
+            ))}
+           <span onClick={()=>{
+              setLoaded(false)
+             }}>..LESS
+           </span>
+             </>
+          ) : null}
+        
            {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (!loaded &&
-          <span className='' onClick={()=>{
-           setLoaded(true)
-          }}>..MORE</span>)}
-        </div> */}
+           <span className='' onClick={()=>{
+            setLoaded(true)
+           }}>..MORE</span>)}
+        {/* </div>  */}
         {/* {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (loaded &&
           <span className='' onClick={()=>{
            setLoaded(false)

@@ -10,10 +10,8 @@ SwiperCore.use([Navigation]);
 export default function Carousel({id, slideData, Children, description=false, ...restProps}){
   const nextButtonRef = useRef(null);
   const prevButtonRef = useRef(null);
-  console.log("debug length", slideData);
   if(description) {
     return(
-      <div className="relative customCarousel" style={{ width: "212px"}}>
               <Swiper
                 spaceBetween={0}
                 slidesPerView={1}
@@ -23,24 +21,54 @@ export default function Carousel({id, slideData, Children, description=false, ..
                   prevEl: prevButtonRef.current,
                   disabledClass: "hidden",
                 }}
-                className={`w-full relative swiper-mini-${id}`}
                 draggable="true"
-                direction={"vertical"}
-                freeMode={true}
-                onSlideChange={({activeIndex}) => {console.log("debug index", activeIndex)}}
-                autoHeight="true"
+                direction={"horizontal"}
+                longSwipes="5000"
+                // freeMode={true}
+                // autoHeight="true"
+                className="descriptionSwiper"
+                allowSlideNext={false}
+                allowSlidePrev={false}
               >
                 {slideData.length > 0 &&
                   slideData.map((data, id) => (
+                    <>
                     <SwiperSlide
-                      className='descriptionSlide'
+                      key={id}
+                    >
+                       <Swiper
+                spaceBetween={100}
+                slidesPerView={"auto"}
+                modules={[Navigation]}
+                navigation={{
+                  nextEl: nextButtonRef.current,
+                  prevEl: prevButtonRef.current,
+                  disabledClass: "hidden",
+                }}
+                draggable="true"
+                direction={"vertical"}
+                freeMode={true}
+              >
+                {slideData.length > 0 &&
+                  slideData.map((data, id) => (
+                    <>
+                    <SwiperSlide
                       key={id}
                     >
                       <Children data={data} {...restProps}/>
                     </SwiperSlide>
+                    <SwiperSlide
+                      key={"abv"}
+                    >
+                      <div style={{height : 550}}></div>
+                    </SwiperSlide>
+                      </>
                   ))}
               </Swiper>
-            </div>
+                    </SwiperSlide>
+                      </>
+                  ))}
+              </Swiper>
     )
   }
   return(
