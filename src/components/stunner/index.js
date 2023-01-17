@@ -112,9 +112,9 @@ useEffect(()=>{
 </div>
 
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
-<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> January Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
+<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> January Challenge 2 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Heartbreaks are the worst! But can you wear your heart up your sleeve and turn things around?</span>
+    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Your eyes show off the strength of your soul, and it’s time to see the world with glasses that reflect your unique self.</span>
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
@@ -221,7 +221,7 @@ useEffect(()=>{
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
-    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Jan challenge 1 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Jan challenge 2 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
     </p> 
     {/* <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Missed October Challenge 2? Not a problem. Know about Oct Challenge 2 <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
@@ -370,7 +370,7 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : id == 1 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 1 ? challenge1Ref : id == 1 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>
