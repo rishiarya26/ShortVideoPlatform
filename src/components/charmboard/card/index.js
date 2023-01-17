@@ -43,7 +43,8 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
          toTrackClevertap('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
          const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
          console.log("finalLink",appsflyerLink)
-         window?.open(appsflyerLink || shopLink)
+         const shopLinkUpdate = shopLink?.includes("utm_source") ? `${shopLink}&utm_platform=web` : shopLink;
+         window?.open(appsflyerLink || shopLinkUpdate)
         }  
 
 const lingerieComp = <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">

@@ -274,7 +274,7 @@ console.log("onClick follow btn issue ",e);
       rightButton: {
         others:   
       <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>share({id: id, type:'profile'}))}
+        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>share({id: userHandle, type:'profile'}))}
         className="flex relative py-2  px-3 text-center items-end flex-col"
       >
       <ShareComp type={'profile'}/>
