@@ -112,9 +112,9 @@ useEffect(()=>{
 </div>
 
 <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center'>
-<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> January Challenge 1 is now <span className='animate-pulse'>Live</span></h1>
+<h1 className='text-3xl font-bold purple_font mb-2 px-4 text-center pb-2'> January Challenge 2 is now <span className='animate-pulse'>Live</span></h1>
     <p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>
-    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Heartbreaks are the worst! But can you wear your heart up your sleeve and turn things around?</span>
+    <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='hover:underline cursor-pointer'>Your eyes show off the strength of your soul, and it’s time to see the world with glasses that reflect your unique self.</span>
 </p>
 
 {type === 'stunner' && <div className="stunner_swiper relative testimonials_swiper carousel">
@@ -221,7 +221,7 @@ useEffect(()=>{
 
 
     <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
-    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Jan challenge 1 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
+    Participate in both challenges of the month to win a cash prize of INR 1,00,000 and much more. Check out Jan challenge 2 details <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
     </p> 
     {/* <p className='px-8 md:px-16 md:w-1/2 pb-2 text-center text-gray-600 font-light'> 
     Missed October Challenge 2? Not a problem. Know about Oct Challenge 2 <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span>
@@ -233,7 +233,7 @@ useEffect(()=>{
 
 
     <div className='py-8 md:pt-20 w-full flex flex-col items-center justify-center bg_pastel_blue '>
-            <h3 className='text-3xl text-center font-bold purple_font pb-4 px-6'>Meet our Aug, Sep, Oct and Nov Hipi Stunners</h3>
+            <h3 className='text-3xl text-center font-bold purple_font pb-4 px-6'>Meet our Aug, Sep, Oct, Nov and Dec Hipi Stunners</h3>
             <p className='px-8 md:w-1/2 text-center text-gray-600 font-light'>You could be the next. </p><p className='px-8 md:w-1/2 pb-6 md:pb-6 text-center text-gray-600 font-light'>Check out the monthly challenges <span onClick={()=>challenge1Ref.current.scrollIntoView({behavior: 'smooth'})  } className='font-bold text-blue-600 cursor-pointer'>HERE</span> </p>
             <div className="stunner_swiper relative testimonials_swiper carousel">
         <Swiper
@@ -280,10 +280,17 @@ useEffect(()=>{
             </div>
         </SwiperSlide>
         <SwiperSlide>
+            <div className='w-full h-full flex mx-2 '>
+            <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
+            <video src={withBasePath('videos/stunner/december_web.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
+            </div>
+            </div>
+        </SwiperSlide>
+        <SwiperSlide>
             <div className='w-full flex h-full mx-2 '>
             <div className='w-full shadow-md  rounded-lg overflow-hidden bg-gray-300  border border-gray-200 flex flex-col justify-center items-center'>
             {/* <svg height="48px" viewBox="0 0 20 20" width="48px" fill="#FFFFFF"><g><rect fill="none" height="20" width="20"/></g><g><path d="M9.29,10.58c0.6-1.07,1.73-1.7,2.39-2.65c0.7-0.99,0.31-2.85-1.67-2.85c-1.3,0-1.94,0.98-2.2,1.8l-2-0.84 C6.35,4.41,7.83,3,9.99,3c1.81,0,3.05,0.82,3.68,1.85c0.54,0.88,0.86,2.54,0.02,3.77c-0.92,1.36-1.81,1.78-2.28,2.65 c-0.19,0.35-0.27,0.58-0.27,1.72H8.91C8.91,12.4,8.82,11.42,9.29,10.58z M11.5,16c0,0.83-0.67,1.5-1.5,1.5 c-0.83,0-1.5-0.67-1.5-1.5c0-0.83,0.67-1.5,1.5-1.5C10.83,14.5,11.5,15.17,11.5,16z"/></g></svg> */}
-            <p className='text-lg text-center font-bold purple_font pb-4 px-6'>You could be the Dec Stunner</p>
+            <p className='text-lg text-center font-bold purple_font pb-4 px-6'>You could be the Jan Stunner</p>
             </div>
             </div>
         </SwiperSlide>
@@ -370,7 +377,7 @@ useEffect(()=>{
         
           <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            {stunnerData.map((item,id)=>(
-           <div key={id} ref={id == 0 ? challenge1Ref : id == 1 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+           <div key={id} ref={id == 1 ? challenge1Ref : id == 1 ? challenge2Ref : null} className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
               <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>item?.promoUrl&&window?.open(item?.promoUrl)}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/stunner/${item?.imageURL}`)} />
               </div>

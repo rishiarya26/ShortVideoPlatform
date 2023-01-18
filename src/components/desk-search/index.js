@@ -167,13 +167,13 @@ const SearchItems = ({router,type})=>{
 
     useEffect(()=>{
         const closeDrop = e =>{
-            console.log(e.path[0])
+            //console.log(e?.path[0])
             // console.log("777",e.path[0], btnContent.current, btnRef.current, searchInput.current)
-        if(e.path[0] !== inputRef?.current && e.path[0] !== searchSuggRef?.current){
+        if(e?.path?.[0] !== inputRef?.current && e?.path?.[0] !== searchSuggRef?.current){
             closeDropdown();
         }   
         }
-        document.body.addEventListener('click',closeDrop);
+        document?.body?.addEventListener('click',closeDrop);
         return ()=> document.body.removeEventListener('click',closeDrop);
     },[])
 

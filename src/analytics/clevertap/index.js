@@ -2,7 +2,7 @@ import { getItem } from "../../utils/cookie";
 import { localStorage, sessionStorage } from "../../utils/storage";
 import { APP_NAME, LANGUAGE } from "../../constants";
 
-export const isLoaded = () => (window.clevertap);
+export const isLoaded = () => (window?.clevertap ? true : false);
 
 export function track(event, payload) {
     if (isLoaded()) {
@@ -92,8 +92,8 @@ export function track(event, payload) {
       if(isPopupShown) {
         timeDiff = Number(((new Date() - isPopupShown) / (1000 * 60 * 60)).toFixed(1));
       }
-      if((timeDiff > 24 || !isPopupShown) && isLoaded) {
-        clevertap.notifications.push({
+      if((timeDiff > 24 || !isPopupShown) && isLoaded()) {
+        window.clevertap.notifications.push({
           "titleText": "Get notifications for trending videos from Hipi",
           "bodyText": "We promise to send you notifications for relevant content only",
           "okButtonText": "Enable",

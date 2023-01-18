@@ -109,15 +109,15 @@ function VideoSidebar({
   const getVideoReactions = async(socialId,time,action)=>{
     let isLiked;
     const details = await getActivityDetails(socialId);
-    // console.log('like count',details.reactionsCount.like)
+    console.log("%likes Count***",details)
     if(time === 'now') { 
       if(action === 'add'){
-        setReactionCount({likes: details?.reactionsCount?.like+1 || likes+1})
+        setReactionCount({likes: details?.reactionsCount?.like+1 ?? likes+1})
       }else if(action === 'delete'){
-        setReactionCount({likes: details?.reactionsCount?.like-1 || likes-1})
+        setReactionCount({likes: details?.reactionsCount?.like-1 ?? likes-1})
       }
     }else{
-      setReactionCount({likes: details?.reactionsCount?.like || likes})
+      setReactionCount({likes: details?.reactionsCount?.like ?? likes})
     }
   //  console.log('mrReact',details.myReactions)
     if(details?.myReactions?.length > 0){
@@ -267,8 +267,8 @@ const handleSaveMoments = () =>{
                   role="presentation"
                   onClick={() => {
                     deleteReaction("like", socialId);
-                    setIsLiked({ like: false, reactionTime: "now" });
                     getVideoReactions(socialId, "now", "delete");
+                    setIsLiked({ like: false, reactionTime: "now" });
                     /* mixpanel - dislike */
                     toTrackMixpanel(
                       "cta",
@@ -315,8 +315,8 @@ const handleSaveMoments = () =>{
 
                 <p className="text-xs mt-1 text-center">
                   {isLiked?.reactionTime === "past"
-                    ? numberFormatter(reactionCount.likes)
-                    : numberFormatter(reactionCount.likes)}
+                    ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""
+                    : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
                 </p>
               </div>
             ) : (
@@ -326,8 +326,8 @@ const handleSaveMoments = () =>{
                 </div>
                 <p className="text-xs mt-1 text-center">
                   {isLiked?.reactionTime === "past"
-                    ? numberFormatter(reactionCount.likes)
-                    : numberFormatter(reactionCount.likes)}
+                    ? reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""
+                    : reactionCount.likes > 0 ? numberFormatter(reactionCount.likes) : ""}
                 </p>
               </div>
             )}
@@ -450,7 +450,7 @@ const handleSaveMoments = () =>{
               <Liked />
             </div>
 
-            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ?  numberFormatter(reactionCount.likes)   : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""   : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
         ) : (
           <div>
@@ -461,7 +461,7 @@ const handleSaveMoments = () =>{
             >
               <Like />
             </div>
-            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? numberFormatter(reactionCount.likes)  : numberFormatter(reactionCount.likes)}</p>
+            <p className="text-xs mt-1 text-center">{isLiked?.reactionTime === 'past' ? reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""  : reactionCount?.likes > 0 ? numberFormatter(reactionCount?.likes) : ""}</p>
           </div>
        )} 
 
