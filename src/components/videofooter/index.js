@@ -190,7 +190,7 @@ function VideoFooter({
 
       </div>
       </div>
-      </div>
+      // </div>
   );
 }
 
