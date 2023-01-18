@@ -30,6 +30,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
       <div
       onClick={
         ()=> {
+          const updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url
           if (comp === "feed") {
             toTrackMixpanel(
               "monetisationProductClick",
@@ -37,8 +38,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               {
                 content_id: videoId,
                 productId: data?.card_id,
-                productUrl: data?.product_url,
-                brandName: getBrand(data?.product_url),
+                productUrl: updatedProductUrl,
+                brandName: getBrand(updatedProductUrl),
                 campaignId,
                 category: data?.category,
                 subCategory: data?.sub_category,
@@ -48,9 +49,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               }
             );
             const usedAppsflyerLink = window.sessionStorage.getItem('used-impression-link') || null;
-            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(data?.product_url),uri:data?.product_url,comp:'Feed',productId:data?.card_id}) : null;
+            const appsflyerLink = data?.appsflyer_id ? appsflyerPixelClick({appId:data?.appsflyer_id, iosAppId: data?.appsflyer_ios_id, advertiser:getBrand(updatedProductUrl),uri:updatedProductUrl,comp:'Feed',productId:data?.card_id}) : null;
             console.log("finalLink",appsflyerLink)
-            const updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url
             usedAppsflyerLink !== 'true' && appsflyerLink && allAdCards?.length > 0 && allAdCards?.map((item)=>{
               appsflyerPixelImp({ advertiser:getBrand(updatedProductUrl), appId:item?.appsflyer_id, productId:item?.card_id,comp:'Feed'})
               toTrackMixpanel("appsflyerImpPixel",
@@ -89,8 +89,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               {
                 content_id: videoId,
                 productId: data?.card_id,
-                productUrl: data?.product_url,
-                brandName: getBrand(data?.product_url),
+                productUrl: updatedProductUrl,
+                brandName: getBrand(updatedProductUrl),
                 campaignId,
                 category: data?.category,
                 subCategory: data?.sub_category,
@@ -105,8 +105,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
               {
                 content_id: videoId,
                 productId: data?.card_id,
-                productUrl: data?.product_url,
-                brandName: getBrand(data?.product_url),
+                productUrl: updatedProductUrl,
+                brandName: getBrand(updatedProductUrl),
                 campaignId
               }
             );

@@ -169,7 +169,6 @@ function VideoFooter({
            setLoaded(false)
           }}>..LESS</span>)} */}
         </div>
-        </div>
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 
         <div className="w-8/12 flex items-center my-1 text-sm">
@@ -188,6 +187,7 @@ function VideoFooter({
           </span>
         </div>
        }
+      </div>
       </div>
   );
 }
