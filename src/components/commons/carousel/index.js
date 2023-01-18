@@ -37,7 +37,7 @@ export default function Carousel({id, slideData, Children, description=false, ..
                       key={id}
                     >
                        <Swiper
-                spaceBetween={100}
+                spaceBetween={0}
                 slidesPerView={"auto"}
                 modules={[Navigation]}
                 navigation={{
@@ -60,7 +60,8 @@ export default function Carousel({id, slideData, Children, description=false, ..
                     <SwiperSlide
                       key={"abv"}
                     >
-                      <div style={{height : 550}}></div>
+                      {/* <div style={{height : "78vh"}}></div> */}
+                      <div className='desc_h'></div>
                     </SwiperSlide>
                       </>
                   ))}

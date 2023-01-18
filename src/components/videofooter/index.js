@@ -37,7 +37,7 @@ const sliceString = ({str="", maxLen}) => {
 
 const LongDescription = (({data, setLoaded, hashtagOnClick}) => {
   return (
-  <div>  
+  <div className=''>  
   {
     data?.description && data?.description?.replaceAll('\n',' ')?.split(' ')?.map((item,id)=>(
     <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
@@ -169,7 +169,6 @@ function VideoFooter({
            setLoaded(false)
           }}>..LESS</span>)} */}
         </div>
-        </div>
         {/* {musicCoverTitle}</p> */}
        {videoSoundAvailable ? musicTitle && 
         <div className="w-8/12 flex items-center my-1 text-sm">
@@ -188,6 +187,8 @@ function VideoFooter({
           </span>
         </div>
        }
+
+      </div>
       </div>
   );
 }

@@ -1439,3 +1439,12 @@ input:checked + .slider_new:before {
   overflow-y: scroll !important;
   height: 200px !important;
 }
+
+.desc_h{
+  height: 78vh;
+}
+@media screen and (max-height: 700px) {
+  .desc_h{
+    height: 67vh;
+  }
+}
