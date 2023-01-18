@@ -29,7 +29,10 @@ const {show} = useDrawer();
 appsflyer && appsflyer();
 
 useEffect(()=>{
-  if(device === 'ios') return;
+  if(device === 'ios'){
+     setShowOpenStrip(true);
+    return;
+    }
    setTimeout(()=>{setShowOpenStrip(true)},3000); 
  },[]) 
 
