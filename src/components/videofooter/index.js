@@ -159,6 +159,11 @@ function VideoFooter({
              </>
           ) : null}
         
+         {!loaded && description && description?.replaceAll('\n',' ')?.split(' ')?.splice(0,4).map((item,id)=>(
+            <span key={id} className={item?.includes('#') ? 'hashtag font-bold':''}  onClick={()=> hashtagOnClick(item)}>
+              {item}{' '}
+             </span>
+          ))}
            {description && description?.replaceAll('\n',' ')?.split(' ')?.length >= 5 && (!loaded &&
            <span className='' onClick={()=>{
             setLoaded(true)
