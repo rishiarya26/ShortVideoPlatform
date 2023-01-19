@@ -57,6 +57,7 @@
   "REGISTERED":"mobile no is already registered. Please Log in",
   "SIGN_UP":"Sign up",
   "LOGIN":"Log in",
+  "LOGIN_OR_SIGNUP": "Login or Sign up",
   "SEND_OTP":"Send OTP",
   "NO_ITEM_SEARCH_RESULTS":"No item available for this category!"
   }

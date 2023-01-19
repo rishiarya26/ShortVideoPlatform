@@ -11,7 +11,6 @@ import { localStorage } from '../../utils/storage';
 import useSnackbar from '../../hooks/use-snackbar';
 
 export default function AuthOptions({showMessage, pageName, tabName=null}) {
-  const [showLoginOptons, setShowLoginOptons] = useState(true);
   const [loading, setLoading] = useState(true);
   const [authMethod, setAuthMethod] = useState(null);
     
@@ -26,10 +25,6 @@ export default function AuthOptions({showMessage, pageName, tabName=null}) {
     inject(GOOGLE_PLATFORM , null, loaded); 
  },[])
 
-  const toggle = selected => {
-    setShowLoginOptons(!(selected === 'signup'));
-  };
-
   const toLoginOptions = (value)=>{
     console.log(value, authMethod)
     setAuthMethod(value);
@@ -37,15 +32,18 @@ export default function AuthOptions({showMessage, pageName, tabName=null}) {
 
   return (
     <>
-      {authMethod ? authMethod === 'login' ? 
-      <DeskLogin showMessage={showMessage} backToOptions={toLoginOptions}/>
-      : authMethod === 'signup' && <DeskSignup showMessage={showMessage} backToOptions={toLoginOptions}/>
-      :
-      showLoginOptons ? 
-        // <Suspense fallback={<div>Loading...</div>}> 
-        <Login toggle={toggle} loading={loading} setAuth={toLoginOptions} pageName={pageName} tabName={tabName}/>
-        // {/* </Suspense> */}
-        : <Signup toggle={toggle} loading={loading} setAuth={toLoginOptions} pageName={pageName} tabName={tabName}/>}
+    {
+      authMethod ? (
+          <DeskLogin showMessage={showMessage} backToOptions={toLoginOptions} />
+      ) : (
+        <Login
+          loading={loading}
+          setAuth={toLoginOptions}
+          pageName={pageName}
+          tabName={tabName}
+        />
+      )
+    }
     </>
   );
 }

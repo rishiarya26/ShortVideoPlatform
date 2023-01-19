@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
-export default function Login({ toggle, loading, setAuth, pageName, tabName=null }) {
+export default function Login({ loading, setAuth, pageName, tabName=null }) {
   const { close } = useDrawer();
   const router = useRouter();
   const device = getItem('device-type')

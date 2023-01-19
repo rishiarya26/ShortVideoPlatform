@@ -15,14 +15,15 @@ import useSnackbar from '../../../hooks/use-snackbar';
 import * as fbq from '../../../analytics/fb-pixel'
 import { toTrackClevertap } from '../../../analytics/clevertap/events';
 import { sendOTP } from '../../../sources/auth/send-otp';
+import VerifyOtp from '../verify-otp';
 
 function formatDate(age) {
   const year = new Date().getUTCFullYear();
   const modifiedYear = year - age;
-  return `${modifiedYear}-01-01`;
+  return `01/01/${modifiedYear}`;
 }
 
-const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
+const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmail }) => {
 
   const [data, setData] = useState({
     type: '',
@@ -34,8 +35,9 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     dob: '',
   });
   const [pending, setPending] = useState(false);
+  const [otpStatus, setOtpStatus] = useState(false);
+
   const { t } = useTranslation();
-  // const { showMessage } = useSnackbar();
  const {close} = useDrawer();
  const {showSnackbar} = useSnackbar();
  const device = getItem('device-type');
@@ -54,11 +56,6 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
       phoneNo = `${countryCode}${phone}`;
     }
   }
-  // else if(device === 'desktop'){
-  //   if(mobile) {
-  //     phoneNo= fullMobileNo;
-  //   }
-  // }
 
   useEffect(() => {
     const dataToUpdate = { ...data };
@@ -66,10 +63,10 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     dataToUpdate.type = mobile ? 'phoneno' : 'email';
     dataToUpdate.value = mobile ? phoneNo : email;
     }
-    // else if (device === 'desktop'){
-    //  dataToUpdate.type = dataType;
-    //  dataToUpdate.value = dataValue;
-    // }
+    else if (device === 'desktop'){
+     dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
+     dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}-${phoneData?.input}` : phoneData.input;
+    }
     console.log(dataToUpdate)
     setData(dataToUpdate);
   }, []);
@@ -127,75 +124,40 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
 
   const submit = async (e) => {
     e.preventDefault();
-   if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
-     try {
-      setPending(true);
-      const info = {
-        ...(mobile ? {"phoneno": phoneNo} : {"email": email})
-      }
-      await sendOTP(info)
-      const reqObject = {
-        ...data,
-        dob: formatDate(Number(data.dob))
-      }
-      if(device === 'mobile'){ 
-        router && router?.push({
-        pathname: '/verify-otp',
-        query: { ref: 'signup', ...(mobile ? {"phoneno": phoneNo} : {"email": email}), formData: JSON.stringify(reqObject) }
-      });}
-      setPending(false);
-    } catch (e) {
-      setPending(false);
-    }}else{
-      if(data.lastName?.length  < 1){ 
-      showMessage({message : "Last name cant be left empty"})
-    }else if(data.dob === '') {
-      showMessage({message : "Age cant be left empty"})
-    }
-    else if(Number(data.dob) < 18) {
-      showSnackbar({message: "Age should be atleast 18 years"});
-    }
-  }};
-
-  const sendData = async () => {
-    try {
-      const methodMixpanel = data?.type && data.type === 'email' ? 'email' : data.type === 'mobile' && 'phone';
-      toTrackMixpanel('signupInitiated',{method : methodMixpanel, pageName:'signup'})
-      toTrackClevertap('signupInitiated',{method : methodMixpanel, pageName:'signup'})
-      const response = await registerUser(data);
-      console.log("user registered",response.status)
-      // console.log("suces rep",response)
-      if (response.status === 'success') {
-        /* Mixpanel */
-        try{
-        try{
-          toTrackMixpanel('signupSuccess',{method : methodMixpanel, pageName:'signup'})
-        fbq.defEvent('CompleteRegistration');
-      }catch(e){
-        console.log('error in fb or mixpanel event')
-      }
-       }catch(e){
-         console.log('error in fb events or mixpanel')
-       }
-        /* Mixpanel */
-        if(device === 'mobile'){
-           router && router?.push('/feed/for-you');
-        }else if (device === 'desktop'){
-          close();
-          try{
-            router?.asPath && (window.location.href = router?.asPath)
-          }catch(e){
-            console.error('error in redirection',e)
-          }
+    if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
+      try {
+        setPending(true);
+        const info = mobile ? {
+          ...(mobile ? {"phoneno": phoneNo} : {"email": email})
+        } : {
+          ...(numberOrEmail === "mobile" ? {"phoneno":  `${data?.countryCode}${data?.input}`} : {"email": phoneData.input})
         }
-        showMessage({ message: t('SIGNUP_SUCCESS') });
+        await sendOTP(info)
+        const reqObject = {
+          ...data,
+          dob: formatDate(Number(data.dob))
+        }
+        if(device === 'mobile'){ 
+          router && router?.push({
+            pathname: '/verify-otp',
+            query: { ref: 'signup', formData: JSON.stringify(reqObject) }
+          });
+        } else {
+          setOtpStatus(true);
+          toggleFlow("userHandle")
+        }
+        setPending(false);
+      } catch (e) {
+        setPending(false);
       }
-    } catch (e) {
-      if (e.status === 'fail') {
-        toTrackMixpanel('signupFailure',{method : methodMixpanel, pageName:'signup'})
-        console.log("user not registered",e)
-        showMessage({ message: e.message });
-      }
+    } else {
+        if(data.lastName?.length  < 1){ 
+          showMessage({message : "Last name cant be left empty"})
+        } else if(data.dob === '') {
+          showMessage({message : "Age cant be left empty"})
+        } else if(Number(data.dob) < 18) {
+          showMessage({message: "Age should be atleast 18 years"});
+        }
     }
   };
 
@@ -212,7 +174,7 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={()=>toggleRegistration && toggleRegistration({show : false})} />
+      <BackButton back={()=>toggleFlow && toggleFlow("login")} />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>
@@ -271,15 +233,29 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
           autoComplete="off"
         />
       </div>
+      {device === "desktop" && otpStatus && (
+          <div className='mt-4'>
+            <VerifyOtp
+              typeRef="signup"
+              type={numberOrEmail}
+              value={{
+                ...data,
+                dob: formatDate(Number(data.dob))
+              }}
+              showMessage={showMessage}
+            />
+          </div>
+        )
+      }
       <div className="mt-10">
-      <button
+     {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
         type="submit"
         className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
       >
         {' '}
         {"Sign Up"}
         {!pending ? '' : <CircularProgress />}
-      </button>
+      </button>}
       </div>
       </form>
     </div>

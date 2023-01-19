@@ -48,18 +48,6 @@ const Auth = ({ router, authType }) => {
     }
   }, []);
 
-  const toggle = selected => {
-    setLoginOption(selected);
-    selected && router?.replace(`/login/phone?option=${selected}`);
-  };
-
-  const getMappings = (e, data) => {
-    const { id } = e.target;
-    const { value } = e.target;
-    data[id] = value;
-    return data;
-  };
-
   const onChangeInput = (e) => {
     if(Number(e.target.value)) {
       setNumberOrEmail("mobile");;
@@ -90,7 +78,6 @@ const Auth = ({ router, authType }) => {
       </div> */}
       <div className="mt-10">
       <Mobile
-        toggle={toggle}
         onCountryCodeChange={onCountryCodeChange}
         processPhoneData={onChangeInput}
         data={phoneData}

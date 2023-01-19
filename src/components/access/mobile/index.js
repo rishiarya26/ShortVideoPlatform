@@ -20,10 +20,11 @@ import { toTrackClevertap } from '../../../analytics/clevertap/events';
 
 
 export default function Mobile({
-  toggle, processPhoneData, data, onCountryCodeChange, type, toggleShowForgotPassComp,
-  toggleRegistration, showMessage, numberOrEmail
+  processPhoneData, data, onCountryCodeChange,
+  toggleFlow, showMessage, numberOrEmail
 }) {
   const [seconds, setSeconds] = useState(0);
+  const [otpStatus, setOtpStatus] = useState(false);
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Mobile({
   const device = getItem('device-type')
 
   const disable = {
-    loginOtp: !!(data.mobile?.length === 0)
+    loginOtp: !!(data.input?.length === 0)
   };
 
   const submit = async () => {
@@ -41,7 +42,7 @@ export default function Mobile({
       const response = await verifyUserOnly({type: numberOrEmail, [inputKey]: inputData});
       if (response?.data?.code === 0) {
         await sendOTP({
-          ...(numberOrEmail === "mobile" ? {"phoneno": inputData} : {"email": email})
+          ...(numberOrEmail === "mobile" ? {"phoneno": inputData} : {"email": inputData})
         });
         setSeconds(59);
         fbq.defEvent('CompleteRegistration');
@@ -49,7 +50,10 @@ export default function Mobile({
             router && router?.push({
             pathname: '/verify-otp',
             query: { ref: 'login', ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
-          });}
+          });
+        } else {
+          setOtpStatus(true);
+        }
         
         showMessage({ message: t('SUCCESS_OTP') });
       } else if(response?.data?.code === 1) {
@@ -58,8 +62,10 @@ export default function Mobile({
               router && router?.push({
               pathname: '/registration',
               query: { ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
-            });}
-          showMessage({ message: t('SUCCESS_OTP') });
+            });
+          } else {
+            toggleFlow("registration");
+          }
       }
     } catch (e) {
       // toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
@@ -80,50 +86,6 @@ export default function Mobile({
     }
   })
 
-
-  // const info = {
-  //   loginOtp:
-  //   <>
-  //     {device === 'desktop' && 
-  //     <>
-  //       <button
-  //       onClick={() => toggle('password')}
-  //       onKeyDown={() => toggle('password')}
-  //       className="flex justify-end text-sm font-semibold mt-2 px-2 cursor-pointer"
-  //     >
-  //       <p className="text-blue-400">Login with Password</p>
-  //     </button>
-      
-  //     <div className='flex relative mt-4'>
-      
-  //     <div className='flex w-full items-center flex-col'> 
-  //     <VerifyOTP 
-  //     typeRef={type === 'signup' ? 'signup' : 'login'} 
-  //     fullMobileNo={`${data.countryCode}${data.mobile}`}
-  //     showMessage={showMessage}
-  //     />
-  //     </div>
-
-  //     <div className="absolute top-1 right-0 mt-4  flex justify-center">
-  //       <div className="text-gray-500">
-  //        {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : 
-  //         <DeskSendOtp disable={disable['loginOtp']} fetchData={submit['loginOtp']} text={submitText['loginOtp']} showMessage={showMessage}/>
-  //        }
-  //         </div>
-  //       </div>
-   
-  //     </div>
-  //     </>}
-
-    
-  //   {device === 'mobile' && 
-  //   <>
-  //     <div className="mt-10">
-  //         <SubmitButton disable={disable[type]} fetchData={submit[type]} text={submitText[type]} />
-  //     </div>
-  //   </>}
-  // </>,
-  // };
   const countryCodeComp = {
     'desktop' :
     <DeskCountryCode
@@ -143,7 +105,7 @@ export default function Mobile({
         <form className='w-full'>
           {numberOrEmail === "mobile" ? 
           (
-            <div className='flex flex-row'>
+            <div className='flex flex-row relative'>
               {countryCodeComp?.[device]}
               <input
                 id="mobile"
@@ -152,7 +114,6 @@ export default function Mobile({
                 className=" w-full border-b-2 border-grey-300 px-4 py-2"
                 name="phone"
                 placeholder="Email or Mobile Number"
-                maxLength={10}
                 required
                 autoFocus
                 autoComplete='off'
@@ -173,9 +134,17 @@ export default function Mobile({
               />
             )
           }
-          <div className="mt-10">
+          {device === "desktop" && otpStatus && (
+            <VerifyOTP
+              typeRef="login"
+              type={numberOrEmail}
+              value={data}
+              showMessage={showMessage}
+            />
+          )}
+          {((device === "mobile") || (device === "desktop" && !otpStatus)) && <div className="mt-10">
             <SubmitButton disable={disable['loginOtp']} fetchData={submit} text={'Proceed'} />
-          </div>
+          </div>}
         </form>
       </div>
     </div>

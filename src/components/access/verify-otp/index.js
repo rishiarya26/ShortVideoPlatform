@@ -13,13 +13,18 @@ import { verifyUser } from '../../../sources/auth/verify-user';
 import { getItem } from '../../../utils/cookie';
 import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
+import { registerUser } from "../../../sources/auth/register-user";
+import CircularLoaderSmall from '../../commons/circular-loader-small';
 
-const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMessage }) => {
+const TIMER_LIMIT = 10;
+
+const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
   const [otp, setOtp] = useState('');
-  const [seconds, setSeconds] = useState(59);
+  const [seconds, setSeconds] = useState(TIMER_LIMIT);
   const device = getItem('device-type')
   const {showSnackbar} = useSnackbar();
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   if(device === 'mobile'){
     showMessage = showSnackbar;
@@ -32,30 +37,29 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
 
   useEffect(()=>{
     if(seconds > 0){
-    setTimeout(updateTimer,1000);
+      setTimeout(updateTimer,1000);
     }
   })
   
   useEffect(() => {
-    console.log("debug 1", device, ref, formDataParam)
-    if(device === 'mobile' && ref === 'signup' && Object.keys(formDataParam).length > 0) {
-      setFormData({...formData});
+    if(device === 'mobile' && ref === 'signup' && Object.keys(jsonFormData).length > 0) {
+      const jsonFormData = JSON.parse(formDataParam);
+      setFormData({...jsonFormData});
     }
   }, [])
 
-  useEffect(() => {
-    console.log("debug", formData)
-  }, [formData])
-
   let phoneNo;
+  if(ref === 'signup') {
+
+  }
   if(device === 'mobile'){
     if(mobile) {
       const [countryCode, phone] = mobile && mobile.split('-');
       phoneNo = `${countryCode}${phone}`;
     }
   }else if(device === 'desktop'){
-    if(mobile) {
-      phoneNo= fullMobileNo;
+    if(type === "mobile") {
+      phoneNo = `${value?.countryCode}${value?.input}`;
     }
   }
 
@@ -65,22 +69,7 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   };
  
   const { t } = useTranslation();
-  // const { showSnackbar } = useSnackbar();
   const {close} = useDrawer();
-
-  const types = {
-    login: {
-      pathname: '/feed/for-you'
-    },
-    signup: {
-      pathname: '/registration',
-      query: { mobile: phoneNo }
-    },
-    'forgot-password':{
-      pathname: '/reset-password',
-      query: { mobile: phoneNo, code : otp }
-    }
-  };
 
   const handleOtpChange = e => {
     const otp = e.currentTarget.value;
@@ -89,16 +78,15 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
 
   const fetchData = {
     login: async () => {
-      const payload = {
-        info:{...(mobile ? {phoneno: phoneNo} : {email})},
-        otp,
-        type: mobile ? "mobile" : "email"
-      };
+      const payload = device === "mobile" ? {
+                ...(mobile ? {"phoneno": phoneNo} : {"email": email})
+              } : {
+                ...(type === "mobile" ? {"phoneno":  `${value?.countryCode}${value?.input}`} : {"email": value?.input})
+              }
       try {
         toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
         toTrackClevertap('loginInitiated',{method:'phone', pageName: 'login'})
-        const response = await verifyOTP(payload);
-        console.error("response",response)
+        const response = await verifyOTP({info: payload, otp});
         if (response?.data?.status === 200) {
           try{
             toTrackMixpanel('loginSuccess',{method:'phone', pageName: 'login'})
@@ -114,45 +102,57 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
               console.error('error in redirection',e)
             }
           }else if(device === 'mobile'){
-             router && router?.push(types[ref]);
-            close();
+             router && router?.replace('/feed/for-you');
           }
         }
       } catch (error) {
-        toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
+        toTrackMixpanel('loginFailure',{method:'phone', pageName: 'login'})
         showMessage({ message: t('INCORRECT_OTP') });
       }
     },
+    signup: async()=>{
+      const registerFormData = {
+        type: formData?.type,
+        value: formData?.value,
+        otp: otp,
+        gender: formData?.gender,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        dob: formData?.dob
+
+      }
+      try{ 
+        const response = await registerUser(registerFormData);
+        if (response.data.code === 0) {
+         showMessage({message : 'Otp sent Successfully'});
+         setSeconds(TIMER_LIMIT);
+       }}catch(e){
+        console.log("error", e);
+        showMessage({message : 'Error sending otp'})
+      }
+     }
   }
 
   const resendOtp ={
-    'forgot-password' : async() => {
-      try{
-        const response = await resetPasswordMobile(phoneNo);
-        if (response.data.code === 1) { 
-          showMessage({message : 'Otp sent Successfully'});
-          setSeconds(59);
-        }
-    }catch(e){
-        showMessage({message : 'Error sending otp'})
-    }}
-    ,
     login : async()=>{
+      setLoading(true);
      try{
-      const response = await sendOTP({...(mobile ? {phoneno: phoneNo} : {email})});
+      const response = await sendOTP({...(type === "mobile" ? {phoneno: phoneNo} : {email: (device === "mobile" ? email : value.input)})});
         if (response.data.code === 0) {
         showMessage({message : 'Otp sent Successfully'});
-        setSeconds(59);
+        setSeconds(TIMER_LIMIT);
       }}catch(e){
         showMessage({message : 'Error sending otp'})
+     } finally{
+      setLoading(false);
      }
     },
     signup: async()=>{
-      try{ 
-        const response = await sendOTP(phoneNo);
-        if (response.data.code === 0) {
+      try{
+       const response = await sendOTP({[formData?.type]: formData?.value});
+         if (response.data.code === 0) {
          showMessage({message : 'Otp sent Successfully'});
-         setSeconds(59);
+         setSeconds(TIMER_LIMIT);
        }}catch(e){
          showMessage({message : 'Error sending otp'})
       }
@@ -169,15 +169,28 @@ const VerifyOTP = ({ router, fullMobileNo, typeRef, toggleRegistration, showMess
   const chooseComp = {
    desktop : 
    <>
-   <div className="mt-4 w-full self-start">
+   <div className="mt-4 w-full self-start border-b-2 border-grey-300 flex">
      <input
-       className=" w-full border-b-2 border-grey-300 px-4 py-2"
+       className="flex-1 mx-4 my-2"
        type="password"
        name="phone"
        placeholder="OTP"
        value={otp}
        onChange={handleOtpChange}
      />
+     <div className="text-gray-500 flex items-center justify-center">
+      {seconds > 0 ? (
+        `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}`
+        ) : (
+        <button
+          type="button"
+          className="text-white bg-hipired text-sm  font-semibold cursor-pointer h-100 px-8 relative"
+          onClick={resendOtp[ref]}>
+            send OTP 
+            {loading && <CircularLoaderSmall />}
+        </button>
+      )}
+      </div>
    </div>
    <div className="mt-10 mb-4">
      <SubmitButton disable={disable[ref]} fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
