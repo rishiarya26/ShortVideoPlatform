@@ -136,16 +136,6 @@ function ProfilePlaylist({ router }) {
         playlistId: playlistid,
       });
     }
-    if (utmVal) {
-      show("", playListModal, "medium", {
-        data: items,
-        fetchMore: loadMore,
-        activeVideoId,
-        playlistName: playListName,
-        hideOverLay: true,
-        playlistId: playlistid,
-      });
-    }
     backButton && (backButton.onClick = handleBackClick);
   }, [items]);
 

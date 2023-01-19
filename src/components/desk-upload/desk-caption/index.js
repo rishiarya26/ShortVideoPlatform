@@ -73,15 +73,15 @@ function DeskCaption({
     const closeDrop = (e) => {
       console.log(e?.path?.[0]);
       if (
-        e.path[0] !== inputRef?.current &&
-        e.path[0] !== searchSuggRef?.current &&
-        e.path[0] !== InputRefCaption?.current &&
-        e.path[0] !== userListInputRef?.current
+        e.path?.[0] !== inputRef?.current &&
+        e.path?.[0] !== searchSuggRef?.current &&
+        e.path?.[0] !== InputRefCaption?.current &&
+        e.path?.[0] !== userListInputRef?.current
       ) {
         closeDropdown();
       }
     };
-    document.body.addEventListener('click', closeDrop);
+    document?.body?.addEventListener('click', closeDrop);
     return () => document.body.removeEventListener('click', closeDrop);
   }, []);
 

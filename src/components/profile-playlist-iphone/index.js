@@ -316,11 +316,6 @@ function ProfilePlaylistIphone({ router }) {
       };
     });
     backButton && (backButton.onClick = handleBackClick);
-    if(utmVal){
-      if(utmVal) {
-        show('', playListModal, 'medium', {data:items, activeVideoId, playlistName: playListName, hideOverLay: true, playlistId: playlistid})
-      }
-    }
   }, [items]);
 
   const [fetchState, setRetry] = useFetcher(dataFetcher, onDataFetched);
