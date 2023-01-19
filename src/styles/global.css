@@ -1445,6 +1445,6 @@ input:checked + .slider_new:before {
 }
 @media screen and (max-height: 700px) {
   .desc_h{
-    height: 64vh;
+    height: 65vh;
   }
 }
