@@ -202,6 +202,8 @@ export const toTrackMixpanel = (type, value, item) => {
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
         track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();
@@ -219,11 +221,15 @@ export const toTrackMixpanel = (type, value, item) => {
       'play' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
         track('UGC Play', eventsWithIds)},
       'share' : () => track('UGC Share Click', commonWithIds()),
       'replay' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
         track('UGC Replayed', eventsWithIds)},
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
@@ -239,6 +245,8 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
         eventsWithIds['UGC Duration'] =  value?.duration && Math.round(value.duration)
         eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
         track('UGC Watch Time',eventsWithIds)
       },
       'cta' : ()=>{

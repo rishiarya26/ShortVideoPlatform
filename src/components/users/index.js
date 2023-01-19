@@ -383,8 +383,7 @@ const notNowClick=()=>{
   const toShowFollowers = useAuth( ()=>show('',login, 'medium',{pageName:pageName,tabName:tabName}), ()=> router && router?.push(`/profile-detail/${id}?type=followers`))
 
   const chipOnClick = (id,name) => {
-    toTrackMixpanel("playlistClickedVideo", {pageName:"Creator Profile",playlistName: name, playlistId: id})
-    toTrackMixpanel("playlistClicked", {pageName:"Creator Profile", playlistName: name, playlistId: id})
+    toTrackMixpanel("playlistClickedProfile", {pageName:"Creator Profile",playlistName: name, playlistId: id})
     router.push({pathname: `/playlist/${id}`});
   }
 

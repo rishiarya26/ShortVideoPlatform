@@ -160,6 +160,8 @@ const Videos = ({item}) =>{
          videoSound={videoDetailData?.videoSound}
          noSound={noSound}
          checkNoSound={checkNoSound}
+         playlistId={videoDetailData?.playlistId || "NA"}
+         playlistName={videoDetailData?.playlistName || "NA"}
          />
        </div>}
        {items?.length > 0 ? 

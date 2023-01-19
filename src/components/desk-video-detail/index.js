@@ -37,7 +37,7 @@ function VideoDetail({url,firstFrame,
 userProfilePicUrl='', userName, music_title, likesCount, muted, unMute,firstName, lastName,
 description, updateActiveIndex, index, router, videoId, handleUpClick, handleDownClick,
 hideVideoDetail, shareCount, activeIndex, socialId, commentCount, type = 'feed',userVerified,convivaItemInfo,
-comp = 'normal',videoSound=true, noSound, checkNoSound, userId}) {
+comp = 'normal',videoSound=true, noSound, checkNoSound, userId, playlistName="NA", playlistId="NA"}) {
 
    const {show:showDialog} = useDialog();
    const {showSnackbar} = useSnackbar();
@@ -154,6 +154,8 @@ return (
          userId={userId}
          contentId={videoId}
          userName={userName}
+         playlistId={playlistId}
+         playlistName={playlistName}
       />
       {NavigationBtns[comp]}
    </div>

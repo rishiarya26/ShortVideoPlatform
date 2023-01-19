@@ -50,8 +50,8 @@ const LoadComp = () => (<Loading />);
 
   useEffect(() => {
     if(initialPlayStarted.started && initialPlayStarted.activeId !== initialPlayStarted.prevActiveId) {
-      toTrackClevertap('play',{pageName : 'Feed',tabName:tabName},items?.[activeFeedIndex]);
-      toTrackMixpanel('play', {pageName : 'Feed',tabName:tabName},items?.[activeFeedIndex]);
+      toTrackClevertap('play',{pageName : 'Feed',tabName:tabName, playlistId: items[activeFeedIndex]?.playlistId, playlistName: items[activeFeedIndex]?.playlistName},items?.[activeFeedIndex]);
+      toTrackMixpanel('play', {pageName : 'Feed',tabName:tabName, playlistId: items[activeFeedIndex]?.playlistId, playlistName: items[activeFeedIndex]?.playlistName},items?.[activeFeedIndex]);
     }
   }, [initialPlayStarted])
 
@@ -337,6 +337,8 @@ const info ={
          noSound={noSound}
          checkNoSound={checkNoSound}
          userId={videoDetailData?.userId}
+         playlistId={videoDetailData?.playlistId || "NA"}
+         playlistName={videoDetailData?.playlistName || "NA"}
          />
        </div>}
         <Header doReload={doReload} typeParam={id}/>

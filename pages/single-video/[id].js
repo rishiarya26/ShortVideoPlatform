@@ -105,6 +105,8 @@ export default function Hipi(params={}) {
     userVerified = {item?.verified}
     comp = 'deskSingleVideo'
     videoSound={item?.videoSound}
+    playlistId={item?.playlistId || "NA"}
+    playlistName={item?.playlistName || "NA"}
     />
     </div> : 
    <VideoUnavailable/>
@@ -136,6 +138,8 @@ export default function Hipi(params={}) {
     adData={item?.adData}
     videoSound={item?.videoSound}
     campaignId={item?.canShop?.campaignId}
+    playlistId={item?.playlistId || "NA"}
+    playlistName={item?.playlistName || "NA"}
   />
   }
 

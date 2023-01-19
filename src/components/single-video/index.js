@@ -142,6 +142,8 @@ export default function SingleVideo(props){
     mixpanelEvents['UGC Genre'] = props?.genre || 'NA';
     mixpanelEvents['UGC Description'] = props?.description || 'NA';
     mixpanelEvents['Page Name'] = 'Video';
+    mixpanelEvents['playlistId'] = props?.playlistId;
+    mixpanelEvents['playlistName'] = props?.playlistName;
 
     type && toTrack?.[type] && toTrack?.[type]();
   }
@@ -183,7 +185,7 @@ export default function SingleVideo(props){
      if(currentTime >= duration-0.2){
       toTrackMixpanel('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackMixpanel('watchTime', props,{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
-      toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable})
+      toTrackMixpanel('replay',{  duration : duration, durationWatchTime: duration, isShoppable: props?.shoppable})
        /*** view events ***/
        viewEventsCall(props?.id, 'completed');
        viewEventsCall(props?.id, 'user_video_start');
