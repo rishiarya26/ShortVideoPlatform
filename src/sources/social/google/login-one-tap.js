@@ -24,7 +24,7 @@ const loginOneTap = async (
       );
       resp.data.status = 200;
       resp.data.message = 'success';
-      const accessToken = resp?.data?.token;
+      const accessToken = resp?.data?.access_token;
       console.log(resp, accessToken)
       // const {refreshToken = ''} = resp;
       response = await hipiLogin({ accessToken , refreshToken :'' });
