@@ -29,7 +29,8 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
     const onTokenFetched = async(data)=>{
       toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:type,ctaName:'Google',elemant:'Google'})
       toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''},{name:type,ctaName:'Google',elemant:'Google'})
-        console.log("got token... about to call api",data, data?.tokenId);
+        console.log("google api resp",data, data?.tokenId);
+        console.log("google api resp email", data?.profileObj, data?.profileObj?.email)
         // const allCookies = Cookies.getAll();
         const arrSplit = document?.cookie?.split(";");
   
