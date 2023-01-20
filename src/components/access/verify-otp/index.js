@@ -15,8 +15,10 @@ import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
 import { registerUser } from "../../../sources/auth/register-user";
 import CircularLoaderSmall from '../../commons/circular-loader-small';
+import Eye from "../../commons/svgicons/eye";
+import CloseEye from "../../commons/svgicons/closeEye";
 
-const TIMER_LIMIT = 10;
+const TIMER_LIMIT = 59;
 
 const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
   const [otp, setOtp] = useState('');
@@ -25,6 +27,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
   const {showSnackbar} = useSnackbar();
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showOTP, setShowOtp] = useState(false);
 
   if(device === 'mobile'){
     showMessage = showSnackbar;
@@ -172,12 +175,13 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
    <div className="mt-4 w-full self-start border-b-2 border-grey-300 flex">
      <input
        className="flex-1 mx-4 my-2"
-       type="password"
+       type={showOTP ? "text" : "password"}
        name="phone"
        placeholder="OTP"
        value={otp}
        onChange={handleOtpChange}
      />
+     <div style={{alignSelf: "center", marginRight: "15px", cursor: "pointer"}} onClick={() => setShowOtp(prev => !prev)}>{showOTP ? <CloseEye /> : <Eye />}</div>
      <div className="text-gray-500 flex items-center justify-center">
       {seconds > 0 ? (
         `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}`
@@ -186,7 +190,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
           type="button"
           className="text-white bg-hipired text-sm  font-semibold cursor-pointer h-100 px-8 relative"
           onClick={resendOtp[ref]}>
-            send OTP 
+            Send OTP 
             {loading && <CircularLoaderSmall />}
         </button>
       )}
@@ -204,22 +208,23 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
      <p className="font-bold w-full">Enter 4-digit code</p>
      <p className="text-gray-400 text-xs">{`Your code was messaged to ${mobile ? `+${mobile}` : email}`}</p>
    </div>
-   <div className="mt-4">
+   <div className="mt-4 flex w-full border-b-2 border-grey-300">
      <input
-       className=" w-full border-b-2 border-grey-300 px-4 py-2"
-       type="password"
+       className=" w-full px-4 py-2"
+       type={showOTP ? "text" : "password"}
        name="phone"
        placeholder="OTP"
        value={otp}
        onChange={handleOtpChange}
        autoComplete="off"
      />
+     <div style={{alignSelf: "center"}} onClick={() => setShowOtp(prev => !prev)}>{showOTP ? <CloseEye /> : <Eye />}</div>
    </div>
    <div className="mt-10 mb-4">
      <SubmitButton fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
    </div>
    <div className="text-gray-500">
-   {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold cursor-pointer" onClick={resendOtp[ref]}>send again</span></>}
+   {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold cursor-pointer" onClick={resendOtp[ref]}>Send again</span></>}
    </div>
  </div>
   }
