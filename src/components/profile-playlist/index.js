@@ -95,7 +95,7 @@ function ProfilePlaylist({ router }) {
 
   const preVideoDurationDetails = usePreviousValue({ videoDurationDetails });
   const { id: playlistid } = router?.query;
-  const pageName = "Playlist feed";
+  const pageName = "Playlist Video Detail";
 
   const loadMoreItems = async () => {
     let videos = [...items];
@@ -143,7 +143,7 @@ function ProfilePlaylist({ router }) {
     if (initialLoadComplete) {
       toTrackMixpanel(
         "impression",
-        { pageName: pageName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName },
         items?.[videoActiveIndex]
       );
     }
@@ -162,7 +162,7 @@ function ProfilePlaylist({ router }) {
     if (initialPlayStarted === true) {
       toTrackMixpanel(
         "play",
-        { pageName: pageName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName },
         items?.[videoActiveIndex]
       );
       ToTrackFbEvents("play", {
@@ -246,12 +246,13 @@ function ProfilePlaylist({ router }) {
           watchTime: "Complete",
           duration: duration,
           durationWatchTime: duration,
+          playlistId: playlistid, playlistName: playListName
         },
         items?.[videoActiveIndex]
       );
       toTrackMixpanel(
         "replay",
-        { pageName: pageName, duration: duration, durationWatchTime: duration },
+        { pageName: pageName, duration: duration, durationWatchTime: duration, playlistId: playlistid, playlistName: playListName },
         items?.[videoActiveIndex]
       );
 
@@ -409,7 +410,7 @@ function ProfilePlaylist({ router }) {
               setShowSwipeUp({ count: 1, value: false });
               toTrackMixpanel(
                 "impression",
-                { pageName: pageName },
+                { pageName: pageName, playlistId: playlistid, playlistName: playListName },
                 items?.[videoActiveIndex]
               );
               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 &&
@@ -423,6 +424,7 @@ function ProfilePlaylist({ router }) {
                     duration:
                       preVideoDurationDetails?.videoDurationDetails
                         ?.totalDuration,
+                        playlistId: playlistid, playlistName: playListName
                   },
                   items?.[videoActiveIndex]
                 );
