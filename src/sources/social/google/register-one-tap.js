@@ -13,8 +13,13 @@ const regitserUserOneTap = async ({
      token
     };
 
-    const apiPath = `${getApiBasePath('userApi')}/v4/user/registergoogle`;
-    const resp = await post(apiPath, payload, {'conetent-type' : 'json'});
+    const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/registergoogle`;
+    const resp = await post(apiPath, payload,
+      {
+        'content-type' : 'application/json',
+        'ref-origin-id': '2',
+        'platform-hipi-google': 'hipi-android'
+      });
     resp.data.status = 200;
     resp.data.message = 'success';
     const accessToken = resp?.data?.token;

@@ -10,9 +10,18 @@ const loginOneTap = async (
    ) => {
       console.log(token)
     let response = {};
+    const payload = {
+      access_token: token
+    }
     try {
-      const apiPath = `${getApiBasePath('userApi')}/v3/user/logingoogle?id_token=${token}`;
-      const resp = await get(apiPath, null, {'content-type' : 'noHeaders'});
+      const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/logingoogle`;
+      const resp = await get(apiPath, payload,
+        {
+          'content-type' : 'application/json',
+          'ref-origin-id': '2',
+          'platform-hipi-google': 'hipi-android'
+        }
+      );
       resp.data.status = 200;
       resp.data.message = 'success';
       const accessToken = resp?.data?.token;
