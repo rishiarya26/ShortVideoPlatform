@@ -1,5 +1,5 @@
 
-import { get } from 'network';
+import { post } from 'network';
 import { getApiBasePath } from '../../../config';
 import { apiMiddleWare } from '../../../network/utils';
 import { hipiLogin } from '../../auth/login';
