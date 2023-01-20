@@ -15,7 +15,7 @@ const loginOneTap = async (
     }
     try {
       const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/logingoogle`;
-      const resp = await get(apiPath, payload,
+      const resp = await post(apiPath, payload,
         {
           'content-type' : 'application/json',
           'ref-origin-id': '2',

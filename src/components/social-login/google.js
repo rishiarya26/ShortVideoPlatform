@@ -13,6 +13,7 @@ import * as fbq from '../../analytics/fb-pixel'
 import { getAllItems, getItem, removeItem } from "../../utils/cookie";
 import Cookies from "../cookies";
 import { toTrackClevertap } from "../../analytics/clevertap/events";
+import { verifyUserOnly } from "../../sources/auth/verify-user";
 
 export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
 
@@ -51,8 +52,10 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
         //  const googleToken = data?.Zb?.access_token;
          try{  
              toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-             const response = await login(data?.tokenId);
-             if(response.status === 'success'){
+             const verifyResponse = await verifyUserOnly({type:"email", value: data?.profileObj?.email})
+             if(verifyResponse?.data?.code === 0) {
+               const response = await login(data?.tokenId);
+               if(response.status === 'success') {
                 showSnackbar({ message: 'Login Successful' })
                  close();
                  try{
@@ -61,16 +64,15 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
                 }catch(e){
                     console.log('error in fb or mixpanel event')
                   }
-             }
-           console.log(response);
+              }
+              console.log(response);
+              } else if(verifyResponse?.data.code === 1) {
+                const response = await registerUser(data?.tokenId);
+                console.log("google register resp:", response);
+              }
         }
         catch(e){
           toTrackMixpanel(`${type || ''}Failure`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-            if(e.code === 2){  
-                const response = await registerUser(data?.tokenId);
-               console.log(response);
-              }
-            // showSnackbar({message: 'Something went wrong..'})
             console.log('e',e)
         }
         }
