@@ -127,7 +127,11 @@ function HashTag({router}) {
         }}
      />
     <div>
-      <div onClick={()=>router?.back()} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
+      <div onClick={()=>{
+            const previousPage = window.sessionStorage.getItem('previous-page') || null;
+            console.log("back",previousPage,window.sessionStorage.getItem('previous-page'))
+            previousPage ? router?.back() : router?.push("/feed/for-you")
+      }} className="headbar w-full flex h-16 shadow-md bg-white items-center p-4">
         <Back />
       </div>
       <div className="w-full h-full flex flex-col p-4"> 
