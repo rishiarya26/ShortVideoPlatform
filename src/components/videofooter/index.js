@@ -142,7 +142,7 @@ function VideoFooter({
         <h3 onClick={userNameOnClick} className=" mb-1 mt-1.5 font-semibold text-sm flex ">
           @{userName} {userVerified === 'verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
         </h3>
-        <div style={{maxHeight: "200px"}}>
+        <div style={{maxHeight: "200px"}} className="text-xs  mb-3 mt-2">
         {loaded ? description?.length > 400 ?
           (
             <Carousel description={true} slideData={[{description}]} Children={LongDescription} setLoaded={setLoaded} hashtagOnClick={hashtagOnClick}/>
