@@ -534,7 +534,7 @@ function ProfilePlaylistIphone({ router }) {
           >
             <Back />
           </div>
-          <div className=" text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2">
+          <div className="font-semibold text-center text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2 w-3/4 px-6">
             {playListName ? playListName: null}
           </div>
           <Swiper
