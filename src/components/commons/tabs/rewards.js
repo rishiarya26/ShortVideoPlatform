@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
+const RewardsTabs = ({ items, selectedIndex = 0, onTabChange }) => {
     const onTabClick = (selected)=>{
         onTabChange(selected);
     }
@@ -13,7 +13,7 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
                onClick={()=>onTabClick(id)}
                className={ id === selectedIndex
               ? ' goatbg px-4 flex justify-center align-center py-2 rounded-lg mx-2'
-              : ' py-2 bg-gray-300 bg-opacity-60 py-2 px-4 flex justify-center align-center rounded-lg mx-2 pointer-events-none'}
+              : ' py-2 bg-gray-300 bg-opacity-60 py-2 px-4 flex justify-center align-center rounded-lg mx-2'}
           >
             <span className={
                 id === selectedIndex ? 'text-white font-semibold ' : 'text-gray-400 font-semibold'}>{data}
@@ -24,4 +24,4 @@ const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
   );
 };
 
-export default Tabs;
+export default RewardsTabs;
