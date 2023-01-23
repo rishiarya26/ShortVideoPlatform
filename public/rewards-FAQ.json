@@ -43,5 +43,5 @@
     "ans" : "Rewards coins will expire automatically 90 days after they have been earned. Thus, coins should be redeemed within 90 days.", "show": false},
     
     { "ques" : "How can I reach out for any other queries or issues?",    
-    "ans" : "For any queries, you can email us at contact@hipi.co.in", "show": false}
+    "ans" : "For any queries, you can email us at contact@hipi.co.in. Please don't forget to mention your registered email address or mobile number in your query email.", "show": false}
        ]}

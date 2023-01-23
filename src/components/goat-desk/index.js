@@ -66,7 +66,7 @@ Stay tuned!
 </div>
 </div>
 <div className='w-full md:w-1/3 flex  px-4 md:pl-0 pt-4 md:pt-0'>
-<video className='md:w-2/3 w-full rounded-md overflow-hidden' src={withBasePath('videos/goat2/goat_intro.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover"/>
+<video className='md:w-2/3 w-full rounded-md overflow-hidden' src={withBasePath('videos/goat2/goat_intro.mp4')} controlsList="nodownload" playsInline  loop autoPlay webkit-playsinline="true" objectfit="cover"/>
 </div>
   </div>
 </div>
