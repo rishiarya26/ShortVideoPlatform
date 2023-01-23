@@ -1,14 +1,22 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
+/*eslint-disable react/no-unescaped-entities*/
+
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import faq from '../../../public/goat-FAQ.json'
 import { withBasePath } from '../../config';
+import Header from '../desk-header';
 import StaticFooter from '../static-footer';
+import { getItem } from '../../utils/cookie';
 
 function GoatDesk() {
  const [items, setItems] = useState(faq?.faq);
+ const [showOldGoatContent, setShowOldGoatContent] = useState(false);
  const router = useRouter()
+ const device = getItem('device-type')
+ const deviceType = getItem('device-info')
+
 
  const links={
   facebook : 'https://www.facebook.com/HiPiOfficialApp',
@@ -31,10 +39,43 @@ const onStoreRedirect =(device)=>{
    setItems(updateItem);
  }
   return (
+    <>
     <div className="w-full h-full">
-       <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
+      <div className='hidden md:flex'><Header/></div>
+<div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
+<div className='w-full'>
+		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.jpg')} />
+		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.jpg')} />}
+		</div>
+  <div className='py-4 md:py-20 w-full flex flex-col items-center md:w-feed md:flex-row'>
+    <div className='w-full md:w-2/3 md:pl-36 p-4 px-6 flex justify-end'>
+      <div className='flex flex-col justify-start'>
+    <h1 className='text-3xl font-bold gblue_font mb-2 text-center md:text-left'>Hipi G.O.A.T. is back with a bang!</h1>
+    <p className='md:w-3/4 md:pt-4 text-center text-gray-600 font-light md:text-left'>
+    To all the talented singers out there, season 2 of Hipi G.O.A.T. is an upcoming nationwide digital singing contest, packed with fun-filled, pitch-and-video-perfect challenges. If you win, you'll bag a golden ticket to record a music video with the Zee Music Company! 
+</p>
+<p className='md:w-3/4 md:pt-4 text-center text-gray-600 font-light md:text-left'>
+So, If you have magic in your voice, get ready for your BIG BREAK. 
+
+Stay tuned! 
+</p>
+</div>
+</div>
+<div className='w-full md:w-1/3 flex  px-4 md:pl-0 pt-4 md:pt-0'>
+<video className='md:w-2/3 w-full rounded-md overflow-hidden' src={withBasePath('videos/goat2/goat_intro.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover"/>
+</div>
+  </div>
+</div>
+<div className='w-full p-4 md:px-8 bg-black bg-opacity-40 flex justify-between items-center install_app_bg ' >
+<p className='text-white'>You can check details of the Season 1 of Hipi G.O.A T.</p>
+<div className='font-semibold text-sm border border-white rounded py-2 px-6 mr-1 text-white cursor-pointer' onClick={()=>setShowOldGoatContent(!showOldGoatContent)}>{!showOldGoatContent ? 'More' : 'Less'}</div>
+</div>
+</div>
+
+<div className={`${showOldGoatContent ? "flex flex-col" : "hidden"}`}>
+{/* <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
         <img alt="" className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
-      </div>
+      </div> */}
 
 <div className="flex justify-center items-center flex-col section_1 relative">
   <img alt="" src={withBasePath('images/goat/desktop/unlu_desktop.jpg')} />
@@ -158,8 +199,10 @@ Round 2 Details
             <div onClick={()=> onStoreRedirect('ios')}><img alt="" src={withBasePath('icons/app_store_1.png')} className="cursor-pointer w-32" alt="hipi logo" /> </div>
             </div>
       </div> */}
-      <StaticFooter/>
-    </div>
+</div>
+
+<StaticFooter/>
+</>
   );
 }
 

@@ -53,7 +53,8 @@ export default function Hipi() {
           // }
         }}
       />
-    <ChooseComp mobile={<GoatMob/>} desktop={<GoatDesk/>}/>
+      <GoatDesk/>
+    {/* <ChooseComp mobile={<GoatMob/>} desktop={<GoatDesk/>}/> */}
   </>
   )
 }
