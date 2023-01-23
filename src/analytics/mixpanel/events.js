@@ -6,7 +6,6 @@ import { localStorage } from "../../utils/storage";
 import { getReffererPage, usePreviousRoute } from "../../utils/web";
 import platform from "platform";
 
-
 let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
 
   const getIsMobile = ()=>{
@@ -547,6 +546,7 @@ export const toTrackMixpanel = (type, value, item) => {
         },
         'pwaInstallStripImpression' : ()=>{
           addPageTabName();
+          globalCommonEvents["time taken"] = value?.timer;
           track('PWA Install Button Impression',globalCommonEvents)
         },
         'pwaInstallStripClicked' : ()=> {
