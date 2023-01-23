@@ -79,7 +79,7 @@
      "position": id+1,
      "name": `${item?.content_description || ''} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
      "url": `https://www.hipi.co.in/single-video/${item?.id}`,
-     "description": item?.content_description,
+     "description": item?.content_description || 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
      "thumbnailUrl": [
        item?.thumbnailUrl
      ],
