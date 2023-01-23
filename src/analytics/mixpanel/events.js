@@ -5,8 +5,6 @@ import { getItem } from "../../utils/cookie"
 import { localStorage } from "../../utils/storage";
 import { getReffererPage, usePreviousRoute } from "../../utils/web";
 import platform from "platform";
-import { mapValues } from "lodash";
-
 
 let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile', 'videoAdThirdQuartile', 'videoAdEnd', 'videoAdStartedFailure', 'videoAdFirstQuartileFailure', 'videoAdSecondQuartileFailure', 'videoAdThirdQuartileFailure', 'videoAdEndFailure'];
 
