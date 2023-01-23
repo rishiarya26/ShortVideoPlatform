@@ -1,6 +1,7 @@
 /*eslint-disable @next/next/no-img-element*/
 /*eslint-disable react/jsx-no-duplicate-props */
 /*eslint-disable react/no-unescaped-entities*/
+/* eslint-disable react/no-unknown-property */
 
 import { useRouter } from 'next/router';
 import { useState } from 'react';
