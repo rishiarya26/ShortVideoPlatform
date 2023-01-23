@@ -11,9 +11,8 @@ import faq from '../../../public/rewards-FAQ.json';
 import OpenFaqBlue from '../commons/svgicons/open-faq-blue';
 import CloseFaqBlue from '../commons/svgicons/close-faq-blue';
 import { faqRewards } from '../../utils/schema';
-import RewardsHindi from './index_hindi';
 
-function Rewards() {
+function RewardsHindi() {
 const [items, setItems] = useState(faq?.faq);
 const [showLast, setShowLast] = useState(false);
 const handleClick = (id) =>{
@@ -55,7 +54,6 @@ site_name: 'Hipi'
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqRewards) }}
       />
-      <RewardsHindi/>
 <div className="static_body_ relative">
     <div className='hidden md:flex'>
         <Header/>
@@ -251,4 +249,4 @@ site_name: 'Hipi'
 </>
 );
 }
-export default Rewards;
+export default RewardsHindi;
