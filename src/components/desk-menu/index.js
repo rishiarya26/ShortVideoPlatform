@@ -98,6 +98,8 @@ useEffect(()=>{
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/brand-assets')}>Brand Assets</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/grievance')}>Grievance</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/contact-us')}>Contact Us</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/stunner')}>Hipi Stunner</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/goat')}>Hipi G.O.A.T.</div>
         </div>
         <div className="flex py-4 flex-wrap items-center sm-menu">
               <a target="_blank" href={links.facebook}  className="pr-4" rel="noreferrer">
@@ -112,9 +114,9 @@ useEffect(()=>{
               <a target="_blank" href={links.youtube} className="pr-4" rel="noreferrer">
                 <Youtube/>
               </a>
-              <a target="_blank" href={links.wiki} className="pr-4" rel="noreferrer">
+              {/* <a target="_blank" href={links.wiki} className="pr-4" rel="noreferrer">
               <Wiki/>
-              </a>
+              </a> */}
         </div>
         {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
         
