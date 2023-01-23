@@ -9,6 +9,7 @@ import { withBasePath } from '../../config';
 import Header from '../desk-header';
 import StaticFooter from '../static-footer';
 import { getItem } from '../../utils/cookie';
+import GoatMob from '../goat-mob';
 
 function GoatDesk() {
  const [items, setItems] = useState(faq?.faq);
@@ -44,10 +45,10 @@ const onStoreRedirect =(device)=>{
       <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
 <div className='w-full'>
-		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.jpg')} />
-		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.jpg')} />}
+		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner_mob.webp')} />
+		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.webp')} />}
 		</div>
-  <div className='py-4 md:py-20 w-full flex flex-col items-center md:w-feed md:flex-row'>
+  <div className='py-4 md:py-20 w-full flex flex-col items-start md:w-feed md:flex-row'>
     <div className='w-full md:w-2/3 md:pl-36 p-4 px-6 flex justify-end'>
       <div className='flex flex-col justify-start'>
     <h1 className='text-3xl font-bold gblue_font mb-2 text-center md:text-left'>Hipi G.O.A.T. is back with a bang!</h1>
@@ -67,12 +68,16 @@ Stay tuned!
   </div>
 </div>
 <div className='w-full p-4 md:px-8 bg-black bg-opacity-40 flex justify-between items-center install_app_bg ' >
-<p className='text-white'>You can check details of the Season 1 of Hipi G.O.A T.</p>
+<p className='text-white pr-4'>You can check details of the Season 1 of Hipi G.O.A T.</p>
 <div className='font-semibold text-sm border border-white rounded py-2 px-6 mr-1 text-white cursor-pointer' onClick={()=>setShowOldGoatContent(!showOldGoatContent)}>{!showOldGoatContent ? 'More' : 'Less'}</div>
 </div>
 </div>
 
-<div className={`${showOldGoatContent ? "flex flex-col" : "hidden"}`}>
+<div className={`${showOldGoatContent ? "flex flex-col" : "hidden"}`} >
+<div className='flex md:hidden'>
+  <GoatMob/>
+</div>
+{device === 'desktop' && <div>
 {/* <div className=" headerbar w-full h-18 bg-red-600 flex items-center justify-start lg:px-10 px-4 py-2">
         <img alt="" className="w-16" src={withBasePath('images/logo_hipi.png')} alt="hipi logo" /> 
       </div> */}
@@ -199,6 +204,8 @@ Round 2 Details
             <div onClick={()=> onStoreRedirect('ios')}><img alt="" src={withBasePath('icons/app_store_1.png')} className="cursor-pointer w-32" alt="hipi logo" /> </div>
             </div>
       </div> */}
+</div>}
+
 </div>
 
 <StaticFooter/>
