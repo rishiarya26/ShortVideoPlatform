@@ -11,6 +11,8 @@ import Header from '../desk-header';
 import StaticFooter from '../static-footer';
 import { getItem } from '../../utils/cookie';
 import GoatMob from '../goat-mob';
+import LessWhite from '../commons/svgicons/less-white';
+import ExpandWhite from '../commons/svgicons/expand-white';
 
 function GoatDesk() {
  const [items, setItems] = useState(faq?.faq);
@@ -46,7 +48,7 @@ const onStoreRedirect =(device)=>{
       <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
 <div className='w-full'>
-		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner_mob.webp')} />
+		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_mob_banner.webp')} />
 		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.webp')} />}
 		</div>
   <div className='py-4 md:py-20 w-full flex flex-col items-start md:w-feed md:flex-row'>
@@ -68,9 +70,10 @@ Stay tuned!
 </div>
   </div>
 </div>
-<div className='w-full p-4 md:px-8 bg-black bg-opacity-40 flex justify-between items-center install_app_bg ' >
+<div className='w-full p-4 md:px-8 bg-black bg-opacity-40 flex  items-center install_app_bg ' >
 <p className='text-white pr-4'>You can check details of the Season 1 of Hipi G.O.A T.</p>
-<div className='font-semibold text-sm border border-white rounded py-2 px-6 mr-1 text-white cursor-pointer' onClick={()=>setShowOldGoatContent(!showOldGoatContent)}>{!showOldGoatContent ? 'More' : 'Less'}</div>
+<div className='font-semibold text-sm border border-white rounded py-2 pl-6 pr-4 mr-1 text-white cursor-pointer' onClick={()=>setShowOldGoatContent(!showOldGoatContent)}>
+  {!showOldGoatContent ? <div className='flex items-center'>More <ExpandWhite/></div> :<div className='flex items-center'> Less <LessWhite/> </div>}</div>
 </div>
 </div>
 
