@@ -84,7 +84,7 @@ site_name: 'Hipi'
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqRewards) }}
       />
-<div className="static_body_ relative">
+<div className="static_body_ relative pt-20">
     <div className='hidden md:flex'>
         <Header/>
     </div>
@@ -94,17 +94,17 @@ site_name: 'Hipi'
         <img className='hidden md:flex'alt="Supermonindia contest" src={withBasePath('images/rewards/rewards_web.webp')} />
     </div>
     */}
-    <div className='flex justify-end w-full md:mt-20'>
-    <div className='absolute top-4 md:top-20 right-4'>
+    <div className='flex justify-end w-full'>
+    <div className='fixed top-4 md:top-20 right-4 z-20'>
       <div className='border border-gray-300 bg-white rounded-md px-4  flex flex-col'>
-       <div className='flex relative items-center cursor-pointer py-2'>
+       <div className='flex relative items-center cursor-pointer py-2 '>
        <div ref={btn} onClick={()=>setOpen(!open)} className='w-full h-full absolute top-0 left-0 bg-transparent'></div>
         <div className='pr-2'> 
         <div ><Language /></div> 
         </div>{selectedLang} <div><Expand/></div>
         </div>
-       {open && <div className='flex flex-col'>
-          {/* <div className='border-b border-gray-300 flex justify-center py-1'>English</div> */}
+        
+       {open && <div className='flex flex-col cursor-pointer '>
          {languages.map((item,id)=>( 
            item !== selectedLang && 
            <div 
@@ -117,6 +117,9 @@ site_name: 'Hipi'
        </div>}
       </div>
     </div>
+    </div>
+    <div className=' w-full px-8 pt-8'>
+    <img className='flex object-contain min-h-20 flex md:hidden'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
     </div>
     {/* <RewardsTabs items={tabItems} selectedIndex={selectedIndex} onTabChange={onTabChange}/> */}
     {comp[selectedLang]}

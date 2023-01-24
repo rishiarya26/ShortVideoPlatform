@@ -3,7 +3,7 @@
 import { withBasePath } from '../../config';
 
 const Hindi=()=> (
-        <div className=' mt-4'>
+        <div className=' md:mt-4'>
         <div className='flex w-full flex-col-reverse md:flex-row pb-4 md:pb-12'>
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Hipi करो, Rewards जीतो</h1>
@@ -11,8 +11,8 @@ const Hindi=()=> (
                 <p className='md:w-3/4'>Hipi rewards कमाने के लिए, कुछ आसान तरीके आपको अधिकतम लाभ दिला सकते हैं जिसका वर्गीकरण यहां दिया गया है:</p>
                 
             </div>
-            <div className=' w-full md:w-7/12 px-8 md:pr-20 pt-8 md:py-0'>
-                <img className='flex object-contain'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
+            <div className=' w-full md:w-7/12 px-8 md:pr-20 md:pt-8 md:py-0'>
+                <img className='flex object-contain min-h-20 hidden md:flex'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
             </div>
         </div>
         <div className="">

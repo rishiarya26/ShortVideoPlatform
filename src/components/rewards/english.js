@@ -2,15 +2,15 @@
 import { withBasePath } from "../../config"
 
 const English = ()=> (
-        <div className='mt-4'>
+        <div className='md:mt-4'>
         <div className='flex w-full flex-col-reverse md:flex-row pb-4 md:pb-12'>
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Earn rewards with Hipi</h1>
                 <p className='md:w-3/4'>Hipi rewards is a token of appreciation from Hipi to our incredible community of users. 
                 Hipi rewards can be earned when a user participates in regular video watching tasks. Such video watching activities are usually time bound. Thus the user must watch videos within the specified time period to earn rewards. You can earn Hipi rewards by watching videos, creating videos, and sharing the video with your friends and families. Here are some easy ways to earn Hipi rewards and a classification of the level goals to be achieved for maximum benefit: </p>
             </div>
-            <div className=' w-full md:w-7/12 px-8 md:pr-20 pt-8 md:py-0'>
-                <img className='flex object-contain'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
+            <div className=' w-full md:w-7/12 px-8 md:pr-20 md:pt-8 md:py-0'>
+                <img className='flex object-contain min-h-20 hidden md:flex'alt="Supermonindia contest" src={withBasePath('images/rewards/hipi_rewards_sec_1.webp')} />
             </div>
         </div>
         <div className="">
