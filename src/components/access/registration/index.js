@@ -124,6 +124,8 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
 
   const submit = async (e) => {
     e.preventDefault();
+    toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
+    toTrackMixpanel("cta", {name: "signup", type: "submit"});
     if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
       try {
         setPending(true);

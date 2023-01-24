@@ -9,18 +9,15 @@ import { useEffect } from 'react';
 import { toTrackMixpanel } from '../../analytics/mixpanel/events';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
 
-export default function Login({ loading, setAuth, pageName, tabName=null }) {
+export default function Login({ loading, setAuth, pageName, tabName=null, toggleFlow }) {
   const { close } = useDrawer();
   const router = useRouter();
   const device = getItem('device-type')
 
   useEffect(()=>{
-    toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login'})
-    toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login'})
+    toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
+    toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
   },[])
-
-  // const {showSnackbar} = useSnackbar();
-  // useEffect(()=>{showSnackbar({message : 'working 3'})},[])
 
   const chooseComp = {
     mobile :   
@@ -57,7 +54,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null }) {
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton loading={loading} type='login' />
+        <GoogleButton loading={loading} type='login' toggleFlow={toggleFlow} />
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

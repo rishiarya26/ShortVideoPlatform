@@ -354,15 +354,33 @@ export const toTrackMixpanel = (type, value, item) => {
        },
        'logoutInitiated' :  ()=>{
         addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
         track('Logout Initiated', globalCommonEvents)
        },
        'logoutSuccess' :  ()=>{
         addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
         track('Logout Success', globalCommonEvents)
        },
        'logoutFailure' :  ()=>{
         addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
         track('Logout Failure', globalCommonEvents)
+       },
+       'emailIdSubmitted' :  ()=>{
+        addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
+        track('Email Id Submitted', globalCommonEvents)
+       },
+       'phoneNumberSubmitted' :  ()=>{
+        addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
+        track('Phone Number Submitted', globalCommonEvents)
+       },
+       'signupFormSubmitted' :  ()=>{
+        addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
+        track('Signup Form Submitted', globalCommonEvents)
        },
        'popupLaunch' :  ()=>{
         addPageTabName();
@@ -373,10 +391,9 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Popup Name'] = value?.name;
         globalCommonEvents['Popup CTAs'] = value?.ctaName;
-        globalCommonEvents['elemant'] = value?.elemant;
-        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
-        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
-
+        globalCommonEvents['element'] = value?.ctaName;
+        value?.playlistName && (globalCommonEvents['playlist Name'] = value?.playlistName || 'NA');
+        value?.playlistId && (globalCommonEvents['playlist ID'] = value?.playlistId || 'NA');
         track('Popup CTAs', globalCommonEvents);
        },
        'sessionStart' :  ()=>{

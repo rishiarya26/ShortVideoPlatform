@@ -13,7 +13,12 @@ import useSnackbar from '../../hooks/use-snackbar';
 export default function AuthOptions({showMessage, pageName, tabName=null}) {
   const [loading, setLoading] = useState(true);
   const [authMethod, setAuthMethod] = useState(null);
-    
+  const [flow, setFlow] = useState('login');
+
+  const toggleFlow = (value) => {
+    setFlow(value);
+  };
+
   const loaded = ()=>{
       console.log("lib google ended")
       setLoading(false)
@@ -34,13 +39,14 @@ export default function AuthOptions({showMessage, pageName, tabName=null}) {
     <>
     {
       authMethod ? (
-          <DeskLogin showMessage={showMessage} backToOptions={toLoginOptions} />
+          <DeskLogin flow={flow} toggleFlow={toggleFlow} showMessage={showMessage} backToOptions={toLoginOptions} />
       ) : (
         <Login
           loading={loading}
           setAuth={toLoginOptions}
           pageName={pageName}
           tabName={tabName}
+          toggleFlow={toggleFlow}
         />
       )
     }

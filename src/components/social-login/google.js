@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-// import { login } from "../../sources/social/google/login";
+import { useEffect } from "react";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
 import Google from "../commons/svgicons/google";
@@ -8,23 +7,17 @@ import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
-import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
-import { getAllItems, getItem, removeItem } from "../../utils/cookie";
-import Cookies from "../cookies";
+import { getItem, removeItem } from "../../utils/cookie";
 import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { verifyUserOnly } from "../../sources/auth/verify-user";
+import { useRouter } from "next/router";
 
-export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
-
-    // const mixpanel = (type) =>{
-    //     const mixpanelEvents = commonEvents();
-    //     mixpanelEvents['Method'] = 'Google';
-    //     track(`${type} Result`,mixpanelEvents );
-    //   }
-
+export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
+    const device = getItem('device-type');
+    const router = useRouter();
 
     const onTokenFetched = async(data)=>{
       toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:type,ctaName:'Google',elemant:'Google'})
@@ -54,7 +47,7 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
              toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
              const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
              if(verifyResponse?.data?.code === 0) {
-               const response = await login(data?.tokenId);
+               const response = await login({googleToken: data?.tokenId});
                if(response.status === 'success') {
                 showSnackbar({ message: 'Login Successful' })
                  close();
@@ -67,7 +60,13 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
               }
               console.log(response);
               } else if(verifyResponse?.data.code === 1) {
+                //TODO add register flow
                 const response = await registerUser(data?.tokenId);
+                if(device === "desktop") {
+                  toggleFlow("userHandle")
+                } else {
+                  router.push("/createUsername");
+                }
                 console.log("google register resp:", response);
               }
         }

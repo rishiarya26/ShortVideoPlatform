@@ -7,16 +7,11 @@ import Registration from '../access/registration';
 import UserHandle from "../access/userHandle";
 import ContentLanguageProfile from "../content-lang-profile";
 
-const Auth = ({ router, authType, backToOptions, showMessage }) => {
+const Auth = ({ router, authType, backToOptions, showMessage, flow, toggleFlow }) => {
   const [phoneData, setPhoneData] = useState({ input: '', countryCode: '91' });
   const [numberOrEmail, setNumberOrEmail] = useState("email");
-  const [flow, setFlow] = useState("login");
 
   const { t } = useTranslation();
-
-  const toggleFlow = (value) => {
-    setFlow(value);
-  }
 
   useEffect(() => {
     const updatePhoneData = { ...phoneData };

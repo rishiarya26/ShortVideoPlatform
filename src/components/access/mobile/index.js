@@ -36,25 +36,30 @@ export default function Mobile({
   };
 
   const submit = async () => {
+    toTrackMixpanel("cta", {name: "proceed", type: "submit"});
+    toTrackMixpanel(numberOrEmail === "mobile" ? "phoneNumberSubmitted" :"emailIdSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup Page"});
     try {
       const inputData = numberOrEmail === "mobile" ?  `${data?.countryCode}${data?.input}` : data.input;
       const inputKey = numberOrEmail === "mobile" ? "mobile" : "email"
       const response = await verifyUserOnly({type: numberOrEmail, [inputKey]: inputData});
       if (response?.data?.code === 0) {
-        await sendOTP({
-          ...(numberOrEmail === "mobile" ? {"phoneno": inputData} : {"email": inputData})
-        });
-        setSeconds(59);
-        fbq.defEvent('CompleteRegistration');
-         if(device === 'mobile'){ 
-            router && router?.push({
-            pathname: '/verify-otp',
-            query: { ref: 'login', ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
+        try{
+          await sendOTP({
+            ...(numberOrEmail === "mobile" ? {"phoneno": inputData} : {"email": inputData})
           });
-        } else {
-          setOtpStatus(true);
+          setSeconds(59);
+          fbq.defEvent('CompleteRegistration');
+           if(device === 'mobile'){ 
+              router && router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'login', ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
+            });
+          } else {
+            setOtpStatus(true);
+          }
+        } catch(e) {
+          //TODO: failed login mixpanel
         }
-        
         showMessage({ message: t('SUCCESS_OTP') });
       } else if(response?.data?.code === 1) {
           fbq.defEvent('CompleteRegistration');
@@ -68,7 +73,6 @@ export default function Mobile({
           }
       }
     } catch (e) {
-      // toTrackMixpane('loginFailure',{method:'phone', pageName: 'login'})
       showMessage({ message: 'Something went wrong. Please try again'});
     }
   }
@@ -140,6 +144,7 @@ export default function Mobile({
               type={numberOrEmail}
               value={data}
               showMessage={showMessage}
+              toggleFlow={toggleFlow}
             />
           )}
           {((device === "mobile") || (device === "desktop" && !otpStatus)) && <div className="mt-10">

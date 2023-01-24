@@ -13,7 +13,7 @@ const mixpanel = (type) =>{
 
 const registerUser = async(token) =>{
   try{
-    const resp = await register(token);
+    const resp = await register({googleToken: token});
     if(resp.status === 'success'){
       mixpanel('Login')
     }
@@ -26,7 +26,7 @@ const registerUser = async(token) =>{
 const getToken = async(response)=>{
  try {
   const googleToken = response?.credential;
-  const resp = await login(googleToken);
+  const resp = await login({googleToken, type: "oneTap"});
   console.log("resp*",resp)
   if(resp.status === 'success'){
     console.log("GOOGLE",resp)

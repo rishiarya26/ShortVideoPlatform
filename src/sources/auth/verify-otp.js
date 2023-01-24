@@ -1,6 +1,8 @@
 import { get, post } from 'network';
 import { getApiBasePath } from '../../config';
+import { ESK } from '../../constants';
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
 import { transformSuccess, transformError } from '../transform/auth/verify-otp';
 import { hipiLogin } from './login';
 
@@ -17,7 +19,14 @@ async function validateOTP({
          "guest_token": guestToken,
          "platform": "web",
         "version":"27.0202065"
-    },{'content-type' : 'application/json',"ref-origin-id":"2"});
+      },
+      {
+        'content-type' : 'application/json',
+        'device_id': getItem('guest-token'),
+        'esk': ESK,
+        'platform': 'hipi',
+      }
+    );
     resp.data.requestedWith = {
       info, otp, platform, guestToken
     };

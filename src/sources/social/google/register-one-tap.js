@@ -3,6 +3,8 @@ import { getApiBasePath } from '../../../config';
 import { apiMiddleWare } from '../../../network/utils';
 import { transformError, transformSuccess } from '../../transform/social/google/register-one-tap';
 import { hipiLogin } from '../../auth/login';
+import { getItem } from '../../../utils/cookie';
+import { ESK } from '../../../constants';
 
 const regitserUserOneTap = async ({
   token = ''
@@ -17,7 +19,9 @@ const regitserUserOneTap = async ({
     const resp = await post(apiPath, payload,
       {
         'content-type' : 'application/json',
-        'ref-origin-id': '2',
+        'device_id': getItem('guest-token'),
+        'esk': ESK,
+        'platform': 'hipi',
         'platform-hipi-google': 'hipi-android'
       });
     resp.data.status = 200;

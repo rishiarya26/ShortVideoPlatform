@@ -1,6 +1,8 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+import { ESK } from '../../constants';
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/verify-user';
 import { sendOTP } from './send-otp';
 
@@ -13,7 +15,9 @@ const getUserVerify = async (info) => {
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
-      'ref-origin-id': 2
+      'device_id': getItem('guest-token'),
+      'esk': ESK,
+      'platform': 'hipi',
     });
     response.data.status = 200;
     response.data.message = 'success';
@@ -36,7 +40,9 @@ const getUserVerifyOnly = async (payload) => {
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
-      'ref-origin-id': 2
+      'device_id': getItem('guest-token'),
+      'esk': ESK,
+      'platform': 'hipi',
     });
     response.data.status = 200;
     response.data.message = 'success';

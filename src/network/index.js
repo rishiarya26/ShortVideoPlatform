@@ -1,5 +1,7 @@
 import parseResponse from './parse-response';
 import { getUserId } from '../utils/user';
+import { getItem } from '../utils/cookie';
+import { ESK } from '../constants';
 
 const options = (methodName, body, headersOpt = {},formData) => {
   switch (headersOpt['content-type']) {

@@ -20,7 +20,7 @@ import CloseEye from "../../commons/svgicons/closeEye";
 
 const TIMER_LIMIT = 59;
 
-const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
+const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) => {
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(TIMER_LIMIT);
   const device = getItem('device-type')
@@ -81,18 +81,20 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
 
   const fetchData = {
     login: async () => {
+      toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
       const payload = device === "mobile" ? {
                 ...(mobile ? {"phoneno": phoneNo} : {"email": email})
               } : {
                 ...(type === "mobile" ? {"phoneno":  `${value?.countryCode}${value?.input}`} : {"email": value?.input})
               }
       try {
-        toTrackMixpanel('loginInitiated',{method:'phone', pageName: 'login'})
-        toTrackClevertap('loginInitiated',{method:'phone', pageName: 'login'})
+        toTrackMixpanel('loginInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
+        toTrackClevertap('loginInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
         const response = await verifyOTP({info: payload, otp});
         if (response?.data?.status === 200) {
           try{
-            toTrackMixpanel('loginSuccess',{method:'phone', pageName: 'login'})
+            toTrackMixpanel('loginSuccess', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
+            toTrackClevertap('loginSuccess', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
           }catch(e){
             console.error('mixpanel - login verify otp error',e)
           }
@@ -104,12 +106,13 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
             }catch(e){
               console.error('error in redirection',e)
             }
-          }else if(device === 'mobile'){
+          } else if(device === 'mobile'){
              router && router?.replace('/feed/for-you');
           }
         }
       } catch (error) {
-        toTrackMixpanel('loginFailure',{method:'phone', pageName: 'login'})
+        toTrackMixpanel('loginFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
+        toTrackClevertap('loginFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
         showMessage({ message: t('INCORRECT_OTP') });
       }
     },
@@ -124,14 +127,29 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage }) => {
         dob: formData?.dob
 
       }
-      try{ 
+      try{
+        toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
+        toTrackMixpanel('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+        toTrackClevertap('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
         const response = await registerUser(registerFormData);
-        if (response.data.code === 0) {
-         showMessage({message : 'Otp sent Successfully'});
-         setSeconds(TIMER_LIMIT);
-       }}catch(e){
+        if (response.data.status === 200) {
+          try{
+            toTrackMixpanel('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+            toTrackClevertap('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+          }catch(e){
+            console.error('mixpanel - login verify otp error',e)
+          }
+          if(device === 'desktop'){
+            toggleFlow('userHandle');
+         } else if(device === 'mobile'){
+            router && router?.replace('/createUername');
+         }
+        }
+      }catch(e){
         console.log("error", e);
         showMessage({message : 'Error sending otp'})
+        toTrackMixpanel('registerFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+        toTrackClevertap('registerFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
       }
      }
   }

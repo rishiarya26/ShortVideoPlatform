@@ -1,7 +1,9 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+import { ESK } from '../../constants';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 import { hipiLogin } from './login';
 
@@ -37,7 +39,14 @@ const register = async ({
       }
     };
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/registerWithOTPMobileorEmail`;
-    const resp = await post(apiPath, payload, {'content-type': 'application/json', 'ref-origin-id': 2});
+    const resp = await post(apiPath, payload,
+      {
+        'content-type': 'application/json',
+        'device_id': getItem('guest-token'),
+        'esk': ESK,
+        'platform': 'hipi',
+      }
+    );
     resp.data.status = 200;
     resp.data.message = 'success';
     const accessToken = resp?.data?.token;
