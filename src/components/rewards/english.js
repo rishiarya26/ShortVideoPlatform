@@ -1,7 +1,8 @@
+/*eslint-disable @next/next/no-img-element */
 import { withBasePath } from "../../config"
 
 const English = ()=> (
-        <div className=' md:mt-24'>
+        <div className='mt-4'>
         <div className='flex w-full flex-col-reverse md:flex-row pb-4 md:pb-12'>
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Earn rewards with Hipi</h1>
@@ -20,17 +21,17 @@ const English = ()=> (
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>1</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 10 videos</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 25 videos</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4 md:mx-8'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>2</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 20 videos</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 50 videos</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>3</p>
-                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>On viewing 30 videos</p>
+                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>On viewing 75 videos</p>
                 </div>
                 </div>
    
