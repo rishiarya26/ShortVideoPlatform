@@ -216,7 +216,9 @@ function Users({
   }, [fetchState]);
 
   const handleBackClick = () => {
-    router.back();
+    const previousPage = window.sessionStorage.getItem('previous-page') || null;
+    console.log("back",previousPage,window.sessionStorage.getItem('previous-page'))
+    previousPage ? router?.back() : router?.push("/feed/for-you")
   };
 
   const followUser = async(followerId,userId, follow) =>{
@@ -274,7 +276,7 @@ console.log("onClick follow btn issue ",e);
       rightButton: {
         others:   
       <div
-        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>share({id: id, type:'profile'}))}
+        onClick={(deviceType === 'desktop') ? () => show('Share', null, 'medium'): (deviceType === 'mobile') && (()=>share({id: userHandle, type:'profile'}))}
         className="flex relative py-2  px-3 text-center items-end flex-col"
       >
       <ShareComp type={'profile'}/>

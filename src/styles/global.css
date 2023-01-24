@@ -1434,3 +1434,17 @@ input:checked + .slider_new:before {
   height: 32.3vw;
   max-height: 466px;
 }
+
+.descriptionSwiper {
+  overflow-y: scroll !important;
+  height: 200px !important;
+}
+
+.desc_h{
+  height: 78vh;
+}
+@media screen and (max-height: 700px) {
+  .desc_h{
+    height: 67vh;
+  }
+}

@@ -225,7 +225,9 @@ function HashTagFeed({ router }) {
   };
 
   const handleBackClick = () => {
-    router?.back();
+    const previousPage = window.sessionStorage.getItem('previous-page') || null;
+    console.log("back",previousPage,window.sessionStorage.getItem('previous-page'))
+    previousPage ? router?.back() : router?.push("/feed/for-you")
   };
 
   const getCanShop = async () => {
