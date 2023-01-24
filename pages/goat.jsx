@@ -23,9 +23,9 @@ export default function Hipi() {
   <>
   <SeoMeta
         data={{
-          title: 'Hipi GOAT contest - Singing Talent hunt.',
+          title: 'Hipi GOAT contest Season 2 - Singing Talent hunt',
           // image: item?.thumbnail,
-          description: 'Participate in Hipi GOAT contest on Hipi and win weekly cash awards. Top performers will get coaching sessions from Shilpa Rao and Rupali Jagga. And opportunity to perform at Finale episode of Zee Saregamapa.',
+          description: 'Season 2 of Hipi GOAT is an upcoming nationwide digital singing contest, packed with fun-filled, pitch and video perfect challenges & get a golden ticket to record a music video with Zee music company.Participate Now.',
           canonical: url && getCanonicalUrl(url),
           // openGraph: {
           //   title: 'HiPi - Indian Short Video Platform for Fun Videos, Memes & more',
@@ -53,7 +53,8 @@ export default function Hipi() {
           // }
         }}
       />
-    <ChooseComp mobile={<GoatMob/>} desktop={<GoatDesk/>}/>
+      <GoatDesk/>
+    {/* <ChooseComp mobile={<GoatMob/>} desktop={<GoatDesk/>}/> */}
   </>
   )
 }

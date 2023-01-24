@@ -83,17 +83,17 @@ site_name: 'Hipi'
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>1</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 10 videos</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 25 videos</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4 md:mx-8'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>2</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 20 videos</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>On viewing 50 videos</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>3</p>
-                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>On viewing 30 videos</p>
+                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>On viewing 75 videos</p>
                 </div>
                 </div>
    
