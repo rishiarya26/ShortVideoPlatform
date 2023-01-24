@@ -20,16 +20,22 @@ const closeDropdown = ()=>{
     setShowList(false);
 }
 
-// useEffect(()=>{
-//     const closeDrop = e =>{
-//      if(e?.path?.[0] !== btnRef?.current && e?.path?.[0] !== btnContent?.current &&
-//          e?.path?.[0] !== searchInput?.current){
-//         closeDropdown();
-//      }   
-//     }
-//     document?.body?.addEventListener('click',closeDrop);
-//     return ()=> document?.body?.removeEventListener('click',closeDrop);
-// },[])
+useEffect(()=>{
+    const closeDrop = e =>{
+      
+      if (
+        e?.target !== btnRef?.current &&
+        e?.target !== btnContent?.current &&
+        e?.target !== searchInput?.current &&
+        e?.target?.parentElement !== btnRef?.current
+      ) {
+        closeDropdown();
+      }
+      
+    }
+    document?.body?.addEventListener('click',closeDrop);
+    return ()=> document?.body?.removeEventListener('click',closeDrop);
+},[])
 
 useEffect(() => {
   console.log(showList)
@@ -53,7 +59,7 @@ useEffect(() => {
             <ListWithSearch
               data= {countryCodes && countryCodes}
               onValueChange={onValueChange}
-              type ='countryCode' 
+              type ='countryCode'
               closeDropdown={closeDropdown}
               searchInputRef={searchInput}
             />
