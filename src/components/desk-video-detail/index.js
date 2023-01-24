@@ -156,6 +156,7 @@ return (
          userName={userName}
          playlistId={playlistId}
          playlistName={playlistName}
+         description={description}
       />
       {NavigationBtns[comp]}
    </div>

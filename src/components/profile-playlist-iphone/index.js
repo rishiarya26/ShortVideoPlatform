@@ -151,7 +151,7 @@ function ProfilePlaylistIphone({ router }) {
     if (initialLoadComplete) {
       toTrackMixpanel(
         "impression",
-        { playlistId: playlistid, playlistName: playListName },
+        { playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
     }
@@ -173,7 +173,7 @@ function ProfilePlaylistIphone({ router }) {
     if (initialPlayStarted === true) {
       toTrackMixpanel(
         "play",
-        { pageName: pageName, playlistId: playlistid, playlistName: playListName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
       ToTrackFbEvents("play", {
@@ -345,13 +345,14 @@ function ProfilePlaylistIphone({ router }) {
           watchTime: "Complete",
           duration: duration,
           durationWatchTime: duration,
-          playlistId: playlistid, playlistName: playListName
+          playlistId: playlistid, playlistName: playListName,
+          isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
         },
         items?.[videoActiveIndex]
       );
       toTrackMixpanel(
         "replay",
-        { pageName: pageName, duration: duration, durationWatchTime: duration, playlistId: playlistid, playlistName: playListName },
+        { pageName: pageName, duration: duration, durationWatchTime: duration, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
 
@@ -555,7 +556,7 @@ function ProfilePlaylistIphone({ router }) {
               setShowSwipeUp({ count: 1, value: false });
               toTrackMixpanel(
                 "impression",
-                { pageName: pageName, playlistId: playlistid, playlistName: playListName },
+                { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
                 items?.[videoActiveIndex]
               );
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
@@ -570,7 +571,8 @@ function ProfilePlaylistIphone({ router }) {
                     duration:
                       preVideoDurationDetails?.videoDurationDetails
                         ?.totalDuration,
-                        playlistId: playlistid, playlistName: playListName
+                    playlistId: playlistid, playlistName: playListName,
+                    isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
                   },
                   items?.[videoActiveIndex]
                 );

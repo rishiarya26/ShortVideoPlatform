@@ -11,7 +11,7 @@ import CircularProgress from '../commons/circular-loader'
 import SnackCenter from "../commons/snack-bar-center";
 import EmbedSeekbar from "../emded-seekbar";
 
-const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, checkSound, nosound, videoSound, userId, contentId, userName, playlistId="NA", playlistName="NA"})=>{
+const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, checkSound, nosound, videoSound, userId, contentId, userName, playlistId="NA", playlistName="NA", description})=>{
     const [seekedPercentage, setSeekedPercentage] = useState(0);
     const [initialPlayStarted, setInitialPlayStarted] = useState(false);
     const [playing, setPlaying] = useState(true);
@@ -32,10 +32,12 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, ch
         checkSound && checkSound();
     },[url])
 
+    console.log("debug", playlistId, playlistName, description)
+
     useEffect(() => {
       if(initialPlayStarted) {
         toTrackClevertap('play', {pageName: "video detail"}, {userId, userName, content_id: contentId});
-        toTrackMixpanel('play', {pageName: "video detail", playlistId, playlistName}, {userId, userName, content_id: contentId})
+        toTrackMixpanel('play', {pageName: "video detail", playlistId, playlistName, isPlaylist: !!playlistName,description}, {userId, userName, content_id: contentId})
       }
     }, [initialPlayStarted])
 

@@ -142,8 +142,10 @@ export default function SingleVideo(props){
     mixpanelEvents['UGC Genre'] = props?.genre || 'NA';
     mixpanelEvents['UGC Description'] = props?.description || 'NA';
     mixpanelEvents['Page Name'] = 'Video';
-    mixpanelEvents['playlistId'] = props?.playlistId;
-    mixpanelEvents['playlistName'] = props?.playlistName;
+    mixpanelEvents['playlist Id'] = props?.playlistId;
+    mixpanelEvents['playlist Name'] = props?.playlistName;
+    mixpanelEvents['is Playlist'] = !!props?.playlistName;
+    mixpanelEvents['description'] = props?.description;
 
     type && toTrack?.[type] && toTrack?.[type]();
   }

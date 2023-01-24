@@ -203,6 +203,8 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
         eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
         eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();
@@ -222,6 +224,8 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
         eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
         eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Play', eventsWithIds)},
       'share' : () => track('UGC Share Click', commonWithIds()),
       'replay' : () => {
@@ -229,6 +233,8 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
         eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
         eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Replayed', eventsWithIds)},
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
@@ -246,6 +252,8 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
         eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
         eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Watch Time',eventsWithIds)
       },
       'cta' : ()=>{
