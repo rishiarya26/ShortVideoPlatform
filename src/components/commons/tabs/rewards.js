@@ -24,9 +24,13 @@ const RewardsTabs = ({ items, selectedIndex = 0, onTabChange }) => {
           </div>
       )) }
     </div> */}
-    <div className='relative pr-4'>
-      <div className='bg-gray-100 rounded-md px-4 py-2 flex items-center cursor-pointer'>
-       <div className='pr-2'> <Language/> </div>English <Expand/>
+    <div className='absolute top-4 md:top-20 right-4'>
+      <div className='border border-gray-300 bg-white rounded-md px-4  flex flex-col'>
+       <div className='flex  items-center cursor-pointer py-2'><div className='pr-2'> <Language/> </div>English <Expand/></div>
+       <div className='flex flex-col'>
+          {/* <div className='border-b border-gray-300 flex justify-center py-1'>English</div> */}
+          <div className='flex border-t border-gray-300 justify-center py-2'>Hindi</div>
+       </div>
       </div>
     </div>
     </div>
