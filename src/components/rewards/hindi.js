@@ -7,7 +7,7 @@ const Hindi=()=> (
         <div className='flex w-full flex-col-reverse md:flex-row pb-4 md:pb-12'>
             <div className='w-full md:w-1/2 flex-col flex py-6 md:pl-40 md:p-8 px-8 justify-center '>
                 <h1 className='text-3xl text-center md:text-left reward_font font-bold font-gray-700 pb-2 mt-4 mb-2'>Hipi करो, Rewards जीतो</h1>
-                <p className='md:w-3/4'>Hipi Reward Program एक इनाम कार्यक्रम है। इसकी मदद से आप Hipi app पर coins जीत सकते हैं जो आपको rewards दिलाएगा। Hipi app पर रोज़ाना videos देखकर, users rewards कमा सकते हैं लेकिन videos देखने की ये गतिविधि समयबद्ध है। एक निश्चित समय के भीतर videos को देखकर, users coins इकठ्ठा कर सकते हैं। आप सिर्फ videos देखकर ही नहीं बल्कि videos बनाकर और अपने दोस्तों और परिवार के साथ videos share करके भी Hipi rewards पा सकते हैं। ऐसा करने पर, आपको ज़्यादा coins और फ़ायदे मिलेंगे। जैसे-जैसे आपका level बढ़ेगा, coins बढ़ते जाएंगे। </p>
+                <p className='md:w-3/4'>Hipi Reward Program एक इनाम कार्यक्रम है। Hipi app पर रोज़ाना videos देखकर, users rewards कमा सकते हैं लेकिन videos देखने की ये गतिविधि समयबद्ध है। एक निश्चित समय के भीतर videos को देखकर, users coins इकठ्ठा कर सकते हैं। आप सिर्फ videos देखकर ही नहीं बल्कि videos बनाकर और अपने दोस्तों और परिवार के साथ videos share करके भी Hipi rewards पा सकते हैं। ऐसा करने पर, आपको ज़्यादा coins और फ़ायदे मिलेंगे। जैसे-जैसे आपका level बढ़ेगा, coins बढ़ते जाएंगे। </p>
                 <p className='md:w-3/4'>Hipi rewards कमाने के लिए, कुछ आसान तरीके आपको अधिकतम लाभ दिला सकते हैं जिसका वर्गीकरण यहां दिया गया है:</p>
                 
             </div>
