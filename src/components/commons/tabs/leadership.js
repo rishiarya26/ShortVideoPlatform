@@ -3,8 +3,6 @@ import React from 'react';
 const Tabs = ({ items, selectedIndex = 0, onTabChange }) => {
     const onTabClick = (selected)=>{
         onTabChange(selected);
-        // console.log(selected)
-        // console.log(items[selected])
     }
   return (
     <div className="flex items-center w-full  mt-4 mb-2 text-gray-400 justify-center font-semibold">

@@ -127,8 +127,8 @@ if(noShow) return false;
           show('', playListModal, 'medium', {data,  fetchMore, activeVideoId: videoId || activeVideoId, playlistName, callbackForIos, hideOverLay: true, playlistId:playlistId ?? piD })
         }}
         >
-          <div className='flex items-center'>
-          <PlaylistWhite/> 
+          <div className='flex items-center '>
+          <div className='animate-bounce'><PlaylistWhite/> </div>
           <p className="text-sm ml-2">Playlist <span className='font-black'>&#x2022;</span> {playlistName}</p>
           </div>
        
