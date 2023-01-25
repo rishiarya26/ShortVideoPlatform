@@ -498,6 +498,8 @@ function ProfileFeedIphone({ router }) {
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
+                      playlistId={item?.playlistId || "NA"}
+                      playlistName={item?.playlistName || "NA"}
                       // showBanner={showBanner}
                     />
 

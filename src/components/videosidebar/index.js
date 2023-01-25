@@ -41,7 +41,7 @@ function VideoSidebar({
   type, profilePic, likes, videoOwnersId, handleSaveLook, saveLook, canShop, saved,
   profileFeed, videoId, userName,activeVideoId,comp, pageName,  shopType,
   charmData,onCloseChamboard,creatorId, tabName = null,adCards,showBanner,isAdShowVisible, campaignId="NA",
-  correlationID=null, explain=null, userId=null,vmaxAd
+  correlationID=null, explain=null, userId=null,vmaxAd, playlistName="NA", playlistId="NA"
 }) {
 
   const [isLiked, setIsLiked] = useState({like : false, reactionTime : 'past'});
@@ -67,7 +67,7 @@ function VideoSidebar({
      getVideoReactions(socialId, 'now', 'add');
      /* mixpanel - like */
      toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
-     toTrackMixpanel('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+     toTrackMixpanel('like',{pageName:compName,tabName:(tabName && tabName) || null, playlistId, playlistName, isPlaylist: (playlistId !== "NA" ? true : false)},{userId:videoOwnersId,content_id:videoId,userName:userName})
      toTrackClevertap('like',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
      if(typeof window !== 'undefined' && window.VMAXSDK){
       let customData = {};
@@ -355,7 +355,7 @@ const handleSaveMoments = () =>{
           <div
             onClick={
               // (value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
-              () =>
+              () =>{
                 share({
                   id: videoId,
                   creatorId: videoOwnersId,
@@ -363,7 +363,9 @@ const handleSaveMoments = () =>{
                   pageName: pageName,
                   tabName: tabName,
                   type: "video",
-                })
+                  playlistId,
+                  playlistName
+                })}
               // )
             }
             className={`${
@@ -431,7 +433,7 @@ const handleSaveMoments = () =>{
                 getVideoReactions(socialId, 'now', 'delete')
                 /* mixpanel - dislike */
                 toTrackMixpanel('cta',{pageName:compName,tabName:(tabName && tabName) || null,name: 'like', type: 'Button'},{userId:videoOwnersId,content_id:videoId,userName:userName})
-                toTrackMixpanel('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
+                toTrackMixpanel('unLike',{pageName:compName,tabName:(tabName && tabName) || null, playlistId, playlistName, isPlaylist: (playlistId !== "NA" ? true : false)},{userId:videoOwnersId,content_id:videoId,userName:userName})
                 toTrackClevertap('unLike',{pageName:compName,tabName:(tabName && tabName) || null},{userId:videoOwnersId,content_id:videoId,userName:userName})
                 if(typeof window !== 'undefined' && window.VMAXSDK){
                   vmaxAd && window.VMAXSDK.App.setCustomData({
@@ -485,7 +487,18 @@ const handleSaveMoments = () =>{
       <div
         onClick={
           // (value === 'desktop') ? () => show('Share', null, 'medium'): (value === 'mobile') && (
-          ()=>share({id:videoId,creatorId:videoOwnersId, userName:userName, pageName:pageName, tabName:tabName, type:'video'})
+          ()=>{
+            share({
+              id: videoId,
+              creatorId: videoOwnersId,
+              userName: userName,
+              pageName: pageName,
+              tabName: tabName,
+              type: "video",
+              playlistId,
+              playlistName
+            })
+          }
           // )
         }
         className={`${

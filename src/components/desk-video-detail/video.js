@@ -32,8 +32,6 @@ const Video = ({url, firstFrame, comp, videoId, convivaItemInfo, muted=false, ch
         checkSound && checkSound();
     },[url])
 
-    console.log("debug", playlistId, playlistName, description)
-
     useEffect(() => {
       if(initialPlayStarted) {
         toTrackClevertap('play', {pageName: "video detail"}, {userId, userName, content_id: contentId});

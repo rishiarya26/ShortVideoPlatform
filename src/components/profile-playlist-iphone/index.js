@@ -697,6 +697,8 @@ function ProfilePlaylistIphone({ router }) {
                     videoSound={item?.videoSound}
                     campaignId={shop?.campaignId}
                     setMuted={setMuted}
+                    playlistId={item?.playlistId || "NA"}
+                    playlistName={item?.playlistName || "NA"}
                     // showBanner={showBanner}
                   />
                 ) : (

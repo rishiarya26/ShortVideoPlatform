@@ -227,7 +227,14 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['is Playlist'] = value?.isPlaylist || false;
         eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Play', eventsWithIds)},
-      'share' : () => track('UGC Share Click', commonWithIds()),
+      'share' : () =>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+        track('UGC Share Click', eventsWithIds)
+      },
       'replay' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
@@ -269,8 +276,22 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         track('Save Look', globalCommonEvents)},
-      'like' : ()=> track('UGC Liked', commonWithIds()),
-      'unLike' : ()=> track('UGC Unliked', commonWithIds()),
+      'like' : ()=>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+        track('UGC Liked', eventsWithIds);
+      },
+      'unLike' : ()=>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+         track('UGC Unliked', eventsWithIds)
+        },
       'follow' : ()=> track('User Followed', commonWithIds()),
       'unFollow' : ()=> track('User Unfollowed', commonWithIds()),
   /**** Shop ****/     

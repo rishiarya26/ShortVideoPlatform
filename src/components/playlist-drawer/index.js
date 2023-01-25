@@ -83,7 +83,6 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
         
         <div id="playlistDrawer" className='overflow-y-auto'>
           {data?.map((item, index)=>{
-            console.log("debug", item)
             return(
               <div
               id={`episode_${item?.content_id}`}

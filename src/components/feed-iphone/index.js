@@ -796,6 +796,8 @@ console.error('errorrr',e)
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
+                      playlistId={item?.playlistId || "NA"}
+                      playlistName={item?.playlistName || "NA"}
                     />:<div></div>}
                   </SwiperSlide>
                 )) : (

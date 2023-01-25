@@ -808,6 +808,8 @@ function Feed({ router }) {
                       explain={item?.explain || null}
                       correlationID={item?.correlationID || null}
                       profileId=""
+                      playlistId={item?.playlistId || "NA"}
+                      playlistName={item?.playlistName || "NA"}
                     />}
                   </SwiperSlide>
                 )) : (
