@@ -17,6 +17,11 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
     const [idx, setIdx] = useState(0);
     const { show } = useDrawer();
     const labelThereOrNot = adData?.filter((data) => data?.card_labels).length > 0 ? true : false;
+    //const updatedProductUrl = adData[idx]?.product_url?.includes("utm_source") ? `${adData[idx]?.product_url}&utm_platform=web` : adData[idx]?.product_url
+
+    function toCreateProductUrl(val){
+     return val?.includes("utm_source") ? `${val}&utm_platform=web` : val
+    }
 
 
     const touchEnable = () => {
@@ -57,7 +62,7 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
                 {
                   content_id: id,
                   productId: adData[idx]?.card_id,
-                  productUrl: adData[idx]?.product_url,
+                  productUrl: toCreateProductUrl(adData[idx]?.product_url),
                   brandName: getBrand(adData[idx]?.product_url),
                   campaignId
                 }
@@ -68,7 +73,7 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
                 {
                   content_id: id,
                   productId: adData[idx]?.card_id,
-                  productUrl: adData[idx]?.product_url,
+                  productUrl: toCreateProductUrl(adData[idx]?.product_url),
                   brandName: getBrand(adData[idx]?.product_url),
                   campaignId
                 }
@@ -84,7 +89,7 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
                 {
                   content_id: id,
                   productId: adData[idx+1]?.card_id,
-                  productUrl: adData[idx+1]?.product_url,
+                  productUrl: toCreateProductUrl(adData[idx+1]?.product_url),
                   brandName: getBrand(adData[idx+1]?.product_url),
                   campaignId
                 }
@@ -95,7 +100,7 @@ export default function SwipeEnabler ({ id, feed=false, adData, campaignId, page
                 {
                   content_id: id,
                   productId: adData[idx+1]?.card_id,
-                  productUrl: adData[idx+1]?.product_url,
+                  productUrl: toCreateProductUrl(adData[idx+1]?.product_url),
                   brandName: getBrand(adData[idx+1]?.product_url),
                   campaignId
                 }

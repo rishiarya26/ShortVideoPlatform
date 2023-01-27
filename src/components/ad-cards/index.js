@@ -30,7 +30,8 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
       <div
       onClick={
         ()=> {
-          const updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url
+          const updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url;
+          let productName = data?.subsub_category;
           if (comp === "feed") {
             toTrackMixpanel(
               "monetisationProductClick",
@@ -39,6 +40,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 content_id: videoId,
                 productId: data?.card_id,
                 productUrl: updatedProductUrl,
+                productName,
                 brandName: getBrand(updatedProductUrl),
                 campaignId,
                 category: data?.category,
@@ -77,6 +79,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 content_id: videoId,
                 productId: data?.card_id,
                 productUrl: updatedProductUrl,
+                productName,
                 brandName: getBrand(updatedProductUrl),
                 campaignId
               }
@@ -90,6 +93,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 content_id: videoId,
                 productId: data?.card_id,
                 productUrl: updatedProductUrl,
+                productName,
                 brandName: getBrand(updatedProductUrl),
                 campaignId,
                 category: data?.category,
@@ -106,6 +110,7 @@ const CardElement = ({data, pageName, tabName, videoId, comp, campaignId, show,a
                 content_id: videoId,
                 productId: data?.card_id,
                 productUrl: updatedProductUrl,
+                productName,
                 brandName: getBrand(updatedProductUrl),
                 campaignId
               }

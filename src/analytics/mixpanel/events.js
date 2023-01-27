@@ -265,6 +265,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -280,6 +281,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -294,7 +296,8 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId || 'NA';
-        globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -309,6 +312,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
