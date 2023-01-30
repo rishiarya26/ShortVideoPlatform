@@ -105,6 +105,9 @@ function SearchFeed({ router }) {
     const finalTData = []
     widgetList.forEach((d)=>{
         const video = d?.video;
+        const playlists = video?.playlists;
+        const playlistArr = playlists.map((playlist) => ({name: playlist?.name, id: playlist?.id}));
+        video.playlists = playlistArr?.[0];
         video.selected_video_url = selectVideoUrl(video);;
         finalTData.push(video);
     })
@@ -233,6 +236,10 @@ function SearchFeed({ router }) {
   const toTrackMixpanel = (activeIndex, type, value) => {
     const item = items[activeIndex];
     const mixpanelEvents = commonEvents();
+    mixpanelEvents['playlist Name'] = item?.playlists?.name || "NA";
+    mixpanelEvents['playlist Id'] = item?.playlists?.id ||"NA";
+    mixpanelEvents['is Playlist'] = !!item?.playlists?.id;
+    mixpanelEvents['description'] = item?.content_description || "NA";
 
     const toTrack = {
       'impression' : ()=> track('UGC Impression', mixpanelEvents),
@@ -396,6 +403,8 @@ function SearchFeed({ router }) {
              adData={shop?.adData}
              videoSound={(item?.sound && (!isObjectEmpty(item.sound) === false)) ? false : true}
              campaignId={shop?.campaignId}
+             playlistId={item?.playlists?.id || "NA"}
+             playlistName={item?.playlists?.name || "NA"}
           />
           </SwiperSlide>
           )})}

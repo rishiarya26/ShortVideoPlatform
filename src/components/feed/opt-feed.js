@@ -459,6 +459,8 @@ function Feed({ router }) {
                       videoActiveIndex={videoActiveIndex}
                       initialPlayStarted={initialPlayStarted}
                       currentT={videoDurationDetails?.currentT}
+                      playlistId={videoDurationDetails?.playlistId || "NA"}
+                      playlistName={videoDurationDetails?.playlistName || "NA"}
                       // setMuted={setMuted}
                     />}
                   </SwiperSlide>

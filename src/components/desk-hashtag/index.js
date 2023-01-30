@@ -417,8 +417,10 @@ if(item?.indexOf('#')){
         socialId={videoDetailData?.getSocialId}
         userVerified={userVerified === 'Verified' ? 'verified' : ''}
         videoSound={videoDetailData?.videoSound}
-         noSound={noSound}
-         checkNoSound={checkNoSound}
+        noSound={noSound}
+        checkNoSound={checkNoSound}
+        playlistName={videoDetailData?.playlistId || "NA"}
+        playlistId={videoDetailData?.playlistName || "NA"}
         />
       </div>
       }
