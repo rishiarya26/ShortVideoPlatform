@@ -75,9 +75,9 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
             {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
         </div>
         <div className="flex w-full justify-between p-4 items-center">
-            <div className="flex flex-col w-full">
+           <div className="flex flex-col w-full">
                 <p className="text-xs text-gray-600">{subTitle}</p>
-                <div className="flex justify-between ites-center w-full pt-2">
+                 {campaignId?.length > 0 &&<div className="flex justify-between ites-center w-full pt-2">
                     <div className="flex items-center">
                         {shopNameImg  ? 
                         <div className="max-h-12 ad_logo"> <Img data={shopNameImg}/> </div>
@@ -96,7 +96,7 @@ const CharmCardRecipe = ({thumbnail, title, shopName, shopLink, category, headin
                         <div onClick={onProductClick} className="flex px-4 py-2 pr-0">
                             <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
                         </div>
-                </div>
+                </div>}
             </div>
         </div>
     </div>
