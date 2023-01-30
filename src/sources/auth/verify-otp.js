@@ -10,6 +10,7 @@ async function validateOTP({
   info, otp, guestToken = 'null', platform = 'web', cookieId = '', version = '2.50.19', type="mobile"
 }) {
   let response = {};
+  const deviceId = 'device' || getItem('guest-token');
   try {
     /* eslint-disable max-len */
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/verifyotp`;
@@ -22,7 +23,7 @@ async function validateOTP({
       },
       {
         'content-type' : 'application/json',
-        'device_id': getItem('guest-token'),
+        'device_id': deviceId,
         'esk': ESK,
         'platform': 'hipi',
       }

@@ -6,10 +6,8 @@ import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import useDrawer from '../../../hooks/use-drawer';
 import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
-import { resetPasswordMobile } from '../../../sources/auth/forgot-pass-mobile';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import { verifyOTP } from '../../../sources/auth/verify-otp';
-import { verifyUser } from '../../../sources/auth/verify-user';
 import { getItem } from '../../../utils/cookie';
 import { BackButton } from '../../commons/button/back';
 import { SubmitButton } from '../../commons/button/submit';
@@ -48,6 +46,8 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
     if(device === 'mobile' && ref === 'signup' && Object.keys(jsonFormData).length > 0) {
       const jsonFormData = JSON.parse(formDataParam);
       setFormData({...jsonFormData});
+    } else if(device === 'desktop' && typeRef === 'signup' && Object.keys(value).length > 0) {
+      setFormData({...value});
     }
   }, [])
 
@@ -65,6 +65,8 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
       phoneNo = `${value?.countryCode}${value?.input}`;
     }
   }
+
+  const method = device === "mobile" ? (mobile ? "phoneno": "email") : (type === "mobile" ? "phoneno" : "email");
 
   const disable = {
     login: (phoneNo?.length === 0 || otp?.length === 0),
@@ -88,13 +90,13 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
                 ...(type === "mobile" ? {"phoneno":  `${value?.countryCode}${value?.input}`} : {"email": value?.input})
               }
       try {
-        toTrackMixpanel('loginInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
-        toTrackClevertap('loginInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
-        const response = await verifyOTP({info: payload, otp});
+        toTrackMixpanel('loginInitiated', {method, pageName: "Login or Signup screen"})
+        toTrackClevertap('loginInitiated', {method, pageName: "Login or Signup screen"})
+        const response = await verifyOTP({info: payload, otp, type: method === "phoneno" ? "mobile" : "email"});
         if (response?.data?.status === 200) {
           try{
-            toTrackMixpanel('loginSuccess', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
-            toTrackClevertap('loginSuccess', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
+            toTrackMixpanel('loginSuccess', {method, pageName: "Login or Signup screen"})
+            toTrackClevertap('loginSuccess', {method, pageName: "Login or Signup screen"})
           }catch(e){
             console.error('mixpanel - login verify otp error',e)
           }
@@ -111,8 +113,8 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
           }
         }
       } catch (error) {
-        toTrackMixpanel('loginFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
-        toTrackClevertap('loginFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup screen"})
+        toTrackMixpanel('loginFailure',{method, pageName: "Login or Signup screen"})
+        toTrackClevertap('loginFailure',{method, pageName: "Login or Signup screen"})
         showMessage({ message: t('INCORRECT_OTP') });
       }
     },
@@ -129,13 +131,13 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
       }
       try{
         toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
-        toTrackMixpanel('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
-        toTrackClevertap('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+        toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
+        toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
         const response = await registerUser(registerFormData);
         if (response.data.status === 200) {
           try{
-            toTrackMixpanel('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
-            toTrackClevertap('registerInitiated', {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+            toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
+            toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
           }catch(e){
             console.error('mixpanel - login verify otp error',e)
           }
@@ -147,9 +149,9 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
         }
       }catch(e){
         console.log("error", e);
-        showMessage({message : 'Error sending otp'})
-        toTrackMixpanel('registerFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
-        toTrackClevertap('registerFailure',{method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup screen"})
+        showMessage({message : 'OTP incorrect or expired'})
+        toTrackMixpanel('registerFailure',{method, pageName: "Signup screen"})
+        toTrackClevertap('registerFailure',{method, pageName: "Signup screen"})
       }
      }
   }

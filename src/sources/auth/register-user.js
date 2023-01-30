@@ -16,6 +16,7 @@ const register = async ({
     birthday: new Date(dob).getFullYear(),
     gender: gender
   }
+  const deviceId = 'device' || getItem('guest-token');
   let response = {};
   // TO-DO take care of aid, guestoken & verison_number
   try {
@@ -42,14 +43,14 @@ const register = async ({
     const resp = await post(apiPath, payload,
       {
         'content-type': 'application/json',
-        'device_id': getItem('guest-token'),
+        'device_id': deviceId,
         'esk': ESK,
         'platform': 'hipi',
       }
     );
     resp.data.status = 200;
     resp.data.message = 'success';
-    const accessToken = resp?.data?.token;
+    const accessToken = resp?.data?.access_token;
     const refreshToken = resp?.data?.refresh_token;
     // setTimeout(async()=>{
       response = await hipiLogin({ accessToken, refreshToken, ...(type === "email" ? {"email": value} : {"mobile": value}), signupData});

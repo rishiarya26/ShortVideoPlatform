@@ -6,16 +6,22 @@ import { getItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/verify-user';
 import { sendOTP } from './send-otp';
 
+function getEsk(deviceId){       
+  var sc = 'pnwaz';       
+  return btoa(deviceId + '__' + sc + '__' + new Date().getTime())
+}
+
 const getUserVerify = async (info) => {
   let response = {};
   let value = info.type === 'mobile' ? 'mobile' : 'email';
+  const deviceId = 'device' || getItem('guest-token');
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, info[value]);
-    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
+    const apiPath = `${getApiBasePath('preprodUser')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
-      'device_id': getItem('guest-token'),
+      'device_id': deviceId,
       'esk': ESK,
       'platform': 'hipi',
     });
@@ -34,13 +40,14 @@ const getUserVerify = async (info) => {
 const getUserVerifyOnly = async (payload) => {
   let response = {};
   let value = payload.type === 'mobile' ? 'mobile' : 'email';
+  const deviceId = 'device' || getItem('guest-token');
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, payload[value]);
-    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/getUserToken`;
+    const apiPath = `${getApiBasePath('preprodUser')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
-      'device_id': getItem('guest-token'),
+      'device_id': deviceId,
       'esk': ESK,
       'platform': 'hipi',
     });

@@ -9,6 +9,7 @@ async function dispatchOTP(info) {
   let response = {};
   try {
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/sendotp`;
+    const deviceId = 'device' || getItem('guest-token');
     response = await post(apiPath,{
           ...info,
           "platform_name": "web",
@@ -16,7 +17,7 @@ async function dispatchOTP(info) {
       },
       {
         'content-type' : 'application/json',
-        'device_id': getItem('guest-token'),
+        'device_id': deviceId,
         'esk': ESK,
         'platform': 'hipi',
       }

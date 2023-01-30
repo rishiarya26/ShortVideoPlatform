@@ -90,10 +90,10 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
       'guest-token': getUserId(),
     });
     const tokens = {
-      shortsAuthToken: response.data.shortsAuthToken,
+      shortsAuthToken: response?.data?.shortsAuthToken,
       accessToken,
       refreshToken,
-      getSocialToken: response.data.getSocialToken
+      getSocialToken: response?.data?.getSocialToken || "NA"
     };
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
@@ -123,6 +123,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     response.data.message = 'success';
     return Promise.resolve(response);
   } catch (err) {
+    console.log("hipi login err", err);
     return Promise.reject(err);
   }
 };

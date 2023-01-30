@@ -65,7 +65,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     }
     else if (device === 'desktop'){
      dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
-     dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}-${phoneData?.input}` : phoneData.input;
+     dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}${phoneData?.input}` : phoneData.input;
     }
     console.log(dataToUpdate)
     setData(dataToUpdate);
@@ -132,7 +132,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
         const info = mobile ? {
           ...(mobile ? {"phoneno": phoneNo} : {"email": email})
         } : {
-          ...(numberOrEmail === "mobile" ? {"phoneno":  `${data?.countryCode}${data?.input}`} : {"email": phoneData.input})
+          ...(numberOrEmail === "mobile" ? {"phoneno":  `${phoneData?.countryCode}${phoneData?.input}`} : {"email": phoneData.input})
         }
         await sendOTP(info)
         const reqObject = {
@@ -146,7 +146,6 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
           });
         } else {
           setOtpStatus(true);
-          toggleFlow("userHandle")
         }
         setPending(false);
       } catch (e) {

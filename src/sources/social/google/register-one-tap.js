@@ -10,6 +10,7 @@ const regitserUserOneTap = async ({
   token = ''
 }) => {
   let response = {};
+  const deviceId = 'device' || getItem('guest-token');
   try {
     const payload = {
      token
@@ -19,7 +20,7 @@ const regitserUserOneTap = async ({
     const resp = await post(apiPath, payload,
       {
         'content-type' : 'application/json',
-        'device_id': getItem('guest-token'),
+        'device_id': deviceId,
         'esk': ESK,
         'platform': 'hipi',
         'platform-hipi-google': 'hipi-android'
