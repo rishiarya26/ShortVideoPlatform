@@ -49,11 +49,25 @@
       "item":{"@type":"Thing",
       "@id":`https://www.hipi.co.in/${userHandle}`,
       "name":`${name} (${userHandle}) | Hipi`}},
-      {"@type":"ListItem","position":3,"item":
-        {"@type":"Thing","@id":`https://www.hipi.co.in/single-video/${videoId}`,"name":"Behind the scenes of Zee Rishtey Awards 2022❤️ #hipikaromorekaro #zee"}
-      }]}
+     ]}
     return payload;
     }
+
+    const singleBreadcrumbSchema = ({name='', userHandle='', videoId=''}) => {
+      const payload = {  
+       "@context":"https://schema.org/",
+       "@type":"BreadcrumbList",
+       "itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Thing","@id":"https://www.hipi.co.in/","name":"Hipi"}},
+       {"@type":"ListItem",
+       "position":2,
+       "item":{"@type":"Thing",
+       "@id":`https://www.hipi.co.in/${userHandle}`,
+       "name":`${name} (${userHandle}) | Hipi`}},
+       {"@type":"ListItem","position":3,"item":
+         {"@type":"Thing","@id":`https://www.hipi.co.in/single-video/${videoId}`,"name":"Behind the scenes of Zee Rishtey Awards 2022❤️ #hipikaromorekaro #zee"}
+       }]}
+     return payload;
+     }
     const singleVideoSchema = ({name='video',userThumnail='video',desc='video', videoId='video',view, createdOn='video'})=>{
          const payload = {
            "@context": "https://schema.org",
@@ -78,15 +92,27 @@
      return {"@type": "VideoObject",
      "position": id+1,
      "name": `${item?.content_description || ''} | ${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}’s Video on Hipi`,
-     "url": `https://www.hipi.co.in/single-video/${item?.id}`,
+   //   "url": `https://www.hipi.co.in/single-video/${item?.id}`,
      "description": item?.content_description || 'Hipi is a short video app that brings you the latest trending videos that you can enjoy and share with your friends or get inspired to make awesome videos. Hipi karo. More karo.',
      "thumbnailUrl": [
        item?.thumbnailUrl
      ],
+     "creator": {
+      "@type": "Person",
+      "name":  `${item?.videoOwnersDetail?.firstName || ''} ${item?.videoOwnersDetail?.lastName || ''}`,
+      "url": `https://www.hipi.co.in/@${item?.userName}`,
+      "alternateName": item?.userName || '',
+      "sameAs": `https://www.hipi.co.in/@${item?.userName}`
+      },
+     "width": "360",
+     "height": "640",
      "uploadDate":  item?.createdOn ? new Date(item?.createdOn)?.toISOString() : '',
      "duration": item?.duration,
-     "contentUrl": `https://www.hipi.co.in/single-video/${item?.id}`,
+   //   "contentUrl": `https://www.hipi.co.in/single-video/${item?.id}`,
+     "contentUrl" : item?.video_url,
      "embedUrl": `https://www.hipi.co.in/@${item?.userName}`,
+     "inLanguage": "en-IN",
+     "isFamilyFriendly": true,
      "interactionStatistic": {
        "@type": "InteractionCounter",
        "interactionType": { "@type": "WatchAction" },
@@ -351,5 +377,6 @@
       theEditOrganizationalSchema,
       singleVideoSchema,
       pageSchema,
-      faqRewards
+      faqRewards,
+      singleBreadcrumbSchema
   }

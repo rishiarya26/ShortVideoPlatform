@@ -38,7 +38,6 @@ useEffect(()=>{
    setTimeout(()=>{setShowOpenStrip(true)},3000); 
    const intervalInstanceTemp = setInterval(()=>{
     timer = timer + 0.5;
-    console.log("MIX**",timer)
    },500)
    setIntervalInstance(intervalInstanceTemp);
  },[]) 
