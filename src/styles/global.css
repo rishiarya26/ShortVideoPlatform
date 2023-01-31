@@ -1448,3 +1448,7 @@ input:checked + .slider_new:before {
     height: 67vh;
   }
 }
+
+.stunner_purple{
+  background-color: #33238e;
+}
