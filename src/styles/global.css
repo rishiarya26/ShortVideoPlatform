@@ -1463,3 +1463,8 @@ input:checked + .slider_new:before {
 .stunner_purple{
   background-color: #33238e;
 }
+.reflect{
+	-webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
+}
