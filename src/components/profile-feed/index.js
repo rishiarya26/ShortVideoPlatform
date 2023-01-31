@@ -138,7 +138,7 @@ function ProfileFeed({ router }) {
 
   useEffect(()=>{
     if(initialLoadComplete){
-      toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+      toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
       toTrackClevertap('impression',{pageName:pageName},items?.[videoActiveIndex]);
     }
   },[initialLoadComplete])
@@ -160,7 +160,7 @@ function ProfileFeed({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName, isShoppable: items[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName, isShoppable: items[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
       toTrackClevertap('play',{pageName : pageName},items?.[videoActiveIndex]);
       ToTrackFbEvents('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'})
@@ -229,9 +229,9 @@ function ProfileFeed({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
       toTrackClevertap('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
      
       toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{  duration : duration, durationWatchTime: duration})
@@ -348,10 +348,10 @@ function ProfileFeed({ router }) {
               setSeekedPercentage(0)
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
-              toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+              toTrackMixpanel('impression',{pageName:pageName, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
               toTrackClevertap('impression',{pageName:pageName},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
               toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Profile Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
@@ -424,6 +424,8 @@ function ProfileFeed({ router }) {
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
+                      playlistId={item?.playlistId || "NA"}
+                      playlistName={item?.playlistName || "NA"}
                     />
 
                   </SwiperSlide>

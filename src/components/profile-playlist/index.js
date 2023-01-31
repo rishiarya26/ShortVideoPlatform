@@ -95,7 +95,7 @@ function ProfilePlaylist({ router }) {
 
   const preVideoDurationDetails = usePreviousValue({ videoDurationDetails });
   const { id: playlistid } = router?.query;
-  const pageName = "Playlist feed";
+  const pageName = "Playlist Video Detail";
 
   const loadMoreItems = async () => {
     let videos = [...items];
@@ -143,7 +143,7 @@ function ProfilePlaylist({ router }) {
     if (initialLoadComplete) {
       toTrackMixpanel(
         "impression",
-        { pageName: pageName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
     }
@@ -162,7 +162,7 @@ function ProfilePlaylist({ router }) {
     if (initialPlayStarted === true) {
       toTrackMixpanel(
         "play",
-        { pageName: pageName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
       ToTrackFbEvents("play", {
@@ -249,12 +249,14 @@ function ProfilePlaylist({ router }) {
           watchTime: "Complete",
           duration: duration,
           durationWatchTime: duration,
+          playlistId: playlistid, playlistName: playListName,
+          isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
         },
         items?.[videoActiveIndex]
       );
       toTrackMixpanel(
         "replay",
-        { pageName: pageName, duration: duration, durationWatchTime: duration },
+        { pageName: pageName, duration: duration, durationWatchTime: duration, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
 
@@ -391,7 +393,7 @@ function ProfilePlaylist({ router }) {
           >
             <Back />
           </div>
-          <div className=" text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2">
+          <div className="font-semibold text-center text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2 w-3/4 px-6">
             {playListName ? playListName : null}
           </div>
           <Swiper
@@ -412,7 +414,7 @@ function ProfilePlaylist({ router }) {
               setShowSwipeUp({ count: 1, value: false });
               toTrackMixpanel(
                 "impression",
-                { pageName: pageName },
+                { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
                 items?.[videoActiveIndex]
               );
               preVideoDurationDetails?.videoDurationDetails?.currentT > 0 &&
@@ -426,6 +428,8 @@ function ProfilePlaylist({ router }) {
                     duration:
                       preVideoDurationDetails?.videoDurationDetails
                         ?.totalDuration,
+                    playlistId: playlistid, playlistName: playListName,
+                    isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
                   },
                   items?.[videoActiveIndex]
                 );
@@ -551,6 +555,8 @@ function ProfilePlaylist({ router }) {
                     userVerified={item?.verified}
                     videoSound={item?.videoSound}
                     campaignId={shop?.campaignId}
+                    playlistId={item?.playlistId || "NA"}
+                    playlistName={item?.playlistName || "NA"}
                   />
                 )}
               </SwiperSlide>
