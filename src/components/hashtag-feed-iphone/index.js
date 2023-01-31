@@ -247,9 +247,12 @@ function HashTagFeedIphone({ router }) {
     /* mixpanel - monetization cards impression */
     useEffect(()=>{
       // console.log("aAAAADDD",shop?.adData)
+      let updatedProductUrl;
       shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { 
-        toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category});
-        toTrackClevertap('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})
+        updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url;
+        let productName = data?.subsub_category;
+        toTrackMixpanel('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:updatedProductUrl, productName, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category});
+        toTrackClevertap('monetisationProductImp',{pageName:pageName, hashtagName: item},{content_id:videoId,productId:data?.card_id, productUrl:updatedProductUrl, productName, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId})
       });
     },[shop])
    /************************ */ 
