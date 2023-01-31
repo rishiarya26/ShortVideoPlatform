@@ -105,7 +105,7 @@ useEffect(()=>{
 		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/desk-banner.jpg')} />}
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
-    <h1 className='text-3xl font-bold lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>
+    <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
     Get ready to do what we know you’re best at – DRAMA!
 </p>
@@ -218,6 +218,36 @@ The stage is set. Are you ready to go viral?
 	</p>
 </div> */}
 
+
+
+<div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
+<div className='absolute left-0 top-0 h-full flex items-center'>
+		<img loading="lazy"  alt="" className="object-contain" src={withBasePath('images/lipsync/hipigoat_bg_left.png')} />
+	</div>
+	<div className='hidden md:flex absolute right-0 top-0 h-full items-center'>
+		<img loading="lazy"  alt="" className="object-contain reflect" src={withBasePath('images/lipsync/hipigoat_bg_left.png')} />
+	</div>
+<div class="w-full flex flex-col items-center py-8 md:p-8 px-8 w-feed z-1">
+<h3 className='text-3xl text-center font-bold lipsync_font pb-4'>Challenges</h3>
+
+<div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
+           
+           <div className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
+              <div className='overflow-hidden cursor-pointer ' onClick={()=>""}>
+              <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/lipsync/challenges/Challenge_Love.jpg`)} />
+              </div>
+              <div className='w-full flex flex-col justify-center items-center py-4'>
+              <h4 className="font-medium text-gray-600  bg-white border border-gray-300 -mt-12 px-4 w-40 text-gray-600 text-center">February challenge</h4>
+              {/* <h4 className="font-medium text-gray-600 p-4 pb-0 bg-white purple_font">#love</h4>
+              <p className='text-gray-700 font-light text-sm'>Date</p> */}
+              <p className='text-sm px-4 text-gray-500 font-light text-lg py-4'>This Valentine's month Unleash your creativity and spread some love by making videos on the theme #Love - Let's see how you can turn this hashtag into a work of art. upload your video by 28th February for a chance to win the Hipi Lipsync Battle and dance to the rhythm of victory</p>
+              <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open("https://www.hipi.co.in/feed/for-you?videoId=eaf669ac-a5a7-4cd6-8341-83bf5def44e8")}>Watch challenge video</div>
+              
+              </div>
+          </div>
+          </div>
+</div>
+</div>
 
 <div className='w-full flex flex-col  md:py-16 py-6 pb-0 md:pb-0 mb-6 bg_lipsync_blue'>
 <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>Meet our celebrity judges</h3>
