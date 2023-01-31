@@ -103,8 +103,8 @@ useEffect(()=>{
 		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Mob-Hipi-Stunner.webp')} />
 		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Desk-Hipi-Stunner.webp')} />}
 		</div>
-  <div className='py-8 md:py-20 w-full flex flex-col items-center bg_pastel_blue relative'>
-    <div className='w-100 stunner_purple text-white text-center py-1 absolute top-0'> #HipiStunner Jan Challenge extended by 7 days. Last date to participate: 7th Feb&apos;23</div>
+  <div className='py-8 md:py-20 pt-20 w-full flex flex-col items-center bg_pastel_blue relative'>
+    <div className='w-100 stunner_purple text-white text-center py-1 absolute top-0 px-4'> #HipiStunner Jan Challenge extended by 7 days. Last date to participate: 7th Feb&apos;23</div>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
      Hipi Stunner is designed for you to celebrate your uniqueness both in body and style. It holds no boundaries, no types, no skin tones and no ethnicity. Showcase how you carry your fashion up your sleeve and walk the big stage in style. Be a tenner, a Hipi Stunner.

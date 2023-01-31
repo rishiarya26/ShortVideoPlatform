@@ -101,8 +101,8 @@ useEffect(()=>{
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
 <div className='w-full'>
-		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/mob_banner.jpg')} />
-		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/desk_banner.jpg')} />}
+		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/mob-banner.jpg')} />
+		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/desk-banner.jpg')} />}
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>
