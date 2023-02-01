@@ -27,9 +27,9 @@ export default function Hipi() {
   <>
    <SeoMeta
         data={{
-          title: 'Hipi Lipsync 2023 Contest presented By Hipi ',
+          title: 'Hipi Lipsync Battle Contest | #HipiLipsyncBattle challenge',
           // image: item?.thumbnail,
-          description: '',}}/>
+          description: 'ipi Lipsync battle is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. Read on to find out about the #HipiLipsyncBattle challenge.',}}/>
           <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStunner)}}
