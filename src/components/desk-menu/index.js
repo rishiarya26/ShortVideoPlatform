@@ -100,6 +100,7 @@ useEffect(()=>{
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/contact-us')}>Contact Us</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/stunner')}>Hipi Stunner</div>
           <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/goat')}>Hipi G.O.A.T.</div>
+          <div className="mr-2 cursor-pointer mb-2 hover:border-b" onClick={()=>router && router.push('/dramebaaz')}>Hipi LipSyncBattle</div>
         </div>
         <div className="flex py-4 flex-wrap items-center sm-menu">
               <a target="_blank" href={links.facebook}  className="pr-4" rel="noreferrer">

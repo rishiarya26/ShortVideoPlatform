@@ -75,10 +75,10 @@ const HamburgerMenu = ({pageName='', tabName=''})=>{
           <Contact/>
             <p className="text-base px-3 text-gray-900 ">Contact us</p>
           </div>
-          <a href="https://en.wikipedia.org/wiki/HiPi_(App)" className="flex items-center py-3">
+          {/* <a href="https://en.wikipedia.org/wiki/HiPi_(App)" className="flex items-center py-3">
           <div className="pl-1"><Wiki/></div>
             <p className="text-base px-3 text-gray-900 ">Wikipedia</p>
-          </a>
+          </a> */}
           {/* <div onClick={()=>showDialog('Logout', LogoutPopup)} className="flex items-center py-3">
             <Logout/>
             <p className="text-base px-3 text-gray-900 ">Logout</p>
@@ -101,7 +101,19 @@ const HamburgerMenu = ({pageName='', tabName=''})=>{
           </button>
         </div>
     </div>}
+    <div className='flex flex-col p-4'>
+         <div onClick={()=> router && router?.push('/stunner')} className="flex items-center py-1">
+            <p className="text-base px-3 text-gray-600 ">Hipi Stunner</p>
+          </div>
 
+          <div onClick={()=> router && router?.push('/goat')} className="flex items-center py-1">
+            <p className="text-base px-3 text-gray-600 ">Hipi G.O.A.T.</p>
+          </div>
+
+          <div onClick={()=> router && router?.push('/goat')} className="flex items-center py-1">
+            <p className="text-base px-3 text-gray-600 ">Hipi LipSyncBattle</p>
+          </div>
+    </div>
   </div>
 </>
     )
