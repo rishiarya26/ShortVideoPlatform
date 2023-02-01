@@ -229,7 +229,7 @@ The stage is set. Are you ready to go viral?
 <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            
            <div className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
-              <div className='overflow-hidden cursor-pointer ' onClick={()=>""}>
+              <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>""}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/lipsync/challenges/Challenge_Love.jpg`)} />
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
