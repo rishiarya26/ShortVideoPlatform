@@ -101,8 +101,8 @@ useEffect(()=>{
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
 <div className='w-full'>
-		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/mob-banner.jpg')} />
-		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/lipsync/desk-banner.jpg')} />}
+		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
+		{device === 'desktop' && <img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />}
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>
@@ -124,27 +124,23 @@ The stage is set. Are you ready to go viral?
         </div> */}
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
             <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>Who is a Dramebaaz? </h3>
-            <p className='text-gray-500 font-light text-lg pt-4'>You’re definitely a Dramebaaz if you have the below traits: </p>
+            <p className='text-gray-600 font-light text-lg pt-4 pb-2'>You’re definitely a Dramebaaz if you have the below traits: </p>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You LOVE movies and love acting as well. Be it in front of the mirror or camera, enacting your favourite movie moments or s</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You are the life of the party! An entertainer of the circle, always ready with the perfect movie dialogues and songs for imitation, aka, ‘The Dramebaaz’ </p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You believe that acting is your biggest strength and have never missed a spotlight to showcase your passion for it  </p></div>
-            <div className='flex'><p className='mb-2 pl-4 text-gray-600 font-light'>You could be anything you want to be! A content creator, an entertainer, a lipsync enthusiast or just anybody with an acting flair, ready to give wings to your dream. So, if you’re ready, then grab this opportunity to claim the center stage and the validation from the industry’s best.  </p></div>
-            <div className='flex'><p className='mb-2 pl-4 text-gray-600 font-light'></p></div>
-            
-            
+            <div className='flex'><p className='mb-2 text-gray-600 font-light'>You could be anything you want to be! A content creator, an entertainer, a lipsync enthusiast or just anybody with an acting flair, ready to give wings to your dream. So, if you’re ready, then grab this opportunity to claim the center stage and the validation from the industry’s best.  </p></div>
             </div>
     </div>
 
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_1 relative'>
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
             <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How does Hipi Lipsync unfold: </h3>
-            <p className='text-gray-500 font-light text-lg pt-4'>It’s your time to shine! Read on to find out about the #HipiLipsyncBattle challenge - </p>
-             <div className='flex'><p className='mb-2 pl-4 text-gray-600 font-light'>Hipi Lipsync battle is a 6-month pan-India contest that is open to anyone-and-everyone with a passion to entertain. It is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. A grand stage that provides a chance to impress one celebrity judge each month, win daily/monthly cash prizes and a title cash prize of Rs. 1 Lakh. This isn’t all, the winner also gets a once in a lifetime opportunity to be featured in a music video to be released by Zee Music Company. </p></div>
-             <p className='mb-2 pl-4 text-gray-600 font-light'>Details about the contest: </p>
+
+             <div className='flex'><p className='mb-2 text-gray-600 font-light'>Hipi Lipsync battle is a 6-month pan-India contest that is open to anyone-and-everyone with a passion to entertain. It is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. A grand stage that provides a chance to impress one celebrity judge each month, win daily/monthly cash prizes and a title cash prize of Rs. 1 Lakh. This isn’t all, the winner also gets a once in a lifetime opportunity to be featured in a music video to be released by Zee Music Company. It’s your time to shine! Read on to find out about the #HipiLipSyncBattle challenge - </p></div>
              
              <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> Hipi Lipsync Battle is for a period of 6 months. </p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> One lipsync challenge will be released every month with a unique theme and will be judged by one celebrity judge. Participants can either lipsync to songs or dialogues based on the theme given in their preferred language of choice </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Use  the monthly  thematic hashtag  challenge and #HipiLipsyncBattle  to participate. Only the videos that have both of the mentioned hashtags will be considered  </p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Use  the monthly  thematic hashtag  challenge and #HipiLipSyncBattle  to participate. Only the videos that have both of the mentioned hashtags will be considered  </p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>At the end of every month, the creator with the best lipsync video will be declared as the monthly winner by the celebrity judge of that month  </p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> The monthly winner gets a cash prize of Rs. 15,000  </p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>At the end of 6 months, the 6 monthly winners will compete among themselves for 2 weeks for the grand prize   </p></div>
@@ -163,7 +159,7 @@ The stage is set. Are you ready to go viral?
             <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How To Participate</h3>
             <p className='text-gray-500 font-light text-lg pt-4'>Step 1: Download the Hipi app</p>
             <p className='text-gray-500 font-light text-lg pt-4'>Step 2: Sign up or log in to your Hipi account </p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Step 3: Use #HipiLipsyncBattle and the monthly challenge's hashtag in your video entries </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Step 3: Use #HipiLipSyncBattle and the monthly challenge's hashtag in your video entries </p>
         </div>
     </div>
     
@@ -174,7 +170,7 @@ The stage is set. Are you ready to go viral?
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
             <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>The Ultimate Grand Prize </h3>
             <p className='text-gray-500 font-light text-lg pt-4'>At the end of 6 months, the top 6 finalists will compete for 2 weeks, and one grand winner will be declared. The celebrity judges will choose the asli Dramebaaz based on their talent and the quality of their videos. </p>
-            <p className='text-gray-500 font-light text-lg pt-4'>The winner of the #HipiLipsyncBattle takes home a cash prize of Rs. 1 Lakh and a dream breakthrough of being featured in a music video launched by Zee Music Company! </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>The winner of the #HipiLipSyncBattle takes home a cash prize of Rs. 1 Lakh and a dream breakthrough of being featured in a music video launched by Zee Music Company! </p>
         </div>
     </div>
 
@@ -189,7 +185,7 @@ The stage is set. Are you ready to go viral?
 		<p className="font-light text-lg pt-4">Excited? Here’s more info!</p>
 		<div className="flex pt-4">
 			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4  font-light">Upload your video entries with #HipiLipsyncBattle and the challenge’s hashtag. </p>
+			<p className="mb-2 pl-4  font-light">Upload your video entries with #HipiLipSyncBattle and the challenge’s hashtag. </p>
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
@@ -238,9 +234,9 @@ The stage is set. Are you ready to go viral?
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
               <h4 className="font-medium text-gray-600  bg-white border border-gray-300 -mt-12 px-4 w-40 text-gray-600 text-center">February challenge</h4>
-              {/* <h4 className="font-medium text-gray-600 p-4 pb-0 bg-white purple_font">#love</h4>
-              <p className='text-gray-700 font-light text-sm'>Date</p> */}
-              <p className='text-sm px-4 text-gray-500 font-light text-lg py-4'>This Valentine's month Unleash your creativity and spread some love by making videos on the theme #Love - Let's see how you can turn this hashtag into a work of art. upload your video by 28th February for a chance to win the Hipi Lipsync Battle and dance to the rhythm of victory</p>
+              <h4 className="font-medium text-2xl text-gray-600 p-4 pb-0 bg-white purple_font">#Love</h4>
+              {/* <p className='text-gray-700 font-light text-sm'>Date</p> */}
+              <p className='text-sm px-4 text-gray-500 font-light text-lg py-4'>This Valentine's month Unleash your creativity and spread some love by making videos on the theme #Love - Let's see how you can turn this hashtag into a work of art. upload your video by 28th February for a chance to win the Hipi Lipsync Battle and dance to the rhythm of victory. Use #Love and #HipiLipSyncBattle  while you upload your videos.</p>
               <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open("https://www.hipi.co.in/feed/for-you?videoId=eaf669ac-a5a7-4cd6-8341-83bf5def44e8")}>Watch challenge video</div>
               
               </div>
