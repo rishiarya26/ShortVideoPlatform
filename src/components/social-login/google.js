@@ -125,7 +125,7 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) 
           console.log("register suucess", response)
           if(response.status === 'success'){
             showSnackbar({ message: 'Login Successful' })
-             close();
+            //  close();
              try{
             //  mixpanel('Login')
              fbq.defEvent('CompleteRegistration');
