@@ -15,6 +15,33 @@ async function leaderboardData({round}) {
   }
 }
 
+//Latest API
+const fetchLeaderboardData = async(hashtag)=>{
+  let response = {};
+  try {
+    const apiPath = `https://hipitest.charmd.me/api/v1/shorts/leaderboard/challenge/details?id=${hashtag}`;
+    response = await get(apiPath,null, {});
+    response.data.requestedWith = { id };
+    return Promise.resolve(response);
+  } catch (err) {
+    console.error("Fetch leaderboard api issue",err)
+    return Promise.reject(err);
+  }
+}
+
+//Latest API
+const fetchLeaderboardWinners = async(campaign)=>{
+  let response = {};
+  try {
+    const apiPath = `https://hipitest.charmd.me/api/v1/shorts/leaderboard/winners?id=${campaign}`;
+    response = await get(apiPath,null, {});
+    return Promise.resolve(response);
+  } catch (err) {
+    console.error("winners leaderboard api issue",err)
+    return Promise.reject(err);
+  }
+}
+
 const [getLeaderboardData] = apiMiddleWare(leaderboardData, transformSuccess, transformError, {shouldCache : false});
 
-export { getLeaderboardData };
+export { getLeaderboardData, fetchLeaderboardData, fetchLeaderboardWinners };
