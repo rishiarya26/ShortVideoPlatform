@@ -177,11 +177,11 @@ The stage is set. Are you ready to go viral?
     
 
 
-{/* 
-    <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8   ">
+
+    <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
 	<div className="max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center text-gray-600">
 		<h3 className="text-3xl text-center font-bold  pb-4">Win cash prizes, every day!</h3>
-		<p className="font-light text-lg pt-4">Want to make quick money with your entries? Garner likes on your challenge videos and stand a chance to earn Rs. 1000/- ! </p>
+		<p className="font-light text-lg pt-4">Want to make quick money with your entries? Garner likes on your challenge videos and stand a chance to earn Rs. 1000 . </p>
 		<p className="font-light text-lg pt-4">Excited? Here’s more info!</p>
 		<div className="flex pt-4">
 			<span className="pr-1">•</span>
@@ -197,7 +197,7 @@ The stage is set. Are you ready to go viral?
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000/-!</p>
+			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
@@ -208,11 +208,11 @@ The stage is set. Are you ready to go viral?
 	<p className="max_800 w-full flex-col flex py-8 md:p-12 px-8 justify-center text-gray-600 text-xs">
 	<ul className="list-disc">
 		<li>The Leaderboard only deals with the most liked videos and DOES NOT determine the winners of the challenges.</li>
-		<li>Every 15 days a new challenge is released, and the leaderboard will reset itself accordingly. Your previous challenge entries will not be vaild anymore, but you can always participate in the new challenge to win!</li>
+		<li>Every 30 days a new challenge is released, and the leaderboard will reset itself accordingly. Your previous challenge entries will not be vaild anymore, but you can always participate in the new challenge to win!</li>
 		<li>Once you win, you will not be able get on the leaderboard until the next challenge is announced. Make sure to participate in the new challenge to grab 1000 bucks again.</li>
 	</ul>
 	</p>
-</div> */}
+</div> 
 
 
 
