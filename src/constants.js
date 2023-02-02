@@ -38,5 +38,4 @@ export const S3_REGION = 'ap-south-1';
 export const S3_BUCKET_STAGE = 'hipi-videos-stage'
 export const S3_BUCKET_PROD = 'hipi-videos'
 export const UPLOAD_ACCESS_USERS = ["Tamil360","MiniatureFoods","WanderessKriti","Aditi_Prabhudeva", "bharatjangid3649", "murali.teams","anuragguptazee","16cf2063", "khushi_angel"]
-export const ESK_preprd = 'ZGV2aWNlX19nQlFhWkxpTmRHTjlVc0NLWmFsb2doejl0OVN0V0xTRF9fMTIzNA==';
-export const ESK = 'ZGV2aWNlX19QTHR6dlJPQVlGbU1mSGpPUHV2ZnJFZlVjNlBRR05WSF9fMTIzNA===='
+export const ESK_ENV = 'preprod';

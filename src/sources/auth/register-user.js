@@ -1,9 +1,10 @@
+/* eslint-disable import/no-cycle */
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
-import { ESK } from '../../constants';
-/* eslint-disable import/no-cycle */
+import { ESK_ENV } from '../../constants';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
+import { getEsk } from '../../utils/eskGenerator';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 import { hipiLogin } from './login';
 
@@ -16,7 +17,7 @@ const register = async ({
     birthday: new Date(dob).getFullYear(),
     gender: gender
   }
-  const deviceId = 'device' || getItem('guest-token');
+  const deviceId = getItem('guest-token');
   let response = {};
   // TO-DO take care of aid, guestoken & verison_number
   try {
@@ -44,7 +45,7 @@ const register = async ({
       {
         'content-type': 'application/json',
         'device_id': deviceId,
-        'esk': ESK,
+        'esk': getEsk({deviceId, env: ESK_ENV}),
         'platform': 'hipi',
       }
     );

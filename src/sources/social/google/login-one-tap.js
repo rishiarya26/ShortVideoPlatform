@@ -1,9 +1,10 @@
 
 import { post } from 'network';
 import { getApiBasePath } from '../../../config';
-import { ESK } from '../../../constants';
+import { ESK_ENV } from '../../../constants';
 import { apiMiddleWare } from '../../../network/utils';
 import { getItem } from '../../../utils/cookie';
+import { getEsk } from '../../../utils/eskGenerator';
 import { hipiLogin } from '../../auth/login';
 import { transformError, transformSuccess } from '../../transform/social/google/login-one-tap';
 
@@ -12,14 +13,14 @@ const loginOneTap = async ({googleToken=null}) => {
     const payload = {
       access_token: googleToken
     }
-    const deviceId = 'device' || getItem('guest-token');
+    const deviceId = getItem('guest-token');
     try {
       const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/logingoogle`;
       const resp = await post(apiPath, payload,
         {
           'content-type' : 'application/json',
           'device_id': deviceId,
-          'esk': ESK,
+          'esk': getEsk({deviceId, env: ESK_ENV}),
           'platform': 'hipi',
           'platform-hipi-google': 'hipi-android'
         }

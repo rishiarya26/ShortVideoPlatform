@@ -47,7 +47,7 @@ export function track(event, payload) {
   };
 
   export const webPopUp = () => {
-    if(isLoaded) {
+    if(isLoaded()) {
       window.clevertap.notificationCallback = function(msg){
         clevertap.raiseNotificationViewed();
         console.log('clevertap',msg);
@@ -65,7 +65,7 @@ export function track(event, payload) {
     const loggedInUserDetails = localStorage?.get('user-details') || null;
     const userId = localStorage.get('user-id');
 
-    if(isLoaded) {
+    if(isLoaded()) {
       window.clevertap.onUserLogin.push({
         "Site": {
           "Name": loggedInUserDetails?.firstName || "NA",

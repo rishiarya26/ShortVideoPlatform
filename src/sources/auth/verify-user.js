@@ -1,20 +1,16 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
-import { ESK } from '../../constants';
 import { apiMiddleWare } from '../../network/utils';
 import { getItem } from '../../utils/cookie';
 import { transformError, transformSuccess } from '../transform/auth/verify-user';
 import { sendOTP } from './send-otp';
-
-function getEsk(deviceId){       
-  var sc = 'pnwaz';       
-  return btoa(deviceId + '__' + sc + '__' + new Date().getTime())
-}
+import { getEsk } from '../../utils/eskGenerator';
+import { ESK_ENV } from '../../constants';
 
 const getUserVerify = async (info) => {
   let response = {};
   let value = info.type === 'mobile' ? 'mobile' : 'email';
-  const deviceId = 'device' || getItem('guest-token');
+  const deviceId = getItem('guest-token');
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, info[value]);
@@ -22,7 +18,7 @@ const getUserVerify = async (info) => {
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
       'device_id': deviceId,
-      'esk': ESK,
+      'esk': getEsk({deviceId, env: ESK_ENV}),
       'platform': 'hipi',
     });
     response.data.status = 200;
@@ -40,7 +36,7 @@ const getUserVerify = async (info) => {
 const getUserVerifyOnly = async (payload) => {
   let response = {};
   let value = payload.type === 'mobile' ? 'mobile' : 'email';
-  const deviceId = 'device' || getItem('guest-token');
+  const deviceId = getItem('guest-token');
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, payload[value]);
@@ -48,7 +44,7 @@ const getUserVerifyOnly = async (payload) => {
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
       'device_id': deviceId,
-      'esk': ESK,
+      'esk': getEsk({deviceId, env: ESK_ENV}),
       'platform': 'hipi',
     });
     response.data.status = 200;
