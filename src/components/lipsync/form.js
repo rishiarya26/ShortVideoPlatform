@@ -49,7 +49,7 @@ const Form = ()=>{
          <div className='flex justify-center items-center mt-1 border border-gray-400 p-1'><button onClick={()=>setShowMessage(false)}>OK</button></div>
        </div>
        :  <> */}
-        <h1 className='text-3xl font-bold purple_font text-center'>Tell us your queries </h1>
+        <h2 className='text-3xl font-bold purple_font text-center'>Tell us your queries </h2>
            <p className='text-gray-500 font-light text-lg pt-2 pb-2 text-center'>We’ll get back to you in 24 hours</p>
         <form onSubmit={onSubmit}>  
         <div className='py-2'>
