@@ -125,7 +125,7 @@ function HashTagFeed({ router }) {
 
   useEffect(()=>{
     if(initialLoadComplete){
-      toTrackMixpanel('impression',{pageName:pageName, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+      toTrackMixpanel('impression',{pageName:pageName, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
       toTrackClevertap('impression',{pageName:pageName, hashtagName:item},items?.[videoActiveIndex]);
     }
   },[initialLoadComplete])
@@ -148,7 +148,7 @@ function HashTagFeed({ router }) {
 
   useEffect(()=>{
     if(initialPlayStarted === true){
-      toTrackMixpanel('play',{pageName : pageName, hashtagName:item, isShoppable: items[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+      toTrackMixpanel('play',{pageName : pageName, hashtagName:item, isShoppable: items[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
       toTrackClevertap('play',{pageName : pageName, hashtagName:item},items?.[videoActiveIndex]);
       ToTrackFbEvents(videoActiveIndex,'play')
       toTrackFirebase('play',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'})
@@ -169,9 +169,11 @@ function HashTagFeed({ router }) {
   /* mixpanel - monetization cards impression */
   useEffect(()=>{
     // console.log("aAAAADDD",shop?.adData)
+    let updatedProductUrl;
     shop?.adData?.monitisation && shop?.adData?.monitisationCardArray?.length > 0 &&   shop?.adData?.monitisationCardArray?.map((data)=> { 
-      toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category});
-      toTrackClevertap('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, productUrl:data?.product_url, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId});
+      updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url;
+      toTrackMixpanel('monetisationProductImp',{pageName:pageName},{content_id: items?.[videoActiveIndex]?.content_id,productId:data?.card_id, productUrl:updatedProductUrl, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId, category: data?.category, subCategory: data?.sub_category, subSubCategory: data?.subsub_category, mainCategory: data?.main_category});
+      toTrackClevertap('monetisationProductImp',{pageName:pageName},{content_id:videoId,productId:data?.card_id, productUrl:updatedProductUrl, brandName: getBrand(data?.product_url), campaignId: shop?.campaignId});
     });
   },[shop])
  /************************ */ 
@@ -195,9 +197,9 @@ function HashTagFeed({ router }) {
     setSeekedPercentage(percentage);
     /********** Mixpanel ***********/
     if(currentTime >= duration-0.2){
-      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
       toTrackClevertap('watchTime',{pageName:pageName, watchTime : 'Complete', duration : duration, durationWatchTime: duration, hashtagName:item},items?.[videoActiveIndex])
-      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+      toTrackMixpanel('replay',{pageName:pageName, duration : duration, durationWatchTime: duration, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
 
       toTrackFirebase('watchTime',{ watchTime : 'Complete', duration : duration, durationWatchTime: duration})
       toTrackFirebase('replay',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'}, {  duration : duration, durationWatchTime: duration})
@@ -318,10 +320,10 @@ function HashTagFeed({ router }) {
               setInitialPlayStarted(false);
               setShowSwipeUp({count : 1, value:false});
 
-              toTrackMixpanel('impression',{pageName:pageName, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex]);
+              toTrackMixpanel('impression',{pageName:pageName, hashtagName:item, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex]);
               toTrackClevertap('impression',{pageName:pageName, hashtagName:item},items?.[videoActiveIndex]);
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
-              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashTagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable},items?.[videoActiveIndex])
+              preVideoDurationDetails?.videoDurationDetails?.currentT > 0 && toTrackMixpanel('watchTime',{pageName:pageName, durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration, hashTagName: item, isShoppable: items?.[videoActiveIndex]?.shoppable, playlistId: items?.[videoActiveIndex]?.playlistId, playlistName: items?.[videoActiveIndex]?.playlistName, isPlaylist: !!items?.[videoActiveIndex]?.playlistName, description: items?.[videoActiveIndex]?.content_description},items?.[videoActiveIndex])
               toTrackFirebase('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
 
               ToTrackFbEvents('watchTime',{userId: items?.[videoActiveIndex]?.['userId'], content_id: items?.[videoActiveIndex]?.['content_id'], page:'Hashtag Feed'},{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, watchTime : 'Partial', duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration})
@@ -398,6 +400,8 @@ function HashTagFeed({ router }) {
                       userVerified = {item?.verified}
                       videoSound={item?.videoSound}
                       campaignId={shop?.campaignId}
+                      playlistId={item?.playlistId || "NA"}
+                      playlistName={item?.playlistName || "NA"}
                     />
 
                   </SwiperSlide>

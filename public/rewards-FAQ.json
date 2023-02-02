@@ -37,7 +37,7 @@
     "ans" : "Currently, coins can only be cashed out to PayTM wallet. ", "show": false},
     
     { "ques" : "How much time does it take to receive the amount into PayTM wallet?",    
-    "ans" : "Cashed out rewards coins will reflect in your PayTM wallet in the next 5-7 business days.", "show": false},
+    "ans" : "Cashed out rewards coins will reflect in your PayTM wallet in the next 14 business days.", "show": false},
     
     { "ques" : "Is there an expiry period for coins?",    
     "ans" : "Rewards coins will expire automatically 90 days after they have been earned. Thus, coins should be redeemed within 90 days.", "show": false},

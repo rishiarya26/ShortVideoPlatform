@@ -498,6 +498,8 @@ function Video(props) {
          correlationID={props?.correlationID || null}
          userId={props?.videoOwnersId || null}
          profileId={props?.profileId || ""}
+         playlistName={props?.playlistName || "NA"}
+         playlistId={props?.playlistId || "NA"}
          />
       {/* TO-DO  condition acc to comp */}
       {props.canShop && (!props.profileFeed

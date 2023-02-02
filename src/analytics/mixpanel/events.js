@@ -174,6 +174,24 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
+      'playlistClickedProfile': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Clicked - Profile', globalCommonEvents);
+      },
+      'playlistClickedVideo': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Clicked - Video', globalCommonEvents);
+      },
+      'playlistShareClick': () => {
+        globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
+        globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';
+        addPageTabName(); 
+        track('Playlist Share Clicked', globalCommonEvents);
+      },
       'hashtagBannerClicked' : () => {
         globalCommonEvents['Page Name'] = value?.pageName || 'NA';
         globalCommonEvents['Hashtag ID'] = value?.hashtagId || 'NA';
@@ -183,6 +201,10 @@ export const toTrackMixpanel = (type, value, item) => {
       'impression' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Impression', eventsWithIds)},
       'screenView' : ()=> {
         addScreenDetails();
@@ -200,11 +222,26 @@ export const toTrackMixpanel = (type, value, item) => {
       'play' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Play', eventsWithIds)},
-      'share' : () => track('UGC Share Click', commonWithIds()),
+      'share' : () =>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+        track('UGC Share Click', eventsWithIds)
+      },
       'replay' : () => {
         let eventsWithIds = commonWithIds();
         eventsWithIds['is Shoppable'] = value?.isShoppable || false;
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Replayed', eventsWithIds)},
       'skip' : () => {
         let eventsWithIds = commonWithIds()  
@@ -220,6 +257,10 @@ export const toTrackMixpanel = (type, value, item) => {
         eventsWithIds['UGC Consumption Type'] = value?.watchTime
         eventsWithIds['UGC Duration'] =  value?.duration && Math.round(value.duration)
         eventsWithIds['UGC Watch Duration'] = value?.durationWatchTime && Math.round(value.durationWatchTime)
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
         track('UGC Watch Time',eventsWithIds)
       },
       'cta' : ()=>{
@@ -235,8 +276,22 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         track('Save Look', globalCommonEvents)},
-      'like' : ()=> track('UGC Liked', commonWithIds()),
-      'unLike' : ()=> track('UGC Unliked', commonWithIds()),
+      'like' : ()=>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+        track('UGC Liked', eventsWithIds);
+      },
+      'unLike' : ()=>{
+        let eventsWithIds = commonWithIds();
+        eventsWithIds['playlist Name'] = value?.playlistName || 'NA';
+        eventsWithIds['playlist ID'] = value?.playlistId || 'NA';
+        eventsWithIds['is Playlist'] = value?.isPlaylist || false;
+        eventsWithIds['description'] = value?.description || 'NA';
+         track('UGC Unliked', eventsWithIds)
+        },
       'follow' : ()=> track('User Followed', commonWithIds()),
       'unFollow' : ()=> track('User Unfollowed', commonWithIds()),
   /**** Shop ****/     
@@ -265,6 +320,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -280,6 +336,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -294,7 +351,8 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId || 'NA';
-        globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         globalCommonEvents['Shoppable Category'] = item?.category || 'NA';
@@ -309,6 +367,7 @@ export const toTrackMixpanel = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product Id'] = item?.productId || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';

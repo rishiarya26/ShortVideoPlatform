@@ -437,6 +437,8 @@ function DeskUsers({
          videoSound={videoDetailData?.videoSound}
          noSound={noSound}
          checkNoSound={checkNoSound}
+         playlistId={videoDetailData?.playlistId || "NA"}
+         playlistName={videoDetailData?.playlistName || "NA"}
          />
        </div>}
     <Header/>

@@ -85,7 +85,7 @@ function ProfilePlaylistIphone({ router }) {
 
   const { id: playlistid } = router?.query;
   const { show } = useDrawer();
-  const pageName = "Profile Playlist Feed";
+  const pageName = "Playlist Video Detail";
   const size = useWindowSize();
   const videoHeight = `${size.height}`;
 
@@ -151,7 +151,7 @@ function ProfilePlaylistIphone({ router }) {
     if (initialLoadComplete) {
       toTrackMixpanel(
         "impression",
-        { pageName: pageName },
+        { playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
     }
@@ -173,7 +173,7 @@ function ProfilePlaylistIphone({ router }) {
     if (initialPlayStarted === true) {
       toTrackMixpanel(
         "play",
-        { pageName: pageName },
+        { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
       ToTrackFbEvents("play", {
@@ -198,13 +198,16 @@ function ProfilePlaylistIphone({ router }) {
     shop?.adData?.monitisation &&
       shop?.adData?.monitisationCardArray?.length > 0 &&
       shop?.adData?.monitisationCardArray?.map((data) => {
+        let updatedProductUrl = data?.product_url?.includes("utm_source") ? `${data?.product_url}&utm_platform=web` : data?.product_url;
+        let productName = data?.subsub_category;
         toTrackMixpanel(
           "monetisationProductImp",
           { pageName: pageName },
           {
             content_id: items?.[videoActiveIndex]?.content_id,
             productId: data?.card_id,
-            productUrl: data?.product_url,
+            productUrl: updatedProductUrl,
+            productName,
             brandName: getBrand(data?.product_url),
             campaignId: shop?.campaignId,
             category: data?.category,
@@ -345,12 +348,14 @@ function ProfilePlaylistIphone({ router }) {
           watchTime: "Complete",
           duration: duration,
           durationWatchTime: duration,
+          playlistId: playlistid, playlistName: playListName,
+          isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
         },
         items?.[videoActiveIndex]
       );
       toTrackMixpanel(
         "replay",
-        { pageName: pageName, duration: duration, durationWatchTime: duration },
+        { pageName: pageName, duration: duration, durationWatchTime: duration, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
         items?.[videoActiveIndex]
       );
 
@@ -533,7 +538,7 @@ function ProfilePlaylistIphone({ router }) {
           >
             <Back />
           </div>
-          <div className=" text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2">
+          <div className="font-semibold text-center text-white absolute top-0 right-1/2 mt-4 z-20 items-center flex justify-center p-4 transform translate-x-1/2 w-3/4 px-6">
             {playListName ? playListName: null}
           </div>
           <Swiper
@@ -554,7 +559,7 @@ function ProfilePlaylistIphone({ router }) {
               setShowSwipeUp({ count: 1, value: false });
               toTrackMixpanel(
                 "impression",
-                { pageName: pageName },
+                { pageName: pageName, playlistId: playlistid, playlistName: playListName, isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description },
                 items?.[videoActiveIndex]
               );
               // toTrackMixpanel(videoActiveIndex, 'swipe',{durationWatchTime : preVideoDurationDetails?.videoDurationDetails?.currentT, duration: preVideoDurationDetails?.videoDurationDetails?.totalDuration});
@@ -569,6 +574,8 @@ function ProfilePlaylistIphone({ router }) {
                     duration:
                       preVideoDurationDetails?.videoDurationDetails
                         ?.totalDuration,
+                    playlistId: playlistid, playlistName: playListName,
+                    isPlaylist: !!playlistid, description: items?.[videoActiveIndex]?.content_description
                   },
                   items?.[videoActiveIndex]
                 );
@@ -693,6 +700,8 @@ function ProfilePlaylistIphone({ router }) {
                     videoSound={item?.videoSound}
                     campaignId={shop?.campaignId}
                     setMuted={setMuted}
+                    playlistId={item?.playlistId || "NA"}
+                    playlistName={item?.playlistName || "NA"}
                     // showBanner={showBanner}
                   />
                 ) : (

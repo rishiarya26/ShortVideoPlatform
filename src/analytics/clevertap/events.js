@@ -214,6 +214,7 @@ export const toTrackClevertap = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Shopping Product Impression', globalCommonEvents)
@@ -223,6 +224,7 @@ export const toTrackClevertap = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId;
         globalCommonEvents['Product Name'] = item?.productName;
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
         globalCommonEvents['Brand Name'] = item?.brandName;
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Shoppable Product Clicked', globalCommonEvents)
@@ -231,7 +233,8 @@ export const toTrackClevertap = (type, value, item) => {
         addUgcId();
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
-        globalCommonEvents['Product Url'] = item?.productUrl || 'NA';
+        globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Impression', globalCommonEvents)
@@ -241,6 +244,7 @@ export const toTrackClevertap = (type, value, item) => {
         addPageTabName();
         globalCommonEvents['Product ID'] = item?.productId || 'NA';
         globalCommonEvents['Product URL'] = item?.productUrl || 'NA';
+        globalCommonEvents['Product Name'] = item?.productName;
         globalCommonEvents['Brand Name'] = item?.brandName || 'NA';
         globalCommonEvents['Ad Campaign ID'] = item?.campaignId || 'NA';
         track('Monetisation Product Clicked', globalCommonEvents)

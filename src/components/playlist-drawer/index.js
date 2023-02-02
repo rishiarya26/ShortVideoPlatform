@@ -34,7 +34,7 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
   };
 
   const mixpanelEvents = () => {
-    toTrackMixpanel("popupCta", {pageName:"Playlist Detail",ctaName:"Playlist Video",name:"playlist video", playlistName, playlistId});
+    toTrackMixpanel("popupCta", {pageName:"Playlist Video Detail",ctaName:"Playlist Video",name:"playlist", playlistName, playlistId});
   }
 
   useEffect(() => {
@@ -51,15 +51,15 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
 
   const shareOnClick = async() => {
     if(!navigator.canShare) {
-      // toTrackMixpanel('popupCta',{page:"Playlist Detail",name:"share playlist", ctaName:"share playlist",  playlistName, playlistId});
       device === 'ios' &&  show('', detectDeviceModal, 'extraSmall');
       device === 'android' &&  setShowBanner(true);
     } else {
       try{
-        toTrackMixpanel('popupCta',{pageName:"Playlist Detail",name:"Share Playlist", ctaName:"Share Playlist",  playlistName, playlistId});
+        toTrackMixpanel('playlistShareClick', {pageName:"Playlist Video Detail",playlistName, playlistId})
+        toTrackMixpanel('popupCta',{pageName:"Playlist Video Detail",name:"Share Playlist", ctaName:"Share Playlist",  playlistName, playlistId});
         await navigator.share({text: `Check out the playlist ${playlistName} with interesting videos on Hipi https://${window.location.host}/playlist/${id}?utm_source=ios&utm_medium=playlist&utm_campaign=hipi_shared_link`});
       } catch(err){
-        console.err('something went wrong', err)
+        console.error('something went wrong', err)
       }
     }
   }
@@ -88,7 +88,10 @@ function PlaylistDrawer({data, fetchMore, playlistName="link in Bio", activeVide
               id={`episode_${item?.content_id}`}
               key={index}
               className={`p-2 ${item?.content_id === activeVideoId ? "playlist_bg" : ""}`}
-              onClick={()=>{callbackForIos ? callbackForIos(index) : drawerOnClick({index}); close(); mixpanelEvents();}}
+              onClick={()=>{
+                toTrackMixpanel()
+                callbackForIos ? callbackForIos(index) : drawerOnClick({index}); close(); mixpanelEvents();
+              }}
             >
               <span className='flex'>
                 <div className='usrimg min-w-16 w-16 h-28 overflow-hidden rounded-md'>

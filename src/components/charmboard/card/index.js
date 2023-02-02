@@ -14,8 +14,9 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
   
       useEffect(()=>{
                // console.log('uuu')
+               let productUrl = shopLink?.includes("utm_source") ? `${shopLink}&utm_platform=web` : shopLink;
                productIdChange === id && console.log('A******',campaignId, appsflyerId)
-         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})
+         productIdChange === id && toTrackMixpanel('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId, productUrl})
          // productIdChange === id && appsflyerId && appsflyerPixelImp({advertiser:shopName, appId:appsflyerId,productId:id, comp:'Shop'})
          if(productIdChange === id && appsflyerId){
             try{
@@ -23,7 +24,7 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
             }catch(e){
             }
             }
-         productIdChange === id && toTrackClevertap('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})
+         productIdChange === id && toTrackClevertap('shoppingProductImp',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, productUrl})
       },[productIdChange])
 
 
@@ -39,8 +40,9 @@ const CharmCard = ({thumbnail, title, shopName, shopLink, category,
            });  
 
         const onProductClick= ()=>{
-         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId})  
-         toTrackClevertap('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId})  
+         let productUrl = shopLink?.includes("utm_source") ? `${shopLink}&utm_platform=web` : shopLink;
+         toTrackMixpanel('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId, category, subCategory, subSubCategory, mainCategory,appsflyerId:appsflyerId,productUrl})  
+         toTrackClevertap('shoppableProductClicked',{pageName:pageName, tabName:tabName},{productId:id,brandName:shopName,productName:productName,content_id:videoId, campaignId,productUrl})  
          const appsflyerLink = appsflyerId ? appsflyerPixelClick({ advertiser:shopName, appId:appsflyerId, iosAppId: iosAppsflyerId, uri:shopLink,productId:id,comp:'Shop'}) : null;
          console.log("finalLink",appsflyerLink)
          const shopLinkUpdate = shopLink?.includes("utm_source") ? `${shopLink}&utm_platform=web` : shopLink;

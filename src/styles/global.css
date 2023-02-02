@@ -901,7 +901,14 @@ title:first-letter {
     background-color: rgb(141, 137, 137);
     opacity: 1;
   }
-  
+  /* lipsync */
+  .bg_lipsync_blue{
+      background-color: #a6d4ec;
+  }
+  .lipsync_font{
+    color: #1b506c;
+  }
+
   /* STUNNER */
   .bg_1{
     background-color: #f9fbf6;
@@ -915,10 +922,14 @@ title:first-letter {
   .max_800{
     max-width: 800px;
   }
-  .br_40{
+  .br_40, .br_40_left{
     border-radius: 20px;
   }  
-  
+  @media only screen and (min-width: 768px){  
+    .br_40_left {
+    border-radius: 0 40px 40px 0;
+    }
+  }
   .box_shadow_1{
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
@@ -1447,4 +1458,13 @@ input:checked + .slider_new:before {
   .desc_h{
     height: 67vh;
   }
+}
+
+.stunner_purple{
+  background-color: #33238e;
+}
+.reflect{
+	-webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
 }

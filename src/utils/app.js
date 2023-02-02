@@ -47,10 +47,9 @@ export const generateUUID = persist => {
 };
 
 
-export const share = ({id,creatorId, userName, pageName,tabName, type = 'video' }) => {
-  console.log("tyee",type)
+export const share = ({id,creatorId, userName, pageName,tabName, type = 'video', playlistId, playlistName }) => {
  const mixpanel = {
-   video : toTrackMixpanel &&  toTrackMixpanel('share',{pageName:pageName, tabName:tabName && tabName},{content_id:id, userId:creatorId, userName:userName }),
+   video : toTrackMixpanel &&  toTrackMixpanel('share',{pageName:pageName, tabName:tabName && tabName, playlistId, playlistName, isPlaylist: (playlistId !== "NA" ? true : false)},{content_id:id, userId:creatorId, userName:userName }),
    profile : ''
  }
 
