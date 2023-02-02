@@ -10,6 +10,7 @@ import { ToTrackFbEvents } from "../../src/analytics/fb-pixel/events";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import LipSync from "../../src/components/lipsync";
+import { getCanonicalUrl } from "../../src/utils/web";
 
 export default function Hipi() {
   useEffect(()=>{
@@ -29,7 +30,9 @@ export default function Hipi() {
         data={{
           title: 'Hipi Lipsync Battle Contest | #HipiLipsyncBattle challenge',
           // image: item?.thumbnail,
-          description: 'ipi Lipsync battle is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. Read on to find out about the #HipiLipsyncBattle challenge.',}}/>
+          description: 'ipi Lipsync battle is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. Read on to find out about the #HipiLipsyncBattle challenge.',
+          canonical: getCanonicalUrl && getCanonicalUrl(),}}
+          />
           <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStunner)}}

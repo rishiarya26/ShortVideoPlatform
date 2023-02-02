@@ -100,9 +100,9 @@ useEffect(()=>{
       </div> */}
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-<div className='w-full'>
+<div className='w-full min-h-18 md:min-h-38'>
 		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
-		{device === 'desktop' && <img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />}
+		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>

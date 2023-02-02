@@ -73,7 +73,6 @@ module.exports = {
        },
     maxWidth: 
     {
-
       '6':'24px',
       '20h':'20vh',
       '20v':'20vw',
@@ -99,6 +98,7 @@ module.exports = {
        minHeight: {
         '6':'1.5rem',
         '20':'20vw',
+        '18':'18vw',
         '38':'38vw',
         '1/6':'16.6vw',
         '25':'25vw',
