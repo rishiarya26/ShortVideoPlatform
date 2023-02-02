@@ -175,7 +175,7 @@ The stage is set. Are you ready to go viral?
     </div>
 
     
-
+{/* 
 
 
     <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
@@ -213,7 +213,7 @@ The stage is set. Are you ready to go viral?
 	</ul>
 	</p>
 </div> 
-
+ */}
 
 
 <div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
