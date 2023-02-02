@@ -1,13 +1,10 @@
 /*eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
-import { withBasePath } from '../../config';
 import StaticFooter from '../static-footer';
 import Header from '../desk-header';
 import { SeoMeta } from '../commons/head-meta/seo-meta';
 import {getCanonicalUrl} from '../../utils/web';
 import { useEffect, useState } from 'react';
-import LikeGoat from '../commons/svgicons/leaderboard/like';
-import ShareGoat from '../commons/svgicons/leaderboard/share';
 import Tabs from '../commons/tabs/leaderboard-goat';
 import { Ranklist } from './ranklist';
 import { Winners } from './winners';
@@ -31,7 +28,7 @@ setUrl(document?.location?.href);
 },[]) 
 return (
 <>
-			<SeoMeta
+			{/* <SeoMeta
 			data={{
 			title: '',
 			// image: item?.thumbnail,
@@ -58,15 +55,15 @@ return (
 			site_name: 'Hipi'
 			}
 			}}
-			/>
+			/> */}
 <div className="static_body relative ">
    <div className='hidden md:flex'>
       <Header/>
    </div>
    <div className='flex flex-col items-center md:pt-24 mt-6'>
-   <div className='text-2xl font-semibold text-gray-800'> Leaderboard</div>
+   <div className='text-2xl font-semibold text-gray-800 py-12'>Lipsync Leaderboard</div>
    {/* To-Do change title */}
-<p className='text-gray-400 text-xs w-full md:w-1/2 px-6'>Hipi G.O.A.T. is back with a bang! G.O.A.T is a nationwide online singing contest, packed with fun-filled, pitch-and-video-perfect challenges. It is your dream chance to go viral in the world of music, from the comfort of your home. </p>
+{/* <p className='text-gray-400 text-xs w-full md:w-1/2 px-6'>Hipi G.O.A.T. is back with a bang! G.O.A.T is a nationwide online singing contest, packed with fun-filled, pitch-and-video-perfect challenges. It is your dream chance to go viral in the world of music, from the comfort of your home. </p> */}
 </div>
    <div className='flex flex-col items-center'>
       <Tabs items={{display : ['Ranklist','Winners']}} selectedIndex={selectedIndex} onTabChange={onTabChange}/>
