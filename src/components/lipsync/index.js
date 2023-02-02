@@ -100,7 +100,7 @@ useEffect(()=>{
       </div> */}
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-<div className='w-full min-h-18 md:min-h-38'>
+<div className='w-full min-h-49 md:min-h-25'>
 		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
@@ -229,7 +229,7 @@ The stage is set. Are you ready to go viral?
 <div className='flex  w-full flex-col md:flex-row justify-center flex-wrap'>
            
            <div className='w-full md:w-1/3 bg-white flex flex-col bg-white rounded-xl overflow-hidden my-4 md:mx-8 box_shadow_1 h-fit ease-in duration-300'>
-              <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-38 ' onClick={()=>""}>
+              <div className='overflow-hidden cursor-pointer  min-h-58v md:min-h-25 ' onClick={()=>window.open("https://www.hipi.co.in/feed/for-you?videoId=eaf669ac-a5a7-4cd6-8341-83bf5def44e8")}>
               <img loading="lazy"  className=''alt="Hipi Stunner Challenges " src={withBasePath(`images/lipsync/challenges/Challenge_Love.jpg`)} />
               </div>
               <div className='w-full flex flex-col justify-center items-center py-4'>
