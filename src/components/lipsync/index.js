@@ -105,15 +105,15 @@ useEffect(()=>{
 		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
-    <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap ho asli Dramebaaz?</h1>
+    <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap hain asli Dramebaaz?</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-    Get ready to do what we know you’re best at – DRAMA!
+    Get ready to do what you are best at – DRAMA!
 </p>
 <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-Put your lipsync skills to test with our quirky challenges in funny dialogues, lyrical comedies and much more.  If you win, you get a once in a lifetime opportunity to be featured in a music video released by Zee Music Company!   
+  Test your lip sync skills with monthly fun challenges of Hipi lipsync battle. If you win, you get once in a lifetime opportunity to be featured in a music video released by Zee Music Company!
 </p>
 <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
-The stage is set. Are you ready to go viral? 
+Are you ready to light up the virtual stage
 </p>
   </div>
 </div>
@@ -123,65 +123,58 @@ The stage is set. Are you ready to go viral?
             <img loading="lazy"  alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div> */}
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>Who is a Dramebaaz? </h3>
-            <p className='text-gray-600 font-light text-lg pt-4 pb-2'>You’re definitely a Dramebaaz if you have the below traits: </p>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You LOVE movies and love acting as well. Be it in front of the mirror or camera, enacting your favourite movie moments or s</p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You are the life of the party! An entertainer of the circle, always ready with the perfect movie dialogues and songs for imitation, aka, ‘The Dramebaaz’ </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You believe that acting is your biggest strength and have never missed a spotlight to showcase your passion for it  </p></div>
-            <div className='flex'><p className='mb-2 text-gray-600 font-light'>You could be anything you want to be! A content creator, an entertainer, a lipsync enthusiast or just anybody with an acting flair, ready to give wings to your dream. So, if you’re ready, then grab this opportunity to claim the center stage and the validation from the industry’s best.  </p></div>
+            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>Who is a Dramebaaz?</h3>
+            <p className='text-gray-600 font-light text-lg pt-4 pb-2'>You’re an ultimate Dramebaaz if you have these traits:</p>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You LOVE movies and enjoy acting, be it in front of the mirror or camera. Enacting your favourite movie moments or songs is your THING!</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You are the life of a party! An entertainer, always ready with perfect movie dialogues and songs for imitation, aka, ‘The Dramebaaz’</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>You believe that acting is your biggest strength and you have never missed a spotlight. So, showcase your passion for it.</p></div>
+            <div className='flex'><p className='mb-2 text-gray-600 font-light'>Unlock your boundless potential and become whoever you desire - a content creator, an entertainer, a lip sync master, or a thespian with dramatic flair. The stage is set, and it's time to give your dreams the wings they deserve. The moment has arrived, and it's your time to shine! Discover the #HipiLipsyncBattle and make your mark in the world of entertainment.</p></div>
             </div>
     </div>
 
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_1 relative'>
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How does Hipi Lipsync unfold: </h3>
-
-             <div className='flex'><p className='mb-2 text-gray-600 font-light'>Hipi Lipsync battle is a 6-month pan-India contest that is open to anyone-and-everyone with a passion to entertain. It is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. A grand stage that provides a chance to impress one celebrity judge each month, win daily/monthly cash prizes and a title cash prize of Rs. 1 Lakh. This isn’t all, the winner also gets a once in a lifetime opportunity to be featured in a music video to be released by Zee Music Company. It’s your time to shine! Read on to find out about the #HipiLipSyncBattle challenge - </p></div>
-             
-             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> Hipi Lipsync Battle is for a period of 6 months. </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> One lipsync challenge will be released every month with a unique theme and will be judged by one celebrity judge. Participants can either lipsync to songs or dialogues based on the theme given in their preferred language of choice </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Use  the monthly  thematic hashtag  challenge and #HipiLipSyncBattle  to participate. Only the videos that have both of the mentioned hashtags will be considered  </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>At the end of every month, the creator with the best lipsync video will be declared as the monthly winner by the celebrity judge of that month  </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'> The monthly winner gets a cash prize of Rs. 15,000  </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>At the end of 6 months, the 6 monthly winners will compete among themselves for 2 weeks for the grand prize   </p></div>
-            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>The winner takes home Rs. 1 Lakh and a lifetime opportunity to be featured in a music video launched by the Zee Music Company  </p></div>
-            
+            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How will Hipi Lipsync Battle unfold-</h3>
+             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Hipi Lipsync Battle is a 6-month competition open to everyone.</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Each month will have a unique lipsync challenge theme and participants can lipsync to songs or dialogues in their preferred language</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>To be eligible, videos must include the monthly challenge hashtag. For the month of February it’s #Love.</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>A celebrity judge selects the best lipsync video each month and the winner receives Rs.15,000.</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>After 6 months, the 6 monthly winners compete for the grand prize of Rs. 1 Lakh and a chance to feature in a music video by Zee Music Company.</p></div>
+            <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Contestants can also win daily cash prizes.</p></div>
             </div>
     </div>
     
-
-
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_lipsync_blue relative'>
         {/* <div className='md:w-1/2 w-full  md:pl-32 md:p-8 px-8 '>
             <img loading="lazy"  alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div> */}
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How To Participate</h3>
-            <p className='text-gray-500 font-light text-lg pt-4'>Step 1: Download the Hipi app</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Step 2: Sign up or log in to your Hipi account </p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Step 3: Use #HipiLipSyncBattle and the monthly challenge's hashtag in your video entries </p>
+            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>The Ultimate Grand Prize</h3>
+            <p className='text-gray-500 font-light text-lg pt-4'>At the end of 6 months, the top 6 finalists will compete for 2 weeks, and one grand winner will be declared. The celebrity judges will choose the asli Dramebaaz based on their talent and the quality of their videos.</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>The winner of the #HipiLipsyncBattle takes home a cash prize of Rs.1 Lakh and a dream breakthrough of being featured in a music video launched by Zee Music Company!</p>
         </div>
     </div>
-    
+
+
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_1 relative'>
         {/* <div className='md:w-1/2 w-full  md:pl-32 md:p-8 px-8 '>
             <img loading="lazy"  alt="Get cash rewards with Hipi"  className='object-contain' src={withBasePath('images/reward/Get Cash Rewards.png')} /> 
         </div> */}
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>The Ultimate Grand Prize </h3>
-            <p className='text-gray-500 font-light text-lg pt-4'>At the end of 6 months, the top 6 finalists will compete for 2 weeks, and one grand winner will be declared. The celebrity judges will choose the asli Dramebaaz based on their talent and the quality of their videos. </p>
-            <p className='text-gray-500 font-light text-lg pt-4'>The winner of the #HipiLipSyncBattle takes home a cash prize of Rs. 1 Lakh and a dream breakthrough of being featured in a music video launched by Zee Music Company! </p>
+            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How to participate</h3>
+            <p className='text-gray-500 font-light text-lg pt-4'>- Step 1: Download the Hipi app</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>- Step 2: Sign up or log in to your existing Hipi account</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>- Step 3: Create a video and use the monthly thematic challenge hashtag while uploading.</p>
         </div>
     </div>
-
     
-
-
 {/* 
-    <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8   ">
+
+
+    <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
 	<div className="max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center text-gray-600">
 		<h3 className="text-3xl text-center font-bold  pb-4">Win cash prizes, every day!</h3>
-		<p className="font-light text-lg pt-4">Want to make quick money with your entries? Garner likes on your challenge videos and stand a chance to earn Rs. 1000/- ! </p>
+		<p className="font-light text-lg pt-4">Want to make quick money with your entries? Garner likes on your challenge videos and stand a chance to earn Rs. 1000 . </p>
 		<p className="font-light text-lg pt-4">Excited? Here’s more info!</p>
 		<div className="flex pt-4">
 			<span className="pr-1">•</span>
@@ -197,7 +190,7 @@ The stage is set. Are you ready to go viral?
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000/-!</p>
+			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
@@ -208,12 +201,12 @@ The stage is set. Are you ready to go viral?
 	<p className="max_800 w-full flex-col flex py-8 md:p-12 px-8 justify-center text-gray-600 text-xs">
 	<ul className="list-disc">
 		<li>The Leaderboard only deals with the most liked videos and DOES NOT determine the winners of the challenges.</li>
-		<li>Every 15 days a new challenge is released, and the leaderboard will reset itself accordingly. Your previous challenge entries will not be vaild anymore, but you can always participate in the new challenge to win!</li>
+		<li>Every 30 days a new challenge is released, and the leaderboard will reset itself accordingly. Your previous challenge entries will not be vaild anymore, but you can always participate in the new challenge to win!</li>
 		<li>Once you win, you will not be able get on the leaderboard until the next challenge is announced. Make sure to participate in the new challenge to grab 1000 bucks again.</li>
 	</ul>
 	</p>
-</div> */}
-
+</div> 
+ */}
 
 
 <div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
@@ -251,7 +244,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Ishita Dutta</h4>
             <p> Judge for the February challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Ishita Dutta is a well-known face in the entertainment industry with lead roles in multiple films and television for over a decade. Her captivating performances in the hit movies of ‘Drishyam’ and ‘Drishyam 2’ have been well received along with her earlier roles in ‘Chanakyudu’ and ‘Firangi’. She earned her popularity in television series like ‘Bepanaah Pyaar’, ‘Rishton Ka Saudagar-Baazigar' and ‘Ek Ghar Bhanaunga’. #TheBiggestFan challenge on Hipi is a proof of the love she received from her fans who showered it through their amazing videos. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Ishita Dutta is an actress par excellence in the entertainment industry with lead roles in successful films and television serials for over a decade. Her captivating performances in the hit movies like ‘Drishyam’ and ‘Drishyam 2’ have been well received, along with her earlier roles in ‘Chanakyudu’ and ‘Firangi’. She earned popularity in television serials like ‘Bepanaah Pyaar’, ‘Rishton Ka Saudagar-Baazigar' and ‘Ek Ghar Bhanaunga’. #TheBiggestFan challenge on Hipi is proof of the love she received from her fans.</p>
         </div>
         <div className='w-full md:w-1/2 min-h-32v md:min-h-42  flex justify-center md:justify-end items-center py-4 md:py-20 br_40'>
             <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/lipsync/judges/HLSB_Ishita Dutta.jpg')} /> 
@@ -265,7 +258,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Tanvi Thakker</h4>
             <p> Judge for the March challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Tanvi Thakkar has almost become a household name for her popularity in multiple TV series roles. Her endearing performances in ‘Yeh Ishq Haaye’, ‘Miley Jab Hum Tum’, ‘Sarvggun Sampanna’ and ‘Pyaar Kii Ye Ek Kahaani’ was well received by the television audiences across the country. She continues to keep the streak going with her current hit show ‘Ghum Hai Kisi ke Pyaar Mein’. The soon to be mommy, Tanvi Thakker, has been our valued Hipi creator for almost a year now and her amazing videos are just everyone’s favourite now. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Tanvi Thakkar is a famous TV actress known for her roles in popular TV serials such as "Yeh Ishq Haaye," "Miley Jab Hum Tum," "Sarvggun Sampanna," and "Pyaar Kii Ye Ek Kahaani," Her acting skills have made her popular among television audiences all over the country. Tanvi Thakkar is still going strong with her popular show "Ghum Hai Kisi ke Pyaar Mein”. Soon to be mommy, Tanvi Thakker, has been our valued Hipi creator for almost a year and her amazing videos are just everyone’s favourite.</p>
         </div>
     </div>
 
@@ -273,7 +266,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Aanchal Munjal </h4>
             <p> Judge for the April challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Aanchal Munjal is no stranger to the world of cinema. She has been showcasing her acting skills since her childhood days with her debut in the series, ‘Dhoom Machaao Dhoom’, 2008. She made a mark in the movies receiving widespread recognition for her performance in the movie, ‘We Are Family’, 2008, based on the Hollywood film ‘Stepmom’. That same year she appeared as Muniya S. Yadav in the popular socio-political film Aarakshan alongside the likes of Big B and Deepika Padukone followed by several movies and TV roles not only in Hindi but also in Tamil. Hipi’s recent hashtag challenge around her latest music video release got her an exceptional response from the Hipi fam. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Aanchal Munjal is a well-known actress who’s been performing since her childhood. She made her debut in the series "Dhoom Machaao Dhoom" in 2008 and has since appeared in several movies and TV shows in both Hindi and Tamil. She gained recognition for her role in the movie "We Are Family" in 2008. She has also appeared in the popular socio-political drama "Aarakshan" with actors like Amitabh Bachchan and Deepika Padukone. Recently, Hipi held a hashtag challenge around her latest music video, and she received a great response from the Hipi community.</p>
         </div>
         <div className='w-full md:w-1/2 min-h-32v md:min-h-42  flex justify-center md:justify-end items-center py-4 md:py-20 br_40'>
             <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/lipsync/judges/HLSB_Aanchal Munjal.jpg')} /> 
@@ -287,7 +280,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Shweta Sharma</h4>
             <p> Judge for the May challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Shweta Sharma’s popularity on Hipi is phenomenal. She is a prolific Hipi creator whose videos cross millions of views as soon as they are posted on the app. Her endearing appeal lies in her ethnicity and the traditional flavour that she brings to her videos. Her fashion game is always on-point, especially her sarees are a major hit with her followers that she elevates by her lipsync videos using the 90’s era songs. True to her tagline ‘Leaving a bit of sparkle everywhere I go’, she continues to blaze a sparkling trail on Hipi and her videos are much appreciated by her Hipi fam. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Shweta Sharma, popularly known as misthiss30 is a prolific Hipi creator whose videos cross millions of views as soon as they are posted on the app. People love her unique style and fashion sense that includes traditional elements, especially her sarees. She makes lip-sync videos using 90's era songs, which are a hit with her followers. Shweta's tagline is "Leaving a bit of sparkle everywhere I go" and she continues to shine on Hipi with her videos, which are highly appreciated by her Hipi community.</p>
         </div>
     </div>
 
@@ -295,7 +288,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Shivangi Khedkar</h4>
             <p> Judge for the June challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Shivangi Khedkar, aka, our ‘Pallavi’ has created a massive fan following for herself in such a short span of time. Her role in the much-loved show ‘Mehndi Hai Rachne Wali’ has been received positively by the television audiences. She is not only a talented actor but also a successful model who does the circuit in various beauty pageants, commercials and print shoots. And, if this were not enough, she has also starred in several music videos apart from being a popular creator on Hipi, commanding a sizeable fan base in the Hipi fam. </p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Shivangi Khedkar, better known as Pallavi, has won many hearts with her performances in a short period of time. Known for her role in the hit show 'Mehndi Hai Rachne Wali', she shines not only as a talented actor but also as a successful model, gracing beauty pageants, commercials, and photoshoots. Her versatility extends to music videos and her large following on Hipi. Shivangi truly has it all.</p>
         </div>
         <div className='w-full md:w-1/2 min-h-32v md:min-h-42  flex justify-center md:justify-end items-center py-4 md:py-20 br_40'>
             <img loading="lazy"  alt="Nikita Anand - Miss Universe at Hipi Stunner 2022"  className='object-contain br_40 w-10/12 box_shadow_1' src={withBasePath('images/lipsync/judges/HLSB_Shivangi Khedkar.jpg')} /> 
@@ -309,7 +302,7 @@ The stage is set. Are you ready to go viral?
         <div className='md:w-1/2 w-full flex-col flex py-6 md:pl-32 md:p-8 px-8 justify-center '>
             <h4 className='text-3xl font-bold lipsync_font'>Swati Kapoor</h4>
             <p> Judge for the July challenge</p>
-            <p className='text-gray-500 font-light text-lg pt-4'>Swati Kapoor has proven her mettle in the entertainment industry for over a decade now. She started her acting career in television in 2010 and her debut role as Rachana in the serial ‘Kaali-Ek Agnipariksha’ created a huge impression with the TV audience. Her acting prowess and popularity bagged her a role in the Punjabi film Mr & Mrs 420. She went on to do several successful movies and television roles, notably gaining the appreciation of her fans for her negative role in Kundali Bhagya, Zee TV’s most popular show over the past 5 years. Set to appear in an upcoming television series named ‘Dhruv Tara-Samay Sadi Se Pare’, she is also a sought after Hipi creator and much loved by the Hipi fam.</p>
+            <p className='text-gray-500 font-light text-lg pt-4'>Swati Kapoor has proven her mettle in the entertainment industry for over a decade. She started her acting career in 2010 with her debut role in the TV show "Kaali-Ek Agnipariksha." Later, she appeared in the Punjabi film "Mr & Mrs 420" and has worked in several successful TV shows, including a popular negative role in Zee TV’s "Kundali Bhagya." Set to appear in an upcoming television series named ‘Dhruv Tara-Samay Sadi Se Pare’, she is also a sought after Hipi creator and much loved by the Hipi fam.</p>
         </div>
     </div>
     </div>
