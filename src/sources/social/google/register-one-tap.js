@@ -28,7 +28,7 @@ const regitserUserOneTap = async ({
       });
     resp.data.status = 200;
     resp.data.message = 'success';
-    const accessToken = resp?.data?.token;
+    const accessToken = resp?.data?.access_token;
     // const refreshToken = resp?.data?.refresh_token;
     response = await hipiLogin({ accessToken, refreshToken:'' });
     return Promise.resolve(response);

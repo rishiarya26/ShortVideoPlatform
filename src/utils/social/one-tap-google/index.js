@@ -24,6 +24,7 @@ const registerUser = async(token) =>{
 }
 
 const getToken = async(response)=>{
+  console.log("google-one-tap-resp", response);
  try {
   const googleToken = response?.credential;
   const resp = await login({googleToken, type: "oneTap"});
