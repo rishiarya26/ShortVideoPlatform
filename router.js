@@ -7,5 +7,6 @@ Router.pushState = (path, data = {}, opt = { getInitialProps: true }) => {
   Router.push(`/${path}`, updatedPath, opt);
 };
 
-export default Router;
+
 export { useRouter };
+export default Router;
