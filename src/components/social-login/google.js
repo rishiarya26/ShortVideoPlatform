@@ -40,9 +40,6 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) 
                 // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             }
         }
-
-        // console.log("RESPPP", resppp);
-        //  const googleToken = data?.Zb?.access_token;
          try{  
              toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
              const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
