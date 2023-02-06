@@ -10,7 +10,7 @@ import Info from "../../commons/svgicons/info";
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard, sponsored=null}) =>{
 
   
       useEffect(()=>{
@@ -68,10 +68,10 @@ return(
    <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
    <div onClick={onProductClick} style={{backgroundColor: `${dominantColor}7a` || "gray"}}  className="w-full overflow-hidden relative min-h-49v">
    <CardRibbon ribbonData={ribbonData}/>
-   <div className="absolute flex items-center text-white font-medium text-sm bg-gray-600 opacity-70 rounded-sm p-1 top-4 left-4">
+   {sponsored === 1 && <div className="absolute flex items-center text-white font-medium text-sm bg-gray-600 opacity-70 rounded-sm p-1 top-4 left-4">
       <p className="pr-1">Promoted</p>
       <Info/>
-   </div>
+   </div>}
       <Img data={thumbnail}/> 
       {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
    </div>

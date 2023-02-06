@@ -340,6 +340,7 @@ const onProductChange = (id)=>{
              subCategory={item?.sub_category || "NA"}
              subSubCategory={item?.subsub_category || "NA"}
              mainCategory={item?.main_category || "NA"}
+             sponsored={item?.sponsored || null}
          />
          </div>
         })}
@@ -377,6 +378,7 @@ const onProductChange = (id)=>{
              subCategory={item?.sub_category || "NA"}
              subSubCategory={item?.subsub_category || "NA"}
              mainCategory={item?.main_category || "NA"}
+             sponsored={item?.sponsored || null}
          />
          </div>
          ))}
@@ -580,6 +582,7 @@ const onProductChange = (id)=>{
              subCategory={item?.sub_category || "NA"}
              subSubCategory={item?.subsub_category || "NA"}
              mainCategory={item?.main_category || "NA"}
+
            />
            </div>
           ))}
