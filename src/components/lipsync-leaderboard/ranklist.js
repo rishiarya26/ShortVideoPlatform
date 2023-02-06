@@ -23,7 +23,7 @@ useEffect(()=>{
     getRanklist();
 },[])
 
-if(state === 'error') return <>Something went wrong</>
+if(state === 'error') return <div className="flex flex-col w-full p- justify-center items-center min-h-32v">Something went wrong</div>
 return(    
 <div className='flex flex-col w-full items-center'>
   {/* <div className='flex bg-gray-200 rounded-full p-1 items-center mt-4'>
