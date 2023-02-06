@@ -19,7 +19,7 @@ async function leaderboardData({round}) {
 const fetchLeaderboardData = async(hashtag)=>{
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/api/v1/shorts/leaderboard/challenge/details?id=${hashtag}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/leaderboard/challenge/details?id=${'leaderboardTest2'}`;
     response = await get(apiPath,null, {});
     response.data.requestedWith = { id };
     return Promise.resolve(response);
@@ -33,7 +33,7 @@ const fetchLeaderboardData = async(hashtag)=>{
 const fetchLeaderboardWinners = async(campaign)=>{
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('hipi')}/api/v1/shorts/leaderboard/winners?id=${campaign}`;
+    const apiPath = `${getApiBasePath('hipi')}/v1/shorts/leaderboard/winners?id=${'leaderboardTest'}`;
     response = await get(apiPath,null, {});
     return Promise.resolve(response);
   } catch (err) {

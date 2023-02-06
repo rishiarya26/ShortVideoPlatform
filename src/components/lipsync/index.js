@@ -174,11 +174,9 @@ The stage is set. Are you ready to go viral?
         </div>
     </div>
 
-    
-{/* 
 
 
-    <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
+    {/* <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
 	<div className="max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center text-gray-600">
 		<h3 className="text-3xl text-center font-bold  pb-4">Win cash prizes, every day!</h3>
 		<p className="font-light text-lg pt-4">Want to make quick money with your entries? Garner likes on your challenge videos and stand a chance to earn Rs. 1000 . </p>
@@ -197,14 +195,10 @@ The stage is set. Are you ready to go viral?
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
-		</div>
-		<div className="flex">
-			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">If you win, you need to accept the cash prize within 2 hours, or the next viral creator in line will take your place. </p>
+			<p className="mb-2 pl-4 font-light">Every day at 11:59 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
 		</div>
 	</div>
-	<div className="rounded-md text-sm font-semibold  px-8 p-2 bg-hipired text-white my-2 cursor-pointer">Daily Leaderboard</div>
+	<div className="rounded-md text-sm font-semibold  px-8 p-2 bg-hipired text-white my-2 cursor-pointer" onClick={()=>router && router.push('/lipsync-leaderboard')}>Daily Leaderboard</div>
 	<p className="max_800 w-full flex-col flex py-8 md:p-12 px-8 justify-center text-gray-600 text-xs">
 	<ul className="list-disc">
 		<li>The Leaderboard only deals with the most liked videos and DOES NOT determine the winners of the challenges.</li>
@@ -212,8 +206,7 @@ The stage is set. Are you ready to go viral?
 		<li>Once you win, you will not be able get on the leaderboard until the next challenge is announced. Make sure to participate in the new challenge to grab 1000 bucks again.</li>
 	</ul>
 	</p>
-</div> 
- */}
+</div>  */}
 
 
 <div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
@@ -238,7 +231,6 @@ The stage is set. Are you ready to go viral?
               {/* <p className='text-gray-700 font-light text-sm'>Date</p> */}
               <p className='text-sm px-4 text-gray-500 font-light text-lg py-4'>This Valentine's month Unleash your creativity and spread some love by making videos on the theme #Love - Let's see how you can turn this hashtag into a work of art. upload your video by 28th February for a chance to win the Hipi Lipsync Battle and dance to the rhythm of victory. Use #Love and #HipiLipSyncBattle  while you upload your videos.</p>
               <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open("https://www.hipi.co.in/feed/for-you?videoId=eaf669ac-a5a7-4cd6-8341-83bf5def44e8")}>Watch challenge video</div>
-              
               </div>
           </div>
           </div>
