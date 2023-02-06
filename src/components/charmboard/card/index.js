@@ -78,7 +78,7 @@ return(
    <div className="flex w-full justify-between p-4 items-center">
       <div className="flex flex-col w-full">
          <p className="text-xs text-gray-600">{title}</p>
-         <div className="flex justify-between ites-center w-full pt-2">
+        {sponsored === 1 && <div className="flex justify-between ites-center w-full pt-2">
             <div className="flex items-center">
                {shopNameImg ? <div className="max-h-12 ad_logo"><Img data={shopNameImg}/></div> :
                 <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
@@ -91,7 +91,7 @@ return(
                <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
             </div>
             </div>
-         </div>
+         </div>}
       </div>
    </div>
 </div>

@@ -100,6 +100,10 @@ useEffect(()=>{
 		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
+    <div className='p-2 w-full flex justify-between bg-hipired items-center text-white md:hidden px-4 text-sm'>
+        <p>Check Daily Leaderboard</p>
+        <div className='border border-white p-1 rounded-md ml-2 text-sm px-2' onClick={()=>router && router.push('/lipsync-leaderboard')}>View</div>
+    </div>
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap hain asli Dramebaaz?</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
