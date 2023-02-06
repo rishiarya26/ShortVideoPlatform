@@ -21,7 +21,7 @@ export const Winners = () =>{
         getRanklist();
     },[])
 
-if(state === 'error') return <>Something went wrong</>    
+if(state === 'error') return <div className="flex flex-col w-full items-center justify-center min-h-60">Something went wrong</div>    
 return(
 <div className='flex flex-col w-full items-center min-h-60'>
 
