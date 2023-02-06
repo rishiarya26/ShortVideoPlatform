@@ -1,19 +1,26 @@
 /*eslint-disable @next/next/no-img-element */
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { fetchLeaderboardWinners } from "../../sources/leaderboard";
 
 export const Winners = () =>{
     const [items, setItems] = useState([])   
     const [state, setState] = useState('loading') 
+    const router = useRouter();
     const getRanklist = async() =>{
       try{
         const resp = await fetchLeaderboardWinners('lipsync');
         console.log("resp",resp)
         setItems(resp?.data?.responseData?.challenges);
-        setState('success')
+        if(resp?.data?.responseData?.challenges?.length > 0){
+          setState('success')
+        }else{
+          setState('error')
+        }
+       
       }catch(e){
         console.error("error in leaderboard data api",e);
-        setState('fail')
+        setState('error')
       }
     }    
     
@@ -21,7 +28,13 @@ export const Winners = () =>{
         getRanklist();
     },[])
 
-if(state === 'error') return <div className="flex flex-col w-full items-center justify-center min-h-60">Something went wrong</div>    
+    const dynamicImgUrl = (url)=>{
+      let imgUrl = url;
+      imgUrl = url?.replace('upload','upload/w_190')
+      return imgUrl
+    }
+
+if(state === 'error') return <div className="flex flex-col w-full items-center justify-center min-h-60">No data available. Please check after sometime.</div>    
 return(
 <div className='flex flex-col w-full items-center min-h-60'>
 
@@ -51,13 +64,14 @@ return(
  </div>
  </>
  : state === 'success' && items?.length > 0 && items.map((challenge, id)=>(
+ challenge?.winners?.length > 0 && 
   <div className="flex w-full flex flex-col items-center" key={id}>
-  <div className='text-xl font-semibold text-gray-800 py-4 text-center'> #{challenge?.name}</div>
+  <div className='text-xl font-semibold text-gray-800 py-4 text-center'> #{challenge?.hashtagNames?.[0]}</div>
   <div className='flex LIST w-full p-4 items-center justify-center flex-wrap'>
   {challenge?.winners?.map((item,id)=>(
-  <div key={id} className='flex flex-col ITEM mb-3 justify-between items-center'>
+  <div onClick={()=>router?.push(`/@${item?.winner?.userName}`)} key={id} className='flex flex-col ITEM mb-3 justify-between items-center cursor-pointer'>
       <div className='w-24 h-24 rounded-full bg-gray-200 overflow-hidden'>
-          <img src={item?.winner?.profilePicImgUrl}/>
+          <img src={dynamicImgUrl(item?.winner?.profilePicImgUrl)}/>
       </div>
       <div className='flex justify-center font-semibold text-gray-800 px-2 w-32 truncate'>
           {item?.winner?.firstName || ''}{" "}{item?.winner?.lastName || ''}

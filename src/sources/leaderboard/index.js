@@ -21,7 +21,7 @@ const fetchLeaderboardData = async(hashtag)=>{
   try {
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/leaderboard/challenge/details?id=${'leaderboardTest2'}`;
     response = await get(apiPath,null, {});
-    response.data.requestedWith = { id };
+    response.data.requestedWith = { hashtag };
     return Promise.resolve(response);
   } catch (err) {
     console.error("Fetch leaderboard api issue",err)

@@ -12,7 +12,11 @@ const getRanklist = async() =>{
     const resp = await fetchLeaderboardData('love');
     setItems(resp?.data?.responseData?.leader);
     console.log("resp*",resp)
-    setState('success')
+    if(resp?.data?.responseData?.leader?.length > 0){
+        setState('success')
+      }else{
+        setState('error')
+      }
   }catch(e){
     console.error("error in leaderboard data api",e);
     setState('error')
@@ -23,7 +27,13 @@ useEffect(()=>{
     getRanklist();
 },[])
 
-if(state === 'error') return <div className="flex flex-col w-full p- justify-center items-center min-h-32v">Something went wrong</div>
+const dynamicImgUrl = (url)=>{
+    let imgUrl = url;
+    imgUrl = url?.replace('upload','upload/w_100');
+    return imgUrl
+  }
+
+if(state === 'error') return <div className="flex flex-col w-full p- justify-center items-center min-h-32v">No data available. Please check after sometime.</div>
 return(    
 <div className='flex flex-col w-full items-center'>
   {/* <div className='flex bg-gray-200 rounded-full p-1 items-center mt-4'>
@@ -90,13 +100,13 @@ return(
    </div>
    </>
    : state === 'success' && items?.length > 0 && items?.map((item,id)=>(
-    <div key={id} className='flex mb-3 box_shadow_2 border border-gray-100 rounded-full p-4 w-full md:w-1/2 justify-between items-center'>
+    <div onClick={()=>router?.push(`/${item?.userHandle}`)}  key={id} className='flex mb-3 box_shadow_2 border border-gray-100 rounded-full p-4 w-full md:w-1/2 justify-between items-center cursor-pointer'>
        <div className='flex items-center'>
        <div className='flex font-bold text-gray-800 pl-1 pr-3 text-lg'>
            {id+1}
        </div>
        <div className='w-12 h-12 rounded-full bg-gray-200  overflow-hidden'>
-           <img src={item?.profilePicImgUrl}/>
+           <img src={dynamicImgUrl(item?.profilePicImgUrl)}/>
        </div>
            <div className='flex font-semibold text-gray-800 px-2 max-w-38v md:max-w-28v line-clamp-2'>
            {item?.firstName || ''}{" "}{item?.lastName || ''}
