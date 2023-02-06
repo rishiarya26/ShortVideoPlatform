@@ -1,10 +1,10 @@
 {"faq" : [
     
    {   "ques" : "Who can participate?",
-       "ans" : "Any Indian citizen above 18 years. If you are under 18 then parental/guardian approval is needed. ", "show": false},
+       "ans" : "Indian citizens over 18 years or with parent/guardian approval for those under 18.", "show": false},
 
 { "ques" : "How to make an account on Hipi App? ",
-    "ans" : "Download Hipi app from Play Store or App Store. Sign up by answering a few questions and you are good The contest period is for 6 months and 2 weeks to go. ", "show": false},
+    "ans" : "Download Hipi app from Play Store or App Store. Answer some questions and sign up for free.", "show": false},
       
 { "ques" : "Do you need to be a trained actor to participate? ",
     
@@ -14,14 +14,14 @@
     "ans" : "No, it’s free and easy to use. ", "show": false},
     
 { "ques" : "Do I need to pay to participate in the contest?",
-    "ans" : "No, it's free for all to participate. Just download the Hipi app, create an account & upload your creative lipsync videos! ", "show": false},
+    "ans" : "No, the contest is free to participate. Just download the Hipi app, create an account & upload your lipsync videos!", "show": false},
     
 {"ques" : "What do I win? ",
-   "ans" : "The following prizes await if you win the challenges mentioned. Monthly Challenge winner – Rs. 15,000 and directly qualify for the final round The grand winner of Hipi Lipsync Battle will win Rs.1 Lakh and a dream chance to feature in a music video to be launched by Zee Music Company. You can also win a daily cash prize of Rs. 1000/ based on the Daily Cash Prize Leaderboard.","show": false},
+   "ans" : "Monthly Challenge winner - Rs. 15,000 and a spot in the final round.The grand winner of Hipi Lipsync Battle will win Rs.1 Lakh and a dream chance to feature in a music video to be launched by Zee Music Company.A daily cash prize of Rs. 1000 is offered through a leader board system. The leader board displays the top 20 creators who have received the most likes on their challenge video.","show": false},
     
        
 {"ques" : "Will I be paid to upload my lipsync videos?",
-"ans" : "No, you will not be paid. But you stand to win daily and monthly cash prizes, golden contracts and a grand final prize. ","show": false},
+"ans" : "No, not to upload, but if you participate you can win daily and monthly cash prizes and golden contracts.","show": false},
  
     
 {"ques" : "Can I submit videos in any language?",
@@ -29,7 +29,7 @@
     
        
 {"ques" : "How many videos can I upload in 1 day? ",
-"ans" : "As many as you want but be sure to adhere to the rules of the challenge you are making video entries for, to increase your chances of winning. Use the monthly thematic challenge hashtag to participate. ","show": false},
+"ans" : "You can upload as many videos as you want but be sure to follow the rules of the challenge.","show": false},
  
     
 {"ques" : "What is the duration of videos to be submitted?",
@@ -37,11 +37,11 @@
     
        
 {"ques" : "Do I need to submit lipsync videos for songs or dialogues?  ",
-"ans" : "Your lipsync videos can either be set to songs or dialogues. But ensure that you follow the relevant theme and hashtag for the respective challenges. ","show": false},
+"ans" : "Your lipsync videos can either be on songs or dialogues. But do not forget to use the mentioned hashtag for the challenge.","show": false},
  
     
 {"ques" : "How many videos do I need to upload to be eligible in the contest? ",
-   "ans" : "You need to upload a minimum of 1 video to be eligible for the contest as an entry to the respective hashtag challenge. But the more, the merrier! ","show": false},
+   "ans" : "You need to upload at least 1 video to be eligible for the contest. But more, the merrier!","show": false},
     
        
 {"ques" : "Do we need to upload every day? ",
@@ -49,26 +49,26 @@
  
     
 {"ques" : "How will I get my cash prize and how long will it take to receive it? ",
-   "ans" : "Once the winner's name is announced, our team will get in touch with you and will take all your details to start the process. Once the process starts it may take about a month for the cash prize to reach you. ","show": false},
+   "ans" : "Once the winner's name is announced, our team will get in touch with you and will take all your details to start the process. Once the process starts, it may take about a month for the cash prize to reach you.","show": false},
     
        
 {"ques" : "When will the winner of each hashtag challenge be announced?",
-"ans" : "At the end of every month, 1 monthly winner will be announced and will be 1 of 6 finalists eligible to participate in the grand finale. ","show": false},
+"ans" : "The winner will be announced at the end of each month.","show": false},
  
     
 {"ques" : "Can I submit more than 1 entry? ",
-   "ans" : "We always welcome overachievers. You can submit more than 1 entry in any challenge and any theme. ","show": false},
+   "ans" : "Yes, you can submit more than 1 entry.","show": false},
     
        
 {"ques" : "Will this challenge be held in person?",
-"ans" : "This challenge will be held virtually for the foreseeable future. ","show": false},
+"ans" : "No, this challenge will be held virtually.","show": false},
  
     
 {"ques" : "Who can I reach out to if I have a question? ",
-   "ans" : "You can drop in your questions at Hipi Lipsync mail ID and we will get back to you. ","show": false},
+   "ans" : "You can drop in your questions on the contact form and we will get back to you. ","show": false},
     
        
 {"ques" : "What is not allowed?",
-"ans" : "We want to provide a safe, supportive and inclusive place for our creators and their creativity to flourish. We protect them from the kind of hateful content or behaviour that can spoil a positive experience on #HipiLipsyncBattle. Unethical submissions that are fraudulent or made by violating any rule to gain an unfair advantage will not be tolerated. Such entries will be disqualified immediately. ","show": false}
+"ans" : "We want to make a safe and positive place for our creators to show their creativity. Hateful content and bad behaviour will not be allowed. If you cheat or break any rules to gain an advantage, your entry will be removed.","show": false}
  
 ]}
