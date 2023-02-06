@@ -12,10 +12,15 @@ export const Winners = () =>{
         const resp = await fetchLeaderboardWinners('lipsync');
         console.log("resp",resp)
         setItems(resp?.data?.responseData?.challenges);
-        if(resp?.data?.responseData?.challenges?.length > 0){
+        if(resp?.data?.responseData?.challenges?.length <= 1){
+          if(resp?.data?.responseData?.challenges?.length === 1 && 
+            resp?.data?.responseData?.challenges?.[0]?.winners?.length > 0){
+              setState('success')
+          }else{
+            setState('error');
+          }
+        }else  if(resp?.data?.responseData?.challenges?.length > 1){
           setState('success')
-        }else{
-          setState('error')
         }
        
       }catch(e){
