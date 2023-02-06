@@ -5,13 +5,13 @@ import { getCanonicalUrl } from '../src/utils/web';
 export default function Hipi() {
   return (
     <>
-    {/* <SeoMeta
+    <SeoMeta
     data={{
-      title: 'Hipi Lipsync Battle Contest | #HipiLipsyncBattle challenge',
+      title: 'Lipsync Leaderboard | Hipi',
       // image: item?.thumbnail,
-      description: 'Hipi Lipsync battle is a challenge where each participant gets a chance to showcase their lipsync and acting skills to a nationwide audience. Read on to find out about the #HipiLipsyncBattle challenge.',
+      description: 'Check out the list of contest entries of Lipsync challenge on Hipi.',
       canonical: getCanonicalUrl && getCanonicalUrl()}}
-      /> */}
+      />
       {/* <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStunner)}}
