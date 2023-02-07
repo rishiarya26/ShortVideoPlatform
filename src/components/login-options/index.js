@@ -19,6 +19,10 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
     toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
   },[])
 
+  useEffect(() => {
+    window.sessionStorage.removeItem("data");
+  }, [])
+
   const chooseComp = {
     mobile :   
        <div onClick={()=>{

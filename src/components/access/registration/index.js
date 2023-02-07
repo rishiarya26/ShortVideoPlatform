@@ -16,6 +16,7 @@ import * as fbq from '../../../analytics/fb-pixel'
 import { toTrackClevertap } from '../../../analytics/clevertap/events';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import VerifyOtp from '../verify-otp';
+import { sessionStorage } from '../../../utils/storage';
 
 function formatDate(age) {
   const year = new Date().getUTCFullYear();
@@ -23,12 +24,17 @@ function formatDate(age) {
   return `01/01/${modifiedYear}`;
 }
 
+function yearToDate(date) {
+  const newDate = new Date().getUTCFullYear() - new Date(date).getUTCFullYear() - 1;
+  return newDate;
+}
+
 const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmail }) => {
 
   const [data, setData] = useState({
     type: '',
     value: '',
-    gender: 'Male',
+    gender: '',
     firstName: '',
     lastName: '',
     name: '',
@@ -58,7 +64,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   }
 
   useEffect(() => {
-    const dataToUpdate = { ...data };
+    let dataToUpdate = { ...data };
     if(device === 'mobile'){
     dataToUpdate.type = mobile ? 'phoneno' : 'email';
     dataToUpdate.value = mobile ? phoneNo : email;
@@ -67,7 +73,13 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
      dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
      dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}${phoneData?.input}` : phoneData.input;
     }
-    console.log(dataToUpdate)
+    if(device === 'mobile') {
+      const formData = JSON.parse(window.sessionStorage.getItem('formData'));
+      if(formData) {
+        formData.dob = yearToDate(formData.dob);
+        dataToUpdate = { ...data, ...formData };
+      }
+    }
     setData(dataToUpdate);
   }, []);
   /* eslint-disable no-param-reassign */
@@ -139,10 +151,11 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
           ...data,
           dob: formatDate(Number(data.dob))
         }
-        if(device === 'mobile'){ 
+        if(device === 'mobile'){
+          window.sessionStorage.setItem("formData", JSON.stringify(reqObject))
           router && router?.push({
             pathname: '/verify-otp',
-            query: { ref: 'signup', formData: JSON.stringify(reqObject) }
+            query: { ref: 'signup' }
           });
         } else {
           setOtpStatus(true);
@@ -175,7 +188,16 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
 
   return (
     <div className="flex flex-col px-4 pt-10">
-      <BackButton back={()=>toggleFlow && toggleFlow("login")} />
+      <BackButton
+        back={()=>{
+            if(device === "mobile") {
+              router?.back();
+            } else {
+              toggleFlow && toggleFlow("login")
+            }
+          }
+        }
+      />
       <div className="mt-4 flex flex-col">
         <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
         <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>

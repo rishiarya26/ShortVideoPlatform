@@ -62,7 +62,8 @@ export default function UserHandle({toggleFlow}) {
         try {
             const data = localStorage?.get(['user-details']);
             setUserDetails({...data});
-            setUserHandle(data?.userHandle);
+            const trimmedUserHandle = data?.userHandle?.subStr(1);
+            setUserHandle(trimmedUserHandle);
             setCorrect(true);
             console.log('user-details',data)
         } catch(e) {

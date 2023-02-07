@@ -35,12 +35,21 @@ export default function Mobile({
     loginOtp: !!(data.input?.length === 0)
   };
 
+  useEffect(() => {
+    window.sessionStorage.removeItem("formData");
+    const sessionData = sessionStorage.getItem("data");
+    if(sessionData) {
+      processPhoneData(sessionData);
+    }
+  }, [])
+
   const submit = async () => {
     toTrackMixpanel("cta", {name: "proceed", type: "submit"});
     toTrackMixpanel(numberOrEmail === "mobile" ? "phoneNumberSubmitted" :"emailIdSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Login or Signup Page"});
     try {
       const inputData = numberOrEmail === "mobile" ?  `${data?.countryCode}${data?.input}` : data.input;
       const inputKey = numberOrEmail === "mobile" ? "mobile" : "email"
+      window.sessionStorage.setItem("data", data.input);
       const response = await verifyUserOnly({type: numberOrEmail, [inputKey]: inputData});
       if (response?.data?.code === 0) {
         try{
@@ -49,11 +58,11 @@ export default function Mobile({
           });
           setSeconds(59);
           fbq.defEvent('CompleteRegistration');
-           if(device === 'mobile'){ 
+           if(device === 'mobile') {
               router && router?.push({
-              pathname: '/verify-otp',
-              query: { ref: 'login', ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
-            });
+                pathname: '/verify-otp',
+                query: { ref: 'login', ...(numberOrEmail === "mobile" ?  {"mobile": `${data?.countryCode}-${data?.input}`} : {"email": data.input}) }
+              });
           } else {
             setOtpStatus(true);
           }
@@ -114,7 +123,7 @@ export default function Mobile({
               <input
                 id="mobile"
                 value={data.input}
-                onChange={processPhoneData}
+                onChange={(e) => processPhoneData(e.target.value)}
                 className=" w-full border-b-2 border-grey-300 px-4 py-2"
                 name="phone"
                 placeholder="Email or Mobile Number"
@@ -127,7 +136,7 @@ export default function Mobile({
               <input
                 id="email"
                 value={data.input}
-                onChange={processPhoneData}
+                onChange={(e) => processPhoneData(e.target.value)}
                 className=" w-full border-b-2 border-grey-300 px-4 py-2"
                 name="phone"
                 placeholder="Email or Mobile Number"

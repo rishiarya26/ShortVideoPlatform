@@ -62,6 +62,7 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) 
                 if(device === "desktop") {
                   toggleFlow("userHandle")
                 } else {
+                  close();
                   router.push("/createUsername");
                 }
                 console.log("google register resp:", response);

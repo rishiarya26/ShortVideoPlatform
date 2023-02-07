@@ -48,13 +48,13 @@ const Auth = ({ router, authType }) => {
     }
   }, []);
 
-  const onChangeInput = (e) => {
-    if(Number(e.target.value)) {
+  const onChangeInput = (value) => {
+    if(Number(value)) {
       setNumberOrEmail("mobile");;
     } else {
       setNumberOrEmail("email");
     }
-    setPhoneData({countryCode: phoneData.countryCode, input: e.target.value});
+    setPhoneData({countryCode: phoneData.countryCode, input: value});
   }
 
   const onCountryCodeChange = selectedData => {

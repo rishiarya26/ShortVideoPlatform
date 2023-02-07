@@ -34,7 +34,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
   const ref =  device === 'desktop' ? typeRef : (device === 'mobile' && router?.query?.ref);
   const {mobile} = router?.query;
   const {email} = router?.query;
-  const {formData: formDataParam} = router?.query;
+  // const {formData: formDataParam} = router?.query;
 
   useEffect(()=>{
     if(seconds > 0){
@@ -43,9 +43,12 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
   })
   
   useEffect(() => {
-    if(device === 'mobile' && ref === 'signup' && Object.keys(jsonFormData).length > 0) {
-      const jsonFormData = JSON.parse(formDataParam);
-      setFormData({...jsonFormData});
+    if(device === 'mobile' && ref === 'signup') {
+      const formDataStringified = window.sessionStorage.getItem("formData");
+      const jsonFormData = JSON.parse(formDataStringified);
+      if(Object.keys(jsonFormData).length > 0){
+        setFormData({...jsonFormData});
+      }
     } else if(device === 'desktop' && typeRef === 'signup' && Object.keys(value).length > 0) {
       setFormData({...value});
     }
@@ -144,7 +147,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
           if(device === 'desktop'){
             toggleFlow('userHandle');
          } else if(device === 'mobile'){
-            router && router?.replace('/createUername');
+            router && router?.replace('/createUsername');
          }
         }
       }catch(e){
@@ -222,7 +225,19 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
    </>,
    mobile : 
    <div className="flex flex-col px-4 pt-10">
-   <BackButton back={() =>  router && router?.back()}
+   <BackButton
+        back={()=>{
+            if(device === "mobile") {
+              router?.back();
+            } else {
+              if(typeRef === 'signup') {
+                toggleFlow && toggleFlow("registration");
+              } else {
+                toggleFlow && toggleFlow("login");
+              }
+            }
+          }
+        }
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
