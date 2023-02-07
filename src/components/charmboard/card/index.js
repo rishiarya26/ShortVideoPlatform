@@ -5,11 +5,12 @@ import useIntersect from "../../../hooks/use-intersect";
 import { appsflyerPixelClick, appsflyerPixelImp } from "../../../sources/appsflyer-pixel";
 import CardRibbon from "../../card-ribbon";
 import Img from "../../commons/image"
+import Info from "../../commons/svgicons/info";
 
 const CharmCard = ({thumbnail, title, shopName, shopLink, category,
    shopNameImg,ribbonData,id, actualPrice, salePrice, productName,pageName, tabName,videoId,
    productIdChange, dominantColor,
-   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard}) =>{
+   onProductChange, campaignId,appsflyerId, iosAppsflyerId, mainCategory, subCategory, subSubCategory, lingerieCard, sponsored=null}) =>{
 
   
       useEffect(()=>{
@@ -67,13 +68,17 @@ return(
    <div ref={outfitProductRef} id={id} className="flex flex-col my-4 shadow-md">
    <div onClick={onProductClick} style={{backgroundColor: `${dominantColor}7a` || "gray"}}  className="w-full overflow-hidden relative min-h-49v">
    <CardRibbon ribbonData={ribbonData}/>
+   {sponsored === 1 && <div className="absolute flex items-center text-white font-medium text-sm bg-gray-600 opacity-70 rounded-sm p-1 top-4 left-4">
+      <p className="pr-1">Promoted</p>
+      <Info/>
+   </div>}
       <Img data={thumbnail}/> 
       {/* <img src="https://assets.charmboard.com/images/w_375,ar_0.75,c_fill,c_pad,q_auto:eco,e_sharpen/im/lk/3857657/3857657.jpg"/> */}
    </div>
    <div className="flex w-full justify-between p-4 items-center">
       <div className="flex flex-col w-full">
          <p className="text-xs text-gray-600">{title}</p>
-         <div className="flex justify-between ites-center w-full pt-2">
+        {sponsored === 1 && <div className="flex justify-between ites-center w-full pt-2">
             <div className="flex items-center">
                {shopNameImg ? <div className="max-h-12 ad_logo"><Img data={shopNameImg}/></div> :
                 <p className="text-sm font-semibold capitalize line-clamp-1 max-w-50v">{shopName}</p>
@@ -86,7 +91,7 @@ return(
                <div className="flex rounded w-20 max-h-8 justify-center py-2 px-2 bg-hipired text-xs font-semibold text-white">BUY NOW</div>
             </div>
             </div>
-         </div>
+         </div>}
       </div>
    </div>
 </div>

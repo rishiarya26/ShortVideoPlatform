@@ -61,7 +61,7 @@ return (
       <Header/>
    </div>
    <div className='flex flex-col items-center md:pt-24 mt-6'>
-   <div className='text-2xl font-semibold text-gray-800 py-12'>Lipsync Leaderboard</div>
+   <div className='text-2xl font-semibold text-gray-800 py-6'>Lipsync Leaderboard</div>
    {/* To-Do change title */}
 {/* <p className='text-gray-400 text-xs w-full md:w-1/2 px-6'>Hipi G.O.A.T. is back with a bang! G.O.A.T is a nationwide online singing contest, packed with fun-filled, pitch-and-video-perfect challenges. It is your dream chance to go viral in the world of music, from the comfort of your home. </p> */}
 </div>

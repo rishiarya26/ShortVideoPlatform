@@ -82,10 +82,6 @@ useEffect(()=>{
     }}catch(e){
       console.error("Error - hashtag video for stunner",e)
     }})()
-  toTrackMixpanel('screenView',{pageName:'Hipi Stunner'})
-  toTrackClevertap('screenView',{pageName:'Hipi Stunner'})
-  toTrackFirebase('screenView',{page:'Hipi Stunner'})
-  ToTrackFbEvents('screenView',{page:'Hipi Stunner'})
 
 },[])
   return (
@@ -104,6 +100,10 @@ useEffect(()=>{
 		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
+    {/* <div className='p-2 w-full flex justify-between bg-hipired items-center text-white md:hidden px-4 text-sm'>
+        <p>Check Daily Leaderboard</p>
+        <div className='border border-white p-1 rounded-md ml-2 text-sm px-2' onClick={()=>router && router.push('/lipsync-leaderboard')}>View</div>
+    </div> */}
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap hain asli Dramebaaz?</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
@@ -167,10 +167,8 @@ Are you ready to light up the virtual stage
             <p className='text-gray-500 font-light text-lg pt-4'>- Step 3: Create a video and use the monthly thematic challenge hashtag while uploading.</p>
         </div>
     </div>
-    
+
 {/* 
-
-
     <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
 	<div className="max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center text-gray-600">
 		<h3 className="text-3xl text-center font-bold  pb-4">Win cash prizes, every day!</h3>
@@ -190,14 +188,10 @@ Are you ready to light up the virtual stage
 		</div>
 		<div className="flex">
 			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">Every day at 10 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
-		</div>
-		<div className="flex">
-			<span className="pr-1">•</span>
-			<p className="mb-2 pl-4 font-light">If you win, you need to accept the cash prize within 2 hours, or the next viral creator in line will take your place. </p>
+			<p className="mb-2 pl-4 font-light">Every day at 11:59 p.m, the top creator on the leaderboard will become the chosen leader of the day and win a cash prize of Rs. 1000 .</p>
 		</div>
 	</div>
-	<div className="rounded-md text-sm font-semibold  px-8 p-2 bg-hipired text-white my-2 cursor-pointer">Daily Leaderboard</div>
+	<div className="rounded-md text-sm font-semibold  px-8 p-2 bg-hipired text-white my-2 cursor-pointer" onClick={()=>router && router.push('/lipsync-leaderboard')}>Daily Leaderboard</div>
 	<p className="max_800 w-full flex-col flex py-8 md:p-12 px-8 justify-center text-gray-600 text-xs">
 	<ul className="list-disc">
 		<li>The Leaderboard only deals with the most liked videos and DOES NOT determine the winners of the challenges.</li>
@@ -205,8 +199,7 @@ Are you ready to light up the virtual stage
 		<li>Once you win, you will not be able get on the leaderboard until the next challenge is announced. Make sure to participate in the new challenge to grab 1000 bucks again.</li>
 	</ul>
 	</p>
-</div> 
- */}
+</div>  */}
 
 
 <div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
@@ -231,7 +224,6 @@ Are you ready to light up the virtual stage
               {/* <p className='text-gray-700 font-light text-sm'>Date</p> */}
               <p className='text-sm px-4 text-gray-500 font-light text-lg py-4'>This Valentine's month Unleash your creativity and spread some love by making videos on the theme #Love - Let's see how you can turn this hashtag into a work of art. upload your video by 28th February for a chance to win the Hipi Lipsync Battle and dance to the rhythm of victory. Use #Love and #HipiLipSyncBattle  while you upload your videos.</p>
               <div className="rounded-full text-sm font-semibold  px-8 p-2 purple_bg text-white my-2 cursor-pointer" onClick={()=>window.open("https://www.hipi.co.in/feed/for-you?videoId=eaf669ac-a5a7-4cd6-8341-83bf5def44e8")}>Watch challenge video</div>
-              
               </div>
           </div>
           </div>
