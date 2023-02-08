@@ -9,7 +9,7 @@ import FooterMenu from '../src/components/footer-menu';
 import isEmptyObject from '../src/utils/is-object-empty';
 import { SeoMeta } from '../src/components/commons/head-meta/seo-meta';
 import { breadcrumbSchema, pageSchema, personSchema, videoSchema } from '../src/utils/schema';
-import { getCanonicalUrl, getSmallcaseUsernameUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
+import { getCanonicalUrl, getProfileUrlSeo, getSmallcaseUsernameUrl, updateCampaignId, updateUtmData } from '../src/utils/web';
 import { getProfileVideos, getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { customProfileDescSeo, customProfileTitleSeo } from '../src/utils/seo';
 // import DeskUsers from '../src/components/desk-profile';
@@ -202,7 +202,7 @@ export default function Hipi(params) {
         content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi, ${item?.firstName || ''} ${item?.lastName || ''},${item?.userHandle || ''}`
         }
         ],
-        canonical: url && getSmallcaseUsernameUrl(url),
+        canonical: url && getProfileUrlSeo(url,item?.userHandle?.replace('@',''))
         }}
      />
 

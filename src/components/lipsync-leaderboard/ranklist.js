@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element */
 /*eslint-disable react/jsx-key*/
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { fetchLeaderboardData } from "../../sources/leaderboard"
 import LikeGoat from "../commons/svgicons/leaderboard/like"
@@ -7,6 +8,7 @@ import LikeGoat from "../commons/svgicons/leaderboard/like"
 export const Ranklist = () =>{
 const [items, setItems] = useState([])   
 const [state, setState] = useState('loading') 
+const router = useRouter();
 const getRanklist = async() =>{
   try{
     const resp = await fetchLeaderboardData('love');
