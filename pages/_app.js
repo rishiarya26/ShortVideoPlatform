@@ -312,9 +312,9 @@ function Hipi({
       console.error("one tap issue ")
     }
 
-    window.onunload = function () {
-      navigator?.mediaSession?.setActionHandler('stop',()=>{});
-    }
+    // window.onunload = function () {
+    //   navigator?.mediaSession?.setActionHandler('stop',()=>{});
+    // }
     /** unmount */
     // return () => clearTimeout(timer);
 
