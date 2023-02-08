@@ -86,6 +86,18 @@ function getSmallcaseUsernameUrl(orgUrl){
   }
 }
 
+function getProfileUrlSeo(orgUrl,userHandle){
+  if(typeof window !== "undefined"){
+    const url = orgUrl || (document &&  document?.location?.href);
+    let domain = (new URL(url));
+    let hostname  = domain?.hostname || null;
+    let pathname  = domain?.pathname?.toLowerCase() || '';
+    console.log("canonical - pathname, hostname",pathname, hostname);
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}/@${userHandle}` : url && `https://${hostname}/@${userHandle}` 
+    return finalUrl;
+  }
+}
+
 const getPageName = (refferUrl) =>{
   // const refferUrl = (typeof document != "undefined") ? document?.referrer : ''; 
   let pageName = null;
@@ -181,6 +193,7 @@ export {
   isReffererGoogle,
   getBrand,
   replaceNbsps,
-  getSmallcaseUsernameUrl
+  getSmallcaseUsernameUrl,
+  getProfileUrlSeo
 };
 
