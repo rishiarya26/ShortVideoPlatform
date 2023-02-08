@@ -134,7 +134,7 @@ Are you ready to light up the virtual stage
 
     <div className='w-full flex justify-center items-center flex-col-reverse md:flex-row  py-4 md:py-20 bg_1 relative'>
         <div className='max_800 w-full  flex-col flex py-8 md:p-8 px-8 justify-center'>
-            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How will Hipi Lipsync Battle unfold-</h3>
+            <h3 className='text-3xl text-center font-bold lipsync_font pb-4'>How will Hipi Lipsync Battle unfold</h3>
              <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Hipi Lipsync Battle is a 6-month competition open to everyone.</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>Each month will have a unique lipsync challenge theme and participants can lipsync to songs or dialogues in their preferred language</p></div>
             <div className='flex'><span className='pr-1'>•</span><p className='mb-2 pl-4 text-gray-600 font-light'>To be eligible, videos must include the monthly challenge hashtag. For the month of February it’s #Love.</p></div>

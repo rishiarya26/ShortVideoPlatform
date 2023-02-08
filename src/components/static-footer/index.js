@@ -101,9 +101,9 @@ import WikiWhite from '../commons/svgicons/wikipedia-white';
              <a target="_blank" href={links.youtube} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
                  <Youtube/>
              </a>
-             <a target="_blank" href={links.wiki} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
+             {/* <a target="_blank" href={links.wiki} className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4" rel="noreferrer">
                  <WikiWhite/>
-             </a>
+             </a> */}
              {/* <a href="#" className="bg-gray-500 rounded-full p-2 bg-opacity-30 flex justify-center items-center mr-4">
                <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
                  <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="11">
