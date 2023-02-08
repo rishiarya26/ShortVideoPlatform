@@ -138,7 +138,6 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     e.preventDefault();
     toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
     toTrackMixpanel("cta", {name: "signup", type: "submit"});
-    debugger;
     if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
       try {
         setPending(true);
@@ -267,6 +266,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
                 dob: formatDate(Number(data.dob))
               }}
               showMessage={showMessage}
+              toggleFlow={toggleFlow}
             />
           </div>
         )
