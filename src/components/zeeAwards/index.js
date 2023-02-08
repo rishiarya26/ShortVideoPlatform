@@ -46,9 +46,7 @@ function ZeeAwards({type= 'stunner'}) {
  const deviceType = getItem('device-info')
 
  const links={
-  facebook : 'https://www.facebook.com/HiPiOfficialApp',
-  twitter : 'https://twitter.com/HiPiOfficialApp',
-  instagram : 'https://www.instagram.com/hipiofficialapp/?hl=en'
+  onelink : 'https://hipiapp.onelink.me/hGT6/ZCA1'
 }
 
 const stores = {
@@ -117,7 +115,7 @@ site_name: 'Hipi'
 />
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-<div className='w-full min-h-49 md:min-h-25'>
+<div className='w-full min-h-49 md:min-h-25' onClick={()=> window?.open(links.onelink)} >
 		<img className='flex md:hidden' alt="Zee Cine Awards 2023 Voting on Hipi Plantform" src={withBasePath('images/zca/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="Zee Cine Awards 2023 Voting on Hipi Plantform" src={withBasePath('images/zca/desk_banner.jpg')} />
 		</div>
@@ -125,12 +123,12 @@ site_name: 'Hipi'
         <p>Check Daily Leaderboard</p>
         <div className='border border-white p-1 rounded-md ml-2 text-sm px-2' onClick={()=>router && router.push('/lipsync-leaderboard')}>View</div>
     </div> */}
-  <div className='py-8 md:py-20 w-full flex flex-col items-center stunner_purple'>
-    <h1 className='text-3xl font-bold px-6 text-white mb-2 text-center md:w-3/4'>Cast your votes on the Hipi app for the ‘Viewer's Choice at Zee Cine Awards 2023’</h1>
-    <p className='px-8 md:w-7/12 md:px-12 md:pt-4 text-center text-gray-600 font-light text-white'>
+  <div className='py-8 md:py-20 w-full flex flex-col items-center stunner_purpl'>
+    <h1 className='text-3xl font-bold px-6 mb-2 text-center purple_font md:w-3/4'>Cast your votes on the Hipi app for the ‘Viewer's Choice at Zee Cine Awards 2023’</h1>
+    <p className='px-8 md:w-7/12 md:px-12 md:pt-4 text-center text-gray-600 font-light'>
     The nominations for the coveted Zee Cine Awards 2023 are here! You can now choose from the exciting line-up for Best Film, Best Actor-Male, Best Actor-Female, and Best Song. The nominations for this year’s awards reflect a diverse mix of films that went up the screens last year. They span multiple genres capturing the audience’s imaginations from historical to biographical, action to fantasy, comedy to family drama, and much more.
 </p>
-<p className='px-8 md:w-7/12 md:px-12 md:pt-4 text-center text-gray-600 font-light text-white'>
+<p className='px-8 md:w-7/12 md:px-12 md:pt-4 text-center text-gray-600 font-light'>
 You can vote for Viewer’s choice awards from the Hipi App which has always brought an array of exclusive content of your favorite movies, celebs, behind-the-scenes and fun challenges. This year it gives you the power to decide the winner of the Zee Cine Awards 2023 in various categories. Don't wait any longer. Sign up or log on to the Hipi app and lock in your favourites from each category. 
 </p>
 
@@ -162,7 +160,7 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
         pagination={{"clickable": true}} 
         >
       <SwiperSlide>
-            <div className='w-full h-full flex mx-2 '>
+            <div className='w-full h-full flex mx-2' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
                 
                 <video src={withBasePath('videos/zca/ZCA-Best-Actor-Female.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover"/>
@@ -170,20 +168,20 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
             </div>
         </SwiperSlide>
         <SwiperSlide>
-            <div className='w-full h-full flex mx-2 '>
+            <div className='w-full h-full flex mx-2' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Best-Actor-Male.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
                 </div>
             </div>
         </SwiperSlide>
         <SwiperSlide>
-            <div className='w-full h-full flex mx-2 '>
+            <div className='w-full h-full flex mx-2 ' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Best-Film.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
                 </div>
             </div>
         </SwiperSlide><SwiperSlide>
-            <div className='w-full h-full flex mx-2 '>
+            <div className='w-full h-full flex mx-2 ' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Song-of-the Year.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
             </div>
@@ -234,12 +232,7 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
         <div>
             {/* <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/HSTest" rel="noreferrer" >Install</a> */}
 
-            <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" onClick={()=>{
-              toTrackMixpanel('stunnerInstallClick',{pageName:'Hipi Stunner'})
-              toTrackFirebase('stunnerInstallClick',{page:'Hipi Stunner'})
-              ToTrackFbEvents('stunnerInstallClick',{page:'Hipi Stunner'})
-              window?.open('https://hipi.onelink.me/tMco/HSTest')
-            }} >Install</div>
+            <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" onClick={()=> window?.open(links.onelink)} >Install</div>
         </div>
       </div>
       <StaticFooter/>
