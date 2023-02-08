@@ -100,10 +100,10 @@ useEffect(()=>{
 		<img className='flex md:hidden' alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="HipiLipsyncBattle challenge" src={withBasePath('images/lipsync/desk_banner.jpeg')} />
 		</div>
-    {/* <div className='p-2 w-full flex justify-between bg-hipired items-center text-white md:hidden px-4 text-sm'>
+    <div className='p-2 w-full flex justify-between bg-hipired items-center text-white md:hidden px-4 text-sm'>
         <p>Check Daily Leaderboard</p>
         <div className='border border-white p-1 rounded-md ml-2 text-sm px-2' onClick={()=>router && router.push('/lipsync-leaderboard')}>View</div>
-    </div> */}
+    </div> 
   <div className='py-8 md:py-20 w-full flex flex-col items-center bg_1'>
     <h1 className='text-3xl font-bold px-6 lipsync_font mb-2 text-center'>Kya aap hain asli Dramebaaz?</h1>
     <p className='px-8 md:w-1/2 md:pt-4 text-center text-gray-600 font-light'>
@@ -168,7 +168,7 @@ Are you ready to light up the virtual stage
         </div>
     </div>
 
-{/* 
+
     <div className="w-full flex justify-center items-center flex-col py-4 md:pb-8  bg_lipsync_blue ">
 	<div className="max_800 w-full flex-col flex py-8 md:p-8 px-8 justify-center text-gray-600">
 		<h3 className="text-3xl text-center font-bold  pb-4">Win cash prizes, every day!</h3>
@@ -199,7 +199,7 @@ Are you ready to light up the virtual stage
 		<li>Once you win, you will not be able get on the leaderboard until the next challenge is announced. Make sure to participate in the new challenge to grab 1000 bucks again.</li>
 	</ul>
 	</p>
-</div>  */}
+</div> 
 
 
 <div className='w-full flex justify-center  md:py-16 py-6 pb-0 md:pb-0 mb-6 relative'>
