@@ -115,7 +115,7 @@ site_name: 'Hipi'
 />
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-<div className='w-full min-h-49 md:min-h-25' onClick={()=> window?.open(links.onelink)} >
+<div className='w-full min-h-49 md:min-h-25 cursor-pointer' onClick={()=> window?.open(links.onelink)} >
 		<img className='flex md:hidden' alt="Zee Cine Awards 2023 Voting on Hipi Plantform" src={withBasePath('images/zca/mob_banner.jpg')} />
 		<img className='hidden md:flex'alt="Zee Cine Awards 2023 Voting on Hipi Plantform" src={withBasePath('images/zca/desk_banner.jpg')} />
 		</div>
@@ -160,7 +160,7 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
         pagination={{"clickable": true}} 
         >
       <SwiperSlide>
-            <div className='w-full h-full flex mx-2' onClick={()=> window?.open(links.onelink)} >
+            <div className='w-full h-full flex mx-2 cursor-pointer' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
                 
                 <video src={withBasePath('videos/zca/ZCA-Best-Actor-Female.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover"/>
@@ -168,20 +168,20 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
             </div>
         </SwiperSlide>
         <SwiperSlide>
-            <div className='w-full h-full flex mx-2' onClick={()=> window?.open(links.onelink)} >
+            <div className='w-full h-full flex mx-2 cursor-pointer' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Best-Actor-Male.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
                 </div>
             </div>
         </SwiperSlide>
         <SwiperSlide>
-            <div className='w-full h-full flex mx-2 ' onClick={()=> window?.open(links.onelink)} >
+            <div className='w-full h-full flex mx-2 cursor-pointer' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Best-Film.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
                 </div>
             </div>
         </SwiperSlide><SwiperSlide>
-            <div className='w-full h-full flex mx-2 ' onClick={()=> window?.open(links.onelink)} >
+            <div className='w-full h-full flex mx-2 cursor-pointer' onClick={()=> window?.open(links.onelink)} >
             <div className='w-full h-full shadow-md  rounded-lg overflow-hidden  border border-gray-200 '>
             <video src={withBasePath('videos/zca/ZCA-Song-of-the Year.mp4')} controlsList="nodownload" playsInline  loop autoPlay muted webkit-playsinline="true" objectfit="cover" /> 
             </div>
@@ -232,7 +232,7 @@ You can vote for Viewer’s choice awards from the Hipi App which has always bro
         <div>
             {/* <a className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" target="_blank" href="https://hipi.onelink.me/tMco/HSTest" rel="noreferrer" >Install</a> */}
 
-            <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm" onClick={()=> window?.open(links.onelink)} >Install</div>
+            <div className="border-2 border-gray-400 text-gray-600 px-3 py-1 mx-4 rounded-md text-sm cursor-pointer" onClick={()=> window?.open(links.onelink)} >Install</div>
         </div>
       </div>
       <StaticFooter/>
