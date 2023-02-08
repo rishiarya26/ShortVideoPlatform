@@ -79,13 +79,13 @@ export default function Hipi(params) {
       if(status === 'pending' && isEmptyObject(item)){
         profileApiRetry();
      }
-
-      let userType = 'others'
-      const tokens = localStorage.get('tokens');
-      const userId = localStorage.get('user-id');
-      const userDetails = localStorage?.get('user-details');
-      const userHandle = userDetails?.userHandle?.replace('@', '');
-      tokens && userId && (userId === item?.id || userHandle === item?.id) && (userType = 'self');
+     let userType = 'others'
+     const tokens = localStorage.get('tokens');
+     const userId = localStorage.get('user-id');
+     const userDetails = localStorage?.get('user-details');
+     const userHandle = userDetails?.userHandle;
+     console.log("User id comp:", item, userId, userDetails);
+      tokens && userId && (userId === item?.id || userHandle === item?.userHandle) && (userType = 'self');
       setType(userType);
       console.log(tokens, userId, item)
 

@@ -138,10 +138,11 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     e.preventDefault();
     toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
     toTrackMixpanel("cta", {name: "signup", type: "submit"});
+    debugger;
     if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
       try {
         setPending(true);
-        const info = mobile ? {
+        const info = device === "mobile" ? {
           ...(mobile ? {"phoneno": phoneNo} : {"email": email})
         } : {
           ...(numberOrEmail === "mobile" ? {"phoneno":  `${phoneData?.countryCode}${phoneData?.input}`} : {"email": phoneData.input})

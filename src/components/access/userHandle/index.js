@@ -6,6 +6,7 @@ import { localStorage } from '../../../utils/storage';
 import CircularLoaderSmall from '../../commons/circular-loader-small';
 import { useRouter } from 'next/router';
 import { getItem } from '../../../utils/cookie';
+import { updateUserProfile } from '../../../sources/users';
 
 export default function UserHandle({toggleFlow}) {
     const [userHandle, setUserHandle] = useState("");
@@ -52,6 +53,7 @@ export default function UserHandle({toggleFlow}) {
                 toggleFlow("contentLanguage")
             }
         } catch(e) {
+            showSnackbar({ message: 'Something went wrong. Please try again' });
             console.log("err", e);
         } finally {
             setLoading(false);
@@ -62,7 +64,7 @@ export default function UserHandle({toggleFlow}) {
         try {
             const data = localStorage?.get(['user-details']);
             setUserDetails({...data});
-            const trimmedUserHandle = data?.userHandle?.subStr(1);
+            const trimmedUserHandle = data?.userHandle?.substr(1);
             setUserHandle(trimmedUserHandle);
             setCorrect(true);
             console.log('user-details',data)
