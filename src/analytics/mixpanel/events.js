@@ -20,7 +20,19 @@ let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile
     return isMobile;
   }
 
+const getUtm = (payload) =>{
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+console.log("mix**",params)
+payload['App UTM Source Last Touch'] = params?.utm_source || ''
+payload['App UTM Medium Last Touch'] = params?.utm_medium || ''
+payload['App UTM Campaign Last Touch'] = params?.utm_campaign || ''
+payload['App UTM Term Last Touch'] = params?.utm_term || ''
+payload['App UTM Content Last Touch'] = params?.utm_content || ''
+}
+
 export const commonEvents = ()=>{
+    console.log("MIX**",window.location);
    
     let utmData = localStorage?.get('utm-data') || {}
     const deviceModal = localStorage?.get('device-modal');
@@ -33,6 +45,7 @@ export const commonEvents = ()=>{
     const isInstalled = JSON.parse(localStorage?.get('isInstalled'));
   
     let payload = {}
+    getUtm(payload);
     payload['unique ID'] = loggedInId || guestId;
     payload['isPWA'] = 'true';
     payload['isInstalled'] =  isInstalled;
@@ -48,6 +61,7 @@ export const commonEvents = ()=>{
     utmData?.utm_term && (payload['App UTM Term'] = utmData?.utm_term);
     utmData?.utm_content && (payload['App UTM Content'] = utmData?.utm_content);
     utmData?.utm_source && (payload['App UTM Source'] = utmData?.utm_source);
+    
     payload['Device Modal'] = deviceModal;
     payload['Network Strength'] = networkStrength;
     console.log("reff",document?.referrer);
