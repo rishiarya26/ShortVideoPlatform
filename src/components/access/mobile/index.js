@@ -113,7 +113,7 @@ export default function Mobile({
   }
 
   return (
-    <div className="flex flex-col px-4 pt-10">
+    <div className="flex flex-col px-4 pt-4">
       <div className="mt-4 relative flex">
         <form className='w-full'>
           {numberOrEmail === "mobile" ? 

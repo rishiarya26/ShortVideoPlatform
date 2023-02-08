@@ -76,7 +76,7 @@ const Auth = ({ router, authType }) => {
       {/* <div className="fixed mt-10 z-10 w-full">
         <Tabs items={tabs[authType]} />
       </div> */}
-      <div className="mt-10">
+      <div>
       <Mobile
         onCountryCodeChange={onCountryCodeChange}
         processPhoneData={onChangeInput}

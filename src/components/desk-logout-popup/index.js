@@ -14,9 +14,10 @@ const device = getItem('device-type')
   try{
       localStorage.remove('tokens');
       localStorage.remove('user-id');
-        closePopUp();
-        showMessage({message: 'Logged Out Successfully'});
-        router?.asPath && (window.location.href=router.asPath);
+      localStorage.remove('user-details');
+      closePopUp();
+      showMessage({message: 'Logged Out Successfully'});
+      router?.asPath && (window.location.href=router.asPath);
     }
     catch(e){
         showMessage({ message: 'Something went wrong' });

@@ -48,7 +48,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
         </div>
       </div>,
     desktop : 
-      <div onClick={()=>setAuth('login')}>
+      <div className='cursor-pointer' onClick={()=>setAuth('login')}>
       <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
@@ -63,7 +63,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       {device === 'mobile' && <div onClick={close} className='flex w-full justify-end p-2'>
       <Close/>
    </div>}
-      <div className="p-2 flex flex-col items-center">
+      <div className="p-2 flex flex-col items-center mt-6">
         <h1 className="text-lg font-bold">Login or Signup</h1>
         <p className="text-center text-gray-400 mt-2 text-sm">Make your own videos, follow other accounts, comment on videos and more</p>
       </div>
@@ -97,7 +97,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
-          By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-black'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-black'>Privacy policy</span>
+          By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-gray-600'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-gray-600'>Privacy policy</span>
         </p>
       </div>
     </div>

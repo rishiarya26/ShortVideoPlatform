@@ -44,6 +44,9 @@ export default function UserHandle({toggleFlow}) {
               languages: userDetails?.languages
             };
             response = await updateUserProfile(payload);
+            const data = localStorage?.get('user-details');
+            data.userHandle = userHandle;
+            localStorage.set('user-details', data);
             if(device === 'mobile') {
                 router.replace({
                     pathname: "/content-language",

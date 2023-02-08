@@ -187,102 +187,108 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
 
 
   return (
-    <div className="flex flex-col px-4 pt-10">
-      <BackButton
-        back={()=>{
-            if(device === "mobile") {
-              router?.back();
-            } else {
-              toggleFlow && toggleFlow("login")
+    <>
+      <div className='w-full flex h-16  bg-white items-center'>
+        <div className='p-4 h-full flex items-center'>
+          <BackButton
+            back={()=>{
+                if(device === "mobile") {
+                  router?.back();
+                } else {
+                  toggleFlow && toggleFlow("login")
+                }
+              }
             }
-          }
+          />
+        </div>
+        <span className='font-bold flex justify-center align-center w-9/12'>Sign up</span>
+      </div>
+      <div className="flex flex-col px-4">
+        <div className="mt-4 flex flex-col px-4">
+          <p className="text-gray-400 text-xs">Please enter the following details</p>
+        </div>
+        <form onSubmit={submit}>
+        <div className="mt-4">
+          <input
+            id="info"
+            readOnly
+            value={data.value}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="text"
+            name="info"
+          />
+        </div>
+        <div className="mt-4">
+          <input
+            id="name"
+            value={data.name}
+            onChange={processPhoneData}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="text"
+            name="Name"
+            placeholder="Full Name"
+            required
+            pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
+            onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
+            autoComplete="off"
+          />
+        </div>
+        <div className="mt-4 flex relative">
+          <input
+            readOnly
+            value={data.gender}
+            id="gender"
+            onClick={toggleGender}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2 cursor-pointer"
+            type="text"
+            placeholder="Gender"
+            required
+          />
+          <span className="absolute right-2 bottom-3">
+            {' '}
+            <Toggle />
+          </span>
+        </div>
+        <div className='mt-4 flex'>
+          <input
+            id="dob"
+            value={data.dob}
+            onChange={changeDob}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="number"
+            name="dob"
+            placeholder="Age(in years)"
+            autoComplete="off"
+          />
+        </div>
+        {device === "desktop" && otpStatus && (
+            <div className='mt-4'>
+              <VerifyOtp
+                typeRef="signup"
+                type={numberOrEmail}
+                value={{
+                  ...data,
+                  dob: formatDate(Number(data.dob))
+                }}
+                showMessage={showMessage}
+                toggleFlow={toggleFlow}
+              />
+            </div>
+          )
         }
-      />
-      <div className="mt-4 flex flex-col">
-        <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
-        <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>
-      </div>
-      <form onSubmit={submit}>
-      <div className="mt-4">
-        <input
-          id="info"
-          readOnly
-          value={data.value}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="text"
-          name="info"
-        />
-      </div>
-      <div className="mt-4">
-        <input
-          id="name"
-          value={data.name}
-          onChange={processPhoneData}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="text"
-          name="Name"
-          placeholder="Full Name"
-          required
-          pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
-          onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
-          autoComplete="off"
-        />
-      </div>
-      <div className="mt-4 flex relative">
-        <input
-          readOnly
-          value={data.gender}
-          id="gender"
-          onClick={toggleGender}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2 cursor-pointer"
-          type="text"
-          placeholder="Gender"
-          required
-        />
-        <span className="absolute right-2 bottom-3">
+        <div className="mt-10">
+      {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
+          type="submit"
+          className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+        >
           {' '}
-          <Toggle />
-        </span>
+          {"Sign Up"}
+          {!pending ? '' : <CircularProgress />}
+        </button>}
+        </div>
+        </form>
       </div>
-      <div className='mt-4 flex'>
-        <input
-          id="dob"
-          value={data.dob}
-          onChange={changeDob}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="number"
-          name="dob"
-          placeholder="Age(in years)"
-          autoComplete="off"
-        />
-      </div>
-      {device === "desktop" && otpStatus && (
-          <div className='mt-4'>
-            <VerifyOtp
-              typeRef="signup"
-              type={numberOrEmail}
-              value={{
-                ...data,
-                dob: formatDate(Number(data.dob))
-              }}
-              showMessage={showMessage}
-              toggleFlow={toggleFlow}
-            />
-          </div>
-        )
-      }
-      <div className="mt-10">
-     {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
-        type="submit"
-        className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
-      >
-        {' '}
-        {"Sign Up"}
-        {!pending ? '' : <CircularProgress />}
-      </button>}
-      </div>
-      </form>
-    </div>
+    </>
   );
 };
 

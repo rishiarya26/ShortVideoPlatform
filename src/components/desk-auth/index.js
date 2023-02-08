@@ -50,7 +50,7 @@ const Auth = ({ router, authType, backToOptions, showMessage, flow, toggleFlow }
           <div className="font-bold flex justify-center align-center w-9/12">Login or signup</div>
         </div>
       </div>   
-      <div className="mt-20">
+      <div>
         <Mobile
           processPhoneData={onChangeInput}
           data={phoneData}

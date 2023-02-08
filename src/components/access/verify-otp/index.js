@@ -18,6 +18,8 @@ import CloseEye from "../../commons/svgicons/closeEye";
 
 const TIMER_LIMIT = 59;
 
+const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
+
 const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) => {
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(TIMER_LIMIT);
@@ -144,6 +146,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
           }catch(e){
             console.error('mixpanel - login verify otp error',e)
           }
+          await delay()
           if(device === 'desktop'){
             toggleFlow('userHandle');
          } else if(device === 'mobile'){

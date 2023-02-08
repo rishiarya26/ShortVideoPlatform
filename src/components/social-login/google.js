@@ -174,20 +174,19 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) 
 
     return(
         <>
-        <GoogleLogin
-        clientId={GOOGLE_CLIENT_ID_PREROD}
-        render={renderProps => (
-            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
-         <div className="justify-self-start"><Google/></div>
-         <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
-           <p>Continue with Google</p>
-         </div>
-      </div></>
-          )}
-        buttonText='Continue with Google'
-        onSuccess={onTokenFetched}
-        />
-
+          <GoogleLogin
+          clientId={GOOGLE_CLIENT_ID_PREROD}
+          render={renderProps => (
+              <><div onClick={renderProps.onClick} className="cursor-pointer flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
+          <div className="justify-self-start"><Google/></div>
+          <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
+            <p>Continue with Google</p>
+          </div>
+        </div></>
+            )}
+          buttonText='Continue with Google'
+          onSuccess={onTokenFetched}
+          />
         </>
     //  <div  id ='buttonDiv' className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
     //     <div className="justify-self-start"><Google/></div>
