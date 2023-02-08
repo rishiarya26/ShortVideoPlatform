@@ -14,6 +14,17 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
   const router = useRouter();
   const device = getItem('device-type')
 
+  const privacyAndTermsOnClick = (page) => {
+    let newPage = window.location.origin;
+    if(page === "privacy") {
+      newPage = `${newPage}/privacy-policy.html`;
+      window.open(newPage, "_blank");
+    } else {
+      newPage = `${newPage}/terms-conditions.html`;
+      window.open(newPage, "_blank");
+    }
+  }
+
   useEffect(()=>{
     toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
     toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
@@ -32,7 +43,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
-            <p>Use phone or Email</p>
+            <p>Use Phone or Email</p>
           </div>
         </div>
       </div>,
@@ -41,7 +52,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
-          <p>Use phone or Email</p>
+          <p>Use Phone or Email</p>
         </div>
       </div>
     </div>
@@ -86,7 +97,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
-          By continuing, you agree Hipi's Terms of Use and confirm that you have read Hipi's Privacy policy
+          By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-black'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-black'>Privacy policy</span>
         </p>
       </div>
     </div>

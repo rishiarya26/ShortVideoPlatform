@@ -84,7 +84,6 @@ export default function Hipi(params) {
      const userId = localStorage.get('user-id');
      const userDetails = localStorage?.get('user-details');
      const userHandle = userDetails?.userHandle;
-     console.log("User id comp:", item, userId, userDetails);
       tokens && userId && (userId === item?.id || userHandle === item?.userHandle) && (userType = 'self');
       setType(userType);
       console.log(tokens, userId, item)

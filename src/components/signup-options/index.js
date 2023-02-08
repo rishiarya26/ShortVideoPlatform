@@ -32,7 +32,7 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
       <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center w-full font-semibold">
-          <p>Use phone or Email</p>
+          <p>Use Phone or Email</p>
         </div>
       </div>
     </div>,
@@ -41,7 +41,7 @@ export default function Signup({ toggle, setAuth, pageName, tabName=null }) {
       <div className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
         <div className="justify-self-start"><Mobile /></div>
         <div className="flex justify-center w-full font-semibold">
-          <p>Use phone or Email</p>
+          <p>Use Phone or Email</p>
         </div>
       </div>
     </div>
