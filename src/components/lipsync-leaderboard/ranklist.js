@@ -102,7 +102,11 @@ return(
    </div>
    </>
    : state === 'success' && items?.length > 0 && items?.map((item,id)=>(
-    <div onClick={()=>router?.push(`/${item?.userHandle}`)}  key={id} className='flex mb-3 box_shadow_2 border border-gray-100 rounded-full p-4 w-full md:w-1/2 justify-between items-center cursor-pointer'>
+    <div 
+    // onClick={()=>router?.push(`/${item?.userHandle}`)}
+      key={id} 
+      className='flex mb-3 box_shadow_2 border border-gray-100 rounded-full p-4 w-full md:w-1/2 justify-between items-center cursor-pointer'
+      >
        <div className='flex items-center'>
        <div className='flex font-bold text-gray-800 pl-1 pr-3 text-lg'>
            {id+1}

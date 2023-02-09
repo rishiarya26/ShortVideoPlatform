@@ -74,7 +74,10 @@ return(
   <div className='text-xl font-semibold text-gray-800 py-4 text-center'> #{challenge?.hashtagNames?.[0]}</div>
   <div className='flex LIST w-full p-4 items-center justify-center flex-wrap'>
   {challenge?.winners?.map((item,id)=>(
-  <div onClick={()=>router?.push(`/@${item?.winner?.userName}`)} key={id} className='flex flex-col ITEM mb-3 justify-between items-center cursor-pointer'>
+  <div
+  //  onClick={()=>router?.push(`/@${item?.winner?.userName}`)} 
+   key={id} 
+   className='flex flex-col ITEM mb-3 justify-between items-center cursor-pointer'>
       <div className='w-24 h-24 rounded-full bg-gray-200 overflow-hidden'>
           <img src={dynamicImgUrl(item?.winner?.profilePicImgUrl)}/>
       </div>
