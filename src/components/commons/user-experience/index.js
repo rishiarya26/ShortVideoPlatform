@@ -21,6 +21,10 @@ const [showOpenStrip, setShowOpenStrip] = useState(false);
 const [impressionUsed, setImpressionUsed] = useState(false);
 const [intervalInstance, setIntervalInstance] = useState(null);
 
+// useEffect(()=>{
+//  console.log("timer*&",Math.round(timer));
+// },[timer]) 
+
 const placement = {
   bottom : 'bottom-0',
   aboveBottom : 'bottom-16'
@@ -38,6 +42,7 @@ useEffect(()=>{
    setTimeout(()=>{setShowOpenStrip(true)},3000); 
    const intervalInstanceTemp = setInterval(()=>{
     timer = timer + 0.5;
+    timer%5 === 0 && toTrackMixpanel('sessionDuration',{sessionTime : timer})
    },500)
    setIntervalInstance(intervalInstanceTemp);
  },[]) 
