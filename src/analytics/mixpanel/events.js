@@ -642,6 +642,10 @@ export const toTrackMixpanel = (type, value, item) => {
           globalCommonEvents['Appsflyer Header'] = item?.response;
           globalCommonEvents['Appsflyer Id'] = item?.request;
         track('Appsflyer Logs',globalCommonEvents)
+      },
+      'sessionDuration' : ()=>{
+        globalCommonEvents['Session Time'] = item?.sessionTime;
+        track('Session Duration',globalCommonEvents)
       }
       
         //how to make sunrise in html?
