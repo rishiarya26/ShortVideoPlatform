@@ -69,7 +69,7 @@ function getCanonicalUrl(orgUrl){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname || '';
     console.log("url","|", domain,"|", hostname,"|", pathname)
-    let finalUrl = (hostname?.includes('hipi.co.in')) ? `https://www.${hostname}${pathname}` : url
+    let finalUrl = (hostname?.includes('hipi.co.in')) ? `https://${hostname}${pathname}` : url
     return finalUrl;
   }
 }
