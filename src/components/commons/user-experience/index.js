@@ -42,7 +42,7 @@ useEffect(()=>{
    setTimeout(()=>{setShowOpenStrip(true)},3000); 
    const intervalInstanceTemp = setInterval(()=>{
     timer = timer + 0.5;
-    timer%5 === 0 && toTrackMixpanel('sessionDuration',{sessionTime : timer});
+    timer%5 === 0 && toTrackMixpanel('sessionDuration',null,{sessionTime : Math.round(timer)});
     timer === 60 && clearInterval(intervalInstance)
    },500)
    setIntervalInstance(intervalInstanceTemp);
