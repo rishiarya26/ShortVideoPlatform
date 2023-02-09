@@ -69,7 +69,7 @@ function getCanonicalUrl(orgUrl){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname || '';
     console.log("url","|", domain,"|", hostname,"|", pathname)
-    let finalUrl = (hostname?.includes('hipi.co.in')) ? `https://www.${hostname}${pathname}` : url
+    let finalUrl = (hostname?.includes('hipi.co.in')) ? `https://${hostname}${pathname}` : url
     return finalUrl;
   }
 }
@@ -81,7 +81,7 @@ function getSmallcaseUsernameUrl(orgUrl){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname?.toLowerCase() || '';
     console.log("canonical - pathname, hostname",pathname, hostname);
-    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}${pathname}` : url && url?.toLowerCase() 
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://${hostname}${pathname}` : url && url?.toLowerCase() 
     return finalUrl;
   }
 }
@@ -93,7 +93,7 @@ function getProfileUrlSeo(orgUrl,userHandle){
     let hostname  = domain?.hostname || null;
     let pathname  = domain?.pathname?.toLowerCase() || '';
     console.log("canonical - pathname, hostname",pathname, hostname);
-    let finalUrl = (hostname === 'hipi.co.in') ? `https://www.${hostname}/@${userHandle}` : url && `https://${hostname}/@${userHandle}` 
+    let finalUrl = (hostname === 'hipi.co.in') ? `https://${hostname}/@${userHandle}` : url && `https://${hostname}/@${userHandle}` 
     return finalUrl;
   }
 }
