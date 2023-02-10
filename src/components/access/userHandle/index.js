@@ -80,26 +80,21 @@ export default function UserHandle({toggleFlow}) {
         getUserName();
     }, [])
 
+    const laterOnClick = () => {
+        if(device === 'mobile') {
+            router.replace({pathname: "/content-language",query: {ref: "signup"}});
+        } else {
+            toggleFlow("contentLanguage");
+        }
+    }
+
   return (
     <div className='p-3'>
         <div className='flex'>
-            <span
-                className='text-gray-400 cursor-pointer'
-                onClick={() => {
-                    if(device === 'mobile') {
-                        router.replace({pathname: "/content-language",query: {ref: "signup"}});
-                    } else {
-                        toggleFlow("contentLanguage");
-                    }
-                }}
-            >
-                    skip
-            </span>
-            <span className='mx-auto font-semibold'>Sign up</span>
+            <span className='mx-auto font-semibold'>Create Username</span>
         </div>
         <form onSubmit={onSubmit}>
             <div className='pt-10 px-3'>
-                    <div className='font-bold text-xl'>Create Username</div>
                     <div className='text-gray-400 text-xs'>You can always change this later</div>
                     <div className="mt-4">
                         <div className='w-full border-b-2 border-grey-300 px-4 py-2 flex'>
@@ -136,13 +131,16 @@ export default function UserHandle({toggleFlow}) {
                     </ol>
                 </div>
                 <button
-                disabled={loading}
-                type="submit"
-                className={'bg-hipired flex items-center justify-center w-full py-3 text-white font-semibold mt-5 rounded-md'}
-            >
-                Submit
-                {loading ? <CircularLoaderSmall /> : ""}
-            </button>
+                    disabled={loading}
+                    type="submit"
+                    className={'bg-hipired flex items-center justify-center w-full py-3 text-white font-semibold mt-5 rounded-md'}
+                >
+                    Submit
+                    {loading ? <CircularLoaderSmall /> : ""}
+                </button>
+                <div className="flex w-full justify-center pt-4">
+                    <div onClick={laterOnClick} className="text-gray-400 cursor-pointer">I'll do it later</div>
+                </div>
             </div>
         </form>
     </div>

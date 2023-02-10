@@ -20,6 +20,46 @@ const TIMER_LIMIT = 59;
 
 const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
 
+function yearToDate(date) {
+  const newDate = new Date().getUTCFullYear() - new Date(date).getUTCFullYear() - 1;
+  return newDate;
+}
+
+function formDataCheck({data, showMessage}) {
+  data.dob = yearToDate(data?.dob);
+  if(
+    data.firstName?.length > 0 &&
+    data.lastName?.length > 0 &&
+    Number(data.dob) >= 18 &&
+    Number(data.dob) < 100 &&
+    data.gender.length > 0 &&
+    data.gender !== "defaultValue" &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)
+    ){ 
+      return true;
+    } else {
+      if(data.firstName?.length  < 1){ 
+        showMessage({message : "First name cant be left empty"});
+      } else if(data.lastName?.length  < 1){ 
+        showMessage({message : "Last name cant be left empty"});
+      } else if(data.dob === '') {
+        showMessage({message : "Age cant be left empty"});
+      } else if(Number(data.dob) < 18) {
+        showMessage({message: "Age should be atleast 18 years"});
+      } else if(Number(data.dob) > 99) {
+        showMessage({message: "Age should not be more than 99 years"});
+      } else if(data.gender.length <= 0 || data.gender === "defaultValue") {
+        showMessage({message: "Gender can't be left empty"});
+      } else if (
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) ||
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)) {
+        showMessage({message: "Name is not in correct format"})
+      }
+      return false;
+  }
+}
+
 const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) => {
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(TIMER_LIMIT);
@@ -54,7 +94,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
     } else if(device === 'desktop' && typeRef === 'signup' && Object.keys(value).length > 0) {
       setFormData({...value});
     }
-  }, [])
+  }, [value])
 
   let phoneNo;
   if(ref === 'signup') {
@@ -105,7 +145,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
           }catch(e){
             console.error('mixpanel - login verify otp error',e)
           }
-          showMessage({ message: t('SUCCESS_LOGIN') });
+          showMessage({ message:'Login successful' });
           if(device === 'desktop'){
              close();
              try{
@@ -134,30 +174,33 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
         dob: formData?.dob
 
       }
-      try{
-        toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
-        toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
-        toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
-        const response = await registerUser(registerFormData);
-        if (response.data.status === 200) {
-          try{
-            toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
-            toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
-          }catch(e){
-            console.error('mixpanel - login verify otp error',e)
+      if(formDataCheck({data: formData, showMessage})){
+        try {
+          toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
+          toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
+          toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
+          const response = await registerUser(registerFormData);
+          if (response.data.status === 200) {
+            try{
+              toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
+              toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
+            }catch(e){
+              console.error('mixpanel - login verify otp error',e)
+            }
+            showMessage({message: "Signup successful"})
+            await delay()
+            if(device === 'desktop'){
+              toggleFlow('userHandle');
+           } else if(device === 'mobile'){
+              router && router?.replace('/createUsername');
+           }
           }
-          await delay()
-          if(device === 'desktop'){
-            toggleFlow('userHandle');
-         } else if(device === 'mobile'){
-            router && router?.replace('/createUsername');
-         }
+        } catch(e) {
+          console.log("error", e);
+          showMessage({message : 'OTP incorrect or expired'})
+          toTrackMixpanel('registerFailure',{method, pageName: "Signup screen"})
+          toTrackClevertap('registerFailure',{method, pageName: "Signup screen"})
         }
-      }catch(e){
-        console.log("error", e);
-        showMessage({message : 'OTP incorrect or expired'})
-        toTrackMixpanel('registerFailure',{method, pageName: "Signup screen"})
-        toTrackClevertap('registerFailure',{method, pageName: "Signup screen"})
       }
      }
   }
@@ -244,7 +287,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to ${mobile ? `+${mobile}` : email}`}</p>
+     <p className="text-gray-400 text-xs">{`Your code was messaged to ${formData.value}`}</p>
    </div>
    <div className="mt-4 flex w-full border-b-2 border-grey-300">
      <input

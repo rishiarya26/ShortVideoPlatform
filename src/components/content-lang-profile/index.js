@@ -87,7 +87,6 @@ const ContentLangProfile = ({typeRef}) =>{
             }
             showSnackbar({type: "black", message: "Language updated successfully"})
           }
-        // }
         } catch(e) {
           console.error('inside - languages updation failed',e);
           setLoading(false);
@@ -109,26 +108,39 @@ const ContentLangProfile = ({typeRef}) =>{
             setSelectedLang(copySelectedLang);
         }
     }
-   console.log("debug", device , typeRef);
+
+    const laterOnClick = () => {
+      if(device === 'desktop' && typeRef === 'signup'){
+        try{
+         router?.asPath && (window.location.href = router?.asPath)
+        }catch(e){
+          console.error('error in redirection',e)
+        }
+     } else if(device === 'mobile' && ref === "signup"){
+        router && router?.replace('/feed/for-you');
+     }
+    }
+
+    const doneOnclick = ()=> {
+      if(loading) return;
+      if(selectedLang?.length > 0){
+      localStorage.set('lang-flush','true');
+      toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
+      onSubmit();
+        if(ref === "signup" || typeRef === "signup") {
+          laterOnClick();
+        } else if (ref) {
+          router.replace("/feed/for-you");
+        }
+      } else {
+        showSnackbar({message: 'Please select atleast 1 language'});
+      }
+    }
+
     return(
       <div className={`flex flex-col ${(device === "desktop" && typeRef === "signup") ? "h-full" : "h-screen"} justify-center box-border relative`}>
-        {(ref || (device == 'desktop' && typeRef === 'signup')) ? (
-          <div className='flex px-3 pt-3 w-100 absolute top-3'>
-          <span
-              className='text-gray-400 cursor-pointer'
-              onClick={() => {
-                if(device === 'mobile') {
-                  router.replace("/feed/for-you")
-                } else {
-                  close();
-                }
-              }}
-          >
-            skip
-          </span>
-          <span className='mx-auto font-semibold'>Sign up</span>
-        </div>
-        ) : (
+        {(ref === "signup" || (device === 'desktop' && typeRef === 'signup')) ? 
+        (<></>) : (
           <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
             <div onClick={()=>
               router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
@@ -136,7 +148,7 @@ const ContentLangProfile = ({typeRef}) =>{
             </div>
           </div>
         )}
-        <div className={`${(device === 'desktop' && typeRef === 'signup') && "mt-22"} flex w-full justify-center items-end pb-4 px-4 lang-sm-title`}>
+        <div className={`${(device === 'desktop' && typeRef === 'signup') && "mt-22"} ${(device === 'mobile' && ref === 'signup') && "absolute top-5"} flex w-full justify-center items-end pb-4 px-4 lang-sm-title`}>
             <div className={`text-gray-600 text-xl font-semibold`}>Select your language</div>
         </div>
         <div className='flex flex-wrap justify-center w-full'>
@@ -158,24 +170,14 @@ const ContentLangProfile = ({typeRef}) =>{
         <div className="flex w-full justify-center pt-4">
             <div
               className={`relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
-              onClick={()=>
-              {
-                if(loading) return;
-                if(selectedLang?.length > 0){
-                localStorage.set('lang-flush','true');
-                toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
-                onSubmit();
-                if(ref) {
-                  router.replace("/feed/for-you");
-                }
-                }else{
-                showSnackbar({message: 'Please select atleast 1 language'});
-                }
-              }}
+              onClick={doneOnclick}
               > Done{loading ? 
               <CircularLoaderButtonSmall/>
               : ''}
             </div>
+        </div>
+        <div className="flex w-full justify-center pt-4">
+          <div onClick={laterOnClick} className="text-gray-400 cursor-pointer">I'll do it later</div>
         </div>
       </div>
     )

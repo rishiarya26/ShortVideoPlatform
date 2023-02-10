@@ -19,7 +19,7 @@ async function validateOTP({
         ...info,
         "otp": otp,
          "guest_token": guestToken,
-         "platform": "web",
+         "platform_name": "hipi",
         "version":"27.0202065"
       },
       {

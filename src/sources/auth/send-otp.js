@@ -13,7 +13,7 @@ async function dispatchOTP(info) {
     const deviceId = getItem('guest-token');
     response = await post(apiPath,{
           ...info,
-          "platform_name": "web",
+          "platform_name": "hipi",
           "hash_id": "FA+9qCX9VSu"
       },
       {

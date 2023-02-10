@@ -29,12 +29,46 @@ function yearToDate(date) {
   return newDate;
 }
 
+function formDataCheck({data, showMessage}) {
+  if(
+    data.firstName?.length > 0 &&
+    data.lastName?.length > 0 &&
+    Number(data.dob) >= 18 &&
+    Number(data.dob) < 100 &&
+    data.gender.length > 0 &&
+    data.gender !== "defaultValue" &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)
+    ){ 
+      return true;
+    } else {
+      if(data.firstName?.length  < 1){ 
+        showMessage({message : "First name cant be left empty"});
+      } else if(data.lastName?.length  < 1){ 
+        showMessage({message : "Last name cant be left empty"});
+      } else if(data.dob === '') {
+        showMessage({message : "Age cant be left empty"});
+      } else if(Number(data.dob) < 18) {
+        showMessage({message: "Age should be atleast 18 years"});
+      } else if(Number(data.dob) > 99) {
+        showMessage({message: "Age should not be more than 99 years"});
+      } else if(data.gender.length <= 0 || data.gender === "defaultValue") {
+        showMessage({message: "Gender can't be left empty"});
+      } else if (
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) ||
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)) {
+        showMessage({message: "Name is not in correct format"})
+      }
+      return false;
+  }
+}
+
 const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmail }) => {
 
   const [data, setData] = useState({
     type: '',
     value: '',
-    gender: '',
+    gender: 'defaultValue',
     firstName: '',
     lastName: '',
     name: '',
@@ -138,7 +172,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     e.preventDefault();
     toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
     toTrackMixpanel("cta", {name: "signup", type: "submit"});
-    if(data.lastName?.length > 0 && Number(data.dob) >= 18){ 
+    if(formDataCheck({data, showMessage})){ 
       try {
         setPending(true);
         const info = device === "mobile" ? {
@@ -164,20 +198,12 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
       } catch (e) {
         setPending(false);
       }
-    } else {
-        if(data.lastName?.length  < 1){ 
-          showMessage({message : "Last name cant be left empty"})
-        } else if(data.dob === '') {
-          showMessage({message : "Age cant be left empty"})
-        } else if(Number(data.dob) < 18) {
-          showMessage({message: "Age should be atleast 18 years"});
-        }
     }
   };
 
-  const toggleGender = () => {
+  const toggleGender = (e) => {
     const updateData = { ...data };
-    updateData.gender === 'Male' ? updateData.gender = 'Female' : updateData.gender = 'Male';
+    updateData.gender = e?.target?.value;
     setData(updateData);
   };
 
@@ -227,27 +253,22 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
             type="text"
             name="Name"
             placeholder="Full Name"
-            required
-            pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
-            onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
             autoComplete="off"
           />
         </div>
         <div className="mt-4 flex relative">
-          <input
-            readOnly
+           <select
             value={data.gender}
+            onChange={toggleGender}
+            name="gender"
             id="gender"
-            onClick={toggleGender}
-            className=" w-full border-b-2 border-grey-300 px-4 py-2 cursor-pointer"
-            type="text"
-            placeholder="Gender"
-            required
-          />
-          <span className="absolute right-2 bottom-3">
-            {' '}
-            <Toggle />
-          </span>
+            className='w-100 border-b-2 border-grey-300 px-4 py-2'
+            >
+            <option disabled value="defaultValue"> -- select an option -- </option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Rather not say">Rather not say</option>
+          </select>
         </div>
         <div className='mt-4 flex'>
           <input
@@ -277,14 +298,14 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
           )
         }
         <div className="mt-10">
-      {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
-          type="submit"
-          className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
-        >
-          {' '}
-          {"Sign Up"}
-          {!pending ? '' : <CircularProgress />}
-        </button>}
+        {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
+            type="submit"
+            className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+          >
+            {' '}
+            {"Sign Up"}
+            {!pending ? '' : <CircularProgress />}
+          </button>}
         </div>
         </form>
       </div>

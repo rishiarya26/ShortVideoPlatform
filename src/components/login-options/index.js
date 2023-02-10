@@ -97,7 +97,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
-          By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-gray-600'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-gray-600'>Privacy policy</span>
+          By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-gray-600'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-gray-600'>Privacy Policy</span>
         </p>
       </div>
     </div>

@@ -37,7 +37,7 @@ const register = async ({
         guest_token: 'Z5X_09c303a8591ab6b017b2f60c90ae04668f659631d7f73a6afd2b91ee0fb8fbfa',
         sourceapp: 'Web',
         version_number: '30.1602365.0-76960fb',
-        platform: 'Web'
+        platform_name: 'hipi'
       }
     };
     const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/registerWithOTPMobileorEmail`;
