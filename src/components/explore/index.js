@@ -130,7 +130,13 @@ function Explore() {
     // console.log("8787878",additionalBanner, crousalData)
     // crousalData.shift(additionalBanner.data);
     // console.log(crousalData)
-    setCrousalItems(crousalData);
+    const removedZCAwardData = crousalData?.filter((item)=>{
+      if(item.id !== '6d1e498e-de07-4931-9235-a9e67408b3b5'){
+        return item;
+      }
+    })
+    console.log("CD",removedZCAwardData);
+    setCrousalItems(removedZCAwardData);
     setData(data?.data);
   };
 
