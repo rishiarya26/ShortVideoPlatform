@@ -148,7 +148,7 @@ const ContentLangProfile = ({typeRef}) =>{
             </div>
           </div>
         )}
-        <div className={`${(device === 'desktop' && typeRef === 'signup') && "mt-22"} ${(device === 'mobile' && ref === 'signup') && "absolute top-5"} flex w-full justify-center items-end pb-4 px-4 lang-sm-title`}>
+        <div className={`${(device === 'mobile' && ref === 'signup') && "absolute top-5"} flex w-full justify-center items-end pb-4 px-4 lang-sm-title`}>
             <div className={`text-gray-600 text-xl font-semibold`}>Select your language</div>
         </div>
         <div className='flex flex-wrap justify-center w-full'>

@@ -98,12 +98,16 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
     console.log("LOGIN__",response)
-    const userId = response?.data?.userDetails?.id;
-
+    const userId = response?.data?.userDetails?.id;  
+     
     /* languages selected check */
     if(signupData){
+      sessionStorage.setItem("signup", true);
       await delay();
       checkLanguageSelection(userId);
+      // const userDetails = response.data.userDetails;
+      // localStorage.set("user-details", userDetails);
+      // localStorage.set('lang-codes-selected',{lang: ["en", "hi"], type : 'profile'});
     }else{
       checkLanguageSelection(userId);
     }

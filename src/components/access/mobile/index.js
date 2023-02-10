@@ -25,6 +25,7 @@ export default function Mobile({
 }) {
   const [seconds, setSeconds] = useState(0);
   const [otpStatus, setOtpStatus] = useState(false);
+  const [readonly, setReadOnly] = useState(false);
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -42,6 +43,16 @@ export default function Mobile({
       processPhoneData(sessionData);
     }
   }, [])
+
+  useEffect(() => {
+    if(device === "desktop"){
+      if(otpStatus) {
+        setReadOnly(true);
+      } else {
+        setReadOnly(false);
+      }
+    }
+  }, [otpStatus])
 
   const submit = async () => {
     toTrackMixpanel("cta", {name: "proceed", type: "submit"});
@@ -130,6 +141,7 @@ export default function Mobile({
                 required
                 autoFocus
                 autoComplete='off'
+                readOnly={readonly}
               />
             </div>
             ) : (
@@ -144,6 +156,7 @@ export default function Mobile({
                 autoFocus
                 type="email"
                 autoComplete='off'
+                readOnly={readonly}
               />
             )
           }

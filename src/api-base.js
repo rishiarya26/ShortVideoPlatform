@@ -9,8 +9,8 @@ const newAuth = {
 export const apiBaseEndPoints = {
   local: {
     test: 'https://api.github.com',
-    hipi: 'https://hipitest.charmd.me/api',
-    hipi_stage:"https://hipitest.charmd.me/api",
+    hipi: 'https://hipigwapi.zee5.com/api',
+    hipi_stage:"https://hipigwapi.zee5.com/api",
     app: 'https://preprod.hipi.co.in/',
     stagingMobile: 'https://mapi.charmboard.com',
     'get-social': 'https://api.getsocial.im/v1',
@@ -21,7 +21,7 @@ export const apiBaseEndPoints = {
     otp: 'https://b2bapi.zee5.com',
     userApi: 'https://userapi.zee5.com',
     viewCount: 'https://kw7bwwzx3d.execute-api.ap-south-1.amazonaws.com',
-    staggingHipi: 'https://hipitest.charmd.me/api',
+    staggingHipi: 'https://hipigwapi.zee5.com/api',
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
     playlist:"https://hipigwapis2.zee5.com/api/v1",
@@ -30,7 +30,7 @@ export const apiBaseEndPoints = {
   },
   development: {
     test: 'https://api.github.com',
-    hipi:"http://3.7.148.209:7000",
+    hipi:"https://hipigwapi.zee5.com/api",
     hipi_stage:"https://hipitest.charmd.me/api",
     translations: 'https://mock.hipi.co.in',
     app: 'https://mock.hipi.co.in/',
@@ -71,7 +71,7 @@ export const apiBaseEndPoints = {
   },
   production: {
     test: 'https://api.github.com',
-    hipi: 'https://hipitest.charmd.me/api',
+    hipi: 'https://hipigwapi.zee5.com/api',
     hipi_stage:"https://hipitest.charmd.me/api",
     app: 'https://www.hipi.co.in',
     'get-social': 'https://api.getsocial.im/v1',

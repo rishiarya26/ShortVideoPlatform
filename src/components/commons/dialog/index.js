@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router';
 import Close from '../svgicons/close-black';
 
 const Dialog = ({
   children, title, close, visible, type = 'big'
   
 }) => {
+  const { asPath } = useRouter();
   const height = {
     xExtraSmall:{
       width:'w-1/5'
@@ -32,6 +34,15 @@ const Dialog = ({
       width:'w-2/4'
     }
   };
+
+  const closeOnClick = () => {
+    const tokens = localStorage?.getItem('tokens') || null;
+    close();
+    if(tokens) {
+      asPath && (window.location.href = asPath)
+    }
+  }
+
   return(
   <div
     data-testid="dialog-container"
@@ -56,7 +67,7 @@ const Dialog = ({
           {type !== 'xExtraSmall' && <div
             data-testid="dialog-close"
             role="presentation"
-            onClick={() => (close())}
+            onClick={() => (closeOnClick())}
             className="w-6 h-6 absolute right-3 top-3 cursor-pointer z-20"
           >
             <Close />
