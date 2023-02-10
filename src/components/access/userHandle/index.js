@@ -139,7 +139,7 @@ export default function UserHandle({toggleFlow}) {
                     {loading ? <CircularLoaderSmall /> : ""}
                 </button>
                 <div className="flex w-full justify-center pt-4">
-                    <div onClick={laterOnClick} className="text-gray-400 cursor-pointer">I'll do it later</div>
+                    <div onClick={laterOnClick} className="text-gray-400 cursor-pointer">I&apos;ll do it later</div>
                 </div>
             </div>
         </form>
