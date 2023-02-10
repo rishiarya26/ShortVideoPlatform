@@ -16,10 +16,10 @@ import PlaylistWhite from '../svgicons/playlist_white';
 import { localStorage } from '../../../utils/storage';
 
 let timer = 0;
+let ins = null;
 const OpenAppStrip = ({pageName, tabName, item , activeVideoId , type='bottom', isPlaylistView=false, data=null, fetchMore, playlistId=null, videoId=null, playlistName=null, callbackForIos=undefined, noShow=false, piD=null, promptLoaded=false}) => {
 const [showOpenStrip, setShowOpenStrip] = useState(false);  
 const [impressionUsed, setImpressionUsed] = useState(false);
-const [intervalInstance, setIntervalInstance] = useState(null);
 
 // useEffect(()=>{
 //  console.log("timer*&",Math.round(timer));
@@ -43,9 +43,9 @@ useEffect(()=>{
    const intervalInstanceTemp = setInterval(()=>{
     timer = timer + 0.5;
     timer%5 === 0 && toTrackMixpanel('sessionDuration',null,{sessionTime : Math.round(timer)});
-    timer === 60 && clearInterval(intervalInstance)
+    timer === 60 && clearInterval(ins);
    },500)
-   setIntervalInstance(intervalInstanceTemp);
+   ins = intervalInstanceTemp;
  },[]) 
 
 const promptPresent = localStorage.get('PwaPromptPresent');
@@ -55,7 +55,7 @@ const promptPresent = localStorage.get('PwaPromptPresent');
     if(promptPresent === 'true'){
       toTrackMixpanel('pwaInstallStripImpression',{"timer": Math.round(timer)});
       setImpressionUsed(true);
-      // clearInterval(intervalInstance);
+      clearInterval(ins);
     }
   }
  },[promptPresent])
