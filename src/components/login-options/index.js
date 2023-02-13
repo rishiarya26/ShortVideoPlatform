@@ -69,7 +69,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton loading={loading} type='login' toggleFlow={toggleFlow} />
+        <GoogleButton loading={loading} type='login' toggleFlow={toggleFlow} setAuth={setAuth} />
         {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Fb /></div>
           <div className="flex justify-center w-full font-semibold">

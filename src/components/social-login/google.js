@@ -13,7 +13,7 @@ import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { verifyUserOnly } from "../../sources/auth/verify-user";
 import { useRouter } from "next/router";
 
-export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) =>{
+export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, setAuth}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
     const device = getItem('device-type');
@@ -55,11 +55,12 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow}) 
                     console.log('error in fb or mixpanel event')
                   }
               }
-              console.log(response);
+              console.log("google verify", response);
               } else if(verifyResponse?.data.code === 1) {
                 //TODO add register flow
                 const response = await registerUser(data?.tokenId);
                 if(device === "desktop") {
+                  setAuth('login')
                   toggleFlow("userHandle")
                 } else {
                   close();

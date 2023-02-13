@@ -71,6 +71,12 @@ export default function Hipi(params) {
     }
   }
 
+  useEffect(() => {
+    if(item !== {} && item?.id !== params?.data?.id) {
+      router?.reload(window.location.pathname);
+    }
+  }, [params])
+
   useEffect(()=>{
     console.log("logout page load *")
     try{ 

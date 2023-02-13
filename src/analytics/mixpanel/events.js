@@ -188,6 +188,15 @@ export const toTrackMixpanel = (type, value, item) => {
       globalCommonEvents['Hashtag Name']	= value?.hashtagName || 'NA';
     }
     const toTrack = {
+      'enable': () => {
+        track("Enable", globalCommonEvents);
+      },
+      'notNow': () => {
+        track("Not Now", globalCommonEvents);
+      },
+      'webPushOptinPopupImpression' : () => {
+        track("Web Push Optin Popup Impression", globalCommonEvents)
+      },
       'playlistClickedProfile': () => {
         globalCommonEvents['playlist Name'] = value?.playlistName || 'NA';
         globalCommonEvents['playlist ID'] = value?.playlistId || 'NA';

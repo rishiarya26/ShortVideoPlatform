@@ -30,7 +30,7 @@ const regitserUserOneTap = async ({
     resp.data.message = 'success';
     const accessToken = resp?.data?.access_token;
     // const refreshToken = resp?.data?.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken:'' });
+    response = await hipiLogin({ accessToken, refreshToken:'', isSignup: true });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

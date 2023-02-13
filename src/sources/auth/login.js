@@ -63,7 +63,7 @@ const updateLanguageOnLogin = async(data) =>{
   }
 }
 
-const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA" }) => {
+const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA", isSignup=false }) => {
   console.log("Response",accessToken,refreshToken)
   let response = {};
   // const url = window.location.href;
@@ -101,7 +101,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     const userId = response?.data?.userDetails?.id;  
      
     /* languages selected check */
-    if(signupData){
+    if(signupData || isSignup){
       sessionStorage.setItem("signup", true);
       await delay();
       checkLanguageSelection(userId);
