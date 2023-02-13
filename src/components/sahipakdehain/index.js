@@ -7,7 +7,7 @@ function Sahipakdehain() {
  
   return (
     <div className="w-full h-full relative pb-6">
-       <div className='w-full '>
+       <div className='w-full min-h-49 md:min-h-25 shimmer '>
        <img alt="" src={withBasePath('images/sph/sahipakdehain.png')} />
        </div>
        <div className='section pt-6 px-6'>

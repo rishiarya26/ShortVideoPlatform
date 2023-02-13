@@ -99,10 +99,10 @@ useEffect(()=>{
       </div> */}
   <div className='hidden md:flex'><Header/></div>
 <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-<div className='w-full'>
+<div className='w-full min-h-49 md:min-h-25 shimmer'>
 		<img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Mob-Hipi-Stunner.webp')} />
 		{device === 'desktop' && <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/stunner/Desk-Hipi-Stunner.webp')} />}
-		</div>
+	</div>
   <div className='py-8 md:py-20 pt-20 w-full flex flex-col items-center bg_pastel_blue relative'>
     <div className='w-100 stunner_purple text-white text-center py-1 absolute top-0 px-4'> #HipiStunner Jan Challenge extended by 7 days. Last date to participate: 7th Feb&apos;23</div>
     <h1 className='text-3xl font-bold purple_font mb-2'>Own the red carpet!</h1>
