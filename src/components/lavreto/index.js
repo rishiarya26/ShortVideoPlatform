@@ -50,7 +50,7 @@ const router = useRouter();
 	
     <div className="static_body relative">
 		<div className='hidden md:flex'><Header/></div>
-		<div className='md:mt-16'>
+		<div className='md:mt-16 min-h-49 md:min-h-25 shimmer'>
 		<img className='flex md:hidden' alt="Lav Re To Video Contest on Hipi App" src={withBasePath('images/lavreto/LavReToMob.jpg')} />
 		<img className='hidden md:flex'alt="Lav Re To Video Contest on Hipi App" src={withBasePath('images/lavreto/LavReToDesk.jpg')} />
 		</div>
