@@ -120,7 +120,7 @@ useEffect(()=>{
               <Wiki/>
               </a> */}
         </div>
-        {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 TikTok</div> */}
+        {/* <div className="flex text-xs text-gray-400 pt-2">© 2022 Hipi</div> */}
         
      </div>
     )

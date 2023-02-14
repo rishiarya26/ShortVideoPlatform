@@ -84,7 +84,7 @@ import WikiWhite from '../commons/svgicons/wikipedia-white';
            <div className="mx-2 cursor-pointer mb-2 hover:text-gray-200" onClick={()=>router && router.push('/contact-us')}>Contact Us</div>
            </div> 
            <div className="flex w-full text-gray-400 text-xs items-center px-2 mt-2">
-           <p>Copyright © 2022. All rights reserved.</p>
+           <p>Copyright © 2023. All rights reserved.</p>
          </div>
          </div>
            <div className="flex md:justify-end py-2 md:py-0   items-center w-1/5">
