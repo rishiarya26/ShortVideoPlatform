@@ -40,7 +40,7 @@ const register = async ({
         platform_name: 'hipi'
       }
     };
-    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/registerWithOTPMobileorEmail`;
+    const apiPath = `${getApiBasePath('authApi')}/v1/user/registerWithOTPMobileorEmail`;
     const resp = await post(apiPath, payload,
       {
         'content-type': 'application/json',

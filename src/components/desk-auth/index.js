@@ -6,6 +6,7 @@ import Mobile from '../access/mobile';
 import Registration from '../access/registration';
 import UserHandle from "../access/userHandle";
 import ContentLanguageProfile from "../content-lang-profile";
+import CircularLoader from '../commons/circular-loader';
 
 const Auth = ({ router, authType, backToOptions, showMessage, flow, toggleFlow }) => {
   const [phoneData, setPhoneData] = useState({ input: '', countryCode: '91' });
@@ -92,6 +93,13 @@ const Auth = ({ router, authType, backToOptions, showMessage, flow, toggleFlow }
         <ContentLanguageProfile
           typeRef="signup"
         />
+      )
+    }
+    {
+      flow === "loader" && (
+        <div style={{transform: "translate(-50%, -50%)"}} className='w-full h-full flex items-center justify-center absolute top-1/2 left-1/2'>
+          <CircularLoader />
+        </div>
       )
     }
   </>

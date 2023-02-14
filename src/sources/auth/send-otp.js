@@ -9,7 +9,7 @@ import { getEsk } from "../../utils/eskGenerator";
 async function dispatchOTP(info) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/sendotp`;
+    const apiPath = `${getApiBasePath('authApi')}/v1/user/sendotp`;
     const deviceId = getItem('guest-token');
     response = await post(apiPath,{
           ...info,

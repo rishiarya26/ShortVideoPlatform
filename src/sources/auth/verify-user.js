@@ -14,7 +14,7 @@ const getUserVerify = async (info) => {
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, info[value]);
-    const apiPath = `${getApiBasePath('preprodUser')}/v1/user/getUserToken`;
+    const apiPath = `${getApiBasePath('userApi')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
       'device_id': deviceId,
@@ -40,7 +40,7 @@ const getUserVerifyOnly = async (payload) => {
   try {
     const urlencoded = new URLSearchParams();
     urlencoded.append(value, payload[value]);
-    const apiPath = `${getApiBasePath('preprodUser')}/v1/user/getUserToken`;
+    const apiPath = `${getApiBasePath('userApi')}/v1/user/getUserToken`;
     response = await post(apiPath, urlencoded, {
       'content-type': 'application/x-www-form-urlencoded',
       'device_id': deviceId,

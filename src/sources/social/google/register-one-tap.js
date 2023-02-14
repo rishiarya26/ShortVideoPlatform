@@ -17,7 +17,7 @@ const regitserUserOneTap = async ({
      token
     };
 
-    const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/registergoogle`;
+    const apiPath = `${getApiBasePath('authApi')}/v2/user/registergoogle`;
     const resp = await post(apiPath, payload,
       {
         'content-type' : 'application/json',

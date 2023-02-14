@@ -15,7 +15,7 @@ const loginOneTap = async ({googleToken=null}) => {
     }
     const deviceId = getItem('guest-token');
     try {
-      const apiPath = `${getApiBasePath('preprodAuth')}/v2/user/logingoogle`;
+      const apiPath = `${getApiBasePath('authApi')}/v2/user/logingoogle`;
       const resp = await post(apiPath, payload,
         {
           'content-type' : 'application/json',

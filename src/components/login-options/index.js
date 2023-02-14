@@ -70,30 +70,6 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
         <GoogleButton loading={loading} type='login' toggleFlow={toggleFlow} setAuth={setAuth} />
-        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-          <div className="justify-self-start"><Fb /></div>
-          <div className="flex justify-center w-full font-semibold">
-            <p>Continue with facebook</p>
-          </div>
-        </div> */}
-        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-          <div className="justify-self-start"><Google /></div>
-          <div className="flex justify-center w-full font-semibold">
-            <p>Continue with google</p>
-          </div>
-        </div> */}
-        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-          <div className="justify-self-start"><Twitter /></div>
-          <div className="flex justify-center w-full font-semibold">
-            <p>Continue with Twitter</p>
-          </div>
-        </div> */}
-        {/* <div className="flex border border-1 border-gray-200 py-3 px-4 w-full my-2">
-          <div className="justify-self-start"><Instagram /></div>
-          <div className="flex justify-center w-full font-semibold">
-            <p>Continue with Instagram</p>
-          </div>
-        </div> */}
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">

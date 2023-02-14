@@ -22,7 +22,7 @@ const regitserUser = async ({
         }
     };
 
-    const apiPath = `${getApiBasePath('userApi')}/v2/user/registergoogle`;
+    const apiPath = `${getApiBasePath('oldUserApi')}/v2/user/registergoogle`;
     const resp = await post(apiPath, payload, { 'conetent-type' : 'noHeaders'});
     resp.data.status = 200;
     resp.data.message = 'success';

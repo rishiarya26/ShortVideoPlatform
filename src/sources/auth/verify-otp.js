@@ -14,7 +14,7 @@ async function validateOTP({
   const deviceId = getItem('guest-token');
   try {
     /* eslint-disable max-len */
-    const apiPath = `${getApiBasePath('preprodAuth')}/v1/user/verifyotp`;
+    const apiPath = `${getApiBasePath('authApi')}/v1/user/verifyotp`;
     const resp = await post(apiPath,{
         ...info,
         "otp": otp,

@@ -11,7 +11,7 @@ async function forgotPassword({code, password}) {
     "new_password": password
 }
   try {
-    const apiPath = `${getApiBasePath('userApi')}/v1/user/recreatepasswordmobile`;
+    const apiPath = `${getApiBasePath('oldUserApi')}/v1/user/recreatepasswordmobile`;
     response = await post(apiPath,payload,{'content-type': 'json'});
     response.data.requestedWith = { payload };
     return Promise.resolve(response);

@@ -13,6 +13,9 @@ import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { verifyUserOnly } from "../../sources/auth/verify-user";
 import { useRouter } from "next/router";
 
+
+const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
+
 export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, setAuth}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
@@ -43,6 +46,8 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, s
          try{  
              toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
              const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
+             setAuth('login')
+             toggleFlow("loader")
              if(verifyResponse?.data?.code === 0) {
                const response = await login({googleToken: data?.tokenId});
                if(response.status === 'success') {
@@ -58,22 +63,23 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, s
               console.log("google verify", response);
               } else if(verifyResponse?.data.code === 1) {
                 //TODO add register flow
-                const response = await registerUser(data?.tokenId);
-                if(device === "desktop") {
-                  setAuth('login')
-                  toggleFlow("userHandle")
-                } else {
-                  close();
-                  router.push("/createUsername");
-                }
-                console.log("google register resp:", response);
+                  const response = await registerUser(data?.tokenId);
+                  if(device === "desktop") {
+                    await delay();
+                    toggleFlow("userHandle")
+                  } else {
+                    close();
+                    router.push("/createUsername");
+                  }
+                  console.log("google register resp:", response);
               }
         }
         catch(e){
+          setAuth(null);
           toTrackMixpanel(`${type || ''}Failure`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-            console.log('e',e)
+          console.log('e',e?.message)
         }
-        }
+      }
 
     const initialzeGoogle =()=>{
       try{  
@@ -135,7 +141,8 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, s
         }
         catch(error){
             showSnackbar({message: "Something went wrong.."})
-           console.log("register error",error)
+            console.log("register error",error)
+            throw new Error(error.message)
         }
       }
       
