@@ -34,7 +34,9 @@ const Header = ({ blok = {}, date, blogType = "newsroom" }) => {
     type = router.pathname.split("/")[2],
     subheading = null,
     cardImage = null,
-    writtenBy=null
+    writtenBy=null,
+    seoTitle=null,
+    seoDescription=null,
   } = blok;
   const created_at_date = new Date(date);
   const newDate = `${
@@ -44,8 +46,8 @@ const Header = ({ blok = {}, date, blogType = "newsroom" }) => {
     <>
       <SeoMeta
         data={{
-          title: heading,
-          description: subheading,
+          title: seoTitle || heading,
+          description: seoDescription || subheading,
           canonical: url && getCanonicalUrl(url),
           openGraph: {
             title: heading,

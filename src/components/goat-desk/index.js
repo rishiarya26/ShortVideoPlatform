@@ -53,7 +53,7 @@ const onStoreRedirect =(device)=>{
       <div className="w-full h-full">
         <div className='hidden md:flex'><Header/></div>
         <div className="flex items-center flex-col section_1 bg_1 md:min-h-screen relative md:pt-16">
-        <div className='w-full'>
+        <div className='w-full min-h-49 md:min-h-25 shimmer'>
           <img className='flex md:hidden' alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_mob_banner.webp')} />
           {device === 'desktop' && 
             <img className='hidden md:flex'alt="Hipi Stunner 2022 Contest presented By Nikita Anand" src={withBasePath('images/goat2/goat2_banner.webp')} />
