@@ -37,8 +37,9 @@ const English = ()=> (
    
                 <p className='text-left w-full md:w-4/12 text-xs px-6'>           
                  <ul className='list-disc'>
-                    <li>Only videos that are watched completely will be considered. </li>
-                    <li>Videos that are watched partially or skipped will not be considered. </li>
+                    {/* <li>Only videos that are watched completely will be considered. </li>
+                    <li>Videos that are watched partially or skipped will not be considered. </li> */}
+                    <li>Only those videos that are watched for at least 5 seconds will be considered.</li>
                 <li>Only one view for a video will be considered even if you watch the same video multiple times.</li>
                 <li>Your daily progress will reset at 11:59 PM every day. You should spin the wheel and unlock your coins for the levels achieved daily before 11:59 PM.</li>
                 </ul>

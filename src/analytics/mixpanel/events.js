@@ -2,7 +2,7 @@
 import { track } from "../index";
 import { APP_NAME, LANGUAGE } from "../../constants";
 import { getItem } from "../../utils/cookie"
-import { localStorage } from "../../utils/storage";
+import { localStorage, objectEntriesPoly } from "../../utils/storage";
 import { getReffererPage, usePreviousRoute } from "../../utils/web";
 import platform from "platform";
 
@@ -22,7 +22,7 @@ let adEvents = ['videoAdStarted', 'videoAdFirstQuartile', 'videoAdSecondQuartile
 
 const getUtm = (payload) =>{
 const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());
+const params = objectEntriesPoly(urlSearchParams.entries());
 console.log("mix**",params)
 payload['App UTM Source Last Touch'] = params?.utm_source || ''
 payload['App UTM Medium Last Touch'] = params?.utm_medium || ''
