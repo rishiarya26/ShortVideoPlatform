@@ -448,6 +448,11 @@ export const toTrackMixpanel = (type, value, item) => {
         globalCommonEvents['Method'] = value?.method;
         track('Logout Failure', globalCommonEvents)
        },
+       'registrationAgeEntered' :  ()=>{
+        addPageTabName();
+        globalCommonEvents['Method'] = value?.method;
+        track('Registration Age Entered', globalCommonEvents)
+       },
        'emailIdSubmitted' :  ()=>{
         addPageTabName();
         globalCommonEvents['Method'] = value?.method;

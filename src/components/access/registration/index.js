@@ -77,6 +77,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   });
   const [pending, setPending] = useState(false);
   const [otpStatus, setOtpStatus] = useState(false);
+  const [ageTyping, setAgeTyping] = useState(false);
 
   const { t } = useTranslation();
   const {close} = useDrawer();
@@ -213,10 +214,12 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     //     showMessage({message: 'Something went wrong. Please try again!'})
     //   }
     // } else {
-      toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
-      toTrackMixpanel("cta", {name: "signup", type: "submit"});
       if(formDataCheck({data, showMessage})){ 
         try {
+          toTrackMixpanel("signupFormSubmitted", {method: device === "mobile" ? 
+          (mobile ? "phoneno" :"email") : (numberOrEmail === "mobile" ? "phoneno": "email"), 
+          pageName: "Signup Page"})
+            toTrackMixpanel("cta", {name: "signup", type: "submit"});
           setPending(true);
           const info = device === "mobile" ? {
             ...(mobile ? {"phoneno": phoneNo} : {"email": email})
@@ -252,6 +255,16 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   };
 
   const changeDob = e => {
+    if(!ageTyping) {
+      setAgeTyping(true);
+      try{
+        toTrackMixpanel("registrationAgeEntered", {method: device === "mobile" ? 
+        (mobile ? "phoneno" :"email") : (numberOrEmail === "mobile" ? "phoneno": "email"), 
+        pageName: "Signup Page"})
+      } catch(e) {
+        console.log("Mixpanel error");
+      }
+    }
     setData({...data, dob: e.target.value});
   };
 
