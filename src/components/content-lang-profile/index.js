@@ -169,7 +169,7 @@ const ContentLangProfile = ({typeRef}) =>{
         </div>
         <div className="flex w-full justify-center pt-4">
             <div
-              className={`relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
+              className={`cursor-pointer relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
               onClick={doneOnclick}
               > Done{loading ? 
               <CircularLoaderButtonSmall/>

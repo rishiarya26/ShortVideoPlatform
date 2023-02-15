@@ -3,7 +3,9 @@
 const newAuth = {
   preprod: "https://uapi-preprod.zee5.com",
   auth: "https://auth-preprod.zee5.com",
-  user: "https://user-preprod.zee5.com"
+  user: "https://user-preprod.zee5.com",
+  prodAuth: "https://auth.zee5.com",
+  prodUser: "https://uapi.zee5.com"
 };
 
 export const apiBaseEndPoints = {
@@ -23,8 +25,8 @@ export const apiBaseEndPoints = {
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
     playlist:"https://hipigwapis2.zee5.com/api/v1",
-    authApi: newAuth.auth,
-    userApi: newAuth.user,
+    authApi: newAuth.prodAuth,
+    userApi: newAuth.prodUser,
   },
   development: {
     test: 'https://api.github.com',
@@ -43,8 +45,8 @@ export const apiBaseEndPoints = {
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
     playlist:"https://hipigwapis2.zee5.com/api/v1",
-    authApi: newAuth.auth,
-    userApi: newAuth.user,
+    authApi: newAuth.prodAuth,
+    userApi: newAuth.prodUser,
   },
   staging: {
     test: 'https://api.github.com',
@@ -62,8 +64,8 @@ export const apiBaseEndPoints = {
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
     playlist:"https://hipigwapis2.zee5.com/api/v1",
-    authApi: newAuth.auth,
-    userApi: newAuth.user,
+    authApi: newAuth.prodAuth,
+    userApi: newAuth.prodUser,
   },
   production: {
     test: 'https://api.github.com',
@@ -81,8 +83,8 @@ export const apiBaseEndPoints = {
     leaderboard: 'https://leaderboard.charmd.me',
     staggingLeaderboard: 'http://35.154.183.190:3000',
     playlist:"https://hipigwapis2.zee5.com/api/v1",
-    authApi: newAuth.auth,
-    userApi: newAuth.user,
+    authApi: newAuth.prodAuth,
+    userApi: newAuth.prodUser,
   }
 };
 

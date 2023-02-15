@@ -44,35 +44,40 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, s
             }
         }
          try{  
-             toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-             const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
-             setAuth('login')
-             toggleFlow("loader")
-             if(verifyResponse?.data?.code === 0) {
-               const response = await login({googleToken: data?.tokenId});
-               if(response.status === 'success') {
-                showSnackbar({ message: 'Login Successful' })
-                 close();
-                 try{
-                  toTrackMixpanel(`${type || ''}Success`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-                 fbq.defEvent('CompleteRegistration');
-                }catch(e){
-                    console.log('error in fb or mixpanel event')
-                  }
+          setAuth('login');
+          toggleFlow("loader");
+          toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
+          const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
+          if(verifyResponse?.data?.code === 0) {
+            const response = await login({googleToken: data?.tokenId});
+            if(response.status === 'success') {
+            showSnackbar({ message: 'Login Successful' })
+              close();
+              try{
+              toTrackMixpanel(`${type || ''}Success`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
+              fbq.defEvent('CompleteRegistration');
+            }catch(e){
+                console.log('error in fb or mixpanel event')
               }
-              console.log("google verify", response);
-              } else if(verifyResponse?.data.code === 1) {
-                //TODO add register flow
-                  const response = await registerUser(data?.tokenId);
-                  if(device === "desktop") {
-                    await delay();
-                    toggleFlow("userHandle")
-                  } else {
-                    close();
-                    router.push("/createUsername");
-                  }
-                  console.log("google register resp:", response);
+          }
+          console.log("google verify", response);
+          } else if(verifyResponse?.data.code === 1) {
+            //TODO add register flow
+              const response = await registerUser(data?.tokenId);
+              if(device === "desktop") {
+                // sessionStorage.setItem("googleRegistrationData", JSON.stringify({
+                //   name: data?.profileObj?.name || null,
+                //   email: data?.profileObj?.email || null,
+                // }))
+                // toggleFlow("registration");
+                await delay();
+                toggleFlow("userHandle")
+              } else {
+                close();
+                router.push("/createUsername");
               }
+              // console.log("google register resp:", response);
+          }
         }
         catch(e){
           setAuth(null);

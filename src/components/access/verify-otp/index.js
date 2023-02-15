@@ -26,34 +26,35 @@ function yearToDate(date) {
 }
 
 function formDataCheck({data, showMessage}) {
-  data.dob = yearToDate(data?.dob);
+  const dataObj = {...data};
+  dataObj.dob = yearToDate(dataObj?.dob);
   if(
-    data.firstName?.length > 0 &&
-    data.lastName?.length > 0 &&
-    Number(data.dob) >= 18 &&
-    Number(data.dob) < 100 &&
-    data.gender.length > 0 &&
-    data.gender !== "defaultValue" &&
-    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) &&
-    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)
+    dataObj.firstName?.length > 0 &&
+    dataObj.lastName?.length > 0 &&
+    Number(dataObj.dob) >= 18 &&
+    Number(dataObj.dob) < 100 &&
+    dataObj.gender.length > 0 &&
+    dataObj.gender !== "defaultValue" &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(dataObj.firstName) &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(dataObj.lastName)
     ){ 
       return true;
     } else {
-      if(data.firstName?.length  < 1){ 
+      if(dataObj.firstName?.length  < 1){ 
         showMessage({message : "First name cant be left empty"});
-      } else if(data.lastName?.length  < 1){ 
+      } else if(dataObj.lastName?.length  < 1){ 
         showMessage({message : "Last name cant be left empty"});
-      } else if(data.dob === '') {
+      } else if(dataObj.dob === '') {
         showMessage({message : "Age cant be left empty"});
-      } else if(Number(data.dob) < 18) {
+      } else if(Number(dataObj.dob) < 18) {
         showMessage({message: "Age should be atleast 18 years"});
-      } else if(Number(data.dob) > 99) {
+      } else if(Number(dataObj.dob) > 99) {
         showMessage({message: "Age should not be more than 99 years"});
-      } else if(data.gender.length <= 0 || data.gender === "defaultValue") {
+      } else if(dataObj.gender.length <= 0 || dataObj.gender === "defaultValue") {
         showMessage({message: "Gender can't be left empty"});
       } else if (
-        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) ||
-        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)) {
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(dataObj.firstName) ||
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(dataObj.lastName)) {
         showMessage({message: "Name is not in correct format"})
       }
       return false;
@@ -236,8 +237,6 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
         setSeconds(seconds-1);
     }
   }
-
-
   const chooseComp = {
    desktop : 
    <>
@@ -287,7 +286,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to ${formData.value}`}</p>
+     <p className="text-gray-400 text-xs">{`Your code was messaged to ${mobile ? mobile : email}`}</p>
    </div>
    <div className="mt-4 flex w-full border-b-2 border-grey-300">
      <input

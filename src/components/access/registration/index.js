@@ -17,6 +17,7 @@ import { toTrackClevertap } from '../../../analytics/clevertap/events';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import VerifyOtp from '../verify-otp';
 import { sessionStorage } from '../../../utils/storage';
+// import { updateUserProfile } from '../../../sources/users';
 
 function formatDate(age) {
   const year = new Date().getUTCFullYear();
@@ -78,9 +79,10 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   const [otpStatus, setOtpStatus] = useState(false);
 
   const { t } = useTranslation();
- const {close} = useDrawer();
- const {showSnackbar} = useSnackbar();
- const device = getItem('device-type');
+  const {close} = useDrawer();
+  const {showSnackbar} = useSnackbar();
+  const device = getItem('device-type');
+  // const googleRegistrationData = sessionStorage.get("googleRegistrationData") || null;
 
  if(device === 'mobile'){
    showMessage = showSnackbar;
@@ -96,6 +98,19 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
       phoneNo = `${countryCode}${phone}`;
     }
   }
+
+  //for google registration
+  // useEffect(() => {
+  //   if(googleRegistrationData) {
+  //     const jsonGoogleRegistrationObject = JSON.parse(googleRegistrationData)
+  //     let dataObj = {
+  //       name: jsonGoogleRegistrationObject?.name || "",
+  //       type: "email",
+  //       value: jsonGoogleRegistrationObject?.email || "",
+  //     }
+  //     setData({...data, ...dataObj});
+  //   }
+  // }, [])
 
   useEffect(() => {
     let dataToUpdate = { ...data };
@@ -170,35 +185,64 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
 
   const submit = async (e) => {
     e.preventDefault();
-    toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
-    toTrackMixpanel("cta", {name: "signup", type: "submit"});
-    if(formDataCheck({data, showMessage})){ 
-      try {
-        setPending(true);
-        const info = device === "mobile" ? {
-          ...(mobile ? {"phoneno": phoneNo} : {"email": email})
-        } : {
-          ...(numberOrEmail === "mobile" ? {"phoneno":  `${phoneData?.countryCode}${phoneData?.input}`} : {"email": phoneData.input})
+    // if(googleRegistrationData) {
+    //   try {
+    //     const userDetails = localStorage.getItem("user-details");
+    //     const payload = {
+    //       id: userDetails?.id,
+    //       profilePic: userDetails?.profilePic,
+    //       firstName: userDetails?.firstName,
+    //       lastName: userDetails?.lastName,
+    //       dateOfBirth: userDetails?.dateOfBirth,
+    //       userHandle: userHandle,
+    //       onboarding: null,
+    //       profileType: null,
+    //       bio: userDetails?.bio,
+    //       languages: userDetails?.languages
+    //     };
+    //     const response = await updateUserProfile(payload)
+    //     if(device === 'mobile') {
+    //         router.replace({
+    //             pathname: "/content-language",
+    //             query: {ref: "signup"}
+    //         });
+    //     } else {
+    //         toggleFlow("contentLanguage")
+    //     }
+    //   } catch(e) {
+    //     showMessage({message: 'Something went wrong. Please try again!'})
+    //   }
+    // } else {
+      toTrackMixpanel("signupFormSubmitted", {method: numberOrEmail === "mobile" ? "phoneno" : "email", pageName: "Signup Page"})
+      toTrackMixpanel("cta", {name: "signup", type: "submit"});
+      if(formDataCheck({data, showMessage})){ 
+        try {
+          setPending(true);
+          const info = device === "mobile" ? {
+            ...(mobile ? {"phoneno": phoneNo} : {"email": email})
+          } : {
+            ...(numberOrEmail === "mobile" ? {"phoneno":  `${phoneData?.countryCode}${phoneData?.input}`} : {"email": phoneData.input})
+          }
+          await sendOTP(info)
+          const reqObject = {
+            ...data,
+            dob: formatDate(Number(data.dob))
+          }
+          if(device === 'mobile'){
+            window.sessionStorage.setItem("formData", JSON.stringify(reqObject))
+            router && router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'signup' }
+            });
+          } else {
+            setOtpStatus(true);
+          }
+          setPending(false);
+        } catch (e) {
+          setPending(false);
         }
-        await sendOTP(info)
-        const reqObject = {
-          ...data,
-          dob: formatDate(Number(data.dob))
-        }
-        if(device === 'mobile'){
-          window.sessionStorage.setItem("formData", JSON.stringify(reqObject))
-          router && router?.push({
-            pathname: '/verify-otp',
-            query: { ref: 'signup' }
-          });
-        } else {
-          setOtpStatus(true);
-        }
-        setPending(false);
-      } catch (e) {
-        setPending(false);
       }
-    }
+    // }
   };
 
   const toggleGender = (e) => {
@@ -264,7 +308,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
             id="gender"
             className='w-100 border-b-2 border-grey-300 px-4 py-2'
             >
-            <option disabled value="defaultValue"> -- select an option -- </option>
+            <option disabled value="defaultValue"> -- select gender -- </option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Rather not say">Rather not say</option>
@@ -278,7 +322,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
             className=" w-full border-b-2 border-grey-300 px-4 py-2"
             type="number"
             name="dob"
-            placeholder="Age(in years)"
+            placeholder="Age (in years)"
             autoComplete="off"
           />
         </div>

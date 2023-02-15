@@ -39,7 +39,12 @@ export default function AuthOptions({showMessage, pageName, tabName=null}) {
     <>
     {
       authMethod ? (
-          <DeskLogin flow={flow} toggleFlow={toggleFlow} showMessage={showMessage} backToOptions={toLoginOptions} />
+          <DeskLogin
+            flow={flow}
+            toggleFlow={toggleFlow}
+            showMessage={showMessage}
+            backToOptions={toLoginOptions}
+            />
       ) : (
         <Login
           loading={loading}

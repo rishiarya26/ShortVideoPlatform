@@ -14,7 +14,12 @@ const regitserUserOneTap = async ({
   const deviceId = getItem('guest-token');
   try {
     const payload = {
-     token
+     token,
+     aid: deviceId,
+     "mac_address": "",
+     "ip_address": "",
+     "registration_country": "",
+     "registration_region": ""
     };
 
     const apiPath = `${getApiBasePath('authApi')}/v2/user/registergoogle`;
