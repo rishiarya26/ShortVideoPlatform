@@ -178,13 +178,13 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
       if(formDataCheck({data: formData, showMessage})){
         try {
           toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
-          toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
-          toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
+          toTrackMixpanel('signupInitiated', {method, pageName: "Signup screen"})
+          toTrackClevertap('signupInitiated', {method, pageName: "Signup screen"})
           const response = await registerUser(registerFormData);
           if (response.data.status === 200) {
             try{
-              toTrackMixpanel('registerInitiated', {method, pageName: "Signup screen"})
-              toTrackClevertap('registerInitiated', {method, pageName: "Signup screen"})
+              toTrackMixpanel('signupSuccess', {method, pageName: "Signup screen"})
+              toTrackClevertap('signupSuccess', {method, pageName: "Signup screen"})
             }catch(e){
               console.error('mixpanel - login verify otp error',e)
             }
@@ -199,8 +199,8 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
         } catch(e) {
           console.log("error", e);
           showMessage({message : 'OTP incorrect or expired'})
-          toTrackMixpanel('registerFailure',{method, pageName: "Signup screen"})
-          toTrackClevertap('registerFailure',{method, pageName: "Signup screen"})
+          toTrackMixpanel('signupFailure',{method, pageName: "Signup screen"})
+          toTrackClevertap('signupFailure',{method, pageName: "Signup screen"})
         }
       }
      }
