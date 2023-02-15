@@ -286,7 +286,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
    />
    <div className="mt-4 flex flex-col">
      <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to ${mobile ? mobile : email}`}</p>
+     <p className="text-gray-400 text-xs">{`Your code was messaged to ${ref === "login" ? (mobile ? mobile : email) : (formData?.type === "phoneno" ? `+${formData?.value}` : formData?.value)}`}</p>
    </div>
    <div className="mt-4 flex w-full border-b-2 border-grey-300">
      <input
