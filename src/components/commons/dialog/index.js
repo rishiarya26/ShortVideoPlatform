@@ -5,7 +5,7 @@ const Dialog = ({
   children, title, close, visible, type = 'big'
   
 }) => {
-  const { asPath } = useRouter();
+  const router = useRouter();
   const height = {
     xExtraSmall:{
       width:'w-1/5'
@@ -39,7 +39,7 @@ const Dialog = ({
     const tokens = localStorage?.getItem('tokens') || null;
     close();
     if(tokens) {
-      asPath && (window.location.href = asPath)
+      router?.asPath && (window.location.href = router?.asPath)
     }
   }
 
