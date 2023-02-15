@@ -110,8 +110,11 @@ const HamburgerMenu = ({pageName='', tabName=''})=>{
             <p className="text-base px-3 text-gray-600 ">Hipi G.O.A.T.</p>
           </div>
 
-          <div onClick={()=> router && router?.push('/goat')} className="flex items-center py-1">
+          <div onClick={()=> router && router?.push('/dramebaaz')} className="flex items-center py-1">
             <p className="text-base px-3 text-gray-600 ">Hipi LipSyncBattle</p>
+          </div>
+          <div onClick={()=> router && router?.push('/hipi-app-for-zee-cine-awards-2023-voting')} className="flex items-center py-1">
+            <p className="text-base px-3 text-gray-600 ">Zee cine award</p>
           </div>
     </div>
   </div>

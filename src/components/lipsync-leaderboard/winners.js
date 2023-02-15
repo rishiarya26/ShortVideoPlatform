@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { fetchLeaderboardWinners } from "../../sources/leaderboard";
+import { getMonthName } from "../../utils/date";
 
 export const Winners = () =>{
     const [items, setItems] = useState([])   
@@ -85,7 +86,7 @@ return(
           {item?.winner?.firstName || ''}{" "}{item?.winner?.lastName || ''}
       </div>
       <div className='flex font-semibold text-gray-400 px-2 justify-center'>
-          {item?.createdTimeStamp ? (new Date(item?.createdTimeStamp))?.toLocaleDateString() : ''}
+          {item?.createdTimeStamp ? `${getMonthName(new Date(item?.createdTimeStamp)?.getMonth())} ${new Date(item?.createdTimeStamp).getDate()}`  : ''}
       </div>
   </div>))}
   </div>
