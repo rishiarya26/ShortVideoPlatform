@@ -260,13 +260,13 @@ function Hipi({
     let path = router.asPath
     try{
 
-      if (path.includes("@")) { 
-        setTimeout(()=>{
-          inject("https://websdk.getsocial.im/getsocial.min.js", null);  
-        },6000)
-      }else{
-          inject("https://websdk.getsocial.im/getsocial.min.js", null); 
-      }
+      // if (path.includes("@")) { 
+      //   setTimeout(()=>{
+      //     inject("https://websdk.getsocial.im/getsocial.min.js", null);  
+      //   },3000)
+      // }else{
+      //     inject("https://websdk.getsocial.im/getsocial.min.js", null); 
+      // }
 
         toTrackReco('launch')
       window.sessionStorage.setItem('searchExecuted', undefined)
