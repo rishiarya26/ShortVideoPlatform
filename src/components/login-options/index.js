@@ -69,12 +69,15 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton
-          loading={loading}
-          type='login'
-          toggleFlow={toggleFlow}
-          setAuth={setAuth}
+       {!navigator?.userAgent?.match(/FBAN|FBAV/i) && 
+        (
+          <GoogleButton
+            loading={loading}
+            type='login'
+            toggleFlow={toggleFlow}
+            setAuth={setAuth}
           />
+        )}
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
