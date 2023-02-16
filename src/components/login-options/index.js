@@ -28,14 +28,6 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
   useEffect(()=>{
     toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
     toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
-    if(typeof FB_IAB !== 'undefined'){
-      alert("FB_IAB")
-    }
-    if (document.documentElement.classList.contains('in-app-browser')) {
-      alert('in-app-browser');
-    }
-   
-
   },[])
 
   useEffect(() => {
@@ -47,7 +39,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
        <div onClick={()=>{
         toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
         toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
-         router && router.push('/login/phone?option=otp')}}>
+         router && router.push('/login/phone')}}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
@@ -75,15 +67,18 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
         <h1 className="text-lg font-bold">Login or Signup</h1>
         <p className="text-center text-gray-400 mt-2 text-sm">Make your own videos, follow other accounts, comment on videos and more</p>
       </div>
-      {!navigator?.userAgent?.match(/FBAN|FBAV/i) && <div className="socail flex flex-col w-full my-4">
+      <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton
-          loading={loading}
-          type='login'
-          toggleFlow={toggleFlow}
-          setAuth={setAuth}
+       {!navigator?.userAgent?.match(/FBAN|FBAV/i) && 
+        (
+          <GoogleButton
+            loading={loading}
+            type='login'
+            toggleFlow={toggleFlow}
+            setAuth={setAuth}
           />
-      </div>}
+        )}
+      </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
           By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-gray-600'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-gray-600'>Privacy Policy</span>

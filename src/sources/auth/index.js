@@ -1,33 +1,36 @@
 import { post } from 'network';
 import { getApiBasePath } from '../../config';
+import { ESK_ENV } from '../../constants';
 import { apiMiddleWare } from '../../network/utils';
+import { getItem } from '../../utils/cookie';
+import { getEsk } from '../../utils/eskGenerator';
 import { transformError, transformSuccess } from '../transform/auth';
 import { hipiLogin } from './login';
 
-const login = async ({
-  type, email = '', password = '', mobile = ''
-}) => {
+const login = async ({info, password, type="email"}) => {
   let response = {};
   try {
+    const deviceId = getItem('guest-token');
     const payload = {
-      email,
+      [type]: info[type],
       password,
-      mobile,
-      guest_token: 'null',
-      aid: 'djsucgius',
-      platform: 'web',
-      version: '27.0202065'
+      guest_token: deviceId,
     };
-
-    const apiPath = `${getApiBasePath('login')}/login${type}_v2.php`;
-    const resp = await post(apiPath, payload, {
+    const apiPath = `${getApiBasePath('authApi')}/v2/user/loginemail`;
+    const resp = await post(apiPath, {
+      ...payload,
+      "platform_name": "hipi",
+    },  {
+      'content-type' : 'application/json',
+      'device_id': deviceId,
+      'esk': getEsk({deviceId, env: ESK_ENV}),
+      'platform': 'hipi',
     });
     resp.data.status = 200;
     resp.data.message = 'success';
     const accessToken = resp.data.access_token;
     const refreshToken = resp.data.refresh_token;
-    const getSocialToken = resp.data.getSocialToken;
-    response = await hipiLogin({ accessToken, refreshToken, getSocialToken, email, mobile });
+    response = await hipiLogin({ accessToken, refreshToken, [type]: info[type] });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
@@ -35,5 +38,4 @@ const login = async ({
 };
 
 const [userLogin, clearUserLogin] = apiMiddleWare(login, transformSuccess, transformError);
-
 export { userLogin, clearUserLogin };
