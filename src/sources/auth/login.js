@@ -63,7 +63,7 @@ const updateLanguageOnLogin = async(data) =>{
   }
 }
 
-const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA", isSignup=false }) => {
+const login = async ({ accessToken, refreshToken='', signupData=null, email="NA", mobile="NA", isSignup=false }) => {
   console.log("Response",accessToken,refreshToken)
   let response = {};
   // const url = window.location.href;
