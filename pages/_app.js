@@ -46,13 +46,7 @@ import { toTrackReco } from '../src/analytics/view-events';
 
 // test changes
 
-(function storyBlokInitSelfFunction(){
-  try{
-    storyBlokInit();
-  } catch(e){
-    console.log("storyblokerr", e);
-  }
-  })();
+
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
   const { DrawerProvider } = module;
@@ -273,10 +267,10 @@ function Hipi({
 
       updatingGoogleCookies();
       initConviva()
-      initVmax();
+      // initVmax();
       console.log('mounted');
       //to make sure before loading the app the vmax should get updated
-      inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
+
       
       initLinkdin();
       const cookieAgree = getItem('cookie-agreed');
@@ -539,6 +533,9 @@ function Hipi({
     useEffect(()=>{
       setRefferer();
       isPwa();
+
+     let path = router?.asPath;
+
       localStorage.set("PwaPromptPresent",'false');
      
       // console.error("reset - session start")
@@ -594,7 +591,11 @@ function Hipi({
 
     trapPwaInstallEvent();
 
-    
+    //NEW RELIC
+    setTimeout(()=>{
+      inject("/newrelic.js", null)
+    },0)
+
     /* injecting scripts - floodlight, gtag after 5sec */
   setTimeout(()=>{
       inject(null,`
@@ -632,8 +633,42 @@ function Hipi({
                 var s = document.getElementsByTagName('script')[0];
                 s.parentNode.insertBefore(wzrk, s);
           })();`)
+
+          inject(null, `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', ${fbq.FB_PIXEL_ID});
+        `)
+
+        inject(null, `
+        _linkedin_partner_id = "4069492"; 
+        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; 
+        window._linkedin_data_partner_ids.push(_linkedin_partner_id); 
+        (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} 
+        var s = document.getElementsByTagName("script")[0]; 
+        var b = document.createElement("script"); b.type = "text/javascript";b.async = true; 
+        b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; 
+        s.parentNode.insertBefore(b, s);})(window.lintrk);
+        `)
+
           inject(GOOGLE_ONE_TAP , null, loaded);
       }, 7000);
+      const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
+      /** injecting vmax after 8 seconds */
+      if (!path.includes("@")) {
+        console.log("vmax script before execution");
+        setTimeout(async ()=>{
+          inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
+          await delay();
+          initVmax();
+        },5000)
+      }
     
 
     return () => {
@@ -711,7 +746,7 @@ function Hipi({
                 <SnackbarProvider>
                   <RouteStateProvider>
                     <Layout>
-                    <Script
+                    {/* <Script
                     id="pixelScript"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -743,7 +778,7 @@ function Hipi({
           s.parentNode.insertBefore(b, s);})(window.lintrk);
           `,
         }}
-      />
+      /> */}
     <CacheAdProvider>
                         <Component {...pageProps} />
                       </CacheAdProvider>
@@ -759,6 +794,14 @@ function Hipi({
     </>
   );
 }
+
+(function storyBlokInitSelfFunction(){
+  try{
+    storyBlokInit();
+  } catch(e){
+    console.log("storyblokerr", e);
+  }
+  })();
 
 // Only uncomment this method if you have blocking data requirements for
 // every single page in your application. This disables the ability to
