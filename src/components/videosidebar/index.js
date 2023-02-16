@@ -265,7 +265,7 @@ const handleSaveMoments = () =>{
               <div>
                 <div
                   role="presentation"
-                  onClick={() => {
+                  onClick={(typeof window !== 'undefined' && !window?.GetSocialSDK) ? null : () => {
                     deleteReaction("like", socialId);
                     getVideoReactions(socialId, "now", "delete");
                     setIsLiked({ like: false, reactionTime: "now" });
@@ -321,7 +321,7 @@ const handleSaveMoments = () =>{
               </div>
             ) : (
               <div>
-                <div id="like" role="presentation" onClick={() => selectedLike()}>
+                <div id="like" role="presentation" onClick={(typeof window !== 'undefined' && !window?.GetSocialSDK) ? null : () => selectedLike()}>
                   <Like />
                 </div>
                 <p className="text-xs mt-1 text-center">

@@ -28,6 +28,14 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
   useEffect(()=>{
     toTrackMixpanel('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
     toTrackClevertap('popupLaunch',{pageName:pageName, tabName:(tabName && tabName) || '', name:'Login or Signup Screen'})
+    if(typeof FB_IAB !== 'undefined'){
+      alert("FB_IAB")
+    }
+    if (document.documentElement.classList.contains('in-app-browser')) {
+      alert('in-app-browser');
+    }
+   
+
   },[])
 
   useEffect(() => {
@@ -67,7 +75,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
         <h1 className="text-lg font-bold">Login or Signup</h1>
         <p className="text-center text-gray-400 mt-2 text-sm">Make your own videos, follow other accounts, comment on videos and more</p>
       </div>
-      <div className="socail flex flex-col w-full my-4">
+      {!navigator?.userAgent?.match(/FBAN|FBAV/i) && <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
         <GoogleButton
           loading={loading}
@@ -75,7 +83,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
           toggleFlow={toggleFlow}
           setAuth={setAuth}
           />
-      </div>
+      </div>}
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
           By continuing, you agree to Hipi's <span onClick={() => privacyAndTermsOnClick('terms')} className='font-semibold cursor-pointer text-gray-600'>Terms of Use</span> and confirm that you have read Hipi's <span onClick={() => privacyAndTermsOnClick('privacy')}className='font-semibold cursor-pointer text-gray-600'>Privacy Policy</span>

@@ -46,6 +46,13 @@ import { toTrackReco } from '../src/analytics/view-events';
 
 // test changes
 
+(function storyBlokInitSelfFunction(){
+  try{
+    storyBlokInit();
+  } catch(e){
+    console.log("storyblokerr", e);
+  }
+})()
 
 
 const DrawerProvider = dynamic(() => import('../src/hooks/use-drawer').then(module => {
@@ -249,7 +256,18 @@ function Hipi({
 
   useEffect(()=>{
     //let timer;
+
+    let path = router.asPath
     try{
+
+      if (path.includes("@")) { 
+        setTimeout(()=>{
+          inject("https://websdk.getsocial.im/getsocial.min.js", null);  
+        },6000)
+      }else{
+          inject("https://websdk.getsocial.im/getsocial.min.js", null); 
+      }
+
         toTrackReco('launch')
       window.sessionStorage.setItem('searchExecuted', undefined)
       // if(typeof window !== "undefined"){
@@ -794,14 +812,6 @@ function Hipi({
     </>
   );
 }
-
-(function storyBlokInitSelfFunction(){
-  try{
-    storyBlokInit();
-  } catch(e){
-    console.log("storyblokerr", e);
-  }
-  })();
 
 // Only uncomment this method if you have blocking data requirements for
 // every single page in your application. This disables the ability to
