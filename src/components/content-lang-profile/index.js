@@ -12,12 +12,15 @@ import { localStorage } from "../../utils/storage";
 import Check from "../commons/svgicons/check";
 import { Back } from "../commons/svgicons/back";
 import { useRouter } from 'next/router';
+import useDrawer from "../../hooks/use-drawer";
 
-const ContentLangProfile = () =>{
+const ContentLangProfile = ({typeRef}) =>{
     const router = useRouter()
+    const {ref=null} = router?.query;
     const [selectedLang, setSelectedLang] = useState([]);
     const [loading, setLoading] = useState(false);
-    const device = getItem('device-info');
+    const device = getItem('device-type');
+    const { close } = useDrawer();
 
     const {showSnackbar} = useSnackbar();
    
@@ -77,9 +80,13 @@ const ContentLangProfile = () =>{
             console.log('inside  - lang update w login + ',response)
             console.log('insidie - languages updated successfully');
             setLoading(false);
+            if(device === 'mobile' && ref === 'signup') {
+              router?.replace("/feed/for-you");
+            } else if(device === 'desktop' && typeRef === 'signup') {
+              close();
+            }
             showSnackbar({type: "black", message: "Language updated successfully"})
           }
-        // }
         } catch(e) {
           console.error('inside - languages updation failed',e);
           setLoading(false);
@@ -101,21 +108,52 @@ const ContentLangProfile = () =>{
             setSelectedLang(copySelectedLang);
         }
     }
-   
+
+    const laterOnClick = () => {
+      if(device === 'desktop' && typeRef === 'signup'){
+        try{
+         router?.asPath && (window.location.href = router?.asPath)
+        }catch(e){
+          console.error('error in redirection',e)
+        }
+     } else if(device === 'mobile' && ref === "signup"){
+        router && router?.replace('/feed/for-you');
+     }
+    }
+
+    const doneOnclick = ()=> {
+      if(loading) return;
+      if(selectedLang?.length > 0){
+      localStorage.set('lang-flush','true');
+      toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
+      onSubmit();
+        if(ref === "signup" || typeRef === "signup") {
+          laterOnClick();
+        } else if (ref) {
+          router.replace("/feed/for-you");
+        }
+      } else {
+        showSnackbar({message: 'Please select atleast 1 language'});
+      }
+    }
+
     return(
-      <div className='flex flex-col h-screen justify-center box-border relative'>
-        <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
+      <div className={`flex flex-col ${(device === "desktop" && typeRef === "signup") ? "h-full" : "h-screen"} justify-center box-border relative`}>
+        {(ref === "signup" || (device === 'desktop' && typeRef === 'signup')) ? 
+        (<></>) : (
+          <div className="absolute top-0 left-0 headbar w-full flex h-16 shadow-md bg-white items-center justify-center">
             <div onClick={()=>
               router.back()}  className="p-4 h-full flex items-center absolute left-0 top-0 justify-center">
               <Back/>
             </div>
-        </div>
-        <div className="flex w-full justify-center items-end pb-4 px-4 lang-sm-title">
-            <div className="text-gray-600 text-xl font-semibold">Select your language</div>
+          </div>
+        )}
+        <div className={`${(device === 'mobile' && ref === 'signup') && "absolute top-5"} flex w-full justify-center items-end pb-4 px-4 lang-sm-title`}>
+            <div className={`text-gray-600 text-xl font-semibold`}>Select your language</div>
         </div>
         <div className='flex flex-wrap justify-center w-full'>
             {contentLang?.map((item,id)=>(
-            <div key={id} className="w-5/12  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden" onClick={()=>
+            <div key={id} className={`${device === "desktop" && typeRef === "signup" ? "w-1/4" : "w-5/12"}  bg-gray-400 rounded-md lang-sm flex justify-center items-center my-2 relative max-w-20h min-h-9.5v overflow-hidden`} onClick={()=>
               onLangSelect(item?.code)}>
               <p className="text-white text-sm font-semibold absolute top-1 left-2 z-10">{item?.lang}</p>
               <img className="z-20" src={withBasePath(item?.img)}/>
@@ -131,22 +169,15 @@ const ContentLangProfile = () =>{
         </div>
         <div className="flex w-full justify-center pt-4">
             <div
-              className={`relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
-              onClick={()=>
-              {
-                if(loading) return;
-                if(selectedLang?.length > 0){
-                localStorage.set('lang-flush','true');
-                toTrackMixpanel('contentLanguagesSubmitted',{method:'Profile'},{lang:selectedLang?.length>0 ? selectedLang?.reduce((acc,item,id)=>`${acc}${id === 0 ? '':','}${item}`,'') : 'NA'});
-                onSubmit();
-                }else{
-                showSnackbar({message: 'Please select atleast 1 language'});
-                }
-              }}
+              className={`cursor-pointer relative done_btn flex justify-center items-center font-semibold text-sm border border-hipired rounded py-2 px-6  bg-hipired text-white`}
+              onClick={doneOnclick}
               > Done{loading ? 
               <CircularLoaderButtonSmall/>
               : ''}
             </div>
+        </div>
+        <div className="flex w-full justify-center pt-4">
+          <div onClick={laterOnClick} className="text-gray-400 cursor-pointer">I&apos;ll do it later</div>
         </div>
       </div>
     )

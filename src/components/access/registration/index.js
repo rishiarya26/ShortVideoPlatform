@@ -14,47 +14,122 @@ import { getItem } from '../../../utils/cookie';
 import useSnackbar from '../../../hooks/use-snackbar';
 import * as fbq from '../../../analytics/fb-pixel'
 import { toTrackClevertap } from '../../../analytics/clevertap/events';
+import { sendOTP } from '../../../sources/auth/send-otp';
+import VerifyOtp from '../verify-otp';
+import { sessionStorage } from '../../../utils/storage';
+// import { updateUserProfile } from '../../../sources/users';
 
-const Registration = ({ router, toggleRegistration, dataType, dataValue, showMessage }) => {
+function formatDate(age) {
+  const year = new Date().getUTCFullYear();
+  const modifiedYear = year - age;
+  return `01/01/${modifiedYear}`;
+}
+
+function yearToDate(date) {
+  const newDate = new Date().getUTCFullYear() - new Date(date).getUTCFullYear() - 1;
+  return newDate;
+}
+
+function formDataCheck({data, showMessage}) {
+  if(
+    data.firstName?.length > 0 &&
+    data.lastName?.length > 0 &&
+    Number(data.dob) >= 18 &&
+    Number(data.dob) < 100 &&
+    data.gender.length > 0 &&
+    data.gender !== "defaultValue" &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) &&
+    /^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)
+    ){ 
+      return true;
+    } else {
+      if(data.firstName?.length  < 1){ 
+        showMessage({message : "First name cant be left empty"});
+      } else if(data.lastName?.length  < 1){ 
+        showMessage({message : "Last name cant be left empty"});
+      } else if(data.dob === '') {
+        showMessage({message : "Age cant be left empty"});
+      } else if(Number(data.dob) < 18) {
+        showMessage({message: "Age should be atleast 18 years"});
+      } else if(Number(data.dob) > 99) {
+        showMessage({message: "Age should not be more than 99 years"});
+      } else if(data.gender.length <= 0 || data.gender === "defaultValue") {
+        showMessage({message: "Gender can't be left empty"});
+      } else if (
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.firstName) ||
+        !/^[a-zA-Z]+(\s[a-zA-Z]+)?$/.test(data.lastName)) {
+        showMessage({message: "Name is not in correct format"})
+      }
+      return false;
+  }
+}
+
+const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmail }) => {
 
   const [data, setData] = useState({
     type: '',
     value: '',
-    gender: 'Male',
+    gender: 'defaultValue',
     firstName: '',
     lastName: '',
-    password: '',
     name: '',
-    birthday: '',
-    age: ''
+    dob: '',
   });
   const [pending, setPending] = useState(false);
+  const [otpStatus, setOtpStatus] = useState(false);
+  const [ageTyping, setAgeTyping] = useState(false);
+
   const { t } = useTranslation();
-  // const { showMessage } = useSnackbar();
- const {close} = useDrawer();
- const {showSnackbar} = useSnackbar();
- const device = getItem('device-type');
+  const {close} = useDrawer();
+  const {showSnackbar} = useSnackbar();
+  const device = getItem('device-type');
+  // const googleRegistrationData = sessionStorage.get("googleRegistrationData") || null;
 
  if(device === 'mobile'){
    showMessage = showSnackbar;
  }
 
-  const info = router?.query;
-  const disable = (!!(data.firstName?.length === 0) || !!(data.lastName?.length === 0) || !!(data.name.length === 0)
-   || !!(data.gender.length === 0) || !!(data.password.length === 0) || !!(data.age < 18));
+  const {mobile} = router?.query;
+  const {email} = router?.query
+
+  let phoneNo;
+  if(device === 'mobile'){
+    if(mobile) {
+      const [countryCode, phone] = mobile && mobile.split('-');
+      phoneNo = `${countryCode}${phone}`;
+    }
+  }
+
+  //for google registration
+  // useEffect(() => {
+  //   if(googleRegistrationData) {
+  //     const jsonGoogleRegistrationObject = JSON.parse(googleRegistrationData)
+  //     let dataObj = {
+  //       name: jsonGoogleRegistrationObject?.name || "",
+  //       type: "email",
+  //       value: jsonGoogleRegistrationObject?.email || "",
+  //     }
+  //     setData({...data, ...dataObj});
+  //   }
+  // }, [])
 
   useEffect(() => {
-    const dataToUpdate = { ...data };
+    let dataToUpdate = { ...data };
     if(device === 'mobile'){
-    const type = Object.keys(info)?.[0];
-    dataToUpdate.type = type;
-    dataToUpdate.value = info[type];
-    }else if (device === 'desktop'){
-      console.log("beofre",dataType, dataValue)
-     dataToUpdate.type = dataType;
-     dataToUpdate.value = dataValue;
+    dataToUpdate.type = mobile ? 'phoneno' : 'email';
+    dataToUpdate.value = mobile ? phoneNo : email;
     }
-    console.log(dataToUpdate)
+    else if (device === 'desktop'){
+     dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
+     dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}${phoneData?.input}` : phoneData.input;
+    }
+    if(device === 'mobile') {
+      const formData = JSON.parse(window.sessionStorage.getItem('formData'));
+      if(formData) {
+        formData.dob = yearToDate(formData.dob);
+        dataToUpdate = { ...data, ...formData };
+      }
+    }
     setData(dataToUpdate);
   }, []);
   /* eslint-disable no-param-reassign */
@@ -62,9 +137,6 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
     const [firstName, lastName] = fullName?.split(' ');
     data.firstName = firstName;
     data.lastName = lastName || '';
-  //   if(data.lastName?.length < 1){
-  //     showMessage({message : 'Please Enter Last name'})
-  //  }
     return data;
   };
   /* eslint-disable no-param-reassign */
@@ -107,7 +179,6 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
       let dataToUpdate = { ...data };
       dataToUpdate = getTypes(e, dataToUpdate);
       setData(dataToUpdate);
-      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -115,149 +186,187 @@ const Registration = ({ router, toggleRegistration, dataType, dataValue, showMes
 
   const submit = async (e) => {
     e.preventDefault();
-   if(data.lastName?.length > 0 && data.password.length > 5){ 
-     try {
-      setPending(true);
-      await sendData();
-      setPending(false);
-    } catch (e) {
-      setPending(false);
-    }}else{
-      if(data.lastName?.length  < 1){ 
-      showMessage({message : "Last name cant be left empty"})
-    }else if(data.password?.length <6){
-      showMessage({message : "Password length should be minimum of 6 characters"})
-    }
-  }};
-
-  const sendData = async () => {
-    try {
-      const methodMixpanel = data?.type && data.type === 'email' ? 'email' : data.type === 'mobile' && 'phone';
-      toTrackMixpanel('signupInitiated',{method : methodMixpanel, pageName:'signup'})
-      toTrackClevertap('signupInitiated',{method : methodMixpanel, pageName:'signup'})
-      const response = await registerUser(data);
-      console.log("user registered",response.status)
-      // console.log("suces rep",response)
-      if (response.status === 'success') {
-        /* Mixpanel */
-        try{
-        try{
-          toTrackMixpanel('signupSuccess',{method : methodMixpanel, pageName:'signup'})
-        fbq.defEvent('CompleteRegistration');
-      }catch(e){
-        console.log('error in fb or mixpanel event')
-      }
-       }catch(e){
-         console.log('error in fb events or mixpanel')
-       }
-        /* Mixpanel */
-        if(device === 'mobile'){
-           router && router?.push('/feed/for-you');
-        }else if (device === 'desktop'){
-          close();
-          try{
-            router?.asPath && (window.location.href = router?.asPath)
-          }catch(e){
-            console.error('error in redirection',e)
+    // if(googleRegistrationData) {
+    //   try {
+    //     const userDetails = localStorage.getItem("user-details");
+    //     const payload = {
+    //       id: userDetails?.id,
+    //       profilePic: userDetails?.profilePic,
+    //       firstName: userDetails?.firstName,
+    //       lastName: userDetails?.lastName,
+    //       dateOfBirth: userDetails?.dateOfBirth,
+    //       userHandle: userHandle,
+    //       onboarding: null,
+    //       profileType: null,
+    //       bio: userDetails?.bio,
+    //       languages: userDetails?.languages
+    //     };
+    //     const response = await updateUserProfile(payload)
+    //     if(device === 'mobile') {
+    //         router.replace({
+    //             pathname: "/content-language",
+    //             query: {ref: "signup"}
+    //         });
+    //     } else {
+    //         toggleFlow("contentLanguage")
+    //     }
+    //   } catch(e) {
+    //     showMessage({message: 'Something went wrong. Please try again!'})
+    //   }
+    // } else {
+      if(formDataCheck({data, showMessage})){ 
+        try {
+          toTrackMixpanel("signupFormSubmitted", {method: device === "mobile" ? 
+          (mobile ? "phoneno" :"email") : (numberOrEmail === "mobile" ? "phoneno": "email"), 
+          pageName: "Signup Page"})
+            toTrackMixpanel("cta", {name: "signup", type: "submit"});
+          setPending(true);
+          const info = device === "mobile" ? {
+            ...(mobile ? {"phoneno": phoneNo} : {"email": email})
+          } : {
+            ...(numberOrEmail === "mobile" ? {"phoneno":  `${phoneData?.countryCode}${phoneData?.input}`} : {"email": phoneData.input})
           }
+          await sendOTP(info)
+          const reqObject = {
+            ...data,
+            dob: formatDate(Number(data.dob))
+          }
+          if(device === 'mobile'){
+            window.sessionStorage.setItem("formData", JSON.stringify(reqObject))
+            router && router?.push({
+              pathname: '/verify-otp',
+              query: { ref: 'signup' }
+            });
+          } else {
+            setOtpStatus(true);
+          }
+          setPending(false);
+        } catch (e) {
+          setPending(false);
         }
-        showMessage({ message: t('SIGNUP_SUCCESS') });
       }
-    } catch (e) {
-      if (e.status === 'fail') {
-        toTrackMixpanel('signupFailure',{method : methodMixpanel, pageName:'signup'})
-        console.log("user not registered",e)
-        showMessage({ message: e.message });
-      }
-    }
+    // }
   };
 
-  const toggleGender = () => {
+  const toggleGender = (e) => {
     const updateData = { ...data };
-    updateData.gender === 'Male' ? updateData.gender = 'Female' : updateData.gender = 'Male';
+    updateData.gender = e?.target?.value;
     setData(updateData);
   };
 
+  const changeDob = e => {
+    if(!ageTyping) {
+      setAgeTyping(true);
+      try{
+        toTrackMixpanel("registrationAgeEntered", {method: device === "mobile" ? 
+        (mobile ? "phoneno" :"email") : (numberOrEmail === "mobile" ? "phoneno": "email"), 
+        pageName: "Signup Page"})
+      } catch(e) {
+        console.log("Mixpanel error");
+      }
+    }
+    setData({...data, dob: e.target.value});
+  };
+
+
   return (
-    <div className="flex flex-col px-4 pt-10">
-      <BackButton back={()=>toggleRegistration && toggleRegistration({show : false})} />
-      <div className="mt-4 flex flex-col">
-        <p className="font-bold w-full">{t('TELL_US_MORE')}</p>
-        <p className="text-gray-400 text-xs">{t('ENTER_DETAILS')}</p>
+    <>
+      <div className='w-full flex h-16  bg-white items-center'>
+        <div className='p-4 h-full flex items-center'>
+          <BackButton
+            back={()=>{
+                if(device === "mobile") {
+                  router?.back();
+                } else {
+                  toggleFlow && toggleFlow("login")
+                }
+              }
+            }
+          />
+        </div>
+        <span className='font-bold flex justify-center align-center w-9/12'>Sign up</span>
       </div>
-      <form onSubmit={submit}>
-      <div className="mt-4">
-        <input
-          id="name"
-          value={data.name}
-          onChange={processPhoneData}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="text"
-          name="Name"
-          placeholder="Full Name"
-          required
-          pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$"
-          onInvalid={(e)=>{e.currentTarget.setCustomValidity("First & Last name cant be left empty")}}
-          // formNoValidate
-        />
+      <div className="flex flex-col px-4">
+        <div className="mt-4 flex flex-col px-4">
+          <p className="text-gray-400 text-xs">Please enter the following details</p>
+        </div>
+        <form onSubmit={submit}>
+        <div className="mt-4">
+          <input
+            id="info"
+            readOnly
+            value={data.value}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="text"
+            name="info"
+          />
+        </div>
+        <div className="mt-4">
+          <input
+            id="name"
+            value={data.name}
+            onChange={processPhoneData}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="text"
+            name="Name"
+            placeholder="Full Name"
+            autoComplete="off"
+          />
+        </div>
+        <div className="mt-4 flex relative">
+           <select
+            value={data.gender}
+            onChange={toggleGender}
+            name="gender"
+            id="gender"
+            className='w-100 border-b-2 border-grey-300 px-4 py-2'
+            >
+            <option disabled value="defaultValue"> -- select gender -- </option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Rather not say">Rather not say</option>
+          </select>
+        </div>
+        <div className='mt-4 flex'>
+          <input
+            id="dob"
+            value={data.dob}
+            onChange={changeDob}
+            className=" w-full border-b-2 border-grey-300 px-4 py-2"
+            type="number"
+            name="dob"
+            placeholder="Age (in years)"
+            autoComplete="off"
+          />
+        </div>
+        {device === "desktop" && otpStatus && (
+            <div className='mt-4'>
+              <VerifyOtp
+                typeRef="signup"
+                type={numberOrEmail}
+                value={{
+                  ...data,
+                  dob: formatDate(Number(data.dob))
+                }}
+                showMessage={showMessage}
+                toggleFlow={toggleFlow}
+              />
+            </div>
+          )
+        }
+        <div className="mt-10">
+        {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
+            type="submit"
+            className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+          >
+            {' '}
+            {"Sign Up"}
+            {!pending ? '' : <CircularProgress />}
+          </button>}
+        </div>
+        </form>
       </div>
-      <div className="mt-4 flex relative">
-        <input
-          readOnly
-          value={data.gender}
-          id="gender"
-          onClick={toggleGender}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2 cursor-pointer"
-          type="text"
-          placeholder="Gender"
-          required
-        />
-        <span className="absolute right-2 bottom-3">
-          {' '}
-          <Toggle />
-        </span>
-      </div>
-      <div className="mt-4">
-        <input
-          
-          id="password"
-          value={data.password}
-          onChange={processPhoneData}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="password"
-          name="phone"
-          placeholder="Password"
-          required
-        />
-      </div>
-      <div className="mt-4">
-        <input  
-          id="age"
-          value={data.age}
-          onChange={processPhoneData}
-          className=" w-full border-b-2 border-grey-300 px-4 py-2"
-          type="number"
-          name="age"
-          placeholder="Age"
-          required
-        />
-      </div>
-      <div className="mt-10">
-      <button
-        // disabled={disable || pending}
-        // onClick={()=>sendData()}
-        // onKeyDown={submit}
-        type="submit"
-        className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
-      >
-        {' '}
-        {"Complete"}
-        {!pending ? '' : <CircularProgress />}
-      </button>
-        {/* <SubmitButton  fetchData={sendData} disable={disable} text="Complete" /> */}
-      </div>
-      </form>
-    </div>
+    </>
   );
 };
 

@@ -117,7 +117,7 @@ const nextConfig = {
 };
 
 // eslint-disable-next-line no-nested-ternary
-module.exports = withPWA(nextConfig);
+module.exports = dev ? nextConfig : withPWA(nextConfig);
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : (withPWA(nextConfig));
 // module.exports = genSourceMap ? withSourceMaps(nextConfig) : nextConfig;
 

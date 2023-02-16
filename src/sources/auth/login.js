@@ -4,8 +4,8 @@ import { getApiBasePath } from '../../config';
 import { init } from '../../get-social';
 /* eslint-disable import/no-cycle */
 import { apiMiddleWare } from '../../network/utils';
-import { setItem } from '../../utils/cookie';
 import { localStorage } from '../../utils/storage';
+import { getUserId } from '../../utils/user';
 import { transformError, transformSuccess } from '../transform/auth/hipiLogin';
 import { updateUserProfile } from '../users';
 import { getUserProfile } from '../users/profile';
@@ -63,7 +63,8 @@ const updateLanguageOnLogin = async(data) =>{
   }
 }
 
-const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA" }) => {
+const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=null, email="NA", mobile="NA", isSignup=false }) => {
+  console.log("Response",accessToken,refreshToken)
   let response = {};
   // const url = window.location.href;
   // let domain = (new URL(url));
@@ -85,23 +86,28 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     }
     const apiPath = `${getApiBasePath('hipi')}/v1/shorts/login`;
     response = await post(apiPath, urlencoded, {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
+      'guest-token': getUserId(),
     });
     const tokens = {
-      shortsAuthToken: response.data.shortsAuthToken,
+      shortsAuthToken: response?.data?.shortsAuthToken,
       accessToken,
       refreshToken,
-      getSocialToken: response.data.getSocialToken
+      getSocialToken: response?.data?.getSocialToken || "NA"
     };
     // setItem('tokens', JSON.stringify(tokens), { path: '/', domain });
     localStorage.set('tokens',tokens);
     console.log("LOGIN__",response)
-    const userId = response?.data?.userDetails?.id;
-
+    const userId = response?.data?.userDetails?.id;  
+     
     /* languages selected check */
-    if(signupData){
+    if(signupData || isSignup){
+      sessionStorage.setItem("signup", true);
       await delay();
       checkLanguageSelection(userId);
+      // const userDetails = response.data.userDetails;
+      // localStorage.set("user-details", userDetails);
+      // localStorage.set('lang-codes-selected',{lang: ["en", "hi"], type : 'profile'});
     }else{
       checkLanguageSelection(userId);
     }
@@ -121,6 +127,7 @@ const login = async ({ accessToken, refreshToken='',getSocialToken, signupData=n
     response.data.message = 'success';
     return Promise.resolve(response);
   } catch (err) {
+    console.log("hipi login err", err);
     return Promise.reject(err);
   }
 };

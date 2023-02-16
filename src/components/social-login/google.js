@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-// import { login } from "../../sources/social/google/login";
+import { useEffect } from "react";
 import useDrawer from "../../hooks/use-drawer";
 import useSnackbar from "../../hooks/use-snackbar";
 import Google from "../commons/svgicons/google";
@@ -8,27 +7,25 @@ import { login } from "../../sources/social/google/login-one-tap"
 import { register } from "../../sources/social/google/register-one-tap";
 import {GoogleLogin} from "react-google-login"
 import { toTrackMixpanel } from "../../analytics/mixpanel/events";
-import { track } from "../../analytics";
 import * as fbq from '../../analytics/fb-pixel'
-import { getAllItems, getItem, removeItem } from "../../utils/cookie";
-import Cookies from "../cookies";
+import { getItem, removeItem } from "../../utils/cookie";
 import { toTrackClevertap } from "../../analytics/clevertap/events";
+import { verifyUserOnly } from "../../sources/auth/verify-user";
+import { useRouter } from "next/router";
 
-export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
 
-    // const mixpanel = (type) =>{
-    //     const mixpanelEvents = commonEvents();
-    //     mixpanelEvents['Method'] = 'Google';
-    //     track(`${type} Result`,mixpanelEvents );
-    //   }
+const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
 
+export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, setAuth}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
+    const device = getItem('device-type');
+    const router = useRouter();
 
     const onTokenFetched = async(data)=>{
       toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:type,ctaName:'Google',elemant:'Google'})
       toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''},{name:type,ctaName:'Google',elemant:'Google'})
-        console.log("got token... about to call api",data, data?.tokenId);
+        console.log("google api resp",data, data?.tokenId);
         // const allCookies = Cookies.getAll();
         const arrSplit = document?.cookie?.split(";");
   
@@ -46,34 +43,48 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
                 // document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             }
         }
-
-        // console.log("RESPPP", resppp);
-        //  const googleToken = data?.Zb?.access_token;
          try{  
-             toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-             const response = await login(data?.tokenId);
-             if(response.status === 'success'){
-                showSnackbar({ message: 'Login Successful' })
-                 close();
-                 try{
-                  toTrackMixpanel(`${type || ''}Success`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-                 fbq.defEvent('CompleteRegistration');
-                }catch(e){
-                    console.log('error in fb or mixpanel event')
-                  }
-             }
-           console.log(response);
+          setAuth('login');
+          toggleFlow("loader");
+          toTrackMixpanel(`${type || ''}Initiated`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
+          const verifyResponse = await verifyUserOnly({type:"email", email: data?.profileObj?.email})
+          if(verifyResponse?.data?.code === 0) {
+            const response = await login({googleToken: data?.tokenId});
+            if(response.status === 'success') {
+            showSnackbar({ message: 'Login Successful' })
+              close();
+              try{
+              toTrackMixpanel(`${type || ''}Success`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
+              fbq.defEvent('CompleteRegistration');
+            }catch(e){
+                console.log('error in fb or mixpanel event')
+              }
+          }
+          console.log("google verify", response);
+          } else if(verifyResponse?.data.code === 1) {
+            //TODO add register flow
+              const response = await registerUser(data?.tokenId);
+              if(device === "desktop") {
+                // sessionStorage.setItem("googleRegistrationData", JSON.stringify({
+                //   name: data?.profileObj?.name || null,
+                //   email: data?.profileObj?.email || null,
+                // }))
+                // toggleFlow("registration");
+                await delay();
+                toggleFlow("userHandle")
+              } else {
+                close();
+                router.push("/createUsername");
+              }
+              // console.log("google register resp:", response);
+          }
         }
         catch(e){
+          setAuth(null);
           toTrackMixpanel(`${type || ''}Failure`,{pageName:pageName, tabName:(tabName && tabName) || '',method: 'google'})
-            if(e.code === 2){  
-                const response = await registerUser(data?.tokenId);
-               console.log(response);
-              }
-            // showSnackbar({message: 'Something went wrong..'})
-            console.log('e',e)
+          console.log('e',e?.message)
         }
-        }
+      }
 
     const initialzeGoogle =()=>{
       try{  
@@ -124,7 +135,7 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
           console.log("register suucess", response)
           if(response.status === 'success'){
             showSnackbar({ message: 'Login Successful' })
-             close();
+            //  close();
              try{
             //  mixpanel('Login')
              fbq.defEvent('CompleteRegistration');
@@ -135,7 +146,8 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
         }
         catch(error){
             showSnackbar({message: "Something went wrong.."})
-           console.log("register error",error)
+            console.log("register error",error)
+            throw new Error(error.message)
         }
       }
       
@@ -175,20 +187,19 @@ export const GoogleButton =({loading, type,pageName, tabName=null}) =>{
 
     return(
         <>
-        <GoogleLogin
-        clientId={GOOGLE_CLIENT_ID_PREROD}
-        render={renderProps => (
-            <><div onClick={renderProps.onClick} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
-         <div className="justify-self-start"><Google/></div>
-         <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
-           <p>Continue with Google</p>
-         </div>
-      </div></>
-          )}
-        buttonText='Continue with Google'
-        onSuccess={onTokenFetched}
-        />
-
+          <GoogleLogin
+          clientId={GOOGLE_CLIENT_ID_PREROD}
+          render={renderProps => (
+              <><div onClick={renderProps.onClick} className="cursor-pointer flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
+          <div className="justify-self-start"><Google/></div>
+          <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
+            <p>Continue with Google</p>
+          </div>
+        </div></>
+            )}
+          buttonText='Continue with Google'
+          onSuccess={onTokenFetched}
+          />
         </>
     //  <div  id ='buttonDiv' className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
     //     <div className="justify-self-start"><Google/></div>

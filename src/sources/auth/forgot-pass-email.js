@@ -6,7 +6,7 @@ import { transformSuccess, transformError } from '../transform/auth';
 async function forgotPassword(email) {
   let response = {};
   try {
-    const apiPath = `${getApiBasePath('userApi')}/v1/user/passwordforgottenemail`;
+    const apiPath = `${getApiBasePath('oldUserApi')}/v1/user/passwordforgottenemail`;
     response = await post(apiPath,email,{'content-type': 'json'});
     response.data.requestedWith = { email };
     return Promise.resolve(response);

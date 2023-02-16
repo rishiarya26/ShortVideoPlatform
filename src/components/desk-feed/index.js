@@ -115,8 +115,11 @@ const LoadComp = () => (<Loading />);
 
   useEffect(()=>{
     //prevalue is false & current token is true i.e. user has logged in & feed needs reload
-    console.log('preValue',preTokensValue?.tokens, tokens, tokensPresent)
-    preTokensValue?.tokens === false && tokens && doReload();
+
+    const isSignup = sessionStorage.getItem("signup") || false;
+    console.log('preValue',preTokensValue?.tokens, tokens, tokensPresent, isSignup);
+    !isSignup && preTokensValue?.tokens === false && tokens && doReload();
+    sessionStorage.removeItem("signup");
   },[tokens])
 
   useEffect(()=>{

@@ -1,6 +1,6 @@
 import { getItem } from "../../utils/cookie";
 import { localStorage, sessionStorage } from "../../utils/storage";
-import { APP_NAME, LANGUAGE } from "../../constants";
+import { toTrackMixpanel } from "../mixpanel/events";
 
 export const isLoaded = () => (window?.clevertap ? true : false);
 
@@ -47,7 +47,7 @@ export function track(event, payload) {
   };
 
   export const webPopUp = () => {
-    if(isLoaded) {
+    if(isLoaded()) {
       window.clevertap.notificationCallback = function(msg){
         clevertap.raiseNotificationViewed();
         console.log('clevertap',msg);
@@ -65,7 +65,7 @@ export function track(event, payload) {
     const loggedInUserDetails = localStorage?.get('user-details') || null;
     const userId = localStorage.get('user-id');
 
-    if(isLoaded) {
+    if(isLoaded()) {
       window.clevertap.onUserLogin.push({
         "Site": {
           "Name": loggedInUserDetails?.firstName || "NA",
@@ -93,14 +93,31 @@ export function track(event, payload) {
         timeDiff = Number(((new Date() - isPopupShown) / (1000 * 60 * 60)).toFixed(1));
       }
       if((timeDiff > 24 || !isPopupShown) && isLoaded()) {
-        window.clevertap.notifications.push({
-          "titleText": "Get notifications for trending videos from Hipi",
-          "bodyText": "We promise to send you notifications for relevant content only",
-          "okButtonText": "Enable",
-          "rejectButtonText": "Not Now",
-          "askAgainTimeInSeconds": 5,
-          "serviceWorkerPath": "/sw.js"
-        });
-        localStorage.set("clevertapWebpopup", new Date());
+        try {
+          window.clevertap.notifications.push({
+            "titleText": "Get notifications for trending videos from Hipi",
+            "bodyText": "We promise to send you notifications for relevant content only",
+            "okButtonText": "Enable",
+            "rejectButtonText": "Not Now",
+            "askAgainTimeInSeconds": 5,
+            "serviceWorkerPath": "/sw.js"
+          });
+          // toTrackMixpanel("webPushOptinPopupImpression");
+          localStorage.set("clevertapWebpopup", new Date());
+          // setTimeout(() => {
+          //   const okButton = document.querySelector("#wzrk-confirm");
+          //   const rejectButton = document.querySelector("#wzrk-reject");
+          //   okButton && okButton.addEventListener("click", () => {
+          //     console.log("MIX - DEBUG");
+          //     toTrackMixpanel('enable');
+          //   });
+          //   rejectButton && rejectButton.addEventListener("click", () => {
+          //     console.log("MIX - DEBUG");
+          //     toTrackMixpanel('notNow');
+          //   })
+          // }, [1000])
+        } catch(e) {
+          console.log("Clevertap Web Push Notification Error")
+        }
       }
   }

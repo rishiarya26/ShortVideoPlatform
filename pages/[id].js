@@ -71,6 +71,12 @@ export default function Hipi(params) {
     }
   }
 
+  useEffect(() => {
+    if(item !== {} && item?.id !== params?.data?.id) {
+      router?.reload(window.location.pathname);
+    }
+  }, [params])
+
   useEffect(()=>{
     console.log("logout page load *")
     try{ 
@@ -79,12 +85,14 @@ export default function Hipi(params) {
       if(status === 'pending' && isEmptyObject(item)){
         profileApiRetry();
      }
-
-      let userType = 'others'
-      const tokens = localStorage.get('tokens');
-      const userId = localStorage.get('user-id');
-      tokens && userId && userId === item?.id && (userType = 'self');
+     let userType = 'others'
+     const tokens = localStorage.get('tokens');
+     const userId = localStorage.get('user-id');
+     const userDetails = localStorage?.get('user-details');
+     const userHandle = userDetails?.userHandle;
+      tokens && userId && (userId === item?.id || userHandle === item?.userHandle) && (userType = 'self');
       setType(userType);
+      console.log(tokens, userId, item)
 
     /**** to get isfollowing if logged in ****/
       if(tokens){

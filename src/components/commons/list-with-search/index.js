@@ -56,7 +56,7 @@ export default function ListWithSearch({ data, onValueChange, type, closeDropdow
           <SubmitButton text="Search" />
         </div>}
       </div>
-      <div className="pt-16 px-2 ">
+      <div className="overflow-auto px-2 ">
       {filteredData?.map((data, id) => (
         <div
           key={id}

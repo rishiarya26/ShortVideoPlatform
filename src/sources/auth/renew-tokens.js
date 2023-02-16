@@ -14,7 +14,7 @@ async function refreshTokens() {
   try {
     // const refresh = JSON.parse(tokens)?.refreshToken;
     const refresh = tokens?.refreshToken;
-    const apiPath = `${getApiBasePath('userApi')}/v2/user/renew?refresh_token=${refresh}`;
+    const apiPath = `${getApiBasePath('oldUserApi')}/v2/user/renew?refresh_token=${refresh}`;
 
     const resp = await post(apiPath,null,{'content-type':'noHeaders'});
     const accessToken = resp?.data?.access_token;

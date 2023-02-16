@@ -3,23 +3,39 @@ import { getApiBasePath } from '../../../config';
 import { apiMiddleWare } from '../../../network/utils';
 import { transformError, transformSuccess } from '../../transform/social/google/register-one-tap';
 import { hipiLogin } from '../../auth/login';
+import { getItem } from '../../../utils/cookie';
+import { ESK_ENV } from '../../../constants';
+import { getEsk } from '../../../utils/eskGenerator';
 
 const regitserUserOneTap = async ({
   token = ''
 }) => {
   let response = {};
+  const deviceId = getItem('guest-token');
   try {
     const payload = {
-     token
+     token,
+     aid: deviceId,
+     "mac_address": "",
+     "ip_address": "",
+     "registration_country": "",
+     "registration_region": ""
     };
 
-    const apiPath = `${getApiBasePath('userApi')}/v4/user/registergoogle`;
-    const resp = await post(apiPath, payload, {'conetent-type' : 'json'});
+    const apiPath = `${getApiBasePath('authApi')}/v2/user/registergoogle`;
+    const resp = await post(apiPath, payload,
+      {
+        'content-type' : 'application/json',
+        'device_id': deviceId,
+        'esk': getEsk({deviceId, env: ESK_ENV}),
+        'platform': 'hipi',
+        'platform-hipi-google': 'hipi-android'
+      });
     resp.data.status = 200;
     resp.data.message = 'success';
-    const accessToken = resp?.data?.token;
+    const accessToken = resp?.data?.access_token;
     // const refreshToken = resp?.data?.refresh_token;
-    response = await hipiLogin({ accessToken, refreshToken:'' });
+    response = await hipiLogin({ accessToken, refreshToken:'', isSignup: true });
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);

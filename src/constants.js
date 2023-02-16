@@ -38,4 +38,4 @@ export const S3_REGION = 'ap-south-1';
 export const S3_BUCKET_STAGE = 'hipi-videos-stage'
 export const S3_BUCKET_PROD = 'hipi-videos'
 export const UPLOAD_ACCESS_USERS = ["Tamil360","MiniatureFoods","WanderessKriti","Aditi_Prabhudeva", "bharatjangid3649", "murali.teams","anuragguptazee","16cf2063", "khushi_angel"]
- 
+export const ESK_ENV = 'preprod';
