@@ -212,6 +212,9 @@ function Users({
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
+    new Image().src = data?.data?.[0]?.thumbnailUrl;
+    new Image().src = data?.data?.[1]?.thumbnailUrl;
+    // new Image().src = data?.data?.[2]?.thumbnailUrl;
     setVideoData(videos);
   }, [fetchState]);
 
