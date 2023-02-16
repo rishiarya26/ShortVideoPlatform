@@ -180,7 +180,7 @@ function Users({
   const { show } = useDrawer();
   const { t } = useTranslation();
   const deviceType = getItem('device-type');
-  const device = getItem('device-info');
+  const device = getItem('device-info') || 'android';
 
   const onTabChange = selected => {
     setSelectedTab(selected);
@@ -199,7 +199,7 @@ function Users({
   //const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   const dataFetcher = () => {
     if(typeOfUser === 'self') {
-      return getOwnProfileVideos({id, type: selectedTab});
+      return getOwnProfileVideos({ type: selectedTab});
     } else{
       return getProfileVideos({ id, type: selectedTab });
     }
