@@ -208,12 +208,23 @@ function Users({
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
+  const dynamicImgUrl = (url)=>{
+    let imgUrl = url;
+    if(imgUrl?.includes('upload/w_297')){
+      imgUrl = url?.replaceAll('upload/w_297','upload/w_120');
+      if(imgUrl.includes('.jpg')){
+        imgUrl = url?.replaceAll('.jpg','.webp');
+      }
+    }
+    return imgUrl
+  }
+
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
-    new Image().src = data?.data?.[0]?.thumbnailUrl;
-    new Image().src = data?.data?.[1]?.thumbnailUrl;
+    new Image().src = dynamicImgUrl(data?.data?.[0]?.thumbnailUrl);
+    new Image().src = dynamicImgUrl(data?.data?.[1]?.thumbnailUrl);
     // new Image().src = data?.data?.[2]?.thumbnailUrl;
     setVideoData(videos);
   }, [fetchState]);
