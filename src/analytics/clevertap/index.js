@@ -102,20 +102,18 @@ export function track(event, payload) {
             "askAgainTimeInSeconds": 5,
             "serviceWorkerPath": "/sw.js"
           });
-          // toTrackMixpanel("webPushOptinPopupImpression");
+          toTrackMixpanel("webPushOptinPopupImpression");
           localStorage.set("clevertapWebpopup", new Date());
-          // setTimeout(() => {
-          //   const okButton = document.querySelector("#wzrk-confirm");
-          //   const rejectButton = document.querySelector("#wzrk-reject");
-          //   okButton && okButton.addEventListener("click", () => {
-          //     console.log("MIX - DEBUG");
-          //     toTrackMixpanel('enable');
-          //   });
-          //   rejectButton && rejectButton.addEventListener("click", () => {
-          //     console.log("MIX - DEBUG");
-          //     toTrackMixpanel('notNow');
-          //   })
-          // }, [1000])
+          setTimeout(() => {
+            const okButton = document.querySelector("#wzrk-confirm");
+            const rejectButton = document.querySelector("#wzrk-reject");
+            okButton && okButton.addEventListener("click", () => {
+              toTrackMixpanel('enable');
+            });
+            rejectButton && rejectButton.addEventListener("click", () => {
+              toTrackMixpanel('notNow');
+            })
+          }, [1000])
         } catch(e) {
           console.log("Clevertap Web Push Notification Error")
         }
