@@ -180,7 +180,7 @@ function Users({
   const { show } = useDrawer();
   const { t } = useTranslation();
   const deviceType = getItem('device-type');
-  const device = getItem('device-info');
+  const device = getItem('device-info') || 'android';
 
   const onTabChange = selected => {
     setSelectedTab(selected);
@@ -199,7 +199,7 @@ function Users({
   //const dataFetcher = () => getProfileVideos({ id, type: selectedTab });
   const dataFetcher = () => {
     if(typeOfUser === 'self') {
-      return getOwnProfileVideos({id, type: selectedTab});
+      return getOwnProfileVideos({ type: selectedTab});
     } else{
       return getProfileVideos({ id, type: selectedTab });
     }
@@ -208,10 +208,30 @@ function Users({
   // const [fetchState, retry, data] = useFetcher(dataFetcher);
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
+  const dynamicImgUrl = (url)=>{
+    let imgUrl = url;
+    if(imgUrl?.includes('/w_')){
+      imgUrl = imgUrl?.replace(/upload\/w_+([0-9]*)/,'upload/w_120');
+      if(imgUrl.includes('.jpg')){
+        imgUrl = imgUrl?.replaceAll('.jpg','.webp');
+      }
+      return imgUrl
+    }else{
+      if(imgUrl?.includes('/upload') && !imgUrl?.includes('w_')){
+        imgUrl = imgUrl?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp');
+        return imgUrl
+      }
+    }
+    return imgUrl
+  }
+
   useEffect(() => {
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
+    new Image().src = dynamicImgUrl(data?.data?.[0]?.thumbnailUrl);
+    new Image().src = dynamicImgUrl(data?.data?.[1]?.thumbnailUrl);
+    // new Image().src = data?.data?.[2]?.thumbnailUrl;
     setVideoData(videos);
   }, [fetchState]);
 
@@ -413,7 +433,7 @@ const notNowClick=()=>{
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />
+            <Img data={dynamicImgUrl(profilePic)} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <h1 className="font-medium p-2 text-sm flex">{firstName} {lastName}
           {userVerified === 'Verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}

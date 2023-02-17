@@ -15,6 +15,7 @@ import { registerUser } from "../../../sources/auth/register-user";
 import CircularLoaderSmall from '../../commons/circular-loader-small';
 import Eye from "../../commons/svgicons/eye";
 import CloseEye from "../../commons/svgicons/closeEye";
+import { userLogin } from '../../../sources/auth';
 
 const TIMER_LIMIT = 59;
 
@@ -69,6 +70,8 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOtp] = useState(false);
+  const [authType, setAuthType] = useState("otp");
+  const [password, setPassword] = useState("");
 
   if(device === 'mobile'){
     showMessage = showSnackbar;
@@ -96,6 +99,10 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
       setFormData({...value});
     }
   }, [value])
+
+  useEffect(() => {
+    setShowOtp(false);
+  }, [authType])
 
   let phoneNo;
   if(ref === 'signup') {
@@ -128,7 +135,7 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
   };
 
   const fetchData = {
-    login: async () => {
+    login: async() => {
       toTrackMixpanel('cta', {name: "Verify OTP", type: "submit"});
       const payload = device === "mobile" ? {
                 ...(mobile ? {"phoneno": phoneNo} : {"email": email})
@@ -162,6 +169,42 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
         toTrackMixpanel('loginFailure',{method, pageName: "Login or Signup screen"})
         toTrackClevertap('loginFailure',{method, pageName: "Login or Signup screen"})
         showMessage({ message: t('INCORRECT_OTP') });
+      }
+    },
+    passwordLogin: async() => {
+      toTrackMixpanel('cta', {name: "Log in", type: "submit"});
+      const payload = device === "mobile" ? {
+                ...(mobile ? {"mobile": phoneNo} : {"email": email})
+              } : {
+                ...(type === "mobile" ? {"mobile":  `${value?.countryCode}${value?.input}`} : {"email": value?.input})
+              }
+      try {
+        toTrackMixpanel('loginInitiated', {method, pageName: "Login or Signup screen"})
+        toTrackClevertap('loginInitiated', {method, pageName: "Login or Signup screen"})
+        const response = await userLogin({info: payload, password, type: method === "phoneno" ? "mobile" : "email"});
+        if (response?.data?.status === 200) {
+          try{
+            toTrackMixpanel('loginSuccess', {method, pageName: "Login or Signup screen"})
+            toTrackClevertap('loginSuccess', {method, pageName: "Login or Signup screen"})
+          }catch(e){
+            console.error('mixpanel - login password error',e)
+          }
+          showMessage({ message:'Login successful' });
+          if(device === 'desktop'){
+             close();
+             try{
+              router?.asPath && (window.location.href = router?.asPath)
+            }catch(e){
+              console.error('error in redirection',e)
+            }
+          } else if(device === 'mobile'){
+             router && router?.replace('/feed/for-you');
+          }
+        }
+      } catch (error) {
+        toTrackMixpanel('loginFailure',{method, pageName: "Login or Signup screen"})
+        toTrackClevertap('loginFailure',{method, pageName: "Login or Signup screen"})
+        showMessage({ message: 'Incorrect credentials' });
       }
     },
     signup: async()=>{
@@ -240,73 +283,138 @@ const VerifyOTP = ({ router, type, value, typeRef, showMessage, toggleFlow }) =>
   const chooseComp = {
    desktop : 
    <>
-   <div className="mt-4 w-full self-start border-b-2 border-grey-300 flex">
-     <input
-       className="flex-1 mx-4 my-2"
-       type={showOTP ? "text" : "password"}
-       name="phone"
-       placeholder="OTP"
-       value={otp}
-       onChange={handleOtpChange}
-     />
-     <div style={{alignSelf: "center", marginRight: "15px", cursor: "pointer"}} onClick={() => setShowOtp(prev => !prev)}>{showOTP ? <CloseEye /> : <Eye />}</div>
-     <div className="text-gray-500 flex items-center justify-center">
-      {seconds > 0 ? (
-        `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}`
-        ) : (
-        <button
-          type="button"
-          className="text-white bg-hipired text-sm  font-semibold cursor-pointer h-100 px-8 relative"
-          onClick={resendOtp[ref]}>
-            Send OTP 
-            {loading && <CircularLoaderSmall />}
-        </button>
-      )}
+     {authType === "otp" ? (
+      <div className="mt-4 w-full self-start border-b-2 border-grey-300 flex">
+        <input
+          className="flex-1 mx-4 my-2"
+          type={showOTP ? "text" : "password"}
+          name="phone"
+          placeholder="OTP"
+          value={otp}
+          onChange={handleOtpChange}
+        />
+        <div style={{alignSelf: "center", marginRight: "15px", cursor: "pointer"}} onClick={() => setShowOtp(prev => !prev)}>
+          {showOTP ? <CloseEye /> : <Eye />}
+        </div>
+        <div className="text-gray-500 flex items-center justify-center">
+        {seconds > 0 ? (
+          `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}`
+          ) : (
+          <button
+            type="button"
+            className="text-white bg-hipired text-sm  font-semibold cursor-pointer h-100 px-8 relative"
+            onClick={resendOtp[ref]}>
+              Send OTP 
+              {loading && <CircularLoaderSmall />}
+          </button>
+        )}
+        </div>
       </div>
+      ) : (
+        <div className="mt-4 w-full self-start border-b-2 border-grey-300 flex">
+          <input
+            id="password"
+            className="flex-1 px-4 py-2"
+            type={showOTP ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div style={{alignSelf: "center", marginRight: "15px", cursor: "pointer"}} onClick={() => setShowOtp(prev => !prev)}>
+            {showOTP ? <CloseEye /> : <Eye />}
+          </div>
+        </div>
+      )}
+   <div style={{color: "cornflowerblue"}} className="mt-6">
+     {authType === "otp" ? 
+     (
+        <span onClick={()=>setAuthType("password")} className='cursor-pointer'>Login with password</span>
+     ) : (
+       <span onClick={()=>setAuthType("otp")} className='cursor-pointer'>Login with OTP</span>
+     )}
    </div>
    <div className="mt-10 mb-4">
-     <SubmitButton disable={disable[ref]} fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
+     {authType === "otp" ? (
+      <SubmitButton disable={disable[ref]} fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
+     ) : (
+      <SubmitButton disable={password.length <= 0} fetchData={fetchData['passwordLogin']} text={"Log in"}/>
+     )
+    }
    </div>
    </>,
    mobile : 
-   <div className="flex flex-col px-4 pt-10">
-   <BackButton
-        back={()=>{
-            if(device === "mobile") {
-              router?.back();
-            } else {
-              if(typeRef === 'signup') {
-                toggleFlow && toggleFlow("registration");
-              } else {
-                toggleFlow && toggleFlow("login");
+    <div className="flex flex-col px-4 pt-10">
+    <div className='flex'>
+      <BackButton
+            back={()=>{
+                if(device === "mobile") {
+                  router?.back();
+                } else {
+                  if(typeRef === 'signup') {
+                    toggleFlow && toggleFlow("registration");
+                  } else {
+                    toggleFlow && toggleFlow("login");
+                  }
+                }
               }
             }
-          }
-        }
-   />
-   <div className="mt-4 flex flex-col">
-     <p className="font-bold w-full">Enter 4-digit code</p>
-     <p className="text-gray-400 text-xs">{`Your code was messaged to ${ref === "login" ? (mobile ? mobile : email) : (formData?.type === "phoneno" ? `+${formData?.value}` : formData?.value)}`}</p>
-   </div>
+      />
+      {authType === "password" && (
+        <span className='font-bold flex justify-center align-center w-9/12'>Log in</span>
+      )}
+    </div>
+    {authType === "otp" && (
+      <div className="mt-4 flex flex-col">
+        <p className="font-bold w-full">Enter 4-digit code</p>
+        <p className="text-gray-400 text-xs">{`Your code was messaged to ${ref === "login" ? (mobile ? mobile : email) : (formData?.type === "phoneno" ? `+${formData?.value}` : formData?.value)}`}</p>
+      </div>)}
    <div className="mt-4 flex w-full border-b-2 border-grey-300">
-     <input
-       className=" w-full px-4 py-2"
-       type={showOTP ? "text" : "password"}
-       name="phone"
-       placeholder="OTP"
-       value={otp}
-       onChange={handleOtpChange}
-       autoComplete="off"
-     />
+     {authType === "otp" ? (
+      <input
+        className=" w-full px-4 py-2"
+        type={showOTP ? "text" : "password"}
+        name="phone"
+        placeholder="OTP"
+        value={otp}
+        onChange={handleOtpChange}
+        autoComplete="off"
+      />
+      ) : (
+      <input
+        className=" w-full px-4 py-2"
+        type={showOTP ? "text" : "password"}
+        name="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        autoComplete="off"
+      />
+      )}
      <div style={{alignSelf: "center"}} onClick={() => setShowOtp(prev => !prev)}>{showOTP ? <CloseEye /> : <Eye />}</div>
    </div>
    <div className="mt-10 mb-4">
-     <SubmitButton fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
+    {authType === "otp" ? (
+      <SubmitButton disable={disable[ref]} fetchData={fetchData[ref]} text={t('VERIFY_OTP')} />
+     ) : (
+      <SubmitButton disable={password.length <= 0} fetchData={fetchData['passwordLogin']} text={"Log in"}/>
+     )
+    }
    </div>
-   <div className="text-gray-500">
-   {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold cursor-pointer" onClick={resendOtp[ref]}>Send again</span></>}
-   </div>
- </div>
+   {authType === "otp" && (
+    <div className="text-gray-500">
+      {seconds > 0 ? `Resend code 00:${seconds < 10 ? `0${seconds}`: seconds}` : <>Haven't Recieved OTP?<span className="text-hipired pl-2 font-semibold cursor-pointer" onClick={resendOtp[ref]}>Send again</span></>}
+    </div>
+   )}
+   <div style={{color: "cornflowerblue"}} className="mt-2">
+      {authType === "otp" ? 
+        (
+            <span onClick={()=>setAuthType("password")} className='cursor-pointer'>Login with password</span>
+        ) : (
+          <span onClick={()=>setAuthType("otp")} className='cursor-pointer'>Login with OTP</span>
+      )}
+    </div>
+    </div>
   }
 
   return (

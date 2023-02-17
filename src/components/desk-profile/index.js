@@ -157,7 +157,7 @@ function DeskUsers({
         if(typeOfUser === 'self') {
           resp = await getOwnProfileVideos({type: selectedTab, offset: `${offset}`});
         }else{
-          const resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
+           resp = await getProfileVideos({ id, type: selectedTab, offset: `1`});
         }
         data.items = resp?.data?.concat(response?.data);
         data.status = 'success';
@@ -243,6 +243,7 @@ function DeskUsers({
     const videos = {};
     fetchState && (videos.status = fetchState);
     data && (videos.items = data?.data);
+    console.log("debug videos on first load", data?.data);
     setVideoData(videos);
   }, [fetchState]);
 

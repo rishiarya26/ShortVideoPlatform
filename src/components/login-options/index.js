@@ -39,7 +39,7 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
        <div onClick={()=>{
         toTrackMixpanel('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
         toTrackClevertap('popupCta',{pageName:pageName, tabName:(tabName && tabName) || ''}, {name:'Login',ctaName:'Phone or Email', elemant:'Phone or Email'})
-         router && router.push('/login/phone?option=otp')}}>
+         router && router.push('/login/phone')}}>
         <div onClick={() => close()} className="flex border border-1 border-gray-400 py-3 px-4 w-full my-2">
           <div className="justify-self-start"><Mobile /></div>
           <div className="flex justify-center items-center text-sm md:text-base w-full text-gray-600 font-semibold">
@@ -69,12 +69,15 @@ export default function Login({ loading, setAuth, pageName, tabName=null, toggle
       </div>
       <div className="socail flex flex-col w-full my-4">
        {chooseComp[device]}
-        <GoogleButton
-          loading={loading}
-          type='login'
-          toggleFlow={toggleFlow}
-          setAuth={setAuth}
+       {!navigator?.userAgent?.match(/FBAN|FBAV/i) && 
+        (
+          <GoogleButton
+            loading={loading}
+            type='login'
+            toggleFlow={toggleFlow}
+            setAuth={setAuth}
           />
+        )}
       </div>
       <div>
         <p className="text-center text-gray-400 mt-2 text-sm">
