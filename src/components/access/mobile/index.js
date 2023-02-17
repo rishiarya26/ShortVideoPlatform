@@ -3,20 +3,16 @@ import { useRouter } from 'next/router';
 import useTranslation from '../../../hooks/use-translation';
 import { SubmitButton } from '../../commons/button/submit';
 import { CountryCode } from '../../commons/button/country-code';
-import { userLogin } from '../../../sources/auth';
-import { verifyUser, verifyUserOnly } from '../../../sources/auth/verify-user';
+import { verifyUserOnly } from '../../../sources/auth/verify-user';
 import { sendOTP } from '../../../sources/auth/send-otp';
-import { commonEvents, toTrackMixpanel } from '../../../analytics/mixpanel/events';
-import { track } from '../../../analytics';
+import { toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import * as fbq from '../../../analytics/fb-pixel'
 import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
 import VerifyOTP from '../verify-otp';
-import { DeskSendOtp } from '../../commons/button/desk-send-otp';
 import { useState, useEffect } from 'react';
 import { DeskCountryCode } from '../../commons/button/desk-country-code';
-import { localStorage } from '../../../utils/storage';
-import { toTrackClevertap } from '../../../analytics/clevertap/events';
+
 
 
 export default function Mobile({
@@ -26,15 +22,12 @@ export default function Mobile({
   const [seconds, setSeconds] = useState(0);
   const [otpStatus, setOtpStatus] = useState(false);
   const [readonly, setReadOnly] = useState(false);
+  const [disableInput, setDisableInput] = useState(true);
 
   const { t } = useTranslation();
   const router = useRouter();
   const {close} = useDrawer();
   const device = getItem('device-type')
-
-  const disable = {
-    loginOtp: !!(data.input?.length === 0)
-  };
 
   useEffect(() => {
     window.sessionStorage.removeItem("formData");
@@ -97,6 +90,19 @@ export default function Mobile({
     }
   }
 
+  const checkInputData = (e) => {
+    if(e?.target?.value) {
+      if(numberOrEmail === "mobile" && e?.target?.value?.length === 10) {
+        setDisableInput(false);
+      } else if(numberOrEmail === "email" && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e?.target?.value)){
+        setDisableInput(false);
+      } else {
+        setDisableInput(true);
+      }
+    }
+    processPhoneData(e.target.value);
+  }
+
 
 
   const updateTimer = ()=>{
@@ -134,7 +140,7 @@ export default function Mobile({
               <input
                 id="mobile"
                 value={data.input}
-                onChange={(e) => processPhoneData(e.target.value)}
+                onChange={checkInputData}
                 className=" w-full border-b-2 border-grey-300 px-4 py-2"
                 name="phone"
                 placeholder="Email or Mobile Number"
@@ -148,7 +154,7 @@ export default function Mobile({
               <input
                 id="email"
                 value={data.input}
-                onChange={(e) => processPhoneData(e.target.value)}
+                onChange={checkInputData}
                 className=" w-full border-b-2 border-grey-300 px-4 py-2"
                 name="phone"
                 placeholder="Email or Mobile Number"
@@ -170,7 +176,7 @@ export default function Mobile({
             />
           )}
           {((device === "mobile") || (device === "desktop" && !otpStatus)) && <div className="mt-10">
-            <SubmitButton disable={disable['loginOtp']} fetchData={submit} text={'Proceed'} />
+            <SubmitButton disable={disableInput} fetchData={submit} text={'Proceed'} />
           </div>}
         </form>
       </div>
