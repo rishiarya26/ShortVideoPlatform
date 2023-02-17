@@ -8,21 +8,21 @@ import Play from '../commons/svgicons/play-outlined';
 export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable, id, likesCount, tag,page }) {
   const formattedViewCount =  numberFormatter(viewCount)
   const dynamicImgUrl = (url)=>{
+    debugger;
     let imgUrl = url;
-    if(imgUrl?.includes('upload/w_297')){
-      imgUrl = url?.replaceAll('upload/w_297','upload/w_120');
+    if(imgUrl?.includes('/w_')){
+      imgUrl = imgUrl?.replace(/upload\/w_+([0-9]*)/,'upload/w_120');
       if(imgUrl.includes('.jpg')){
-        imgUrl = url?.replaceAll('.jpg','.webp');
+        imgUrl = imgUrl?.replaceAll('.jpg','.webp');
       }
       return imgUrl
+    }else{
+      if(imgUrl?.includes('/upload') && !imgUrl?.includes('w_')){
+        imgUrl = imgUrl?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp');
+        return imgUrl
+      }
     }
-    if(imgUrl?.includes('/upload')){
-      imgUrl = url?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp');
-      return imgUrl
-    }
-
     return imgUrl
-   
   }
   return (
     <div key={id} className="video-card relative z-0">
