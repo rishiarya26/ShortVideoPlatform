@@ -548,7 +548,7 @@ function Hipi({
   }
   }
  /*************************** */
-    useEffect(()=>{
+    useEffect(async ()=>{
       setRefferer();
       isPwa();
 
@@ -679,13 +679,17 @@ function Hipi({
       }, 7000);
       const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
       /** injecting vmax after 8 seconds */
-      if (!path.includes("@")) {
+      if (path.includes("@")) {
         console.log("vmax script before execution");
         setTimeout(async ()=>{
           inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
           await delay();
           initVmax();
         },5000)
+      }else{
+        inject("https://vmax.charmboard.com/web-sdk/prod/1.3.3/ad.js", null);
+        await delay();
+        initVmax();
       }
     
 
