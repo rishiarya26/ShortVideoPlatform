@@ -9,13 +9,20 @@ export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable,
   const formattedViewCount =  numberFormatter(viewCount)
   const dynamicImgUrl = (url)=>{
     let imgUrl = url;
-    if(imgUrl.includes('upload/w_297')){
+    if(imgUrl?.includes('upload/w_297')){
       imgUrl = url?.replaceAll('upload/w_297','upload/w_120');
       if(imgUrl.includes('.jpg')){
         imgUrl = url?.replaceAll('.jpg','.webp');
       }
+      return imgUrl
     }
+    if(imgUrl?.includes('/upload')){
+      imgUrl = url?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp');
+      return imgUrl
+    }
+
     return imgUrl
+   
   }
   return (
     <div key={id} className="video-card relative z-0">
