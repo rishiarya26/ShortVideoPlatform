@@ -106,7 +106,7 @@ function SearchFeed({ router }) {
     widgetList.forEach((d)=>{
         const video = d?.video;
         const playlists = video?.playlists;
-        const playlistArr = playlists.map((playlist) => ({name: playlist?.name, id: playlist?.id}));
+        const playlistArr = playlists?.map((playlist) => ({name: playlist?.name, id: playlist?.id}));
         video.playlists = playlistArr?.[0];
         video.selected_video_url = selectVideoUrl(video);;
         finalTData.push(video);
