@@ -8,7 +8,6 @@ import Play from '../commons/svgicons/play-outlined';
 export default function VideoCard({ thumbnailUrl,videoTitle,viewCount,shoppable, id, likesCount, tag,page }) {
   const formattedViewCount =  numberFormatter(viewCount)
   const dynamicImgUrl = (url)=>{
-    debugger;
     let imgUrl = url;
     if(imgUrl?.includes('/w_')){
       imgUrl = imgUrl?.replace(/upload\/w_+([0-9]*)/,'upload/w_120');
