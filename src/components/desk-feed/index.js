@@ -80,7 +80,7 @@ const LoadComp = () => (<Loading />);
   const fetchData =  useAuth(dataFetcher,dataFetcherWLogin);
 
   useEffect(() => {
-    if(activeFeedIndex && Number(activeFeedIndex) === 6) {
+    if(activeFeedIndex && Number(activeFeedIndex) >= 6) {
       webPush();
     }
   }, [activeFeedIndex])
