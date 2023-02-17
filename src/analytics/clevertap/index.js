@@ -106,14 +106,14 @@ export function track(event, payload) {
           localStorage.set("clevertapWebpopup", new Date());
           setTimeout(() => {
             const okButton = document.querySelector("#wzrk-confirm");
-            const rejectButton = document.querySelector("#wzrk-reject");
+            const rejectButton = document.querySelector("#wzrk-cancel");
             okButton && okButton.addEventListener("click", () => {
               toTrackMixpanel('enable');
             });
             rejectButton && rejectButton.addEventListener("click", () => {
               toTrackMixpanel('notNow');
             })
-          }, [1000])
+          }, [500])
         } catch(e) {
           console.log("Clevertap Web Push Notification Error")
         }

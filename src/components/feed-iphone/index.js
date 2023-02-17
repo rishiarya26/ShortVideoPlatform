@@ -658,7 +658,7 @@ console.error('errorrr',e)
                 const {
                   activeIndex, slides
                 } = swiper;
-                if(activeIndex === 9) {
+                if(activeIndex === 6) {
                   webPush();
                 }
                 localStorage.set("adArr",[]);

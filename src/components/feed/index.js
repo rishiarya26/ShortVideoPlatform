@@ -673,7 +673,7 @@ function Feed({ router }) {
                 const {
                   activeIndex, slides
                 } = swiperCore;
-                if(activeIndex === 9) {
+                if(activeIndex === 6) {
                   webPush();
                 }
                 localStorage.set("adArr",[]);
