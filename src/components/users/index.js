@@ -209,7 +209,6 @@ function Users({
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
   const dynamicImgUrl = (url)=>{
-    debugger;
     let imgUrl = url;
     if(imgUrl?.includes('/w_')){
       imgUrl = imgUrl?.replace(/upload\/w_+([0-9]*)/,'upload/w_120');
