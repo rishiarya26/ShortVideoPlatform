@@ -457,7 +457,7 @@ const notNowClick=()=>{
         <div className="p-4 h-full flex items-center justify-center">
           {info.function[type]}
         </div>
-        <div className="pb-4 px-12  text-gray-400 text-sm text-center h-full flex items-center justify-center">
+        <div className="pb-4 px-12  text-gray-400 text-sm text-center h-full flex items-center justify-center break-all">
           {bio}
         </div>
       </div>
