@@ -85,22 +85,22 @@ export const share = ({id,creatorId, userName, pageName,tabName, type = 'video',
     console.error('something went wrong during share',e)
   }
   }else{
-    let msg = "inside alert"
+    // let msg = "inside alert"
     const url = document?.location?.href;
     console.log("url",url)
     let domain = (new URL(url));
     domain = domain?.hostname;
-    msg = `${msg}, domain = ${domain}`
+    // msg = `${msg}, domain = ${domain}`
     const shareUrl = {
       video : id && domain &&`https://${domain}/video/${id}`,
       profile : id && domain && `https://${domain}/${id}`
     }
     console.log("tyeefinal",shareUrl[type])
      const finalUrl = (type && (shareUrl[type])) || document?.location?.href;
-     msg = `${msg}, finalUrl = ${finalUrl}`
+    //  msg = `${msg}, finalUrl = ${finalUrl}`
     window.open(`https://api.whatsapp.com/send?text=${finalUrl}`);
     console.log("no navigator share, redirected to whatsap share page")
-    alert(`no navigator share, redirected to whatsap share page ${msg}`);
+    // alert(`no navigator share, redirected to whatsap share page ${msg}`);
    return;
   }
   return Promise.reject(NO_SUPPORT);
