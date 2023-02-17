@@ -209,18 +209,22 @@ function Users({
   const [fetchState, retry, data] = useFetcher(dataFetcher, null, selectedTab);
 
   const dynamicImgUrl = (url)=>{
+    debugger;
     let imgUrl = url;
     if(imgUrl?.includes('upload/w_297')){
       imgUrl = url?.replaceAll('upload/w_297','upload/w_120');
       if(imgUrl.includes('.jpg')){
         imgUrl = url?.replaceAll('.jpg','.webp');
       }
-    }else{
-      if(imgUrl?.includes('/upload')){
-        imgUrl = url?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp')
-      }
+      return imgUrl
     }
+    if(imgUrl?.includes('/upload')){
+      imgUrl = url?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp');
+      return imgUrl
+    }
+
     return imgUrl
+   
   }
 
   useEffect(() => {
