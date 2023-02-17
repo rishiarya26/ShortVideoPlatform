@@ -121,7 +121,7 @@ if(noShow) return false;
   if(isPlaylistView || playlistId){
     return (
       <div 
-      className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
+      className={`${placement?.[type]} z-10 app_cta p-3 fixed h-52 left-0 justify-between flex text-white w-full bg-black bg-opacity-70 items-center`}
       onClick={playlistId ?
         () => {
           toTrackMixpanel("playlistClickedVideo", {pageName, playlistId, playlistName});
@@ -145,7 +145,7 @@ if(noShow) return false;
   }
   
     return (
-    <div className={`${placement?.[type]} z-10 app_cta p-3 absolute h-52 left-0 justify-between flex text-white w-full ${promptPresent === 'true' || showOpenStrip ?  'bg-black bg-opacity-70' : ''}  items-center`}>
+    <div className={`${placement?.[type]} z-10 app_cta p-3 fixed h-52 left-0 justify-between flex text-white w-full ${promptPresent === 'true' || showOpenStrip ?  'bg-black bg-opacity-70' : ''}  items-center`}>
       <p className="text-sm">
       {text?.[device]}
       </p>
