@@ -215,6 +215,10 @@ function Users({
       if(imgUrl.includes('.jpg')){
         imgUrl = url?.replaceAll('.jpg','.webp');
       }
+    }else{
+      if(imgUrl?.includes('/upload')){
+        imgUrl = url?.replaceAll("/upload", "/upload/w_120").replaceAll('.jpg','.webp')
+      }
     }
     return imgUrl
   }
