@@ -427,7 +427,7 @@ const notNowClick=()=>{
       <div className="header flex w-full flex-col items-center pt-7 pb-2">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <Img data={profilePic} title="Hipi" fallback={'/images/users.png'} />
+            <Img data={dynamicImgUrl(profilePic)} title="Hipi" fallback={'/images/users.png'} />
           </div>
           <h1 className="font-medium p-2 text-sm flex">{firstName} {lastName}
           {userVerified === 'Verified' ? <div className="ml-2 mt-1"><Verified/></div>:''}
