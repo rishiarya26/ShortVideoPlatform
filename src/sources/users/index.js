@@ -45,7 +45,7 @@ async function forgotPassword({ lang }) {
   }
 }
 async function updateProfile({
-  id = null, profilePic, firstName, lastName = '', dateOfBirth, userHandle, onboarding, profileType, bio, languages
+  id = null, profilePic, firstName, lastName = '', dateOfBirth, userHandle, onboarding, profileType, bio, languages, gender=null
 }) {
   let response = {};
   try {
@@ -64,6 +64,7 @@ async function updateProfile({
       onboarding: null,
       profileType: null,
       "bio":bio,
+      ...(gender ? {gender} : {}),
       "languages":languages && languages?.map((data)=>{
         return {code : data};     
       })

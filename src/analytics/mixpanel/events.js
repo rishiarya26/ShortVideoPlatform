@@ -189,10 +189,10 @@ export const toTrackMixpanel = (type, value, item) => {
     }
     const toTrack = {
       'enable': () => {
-        track("Enable", globalCommonEvents);
+        track("Web Push Optin Accepted", globalCommonEvents);
       },
       'notNow': () => {
-        track("Not Now", globalCommonEvents);
+        track("Web Push Optin Declined", globalCommonEvents);
       },
       'webPushOptinPopupImpression' : () => {
         track("Web Push Optin Popup Impression", globalCommonEvents)

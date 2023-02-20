@@ -13,9 +13,6 @@ import { toTrackClevertap } from "../../analytics/clevertap/events";
 import { verifyUserOnly } from "../../sources/auth/verify-user";
 import { useRouter } from "next/router";
 
-
-const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
-
 export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, setAuth}) =>{
     const {close} = useDrawer();
     const { showSnackbar } = useSnackbar();
@@ -64,17 +61,15 @@ export const GoogleButton =({loading, type,pageName, tabName=null, toggleFlow, s
           } else if(verifyResponse?.data.code === 1) {
             //TODO add register flow
               const response = await registerUser(data?.tokenId);
+              sessionStorage.setItem("googleRegistrationData", JSON.stringify({
+                name: data?.profileObj?.name || null,
+                email: data?.profileObj?.email || null,
+              }))
               if(device === "desktop") {
-                // sessionStorage.setItem("googleRegistrationData", JSON.stringify({
-                //   name: data?.profileObj?.name || null,
-                //   email: data?.profileObj?.email || null,
-                // }))
-                // toggleFlow("registration");
-                await delay();
-                toggleFlow("userHandle")
+                toggleFlow("registration");
               } else {
                 close();
-                router.push("/createUsername");
+                router.push("/registration");
               }
               // console.log("google register resp:", response);
           }

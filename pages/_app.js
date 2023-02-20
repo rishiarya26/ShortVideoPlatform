@@ -331,11 +331,8 @@ function Hipi({
             // init();
             initFirebase();
           },[1000])
-        }else{
-          if(loading === false){
-            oneTapGoogle();
         }
-      }}catch(e){
+    }catch(e){
         console.error("one tap issue ")
       }
     },[loading])
@@ -632,7 +629,6 @@ function Hipi({
                 var s = document.getElementsByTagName('script')[0];
                 s.parentNode.insertBefore(wzrk, s);
           })();`)
-          inject(GOOGLE_ONE_TAP , null, loaded);
       }, 7000);
     
 
