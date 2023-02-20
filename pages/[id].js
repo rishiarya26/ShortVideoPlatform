@@ -13,17 +13,17 @@ import { getCanonicalUrl, getProfileUrlSeo, getSmallcaseUsernameUrl, updateCampa
 import { getProfileVideos, getUserProfile, getUserProfileWLogin } from '../src/sources/users/profile';
 import { customProfileDescSeo, customProfileTitleSeo } from '../src/utils/seo';
 // import DeskUsers from '../src/components/desk-profile';
-// import Users from '../src/components/users';
+import Users from '../src/components/users';
 
 const DeskUsers = dynamic(() => import('../src/components/desk-profile'),{
   loading: () => <div />,
   ssr: false
 });
 
-const Users = dynamic(() => import('../src/components/users'),{
-  loading: () => <div />,
-  ssr: false
-});
+// const Users = dynamic(() => import('../src/components/users'),{
+//   loading: () => <div />,
+//   ssr: false
+// });
 
 
 
@@ -206,11 +206,11 @@ export default function Hipi(params) {
         // image: item?.thumbnail,
         description: customProfileDescSeo({item}),
         additionalMetaTags:[{
-        name: 'keywords',
-        content: `${item?.firstName || ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi, ${item?.firstName || ''} ${item?.lastName || ''},${item?.userHandle || ''}`
+        name:'keywords',
+        content:`${item?.firstName|| ''} ${item?.lastName || ''} on Hipi, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos, ${item?.firstName || ''} ${item?.lastName || ''} Short Videos on Hipi, ${item?.firstName || ''} ${item?.lastName || ''},${item?.userHandle || ''}`
         }
         ],
-        canonical: url && getProfileUrlSeo(url,item?.userHandle?.replace('@',''))
+        canonical:url && getProfileUrlSeo(url,item?.userHandle?.replace('@',''))
         }}
      />
 
@@ -221,13 +221,13 @@ export default function Hipi(params) {
        ]}
       /> */}
       {status === 'success' && comp?.[device]}
-     {device === 'mobile' && type === 'self' &&
-       <FooterMenu 
-         selectedTab="profile"
-        //  pageName={type === 'self' ? 'My Profile' : type === 'others' && 'Creator Profile'}
-        //  tabName={''}
-       />
-     }
+      {device === 'mobile' && type === 'self' &&
+        <FooterMenu 
+          selectedTab="profile"
+          //  pageName={type === 'self' ? 'My Profile' : type === 'others' && 'Creator Profile'}
+          //  tabName={''}
+        />
+      }
     </>
   );
 }
