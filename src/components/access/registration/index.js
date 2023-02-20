@@ -358,7 +358,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
         {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
             type="submit"
             className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
-            dsiabled={pending}
+            disabled={pending}
           >
             {' '}
             {"Sign Up"}
