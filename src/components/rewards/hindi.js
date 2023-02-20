@@ -23,17 +23,17 @@ const Hindi=()=> (
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>1</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>25 videos देखने पर</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>15 videos देखने पर</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4 md:mx-8'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>2</p>
-                     <p className='text-gray-500 text-xs md:text-sm font-medium'>50 videos देखने पर</p>
+                     <p className='text-gray-500 text-xs md:text-sm font-medium'>30 videos देखने पर</p>
                 </div>
                 <div className='box_shadow_1 bg-white p-4 w-1/2 md:w-40 flex flex-col m-1 md:m-4'>
                 <p className=' pl-2 font-medium text-sm reward_font'>Level</p>
                     <p className='mb-2 pl-2 font-bold text-4xl reward_font'>3</p>
-                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>75 videos देखने पर</p>
+                     <p className=' text-gray-500 text-xs md:text-sm font-medium'>45 videos देखने पर</p>
                 </div>
                 </div>
    
