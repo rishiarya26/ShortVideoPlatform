@@ -56,44 +56,37 @@ const getToken = async(response, open, close, router)=>{
   const device = getItem('device-type');
   try {
     const verifyResponse = await verifyUserOnly({type:"email", email: data?.email})
-    // if(verifyResponse?.data?.code === 0) {
+    if(verifyResponse?.data?.code === 0) {
       const resp = await login({googleToken: response?.credential, type: "oneTap"});
-    //   console.log("resp*",resp)
-    //   if(resp.status === 'success'){
-    //     console.log("GOOGLE",resp)
-    //     try{ 
-    //       mixpanel('Login');
-    //       fbq.defEvent('CompleteRegistration');
-    //     }catch(e){
-    //     console.log('error in fb or mixpanel event');
-    //     }
-    //   }
-    // } else if(verifyResponse?.data?.code === 1) {
-    //     const resp = await registerUser(response?.credential);
-    //     if(resp.status === 'success') {
-    //       if(device === "desktop") {
-    //         await delay();
-    //         open('', loginComp, 'big',{showMessage: snackbarInline, auth_method: "login", _flow: "userHandle"});
-    //       } else {
-    //         close();
-    //         router.push("/createUsername");
-    //       }
-    //     }
-    // }
-    sessionStorage.setItem(
-      "googleRegistrationData",
-      JSON.stringify({
-        name: data?.name || null,
-        email: data?.email || null,
-      })
-    );
-    if(device === "desktop") {
-      await delay();
-      open('', loginComp, 'big',{showMessage: snackbarInline, auth_method: "login", _flow: "registration"});
-    } else {
-      close();
-      router.push("/registration");
-    }   
+      console.log("resp*",resp)
+      if(resp.status === 'success'){
+        console.log("GOOGLE",resp)
+        try{ 
+          mixpanel('Login');
+          fbq.defEvent('CompleteRegistration');
+        }catch(e){
+        console.log('error in fb or mixpanel event');
+        }
+      }
+    } else if(verifyResponse?.data?.code === 1) {
+        const resp = await registerUser(response?.credential);
+        if(resp.status === 'success') {
+          sessionStorage.setItem(
+            "googleRegistrationData",
+            JSON.stringify({
+              name: data?.name || null,
+              email: data?.email || null,
+            })
+          );
+          if(device === "desktop") {
+            await delay();
+            open('', loginComp, 'big',{showMessage: snackbarInline, auth_method: "login", _flow: "registration"});
+          } else {
+            close();
+            router.push("/registration");
+          }   
+        }
+    }
   } catch(e) {
     console.log('google one tap error', e);
   }
