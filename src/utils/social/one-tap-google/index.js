@@ -37,19 +37,6 @@ const mixpanel = (type) =>{
   track(`${type} Result`,mixpanelEvents );
 }
 
-const registerUser = async(token) =>{
-  try{
-    const resp = await register({token: token});
-    if(resp.status === 'success'){
-      mixpanel('Login')
-    }
-  }
-  catch(error){
-     console.log(error)
-  }
-}
-
-
 const getToken = async(response, open, close, router)=>{
   console.log("google-one-tap-resp", response);
   const data = parseJwt(response?.credential);
@@ -69,7 +56,7 @@ const getToken = async(response, open, close, router)=>{
         }
       }
     } else if(verifyResponse?.data?.code === 1) {
-        const resp = await registerUser(response?.credential);
+        const resp = await register({token: response?.credential});
         if(resp.status === 'success') {
           sessionStorage.setItem(
             "googleRegistrationData",
