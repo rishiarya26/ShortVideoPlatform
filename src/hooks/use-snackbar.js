@@ -10,6 +10,8 @@ const SnackbarContext = createContext(
   }
 );
 
+export let snackbarInline;
+
 export const SnackbarProvider = ({ children }) => {
   const [state, setState] = useState({ visibility: false });
 
@@ -27,6 +29,8 @@ export const SnackbarProvider = ({ children }) => {
       visibility: false
     });
   };
+
+  snackbarInline = showSnackbar;
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar, hideSnackbar }}>

@@ -5,6 +5,19 @@ import { login } from "../../../sources/social/google/login-one-tap"
 import { register } from "../../../sources/social/google/register-one-tap";
 import * as fbq from '../../../analytics/fb-pixel'
 import { verifyUserOnly } from "../../../sources/auth/verify-user";
+import { snackbarInline } from "../../../hooks/use-snackbar";
+import dynamic from "next/dynamic";
+import { getItem } from "../../cookie";
+
+const loginComp = dynamic(
+  () => import('../../../components/auth-options'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
+
+const delay = (ms = 1000) => new Promise((r) => setTimeout(r, ms));
 
 //pass token as response.credential
 // response {} with name and email
@@ -24,77 +37,55 @@ const mixpanel = (type) =>{
   track(`${type} Result`,mixpanelEvents );
 }
 
-const registerUser = async(token) =>{
-  try{
-    const resp = await register({token: token});
-    if(resp.status === 'success'){
-      mixpanel('Login')
-    }
-  }
-  catch(error){
-     console.log(error)
-  }
-}
-
-const getToken = async(response)=>{
+const getToken = async(response, open, close, router)=>{
   console.log("google-one-tap-resp", response);
-  // const data = parseJwt(response?.credential);
-  // try {
-  //   const verifyResponse = verifyUserOnly({type:"email", email: data?.email})
-  //   if(verifyResponse?.data?.code === 0) {
-  //     const resp = await login({googleToken, type: "oneTap"});
-  //     console.log("resp*",resp)
-  //     if(resp.status === 'success'){
-  //       console.log("GOOGLE",resp)
-  //       try{ 
-  //         mixpanel('Login');
-  //         fbq.defEvent('CompleteRegistration');
-  //       }catch(e){
-  //       console.log('error in fb or mixpanel event');
-  //       }
-  //     }
-  //   } else if(verifyResponse?.data.code === 1) {
-  //       const response = await registerUser(data?.tokenId);
-  //       if(device === "desktop") {
-  //         await delay();
-  //         toggleFlow("userHandle")
-  //       } else {
-  //         close();
-  //         router.push("/createUsername");
-  //       }
-  //   }
-  // } catch(e) {
-  //   console.log('google one tap error', e);
-  // }
- try {
-  const googleToken = response?.credential;
-  const resp = await login({googleToken, type: "oneTap"});
-  console.log("resp*",resp)
-  if(resp.status === 'success'){
-    console.log("GOOGLE",resp)
-   try{ 
-    mixpanel('Login');
-    fbq.defEvent('CompleteRegistration');
-   }catch(e){
-   console.log('error in fb or mixpanel event');
-   }
+  const data = parseJwt(response?.credential);
+  const device = getItem('device-type');
+  try {
+    const verifyResponse = await verifyUserOnly({type:"email", email: data?.email})
+    if(verifyResponse?.data?.code === 0) {
+      const resp = await login({googleToken: response?.credential, type: "oneTap"});
+      console.log("resp*",resp)
+      if(resp.status === 'success'){
+        console.log("GOOGLE",resp)
+        try{ 
+          mixpanel('Login');
+          fbq.defEvent('CompleteRegistration');
+        }catch(e){
+        console.log('error in fb or mixpanel event');
+        }
+      }
+    } else if(verifyResponse?.data?.code === 1) {
+        const resp = await register({token: response?.credential});
+        if(resp.status === 'success') {
+          sessionStorage.setItem(
+            "googleRegistrationData",
+            JSON.stringify({
+              name: data?.name || null,
+              email: data?.email || null,
+            })
+          );
+          if(device === "desktop") {
+            await delay();
+            open('', loginComp, 'big',{showMessage: snackbarInline, auth_method: "login", _flow: "registration"});
+          } else {
+            close();
+            router.push("/registration");
+          }   
+        }
+    }
+  } catch(e) {
+    console.log('google one tap error', e);
   }
- } catch (error) {
-   if(error.code === 2){  
-    console.log("one tap - register user")
-     await registerUser(response?.credential);
-   }
-   console.log(error)
- }
 }
 
-export const oneTapGoogle = () =>{
+export const oneTapGoogle = ({open, close, router}) =>{
   try{
      google.accounts.id.initialize({
          //TO-DO clinet_id will come from env
         client_id: GOOGLE_CLIENT_ID_PREROD,
         // client_id : '1026747734321-0fobt02rbhi5j36kk6ft8el2k0tev9af.apps.googleusercontent.com',
-        callback: getToken
+        callback: (res) => getToken(res, open, close, router)
     })
 
      google.accounts.id.prompt(notification =>{

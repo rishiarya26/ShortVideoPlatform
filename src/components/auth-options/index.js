@@ -10,7 +10,7 @@ import DeskSignup from '../desk-signup'
 import { localStorage } from '../../utils/storage';
 import useSnackbar from '../../hooks/use-snackbar';
 
-export default function AuthOptions({showMessage, pageName, tabName=null}) {
+export default function AuthOptions({showMessage, pageName, tabName=null, auth_method=null, _flow=null}) {
   const [loading, setLoading] = useState(true);
   const [authMethod, setAuthMethod] = useState(null);
   const [flow, setFlow] = useState('login');
@@ -27,7 +27,11 @@ export default function AuthOptions({showMessage, pageName, tabName=null}) {
   useEffect(()=>{
     console.log('lib google started')
     console.log("loading",loading)
-    inject(GOOGLE_PLATFORM , null, loaded); 
+    inject(GOOGLE_PLATFORM , null, loaded);
+    if(auth_method && _flow) {
+      setAuthMethod(auth_method);
+      setFlow(_flow);
+    }
  },[])
 
   const toLoginOptions = (value)=>{

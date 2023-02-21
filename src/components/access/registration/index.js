@@ -1,23 +1,16 @@
 import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-// import useSnackbar from '../../../hooks/use-snackbar';
 import useTranslation from '../../../hooks/use-translation';
-import { registerUser } from '../../../sources/auth/register-user';
 import { BackButton } from '../../commons/button/back';
-import { SubmitButton } from '../../commons/button/submit';
-import Toggle from '../../commons/svgicons/toggle';
 import CircularProgress from '../../commons/circular-loader-small';
 import { commonEvents, toTrackMixpanel } from '../../../analytics/mixpanel/events';
 import { track } from '../../../analytics';
 import useDrawer from '../../../hooks/use-drawer';
 import { getItem } from '../../../utils/cookie';
 import useSnackbar from '../../../hooks/use-snackbar';
-import * as fbq from '../../../analytics/fb-pixel'
-import { toTrackClevertap } from '../../../analytics/clevertap/events';
 import { sendOTP } from '../../../sources/auth/send-otp';
 import VerifyOtp from '../verify-otp';
-import { sessionStorage } from '../../../utils/storage';
-// import { updateUserProfile } from '../../../sources/users';
+import { updateUserProfile } from '../../../sources/users';
 
 function formatDate(age) {
   const year = new Date().getUTCFullYear();
@@ -78,12 +71,12 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   const [pending, setPending] = useState(false);
   const [otpStatus, setOtpStatus] = useState(false);
   const [ageTyping, setAgeTyping] = useState(false);
+  const [googleRegistration, setGoogleRegistration] = useState(false);
 
   const { t } = useTranslation();
   const {close} = useDrawer();
   const {showSnackbar} = useSnackbar();
   const device = getItem('device-type');
-  // const googleRegistrationData = sessionStorage.get("googleRegistrationData") || null;
 
  if(device === 'mobile'){
    showMessage = showSnackbar;
@@ -100,28 +93,22 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
     }
   }
 
-  //for google registration
-  // useEffect(() => {
-  //   if(googleRegistrationData) {
-  //     const jsonGoogleRegistrationObject = JSON.parse(googleRegistrationData)
-  //     let dataObj = {
-  //       name: jsonGoogleRegistrationObject?.name || "",
-  //       type: "email",
-  //       value: jsonGoogleRegistrationObject?.email || "",
-  //     }
-  //     setData({...data, ...dataObj});
-  //   }
-  // }, [])
-
   useEffect(() => {
     let dataToUpdate = { ...data };
-    if(device === 'mobile'){
-    dataToUpdate.type = mobile ? 'phoneno' : 'email';
-    dataToUpdate.value = mobile ? phoneNo : email;
-    }
-    else if (device === 'desktop'){
-     dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
-     dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}${phoneData?.input}` : phoneData.input;
+    const googleRegistrationData = window?.sessionStorage?.getItem("googleRegistrationData") || null;
+    if(googleRegistrationData) {
+      setGoogleRegistration(true);
+      const jsonGoogleRegistrationObject = JSON.parse(googleRegistrationData)
+      dataToUpdate = splitName(jsonGoogleRegistrationObject?.name, dataToUpdate);
+      dataToUpdate.type = "email";
+      dataToUpdate.value = jsonGoogleRegistrationObject?.email || "";
+      dataToUpdate.name = jsonGoogleRegistrationObject?.name || "";
+    } else if(device === 'mobile'){
+      dataToUpdate.type = mobile ? 'phoneno' : 'email';
+      dataToUpdate.value = mobile ? phoneNo : email;
+    } else if (device === 'desktop'){
+      dataToUpdate.type = numberOrEmail === 'mobile' ? 'phoneno' : 'email';
+      dataToUpdate.value = numberOrEmail === 'mobile' ? `${phoneData?.countryCode}${phoneData?.input}` : phoneData.input;
     }
     if(device === 'mobile') {
       const formData = JSON.parse(window.sessionStorage.getItem('formData'));
@@ -134,9 +121,9 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   }, []);
   /* eslint-disable no-param-reassign */
   const splitName = (fullName = '', data) => {
-    const [firstName, lastName] = fullName?.split(' ');
+    const [firstName, ...lastName] = fullName?.split(' ');
     data.firstName = firstName;
-    data.lastName = lastName || '';
+    data.lastName = lastName?.join(" ") || '';
     return data;
   };
   /* eslint-disable no-param-reassign */
@@ -186,34 +173,47 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
 
   const submit = async (e) => {
     e.preventDefault();
-    // if(googleRegistrationData) {
-    //   try {
-    //     const userDetails = localStorage.getItem("user-details");
-    //     const payload = {
-    //       id: userDetails?.id,
-    //       profilePic: userDetails?.profilePic,
-    //       firstName: userDetails?.firstName,
-    //       lastName: userDetails?.lastName,
-    //       dateOfBirth: userDetails?.dateOfBirth,
-    //       userHandle: userHandle,
-    //       onboarding: null,
-    //       profileType: null,
-    //       bio: userDetails?.bio,
-    //       languages: userDetails?.languages
-    //     };
-    //     const response = await updateUserProfile(payload)
-    //     if(device === 'mobile') {
-    //         router.replace({
-    //             pathname: "/content-language",
-    //             query: {ref: "signup"}
-    //         });
-    //     } else {
-    //         toggleFlow("contentLanguage")
-    //     }
-    //   } catch(e) {
-    //     showMessage({message: 'Something went wrong. Please try again!'})
-    //   }
-    // } else {
+    if(googleRegistration) {
+      setPending(true);
+      try {
+        const userDetails = JSON.parse(window?.localStorage?.getItem("user-details"));
+        const formatedDated = formatDate(Number(data.dob));
+        const payload = {
+          id: userDetails?.id,
+          profilePic: userDetails?.profilePic,
+          firstName: data?.firstName || userDetails?.firstName,
+          lastName: data?.lastName || userDetails?.lastName,
+          dateOfBirth: formatedDated,
+          userHandle: userDetails?.userHandle,
+          onboarding: null,
+          profileType: null,
+          bio: userDetails?.bio,
+          languages: userDetails?.languages,
+          gender: data?.gender
+        };
+        await updateUserProfile(payload)
+        const updatedUserDetails ={...userDetails,
+          firstName: data?.firstName || userDetails?.firstName,
+          lastName: data?.lastName || userDetails?.lastName,
+          dateOfBirth: formatedDated,
+          gender: data?.gender
+        };
+        window?.localStorage?.setItem("user-details", JSON.stringify(updatedUserDetails));
+        window?.sessionStorage?.removeItem("googleRegistrationData");
+        if(device === 'mobile') {
+            router.replace({
+                pathname: "/createUsername",
+                query: {ref: "signup"}
+            });
+        } else {
+            toggleFlow("userHandle");
+        }
+      } catch(e) {
+        showMessage({message: 'Something went wrong. Please try again!'})
+      } finally {
+        setPending(false);
+      }
+    } else {
       if(formDataCheck({data, showMessage})){ 
         try {
           toTrackMixpanel("signupFormSubmitted", {method: device === "mobile" ? 
@@ -245,7 +245,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
           setPending(false);
         }
       }
-    // }
+    }
   };
 
   const toggleGender = (e) => {
@@ -272,7 +272,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
   return (
     <>
       <div className='w-full flex h-16  bg-white items-center'>
-        <div className='p-4 h-full flex items-center'>
+        {!googleRegistration && <div className='p-4 h-full flex items-center'>
           <BackButton
             back={()=>{
                 if(device === "mobile") {
@@ -283,8 +283,8 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
               }
             }
           />
-        </div>
-        <span className='font-bold flex justify-center align-center w-9/12'>Sign up</span>
+        </div>}
+        <span className={`font-bold flex justify-center align-center ${!googleRegistration ?  "w-9/12" : "w-100"}`}>Sign up</span>
       </div>
       <div className="flex flex-col px-4">
         <div className="mt-4 flex flex-col px-4">
@@ -358,6 +358,7 @@ const Registration = ({ router, toggleFlow, showMessage, phoneData, numberOrEmai
         {((device === 'mobile') || (device === 'desktop' && !otpStatus)) && <button
             type="submit"
             className={'bg-hipired w-full px-4 py-2 text-white font-semibold relative'}
+            disabled={pending}
           >
             {' '}
             {"Sign Up"}

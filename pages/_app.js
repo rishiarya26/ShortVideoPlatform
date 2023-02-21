@@ -343,11 +343,8 @@ function Hipi({
             // init();
             initFirebase();
           },[1000])
-        }else{
-          if(loading === false){
-            oneTapGoogle();
         }
-      }}catch(e){
+    }catch(e){
         console.error("one tap issue ")
       }
     },[loading])
@@ -675,7 +672,6 @@ function Hipi({
         s.parentNode.insertBefore(b, s);})(window.lintrk);
         `)
 
-          inject(GOOGLE_ONE_TAP , null, loaded);
       }, 7000);
       const delay = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
       /** injecting vmax after 8 seconds */
