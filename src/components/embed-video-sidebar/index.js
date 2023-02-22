@@ -39,6 +39,23 @@ const router = useRouter();
       onStoreRedirect({videoId : props?.videoId})
     }
 
+    const dynamicImgUrl = (url)=>{
+      let imgUrl = url;
+      if(imgUrl?.includes('/w_')){
+        imgUrl = imgUrl?.replace(/upload\/w_+([0-9]*)/,'upload/w_70');
+        if(imgUrl.includes('.jpg')){
+          imgUrl = imgUrl?.replaceAll('.jpg','.webp');
+        }
+        return imgUrl
+      }else{
+        if(imgUrl?.includes('/upload') && !imgUrl?.includes('w_')){
+          imgUrl = imgUrl?.replaceAll("/upload", "/upload/w_70").replaceAll('.jpg','.webp');
+          return imgUrl
+        }
+      }
+      return imgUrl
+    }
+
   const info = {
     single : props?.canShop && props.adData?.monitisation ? 'bottom-20 fixed' : 'bottom-28 fixed',
     embed : props?.canShop && props?.adData?.monitisation ? 'bottom-0 absolute' : 'bottom-20 absolute'
@@ -55,7 +72,7 @@ const router = useRouter();
         <img
           alt="profile-pic"
           className="usrimg w-12 h-12 rounded-full"
-          src={props.profilePic || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
+          src={dynamicImgUrl(props?.profilePic) || "https://akamaividz2.zee5.com/image/upload/w_297,c_scale,f_auto,q_auto/v1625388234/hipi/videos/c3d292e4-2932-4f7f-ad09-b974207b1bbe/c3d292e4-2932-4f7f-ad09-b974207b1bbe_00.webp"}
         />
         {/* <div
           onClick={toStoreRedirect}

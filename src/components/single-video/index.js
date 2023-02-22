@@ -15,9 +15,17 @@ import { commonEvents } from '../../analytics/mixpanel/events';
 import { track } from '../../analytics';
 import { viewEventsCall } from '../../analytics/view-events';
 import { incrementCountVideoView } from '../../utils/events';
-import VideoUnavailable from '../video-unavailable';
 import SnackCenter from '../commons/snack-bar-center';
 import { toTrackClevertap } from '../../analytics/clevertap/events';
+import dynamic from 'next/dynamic';
+
+const VideoUnavailable = dynamic(
+  () => import('../video-unavailable'),
+  {
+    loading: () => <div />,
+    ssr: false
+  }
+);
 // import usePreviousValue from '../../hooks/use-previous';
 // import EmbedVideoSidebar from '../embed-video-sidebar'
 
@@ -64,12 +72,14 @@ export default function SingleVideo(props){
     },[initialPlayStarted])
 
   useEffect(() => {
-    // const guestId = getItem('guest-token');
     const mixpanelEvents = commonEvents();
     mixpanelEvents['Page Name'] = 'Video';
     track('Screen View',mixpanelEvents );
     toTrackMixpanel('impression');
-    window.addEventListener("beforeunload", ()=>{
+    // const guestId = getItem('guest-token');
+   setTimeout(()=>{ 
+ 
+    // window.addEventListener("beforeunload", ()=>{
       watchedTime > 0 && toTrackMixpanel('watchTime',{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
       watchedTime > 0 && toTrackClevertap('watchTime', props,{ watchTime : 'Partial', duration : tDuration, durationWatchTime: watchedTime})
 
@@ -90,6 +100,7 @@ export default function SingleVideo(props){
 
       /***************/
     });
+  // },1000);
   }, []);
 
   // const noteWatchTime =()=>{
@@ -208,9 +219,8 @@ export default function SingleVideo(props){
     >
     
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <>{ props?.status === 'fail' ? 
-      <VideoUnavailable/>
-      :<><video
+      <>{ props?.status === 'success' ? 
+      <><video
         // autoPlay
         onContextMenu={(e)=>{
           e.preventDefault();
@@ -287,7 +297,8 @@ export default function SingleVideo(props){
              campaignId={props?.campaignId || 'NA'}
            />
          )} 
-         </> }</>
+         </> : props?.status === 'fail' &&
+      <VideoUnavailable/> }</>
     </div>
     
            <FooterMenu 
